@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="utf-8"?>
+<game xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+      name="Card Fighters' Clash"
+      id="e3d56d9e-900d-49c6-b6ae-22cbb51be153"
+      octgnVersion="3.1.0.0"
+      version="1.0.0.0"
+      markersize="16"
+      tags="capcom snk fighter"
+      description="A card game based in the SNK Playmore’s video game SNK vs. Capcom Card Fighters' Clash 2 Expand Edition.
+      &#xd;Automation rank: D
+      &#xd;(This game contains no automation.)"
+      setsurl="http://raohmaru.com/"
+      gameurl="http://raohmaru.com/"
+      authors="raohmaru"
+      iconurl="https://raw.github.com/raohmaru/CFC/master/cfc_logo.png">
+	
+	<scripts>
+		<script src="Scripts/constants.py" />
+		<script src="Scripts/actions.py" />
+		<script src="Scripts/generic.py" />
+		<script src="Scripts/meta.py" />
+	</scripts>
+	
+	<fonts>
+		<font src="fonts/SourceSansPro-Regular.ttf" size="12" target="context"/>
+		<font src="fonts/SourceSansPro-Regular.ttf" size="12" target="chat"/>
+		<font src="fonts/SourceSansPro-Regular.ttf" size="12" target="deckeditor"/>
+	</fonts>
+	
+	<!-- <proxygen definitionsrc="Proxy/proxydef.xml">
+	</proxygen> -->
+	
+	<documents>
+		<!-- <document name="Rulebook" icon="Documents/Manual.png" src="Documents/DoomtownRules.htm" />
+		<document name="FAQ" icon="Documents/Manual.png" src="Documents/Doomtown-FAQ-AEG.htm" />
+		<document name="Accumulated Rulings" icon="Documents/Manual.png" src="Documents/DoomtownAccumulatedRulings.htm" /> -->
+	</documents>
+	
+	<globalvariables>
+		<!-- <globalvariable name="cattach" value="{}"/> -->
+	</globalvariables>
+	
+	<card back="Card/back.jpg" front="Card/front.jpg" width="90" height="126" cornerRadius="3">
+		<property name="Publisher" type="String" ignoreText="True" textKind="Enum" />
+		<property name="Team" type="String" ignoreText="True" textKind="Enum" />
+		<property name="Type" type="String" textKind="Enum" />
+		<property name="Subtype" type="String" textKind="Tokens" />
+		<property name="Rarity" type="String" ignoreText="True" textKind="Enum" />
+		<property name="Rules" type="String" />
+		<property name="Flavor" type="String" ignoreText="True" />
+		<property name="BP" type="String" textKind="Enum" />
+		<property name="SP" type="String" textKind="Enum" />
+		<property name="Backup 1" type="String" textKind="Enum" />
+		<property name="Backup 2" type="String" textKind="Enum" />
+		<property name="Backup 3" type="String" textKind="Enum" />
+		<property name="Number" type="String" ignoreText="True" />
+		<property name="Illustrator" type="String" ignoreText="True" />
+	</card>
+	
+	<table name="Table" visibility="undefined" ordered="False" width="1250" height="750" background="Background/background.jpg" backgroundStyle="uniformToFill" board="Background/board.png" boardPosition="-7,-27,76,190" >
+		<groupaction menu="Next phase" shortcut="Ctrl+Enter" execute="nextPhase" />
+		<groupactions menu="Phases...">
+			<groupaction menu="Go to Activate phase" shortcut="F1" execute="goToActivate" />
+			<groupaction menu="Go to Draw phase" shortcut="F2" execute="goToDraw" />
+			<groupaction menu="Go to Main phase" shortcut="F3" execute="goToMain" />
+			<groupaction menu="Go to End phase" shortcut="F4" execute="goToEnd" />
+		</groupactions>
+		<groupactions menu="Random...">
+			<groupaction menu="Roll 6-sided die" shortcut="Ctrl+Alt+6" execute="roll6" />
+			<groupaction menu="Roll 10-sided die" shortcut="Ctrl+Alt+10" execute="roll10" />
+			<groupaction menu="Flip a coin" shortcut="Ctrl+Alt+2" execute="flipCoin" />
+		</groupactions>		
+		<groupactions menu="Game...">
+			<groupaction menu="Setup starting cards &amp; hand" shortcut="F12" execute="setup" />
+			<groupaction menu="Download sets card images" execute="download_o8c" />
+			<groupaction menu="Debug" execute="TrialError" />
+		</groupactions>
+		<groupaction menu="Clean-up targets and combat" shortcut="Esc" execute="clearAll" />
+		<groupaction menu="Scoop" execute="scoop" />
+		
+		<cardactions menu="Actions...">
+			<cardaction menu="Tap/Untap" shortcut="Ctrl+T" execute="tapUntap" default="true" />
+			<cardaction menu="Face up/down" shortcut="Ctrl+F" execute="morph" />
+			<cardaction menu="Flip" shortcut="Ctrl+shift+F" execute="flip" />
+			<cardaction menu="Clone" shortcut="Ctrl+C" batchExecute="clone" />
+		</cardactions>
+		<cardactions menu="Combat...">
+			<cardaction menu="Attack" shortcut="Ctrl+A" execute="attack" />
+			<cardaction menu="Block" shortcut="Ctrl+B" execute="block" />
+		</cardactions>
+		<cardaction menu="Use ability" shortcut="Ctrl+Z" execute="activate" />
+		<cardaction menu="Freeze/Unfreeze" shortcut="Ctrl+X" execute="freeze" />
+		<cardactions menu="Move...">
+			<cardaction menu="KO" shortcut="Del" execute="destroy" />
+			<cardaction menu="Kill" shortcut="Ctrl+Del" execute="exile" />
+			<cardaction menu="Put into Deck" shortcut="Ctrl+D" execute="tolibrary" />
+			<cardaction menu="Return to Hand" shortcut="Ctrl+H" execute="tohand" />
+		</cardactions>
+		<cardaction menu="Clear" shortcut="esc" execute="clear" />		
+		<cardactions menu="Markers...">
+			<cardaction menu="Raise BP by 1" shortcut="Ctrl+1" execute="plusBP" />
+			<cardaction menu="Lower BP by 1" shortcut="Ctrl+Shift+1" execute="minusBP" />
+			<cardaction menu="Change BP..." shortcut="Ctrl+2" batchExecute="changeBP" />
+			<cardaction menu="Add markers..." shortcut="Ctrl+0" batchExecute="addMarker" />
+		</cardactions>
+	</table>
+	
+	<player summary="HP: {#Life} | SP: {#Life} | Hand: {#Hand}">
+		<counter name="HP" icon="counters/hp.png" default="30" reset="False" />
+		<counter name="SP" icon="counters/sp.png" default="0" reset="True" />
+		<!-- <globalvariable name="Hand Rank" value="N/A" /> -->
+
+		<hand name="Hand" visibility="me" width="90" height="126" icon="Groups/hand.png">
+			<groupaction menu="Random discard" shortcut="Ctrl+Del" execute="randomDiscard" />
+			<groupactions menu="Move all cards to...">
+				<groupaction menu="Owner's Deck (Top)" execute="libraryTopAll" />
+				<groupaction menu="Owner's Deck (Bottom)" execute="libraryBottomAll" />
+				<groupaction menu="Owner's Discard pile" execute="graveyardAll" />
+			</groupactions>
+			<cardaction menu="Play card" default="true" execute="playCard" />
+			<cardaction menu="Play as Backup" shortcut="Ctrl+B" execute="attach" />
+			<cardaction menu="Discard card" shortcut="Del" execute="discard" />
+			<cardaction menu="Put into Deck" shortcut="Ctrl+D" execute="tolibrary" />
+		</hand>
+		<group name="Deck" visibility="none" width="90" height="126" icon="Groups/deck.png">
+			<groupaction menu="Draw" shortcut="Ctrl+D" default ="true" execute="draw" />
+			<groupaction menu="Draw X cards" shortcut="Ctrl+Shift+D" execute="drawMany" />
+			<groupaction menu="Trash X cards" execute="trash" />
+			<groupaction menu="Shuffle" shortcut="Ctrl+S" execute="shuffle" />
+			<groupaction menu="Reveal/Hide top card" shortcut="Ctrl+R" execute="revealtoplibrary" />
+			<groupactions menu="Move all cards to...">
+				<groupaction menu="Owner's Discard pile" execute="graveyardAll" />
+			</groupactions>
+			<cardaction menu="Put card into Discard pile" shortcut="Del" execute="discard" />
+			<cardaction menu="Put card into Hand" shortcut="Ctrl+H" execute="tohand" />
+		</group>
+		<group name="Discard Pile" visibility="all" width="90" height="126" icon="Groups/discards.png">
+			<groupaction menu="Pick a random card" shortcut="Ctrl+R" execute="randomPick" />
+			<groupaction menu="Shuffle" shortcut="Ctrl+S" execute="shuffle" />
+			<groupaction menu="Shuffle into Deck" shortcut="Ctrl+Shift+S" execute="reshuffle" />
+			<groupactions menu="Move all cards to...">
+				<groupaction menu="Owner's Deck (Top)" execute="libraryTopAll" />
+				<groupaction menu="Owner's Deck (Bottom)" execute="libraryBottomAll" />
+			</groupactions>
+			<cardaction menu="Play card" default="true" execute="play" />
+			<cardaction menu="Return card to Hand" shortcut="Ctrl+H" execute="tohand" />
+			<cardaction menu="Put card into Deck" shortcut="Ctrl+D" execute="tolibrary" />
+		</group>
+	</player>
+	
+	<deck>
+		<section name="Main" group="Deck" />
+	</deck>
+</game>

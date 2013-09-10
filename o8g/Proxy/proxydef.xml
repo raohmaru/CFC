@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates>
+	<blocks>
+		<block type=""  id="" >
+			<location x=""  y="" />
+		</block>
+	</blocks>
+	<template src="" >
+		<matches>
+			<match name=""  value="" />
+		</matches>
+		<overlayblocks>
+
+		</overlayblocks>
+		<textblocks>
+
+		</textblocks>
+	</template>
+</templates>
