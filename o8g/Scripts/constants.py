@@ -31,8 +31,10 @@ phases = [
 
 # Highlight Colours
 AttackColor = "#ff0000"
+AttackNoFreezeColor = "#ff8000"
 BlockColor = "#ffff00"
 ActivatedColor = "#0000ff"
+DoesntUnfreezeColor = "#000000"
 
 # Markers
 HPMarker = ("HP", "b86fc644-d084-43d3-99d2-5b11457321cc")
@@ -49,3 +51,8 @@ loud = 'loud' # So that I don't have to use the quotes all the time in my functi
 silent = 'silent' # Same as above
 Xaxis = 'x'  # Same as above
 Yaxis = 'y'	 # Same as above
+
+debugVerbosity = 4 # At -1, means no debugging messages display
+
+Automations = {'Play'      : True, # If True, game will automatically trigger card effects when playing or double-clicking on cards. Requires specific preparation in the sets.
+               'Phase'     : True} # If True, game will automatically trigger effects happening at the start of the player's turn, from cards they control.

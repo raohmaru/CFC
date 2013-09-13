@@ -3,7 +3,7 @@
       xmlns:xsd="http://www.w3.org/2001/XMLSchema"
       name="Card Fighters' Clash"
       id="e3d56d9e-900d-49c6-b6ae-22cbb51be153"
-      octgnVersion="3.1.0.0"
+      octgnVersion="3.1.56.0"
       version="1.0.0.0"
       markersize="16"
       tags="capcom snk fighter"
@@ -18,9 +18,13 @@
 	<scripts>
 		<script src="Scripts/constants.py" />
 		<script src="Scripts/actions.py" />
-		<script src="Scripts/generic.py" />
-		<script src="Scripts/meta.py" />
+		<script src="Scripts/events.py" />
+		<script src="Scripts/utils.py" />
 	</scripts>
+	
+	<events>
+		<event name="OnMoveCard" action="onMoveCardEventHandler"/>
+	</events>
 	
 	<fonts>
 		<font src="fonts/SourceSansPro-Regular.ttf" size="12" target="context"/>
@@ -38,7 +42,7 @@
 	</documents>
 	
 	<globalvariables>
-		<!-- <globalvariable name="cattach" value="{}"/> -->
+		<globalvariable name="Backups" value="{}"/>
 	</globalvariables>
 	
 	<card back="Card/back.jpg" front="Card/front.jpg" width="90" height="126" cornerRadius="3">
@@ -66,36 +70,39 @@
 			<groupaction menu="Go to Main phase" shortcut="F3" execute="goToMain" />
 			<groupaction menu="Go to End phase" shortcut="F4" execute="goToEnd" />
 		</groupactions>
-		<groupactions menu="Random...">
-			<groupaction menu="Roll 6-sided die" shortcut="Ctrl+Alt+6" execute="roll6" />
-			<groupaction menu="Roll 10-sided die" shortcut="Ctrl+Alt+10" execute="roll10" />
-			<groupaction menu="Flip a coin" shortcut="Ctrl+Alt+2" execute="flipCoin" />
-		</groupactions>		
 		<groupactions menu="Game...">
 			<groupaction menu="Setup starting cards &amp; hand" shortcut="F12" execute="setup" />
+			<groupaction menu="Reset" execute="scoop" />
 			<groupaction menu="Download sets card images" execute="download_o8c" />
 			<groupaction menu="Debug" execute="TrialError" />
 		</groupactions>
-		<groupaction menu="Clean-up targets and combat" shortcut="Esc" execute="clearAll" />
-		<groupaction menu="Scoop" execute="scoop" />
+		<groupactions menu="Random...">
+			<groupaction menu="Flip a coin" shortcut="Ctrl+Alt+2" execute="flipCoin" />
+			<groupaction menu="Roll 6-sided die" shortcut="Ctrl+Alt+6" execute="roll6" />
+			<groupaction menu="Roll 10-sided die" shortcut="Ctrl+Alt+10" execute="roll10" />
+			<groupaction menu="Pick a random card" execute="randomPick" />
+		</groupactions>
+		<groupaction menu="Clean-up targets and highlights" shortcut="Esc" execute="clearAll" />
 		
 		<cardactions menu="Actions...">
 			<cardaction menu="Tap/Untap" shortcut="Ctrl+T" execute="tapUntap" default="true" />
-			<cardaction menu="Face up/down" shortcut="Ctrl+F" execute="morph" />
+			<cardaction menu="Face up/down" shortcut="Ctrl+F" execute="faceUpDown" />
 			<cardaction menu="Flip" shortcut="Ctrl+shift+F" execute="flip" />
 			<cardaction menu="Clone" shortcut="Ctrl+C" batchExecute="clone" />
 		</cardactions>
 		<cardactions menu="Combat...">
 			<cardaction menu="Attack" shortcut="Ctrl+A" execute="attack" />
-			<cardaction menu="Block" shortcut="Ctrl+B" execute="block" />
+			<cardaction menu="Attack without freezing" shortcut="Ctrl+Shift+A" execute="attackNoFreeze" />
+			<cardaction menu="Counter-attack" shortcut="Ctrl+B" execute="block" />
 		</cardactions>
 		<cardaction menu="Use ability" shortcut="Ctrl+Z" execute="activate" />
 		<cardaction menu="Freeze/Unfreeze" shortcut="Ctrl+X" execute="freeze" />
 		<cardactions menu="Move...">
 			<cardaction menu="KO" shortcut="Del" execute="destroy" />
-			<cardaction menu="Kill" shortcut="Ctrl+Del" execute="exile" />
-			<cardaction menu="Put into Deck" shortcut="Ctrl+D" execute="tolibrary" />
-			<cardaction menu="Return to Hand" shortcut="Ctrl+H" execute="tohand" />
+			<cardaction menu="Kill" shortcut="Ctrl+Del" execute="remove" />
+			<cardaction menu="Return to Hand" shortcut="Ctrl+H" execute="toHand" />
+			<cardaction menu="Put into Deck (Top)" shortcut="Ctrl+D" execute="toDeckTop" />
+			<cardaction menu="Put into Deck (Bottom)" shortcut="Ctrl+Shift+D" execute="toDeckBottom" />
 		</cardactions>
 		<cardaction menu="Clear" shortcut="esc" execute="clear" />		
 		<cardactions menu="Markers...">
@@ -114,38 +121,56 @@
 		<hand name="Hand" visibility="me" width="90" height="126" icon="Groups/hand.png">
 			<groupaction menu="Random discard" shortcut="Ctrl+Del" execute="randomDiscard" />
 			<groupactions menu="Move all cards to...">
-				<groupaction menu="Owner's Deck (Top)" execute="libraryTopAll" />
-				<groupaction menu="Owner's Deck (Bottom)" execute="libraryBottomAll" />
-				<groupaction menu="Owner's Discard pile" execute="graveyardAll" />
+				<groupaction menu="Deck (Top)" execute="toDeckTopAll" />
+				<groupaction menu="Deck (Bottom)" execute="toDeckBottomAll" />
+				<groupaction menu="Discard pile" execute="discardAll" />
 			</groupactions>
-			<cardaction menu="Play card" default="true" execute="playCard" />
-			<cardaction menu="Play as Backup" shortcut="Ctrl+B" execute="attach" />
+			<cardaction menu="Play card" default="true" shortcut="Ctrl+P" execute="play" />
+			<cardaction menu="Play as backup" shortcut="Ctrl+B" execute="backup" />
 			<cardaction menu="Discard card" shortcut="Del" execute="discard" />
-			<cardaction menu="Put into Deck" shortcut="Ctrl+D" execute="tolibrary" />
+			<cardaction menu="Put into Deck (Top)" shortcut="Ctrl+D" execute="toDeckTop" />
+			<cardaction menu="Put into Deck (Bottom)" shortcut="Ctrl+Shift+D" execute="toDeckBottom" />
 		</hand>
 		<group name="Deck" visibility="none" width="90" height="126" icon="Groups/deck.png">
-			<groupaction menu="Draw" shortcut="Ctrl+D" default ="true" execute="draw" />
+			<groupaction menu="Draw" shortcut="Ctrl+D" default="true" execute="draw" />
 			<groupaction menu="Draw X cards" shortcut="Ctrl+Shift+D" execute="drawMany" />
 			<groupaction menu="Trash X cards" execute="trash" />
 			<groupaction menu="Shuffle" shortcut="Ctrl+S" execute="shuffle" />
 			<groupaction menu="Reveal/Hide top card" shortcut="Ctrl+R" execute="revealtoplibrary" />
+			<groupaction menu="Pick a Random Card" shortcut="Ctrl+R" execute="randomPick" />
 			<groupactions menu="Move all cards to...">
-				<groupaction menu="Owner's Discard pile" execute="graveyardAll" />
+				<groupaction menu="Discard pile" execute="graveyardAll" />
 			</groupactions>
+			<cardaction menu="Play card" shortcut="Ctrl+P" execute="play" />
 			<cardaction menu="Put card into Discard pile" shortcut="Del" execute="discard" />
-			<cardaction menu="Put card into Hand" shortcut="Ctrl+H" execute="tohand" />
+			<cardaction menu="Put card into Hand" shortcut="Ctrl+H" execute="toHand" />
 		</group>
 		<group name="Discard Pile" visibility="all" width="90" height="126" icon="Groups/discards.png">
 			<groupaction menu="Pick a random card" shortcut="Ctrl+R" execute="randomPick" />
 			<groupaction menu="Shuffle" shortcut="Ctrl+S" execute="shuffle" />
 			<groupaction menu="Shuffle into Deck" shortcut="Ctrl+Shift+S" execute="reshuffle" />
 			<groupactions menu="Move all cards to...">
-				<groupaction menu="Owner's Deck (Top)" execute="libraryTopAll" />
-				<groupaction menu="Owner's Deck (Bottom)" execute="libraryBottomAll" />
+				<groupaction menu="Deck (Top)" execute="toDeckTopAll" />
+				<groupaction menu="Deck (Bottom)" execute="toDeckBottomAll" />
 			</groupactions>
-			<cardaction menu="Play card" default="true" execute="play" />
-			<cardaction menu="Return card to Hand" shortcut="Ctrl+H" execute="tohand" />
-			<cardaction menu="Put card into Deck" shortcut="Ctrl+D" execute="tolibrary" />
+			<cardaction menu="Play card" default="true" shortcut="Ctrl+P" execute="play" />
+			<cardaction menu="Return card to Hand" shortcut="Ctrl+H" execute="toHand" />
+			<cardaction menu="Put into Deck (Top)" shortcut="Ctrl+D" execute="toDeckTop" />
+			<cardaction menu="Put into Deck (Bottom)" shortcut="Ctrl+Shift+D" execute="toDeckBottom" />
+		</group>
+		<group name="Removed Zone" visibility="all" width="90" height="126" icon="Groups/removed.png" collapsed="True">
+			<groupaction menu="Shuffle" shortcut="Ctrl+S" execute="shuffle" />
+			<groupaction menu="Pick a Random Card" shortcut="Ctrl+R" execute="randomPick" />
+			<groupactions menu="Move All Cards To...">
+				<groupaction menu="Library (Top)" execute="toDeckTopAll" />
+				<groupaction menu="Library (Bottom)" execute="toDeckBottomAll" />
+				<groupaction menu="Discard pile" execute="graveyardAll" />
+			</groupactions>
+			<cardaction menu="Play Card" default="True" shortcut="Ctrl+P" execute="play" />
+			<cardaction menu="Return card to Hand" shortcut="Ctrl+H" execute="toHand" />
+			<cardaction menu="Put card into Discard pile" shortcut="Del" execute="discard" />
+			<cardaction menu="Put into Deck (Top)" shortcut="Ctrl+D" execute="toDeckTop" />
+			<cardaction menu="Put into Deck (Bottom)" shortcut="Ctrl+Shift+D" execute="toDeckBottom" />
 		</group>
 	</player>
 	

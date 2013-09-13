@@ -48,6 +48,14 @@ def goToActivate(group = table, x = 0, y = 0):
    mute()
    phaseIdx = 1
    showCurrentPhase()
+   
+   # Unfreeze (untap) characters in the player's ring
+   myCards = (card for card in table
+      if card.controller == me
+      and card.highlight != DoesntUnfreezeColor)
+   for card in myCards:
+      card.orientation &= ~Rot90
+      card.highlight = None
 
 def goToDraw(group = table, x = 0, y = 0):
    mute()
@@ -68,6 +76,14 @@ def goToEnd(group = table, x = 0, y = 0):
    mute()
    phaseIdx = 5
    showCurrentPhase()
+   
+   # Freeze (tap) characters in the player's ring
+   myCards = (card for card in table
+      if card.controller == me
+      and card.highlight == AttackColor)
+   for card in myCards:
+      card.orientation = Rot90
+      card.highlight = None
 
 #---------------------------------------------------------------------------
 # Table group actions
@@ -76,29 +92,207 @@ def goToEnd(group = table, x = 0, y = 0):
 def setup(group,x=0,y=0):  # This function is usually the first one the player does
    debugNotify(">>> setup()") #Debug
    mute()
-   if table.isTwoSided():
-      if not confirm("This game is NOT designed to be played on a two-sided table. Things will break!! Please start a new game and unckeck the appropriate button. Are you sure you want to continue?"): return
    resetAll()
    chooseSide() # The classic place where the players choose their side.
    me.Deck.shuffle()
-   refill() # We fill the player's play hand to their hand size (usually 5)
+   refill() # We fill the player's play hand to their hand size
    notify("Setup for player {} completed.".format(me,))
    debugNotify("<<< setup()") #Debug
 
-def discard(card, x = 0, y = 0):  # Discard a card.
-   debugNotify(">>> discard()") #Debug
+def scoop(group, x = 0, y = 0):
    mute()
-   card.moveTo(me.piles['Discard Pile'])
-   notify("{} has discarded {}.".format(me, card))
-   debugNotify("<<< discard()") #Debug
+   if not confirm("Are you sure you want to reset?"):
+      return
+   me.HP = 30
+   me.SP = 0
+   for card in me.Deck:
+      card.moveTo(card.owner.Deck)
+   myCards = (card for card in table
+      if card.controller == me)
+   for card in myCards:
+      card.moveTo(card.owner.Deck)
+   discards = me.piles['Discard Pile']
+   for card in discards:
+      card.moveTo(card.owner.Deck)
+   for card in me.hand:
+      card.moveTo(card.owner.Deck)
+   notify("{} resets.".format(me))
 
-def doesNotUnboot(card, x = 0, y = 0):  # Mark a card as "Does not unboot" or unmark it. We use a card highlight to do this.
-   if card.highlight == DoesntUnbootColor:  # If it's already marked, remove highlight from it and inform.
-      card.highlight = None
-      notify("{}'s {} can now unboot during Nightfall.".format(me, card))
+def download_o8c(group,x=0,y=0):
+   openUrl("http://raohmaru.com/pub/cfc/sets/cfc-sets-bundle.o8c")
+
+def flipCoin(group, x = 0, y = 0):
+   mute()
+   n = rnd(1, 2)
+   if n == 1:
+      notify("{} flips heads.".format(me))
    else:
-      card.highlight = DoesntUnbootColor # Otherwise highlight it and inform.
-      notify("{}'s {} will not unboot during Nightfall.".format(me, card))
+      notify("{} flips tails.".format(me))
+
+def roll6(group, x = 0, y = 0):
+   mute()
+   rollDie(6)
+
+def roll10(group, x = 0, y = 0):
+   mute()
+   rollDie(10)
+
+def rollDie(num):
+   n = rnd(1, num)
+   notify("{} rolls {} on a {}-sided die.".format(me, n, num))
+   
+def randomPick(group, x = 0, y = 0):
+    mute()
+    card = group.random()
+    if card == None:
+        return
+    card.select()
+    card.target(True)
+    if group == table:
+        notify("{} randomly selects {}'s {} on the ring.".format(me, card.controller, card))
+    else:
+        notify("{} randomly selects {} from their {}.".format(me, card, group.name))
+   
+def clearAll(group, x = 0, y = 0):
+   notify("{} clears all targets and highlights.".format(me))
+   for card in group:
+      card.target(False)
+      if card.controller == me:
+         card.highlight = None
+
+#---------------------------------------------------------------------------
+# Table card actions
+#---------------------------------------------------------------------------
+
+def tapUntap(card, x = 0, y = 0, count = None):
+   mute()
+   card.orientation ^= Rot90
+   if card.orientation & Rot90 == Rot90:
+      notify('{} taps {}'.format(me, card))
+   else:
+      notify('{} untaps {}'.format(me, card))
+
+def faceUpDown(card, x = 0, y = 0):
+   mute()
+   if card.isFaceUp == True:
+      card.isFaceUp = False
+      notify("{} faces down {}.".format(me, card))
+   else:
+      card.isFaceUp = True
+      notify("{} faces up {}.".format(me, card))
+
+def flip(card, x = 0, y = 0):
+   mute()
+   if card.orientation & Rot180 == Rot180:
+      notify("{} unflips {}.".format(me, card))
+   else:
+      notify("{} flips {}.".format(me, card))
+   card.orientation ^= Rot180
+
+def clone(cards, x = 0, y = 0):
+   for card in cards:
+      table.create(card.model, x, y, 1)
+      x, y = table.offset(x, y)
+
+def attack(card, x = 0, y = 0):
+   mute()
+   card.highlight = AttackColor
+   notify('{} attacks with {}'.format(me, card))
+
+def attackNoFreeze(card, x = 0, y = 0):
+   mute()
+   card.highlight = AttackNoFreezeColor
+   notify('{} attacks with {}'.format(me, card))
+	
+def block(card, x = 0, y = 0):
+    mute()
+    card.highlight = BlockColor
+    notify('{} counter-attacks with {}'.format(me, card))
+
+def activate(card, x = 0, y = 0):
+	mute()
+	card.highlight = ActivatedColor
+	notify("{} uses {}'s ability.".format(me, card))
+
+def freeze(card, x = 0, y = 0, count = None):
+   mute()
+   card.orientation ^= Rot90
+   if card.orientation & Rot90 == Rot90:
+      notify('{} freezes {}'.format(me, card))
+   else:
+      notify('{} unfreezes {}'.format(me, card))
+   if card.highlight == AttackColor or card.highlight == ActivatedColor:
+      card.highlight = None
+      
+def clear(card, x = 0, y = 0):
+   notify("{} clears {}.".format(me, card))
+   card.highlight = None
+   card.target(False)
+
+#---------------------------------------------------------------------------
+# Movement actions
+#---------------------------------------------------------------------------
+	
+def destroy(card, x = 0, y = 0):
+	mute()
+	src = card.group
+	fromText = " from the ring" if src == table else " from their " + src.name
+	card.moveTo(me.piles['Discard Pile'])
+	notify("{} KOs {}{}.".format(me, card, fromText))
+	
+def remove(card, x = 0, y = 0):
+	mute()
+	src = card.group
+	fromText = " from the ring" if src == table else " from their " + src.name
+	card.moveTo(me.piles['Removed Zone'])
+	notify("{} kills {}{}.".format(me, card, fromText))
+
+def toHand(card, x = 0, y = 0):
+   mute()
+   src = card.group
+   fromText = " from the ring" if src == table else " from their " + src.name
+   cardname = card.name
+   if card.isFaceUp == False:
+      if confirm("Reveal to all players?"):
+         card.isFaceUp = True
+         rnd(10,100)  # This delays the next action until all animation is done.
+      else:
+         cardname = "a card"
+   card.moveTo(me.hand)
+   notify("{} returns {} to their hand{}.".format(me, cardname, fromText))
+
+def toDeckTop(card, x = 0, y = 0):
+   mute()
+   src = card.group
+   fromText = " from the ring" if src == table else " from their " + src.name
+   card.moveTo(me.Deck)
+   notify("{} puts {}{} on the top of their Deck.".format(me, card, fromText))
+
+def toDeckBottom(card, x = 0, y = 0):
+   mute()
+   src = card.group
+   fromText = " from the ring" if src == table else " from their " + src.name
+   card.moveToBottom(me.Deck)
+   notify("{} puts {}{} on the bottom of their Deck.".format(me, card, fromText))
+
+def toDeckTopAll(group, x = 0, y = 0):
+   mute()
+   for card in group:
+      card.moveTo(me.Deck)
+   notify("{} moves all cards from their {} to top of their Deck.".format(me, group.name))
+
+def toDeckBottomAll(group, x = 0, y = 0):
+   mute()
+   for card in group:
+      card.moveToBottom(me.Deck)
+   notify("{} moves all cards from their {} to bottom of their Deck.".format(me, group.name))
+
+def discardAll(group, x = 0, y = 0):
+   mute()
+   discards = me.piles['Discard Pile']
+   for card in group:
+      card.moveTo(discards)
+   notify("{} moves all cards from their {} to their Discard Pile.".format(me, group.name))
 
 #---------------------------------------------------------------------------
 # Marker functions
@@ -125,7 +319,11 @@ def addMarker(cards, x = 0, y = 0):  # A simple function to manually add any of 
    if quantity == 0: return
    for card in cards:  # Then go through their cards and add those markers to each.
       card.markers[marker] += quantity
-      notify("{} adds {} {} counter to {}.".format(me, quantity, marker[0], card))	
+      notify("{} adds {} {} counter to {}.".format(me, quantity, marker[0], card))
+
+def changeBP(cards, x = 0, y = 0):
+   mute()
+   changeMarker(cards, HPMarker, "Set character BP to:")
 
 def changeMarker(cards, marker, question):
    n = 0
@@ -141,20 +339,42 @@ def changeMarker(cards, marker, question):
       if dif >= 0: dif = "+" + str(dif)   
       notify("{} sets {}'s {} to {}({}).".format(me, c, marker[0], count, dif))
 
-def changeBP(cards, x = 0, y = 0):
-   mute()
-   changeMarker(cards, HPMarker, "Set character BP to:")
-
 #---------------------------------------------------------------------------
-# Hand and Deck actions
+# Hand actions
 #---------------------------------------------------------------------------
 
-def playCard(card):  # This is the function to play cards from your hand. It's one of the core functions.
+def play(card):  # This is the function to play cards from your hand. It's one of the core functions.
    mute()
    chooseSide()
-   src = card.group
    card.moveToTable(0, 0)
-   notify("{} plays {} from their {}.".format(me, card, src.name))
+   notify("{} plays {} from their {}.".format(me, card, card.group.name))
+
+def backup(card, x = 0, y = 0):  # Play a card as backup attached to a character in the player's ring
+   mute()
+   target = [card for card in table if card.targetedBy]
+   if len(targetcount) >= 1:
+      attach(card, target[0])
+      card.moveToTable(0, 0)
+      notify("{} backups {} with {} from their {}.".format(me, target[0], card, card.group.name))
+
+def discard(card, x = 0, y = 0):  # Discard a card from your hand.
+   mute()
+   card.moveTo(me.piles['Discard Pile'])
+   notify("{} has discarded {}.".format(me, card))
+
+def randomDiscard(group, x = 0, y = 0):
+    mute()
+    card = group.random()
+    if card == None:
+        return
+    card.isFaceUp = True
+    rnd(10,100)  # This delays the next action until all animation is done.
+    card.moveTo(me.piles['Discard Pile'])
+    notify("{} randomly discards {}.".format(me, card))
+
+#---------------------------------------------------------------------------
+# Piles actions
+#---------------------------------------------------------------------------
 
 def shuffle(group):  # A simple function to shuffle piles
    group.shuffle()
@@ -179,7 +399,7 @@ def drawMany(group, count = None, notification = 'loud'):  # This function draws
    mute()
    if count == None: count = askInteger("Draw how many cards?", 5) # Ask the player how many cards they want.
    for i in range(0, count):
-      if len(group) > 0:  # If the deck is noy empty...
+      if len(group) > 0:  # If the deck is not empty...
          group.top().moveTo(me.hand)  # ...then move them one by one into their play hand.
    if notification == loud : notify("{} draws {} cards.".format(me, count))
 
@@ -191,8 +411,9 @@ def trash(group = me.Deck, x = 0, y = 0, silent = False):  # Draws one card from
    count = askInteger("Trash how many cards?", 1)
    if count == None:
       return
+   discards = me.piles['Discard Pile']
    for card in group.top(count):
-      card.moveTo(me.piles['Discard Pile'])
+      card.moveTo(discards)
    rnd(1, 100) # Wait a bit more, as in multiplayer games, things are slower.
    if not silent: notify("{} trash top {} cards from {}.".format(me, count, group.name))
    
@@ -206,11 +427,6 @@ def refill(group = me.hand):  # Refill the player's hand to its hand size.
    global handsize
    playhand = len(me.hand) # count how many cards there are currently there.
    if playhand < handsize: drawMany(me.Deck, handsize - playhand, silent) # If there's less cards than the handsize, draw from the deck until it's full.
-
-def discard(card, x = 0, y = 0):  # Discard a card from your hand.
-   mute()
-   card.moveTo(me.piles['Discard Pile'])
-   notify("{} has discarded {}.".format(me, card))
 
 def randomDiscard(group):  # Discard a card from your hand randomly.
    mute()
