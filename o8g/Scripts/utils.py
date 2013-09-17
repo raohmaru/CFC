@@ -21,23 +21,6 @@ import re, time
 # General functions
 #---------------------------------------------------------------------------
 
-def chooseSide(): # Called from many functions to check if the player has chosen a side for this game.
-   mute()
-   global playerside, playeraxis
-   if playerside == None:  # Has the player selected a side yet? If not, then...
-      if Table.isTwoSided():
-         playeraxis = Xaxis
-         if me.hasInvertedTable():
-            playerside = -1
-         else:
-            playerside = 1
-      else:
-         playeraxis = Xaxis
-         if confirm("Will you play on the bottom side?"): # Ask which side they want
-            playerside = 1 # This is used to swap between the two halves of the X axis of the play field. Positive is on the right.
-         else:
-            playerside = -1 # Negative is on the left.
-
 def num(s):
 # This function reads the value of a card and returns an integer. For some reason integer values of cards are not processed correctly
 # see bug 373 https://octgn.16bugs.com/projects/3602/bugs/188805
@@ -53,18 +36,28 @@ def delayed_whisper(text): # Because whispers for some reason execute before not
    rnd(1,10)
    whisper(text)
 
-def findMarker(card, markerDesc): # Goes through the markers on the card and looks if one exist with a specific description
-   if debugVerbosity >= 1: notify(">>> findMarker(){}".format(extraASDebug())) #Debug
-   foundKey = None
-   if markerDesc in mdict: markerDesc = mdict[markerDesc][0] # If the marker description is the code of a known marker, then we need to grab the actual name of that.
-   for key in card.markers:
-      if debugVerbosity >= 3: notify("### Key: {}\nmarkerDesc: {}".format(key[0],markerDesc)) # Debug
-      if re.search(r'{}'.format(markerDesc),key[0]) or markerDesc == key[0]:
-         foundKey = key
-         if debugVerbosity >= 2: notify("### Found {} on {}".format(key[0],card))
-         break
-   if debugVerbosity >= 3: notify("<<< findMarker() by returning: {}".format(foundKey))
-   return foundKey
+def chooseSide(): # Called from many functions to check if the player has chosen a side for this game.
+   mute()
+   global playerside, playeraxis
+   if playerside == None:  # Has the player selected a side yet? If not, then...
+      if Table.isTwoSided():
+         playeraxis = Yaxis
+         if me.hasInvertedTable():
+            playerside = -1
+         else:
+            playerside = 1
+      else:
+         playeraxis = Yaxis
+         if confirm("Will you play on the bottom side?"): # Ask which side they want
+            playerside = 1 # This is used to swap between the two halves of the X axis of the play field. Positive is on the right.
+         else:
+            playerside = -1 # Negative is on the left.
+
+def setHandSize(group):  # A function to modify a player's hand size.
+   global handsize
+   handsize = askInteger("What is your current hand size?", handsize)
+   if handsize == None: handsize = 5
+   notify("{} sets their hand size to {}".format(me, handsize))
 
 def resetAll(): # Clears all the global variables in order to start a new game.
    # Import all our global variables and reset them.
@@ -107,7 +100,7 @@ def placeCard(card, type = None, dudecount = 0):
    if playeraxis == Xaxis:
       if type == 'Character':
          card.moveToTable(homeDistance(card) + cardDistance(card) + playerside * cwidth(card), 0)
-      else: card.moveToTable(0,0
+      else: card.moveToTable(0,0)
    else: card.moveToTable(0,0)
 
 def homeDistance(card):
@@ -132,6 +125,38 @@ def cardDistance(card):
 
 
 #---------------------------------------------------------------------------
+# Markers functions
+#---------------------------------------------------------------------------
+
+def findMarker(card, markerDesc): # Goes through the markers on the card and looks if one exist with a specific description
+   if debugVerbosity >= 1: notify(">>> findMarker(){}".format(extraASDebug())) #Debug
+   foundKey = None
+   if markerDesc in mdict: markerDesc = mdict[markerDesc][0] # If the marker description is the code of a known marker, then we need to grab the actual name of that.
+   for key in card.markers:
+      if debugVerbosity >= 3: notify("### Key: {}\nmarkerDesc: {}".format(key[0],markerDesc)) # Debug
+      if re.search(r'{}'.format(markerDesc),key[0]) or markerDesc == key[0]:
+         foundKey = key
+         if debugVerbosity >= 2: notify("### Found {} on {}".format(key[0],card))
+         break
+   if debugVerbosity >= 3: notify("<<< findMarker() by returning: {}".format(foundKey))
+   return foundKey
+
+def changeMarker(cards, marker, question):
+   n = 0
+   for c in cards:
+      if c.markers[marker] > n:
+	     n = c.markers[marker]   
+   count = askInteger(question, n)
+   if count == None: return
+   for c in cards:
+      n = c.markers[marker]
+      c.markers[marker] = count
+      dif = count-n
+      if dif >= 0: dif = "+" + str(dif)   
+      notify("{} sets {}'s {} to {}({}).".format(me, c, marker[0], count, dif))
+
+
+#---------------------------------------------------------------------------
 # Counter Manipulation
 #---------------------------------------------------------------------------
 
@@ -151,7 +176,7 @@ def payCost(count = 1, notification = silent): # Pay an SP cost. However we also
          notify("{} was supposed to pay {} SP but only has {}. They'll need to reduce the cost by {} with card effects.".format(me, count, me.SP, count - me.SP))
          me.SP -= num(count)
       else: me.SP -= num(count)
-   else: # Otherwise, just take the money out and inform that we did if we're "loud".
+   else: # Otherwise, just take the SP out and inform that we did if we're "loud".
       me.SP -= num(count)
       if notification == loud: notify("{} has paid {} SP. New total is {}.".format(me, count, me.SP))
 
@@ -169,6 +194,7 @@ def attach(card, target):
    debugNotify("<<< attachCard()", 3)
    
 def dettach(card):
+   debugNotify(">>> dettach(){}".format(extraASDebug())) #Debug
    mute()
    backups = eval(getGlobalVariable('Backups'))
    card.target(False)
@@ -184,26 +210,26 @@ def dettach(card):
    else:
       return
    setGlobalVariable('Backups', str(backups))
+   debugNotify("<<< dettach()")
 
 def clearAttachLinks(card):
 # This function takes care to discard any attachments of a card that left play
 # It also clear the card from the attach dictionary, if it was itself attached to another card
    debugNotify(">>> clearAttachLinks()") #Debug
    backups = eval(getGlobalVariable('Backups'))
-   attachements = len([att_id for att_id in backups if backups[att_id] == card._id])
-   if attachements >= 1:
-      backupsDict = dict(backups)
-      for attachmentID in backupsDict:
-         if backupsDict[attachmentID] == card._id:
-            if Card(attachmentID) in table:
+   attachements = [att_id for att_id in backups if backups[att_id] == card._id]
+   if len(attachements) >= 1:
+      for att_id in attachements:
+         if attachements[att_id] == card._id:
+            if Card(att_id) in table:
                debugNotify("Attachment exists. Trying to remove.", 2)
-               discard(Card(attachmentID))
-            del backups[attachmentID]
+               discard(Card(att_id))
+            del backups[att_id]
    debugNotify("Checking if the card is attached to unlink.", 2)
    if backups.has_key(card._id):
       del backups[card._id] # If the card was an attachment, delete the link
    setGlobalVariable('Backups', str(backups))
-   debugNotify("<<< clearAttachLinks()", 3) #Debug
+   debugNotify("<<< clearAttachLinks()") #Debug
 
 
 #------------------------------------------------------------------------------

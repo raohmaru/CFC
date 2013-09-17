@@ -24,6 +24,7 @@
 	
 	<events>
 		<event name="OnMoveCard" action="onMoveCardEventHandler"/>
+		<event name="OnEndTurn" action="onEndTurnEventHandler" />
 	</events>
 	
 	<fonts>
@@ -32,8 +33,8 @@
 		<font src="fonts/SourceSansPro-Regular.ttf" size="12" target="deckeditor"/>
 	</fonts>
 	
-	<!-- <proxygen definitionsrc="Proxy/proxydef.xml">
-	</proxygen> -->
+	<proxygen definitionsrc="Proxy/proxydef.xml">
+	</proxygen>
 	
 	<documents>
 		<!-- <document name="Rulebook" icon="Documents/Manual.png" src="Documents/DoomtownRules.htm" />
@@ -45,14 +46,13 @@
 		<globalvariable name="Backups" value="{}"/>
 	</globalvariables>
 	
-	<card back="Card/back.jpg" front="Card/front.jpg" width="90" height="126" cornerRadius="3">
+	<card back="Card/back.jpg" front="Card/front.png" width="90" height="126" cornerRadius="3">
 		<property name="Publisher" type="String" ignoreText="True" textKind="Enum" />
 		<property name="Team" type="String" ignoreText="True" textKind="Enum" />
 		<property name="Type" type="String" textKind="Enum" />
 		<property name="Subtype" type="String" textKind="Tokens" />
 		<property name="Rarity" type="String" ignoreText="True" textKind="Enum" />
 		<property name="Rules" type="String" />
-		<property name="Flavor" type="String" ignoreText="True" />
 		<property name="BP" type="String" textKind="Enum" />
 		<property name="SP" type="String" textKind="Enum" />
 		<property name="Backup 1" type="String" textKind="Enum" />
@@ -62,7 +62,7 @@
 		<property name="Illustrator" type="String" ignoreText="True" />
 	</card>
 	
-	<table name="Table" visibility="undefined" ordered="False" width="1250" height="750" background="Background/background.jpg" backgroundStyle="uniformToFill" board="Background/board.png" boardPosition="-7,-27,76,190" >
+	<table name="Table" visibility="undefined" ordered="False" width="1250" height="750" background="Background/background.jpg" backgroundStyle="uniformToFill" board="Background/ring.png" boardPosition="-239,-342,478,684" >
 		<groupaction menu="Next phase" shortcut="Ctrl+Enter" execute="nextPhase" />
 		<groupactions menu="Phases...">
 			<groupaction menu="Go to Activate phase" shortcut="F1" execute="goToActivate" />
@@ -85,7 +85,7 @@
 		<groupaction menu="Clean-up targets and highlights" shortcut="Esc" execute="clearAll" />
 		
 		<cardactions menu="Actions...">
-			<cardaction menu="Tap/Untap" shortcut="Ctrl+T" execute="tapUntap" default="true" />
+			<cardaction menu="Tap/Untap" shortcut="Ctrl+T" execute="tapUntap" default="True" />
 			<cardaction menu="Face up/down" shortcut="Ctrl+F" execute="faceUpDown" />
 			<cardaction menu="Flip" shortcut="Ctrl+shift+F" execute="flip" />
 			<cardaction menu="Clone" shortcut="Ctrl+C" batchExecute="clone" />
@@ -97,6 +97,7 @@
 		</cardactions>
 		<cardaction menu="Use ability" shortcut="Ctrl+Z" execute="activate" />
 		<cardaction menu="Freeze/Unfreeze" shortcut="Ctrl+X" execute="freeze" />
+		<cardaction menu="Don't unfreeze during Activate phase" shortcut="Ctrl+Shift+X" execute="doesNotUnfreeze" />
 		<cardactions menu="Move...">
 			<cardaction menu="KO" shortcut="Del" execute="destroy" />
 			<cardaction menu="Kill" shortcut="Ctrl+Del" execute="remove" />
@@ -125,21 +126,21 @@
 				<groupaction menu="Deck (Bottom)" execute="toDeckBottomAll" />
 				<groupaction menu="Discard pile" execute="discardAll" />
 			</groupactions>
-			<cardaction menu="Play card" default="true" shortcut="Ctrl+P" execute="play" />
+			<cardaction menu="Play card" default="True" shortcut="Ctrl+P" execute="play" />
 			<cardaction menu="Play as backup" shortcut="Ctrl+B" execute="backup" />
 			<cardaction menu="Discard card" shortcut="Del" execute="discard" />
 			<cardaction menu="Put into Deck (Top)" shortcut="Ctrl+D" execute="toDeckTop" />
 			<cardaction menu="Put into Deck (Bottom)" shortcut="Ctrl+Shift+D" execute="toDeckBottom" />
 		</hand>
 		<group name="Deck" visibility="none" width="90" height="126" icon="Groups/deck.png">
-			<groupaction menu="Draw" shortcut="Ctrl+D" default="true" execute="draw" />
+			<groupaction menu="Draw" shortcut="Ctrl+D" default="True" execute="draw" />
 			<groupaction menu="Draw X cards" shortcut="Ctrl+Shift+D" execute="drawMany" />
 			<groupaction menu="Trash X cards" execute="trash" />
 			<groupaction menu="Shuffle" shortcut="Ctrl+S" execute="shuffle" />
-			<groupaction menu="Reveal/Hide top card" shortcut="Ctrl+R" execute="revealtoplibrary" />
+			<groupaction menu="Reveal/Hide top card" shortcut="Ctrl+R" execute="revealTopDeck" />
 			<groupaction menu="Pick a Random Card" shortcut="Ctrl+R" execute="randomPick" />
 			<groupactions menu="Move all cards to...">
-				<groupaction menu="Discard pile" execute="graveyardAll" />
+				<groupaction menu="Discard pile" execute="discardAll" />
 			</groupactions>
 			<cardaction menu="Play card" shortcut="Ctrl+P" execute="play" />
 			<cardaction menu="Put card into Discard pile" shortcut="Del" execute="discard" />
@@ -149,22 +150,23 @@
 			<groupaction menu="Pick a random card" shortcut="Ctrl+R" execute="randomPick" />
 			<groupaction menu="Shuffle" shortcut="Ctrl+S" execute="shuffle" />
 			<groupaction menu="Shuffle into Deck" shortcut="Ctrl+Shift+S" execute="reshuffle" />
+			<groupaction menu="Swap with Deck" shortcut="Ctrl+Shift+Alt+S" execute="swapWithDeck" />
 			<groupactions menu="Move all cards to...">
 				<groupaction menu="Deck (Top)" execute="toDeckTopAll" />
 				<groupaction menu="Deck (Bottom)" execute="toDeckBottomAll" />
 			</groupactions>
-			<cardaction menu="Play card" default="true" shortcut="Ctrl+P" execute="play" />
+			<cardaction menu="Play card" default="True" shortcut="Ctrl+P" execute="play" />
 			<cardaction menu="Return card to Hand" shortcut="Ctrl+H" execute="toHand" />
 			<cardaction menu="Put into Deck (Top)" shortcut="Ctrl+D" execute="toDeckTop" />
 			<cardaction menu="Put into Deck (Bottom)" shortcut="Ctrl+Shift+D" execute="toDeckBottom" />
 		</group>
-		<group name="Removed Zone" visibility="all" width="90" height="126" icon="Groups/removed.png" collapsed="True">
+		<group name="Kill Zone" visibility="all" width="90" height="126" icon="Groups/removed.png" collapsed="True">
 			<groupaction menu="Shuffle" shortcut="Ctrl+S" execute="shuffle" />
 			<groupaction menu="Pick a Random Card" shortcut="Ctrl+R" execute="randomPick" />
 			<groupactions menu="Move All Cards To...">
 				<groupaction menu="Library (Top)" execute="toDeckTopAll" />
 				<groupaction menu="Library (Bottom)" execute="toDeckBottomAll" />
-				<groupaction menu="Discard pile" execute="graveyardAll" />
+				<groupaction menu="Discard pile" execute="discardAll" />
 			</groupactions>
 			<cardaction menu="Play Card" default="True" shortcut="Ctrl+P" execute="play" />
 			<cardaction menu="Return card to Hand" shortcut="Ctrl+H" execute="toHand" />

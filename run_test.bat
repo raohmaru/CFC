@@ -1,0 +1,1 @@
+"D:\Mis documentos\Octgn\OCTGN\o8build.exe" -v -d=o8g

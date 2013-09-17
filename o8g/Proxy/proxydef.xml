@@ -1,19 +1,656 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <templates>
+
 	<blocks>
-		<block type=""  id="" >
-			<location x=""  y="" />
+		<!-- Overlay blocks -->
+		<block type="overlay" id="blank" src="Proxy/blank.png">
+			<location x="0" y="0" />
+		</block>
+		<block type="overlay" id="bp_box" src="Proxy/Overlays/bp_box.png">
+			<location x="322" y="36" />
+		</block>
+		<block type="overlay" id="sp_box" src="Proxy/Overlays/sp_box.png">
+			<location x="382" y="87" />
+		</block>
+		<!-- Publisher -->
+		<block type="overlay" id="pub_capcom" src="Proxy/Logos/Capcom.png">
+			<location x="366" y="330" />
+		</block>
+		<block type="overlay" id="pub_snk" src="Proxy/Logos/SNK.png">
+			<location x="366" y="330" />
+		</block>
+		<!-- Team -->
+		<block type="overlay" id="team_art_of_fighting" src="Proxy/Logos/Art_of_Fighting.png">
+			<location x="348" y="366" />
+		</block>
+		<block type="overlay" id="team_breath_of_fire" src="Proxy/Logos/Breath_of_Fire.png">
+			<location x="348" y="366" />
+		</block>
+		<block type="overlay" id="team_buriki-one" src="Proxy/Logos/Buriki-One.png">
+			<location x="348" y="366" />
+		</block>
+		<block type="overlay" id="team_captain_commando" src="Proxy/Logos/Captain_Commando.png">
+			<location x="348" y="366" />
+		</block>
+		<block type="overlay" id="team_cvs2" src="Proxy/Logos/CVS2.png">
+			<location x="348" y="366" />
+		</block>
+		<block type="overlay" id="team_cyberbots" src="Proxy/Logos/Cyberbots.png">
+			<location x="348" y="366" />
+		</block>
+		<block type="overlay" id="team_dino_crisis" src="Proxy/Logos/Dino_Crisis.png">
+			<location x="348" y="366" />
+		</block>
+		<block type="overlay" id="team_fatal_fury" src="Proxy/Logos/Fatal_Fury.png">
+			<location x="348" y="366" />
+		</block>
+		<block type="overlay" id="team_final_fight" src="Proxy/Logos/Final_Fight.png">
+			<location x="348" y="366" />
+		</block>
+		<block type="overlay" id="team_ghost_n_goblins" src="Proxy/Logos/Ghost_N_Goblins.png">
+			<location x="348" y="366" />
+		</block>
+		<block type="overlay" id="team_kizuna_encounter" src="Proxy/Logos/Kizuna_Encounter.png">
+			<location x="348" y="366" />
+		</block>
+		<block type="overlay" id="team_kof" src="Proxy/Logos/KOF.png">
+			<location x="348" y="366" />
+		</block>
+		<block type="overlay" id="team_last_blade" src="Proxy/Logos/Last_Blade.png">
+			<location x="348" y="366" />
+		</block>
+		<block type="overlay" id="team_legendary_wings" src="Proxy/Logos/Legendary_Wings.png">
+			<location x="348" y="366" />
+		</block>
+		<block type="overlay" id="team_marvel_vs" src="Proxy/Logos/Marvel_VS.png">
+			<location x="348" y="366" />
+		</block>
+		<block type="overlay" id="team_megaman" src="Proxy/Logos/Megaman.png">
+			<location x="348" y="366" />
+		</block>
+		<block type="overlay" id="team_metal_slug" src="Proxy/Logos/Metal_Slug.png">
+			<location x="348" y="366" />
+		</block>
+		<block type="overlay" id="team_onimusha" src="Proxy/Logos/Onimusha.png">
+			<location x="348" y="366" />
+		</block>
+		<block type="overlay" id="team_power_stone" src="Proxy/Logos/Power_Stone.png">
+			<location x="348" y="366" />
+		</block>
+		<block type="overlay" id="team_quiz_nanairo_dreams" src="Proxy/Logos/Quiz_Nanairo_Dreams.png">
+			<location x="348" y="366" />
+		</block>
+		<block type="overlay" id="team_resident_evil" src="Proxy/Logos/Resident_Evil.png">
+			<location x="348" y="366" />
+		</block>
+		<block type="overlay" id="team_rival_school" src="Proxy/Logos/Rival_School.png">
+			<location x="348" y="366" />
+		</block>
+		<block type="overlay" id="team_samurai_shodown" src="Proxy/Logos/Samurai_Shodown.png">
+			<location x="348" y="366" />
+		</block>
+		<block type="overlay" id="team_star_gladiator" src="Proxy/Logos/Star_Gladiator.png">
+			<location x="348" y="366" />
+		</block>
+		<block type="overlay" id="team_street_fighter" src="Proxy/Logos/Street_Fighter.png">
+			<location x="348" y="366" />
+		</block>
+		<block type="overlay" id="team_strider" src="Proxy/Logos/Strider.png">
+			<location x="348" y="366" />
+		</block>
+		<block type="overlay" id="team_svc" src="Proxy/Logos/SVC.png">
+			<location x="348" y="366" />
+		</block>
+		<block type="overlay" id="team_tech_romancer" src="Proxy/Logos/Tech_Romancer.png">
+			<location x="348" y="366" />
+		</block>
+		<block type="overlay" id="team_top_hunter" src="Proxy/Logos/Top_Hunter.png">
+			<location x="348" y="366" />
+		</block>
+		<block type="overlay" id="team_vampire" src="Proxy/Logos/Vampire.png">
+			<location x="348" y="366" />
+		</block>
+		<block type="overlay" id="team_warzard" src="Proxy/Logos/Warzard.png">
+			<location x="348" y="366" />
+		</block>
+		<!-- Subtype -->
+		<block type="overlay" id="subtype_agent" src="Proxy/Subtypes/Agent.png">
+			<location x="310" y="446" />
+		</block>
+		<block type="overlay" id="subtype_aikido" src="Proxy/Subtypes/Aikido.png">
+			<location x="310" y="446" />
+		</block>
+		<block type="overlay" id="subtype_alien" src="Proxy/Subtypes/Alien.png">
+			<location x="310" y="446" />
+		</block>
+		<block type="overlay" id="subtype_android" src="Proxy/Subtypes/Android.png">
+			<location x="310" y="446" />
+		</block>
+		<block type="overlay" id="subtype_artist" src="Proxy/Subtypes/Artist.png">
+			<location x="310" y="446" />
+		</block>
+		<block type="overlay" id="subtype_assassin" src="Proxy/Subtypes/Assassin.png">
+			<location x="310" y="446" />
+		</block>
+		<block type="overlay" id="subtype_avatar" src="Proxy/Subtypes/Avatar.png">
+			<location x="310" y="446" />
+		</block>
+		<block type="overlay" id="subtype_beast" src="Proxy/Subtypes/Beast.png">
+			<location x="310" y="446" />
+		</block>
+		<block type="overlay" id="subtype_boss" src="Proxy/Subtypes/Boss.png">
+			<location x="310" y="446" />
+		</block>
+		<block type="overlay" id="subtype_boxer" src="Proxy/Subtypes/Boxer.png">
+			<location x="310" y="446" />
+		</block>
+		<block type="overlay" id="subtype_brute" src="Proxy/Subtypes/Brute.png">
+			<location x="310" y="446" />
+		</block>
+		<block type="overlay" id="subtype_capoeira" src="Proxy/Subtypes/Capoeira.png">
+			<location x="310" y="446" />
+		</block>
+		<block type="overlay" id="subtype_captain" src="Proxy/Subtypes/Captain.png">
+			<location x="310" y="446" />
+		</block>
+		<block type="overlay" id="subtype_cursed" src="Proxy/Subtypes/Cursed.png">
+			<location x="310" y="446" />
+		</block>
+		<block type="overlay" id="subtype_cyborg" src="Proxy/Subtypes/Cyborg.png">
+			<location x="310" y="446" />
+		</block>
+		<block type="overlay" id="subtype_deity" src="Proxy/Subtypes/Deity.png">
+			<location x="310" y="446" />
+		</block>
+		<block type="overlay" id="subtype_demon" src="Proxy/Subtypes/Demon.png">
+			<location x="310" y="446" />
+		</block>
+		<block type="overlay" id="subtype_detective" src="Proxy/Subtypes/Detective.png">
+			<location x="310" y="446" />
+		</block>
+		<block type="overlay" id="subtype_experiment" src="Proxy/Subtypes/Experiment.png">
+			<location x="310" y="446" />
+		</block>
+		<block type="overlay" id="subtype_fighter" src="Proxy/Subtypes/Fighter.png">
+			<location x="310" y="446" />
+		</block>
+		<block type="overlay" id="subtype_gangster" src="Proxy/Subtypes/Gangster.png">
+			<location x="310" y="446" />
+		</block>
+		<block type="overlay" id="subtype_guardian" src="Proxy/Subtypes/Guardian.png">
+			<location x="310" y="446" />
+		</block>
+		<block type="overlay" id="subtype_gymnast" src="Proxy/Subtypes/Gymnast.png">
+			<location x="310" y="446" />
+		</block>
+		<block type="overlay" id="subtype_hunter" src="Proxy/Subtypes/Hunter.png">
+			<location x="310" y="446" />
+		</block>
+		<block type="overlay" id="subtype_karateka" src="Proxy/Subtypes/Karateka.png">
+			<location x="310" y="446" />
+		</block>
+		<block type="overlay" id="subtype_kickboxer" src="Proxy/Subtypes/Kickboxer.png">
+			<location x="310" y="446" />
+		</block>
+		<block type="overlay" id="subtype_kobudo" src="Proxy/Subtypes/Kobudo.png">
+			<location x="310" y="446" />
+		</block>
+		<block type="overlay" id="subtype_kung-fu" src="Proxy/Subtypes/Kung-fu.png">
+			<location x="310" y="446" />
+		</block>
+		<block type="overlay" id="subtype_magician" src="Proxy/Subtypes/Magician.png">
+			<location x="310" y="446" />
+		</block>
+		<block type="overlay" id="subtype_mentor" src="Proxy/Subtypes/Mentor.png">
+			<location x="310" y="446" />
+		</block>
+		<block type="overlay" id="subtype_mercenary" src="Proxy/Subtypes/Mercenary.png">
+			<location x="310" y="446" />
+		</block>
+		<block type="overlay" id="subtype_monk" src="Proxy/Subtypes/Monk.png">
+			<location x="310" y="446" />
+		</block>
+		<block type="overlay" id="subtype_monster" src="Proxy/Subtypes/Monster.png">
+			<location x="310" y="446" />
+		</block>
+		<block type="overlay" id="subtype_ninja" src="Proxy/Subtypes/Ninja.png">
+			<location x="310" y="446" />
+		</block>
+		<block type="overlay" id="subtype_pilot" src="Proxy/Subtypes/Pilot.png">
+			<location x="310" y="446" />
+		</block>
+		<block type="overlay" id="subtype_priest" src="Proxy/Subtypes/Priest.png">
+			<location x="310" y="446" />
+		</block>
+		<block type="overlay" id="subtype_psychic" src="Proxy/Subtypes/Psychic.png">
+			<location x="310" y="446" />
+		</block>
+		<block type="overlay" id="subtype_robot" src="Proxy/Subtypes/Robot.png">
+			<location x="310" y="446" />
+		</block>
+		<block type="overlay" id="subtype_samurai" src="Proxy/Subtypes/Samurai.png">
+			<location x="310" y="446" />
+		</block>
+		<block type="overlay" id="subtype_soldier" src="Proxy/Subtypes/Soldier.png">
+			<location x="310" y="446" />
+		</block>
+		<block type="overlay" id="subtype_spirit" src="Proxy/Subtypes/Spirit.png">
+			<location x="310" y="446" />
+		</block>
+		<block type="overlay" id="subtype_student" src="Proxy/Subtypes/Student.png">
+			<location x="310" y="446" />
+		</block>
+		<block type="overlay" id="subtype_sumotori" src="Proxy/Subtypes/Sumotori.png">
+			<location x="310" y="446" />
+		</block>
+		<block type="overlay" id="subtype_swordsman" src="Proxy/Subtypes/Swordsman.png">
+			<location x="310" y="446" />
+		</block>
+		<block type="overlay" id="subtype_taekwondo" src="Proxy/Subtypes/Taekwondo.png">
+			<location x="310" y="446" />
+		</block>
+		<block type="overlay" id="subtype_vampire" src="Proxy/Subtypes/Vampire.png">
+			<location x="310" y="446" />
+		</block>
+		<block type="overlay" id="subtype_warrior" src="Proxy/Subtypes/Warrior.png">
+			<location x="310" y="446" />
+		</block>
+		<block type="overlay" id="subtype_wrestler" src="Proxy/Subtypes/Wrestler.png">
+			<location x="310" y="446" />
+		</block>
+		<block type="overlay" id="subtype_zombie" src="Proxy/Subtypes/Zombie.png">
+			<location x="310" y="446" />
+		</block>
+		<!-- Rarity -->
+		<block type="overlay" id="rarity_s" src="Proxy/Overlays/rarity_s.png">
+			<location x="450" y="434" />
+		</block>
+		<block type="overlay" id="rarity_a" src="Proxy/Overlays/rarity_a.png">
+			<location x="450" y="434" />
+		</block>
+		<block type="overlay" id="rarity_b" src="Proxy/Overlays/rarity_b.png">
+			<location x="450" y="434" />
+		</block>
+		<block type="overlay" id="rarity_c" src="Proxy/Overlays/rarity_c.png">
+			<location x="450" y="434" />
+		</block>
+		<block type="overlay" id="rarity_d" src="Proxy/Overlays/rarity_d.png">
+			<location x="450" y="434" />
+		</block>
+		
+		<!-- Text blocks -->
+		<block type="text" id="bp">
+			<location x="337" y="51" />
+			<text color="#fad6d6" size="27" font="Fonts/m04br.ttf" />
+			<border color="#691e1e" size="2" />
+			<wordwrap width="119" height="30" align="far" shrinktofit="True" />
+		</block>
+		<block type="text" id="sp">
+			<location x="399" y="101" />
+			<text color="#dae1f7" size="21" font="Fonts/m04br.ttf" />
+			<border color="#102267" size="2" />
+			<wordwrap width="60" height="24" align="far" shrinktofit="True" />
+		</block>
+		<block type="text" id="name">
+			<location x="31" y="442" />
+			<text color="#FFFFFF" size="45" font="Fonts/PassionOne-Regular.ttf" />
+			<wordwrap width="275" height="45" shrinktofit="True" />
+		</block>
+		<block type="text" id="type">
+			<location x="354" y="447" />
+			<text color="#cecece" size="22" font="Fonts/ArchivoNarrow-Bold.ttf" />
+			<wordwrap width="92" height="24" shrinktofit="True" />
+		</block>
+		<block type="text" id="subtype">
+			<location x="354" y="470" />
+			<text color="#ffffff" size="17" font="Fonts/ArchivoNarrow-Bold.ttf" />
+			<wordwrap width="92" height="19" shrinktofit="True" />
+		</block>
+		<block type="text" id="rules">
+			<location x="100" y="507" />
+			<text color="#000000" size="20" font="Fonts/ArchivoNarrow-Regular.ttf" />
+			<wordwrap width="380" height="155" />
+		</block>
+		<block type="text" id="number">
+			<location x="326" y="677" />
+			<text color="#000000" size="16" font="Fonts/SourceSansPro-Regular.ttf" />
+			<wordwrap width="156" height="18" align="far" />
 		</block>
 	</blocks>
-	<template src="" >
+	
+	<template src="Card/front.png" default="True">
 		<matches>
-			<match name=""  value="" />
+			<match name="Type" value="None" />
 		</matches>
+		
 		<overlayblocks>
-
+			<link block="blank" />
 		</overlayblocks>
+		
 		<textblocks>
-
+			<link block="name">
+				<property name="Name" />
+			</link>
+			<link block="rules">
+				<property name="Rules" />
+			</link>
 		</textblocks>
 	</template>
+	
+	<template src="Proxy/Back/character.png">
+		<matches>
+			<match name="Type" value="Character" />
+		</matches>
+		
+		<overlayblocks>
+			<link block="bp_box" />
+			<link block="sp_box" />
+			<!-- Publisher -->
+			<conditional>
+				<switch property="Publisher">
+					<case value="Capcom" break="True">
+						<link block="pub_capcom" />
+					</case>
+					<case value="SNK" break="True">
+						<link block="pub_snk" />
+					</case>
+				</switch>
+			</conditional>
+			<!-- Team -->
+			<conditional>
+				<switch property="Team">
+					<case value="Art of Fighting" break="True">
+						<link block="team_art_of_fighting" />
+					</case>
+					<case value="Breath of Fire" break="True">
+						<link block="team_breath_of_fire" />
+					</case>
+					<case value="Buriki-One" break="True">
+						<link block="team_buriki-one" />
+					</case>
+					<case value="Captain Commando" break="True">
+						<link block="team_captain_commando" />
+					</case>
+					<case value="CVS2" break="True">
+						<link block="team_cvs2" />
+					</case>
+					<case value="Cyberbots" break="True">
+						<link block="team_cyberbots" />
+					</case>
+					<case value="Dino Crisis" break="True">
+						<link block="team_dino_crisis" />
+					</case>
+					<case value="Fatal Fury" break="True">
+						<link block="team_fatal_fury" />
+					</case>
+					<case value="Final Fight" break="True">
+						<link block="team_final_fight" />
+					</case>
+					<case value="Ghost N Goblins" break="True">
+						<link block="team_ghost_n_goblins" />
+					</case>
+					<case value="Kizuna Encounter" break="True">
+						<link block="team_kizuna_encounter" />
+					</case>
+					<case value="KOF" break="True">
+						<link block="team_kof" />
+					</case>
+					<case value="Last Blade" break="True">
+						<link block="team_last_blade" />
+					</case>
+					<case value="Legendary Wings" break="True">
+						<link block="team_legendary_wings" />
+					</case>
+					<case value="Marvel VS" break="True">
+						<link block="team_marvel_vs" />
+					</case>
+					<case value="Megaman" break="True">
+						<link block="team_megaman" />
+					</case>
+					<case value="Metal Slug" break="True">
+						<link block="team_metal_slug" />
+					</case>
+					<case value="Onimusha" break="True">
+						<link block="team_onimusha" />
+					</case>
+					<case value="Power Stone" break="True">
+						<link block="team_power_stone" />
+					</case>
+					<case value="Quiz Nanairo Dreams" break="True">
+						<link block="team_quiz_nanairo_dreams" />
+					</case>
+					<case value="Resident Evil" break="True">
+						<link block="team_resident_evil" />
+					</case>
+					<case value="Rival School" break="True">
+						<link block="team_rival_school" />
+					</case>
+					<case value="Samurai Shodown" break="True">
+						<link block="team_samurai_shodown" />
+					</case>
+					<case value="Star Gladiator" break="True">
+						<link block="team_star_gladiator" />
+					</case>
+					<case value="Street Fighter" break="True">
+						<link block="team_street_fighter" />
+					</case>
+					<case value="Strider" break="True">
+						<link block="team_strider" />
+					</case>
+					<case value="SVC" break="True">
+						<link block="team_svc" />
+					</case>
+					<case value="Tech Romancer" break="True">
+						<link block="team_tech_romancer" />
+					</case>
+					<case value="Top Hunter" break="True">
+						<link block="team_top_hunter" />
+					</case>
+					<case value="Vampire" break="True">
+						<link block="team_vampire" />
+					</case>
+					<case value="Warzard" break="True">
+						<link block="team_warzard" />
+					</case>
+				</switch>
+			</conditional>
+			<!-- Subtype -->
+			<conditional>
+				<switch property="Subtype">
+					<case value="Agent" break="True">
+						<link block="subtype_agent" />
+					</case>
+					<case value="Aikido" break="True">
+						<link block="subtype_aikido" />
+					</case>
+					<case value="Alien" break="True">
+						<link block="subtype_alien" />
+					</case>
+					<case value="Android" break="True">
+						<link block="subtype_android" />
+					</case>
+					<case value="Artist" break="True">
+						<link block="subtype_artist" />
+					</case>
+					<case value="Assassin" break="True">
+						<link block="subtype_assassin" />
+					</case>
+					<case value="Avatar" break="True">
+						<link block="subtype_avatar" />
+					</case>
+					<case value="Beast" break="True">
+						<link block="subtype_beast" />
+					</case>
+					<case value="Boss" break="True">
+						<link block="subtype_boss" />
+					</case>
+					<case value="Boxer" break="True">
+						<link block="subtype_boxer" />
+					</case>
+					<case value="Brute" break="True">
+						<link block="subtype_brute" />
+					</case>
+					<case value="Capoeira" break="True">
+						<link block="subtype_capoeira" />
+					</case>
+					<case value="Captain" break="True">
+						<link block="subtype_captain" />
+					</case>
+					<case value="Cursed" break="True">
+						<link block="subtype_cursed" />
+					</case>
+					<case value="Cyborg" break="True">
+						<link block="subtype_cyborg" />
+					</case>
+					<case value="Deity" break="True">
+						<link block="subtype_deity" />
+					</case>
+					<case value="Demon" break="True">
+						<link block="subtype_demon" />
+					</case>
+					<case value="Detective" break="True">
+						<link block="subtype_detective" />
+					</case>
+					<case value="Experiment" break="True">
+						<link block="subtype_experiment" />
+					</case>
+					<case value="Fighter" break="True">
+						<link block="subtype_fighter" />
+					</case>
+					<case value="Gangster" break="True">
+						<link block="subtype_gangster" />
+					</case>
+					<case value="Guardian" break="True">
+						<link block="subtype_guardian" />
+					</case>
+					<case value="Gymnast" break="True">
+						<link block="subtype_gymnast" />
+					</case>
+					<case value="Hunter" break="True">
+						<link block="subtype_hunter" />
+					</case>
+					<case value="Karateka" break="True">
+						<link block="subtype_karateka" />
+					</case>
+					<case value="Kickboxer" break="True">
+						<link block="subtype_kickboxer" />
+					</case>
+					<case value="Kobudo" break="True">
+						<link block="subtype_kobudo" />
+					</case>
+					<case value="Kung-fu" break="True">
+						<link block="subtype_kung-fu" />
+					</case>
+					<case value="Magician" break="True">
+						<link block="subtype_magician" />
+					</case>
+					<case value="Mentor" break="True">
+						<link block="subtype_mentor" />
+					</case>
+					<case value="Mercenary" break="True">
+						<link block="subtype_mercenary" />
+					</case>
+					<case value="Monk" break="True">
+						<link block="subtype_monk" />
+					</case>
+					<case value="Monster" break="True">
+						<link block="subtype_monster" />
+					</case>
+					<case value="Ninja" break="True">
+						<link block="subtype_ninja" />
+					</case>
+					<case value="Pilot" break="True">
+						<link block="subtype_pilot" />
+					</case>
+					<case value="Priest" break="True">
+						<link block="subtype_priest" />
+					</case>
+					<case value="Psychic" break="True">
+						<link block="subtype_psychic" />
+					</case>
+					<case value="Robot" break="True">
+						<link block="subtype_robot" />
+					</case>
+					<case value="Samurai" break="True">
+						<link block="subtype_samurai" />
+					</case>
+					<case value="Soldier" break="True">
+						<link block="subtype_soldier" />
+					</case>
+					<case value="Spirit" break="True">
+						<link block="subtype_spirit" />
+					</case>
+					<case value="Student" break="True">
+						<link block="subtype_student" />
+					</case>
+					<case value="Sumotori" break="True">
+						<link block="subtype_sumotori" />
+					</case>
+					<case value="Swordsman" break="True">
+						<link block="subtype_swordsman" />
+					</case>
+					<case value="Taekwondo" break="True">
+						<link block="subtype_taekwondo" />
+					</case>
+					<case value="Vampire" break="True">
+						<link block="subtype_vampire" />
+					</case>
+					<case value="Warrior" break="True">
+						<link block="subtype_warrior" />
+					</case>
+					<case value="Wrestler" break="True">
+						<link block="subtype_wrestler" />
+					</case>
+					<case value="Zombie" break="True">
+						<link block="subtype_zombie" />
+					</case>
+				</switch>
+			</conditional>
+			<!-- Rarity -->
+			<conditional>
+				<switch property="Rarity">
+					<case value="S" break="True">
+						<link block="rarity_s" />
+					</case>
+					<case value="A" break="True">
+						<link block="rarity_a" />
+					</case>
+					<case value="B" break="True">
+						<link block="rarity_b" />
+					</case>
+					<case value="C" break="True">
+						<link block="rarity_c" />
+					</case>
+					<default>
+						<link block="rarity_d" />
+					</default>
+				</switch>
+			</conditional>
+		</overlayblocks>
+		
+		<textblocks>
+			<link block="bp">
+				<property name="BP" />
+			</link>
+			<link block="sp">
+				<property name="SP" />
+			</link>
+			<link block="type">
+				<property name="Type" />
+			</link>
+			<link block="subtype">
+				<property name="Subtype" />
+			</link>
+			<link block="name">
+				<property name="Name" />
+			</link>
+			<link block="rules">
+				<property name="Rules" />
+			</link>
+			<link block="number">
+				<property name="Number" />
+			</link>
+		</textblocks>
+	</template>
+
 </templates>

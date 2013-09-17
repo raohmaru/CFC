@@ -1,1 +1,4 @@
 *.psd
+*.nupkg
+*.o8g
+proxy_glob.rb

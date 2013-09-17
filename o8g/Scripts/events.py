@@ -23,6 +23,19 @@
 # Event handler hooked to an OCTGN game events
 def onMoveCardEventHandler(player, card, fromGroup, toGroup, oldIndex, index, oldX, oldY, x, y, isScriptMove):
    debugNotify(">>> onMoveCardEventHandler()") #Debug
-   if fromGroup == table and card.Type == 'Character':
+   if fromGroup == table and toGroup != table and card.Type == 'Character':
       clearAttachLinks(card)
    debugNotify("<<< onMoveCardEventHandler()") #Debug
+
+def onEndTurnEventHandler(player):
+   mute()
+   if player != me: return
+   # Clears targets, colors and freeze (tap) characters in the player's ring
+   myCards = (card for card in table
+      if card.controller == me)
+   for card in myCards:
+      card.target(False)
+      if card.highlight != None and card.highlight != DoesntUnfreezeColor:
+         if card.highlight == AttackColor:
+            card.orientation = Rot90
+         card.highlight = None

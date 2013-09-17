@@ -31,13 +31,16 @@ AttachedCards = {} # A dictionary which holds a coutner for each card, numbering
 #---------------------------------------------------------------------------
 
 def showCurrentPhase():  # Just say a nice notification about which phase you're on.
+   global phaseIdx
    notify(phases[phaseIdx].format(me))
 
 def nextPhase(group = table, x = 0, y = 0):  # Function to take you to the next phase.
-   mute()
-   if phaseIdx > len(phases): phaseIdx = 1
-   else: phaseIdx += 1
-   if phaseIdx == 1: goToActivate()
+   global phaseIdx
+   if phaseIdx > len(phases):
+      phaseIdx = 1
+   else:
+      phaseIdx += 1
+   if phaseIdx == 1:   goToActivate()
    elif phaseIdx == 2: goToDraw()
    elif phaseIdx == 3: goToMain()
    elif phaseIdx == 4: goToCounterattack()
@@ -45,7 +48,7 @@ def nextPhase(group = table, x = 0, y = 0):  # Function to take you to the next 
    else: showCurrentPhase()
 
 def goToActivate(group = table, x = 0, y = 0):
-   mute()
+   global phaseIdx
    phaseIdx = 1
    showCurrentPhase()
    
@@ -58,32 +61,24 @@ def goToActivate(group = table, x = 0, y = 0):
       card.highlight = None
 
 def goToDraw(group = table, x = 0, y = 0):
-   mute()
+   global phaseIdx
    phaseIdx = 2
    showCurrentPhase()
 
 def goToMain(group = table, x = 0, y = 0):
-   mute()
+   global phaseIdx
    phaseIdx = 3
    showCurrentPhase()
 
 def goToCounterattack(group = table, x = 0, y = 0):
-   mute()
+   global phaseIdx
    phaseIdx = 4
    showCurrentPhase()
 
 def goToEnd(group = table, x = 0, y = 0):
-   mute()
+   global phaseIdx
    phaseIdx = 5
    showCurrentPhase()
-   
-   # Freeze (tap) characters in the player's ring
-   myCards = (card for card in table
-      if card.controller == me
-      and card.highlight == AttackColor)
-   for card in myCards:
-      card.orientation = Rot90
-      card.highlight = None
 
 #---------------------------------------------------------------------------
 # Table group actions
@@ -223,7 +218,12 @@ def freeze(card, x = 0, y = 0, count = None):
       notify('{} unfreezes {}'.format(me, card))
    if card.highlight == AttackColor or card.highlight == ActivatedColor:
       card.highlight = None
-      
+
+def doesNotUnfreeze(card, x = 0, y = 0):
+   mute()
+   card.highlight = DoesntUnfreezeColor
+   notify("{0}'s {1} will not unfreeze during {0}'s Activate phase.".format(me, card))
+
 def clear(card, x = 0, y = 0):
    notify("{} clears {}.".format(me, card))
    card.highlight = None
@@ -277,14 +277,16 @@ def toDeckBottom(card, x = 0, y = 0):
 
 def toDeckTopAll(group, x = 0, y = 0):
    mute()
+   Deck = me.Deck
    for card in group:
-      card.moveTo(me.Deck)
+      card.moveTo(Deck)
    notify("{} moves all cards from their {} to top of their Deck.".format(me, group.name))
 
 def toDeckBottomAll(group, x = 0, y = 0):
    mute()
+   Deck = me.Deck
    for card in group:
-      card.moveToBottom(me.Deck)
+      card.moveToBottom(Deck)
    notify("{} moves all cards from their {} to bottom of their Deck.".format(me, group.name))
 
 def discardAll(group, x = 0, y = 0):
@@ -295,20 +297,20 @@ def discardAll(group, x = 0, y = 0):
    notify("{} moves all cards from their {} to their Discard Pile.".format(me, group.name))
 
 #---------------------------------------------------------------------------
-# Marker functions
+# Marker actions
 #---------------------------------------------------------------------------
 
 def plusBP(card, x = 0, y = 0, notification = 'loud', count = 1):
    mute()
    if notification == loud:
-      notify("{} marks that {}'s BP has raised by {}".format(me, card, count))
+      notify("{} raises {}'s BP by {}".format(me, card, count))
    for i in range(0,count):
       card.markers[HPMarker] += 1
 
 def minusBP(card, x = 0, y = 0, notification = 'loud', count = 1):
    mute()
    if notification == loud:
-      notify("{} marks that {}'s BP has lowered by {}.".format(me, card, count))
+      notify("{} lowers {}'s BP by {}.".format(me, card, count))
    for i in range(0,count):
       if HPMarker in card.markers:
          card.markers[HPMarker] -= 1
@@ -324,20 +326,6 @@ def addMarker(cards, x = 0, y = 0):  # A simple function to manually add any of 
 def changeBP(cards, x = 0, y = 0):
    mute()
    changeMarker(cards, HPMarker, "Set character BP to:")
-
-def changeMarker(cards, marker, question):
-   n = 0
-   for c in cards:
-      if c.markers[marker] > n:
-	     n = c.markers[marker]   
-   count = askInteger(question, n)
-   if count == None: return
-   for c in cards:
-      n = c.markers[marker]
-      c.markers[marker] = count
-      dif = count-n
-      if dif >= 0: dif = "+" + str(dif)   
-      notify("{} sets {}'s {} to {}({}).".format(me, c, marker[0], count, dif))
 
 #---------------------------------------------------------------------------
 # Hand actions
@@ -367,26 +355,19 @@ def randomDiscard(group, x = 0, y = 0):
     card = group.random()
     if card == None:
         return
-    card.isFaceUp = True
-    rnd(10,100)  # This delays the next action until all animation is done.
+    # card.isFaceUp = True
+    # rnd(10,100)  # This delays the next action until all animation is done.
     card.moveTo(me.piles['Discard Pile'])
     notify("{} randomly discards {}.".format(me, card))
+
+def refill(group = me.hand):  # Refill the player's hand to its hand size.
+   global handsize
+   playhand = len(me.hand) # count how many cards there are currently there.
+   if playhand < handsize: drawMany(me.Deck, handsize - playhand, silent) # If there's less cards than the handsize, draw from the deck until it's full.
 
 #---------------------------------------------------------------------------
 # Piles actions
 #---------------------------------------------------------------------------
-
-def shuffle(group):  # A simple function to shuffle piles
-   group.shuffle()
-
-def reshuffle(group = me.piles['Discard Pile']):  # This function reshuffles the player's discard pile into their deck.
-   mute()
-   Deck = me.Deck
-   for card in group: card.moveTo(Deck) # Move the player's cards from the discard to their deck one-by-one.
-   random = rnd(100, 10000) # Bug 105 workaround. This delays the next action until all animation is done.
-                           # see https://octgn.16bugs.com/projects/3602/bugs/102681
-   Deck.shuffle() # Then use the built-in shuffle action
-   notify("{} reshuffled their {} into their Deck.".format(me, group.name)) # And inform everyone.
 
 def draw(group = me.Deck):  # Draws one card from the deck into the player's hand.
    mute()
@@ -397,12 +378,11 @@ def draw(group = me.Deck):  # Draws one card from the deck into the player's han
 
 def drawMany(group, count = None, notification = 'loud'):  # This function draws a variable number cards into the player's hand.
    mute()
-   if count == None: count = askInteger("Draw how many cards?", 5) # Ask the player how many cards they want.
+   if count == None: count = askInteger("Draw how many cards?", handsize) # Ask the player how many cards they want.
    for i in range(0, count):
       if len(group) > 0:  # If the deck is not empty...
          group.top().moveTo(me.hand)  # ...then move them one by one into their play hand.
    if notification == loud : notify("{} draws {} cards.".format(me, count))
-
 
 def trash(group = me.Deck, x = 0, y = 0, silent = False):  # Draws one card from the deck into the discard pile and announces its value.
    mute()
@@ -416,27 +396,40 @@ def trash(group = me.Deck, x = 0, y = 0, silent = False):  # Draws one card from
       card.moveTo(discards)
    rnd(1, 100) # Wait a bit more, as in multiplayer games, things are slower.
    if not silent: notify("{} trash top {} cards from {}.".format(me, count, group.name))
-   
-def setHandSize(group):  # A function to modify a player's hand size.
-   global handsize
-   handsize = askInteger("What is your current hand size?", handsize)
-   if handsize == None: handsize = 5
-   notify("{} sets their hand size to {}".format(me, handsize))
 
-def refill(group = me.hand):  # Refill the player's hand to its hand size.
-   global handsize
-   playhand = len(me.hand) # count how many cards there are currently there.
-   if playhand < handsize: drawMany(me.Deck, handsize - playhand, silent) # If there's less cards than the handsize, draw from the deck until it's full.
-
-def randomDiscard(group):  # Discard a card from your hand randomly.
+def shuffle(group):  # A simple function to shuffle piles
    mute()
-   card = group.random() # Select a random card
-   if card == None: return # If hand is empty, do nothing.
-   notify("{} randomly discards a card.".format(me)) # Inform that a random card was discarded
-   card.moveTo(me.piles['Discard Pile']) # Move the card in the discard pile.
+   for card in group:
+      if card.isFaceUp:
+         card.isFaceUp = False
+   group.shuffle()
+   notify("{} shuffled their {}".format(me, group.name))
 
-def moveIntoDeck(group):
+def reshuffle(group = me.piles['Discard Pile']):  # This function reshuffles the player's discard pile into their deck.
    mute()
    Deck = me.Deck
-   for card in group: card.moveTo(Deck)
-   notify("{} moves their {} into their Deck.".format(me, group.name))
+   for card in group: card.moveTo(Deck) # Move the player's cards from the discard to their deck one-by-one.
+   random = rnd(100, 10000) # Bug 105 workaround. This delays the next action until all animation is done.
+                           # see https://octgn.16bugs.com/projects/3602/bugs/102681
+   Deck.shuffle() # Then use the built-in shuffle action
+   notify("{} reshuffled their {} into their Deck.".format(me, group.name)) # And inform everyone.
+
+def revealTopDeck(group, x = 0, y = 0):
+   mute()
+   if group[0].isFaceUp:
+      notify("{} hides {} from top of Library.".format(me, group[0]))
+      group[0].isFaceUp = False
+   else:
+      group[0].isFaceUp = True
+      notify("{} reveals {} from top of Library.".format(me, group[0]))
+
+def swapWithDeck(group = me.piles['Discard Pile']):  # This function reshuffles the player's discard pile into their deck.
+   mute()
+   Deck = me.Deck
+   savedDeck = (card for card in Deck)   
+   for card in group:
+      card.moveTo(Deck)   
+   for card in savedDeck:
+      card.moveTo(group)   
+   rnd(1, 100) # Wait a bit more, as in multiplayer games, things are slower.
+   notify("{} swaps their {} with their Deck.".format(me, group.name)) # And inform everyone.
