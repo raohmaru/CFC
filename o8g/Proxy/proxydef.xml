@@ -7,10 +7,10 @@
 			<location x="0" y="0" />
 		</block>
 		<block type="overlay" id="bp_box" src="Proxy/Overlays/bp_box.png">
-			<location x="322" y="36" />
+			<location x="321" y="38" />
 		</block>
 		<block type="overlay" id="sp_box" src="Proxy/Overlays/sp_box.png">
-			<location x="382" y="87" />
+			<location x="381" y="89" />
 		</block>
 		<!-- Publisher -->
 		<block type="overlay" id="pub_capcom" src="Proxy/Logos/Capcom.png">
@@ -115,206 +115,659 @@
 		</block>
 		<!-- Subtype -->
 		<block type="overlay" id="subtype_agent" src="Proxy/Subtypes/Agent.png">
-			<location x="310" y="446" />
+			<location x="311" y="448" />
 		</block>
 		<block type="overlay" id="subtype_aikido" src="Proxy/Subtypes/Aikido.png">
-			<location x="310" y="446" />
+			<location x="311" y="448" />
 		</block>
 		<block type="overlay" id="subtype_alien" src="Proxy/Subtypes/Alien.png">
-			<location x="310" y="446" />
+			<location x="311" y="448" />
 		</block>
 		<block type="overlay" id="subtype_android" src="Proxy/Subtypes/Android.png">
-			<location x="310" y="446" />
+			<location x="311" y="448" />
 		</block>
 		<block type="overlay" id="subtype_artist" src="Proxy/Subtypes/Artist.png">
-			<location x="310" y="446" />
+			<location x="311" y="448" />
 		</block>
 		<block type="overlay" id="subtype_assassin" src="Proxy/Subtypes/Assassin.png">
-			<location x="310" y="446" />
+			<location x="311" y="448" />
 		</block>
 		<block type="overlay" id="subtype_avatar" src="Proxy/Subtypes/Avatar.png">
-			<location x="310" y="446" />
+			<location x="311" y="448" />
 		</block>
 		<block type="overlay" id="subtype_beast" src="Proxy/Subtypes/Beast.png">
-			<location x="310" y="446" />
+			<location x="311" y="448" />
 		</block>
 		<block type="overlay" id="subtype_boss" src="Proxy/Subtypes/Boss.png">
-			<location x="310" y="446" />
+			<location x="311" y="448" />
 		</block>
 		<block type="overlay" id="subtype_boxer" src="Proxy/Subtypes/Boxer.png">
-			<location x="310" y="446" />
+			<location x="311" y="448" />
 		</block>
 		<block type="overlay" id="subtype_brute" src="Proxy/Subtypes/Brute.png">
-			<location x="310" y="446" />
+			<location x="311" y="448" />
 		</block>
 		<block type="overlay" id="subtype_capoeira" src="Proxy/Subtypes/Capoeira.png">
-			<location x="310" y="446" />
+			<location x="311" y="448" />
 		</block>
 		<block type="overlay" id="subtype_captain" src="Proxy/Subtypes/Captain.png">
-			<location x="310" y="446" />
+			<location x="311" y="448" />
 		</block>
 		<block type="overlay" id="subtype_cursed" src="Proxy/Subtypes/Cursed.png">
-			<location x="310" y="446" />
+			<location x="311" y="448" />
 		</block>
 		<block type="overlay" id="subtype_cyborg" src="Proxy/Subtypes/Cyborg.png">
-			<location x="310" y="446" />
+			<location x="311" y="448" />
 		</block>
 		<block type="overlay" id="subtype_deity" src="Proxy/Subtypes/Deity.png">
-			<location x="310" y="446" />
+			<location x="311" y="448" />
 		</block>
 		<block type="overlay" id="subtype_demon" src="Proxy/Subtypes/Demon.png">
-			<location x="310" y="446" />
+			<location x="311" y="448" />
 		</block>
 		<block type="overlay" id="subtype_detective" src="Proxy/Subtypes/Detective.png">
-			<location x="310" y="446" />
+			<location x="311" y="448" />
 		</block>
 		<block type="overlay" id="subtype_experiment" src="Proxy/Subtypes/Experiment.png">
-			<location x="310" y="446" />
+			<location x="311" y="448" />
 		</block>
 		<block type="overlay" id="subtype_fighter" src="Proxy/Subtypes/Fighter.png">
-			<location x="310" y="446" />
+			<location x="311" y="448" />
 		</block>
 		<block type="overlay" id="subtype_gangster" src="Proxy/Subtypes/Gangster.png">
-			<location x="310" y="446" />
+			<location x="311" y="448" />
 		</block>
 		<block type="overlay" id="subtype_guardian" src="Proxy/Subtypes/Guardian.png">
-			<location x="310" y="446" />
+			<location x="311" y="448" />
 		</block>
 		<block type="overlay" id="subtype_gymnast" src="Proxy/Subtypes/Gymnast.png">
-			<location x="310" y="446" />
+			<location x="311" y="448" />
 		</block>
 		<block type="overlay" id="subtype_hunter" src="Proxy/Subtypes/Hunter.png">
-			<location x="310" y="446" />
+			<location x="311" y="448" />
 		</block>
 		<block type="overlay" id="subtype_karateka" src="Proxy/Subtypes/Karateka.png">
-			<location x="310" y="446" />
+			<location x="311" y="448" />
 		</block>
 		<block type="overlay" id="subtype_kickboxer" src="Proxy/Subtypes/Kickboxer.png">
-			<location x="310" y="446" />
+			<location x="311" y="448" />
 		</block>
 		<block type="overlay" id="subtype_kobudo" src="Proxy/Subtypes/Kobudo.png">
-			<location x="310" y="446" />
+			<location x="311" y="448" />
 		</block>
 		<block type="overlay" id="subtype_kung-fu" src="Proxy/Subtypes/Kung-fu.png">
-			<location x="310" y="446" />
+			<location x="311" y="448" />
 		</block>
 		<block type="overlay" id="subtype_magician" src="Proxy/Subtypes/Magician.png">
-			<location x="310" y="446" />
+			<location x="311" y="448" />
 		</block>
 		<block type="overlay" id="subtype_mentor" src="Proxy/Subtypes/Mentor.png">
-			<location x="310" y="446" />
+			<location x="311" y="448" />
 		</block>
 		<block type="overlay" id="subtype_mercenary" src="Proxy/Subtypes/Mercenary.png">
-			<location x="310" y="446" />
+			<location x="311" y="448" />
 		</block>
 		<block type="overlay" id="subtype_monk" src="Proxy/Subtypes/Monk.png">
-			<location x="310" y="446" />
+			<location x="311" y="448" />
 		</block>
 		<block type="overlay" id="subtype_monster" src="Proxy/Subtypes/Monster.png">
-			<location x="310" y="446" />
+			<location x="311" y="448" />
 		</block>
 		<block type="overlay" id="subtype_ninja" src="Proxy/Subtypes/Ninja.png">
-			<location x="310" y="446" />
+			<location x="311" y="448" />
 		</block>
 		<block type="overlay" id="subtype_pilot" src="Proxy/Subtypes/Pilot.png">
-			<location x="310" y="446" />
+			<location x="311" y="448" />
 		</block>
 		<block type="overlay" id="subtype_priest" src="Proxy/Subtypes/Priest.png">
-			<location x="310" y="446" />
+			<location x="311" y="448" />
 		</block>
 		<block type="overlay" id="subtype_psychic" src="Proxy/Subtypes/Psychic.png">
-			<location x="310" y="446" />
+			<location x="311" y="448" />
 		</block>
 		<block type="overlay" id="subtype_robot" src="Proxy/Subtypes/Robot.png">
-			<location x="310" y="446" />
+			<location x="311" y="448" />
 		</block>
 		<block type="overlay" id="subtype_samurai" src="Proxy/Subtypes/Samurai.png">
-			<location x="310" y="446" />
+			<location x="311" y="448" />
 		</block>
 		<block type="overlay" id="subtype_soldier" src="Proxy/Subtypes/Soldier.png">
-			<location x="310" y="446" />
+			<location x="311" y="448" />
 		</block>
 		<block type="overlay" id="subtype_spirit" src="Proxy/Subtypes/Spirit.png">
-			<location x="310" y="446" />
+			<location x="311" y="448" />
 		</block>
 		<block type="overlay" id="subtype_student" src="Proxy/Subtypes/Student.png">
-			<location x="310" y="446" />
+			<location x="311" y="448" />
 		</block>
 		<block type="overlay" id="subtype_sumotori" src="Proxy/Subtypes/Sumotori.png">
-			<location x="310" y="446" />
+			<location x="311" y="448" />
 		</block>
 		<block type="overlay" id="subtype_swordsman" src="Proxy/Subtypes/Swordsman.png">
-			<location x="310" y="446" />
+			<location x="311" y="448" />
 		</block>
 		<block type="overlay" id="subtype_taekwondo" src="Proxy/Subtypes/Taekwondo.png">
-			<location x="310" y="446" />
+			<location x="311" y="448" />
 		</block>
 		<block type="overlay" id="subtype_vampire" src="Proxy/Subtypes/Vampire.png">
-			<location x="310" y="446" />
+			<location x="311" y="448" />
 		</block>
 		<block type="overlay" id="subtype_warrior" src="Proxy/Subtypes/Warrior.png">
-			<location x="310" y="446" />
+			<location x="311" y="448" />
 		</block>
 		<block type="overlay" id="subtype_wrestler" src="Proxy/Subtypes/Wrestler.png">
-			<location x="310" y="446" />
+			<location x="311" y="448" />
 		</block>
 		<block type="overlay" id="subtype_zombie" src="Proxy/Subtypes/Zombie.png">
-			<location x="310" y="446" />
+			<location x="311" y="448" />
 		</block>
 		<!-- Rarity -->
 		<block type="overlay" id="rarity_s" src="Proxy/Overlays/rarity_s.png">
-			<location x="450" y="434" />
+			<location x="449" y="434" />
 		</block>
 		<block type="overlay" id="rarity_a" src="Proxy/Overlays/rarity_a.png">
-			<location x="450" y="434" />
+			<location x="449" y="434" />
 		</block>
 		<block type="overlay" id="rarity_b" src="Proxy/Overlays/rarity_b.png">
-			<location x="450" y="434" />
+			<location x="449" y="434" />
 		</block>
 		<block type="overlay" id="rarity_c" src="Proxy/Overlays/rarity_c.png">
-			<location x="450" y="434" />
+			<location x="449" y="434" />
 		</block>
 		<block type="overlay" id="rarity_d" src="Proxy/Overlays/rarity_d.png">
-			<location x="450" y="434" />
+			<location x="449" y="434" />
 		</block>
-		
+		<!-- Empty backups -->
+		<block type="overlay" id="empty_backup1" src="Proxy/Overlays/backup_none.png">
+			<location x="33" y="547" />
+		</block>
+		<block type="overlay" id="empty_backup2" src="Proxy/Overlays/backup_none.png">
+			<location x="33" y="589" />
+		</block>
+		<block type="overlay" id="empty_backup3" src="Proxy/Overlays/backup_none.png">
+			<location x="33" y="631" />
+		</block>
+		<!-- Backup 1 -->
+		<block type="overlay" id="backup1_agent" src="Proxy/Subtypes/Agent.png">
+			<location x="33" y="547" />
+		</block>
+		<block type="overlay" id="backup1_aikido" src="Proxy/Subtypes/Aikido.png">
+			<location x="33" y="547" />
+		</block>
+		<block type="overlay" id="backup1_alien" src="Proxy/Subtypes/Alien.png">
+			<location x="33" y="547" />
+		</block>
+		<block type="overlay" id="backup1_android" src="Proxy/Subtypes/Android.png">
+			<location x="33" y="547" />
+		</block>
+		<block type="overlay" id="backup1_artist" src="Proxy/Subtypes/Artist.png">
+			<location x="33" y="547" />
+		</block>
+		<block type="overlay" id="backup1_assassin" src="Proxy/Subtypes/Assassin.png">
+			<location x="33" y="547" />
+		</block>
+		<block type="overlay" id="backup1_avatar" src="Proxy/Subtypes/Avatar.png">
+			<location x="33" y="547" />
+		</block>
+		<block type="overlay" id="backup1_beast" src="Proxy/Subtypes/Beast.png">
+			<location x="33" y="547" />
+		</block>
+		<block type="overlay" id="backup1_boss" src="Proxy/Subtypes/Boss.png">
+			<location x="33" y="547" />
+		</block>
+		<block type="overlay" id="backup1_boxer" src="Proxy/Subtypes/Boxer.png">
+			<location x="33" y="547" />
+		</block>
+		<block type="overlay" id="backup1_brute" src="Proxy/Subtypes/Brute.png">
+			<location x="33" y="547" />
+		</block>
+		<block type="overlay" id="backup1_capoeira" src="Proxy/Subtypes/Capoeira.png">
+			<location x="33" y="547" />
+		</block>
+		<block type="overlay" id="backup1_captain" src="Proxy/Subtypes/Captain.png">
+			<location x="33" y="547" />
+		</block>
+		<block type="overlay" id="backup1_cursed" src="Proxy/Subtypes/Cursed.png">
+			<location x="33" y="547" />
+		</block>
+		<block type="overlay" id="backup1_cyborg" src="Proxy/Subtypes/Cyborg.png">
+			<location x="33" y="547" />
+		</block>
+		<block type="overlay" id="backup1_deity" src="Proxy/Subtypes/Deity.png">
+			<location x="33" y="547" />
+		</block>
+		<block type="overlay" id="backup1_demon" src="Proxy/Subtypes/Demon.png">
+			<location x="33" y="547" />
+		</block>
+		<block type="overlay" id="backup1_detective" src="Proxy/Subtypes/Detective.png">
+			<location x="33" y="547" />
+		</block>
+		<block type="overlay" id="backup1_experiment" src="Proxy/Subtypes/Experiment.png">
+			<location x="33" y="547" />
+		</block>
+		<block type="overlay" id="backup1_fighter" src="Proxy/Subtypes/Fighter.png">
+			<location x="33" y="547" />
+		</block>
+		<block type="overlay" id="backup1_gangster" src="Proxy/Subtypes/Gangster.png">
+			<location x="33" y="547" />
+		</block>
+		<block type="overlay" id="backup1_guardian" src="Proxy/Subtypes/Guardian.png">
+			<location x="33" y="547" />
+		</block>
+		<block type="overlay" id="backup1_gymnast" src="Proxy/Subtypes/Gymnast.png">
+			<location x="33" y="547" />
+		</block>
+		<block type="overlay" id="backup1_hunter" src="Proxy/Subtypes/Hunter.png">
+			<location x="33" y="547" />
+		</block>
+		<block type="overlay" id="backup1_karateka" src="Proxy/Subtypes/Karateka.png">
+			<location x="33" y="547" />
+		</block>
+		<block type="overlay" id="backup1_kickboxer" src="Proxy/Subtypes/Kickboxer.png">
+			<location x="33" y="547" />
+		</block>
+		<block type="overlay" id="backup1_kobudo" src="Proxy/Subtypes/Kobudo.png">
+			<location x="33" y="547" />
+		</block>
+		<block type="overlay" id="backup1_kung-fu" src="Proxy/Subtypes/Kung-fu.png">
+			<location x="33" y="547" />
+		</block>
+		<block type="overlay" id="backup1_magician" src="Proxy/Subtypes/Magician.png">
+			<location x="33" y="547" />
+		</block>
+		<block type="overlay" id="backup1_mentor" src="Proxy/Subtypes/Mentor.png">
+			<location x="33" y="547" />
+		</block>
+		<block type="overlay" id="backup1_mercenary" src="Proxy/Subtypes/Mercenary.png">
+			<location x="33" y="547" />
+		</block>
+		<block type="overlay" id="backup1_monk" src="Proxy/Subtypes/Monk.png">
+			<location x="33" y="547" />
+		</block>
+		<block type="overlay" id="backup1_monster" src="Proxy/Subtypes/Monster.png">
+			<location x="33" y="547" />
+		</block>
+		<block type="overlay" id="backup1_ninja" src="Proxy/Subtypes/Ninja.png">
+			<location x="33" y="547" />
+		</block>
+		<block type="overlay" id="backup1_pilot" src="Proxy/Subtypes/Pilot.png">
+			<location x="33" y="547" />
+		</block>
+		<block type="overlay" id="backup1_priest" src="Proxy/Subtypes/Priest.png">
+			<location x="33" y="547" />
+		</block>
+		<block type="overlay" id="backup1_psychic" src="Proxy/Subtypes/Psychic.png">
+			<location x="33" y="547" />
+		</block>
+		<block type="overlay" id="backup1_robot" src="Proxy/Subtypes/Robot.png">
+			<location x="33" y="547" />
+		</block>
+		<block type="overlay" id="backup1_samurai" src="Proxy/Subtypes/Samurai.png">
+			<location x="33" y="547" />
+		</block>
+		<block type="overlay" id="backup1_soldier" src="Proxy/Subtypes/Soldier.png">
+			<location x="33" y="547" />
+		</block>
+		<block type="overlay" id="backup1_spirit" src="Proxy/Subtypes/Spirit.png">
+			<location x="33" y="547" />
+		</block>
+		<block type="overlay" id="backup1_student" src="Proxy/Subtypes/Student.png">
+			<location x="33" y="547" />
+		</block>
+		<block type="overlay" id="backup1_sumotori" src="Proxy/Subtypes/Sumotori.png">
+			<location x="33" y="547" />
+		</block>
+		<block type="overlay" id="backup1_swordsman" src="Proxy/Subtypes/Swordsman.png">
+			<location x="33" y="547" />
+		</block>
+		<block type="overlay" id="backup1_taekwondo" src="Proxy/Subtypes/Taekwondo.png">
+			<location x="33" y="547" />
+		</block>
+		<block type="overlay" id="backup1_vampire" src="Proxy/Subtypes/Vampire.png">
+			<location x="33" y="547" />
+		</block>
+		<block type="overlay" id="backup1_warrior" src="Proxy/Subtypes/Warrior.png">
+			<location x="33" y="547" />
+		</block>
+		<block type="overlay" id="backup1_wrestler" src="Proxy/Subtypes/Wrestler.png">
+			<location x="33" y="547" />
+		</block>
+		<block type="overlay" id="backup1_zombie" src="Proxy/Subtypes/Zombie.png">
+			<location x="33" y="547" />
+		</block>
+		<!-- Backup 2 -->
+		<block type="overlay" id="backup2_agent" src="Proxy/Subtypes/Agent.png">
+			<location x="33" y="589" />
+		</block>
+		<block type="overlay" id="backup2_aikido" src="Proxy/Subtypes/Aikido.png">
+			<location x="33" y="589" />
+		</block>
+		<block type="overlay" id="backup2_alien" src="Proxy/Subtypes/Alien.png">
+			<location x="33" y="589" />
+		</block>
+		<block type="overlay" id="backup2_android" src="Proxy/Subtypes/Android.png">
+			<location x="33" y="589" />
+		</block>
+		<block type="overlay" id="backup2_artist" src="Proxy/Subtypes/Artist.png">
+			<location x="33" y="589" />
+		</block>
+		<block type="overlay" id="backup2_assassin" src="Proxy/Subtypes/Assassin.png">
+			<location x="33" y="589" />
+		</block>
+		<block type="overlay" id="backup2_avatar" src="Proxy/Subtypes/Avatar.png">
+			<location x="33" y="589" />
+		</block>
+		<block type="overlay" id="backup2_beast" src="Proxy/Subtypes/Beast.png">
+			<location x="33" y="589" />
+		</block>
+		<block type="overlay" id="backup2_boss" src="Proxy/Subtypes/Boss.png">
+			<location x="33" y="589" />
+		</block>
+		<block type="overlay" id="backup2_boxer" src="Proxy/Subtypes/Boxer.png">
+			<location x="33" y="589" />
+		</block>
+		<block type="overlay" id="backup2_brute" src="Proxy/Subtypes/Brute.png">
+			<location x="33" y="589" />
+		</block>
+		<block type="overlay" id="backup2_capoeira" src="Proxy/Subtypes/Capoeira.png">
+			<location x="33" y="589" />
+		</block>
+		<block type="overlay" id="backup2_captain" src="Proxy/Subtypes/Captain.png">
+			<location x="33" y="589" />
+		</block>
+		<block type="overlay" id="backup2_cursed" src="Proxy/Subtypes/Cursed.png">
+			<location x="33" y="589" />
+		</block>
+		<block type="overlay" id="backup2_cyborg" src="Proxy/Subtypes/Cyborg.png">
+			<location x="33" y="589" />
+		</block>
+		<block type="overlay" id="backup2_deity" src="Proxy/Subtypes/Deity.png">
+			<location x="33" y="589" />
+		</block>
+		<block type="overlay" id="backup2_demon" src="Proxy/Subtypes/Demon.png">
+			<location x="33" y="589" />
+		</block>
+		<block type="overlay" id="backup2_detective" src="Proxy/Subtypes/Detective.png">
+			<location x="33" y="589" />
+		</block>
+		<block type="overlay" id="backup2_experiment" src="Proxy/Subtypes/Experiment.png">
+			<location x="33" y="589" />
+		</block>
+		<block type="overlay" id="backup2_fighter" src="Proxy/Subtypes/Fighter.png">
+			<location x="33" y="589" />
+		</block>
+		<block type="overlay" id="backup2_gangster" src="Proxy/Subtypes/Gangster.png">
+			<location x="33" y="589" />
+		</block>
+		<block type="overlay" id="backup2_guardian" src="Proxy/Subtypes/Guardian.png">
+			<location x="33" y="589" />
+		</block>
+		<block type="overlay" id="backup2_gymnast" src="Proxy/Subtypes/Gymnast.png">
+			<location x="33" y="589" />
+		</block>
+		<block type="overlay" id="backup2_hunter" src="Proxy/Subtypes/Hunter.png">
+			<location x="33" y="589" />
+		</block>
+		<block type="overlay" id="backup2_karateka" src="Proxy/Subtypes/Karateka.png">
+			<location x="33" y="589" />
+		</block>
+		<block type="overlay" id="backup2_kickboxer" src="Proxy/Subtypes/Kickboxer.png">
+			<location x="33" y="589" />
+		</block>
+		<block type="overlay" id="backup2_kobudo" src="Proxy/Subtypes/Kobudo.png">
+			<location x="33" y="589" />
+		</block>
+		<block type="overlay" id="backup2_kung-fu" src="Proxy/Subtypes/Kung-fu.png">
+			<location x="33" y="589" />
+		</block>
+		<block type="overlay" id="backup2_magician" src="Proxy/Subtypes/Magician.png">
+			<location x="33" y="589" />
+		</block>
+		<block type="overlay" id="backup2_mentor" src="Proxy/Subtypes/Mentor.png">
+			<location x="33" y="589" />
+		</block>
+		<block type="overlay" id="backup2_mercenary" src="Proxy/Subtypes/Mercenary.png">
+			<location x="33" y="589" />
+		</block>
+		<block type="overlay" id="backup2_monk" src="Proxy/Subtypes/Monk.png">
+			<location x="33" y="589" />
+		</block>
+		<block type="overlay" id="backup2_monster" src="Proxy/Subtypes/Monster.png">
+			<location x="33" y="589" />
+		</block>
+		<block type="overlay" id="backup2_ninja" src="Proxy/Subtypes/Ninja.png">
+			<location x="33" y="589" />
+		</block>
+		<block type="overlay" id="backup2_pilot" src="Proxy/Subtypes/Pilot.png">
+			<location x="33" y="589" />
+		</block>
+		<block type="overlay" id="backup2_priest" src="Proxy/Subtypes/Priest.png">
+			<location x="33" y="589" />
+		</block>
+		<block type="overlay" id="backup2_psychic" src="Proxy/Subtypes/Psychic.png">
+			<location x="33" y="589" />
+		</block>
+		<block type="overlay" id="backup2_robot" src="Proxy/Subtypes/Robot.png">
+			<location x="33" y="589" />
+		</block>
+		<block type="overlay" id="backup2_samurai" src="Proxy/Subtypes/Samurai.png">
+			<location x="33" y="589" />
+		</block>
+		<block type="overlay" id="backup2_soldier" src="Proxy/Subtypes/Soldier.png">
+			<location x="33" y="589" />
+		</block>
+		<block type="overlay" id="backup2_spirit" src="Proxy/Subtypes/Spirit.png">
+			<location x="33" y="589" />
+		</block>
+		<block type="overlay" id="backup2_student" src="Proxy/Subtypes/Student.png">
+			<location x="33" y="589" />
+		</block>
+		<block type="overlay" id="backup2_sumotori" src="Proxy/Subtypes/Sumotori.png">
+			<location x="33" y="589" />
+		</block>
+		<block type="overlay" id="backup2_swordsman" src="Proxy/Subtypes/Swordsman.png">
+			<location x="33" y="589" />
+		</block>
+		<block type="overlay" id="backup2_taekwondo" src="Proxy/Subtypes/Taekwondo.png">
+			<location x="33" y="589" />
+		</block>
+		<block type="overlay" id="backup2_vampire" src="Proxy/Subtypes/Vampire.png">
+			<location x="33" y="589" />
+		</block>
+		<block type="overlay" id="backup2_warrior" src="Proxy/Subtypes/Warrior.png">
+			<location x="33" y="589" />
+		</block>
+		<block type="overlay" id="backup2_wrestler" src="Proxy/Subtypes/Wrestler.png">
+			<location x="33" y="589" />
+		</block>
+		<block type="overlay" id="backup2_zombie" src="Proxy/Subtypes/Zombie.png">
+			<location x="33" y="589" />
+		</block>
+		<!-- Backup 3 -->
+		<block type="overlay" id="backup3_agent" src="Proxy/Subtypes/Agent.png">
+			<location x="33" y="631" />
+		</block>
+		<block type="overlay" id="backup3_aikido" src="Proxy/Subtypes/Aikido.png">
+			<location x="33" y="631" />
+		</block>
+		<block type="overlay" id="backup3_alien" src="Proxy/Subtypes/Alien.png">
+			<location x="33" y="631" />
+		</block>
+		<block type="overlay" id="backup3_android" src="Proxy/Subtypes/Android.png">
+			<location x="33" y="631" />
+		</block>
+		<block type="overlay" id="backup3_artist" src="Proxy/Subtypes/Artist.png">
+			<location x="33" y="631" />
+		</block>
+		<block type="overlay" id="backup3_assassin" src="Proxy/Subtypes/Assassin.png">
+			<location x="33" y="631" />
+		</block>
+		<block type="overlay" id="backup3_avatar" src="Proxy/Subtypes/Avatar.png">
+			<location x="33" y="631" />
+		</block>
+		<block type="overlay" id="backup3_beast" src="Proxy/Subtypes/Beast.png">
+			<location x="33" y="631" />
+		</block>
+		<block type="overlay" id="backup3_boss" src="Proxy/Subtypes/Boss.png">
+			<location x="33" y="631" />
+		</block>
+		<block type="overlay" id="backup3_boxer" src="Proxy/Subtypes/Boxer.png">
+			<location x="33" y="631" />
+		</block>
+		<block type="overlay" id="backup3_brute" src="Proxy/Subtypes/Brute.png">
+			<location x="33" y="631" />
+		</block>
+		<block type="overlay" id="backup3_capoeira" src="Proxy/Subtypes/Capoeira.png">
+			<location x="33" y="631" />
+		</block>
+		<block type="overlay" id="backup3_captain" src="Proxy/Subtypes/Captain.png">
+			<location x="33" y="631" />
+		</block>
+		<block type="overlay" id="backup3_cursed" src="Proxy/Subtypes/Cursed.png">
+			<location x="33" y="631" />
+		</block>
+		<block type="overlay" id="backup3_cyborg" src="Proxy/Subtypes/Cyborg.png">
+			<location x="33" y="631" />
+		</block>
+		<block type="overlay" id="backup3_deity" src="Proxy/Subtypes/Deity.png">
+			<location x="33" y="631" />
+		</block>
+		<block type="overlay" id="backup3_demon" src="Proxy/Subtypes/Demon.png">
+			<location x="33" y="631" />
+		</block>
+		<block type="overlay" id="backup3_detective" src="Proxy/Subtypes/Detective.png">
+			<location x="33" y="631" />
+		</block>
+		<block type="overlay" id="backup3_experiment" src="Proxy/Subtypes/Experiment.png">
+			<location x="33" y="631" />
+		</block>
+		<block type="overlay" id="backup3_fighter" src="Proxy/Subtypes/Fighter.png">
+			<location x="33" y="631" />
+		</block>
+		<block type="overlay" id="backup3_gangster" src="Proxy/Subtypes/Gangster.png">
+			<location x="33" y="631" />
+		</block>
+		<block type="overlay" id="backup3_guardian" src="Proxy/Subtypes/Guardian.png">
+			<location x="33" y="631" />
+		</block>
+		<block type="overlay" id="backup3_gymnast" src="Proxy/Subtypes/Gymnast.png">
+			<location x="33" y="631" />
+		</block>
+		<block type="overlay" id="backup3_hunter" src="Proxy/Subtypes/Hunter.png">
+			<location x="33" y="631" />
+		</block>
+		<block type="overlay" id="backup3_karateka" src="Proxy/Subtypes/Karateka.png">
+			<location x="33" y="631" />
+		</block>
+		<block type="overlay" id="backup3_kickboxer" src="Proxy/Subtypes/Kickboxer.png">
+			<location x="33" y="631" />
+		</block>
+		<block type="overlay" id="backup3_kobudo" src="Proxy/Subtypes/Kobudo.png">
+			<location x="33" y="631" />
+		</block>
+		<block type="overlay" id="backup3_kung-fu" src="Proxy/Subtypes/Kung-fu.png">
+			<location x="33" y="631" />
+		</block>
+		<block type="overlay" id="backup3_magician" src="Proxy/Subtypes/Magician.png">
+			<location x="33" y="631" />
+		</block>
+		<block type="overlay" id="backup3_mentor" src="Proxy/Subtypes/Mentor.png">
+			<location x="33" y="631" />
+		</block>
+		<block type="overlay" id="backup3_mercenary" src="Proxy/Subtypes/Mercenary.png">
+			<location x="33" y="631" />
+		</block>
+		<block type="overlay" id="backup3_monk" src="Proxy/Subtypes/Monk.png">
+			<location x="33" y="631" />
+		</block>
+		<block type="overlay" id="backup3_monster" src="Proxy/Subtypes/Monster.png">
+			<location x="33" y="631" />
+		</block>
+		<block type="overlay" id="backup3_ninja" src="Proxy/Subtypes/Ninja.png">
+			<location x="33" y="631" />
+		</block>
+		<block type="overlay" id="backup3_pilot" src="Proxy/Subtypes/Pilot.png">
+			<location x="33" y="631" />
+		</block>
+		<block type="overlay" id="backup3_priest" src="Proxy/Subtypes/Priest.png">
+			<location x="33" y="631" />
+		</block>
+		<block type="overlay" id="backup3_psychic" src="Proxy/Subtypes/Psychic.png">
+			<location x="33" y="631" />
+		</block>
+		<block type="overlay" id="backup3_robot" src="Proxy/Subtypes/Robot.png">
+			<location x="33" y="631" />
+		</block>
+		<block type="overlay" id="backup3_samurai" src="Proxy/Subtypes/Samurai.png">
+			<location x="33" y="631" />
+		</block>
+		<block type="overlay" id="backup3_soldier" src="Proxy/Subtypes/Soldier.png">
+			<location x="33" y="631" />
+		</block>
+		<block type="overlay" id="backup3_spirit" src="Proxy/Subtypes/Spirit.png">
+			<location x="33" y="631" />
+		</block>
+		<block type="overlay" id="backup3_student" src="Proxy/Subtypes/Student.png">
+			<location x="33" y="631" />
+		</block>
+		<block type="overlay" id="backup3_sumotori" src="Proxy/Subtypes/Sumotori.png">
+			<location x="33" y="631" />
+		</block>
+		<block type="overlay" id="backup3_swordsman" src="Proxy/Subtypes/Swordsman.png">
+			<location x="33" y="631" />
+		</block>
+		<block type="overlay" id="backup3_taekwondo" src="Proxy/Subtypes/Taekwondo.png">
+			<location x="33" y="631" />
+		</block>
+		<block type="overlay" id="backup3_vampire" src="Proxy/Subtypes/Vampire.png">
+			<location x="33" y="631" />
+		</block>
+		<block type="overlay" id="backup3_warrior" src="Proxy/Subtypes/Warrior.png">
+			<location x="33" y="631" />
+		</block>
+		<block type="overlay" id="backup3_wrestler" src="Proxy/Subtypes/Wrestler.png">
+			<location x="33" y="631" />
+		</block>
+		<block type="overlay" id="backup3_zombie" src="Proxy/Subtypes/Zombie.png">
+			<location x="33" y="631" />
+		</block>
 		<!-- Text blocks -->
 		<block type="text" id="bp">
-			<location x="337" y="51" />
-			<text color="#fad6d6" size="27" font="Fonts/m04br.ttf" />
-			<border color="#691e1e" size="2" />
-			<wordwrap width="119" height="30" align="far" shrinktofit="True" />
+			<location x="340" y="47" />
+			<text color="#fdeaea" size="29" font="Fonts/m04b_CFC.ttf" />
+			<border color="#691e1e" size="6" />
+			<wordwrap width="124" height="32" align="far" shrinktofit="True" />
 		</block>
 		<block type="text" id="sp">
-			<location x="399" y="101" />
-			<text color="#dae1f7" size="21" font="Fonts/m04br.ttf" />
-			<border color="#102267" size="2" />
-			<wordwrap width="60" height="24" align="far" shrinktofit="True" />
+			<location x="398" y="98" />
+			<text color="#e7ecfa" size="23" font="Fonts/m04b_CFC.ttf" />
+			<border color="#102267" size="6" />
+			<wordwrap width="65" height="25" align="far" shrinktofit="True" />
 		</block>
 		<block type="text" id="name">
-			<location x="31" y="442" />
-			<text color="#FFFFFF" size="45" font="Fonts/PassionOne-Regular.ttf" />
-			<wordwrap width="275" height="45" shrinktofit="True" />
+			<location x="23" y="442" />
+			<text color="#FFFFFF" size="46" font="Fonts/PassionOne-Regular.ttf" />
+			<wordwrap width="295" height="52" shrinktofit="True" />
 		</block>
 		<block type="text" id="type">
-			<location x="354" y="447" />
-			<text color="#cecece" size="22" font="Fonts/ArchivoNarrow-Bold.ttf" />
-			<wordwrap width="92" height="24" shrinktofit="True" />
+			<location x="350" y="446" />
+			<text color="#cecece" size="24" font="Fonts/ArchivoNarrow-Bold.ttf" />
+			<wordwrap width="92" height="26" shrinktofit="True" />
 		</block>
 		<block type="text" id="subtype">
-			<location x="354" y="470" />
-			<text color="#ffffff" size="17" font="Fonts/ArchivoNarrow-Bold.ttf" />
-			<wordwrap width="92" height="19" shrinktofit="True" />
+			<location x="352" y="469" />
+			<text color="#ffffff" size="18" font="Fonts/ArchivoNarrow-Bold.ttf" />
+			<wordwrap width="92" height="21" shrinktofit="True" />
 		</block>
 		<block type="text" id="rules">
-			<location x="100" y="507" />
-			<text color="#000000" size="20" font="Fonts/ArchivoNarrow-Regular.ttf" />
+			<location x="95" y="507" />
+			<text color="#000000" size="22" font="Fonts/ArchivoNarrow-Regular_CFC.ttf" />
 			<wordwrap width="380" height="155" />
 		</block>
 		<block type="text" id="number">
-			<location x="326" y="677" />
-			<text color="#000000" size="16" font="Fonts/SourceSansPro-Regular.ttf" />
-			<wordwrap width="156" height="18" align="far" />
+			<location x="435" y="674" />
+			<text color="#ffffff" size="15" font="Fonts/SourceSansPro-Regular_CFC.ttf" />
+			<wordwrap width="50" height="15" align="far" />
 		</block>
 	</blocks>
 	
@@ -626,12 +1079,579 @@
 					</default>
 				</switch>
 			</conditional>
+			<!-- Backup 1 -->
+			<conditional>
+				<switch property="Backup 1">
+					<case value="Agent" break="True">
+						<link block="backup1_agent" />
+					</case>
+					<case value="Aikido" break="True">
+						<link block="backup1_aikido" />
+					</case>
+					<case value="Alien" break="True">
+						<link block="backup1_alien" />
+					</case>
+					<case value="Android" break="True">
+						<link block="backup1_android" />
+					</case>
+					<case value="Artist" break="True">
+						<link block="backup1_artist" />
+					</case>
+					<case value="Assassin" break="True">
+						<link block="backup1_assassin" />
+					</case>
+					<case value="Avatar" break="True">
+						<link block="backup1_avatar" />
+					</case>
+					<case value="Beast" break="True">
+						<link block="backup1_beast" />
+					</case>
+					<case value="Boss" break="True">
+						<link block="backup1_boss" />
+					</case>
+					<case value="Boxer" break="True">
+						<link block="backup1_boxer" />
+					</case>
+					<case value="Brute" break="True">
+						<link block="backup1_brute" />
+					</case>
+					<case value="Capoeira" break="True">
+						<link block="backup1_capoeira" />
+					</case>
+					<case value="Captain" break="True">
+						<link block="backup1_captain" />
+					</case>
+					<case value="Cursed" break="True">
+						<link block="backup1_cursed" />
+					</case>
+					<case value="Cyborg" break="True">
+						<link block="backup1_cyborg" />
+					</case>
+					<case value="Deity" break="True">
+						<link block="backup1_deity" />
+					</case>
+					<case value="Demon" break="True">
+						<link block="backup1_demon" />
+					</case>
+					<case value="Detective" break="True">
+						<link block="backup1_detective" />
+					</case>
+					<case value="Experiment" break="True">
+						<link block="backup1_experiment" />
+					</case>
+					<case value="Fighter" break="True">
+						<link block="backup1_fighter" />
+					</case>
+					<case value="Gangster" break="True">
+						<link block="backup1_gangster" />
+					</case>
+					<case value="Guardian" break="True">
+						<link block="backup1_guardian" />
+					</case>
+					<case value="Gymnast" break="True">
+						<link block="backup1_gymnast" />
+					</case>
+					<case value="Hunter" break="True">
+						<link block="backup1_hunter" />
+					</case>
+					<case value="Karateka" break="True">
+						<link block="backup1_karateka" />
+					</case>
+					<case value="Kickboxer" break="True">
+						<link block="backup1_kickboxer" />
+					</case>
+					<case value="Kobudo" break="True">
+						<link block="backup1_kobudo" />
+					</case>
+					<case value="Kung-fu" break="True">
+						<link block="backup1_kung-fu" />
+					</case>
+					<case value="Magician" break="True">
+						<link block="backup1_magician" />
+					</case>
+					<case value="Mentor" break="True">
+						<link block="backup1_mentor" />
+					</case>
+					<case value="Mercenary" break="True">
+						<link block="backup1_mercenary" />
+					</case>
+					<case value="Monk" break="True">
+						<link block="backup1_monk" />
+					</case>
+					<case value="Monster" break="True">
+						<link block="backup1_monster" />
+					</case>
+					<case value="Ninja" break="True">
+						<link block="backup1_ninja" />
+					</case>
+					<case value="Pilot" break="True">
+						<link block="backup1_pilot" />
+					</case>
+					<case value="Priest" break="True">
+						<link block="backup1_priest" />
+					</case>
+					<case value="Psychic" break="True">
+						<link block="backup1_psychic" />
+					</case>
+					<case value="Robot" break="True">
+						<link block="backup1_robot" />
+					</case>
+					<case value="Samurai" break="True">
+						<link block="backup1_samurai" />
+					</case>
+					<case value="Soldier" break="True">
+						<link block="backup1_soldier" />
+					</case>
+					<case value="Spirit" break="True">
+						<link block="backup1_spirit" />
+					</case>
+					<case value="Student" break="True">
+						<link block="backup1_student" />
+					</case>
+					<case value="Sumotori" break="True">
+						<link block="backup1_sumotori" />
+					</case>
+					<case value="Swordsman" break="True">
+						<link block="backup1_swordsman" />
+					</case>
+					<case value="Taekwondo" break="True">
+						<link block="backup1_taekwondo" />
+					</case>
+					<case value="Vampire" break="True">
+						<link block="backup1_vampire" />
+					</case>
+					<case value="Warrior" break="True">
+						<link block="backup1_warrior" />
+					</case>
+					<case value="Wrestler" break="True">
+						<link block="backup1_wrestler" />
+					</case>
+					<case value="Zombie" break="True">
+						<link block="backup1_zombie" />
+					</case>
+					<default>
+						<link block="empty_backup1" />
+					</default>
+				</switch>
+			</conditional>
+			<!-- Backup 2 -->
+			<conditional>
+				<switch property="Backup 2">
+					<case value="Agent" break="True">
+						<link block="backup2_agent" />
+					</case>
+					<case value="Aikido" break="True">
+						<link block="backup2_aikido" />
+					</case>
+					<case value="Alien" break="True">
+						<link block="backup2_alien" />
+					</case>
+					<case value="Android" break="True">
+						<link block="backup2_android" />
+					</case>
+					<case value="Artist" break="True">
+						<link block="backup2_artist" />
+					</case>
+					<case value="Assassin" break="True">
+						<link block="backup2_assassin" />
+					</case>
+					<case value="Avatar" break="True">
+						<link block="backup2_avatar" />
+					</case>
+					<case value="Beast" break="True">
+						<link block="backup2_beast" />
+					</case>
+					<case value="Boss" break="True">
+						<link block="backup2_boss" />
+					</case>
+					<case value="Boxer" break="True">
+						<link block="backup2_boxer" />
+					</case>
+					<case value="Brute" break="True">
+						<link block="backup2_brute" />
+					</case>
+					<case value="Capoeira" break="True">
+						<link block="backup2_capoeira" />
+					</case>
+					<case value="Captain" break="True">
+						<link block="backup2_captain" />
+					</case>
+					<case value="Cursed" break="True">
+						<link block="backup2_cursed" />
+					</case>
+					<case value="Cyborg" break="True">
+						<link block="backup2_cyborg" />
+					</case>
+					<case value="Deity" break="True">
+						<link block="backup2_deity" />
+					</case>
+					<case value="Demon" break="True">
+						<link block="backup2_demon" />
+					</case>
+					<case value="Detective" break="True">
+						<link block="backup2_detective" />
+					</case>
+					<case value="Experiment" break="True">
+						<link block="backup2_experiment" />
+					</case>
+					<case value="Fighter" break="True">
+						<link block="backup2_fighter" />
+					</case>
+					<case value="Gangster" break="True">
+						<link block="backup2_gangster" />
+					</case>
+					<case value="Guardian" break="True">
+						<link block="backup2_guardian" />
+					</case>
+					<case value="Gymnast" break="True">
+						<link block="backup2_gymnast" />
+					</case>
+					<case value="Hunter" break="True">
+						<link block="backup2_hunter" />
+					</case>
+					<case value="Karateka" break="True">
+						<link block="backup2_karateka" />
+					</case>
+					<case value="Kickboxer" break="True">
+						<link block="backup2_kickboxer" />
+					</case>
+					<case value="Kobudo" break="True">
+						<link block="backup2_kobudo" />
+					</case>
+					<case value="Kung-fu" break="True">
+						<link block="backup2_kung-fu" />
+					</case>
+					<case value="Magician" break="True">
+						<link block="backup2_magician" />
+					</case>
+					<case value="Mentor" break="True">
+						<link block="backup2_mentor" />
+					</case>
+					<case value="Mercenary" break="True">
+						<link block="backup2_mercenary" />
+					</case>
+					<case value="Monk" break="True">
+						<link block="backup2_monk" />
+					</case>
+					<case value="Monster" break="True">
+						<link block="backup2_monster" />
+					</case>
+					<case value="Ninja" break="True">
+						<link block="backup2_ninja" />
+					</case>
+					<case value="Pilot" break="True">
+						<link block="backup2_pilot" />
+					</case>
+					<case value="Priest" break="True">
+						<link block="backup2_priest" />
+					</case>
+					<case value="Psychic" break="True">
+						<link block="backup2_psychic" />
+					</case>
+					<case value="Robot" break="True">
+						<link block="backup2_robot" />
+					</case>
+					<case value="Samurai" break="True">
+						<link block="backup2_samurai" />
+					</case>
+					<case value="Soldier" break="True">
+						<link block="backup2_soldier" />
+					</case>
+					<case value="Spirit" break="True">
+						<link block="backup2_spirit" />
+					</case>
+					<case value="Student" break="True">
+						<link block="backup2_student" />
+					</case>
+					<case value="Sumotori" break="True">
+						<link block="backup2_sumotori" />
+					</case>
+					<case value="Swordsman" break="True">
+						<link block="backup2_swordsman" />
+					</case>
+					<case value="Taekwondo" break="True">
+						<link block="backup2_taekwondo" />
+					</case>
+					<case value="Vampire" break="True">
+						<link block="backup2_vampire" />
+					</case>
+					<case value="Warrior" break="True">
+						<link block="backup2_warrior" />
+					</case>
+					<case value="Wrestler" break="True">
+						<link block="backup2_wrestler" />
+					</case>
+					<case value="Zombie" break="True">
+						<link block="backup2_zombie" />
+					</case>
+					<default>
+						<link block="empty_backup2" />
+					</default>
+				</switch>
+			</conditional>
+			<!-- Backup 3 -->
+			<conditional>
+				<switch property="Backup 3">
+					<case value="Agent" break="True">
+						<link block="backup3_agent" />
+					</case>
+					<case value="Aikido" break="True">
+						<link block="backup3_aikido" />
+					</case>
+					<case value="Alien" break="True">
+						<link block="backup3_alien" />
+					</case>
+					<case value="Android" break="True">
+						<link block="backup3_android" />
+					</case>
+					<case value="Artist" break="True">
+						<link block="backup3_artist" />
+					</case>
+					<case value="Assassin" break="True">
+						<link block="backup3_assassin" />
+					</case>
+					<case value="Avatar" break="True">
+						<link block="backup3_avatar" />
+					</case>
+					<case value="Beast" break="True">
+						<link block="backup3_beast" />
+					</case>
+					<case value="Boss" break="True">
+						<link block="backup3_boss" />
+					</case>
+					<case value="Boxer" break="True">
+						<link block="backup3_boxer" />
+					</case>
+					<case value="Brute" break="True">
+						<link block="backup3_brute" />
+					</case>
+					<case value="Capoeira" break="True">
+						<link block="backup3_capoeira" />
+					</case>
+					<case value="Captain" break="True">
+						<link block="backup3_captain" />
+					</case>
+					<case value="Cursed" break="True">
+						<link block="backup3_cursed" />
+					</case>
+					<case value="Cyborg" break="True">
+						<link block="backup3_cyborg" />
+					</case>
+					<case value="Deity" break="True">
+						<link block="backup3_deity" />
+					</case>
+					<case value="Demon" break="True">
+						<link block="backup3_demon" />
+					</case>
+					<case value="Detective" break="True">
+						<link block="backup3_detective" />
+					</case>
+					<case value="Experiment" break="True">
+						<link block="backup3_experiment" />
+					</case>
+					<case value="Fighter" break="True">
+						<link block="backup3_fighter" />
+					</case>
+					<case value="Gangster" break="True">
+						<link block="backup3_gangster" />
+					</case>
+					<case value="Guardian" break="True">
+						<link block="backup3_guardian" />
+					</case>
+					<case value="Gymnast" break="True">
+						<link block="backup3_gymnast" />
+					</case>
+					<case value="Hunter" break="True">
+						<link block="backup3_hunter" />
+					</case>
+					<case value="Karateka" break="True">
+						<link block="backup3_karateka" />
+					</case>
+					<case value="Kickboxer" break="True">
+						<link block="backup3_kickboxer" />
+					</case>
+					<case value="Kobudo" break="True">
+						<link block="backup3_kobudo" />
+					</case>
+					<case value="Kung-fu" break="True">
+						<link block="backup3_kung-fu" />
+					</case>
+					<case value="Magician" break="True">
+						<link block="backup3_magician" />
+					</case>
+					<case value="Mentor" break="True">
+						<link block="backup3_mentor" />
+					</case>
+					<case value="Mercenary" break="True">
+						<link block="backup3_mercenary" />
+					</case>
+					<case value="Monk" break="True">
+						<link block="backup3_monk" />
+					</case>
+					<case value="Monster" break="True">
+						<link block="backup3_monster" />
+					</case>
+					<case value="Ninja" break="True">
+						<link block="backup3_ninja" />
+					</case>
+					<case value="Pilot" break="True">
+						<link block="backup3_pilot" />
+					</case>
+					<case value="Priest" break="True">
+						<link block="backup3_priest" />
+					</case>
+					<case value="Psychic" break="True">
+						<link block="backup3_psychic" />
+					</case>
+					<case value="Robot" break="True">
+						<link block="backup3_robot" />
+					</case>
+					<case value="Samurai" break="True">
+						<link block="backup3_samurai" />
+					</case>
+					<case value="Soldier" break="True">
+						<link block="backup3_soldier" />
+					</case>
+					<case value="Spirit" break="True">
+						<link block="backup3_spirit" />
+					</case>
+					<case value="Student" break="True">
+						<link block="backup3_student" />
+					</case>
+					<case value="Sumotori" break="True">
+						<link block="backup3_sumotori" />
+					</case>
+					<case value="Swordsman" break="True">
+						<link block="backup3_swordsman" />
+					</case>
+					<case value="Taekwondo" break="True">
+						<link block="backup3_taekwondo" />
+					</case>
+					<case value="Vampire" break="True">
+						<link block="backup3_vampire" />
+					</case>
+					<case value="Warrior" break="True">
+						<link block="backup3_warrior" />
+					</case>
+					<case value="Wrestler" break="True">
+						<link block="backup3_wrestler" />
+					</case>
+					<case value="Zombie" break="True">
+						<link block="backup3_zombie" />
+					</case>
+					<default>
+						<link block="empty_backup3" />
+					</default>
+				</switch>
+			</conditional>
 		</overlayblocks>
 		
 		<textblocks>
 			<link block="bp">
 				<property name="BP" />
 			</link>
+			<link block="sp">
+				<property name="SP" />
+			</link>
+			<link block="type">
+				<property name="Type" />
+			</link>
+			<link block="subtype">
+				<property name="Subtype" />
+			</link>
+			<link block="name">
+				<property name="Name" />
+			</link>
+			<link block="rules">
+				<property name="Rules" />
+			</link>
+			<link block="number">
+				<property name="Number" />
+			</link>
+		</textblocks>
+	</template>
+
+	<template src="Proxy/Back/action.png">
+		<matches>
+			<match name="Type" value="Action" />
+		</matches>
+		
+		<overlayblocks>
+			<link block="sp_box" />
+			<!-- Rarity -->
+			<conditional>
+				<switch property="Rarity">
+					<case value="S" break="True">
+						<link block="rarity_s" />
+					</case>
+					<case value="A" break="True">
+						<link block="rarity_a" />
+					</case>
+					<case value="B" break="True">
+						<link block="rarity_b" />
+					</case>
+					<case value="C" break="True">
+						<link block="rarity_c" />
+					</case>
+					<default>
+						<link block="rarity_d" />
+					</default>
+				</switch>
+			</conditional>
+		</overlayblocks>
+		
+		<textblocks>
+			<link block="sp">
+				<property name="SP" />
+			</link>
+			<link block="type">
+				<property name="Type" />
+			</link>
+			<link block="subtype">
+				<property name="Subtype" />
+			</link>
+			<link block="name">
+				<property name="Name" />
+			</link>
+			<link block="rules">
+				<property name="Rules" />
+			</link>
+			<link block="number">
+				<property name="Number" />
+			</link>
+		</textblocks>
+	</template>
+
+	<template src="Proxy/Back/reaction.png">
+		<matches>
+			<match name="Type" value="Reaction" />
+		</matches>
+		
+		<overlayblocks>
+			<link block="sp_box" />
+			<!-- Rarity -->
+			<conditional>
+				<switch property="Rarity">
+					<case value="S" break="True">
+						<link block="rarity_s" />
+					</case>
+					<case value="A" break="True">
+						<link block="rarity_a" />
+					</case>
+					<case value="B" break="True">
+						<link block="rarity_b" />
+					</case>
+					<case value="C" break="True">
+						<link block="rarity_c" />
+					</case>
+					<default>
+						<link block="rarity_d" />
+					</default>
+				</switch>
+			</conditional>
+		</overlayblocks>
+		
+		<textblocks>
 			<link block="sp">
 				<property name="SP" />
 			</link>

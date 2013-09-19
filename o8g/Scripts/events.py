@@ -20,22 +20,27 @@
 # Event handlers
 #---------------------------------------------------------------------------
 
-# Event handler hooked to an OCTGN game events
+def checkTwoSidedTable():
+   mute()
+   if not table.isTwoSided():
+      information(":::WARNING::: This game is designed to be played on a two-sided table. Playing could be uncomfortable otherwise! Please start a new game and make sure the appropriate button is checked.")
+
+def OnLoadDeckEventHandler(player, groups):
+   debugNotify(">>> OnLoadDeckEventHandler()") #Debug
+   
+   if player != me: return # We only want the owner of to run this script
+   mute()
+   decklen = len(me.Deck)
+   if decklen != 50:
+      notify (":::ERROR::: {}'s Deck must have exactly 50 cards (it has {} cards)".format(me,decklen))
+   
+   debugNotify("<<< OnLoadDeckEventHandler()") #Debug
+
 def onMoveCardEventHandler(player, card, fromGroup, toGroup, oldIndex, index, oldX, oldY, x, y, isScriptMove):
    debugNotify(">>> onMoveCardEventHandler()") #Debug
-   if fromGroup == table and toGroup != table and card.Type == 'Character':
-      clearAttachLinks(card)
+   
+   if card.owner == me and fromGroup == table and toGroup != table:
+      if card.Type == 'Character':
+         clearAttachLinks(card)
+      
    debugNotify("<<< onMoveCardEventHandler()") #Debug
-
-def onEndTurnEventHandler(player):
-   mute()
-   if player != me: return
-   # Clears targets, colors and freeze (tap) characters in the player's ring
-   myCards = (card for card in table
-      if card.controller == me)
-   for card in myCards:
-      card.target(False)
-      if card.highlight != None and card.highlight != DoesntUnfreezeColor:
-         if card.highlight == AttackColor:
-            card.orientation = Rot90
-         card.highlight = None

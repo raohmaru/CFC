@@ -36,23 +36,18 @@ BlockColor = "#ffff00"
 ActivatedColor = "#0000ff"
 DoesntUnfreezeColor = "#000000"
 
-# Markers
-HPMarker = ("HP", "b86fc644-d084-43d3-99d2-5b11457321cc")
-
-mdict = { # A dictionary which holds all the hard coded markers (in the markers file)
+# A dictionary which holds all the hard coded markers (in the markers file)
+mkdict = {
     'HP': ("HP", "b86fc644-d084-43d3-99d2-5b11457321cc")
 }
 
 # Misc
-CardWidth = 90
-CardHeight = 126
-
-loud = 'loud' # So that I don't have to use the quotes all the time in my function calls
-silent = 'silent' # Same as above
-Xaxis = 'x'  # Same as above
-Yaxis = 'y'	 # Same as above
+Xaxis = 'x'
+Yaxis = 'y'
 
 debugVerbosity = 4 # At -1, means no debugging messages display
 
-Automations = {'Play'      : True, # If True, game will automatically trigger card effects when playing or double-clicking on cards. Requires specific preparation in the sets.
-               'Phase'     : True} # If True, game will automatically trigger effects happening at the start of the player's turn, from cards they control.
+Automations = {
+   'Play'  : True, # Automatically trigger game effetcs and card effects when playing cards
+   'Phase' : True  # Automatically trigger phase related events, and effects from cards they control.
+}

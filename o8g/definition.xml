@@ -8,29 +8,33 @@
       markersize="16"
       tags="capcom snk fighter"
       description="A card game based in the SNK Playmore’s video game SNK vs. Capcom Card Fighters' Clash 2 Expand Edition.
-      &#xd;Automation rank: D
-      &#xd;(This game contains no automation.)"
+      &#xd;Automation rank: C
+      &#xd;(This game contains some automation.)"
       setsurl="http://raohmaru.com/"
       gameurl="http://raohmaru.com/"
       authors="raohmaru"
-      iconurl="https://raw.github.com/raohmaru/CFC/master/cfc_logo.png">
+      iconurl="https://raw.github.com/raohmaru/CFC/master/cfc_logo.png"
+	  usetwosidedtable="True">
 	
 	<scripts>
 		<script src="Scripts/constants.py" />
 		<script src="Scripts/actions.py" />
 		<script src="Scripts/events.py" />
+		<script src="Scripts/autoscripts.py" />
 		<script src="Scripts/utils.py" />
 	</scripts>
 	
 	<events>
+		<event name="OnTableLoad" action="checkTwoSidedTable" />
+		<event name="OnGameStart" action="resetAll" />
+		<event name="OnLoadDeck" action="OnLoadDeckEventHandler" />
 		<event name="OnMoveCard" action="onMoveCardEventHandler"/>
-		<event name="OnEndTurn" action="onEndTurnEventHandler" />
 	</events>
 	
 	<fonts>
-		<font src="fonts/SourceSansPro-Regular.ttf" size="12" target="context"/>
-		<font src="fonts/SourceSansPro-Regular.ttf" size="12" target="chat"/>
-		<font src="fonts/SourceSansPro-Regular.ttf" size="12" target="deckeditor"/>
+		<font src="fonts/SourceSansPro-Regular_CFC.ttf" size="12" target="context"/>
+		<font src="fonts/SourceSansPro-Regular_CFC.ttf" size="12" target="chat"/>
+		<font src="fonts/SourceSansPro-Regular_CFC.ttf" size="12" target="deckeditor"/>
 	</fonts>
 	
 	<proxygen definitionsrc="Proxy/proxydef.xml">
@@ -62,18 +66,17 @@
 		<property name="Illustrator" type="String" ignoreText="True" />
 	</card>
 	
-	<table name="Table" visibility="undefined" ordered="False" width="1250" height="750" background="Background/background.jpg" backgroundStyle="uniformToFill" board="Background/ring.png" boardPosition="-239,-342,478,684" >
+	<table name="Table" visibility="undefined" ordered="False" width="1250" height="750" background="Background/background.jpg" backgroundStyle="uniformToFill" board="Background/ring.png" boardPosition="-327,-342,655,684" >
 		<groupaction menu="Next phase" shortcut="Ctrl+Enter" execute="nextPhase" />
 		<groupactions menu="Phases...">
 			<groupaction menu="Go to Activate phase" shortcut="F1" execute="goToActivate" />
 			<groupaction menu="Go to Draw phase" shortcut="F2" execute="goToDraw" />
 			<groupaction menu="Go to Main phase" shortcut="F3" execute="goToMain" />
-			<groupaction menu="Go to End phase" shortcut="F4" execute="goToEnd" />
+			<groupaction menu="Go to End phase" shortcut="F12" execute="goToEnd" />
 		</groupactions>
 		<groupactions menu="Game...">
-			<groupaction menu="Setup starting cards &amp; hand" shortcut="F12" execute="setup" />
+			<groupaction menu="Setup starting cards &amp; hand" shortcut="Ctrl+F1" execute="setup" />
 			<groupaction menu="Reset" execute="scoop" />
-			<groupaction menu="Download sets card images" execute="download_o8c" />
 			<groupaction menu="Debug" execute="TrialError" />
 		</groupactions>
 		<groupactions menu="Random...">
@@ -82,10 +85,16 @@
 			<groupaction menu="Roll 10-sided die" shortcut="Ctrl+Alt+10" execute="roll10" />
 			<groupaction menu="Pick a random card" execute="randomPick" />
 		</groupactions>
-		<groupaction menu="Clean-up targets and highlights" shortcut="Esc" execute="clearAll" />
+		<groupactions menu="Settings...">
+			<groupaction menu="Switch Play automation ON/OFF" execute="switchPlayAutomation" />
+			<groupaction menu="Switch Phase Triggers automation ON/OFF" execute="switchPhaseAutomation" />
+		</groupactions>
 		
+		<cardaction menu="Use  &#163; ability/Resolve" default="True" execute="activate" />
+		<cardaction menu="(Un)Freeze" shortcut="Ctrl+X" execute="freeze" />
+		<cardaction menu="Don't unfreeze during Activate phase" shortcut="Ctrl+Shift+X" execute="doesNotUnfreeze" />
 		<cardactions menu="Actions...">
-			<cardaction menu="Tap/Untap" shortcut="Ctrl+T" execute="tapUntap" default="True" />
+			<cardaction menu="(Un)Tap" shortcut="Ctrl+T" execute="tapUntap" />
 			<cardaction menu="Face up/down" shortcut="Ctrl+F" execute="faceUpDown" />
 			<cardaction menu="Flip" shortcut="Ctrl+shift+F" execute="flip" />
 			<cardaction menu="Clone" shortcut="Ctrl+C" batchExecute="clone" />
@@ -95,9 +104,6 @@
 			<cardaction menu="Attack without freezing" shortcut="Ctrl+Shift+A" execute="attackNoFreeze" />
 			<cardaction menu="Counter-attack" shortcut="Ctrl+B" execute="block" />
 		</cardactions>
-		<cardaction menu="Use ability" shortcut="Ctrl+Z" execute="activate" />
-		<cardaction menu="Freeze/Unfreeze" shortcut="Ctrl+X" execute="freeze" />
-		<cardaction menu="Don't unfreeze during Activate phase" shortcut="Ctrl+Shift+X" execute="doesNotUnfreeze" />
 		<cardactions menu="Move...">
 			<cardaction menu="KO" shortcut="Del" execute="destroy" />
 			<cardaction menu="Kill" shortcut="Ctrl+Del" execute="remove" />
@@ -115,7 +121,7 @@
 	</table>
 	
 	<player summary="HP: {#Life} | SP: {#Life} | Hand: {#Hand}">
-		<counter name="HP" icon="counters/hp.png" default="30" reset="False" />
+		<counter name="HP" icon="counters/hp.png" default="30" reset="True" />
 		<counter name="SP" icon="counters/sp.png" default="0" reset="True" />
 		<!-- <globalvariable name="Hand Rank" value="N/A" /> -->
 

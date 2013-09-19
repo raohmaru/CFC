@@ -23,8 +23,6 @@ playerside = None # Variable to keep track on which side each player is
 playeraxis = None # Variable to keep track on which axis the player is
 phaseIdx = 0
 handsize = 5 # Used when automatically refilling your hand
-AttachingCard = None # Holds the card about to have other card attached. This needs to become a shared OCTGN variable when available.
-AttachedCards = {} # A dictionary which holds a coutner for each card, numbering how many attached cards each card has.
 
 #---------------------------------------------------------------------------
 # Phases
@@ -36,7 +34,7 @@ def showCurrentPhase():  # Just say a nice notification about which phase you're
 
 def nextPhase(group = table, x = 0, y = 0):  # Function to take you to the next phase.
    global phaseIdx
-   if phaseIdx > len(phases):
+   if phaseIdx >= len(phases):
       phaseIdx = 1
    else:
       phaseIdx += 1
@@ -51,34 +49,31 @@ def goToActivate(group = table, x = 0, y = 0):
    global phaseIdx
    phaseIdx = 1
    showCurrentPhase()
-   
-   # Unfreeze (untap) characters in the player's ring
-   myCards = (card for card in table
-      if card.controller == me
-      and card.highlight != DoesntUnfreezeColor)
-   for card in myCards:
-      card.orientation &= ~Rot90
-      card.highlight = None
+   triggerPhaseEvent('Activate')
 
 def goToDraw(group = table, x = 0, y = 0):
    global phaseIdx
    phaseIdx = 2
    showCurrentPhase()
+   triggerPhaseEvent('Draw')
 
 def goToMain(group = table, x = 0, y = 0):
    global phaseIdx
    phaseIdx = 3
    showCurrentPhase()
+   triggerPhaseEvent('Main')
 
 def goToCounterattack(group = table, x = 0, y = 0):
    global phaseIdx
    phaseIdx = 4
    showCurrentPhase()
+   triggerPhaseEvent('Counterattack')
 
 def goToEnd(group = table, x = 0, y = 0):
    global phaseIdx
    phaseIdx = 5
    showCurrentPhase()
+   triggerPhaseEvent('End')
 
 #---------------------------------------------------------------------------
 # Table group actions
@@ -87,8 +82,12 @@ def goToEnd(group = table, x = 0, y = 0):
 def setup(group,x=0,y=0):  # This function is usually the first one the player does
    debugNotify(">>> setup()") #Debug
    mute()
-   resetAll()
+   if not confirm("Are you sure you want to setup for a new game?\n(This action should only be done after a table reset)"):
+      return
    chooseSide() # The classic place where the players choose their side.
+   if len(me.Deck) == 0:
+      whisper("Please load a deck first")
+      return
    me.Deck.shuffle()
    refill() # We fill the player's play hand to their hand size
    notify("Setup for player {} completed.".format(me,))
@@ -96,7 +95,7 @@ def setup(group,x=0,y=0):  # This function is usually the first one the player d
 
 def scoop(group, x = 0, y = 0):
    mute()
-   if not confirm("Are you sure you want to reset?"):
+   if not confirm("Are you sure you want to reset?\n(All cards in your ring will return to their owner's hand and your stats will be restored)"):
       return
    me.HP = 30
    me.SP = 0
@@ -113,16 +112,13 @@ def scoop(group, x = 0, y = 0):
       card.moveTo(card.owner.Deck)
    notify("{} resets.".format(me))
 
-def download_o8c(group,x=0,y=0):
-   openUrl("http://raohmaru.com/pub/cfc/sets/cfc-sets-bundle.o8c")
-
 def flipCoin(group, x = 0, y = 0):
    mute()
    n = rnd(1, 2)
    if n == 1:
-      notify("{} flips heads.".format(me))
+      notify("{} flips Heads.".format(me))
    else:
-      notify("{} flips tails.".format(me))
+      notify("{} flips Tails.".format(me))
 
 def roll6(group, x = 0, y = 0):
    mute()
@@ -147,13 +143,20 @@ def randomPick(group, x = 0, y = 0):
         notify("{} randomly selects {}'s {} on the ring.".format(me, card.controller, card))
     else:
         notify("{} randomly selects {} from their {}.".format(me, card, group.name))
-   
-def clearAll(group, x = 0, y = 0):
+
+def clearAll(allPlayers = False):
    notify("{} clears all targets and highlights.".format(me))
-   for card in group:
-      card.target(False)
-      if card.controller == me:
-         card.highlight = None
+   for card in table:
+      if allPlayers or card.controller == me:
+         clear(card, silent = True)
+
+def switchPlayAutomation(group, x = 0, y = 0):
+   debugNotify(">>> switchPlayAutomation()") #Debug
+   switchAutomation('Play')
+
+def switchPhaseAutomation(group, x = 0, y = 0):
+   debugNotify(">>> switchPhaseAutomation()") #Debug
+   switchAutomation('Phase')
 
 #---------------------------------------------------------------------------
 # Table card actions
@@ -209,25 +212,33 @@ def activate(card, x = 0, y = 0):
 	card.highlight = ActivatedColor
 	notify("{} uses {}'s ability.".format(me, card))
 
-def freeze(card, x = 0, y = 0, count = None):
+def freeze(card, x = 0, y = 0, unfreeze = None, silent = False):
    mute()
-   card.orientation ^= Rot90
-   if card.orientation & Rot90 == Rot90:
-      notify('{} freezes {}'.format(me, card))
+   if unfreeze != None:
+      card.orientation = Rot0 if unfreeze else Rot90
    else:
-      notify('{} unfreezes {}'.format(me, card))
-   if card.highlight == AttackColor or card.highlight == ActivatedColor:
+      card.orientation ^= Rot90
+   if card.orientation & Rot90 == Rot90:
+      if not silent: notify('{} freezes {}'.format(me, card))
+   else:
+      if not silent: notify('{} unfreezes {}'.format(me, card))
+   if card.highlight != DoesntUnfreezeColor:
       card.highlight = None
 
 def doesNotUnfreeze(card, x = 0, y = 0):
    mute()
-   card.highlight = DoesntUnfreezeColor
-   notify("{0}'s {1} will not unfreeze during {0}'s Activate phase.".format(me, card))
+   if card.highlight != DoesntUnfreezeColor:
+      card.highlight = DoesntUnfreezeColor
+      notify("{0}'s {1} will not unfreeze during {0}'s next Activate phase.".format(me, card))
+   else:
+      card.highlight = None
+      notify("{0}'s {1} will unfreeze as normal during {0}'s Activate phase.".format(me, card))
 
-def clear(card, x = 0, y = 0):
-   notify("{} clears {}.".format(me, card))
-   card.highlight = None
+def clear(card, x = 0, y = 0, silent = False):
+   if not silent: notify("{} clears {}.".format(me, card))
    card.target(False)
+   if card.highlight != DoesntUnfreezeColor:
+      card.highlight = None
 
 #---------------------------------------------------------------------------
 # Movement actions
@@ -300,20 +311,20 @@ def discardAll(group, x = 0, y = 0):
 # Marker actions
 #---------------------------------------------------------------------------
 
-def plusBP(card, x = 0, y = 0, notification = 'loud', count = 1):
+def plusBP(card, x = 0, y = 0, silent = False, count = 1):
    mute()
-   if notification == loud:
+   if not silent:
       notify("{} raises {}'s BP by {}".format(me, card, count))
    for i in range(0,count):
-      card.markers[HPMarker] += 1
+      card.markers[mkdict['HP']] += 1
 
-def minusBP(card, x = 0, y = 0, notification = 'loud', count = 1):
+def minusBP(card, x = 0, y = 0, silent = False, count = 1):
    mute()
-   if notification == loud:
+   if not silent:
       notify("{} lowers {}'s BP by {}.".format(me, card, count))
    for i in range(0,count):
-      if HPMarker in card.markers:
-         card.markers[HPMarker] -= 1
+      if mkdict['HP'] in card.markers:
+         card.markers[mkdict['HP']] -= 1
 
 def addMarker(cards, x = 0, y = 0):  # A simple function to manually add any of the available markers.
    mute()
@@ -325,7 +336,7 @@ def addMarker(cards, x = 0, y = 0):  # A simple function to manually add any of 
 
 def changeBP(cards, x = 0, y = 0):
    mute()
-   changeMarker(cards, HPMarker, "Set character BP to:")
+   changeMarker(cards, mkdict['HP'], "Set character BP to:")
 
 #---------------------------------------------------------------------------
 # Hand actions
@@ -333,16 +344,20 @@ def changeBP(cards, x = 0, y = 0):
 
 def play(card):  # This is the function to play cards from your hand. It's one of the core functions.
    mute()
-   chooseSide()
-   card.moveToTable(0, 0)
+   chooseSide()  # Just in case...
+   placeCard(card, card.Type)
    notify("{} plays {} from their {}.".format(me, card, card.group.name))
 
 def backup(card, x = 0, y = 0):  # Play a card as backup attached to a character in the player's ring
    mute()
-   target = [card for card in table if card.targetedBy]
-   if len(targetcount) >= 1:
+   if card.Type != 'Character':
+      whisper("You can only backup with Character cards")
+      return
+   target = [c for c in table if c.targetedBy]
+   if len(target) >= 1:
+      if target[0].Type != 'Character': return
       attach(card, target[0])
-      card.moveToTable(0, 0)
+      placeCard(card, card.Type, 'backup')
       notify("{} backups {} with {} from their {}.".format(me, target[0], card, card.group.name))
 
 def discard(card, x = 0, y = 0):  # Discard a card from your hand.
@@ -355,15 +370,13 @@ def randomDiscard(group, x = 0, y = 0):
     card = group.random()
     if card == None:
         return
-    # card.isFaceUp = True
-    # rnd(10,100)  # This delays the next action until all animation is done.
     card.moveTo(me.piles['Discard Pile'])
     notify("{} randomly discards {}.".format(me, card))
 
 def refill(group = me.hand):  # Refill the player's hand to its hand size.
    global handsize
    playhand = len(me.hand) # count how many cards there are currently there.
-   if playhand < handsize: drawMany(me.Deck, handsize - playhand, silent) # If there's less cards than the handsize, draw from the deck until it's full.
+   if playhand < handsize: drawMany(me.Deck, handsize - playhand, True) # If there's less cards than the handsize, draw from the deck until it's full.
 
 #---------------------------------------------------------------------------
 # Piles actions
@@ -376,13 +389,13 @@ def draw(group = me.Deck):  # Draws one card from the deck into the player's han
    group.top().moveTo(me.hand)
    notify("{} draws a card.".format(me))
 
-def drawMany(group, count = None, notification = 'loud'):  # This function draws a variable number cards into the player's hand.
+def drawMany(group, count = None, silent = False):  # This function draws a variable number cards into the player's hand.
    mute()
    if count == None: count = askInteger("Draw how many cards?", handsize) # Ask the player how many cards they want.
    for i in range(0, count):
       if len(group) > 0:  # If the deck is not empty...
          group.top().moveTo(me.hand)  # ...then move them one by one into their play hand.
-   if notification == loud : notify("{} draws {} cards.".format(me, count))
+   if not silent: notify("{} draws {} cards.".format(me, count))
 
 def trash(group = me.Deck, x = 0, y = 0, silent = False):  # Draws one card from the deck into the discard pile and announces its value.
    mute()
@@ -394,7 +407,7 @@ def trash(group = me.Deck, x = 0, y = 0, silent = False):  # Draws one card from
    discards = me.piles['Discard Pile']
    for card in group.top(count):
       card.moveTo(discards)
-   rnd(1, 100) # Wait a bit more, as in multiplayer games, things are slower.
+   if len(players) > 1: rnd(1, 100)  # Wait a bit more, as in multiplayer games, things are slower.
    if not silent: notify("{} trash top {} cards from {}.".format(me, count, group.name))
 
 def shuffle(group):  # A simple function to shuffle piles
@@ -431,5 +444,5 @@ def swapWithDeck(group = me.piles['Discard Pile']):  # This function reshuffles 
       card.moveTo(Deck)   
    for card in savedDeck:
       card.moveTo(group)   
-   rnd(1, 100) # Wait a bit more, as in multiplayer games, things are slower.
+   if len(players) > 1: rnd(1, 100) # Wait a bit more, as in multiplayer games, things are slower.
    notify("{} swaps their {} with their Deck.".format(me, group.name)) # And inform everyone.
