@@ -29,7 +29,6 @@
 			<property name="Backup 2" value="Warrior" />
 			<property name="Backup 3" value="Warrior" />
 			<property name="Number" value="C001" />
-			<property name="Illustrator" value="Michael Cook" />
 		</card>
 		<card name="Ryu no Senshi" id="ac20168a-9648-178f-53c6-11c577cea28d">
 			<property name="Publisher" value="Capcom" />
@@ -44,7 +43,6 @@
 			<property name="Backup 2" value="Warrior" />
 			<property name="Backup 3" value="" />
 			<property name="Number" value="C002" />
-			<property name="Illustrator" value="" />
 		</card>
 		<card name="Baby Head" id="a943a297-4d1c-b8e1-5508-bf6e185e8e40">
 			<property name="Publisher" value="Capcom" />
@@ -59,7 +57,6 @@
 			<property name="Backup 2" value="Alien" />
 			<property name="Backup 3" value="Avatar" />
 			<property name="Number" value="C003" />
-			<property name="Illustrator" value="" />
 		</card>
 		<card name="Cap. Commando" id="9744f8e4-7ea2-1050-514a-fa10011616a3">
 			<property name="Publisher" value="Capcom" />
@@ -74,7 +71,6 @@
 			<property name="Backup 2" value="Alien" />
 			<property name="Backup 3" value="Pilot" />
 			<property name="Number" value="C004" />
-			<property name="Illustrator" value="" />
 		</card>
 		<card name="Ginzu Ninja" id="bcb0ac00-07ef-e157-8383-45c9012f08d0">
 			<property name="Publisher" value="Capcom" />
@@ -89,7 +85,6 @@
 			<property name="Backup 2" value="Pilot" />
 			<property name="Backup 3" value="Ninja" />
 			<property name="Number" value="C005" />
-			<property name="Illustrator" value="" />
 		</card>
 		<card name="Mack Knife" id="8aa4b02c-6708-0f71-4076-0935d0d4f206">
 			<property name="Publisher" value="Capcom" />
@@ -104,7 +99,6 @@
 			<property name="Backup 2" value="Pilot" />
 			<property name="Backup 3" value="Zombie" />
 			<property name="Number" value="C006" />
-			<property name="Illustrator" value="" />
 		</card>
 		<card name="Shinjin Akuma" id="c854d372-d77b-1d80-98a1-14f983b1401b">
 			<property name="Publisher" value="Capcom" />
@@ -119,7 +113,6 @@
 			<property name="Backup 2" value="Boss" />
 			<property name="Backup 3" value="" />
 			<property name="Number" value="C007" />
-			<property name="Illustrator" value="" />
 		</card>
 		<card name="Blodia" id="ee132836-004e-ac42-c00e-fcc03a554e28">
 			<property name="Publisher" value="Capcom" />
@@ -134,7 +127,6 @@
 			<property name="Backup 2" value="Robot" />
 			<property name="Backup 3" value="" />
 			<property name="Number" value="C008" />
-			<property name="Illustrator" value="" />
 		</card>
 		<card name="Jin Saotome" id="5a8d945b-4107-35e1-e006-fd2aae403fc6">
 			<property name="Publisher" value="Capcom" />
@@ -149,7 +141,6 @@
 			<property name="Backup 2" value="Robot" />
 			<property name="Backup 3" value="Robot" />
 			<property name="Number" value="C009" />
-			<property name="Illustrator" value="" />
 		</card>
 		<card name="Zero Akuma" id="0aa6dc0d-1a61-8318-a301-9e0251095917">
 			<property name="Publisher" value="Capcom" />
@@ -164,7 +155,6 @@
 			<property name="Backup 2" value="" />
 			<property name="Backup 3" value="" />
 			<property name="Number" value="C010" />
-			<property name="Illustrator" value="" />
 		</card>
 		<card name="Regina" id="bc901e24-6371-d714-1537-8c34e20c8485">
 			<property name="Publisher" value="Capcom" />
@@ -179,7 +169,6 @@
 			<property name="Backup 2" value="" />
 			<property name="Backup 3" value="" />
 			<property name="Number" value="C011" />
-			<property name="Illustrator" value="" />
 		</card>
 		<card name="Cody" id="15583862-8c04-6b43-811e-af3785b85f45">
 			<property name="Publisher" value="Capcom" />
@@ -194,7 +183,6 @@
 			<property name="Backup 2" value="Wrestler" />
 			<property name="Backup 3" value="Fighter" />
 			<property name="Number" value="C012" />
-			<property name="Illustrator" value="" />
 		</card>
 		<card name="Cody Travers" id="a341bc89-a341-bc89-a341-bc89a341bc89">
 			<property name="Publisher" value="Capcom" />
@@ -209,7 +197,6 @@
 			<property name="Backup 2" value="Brute" />
 			<property name="Backup 3" value="Gangster" />
 			<property name="Number" value="C013" />
-			<property name="Illustrator" value="Daichan" />
 		</card>
 		<card name="Damnd" id="5492c447-fcf6-a921-ed32-1803b28e8b39">
 			<property name="Publisher" value="Capcom" />
@@ -224,7 +211,6 @@
 			<property name="Backup 2" value="Soldier" />
 			<property name="Backup 3" value="" />
 			<property name="Number" value="C014" />
-			<property name="Illustrator" value="" />
 		</card>
 		<card name="Guy" id="af0e6088-3431-aefe-e4e0-a439b5e40218">
 			<property name="Publisher" value="Capcom" />
@@ -239,7 +225,6 @@
 			<property name="Backup 2" value="Wrestler" />
 			<property name="Backup 3" value="" />
 			<property name="Number" value="C015" />
-			<property name="Illustrator" value="" />
 		</card>
 		<card name="Haggar" id="d60a6c13-4fc2-d216-911a-c7ae10ee0933">
 			<property name="Publisher" value="Capcom" />
@@ -254,7 +239,6 @@
 			<property name="Backup 2" value="Mentor" />
 			<property name="Backup 3" value="" />
 			<property name="Number" value="C016" />
-			<property name="Illustrator" value="" />
 		</card>
 		<card name="Maki" id="4e625a24-fe27-b6d5-5193-84002b72a8a2">
 			<property name="Publisher" value="Capcom" />
@@ -269,7 +253,6 @@
 			<property name="Backup 2" value="Wrestler" />
 			<property name="Backup 3" value="" />
 			<property name="Number" value="C017" />
-			<property name="Illustrator" value="" />
 		</card>
 		<card name="Arthur" id="e8cbf025-3e2c-00e6-c57f-6680316e2297">
 			<property name="Publisher" value="Capcom" />
@@ -284,7 +267,6 @@
 			<property name="Backup 2" value="Boss" />
 			<property name="Backup 3" value="Boxer" />
 			<property name="Number" value="C018" />
-			<property name="Illustrator" value="Toshiaki &quot;Shinkiro&quot;" />
 		</card>
 		<card name="Lucifer" id="2666f210-3a8d-1717-41fe-4ef8ae726069">
 			<property name="Publisher" value="Capcom" />
@@ -299,7 +281,6 @@
 			<property name="Backup 2" value="" />
 			<property name="Backup 3" value="" />
 			<property name="Number" value="C019" />
-			<property name="Illustrator" value="" />
 		</card>
 		<card name="Red Arremer" id="7063d5f5-5ac7-7148-04cb-26bd3dbee1ec">
 			<property name="Publisher" value="Capcom" />
@@ -314,7 +295,6 @@
 			<property name="Backup 2" value="Zombie" />
 			<property name="Backup 3" value="Zombie" />
 			<property name="Number" value="C020" />
-			<property name="Illustrator" value="" />
 		</card>
 		<card name="Michelle Heart" id="f7041354-94d8-1960-5d2e-0207f1ed2a84">
 			<property name="Publisher" value="Capcom" />
@@ -329,7 +309,6 @@
 			<property name="Backup 2" value="Deity" />
 			<property name="Backup 3" value="Fighter" />
 			<property name="Number" value="C021" />
-			<property name="Illustrator" value="" />
 		</card>
 		<card name="Amingo" id="110c9e65-0c81-310d-0e2a-8ba208950cba">
 			<property name="Publisher" value="Capcom" />
@@ -344,7 +323,6 @@
 			<property name="Backup 2" value="Captain" />
 			<property name="Backup 3" value="Deity" />
 			<property name="Number" value="C022" />
-			<property name="Illustrator" value="" />
 		</card>
 		<card name="Mech Zangief" id="1389c742-4437-041f-2142-0ced8151389c">
 			<property name="Publisher" value="Capcom" />
@@ -359,7 +337,6 @@
 			<property name="Backup 2" value="" />
 			<property name="Backup 3" value="" />
 			<property name="Number" value="C023" />
-			<property name="Illustrator" value="" />
 		</card>
 		<card name="Ruby Heart" id="b10f8897-807e-b754-850a-1350e31a924e">
 			<property name="Publisher" value="Capcom" />
@@ -374,7 +351,6 @@
 			<property name="Backup 2" value="Captain" />
 			<property name="Backup 3" value="" />
 			<property name="Number" value="C024" />
-			<property name="Illustrator" value="" />
 		</card>
 		<card name="Son Son" id="43c69dc1-d026-8807-01c7-00100b453419">
 			<property name="Publisher" value="Capcom" />
@@ -389,7 +365,6 @@
 			<property name="Backup 2" value="Kung-fu" />
 			<property name="Backup 3" value="Gangster" />
 			<property name="Number" value="C025" />
-			<property name="Illustrator" value="" />
 		</card>
 		<card name="Mega Man" id="cd14ab1b-d3e2-93d1-00ef-fd4f08223783">
 			<property name="Publisher" value="Capcom" />
@@ -404,7 +379,6 @@
 			<property name="Backup 2" value="Beast" />
 			<property name="Backup 3" value="" />
 			<property name="Number" value="C026" />
-			<property name="Illustrator" value="" />
 		</card>
 		<card name="Mega Man X" id="5b180211-2beb-6dc0-1e0e-c5d2cfe6f8a1">
 			<property name="Publisher" value="Capcom" />
@@ -419,7 +393,6 @@
 			<property name="Backup 2" value="Android" />
 			<property name="Backup 3" value="Mercenary" />
 			<property name="Number" value="C027" />
-			<property name="Illustrator" value="" />
 		</card>
 		<card name="Proto Man" id="11de4695-a152-6748-8b80-4479d3ad0b81">
 			<property name="Publisher" value="Capcom" />
@@ -434,7 +407,6 @@
 			<property name="Backup 2" value="Gangster" />
 			<property name="Backup 3" value="Experiment" />
 			<property name="Number" value="C028" />
-			<property name="Illustrator" value="" />
 		</card>
 		<card name="Rock" id="0c201ffb-96de-8328-0fde-f811122102e5">
 			<property name="Publisher" value="Capcom" />
@@ -449,7 +421,6 @@
 			<property name="Backup 2" value="Android" />
 			<property name="Backup 3" value="" />
 			<property name="Number" value="C029" />
-			<property name="Illustrator" value="" />
 		</card>
 		<card name="Rock Man" id="61121e50-4b7a-f001-0e57-e497e0bec2d8">
 			<property name="Publisher" value="Capcom" />
@@ -464,7 +435,6 @@
 			<property name="Backup 2" value="Android" />
 			<property name="Backup 3" value="" />
 			<property name="Number" value="C030" />
-			<property name="Illustrator" value="Maede Shima" />
 		</card>
 		<card name="Roll" id="640ede94-455c-1e42-32cd-232e736a0528">
 			<property name="Publisher" value="Capcom" />
@@ -479,7 +449,6 @@
 			<property name="Backup 2" value="Android" />
 			<property name="Backup 3" value="" />
 			<property name="Number" value="C031" />
-			<property name="Illustrator" value="" />
 		</card>
 		<card name="Roll Caskett" id="13d17151-3371-dc93-fe41-1962ef506b6a">
 			<property name="Publisher" value="Capcom" />
@@ -494,7 +463,6 @@
 			<property name="Backup 2" value="Android" />
 			<property name="Backup 3" value="" />
 			<property name="Number" value="C032" />
-			<property name="Illustrator" value="Maede Shima" />
 		</card>
 		<card name="Roll-chan" id="a0adcfb8-081a-bea1-eb20-b85091e41123">
 			<property name="Publisher" value="Capcom" />
@@ -509,7 +477,6 @@
 			<property name="Backup 2" value="Beast" />
 			<property name="Backup 3" value="Hunter" />
 			<property name="Number" value="C033" />
-			<property name="Illustrator" value="" />
 		</card>
 		<card name="Rush" id="82e1dafb-9482-e1da-fb94-82e1dafb9482">
 			<property name="Publisher" value="Capcom" />
@@ -524,7 +491,6 @@
 			<property name="Backup 2" value="Android" />
 			<property name="Backup 3" value="Ninja" />
 			<property name="Number" value="C034" />
-			<property name="Illustrator" value="" />
 		</card>
 		<card name="Tron Bonne" id="13fac80c-28db-4f90-12f7-c8a0c2b94035">
 			<property name="Publisher" value="Capcom" />
@@ -539,7 +505,6 @@
 			<property name="Backup 2" value="Captain" />
 			<property name="Backup 3" value="" />
 			<property name="Number" value="C035" />
-			<property name="Illustrator" value="" />
 		</card>
 		<card name="Zero" id="92c2c3b4-e495-6675-0728-a528e94b0a9b">
 			<property name="Publisher" value="Capcom" />
@@ -554,7 +519,6 @@
 			<property name="Backup 2" value="Android" />
 			<property name="Backup 3" value="Experiment" />
 			<property name="Number" value="C036" />
-			<property name="Illustrator" value="" />
 		</card>
 		<card name="Kaede (OM)" id="8568203d-9ea1-4887-bfa0-23d6008246c7">
 			<property name="Publisher" value="Capcom" />
@@ -569,7 +533,6 @@
 			<property name="Backup 2" value="Samurai" />
 			<property name="Backup 3" value="Ninja" />
 			<property name="Number" value="C037" />
-			<property name="Illustrator" value="" />
 		</card>
 		<card name="Samanosuke" id="02640c24-b672-abdd-5237-8052ff7a24e5">
 			<property name="Publisher" value="Capcom" />
@@ -584,7 +547,6 @@
 			<property name="Backup 2" value="Ninja" />
 			<property name="Backup 3" value="Samurai" />
 			<property name="Number" value="C038" />
-			<property name="Illustrator" value="" />
 		</card>
 		<card name="Ayame" id="8f0c2d89-1204-f262-9c31-0542ba8a2b28">
 			<property name="Publisher" value="Capcom" />
@@ -599,7 +561,6 @@
 			<property name="Backup 2" value="Ninja" />
 			<property name="Backup 3" value="Mentor" />
 			<property name="Number" value="C039" />
-			<property name="Illustrator" value="" />
 		</card>
 		<card name="Falcon" id="baf35756-03ef-9202-5c20-d6d35aee0ea0">
 			<property name="Publisher" value="Capcom" />
@@ -614,7 +575,6 @@
 			<property name="Backup 2" value="Gangster" />
 			<property name="Backup 3" value="Pilot" />
 			<property name="Number" value="C040" />
-			<property name="Illustrator" value="" />
 		</card>
 		<card name="Rouge" id="9d981fb4-09a3-b87b-1b11-83f7c9348405">
 			<property name="Publisher" value="Capcom" />
@@ -629,7 +589,6 @@
 			<property name="Backup 2" value="Magician" />
 			<property name="Backup 3" value="Magician" />
 			<property name="Number" value="C041" />
-			<property name="Illustrator" value="" />
 		</card>
 		<card name="Ryoma" id="e69b842a-c511-8fa1-8407-428122a210b5">
 			<property name="Publisher" value="Capcom" />
@@ -644,7 +603,6 @@
 			<property name="Backup 2" value="Samurai" />
 			<property name="Backup 3" value="Samurai" />
 			<property name="Number" value="C042" />
-			<property name="Illustrator" value="" />
 		</card>
 		<card name="Wang Tang" id="0b0309b5-0234-9c9d-8135-8931496e22e6">
 			<property name="Publisher" value="Capcom" />
@@ -659,7 +617,6 @@
 			<property name="Backup 2" value="Kung-fu" />
 			<property name="Backup 3" value="Detective" />
 			<property name="Number" value="C043" />
-			<property name="Illustrator" value="" />
 		</card>
 		<card name="Omokane Saki" id="7b4b1b24-61ff-3205-d3a6-32ce6b4383b4">
 			<property name="Publisher" value="Capcom" />
@@ -674,7 +631,6 @@
 			<property name="Backup 2" value="Robot" />
 			<property name="Backup 3" value="Robot" />
 			<property name="Number" value="C044" />
-			<property name="Illustrator" value="" />
 		</card>
 		<card name="Chris Redfield" id="573ede30-10b8-b4c0-80b0-601851617182">
 			<property name="Publisher" value="Capcom" />
@@ -689,7 +645,6 @@
 			<property name="Backup 2" value="Agent" />
 			<property name="Backup 3" value="" />
 			<property name="Number" value="C045" />
-			<property name="Illustrator" value="" />
 		</card>
 		<card name="Claire" id="642f811f-d938-6a4a-5340-65bfca10168c">
 			<property name="Publisher" value="Capcom" />
@@ -704,7 +659,6 @@
 			<property name="Backup 2" value="Agent" />
 			<property name="Backup 3" value="Agent" />
 			<property name="Number" value="C046" />
-			<property name="Illustrator" value="" />
 		</card>
 		<card name="Jill" id="21af1601-9ed4-97c1-c637-ec8d42118674">
 			<property name="Publisher" value="Capcom" />
@@ -719,7 +673,6 @@
 			<property name="Backup 2" value="Agent" />
 			<property name="Backup 3" value="Agent" />
 			<property name="Number" value="C047" />
-			<property name="Illustrator" value="" />
 		</card>
 		<card name="Jill Valentine" id="561d46aa-8106-9847-02e6-f2f800a40a18">
 			<property name="Publisher" value="Capcom" />
@@ -734,7 +687,6 @@
 			<property name="Backup 2" value="Agent" />
 			<property name="Backup 3" value="" />
 			<property name="Number" value="C048" />
-			<property name="Illustrator" value="Maede Shima" />
 		</card>
 		<card name="Leon" id="16012415-7ba1-c670-c210-512266283a10">
 			<property name="Publisher" value="Capcom" />
@@ -749,7 +701,6 @@
 			<property name="Backup 2" value="Agent" />
 			<property name="Backup 3" value="" />
 			<property name="Number" value="C049" />
-			<property name="Illustrator" value="" />
 		</card>
 		<card name="Nemesis" id="c66d70c5-020b-3885-16a3-54b4baacee90">
 			<property name="Publisher" value="Capcom" />
@@ -764,7 +715,6 @@
 			<property name="Backup 2" value="Wrestler" />
 			<property name="Backup 3" value="" />
 			<property name="Number" value="C050" />
-			<property name="Illustrator" value="" />
 		</card>
 		<card name="Zombie" id="b23aac80-94b1-0b02-83fa-2073bc08a19f">
 			<property name="Publisher" value="Capcom" />
@@ -779,7 +729,6 @@
 			<property name="Backup 2" value="Zombie" />
 			<property name="Backup 3" value="Zombie" />
 			<property name="Number" value="C051" />
-			<property name="Illustrator" value="" />
 		</card>
 		<card name="Akira" id="76a1c20a-d024-cfda-b8c7-011af8d7084d">
 			<property name="Publisher" value="Capcom" />
@@ -794,7 +743,6 @@
 			<property name="Backup 2" value="Ninja" />
 			<property name="Backup 3" value="Experiment" />
 			<property name="Number" value="C052" />
-			<property name="Illustrator" value="" />
 		</card>
 		<card name="Batsu" id="715103c9-a0b2-1711-1304-14cf781e75d3">
 			<property name="Publisher" value="Capcom" />
@@ -809,7 +757,6 @@
 			<property name="Backup 2" value="Student" />
 			<property name="Backup 3" value="" />
 			<property name="Number" value="C053" />
-			<property name="Illustrator" value="" />
 		</card>
 		<card name="Boman" id="0f130047-0b1a-9e9e-4fa8-10f990e37611">
 			<property name="Publisher" value="Capcom" />
@@ -824,7 +771,6 @@
 			<property name="Backup 2" value="Kickboxer" />
 			<property name="Backup 3" value="Spirit" />
 			<property name="Number" value="C054" />
-			<property name="Illustrator" value="" />
 		</card>
 		<card name="Daigo" id="55c23613-bd92-863a-1d1d-35295410f0f0">
 			<property name="Publisher" value="Capcom" />
@@ -839,7 +785,6 @@
 			<property name="Backup 2" value="Swordsman" />
 			<property name="Backup 3" value="" />
 			<property name="Number" value="C055" />
-			<property name="Illustrator" value="" />
 		</card>
 		<card name="Edge" id="2641142b-1031-1144-67c3-e0c70e4b1100">
 			<property name="Publisher" value="Capcom" />
@@ -854,7 +799,6 @@
 			<property name="Backup 2" value="Boxer" />
 			<property name="Backup 3" value="" />
 			<property name="Number" value="C056" />
-			<property name="Illustrator" value="" />
 		</card>
 		<card name="Gan" id="650e8da6-4509-8615-38e8-52c6932e2700">
 			<property name="Publisher" value="Capcom" />
@@ -869,7 +813,6 @@
 			<property name="Backup 2" value="Brute" />
 			<property name="Backup 3" value="Sumotori" />
 			<property name="Number" value="C057" />
-			<property name="Illustrator" value="" />
 		</card>
 		<card name="Hideo" id="c3f3f119-e65e-ee6c-860d-118a41ad374a">
 			<property name="Publisher" value="Capcom" />
@@ -884,7 +827,6 @@
 			<property name="Backup 2" value="Taekwondo" />
 			<property name="Backup 3" value="" />
 			<property name="Number" value="C058" />
-			<property name="Illustrator" value="" />
 		</card>
 		<card name="Hinata" id="12db5040-ae82-493d-0c9c-58c14e315fc6">
 			<property name="Publisher" value="Capcom" />
@@ -899,7 +841,6 @@
 			<property name="Backup 2" value="Psychic" />
 			<property name="Backup 3" value="Sumotori" />
 			<property name="Number" value="C059" />
-			<property name="Illustrator" value="Omar Dogan" />
 		</card>
 		<card name="Hyo" id="c2559b61-1891-80c9-dd37-10ccbaa70c3e">
 			<property name="Publisher" value="Capcom" />
@@ -914,7 +855,6 @@
 			<property name="Backup 2" value="Fighter" />
 			<property name="Backup 3" value="" />
 			<property name="Number" value="C060" />
-			<property name="Illustrator" value="" />
 		</card>
 		<card name="Iincyo" id="129445a5-e888-8bfb-7d2d-fece3520c06a">
 			<property name="Publisher" value="Capcom" />
@@ -929,7 +869,6 @@
 			<property name="Backup 2" value="Taekwondo" />
 			<property name="Backup 3" value="" />
 			<property name="Number" value="C061" />
-			<property name="Illustrator" value="" />
 		</card>
 		<card name="Kurow" id="116902fa-3b63-411c-01a4-24005d8d1a08">
 			<property name="Publisher" value="Capcom" />
@@ -944,7 +883,6 @@
 			<property name="Backup 2" value="Gangster" />
 			<property name="Backup 3" value="" />
 			<property name="Number" value="C062" />
-			<property name="Illustrator" value="" />
 		</card>
 		<card name="Kyoko" id="b5026409-61fb-dee7-11a4-1ccbe28d2405">
 			<property name="Publisher" value="Capcom" />
@@ -959,7 +897,6 @@
 			<property name="Backup 2" value="Taekwondo" />
 			<property name="Backup 3" value="" />
 			<property name="Number" value="C063" />
-			<property name="Illustrator" value="" />
 		</card>
 		<card name="Kyosuke" id="455195e3-6d45-e4cc-1138-d94bb4723407">
 			<property name="Publisher" value="Capcom" />
@@ -974,7 +911,6 @@
 			<property name="Backup 2" value="Taekwondo" />
 			<property name="Backup 3" value="" />
 			<property name="Number" value="C064" />
-			<property name="Illustrator" value="" />
 		</card>
 		<card name="Momo" id="41820fe0-d3cc-00a2-5d9a-cc5b1b01e2ab">
 			<property name="Publisher" value="Capcom" />
@@ -989,7 +925,6 @@
 			<property name="Backup 2" value="Magician" />
 			<property name="Backup 3" value="Kung-fu" />
 			<property name="Number" value="C065" />
-			<property name="Illustrator" value="" />
 		</card>
 		<card name="Natsu" id="0d0e69d2-44ac-72cc-6f31-1fa7c5837099">
 			<property name="Publisher" value="Capcom" />
@@ -1004,7 +939,6 @@
 			<property name="Backup 2" value="Gymnast" />
 			<property name="Backup 3" value="" />
 			<property name="Number" value="C066" />
-			<property name="Illustrator" value="" />
 		</card>
 		<card name="Pure Rider Akira" id="f17b2ed1-3271-2582-4337-630dc9d4c571">
 			<property name="Publisher" value="Capcom" />
@@ -1019,7 +953,6 @@
 			<property name="Backup 2" value="Kickboxer" />
 			<property name="Backup 3" value="Captain" />
 			<property name="Number" value="C067" />
-			<property name="Illustrator" value="" />
 		</card>
 		<card name="Raizou" id="d876c690-1c03-2136-958c-ec0d42025caf">
 			<property name="Publisher" value="Capcom" />
@@ -1034,7 +967,6 @@
 			<property name="Backup 2" value="Assassin" />
 			<property name="Backup 3" value="" />
 			<property name="Number" value="C068" />
-			<property name="Illustrator" value="" />
 		</card>
 		<card name="Roberto" id="ff764231-0326-51d7-1954-8110afd076a6">
 			<property name="Publisher" value="Capcom" />
@@ -1049,7 +981,6 @@
 			<property name="Backup 2" value="Gymnast" />
 			<property name="Backup 3" value="" />
 			<property name="Number" value="C069" />
-			<property name="Illustrator" value="" />
 		</card>
 		<card name="Roy" id="f648e751-391a-11a4-a791-a221ef101d12">
 			<property name="Publisher" value="Capcom" />
@@ -1064,7 +995,6 @@
 			<property name="Backup 2" value="Boxer" />
 			<property name="Backup 3" value="Samurai" />
 			<property name="Number" value="C070" />
-			<property name="Illustrator" value="" />
 		</card>
 		<card name="Shoma" id="c08f2783-b3e9-364b-40b7-e01112f19044">
 			<property name="Publisher" value="Capcom" />
@@ -1079,7 +1009,6 @@
 			<property name="Backup 2" value="Gymnast" />
 			<property name="Backup 3" value="" />
 			<property name="Number" value="C071" />
-			<property name="Illustrator" value="" />
 		</card>
 		<card name="Tiffany" id="6cdc6569-192e-2537-94b1-b6a2f704876f">
 			<property name="Publisher" value="Capcom" />
@@ -1094,7 +1023,6 @@
 			<property name="Backup 2" value="Boxer" />
 			<property name="Backup 3" value="Fighter" />
 			<property name="Number" value="C072" />
-			<property name="Illustrator" value="" />
 		</card>
 		<card name="Yurika" id="6ee9f518-f0af-4a28-f355-548176f1a5ed">
 			<property name="Publisher" value="Capcom" />
@@ -1109,7 +1037,6 @@
 			<property name="Backup 2" value="Priest" />
 			<property name="Backup 3" value="Student" />
 			<property name="Number" value="C073" />
-			<property name="Illustrator" value="" />
 		</card>
 		<card name="Zaki" id="abc64624-92be-1ae1-5167-4a300812d418">
 			<property name="Publisher" value="Capcom" />
@@ -1124,7 +1051,6 @@
 			<property name="Backup 2" value="Fighter" />
 			<property name="Backup 3" value="Brute" />
 			<property name="Number" value="C074" />
-			<property name="Illustrator" value="" />
 		</card>
 		<card name="Bilstein" id="ef900931-70de-617f-206f-86b078b6a450">
 			<property name="Publisher" value="Capcom" />
@@ -1139,7 +1065,6 @@
 			<property name="Backup 2" value="Swordsman" />
 			<property name="Backup 3" value="Swordsman" />
 			<property name="Number" value="C075" />
-			<property name="Illustrator" value="" />
 		</card>
 		<card name="Black Hayato" id="f933c952-8c15-4500-d010-0590504c12da">
 			<property name="Publisher" value="Capcom" />
@@ -1154,7 +1079,6 @@
 			<property name="Backup 2" value="Samurai" />
 			<property name="Backup 3" value="Samurai" />
 			<property name="Number" value="C076" />
-			<property name="Illustrator" value="" />
 		</card>
 		<card name="Elle" id="d1a10f59-165a-5e20-d9a2-8558e0471b8d">
 			<property name="Publisher" value="Capcom" />
@@ -1169,7 +1093,6 @@
 			<property name="Backup 2" value="Gymnast" />
 			<property name="Backup 3" value="Swordsman" />
 			<property name="Number" value="C077" />
-			<property name="Illustrator" value="" />
 		</card>
 		<card name="Hayato" id="41087e1f-4a00-1e25-a801-4855831a1c25">
 			<property name="Publisher" value="Capcom" />
@@ -1184,7 +1107,6 @@
 			<property name="Backup 2" value="Gymnast" />
 			<property name="Backup 3" value="" />
 			<property name="Number" value="C078" />
-			<property name="Illustrator" value="" />
 		</card>
 		<card name="June" id="b261b3e3-0e9b-1441-4333-0e96416c659d">
 			<property name="Publisher" value="Capcom" />
@@ -1199,7 +1121,6 @@
 			<property name="Backup 2" value="Hunter" />
 			<property name="Backup 3" value="Gymnast" />
 			<property name="Number" value="C079" />
-			<property name="Illustrator" value="" />
 		</card>
 		<card name="Rain" id="4066a729-1c12-5d51-a590-d3d5cc8749a0">
 			<property name="Publisher" value="Capcom" />
@@ -1214,7 +1135,6 @@
 			<property name="Backup 2" value="Kickboxer" />
 			<property name="Backup 3" value="Swordsman" />
 			<property name="Number" value="C080" />
-			<property name="Illustrator" value="" />
 		</card>
 		<card name="Adon" id="9f0581c7-8f1c-0cca-5794-370cd1ebc145">
 			<property name="Publisher" value="Capcom" />
@@ -1229,7 +1149,6 @@
 			<property name="Backup 2" value="Kickboxer" />
 			<property name="Backup 3" value="Kickboxer" />
 			<property name="Number" value="C081" />
-			<property name="Illustrator" value="" />
 		</card>
 		<card name="Akuma" id="6d12b93c-2c44-213a-0959-40c9f0d248ac">
 			<property name="Publisher" value="Capcom" />
@@ -1244,7 +1163,6 @@
 			<property name="Backup 2" value="" />
 			<property name="Backup 3" value="" />
 			<property name="Number" value="C082" />
-			<property name="Illustrator" value="" />
 		</card>
 		<card name="Alex" id="214ce204-1c45-40c5-091b-1a267edbb4a3">
 			<property name="Publisher" value="Capcom" />
@@ -1259,7 +1177,6 @@
 			<property name="Backup 2" value="Wrestler" />
 			<property name="Backup 3" value="Fighter" />
 			<property name="Number" value="C083" />
-			<property name="Illustrator" value="" />
 		</card>
 		<card name="Balrog" id="03179943-3f21-d3bc-dcbb-a7a276518580">
 			<property name="Publisher" value="Capcom" />
@@ -1274,7 +1191,6 @@
 			<property name="Backup 2" value="Mercenary" />
 			<property name="Backup 3" value="" />
 			<property name="Number" value="C084" />
-			<property name="Illustrator" value="" />
 		</card>
 		<card name="Birdie" id="a2268c53-10c3-b172-ff9e-818f5796d98c">
 			<property name="Publisher" value="Capcom" />
@@ -1289,7 +1205,6 @@
 			<property name="Backup 2" value="Gangster" />
 			<property name="Backup 3" value="Capoeira" />
 			<property name="Number" value="C085" />
-			<property name="Illustrator" value="" />
 		</card>
 		<card name="Blanka" id="15601347-504c-4a02-8c28-e19355a41105">
 			<property name="Publisher" value="Capcom" />
@@ -1304,7 +1219,6 @@
 			<property name="Backup 2" value="Assassin" />
 			<property name="Backup 3" value="Boxer" />
 			<property name="Number" value="C086" />
-			<property name="Illustrator" value="Daigo Ikeno" />
 		</card>
 		<card name="Cammy" id="ff32358a-3abe-2d09-369a-8a34d51b241c">
 			<property name="Publisher" value="Capcom" />
@@ -1319,7 +1233,6 @@
 			<property name="Backup 2" value="Student" />
 			<property name="Backup 3" value="Samurai" />
 			<property name="Number" value="C087" />
-			<property name="Illustrator" value="" />
 		</card>
 		<card name="Cammy White" id="24275272-0693-272d-039d-905221d20678">
 			<property name="Publisher" value="Capcom" />
@@ -1334,7 +1247,6 @@
 			<property name="Backup 2" value="Guardian" />
 			<property name="Backup 3" value="Guardian" />
 			<property name="Number" value="C088" />
-			<property name="Illustrator" value="Daichan" />
 		</card>
 		<card name="Charlie" id="9c940c31-4192-60cf-2eee-8010dd701c03">
 			<property name="Publisher" value="Capcom" />
@@ -1349,7 +1261,6 @@
 			<property name="Backup 2" value="Mercenary" />
 			<property name="Backup 3" value="Mercenary" />
 			<property name="Number" value="C089" />
-			<property name="Illustrator" value="" />
 		</card>
 		<card name="Chun-Li" id="30324847-4261-82c7-522f-01b99fa00eca">
 			<property name="Publisher" value="Capcom" />
@@ -1364,7 +1275,6 @@
 			<property name="Backup 2" value="Ninja" />
 			<property name="Backup 3" value="" />
 			<property name="Number" value="C090" />
-			<property name="Illustrator" value="Jo Chen" />
 		</card>
 		<card name="Chun-Li Zang" id="fd46d308-f130-c3bb-6205-1f421a1b34c9">
 			<property name="Publisher" value="Capcom" />
@@ -1379,7 +1289,6 @@
 			<property name="Backup 2" value="Kung-fu" />
 			<property name="Backup 3" value="" />
 			<property name="Number" value="C091" />
-			<property name="Illustrator" value="Daichan" />
 		</card>
 		<card name="Dan" id="11db5a0b-16ed-144c-1405-4800cc756704">
 			<property name="Publisher" value="Capcom" />
@@ -1394,7 +1303,6 @@
 			<property name="Backup 2" value="Karateka" />
 			<property name="Backup 3" value="Gangster" />
 			<property name="Number" value="C092" />
-			<property name="Illustrator" value="" />
 		</card>
 		<card name="Dee Jay" id="3f695137-eda4-c80a-288f-60ee3e96aa74">
 			<property name="Publisher" value="Capcom" />
@@ -1409,7 +1317,6 @@
 			<property name="Backup 2" value="Capoeira" />
 			<property name="Backup 3" value="Capoeira" />
 			<property name="Number" value="C093" />
-			<property name="Illustrator" value="" />
 		</card>
 		<card name="Dhalsim" id="1c83c38e-6345-622d-504e-af36ca5b1569">
 			<property name="Publisher" value="Capcom" />
@@ -1424,7 +1331,6 @@
 			<property name="Backup 2" value="Spirit" />
 			<property name="Backup 3" value="Magician" />
 			<property name="Number" value="C094" />
-			<property name="Illustrator" value="" />
 		</card>
 		<card name="Dudley" id="75ae133f-f521-c506-8231-7413f0ee0111">
 			<property name="Publisher" value="Capcom" />
@@ -1439,7 +1345,6 @@
 			<property name="Backup 2" value="Boxer" />
 			<property name="Backup 3" value="Boxer" />
 			<property name="Number" value="C095" />
-			<property name="Illustrator" value="" />
 		</card>
 		<card name="E. Honda" id="e7c8b38e-9b20-0648-8b51-d040efa04a60">
 			<property name="Publisher" value="Capcom" />
@@ -1454,7 +1359,6 @@
 			<property name="Backup 2" value="Sumotori" />
 			<property name="Backup 3" value="" />
 			<property name="Number" value="C096" />
-			<property name="Illustrator" value="Jo Chen" />
 		</card>
 		<card name="Eagle" id="97073510-17e7-97b5-7c6b-9c4b493e2419">
 			<property name="Publisher" value="Capcom" />
@@ -1469,7 +1373,6 @@
 			<property name="Backup 2" value="Kickboxer" />
 			<property name="Backup 3" value="Gangster" />
 			<property name="Number" value="C097" />
-			<property name="Illustrator" value="Genzo" />
 		</card>
 		<card name="Elena" id="523a34fd-b381-fb03-11b8-8a6c7cd27def">
 			<property name="Publisher" value="Capcom" />
@@ -1484,7 +1387,6 @@
 			<property name="Backup 2" value="Deity" />
 			<property name="Backup 3" value="Monk" />
 			<property name="Number" value="C098" />
-			<property name="Illustrator" value="" />
 		</card>
 		<card name="Evil Ryu" id="1a15c505-485f-0778-a3aa-452fa240b1d0">
 			<property name="Publisher" value="Capcom" />
@@ -1499,7 +1401,6 @@
 			<property name="Backup 2" value="" />
 			<property name="Backup 3" value="" />
 			<property name="Number" value="C099" />
-			<property name="Illustrator" value="" />
 		</card>
 		<card name="Fei-Long" id="a144e170-1a2a-f481-f4f9-d3cf422424f8">
 			<property name="Publisher" value="Capcom" />
@@ -1514,7 +1415,6 @@
 			<property name="Backup 2" value="Detective" />
 			<property name="Backup 3" value="Monk" />
 			<property name="Number" value="C100" />
-			<property name="Illustrator" value="" />
 		</card>
 		<card name="Gen" id="31652bd8-1a7a-e1f0-1817-06204001bfc0">
 			<property name="Publisher" value="Capcom" />
@@ -1529,7 +1429,6 @@
 			<property name="Backup 2" value="Kung-fu" />
 			<property name="Backup 3" value="Psychic" />
 			<property name="Number" value="C101" />
-			<property name="Illustrator" value="" />
 		</card>
 		<card name="Gill" id="a1111b81-2c52-faae-2c1f-0f29840cb9fe">
 			<property name="Publisher" value="Capcom" />
@@ -1544,7 +1443,6 @@
 			<property name="Backup 2" value="Fighter" />
 			<property name="Backup 3" value="Deity" />
 			<property name="Number" value="C102" />
-			<property name="Illustrator" value="" />
 		</card>
 		<card name="Guile" id="51c5006b-4116-9e5b-68f1-a053104f2bb1">
 			<property name="Publisher" value="Capcom" />
@@ -1559,7 +1457,6 @@
 			<property name="Backup 2" value="Gangster" />
 			<property name="Backup 3" value="" />
 			<property name="Number" value="C103" />
-			<property name="Illustrator" value="" />
 		</card>
 		<card name="Hugo" id="31e15822-af57-5866-9cd1-bb1d51e22c9c">
 			<property name="Publisher" value="Capcom" />
@@ -1574,7 +1471,6 @@
 			<property name="Backup 2" value="Wrestler" />
 			<property name="Backup 3" value="" />
 			<property name="Number" value="C104" />
-			<property name="Illustrator" value="" />
 		</card>
 		<card name="Ibuki" id="60097a34-b340-879e-4760-097a34b34087">
 			<property name="Publisher" value="Capcom" />
@@ -1589,7 +1485,6 @@
 			<property name="Backup 2" value="Ninja" />
 			<property name="Backup 3" value="Assassin" />
 			<property name="Number" value="C105" />
-			<property name="Illustrator" value="" />
 		</card>
 		<card name="Juli" id="26017a27-7126-0c6f-240e-2bc8a4ab3e01">
 			<property name="Publisher" value="Capcom" />
@@ -1604,7 +1499,6 @@
 			<property name="Backup 2" value="Guardian" />
 			<property name="Backup 3" value="Avatar" />
 			<property name="Number" value="C106" />
-			<property name="Illustrator" value="" />
 		</card>
 		<card name="Juni" id="1f62c48d-dca7-557d-55ee-83e0e68cb93c">
 			<property name="Publisher" value="Capcom" />
@@ -1619,7 +1513,6 @@
 			<property name="Backup 2" value="Guardian" />
 			<property name="Backup 3" value="Avatar" />
 			<property name="Number" value="C107" />
-			<property name="Illustrator" value="" />
 		</card>
 		<card name="Karin" id="079380c1-33e5-1432-1416-820ae32d1cbe">
 			<property name="Publisher" value="Capcom" />
@@ -1634,7 +1527,6 @@
 			<property name="Backup 2" value="Sumotori" />
 			<property name="Backup 3" value="" />
 			<property name="Number" value="C108" />
-			<property name="Illustrator" value="" />
 		</card>
 		<card name="Ken" id="23a0f38c-2007-200e-1b8f-424d016c22fe">
 			<property name="Publisher" value="Capcom" />
@@ -1649,7 +1541,6 @@
 			<property name="Backup 2" value="Karateka" />
 			<property name="Backup 3" value="" />
 			<property name="Number" value="C109" />
-			<property name="Illustrator" value="" />
 		</card>
 		<card name="Lee" id="0d5690db-ccee-cb00-9c81-c890396de4c2">
 			<property name="Publisher" value="Capcom" />
@@ -1664,7 +1555,6 @@
 			<property name="Backup 2" value="Kung-fu" />
 			<property name="Backup 3" value="Psychic" />
 			<property name="Number" value="C110" />
-			<property name="Illustrator" value="" />
 		</card>
 		<card name="M. Bison" id="577046da-4461-5131-00e5-f9a31c11839c">
 			<property name="Publisher" value="Capcom" />
@@ -1679,7 +1569,6 @@
 			<property name="Backup 2" value="Guardian" />
 			<property name="Backup 3" value="Boss" />
 			<property name="Number" value="C111" />
-			<property name="Illustrator" value="" />
 		</card>
 		<card name="Makoto" id="a4a829c1-68e8-e5f4-1671-62e82b38341b">
 			<property name="Publisher" value="Capcom" />
@@ -1694,7 +1583,6 @@
 			<property name="Backup 2" value="Mentor" />
 			<property name="Backup 3" value="Magician" />
 			<property name="Number" value="C112" />
-			<property name="Illustrator" value="" />
 		</card>
 		<card name="Necro" id="88036580-0dd5-170e-4c39-0a8e5ac7f841">
 			<property name="Publisher" value="Capcom" />
@@ -1709,7 +1597,6 @@
 			<property name="Backup 2" value="Cursed" />
 			<property name="Backup 3" value="Samurai" />
 			<property name="Number" value="C113" />
-			<property name="Illustrator" value="" />
 		</card>
 		<card name="Oro" id="79842f30-0ce1-7fd3-854c-2587bf382026">
 			<property name="Publisher" value="Capcom" />
@@ -1724,7 +1611,6 @@
 			<property name="Backup 2" value="Psychic" />
 			<property name="Backup 3" value="" />
 			<property name="Number" value="C114" />
-			<property name="Illustrator" value="" />
 		</card>
 		<card name="Q" id="e0284b1e-1345-cc05-ba72-57c57c9f602c">
 			<property name="Publisher" value="Capcom" />
@@ -1739,7 +1625,6 @@
 			<property name="Backup 2" value="Wrestler" />
 			<property name="Backup 3" value="Wrestler" />
 			<property name="Number" value="C115" />
-			<property name="Illustrator" value="" />
 		</card>
 		<card name="R. Mika" id="d345dee7-6cd6-327e-c500-e32141c867c9">
 			<property name="Publisher" value="Capcom" />
@@ -1754,7 +1639,6 @@
 			<property name="Backup 2" value="Student" />
 			<property name="Backup 3" value="Wrestler" />
 			<property name="Number" value="C116" />
-			<property name="Illustrator" value="" />
 		</card>
 		<card name="Remy" id="5010995a-1ac4-ce50-ff95-0124f2734acc">
 			<property name="Publisher" value="Capcom" />
@@ -1769,7 +1653,6 @@
 			<property name="Backup 2" value="Assassin" />
 			<property name="Backup 3" value="" />
 			<property name="Number" value="C117" />
-			<property name="Illustrator" value="" />
 		</card>
 		<card name="Retsu" id="405e7518-3779-d0b8-0305-49b0d1cae01f">
 			<property name="Publisher" value="Capcom" />
@@ -1784,7 +1667,6 @@
 			<property name="Backup 2" value="Priest" />
 			<property name="Backup 3" value="Monk" />
 			<property name="Number" value="C118" />
-			<property name="Illustrator" value="" />
 		</card>
 		<card name="Rolento" id="08630ee9-0bed-cbd9-bd7e-2844cced3894">
 			<property name="Publisher" value="Capcom" />
@@ -1799,7 +1681,6 @@
 			<property name="Backup 2" value="Fighter" />
 			<property name="Backup 3" value="Mercenary" />
 			<property name="Number" value="C119" />
-			<property name="Illustrator" value="Genzo" />
 		</card>
 		<card name="Rose" id="0023310e-b6a8-6991-31a2-1559c9884136">
 			<property name="Publisher" value="Capcom" />
@@ -1814,7 +1695,6 @@
 			<property name="Backup 2" value="Magician" />
 			<property name="Backup 3" value="" />
 			<property name="Number" value="C120" />
-			<property name="Illustrator" value="" />
 		</card>
 		<card name="Ryu" id="9e5fdba4-e106-70a2-a943-ec688e057138">
 			<property name="Publisher" value="Capcom" />
@@ -1829,7 +1709,6 @@
 			<property name="Backup 2" value="Fighter" />
 			<property name="Backup 3" value="" />
 			<property name="Number" value="C121" />
-			<property name="Illustrator" value="Jo Chen" />
 		</card>
 		<card name="Ryu Hoshi" id="12cae116-1a00-15b0-9688-08b10346e404">
 			<property name="Publisher" value="Capcom" />
@@ -1844,7 +1723,6 @@
 			<property name="Backup 2" value="Karateka" />
 			<property name="Backup 3" value="" />
 			<property name="Number" value="C122" />
-			<property name="Illustrator" value="UZI" />
 		</card>
 		<card name="Sagat" id="113c0ed3-22d1-6d8a-e10a-8d1e41efeecd">
 			<property name="Publisher" value="Capcom" />
@@ -1859,7 +1737,6 @@
 			<property name="Backup 2" value="" />
 			<property name="Backup 3" value="" />
 			<property name="Number" value="C123" />
-			<property name="Illustrator" value="Arnold Tsang" />
 		</card>
 		<card name="Sakura" id="820e3110-6c20-c44f-ff5a-322c641e0d79">
 			<property name="Publisher" value="Capcom" />
@@ -1874,7 +1751,6 @@
 			<property name="Backup 2" value="Student" />
 			<property name="Backup 3" value="" />
 			<property name="Number" value="C124" />
-			<property name="Illustrator" value="" />
 		</card>
 		<card name="Sean" id="1f2f46a7-2e4f-7643-975b-784cc8d0d541">
 			<property name="Publisher" value="Capcom" />
@@ -1889,7 +1765,6 @@
 			<property name="Backup 2" value="Fighter" />
 			<property name="Backup 3" value="Student" />
 			<property name="Number" value="C125" />
-			<property name="Illustrator" value="" />
 		</card>
 		<card name="Sodom" id="c44dd7eb-e212-d49e-01e2-3dde231de350">
 			<property name="Publisher" value="Capcom" />
@@ -1904,7 +1779,6 @@
 			<property name="Backup 2" value="Spirit" />
 			<property name="Backup 3" value="Samurai" />
 			<property name="Number" value="C126" />
-			<property name="Illustrator" value="" />
 		</card>
 		<card name="T. Hawk" id="0a9086e1-aaaf-1fb4-5db1-74d534e9593a">
 			<property name="Publisher" value="Capcom" />
@@ -1919,7 +1793,6 @@
 			<property name="Backup 2" value="Priest" />
 			<property name="Backup 3" value="Priest" />
 			<property name="Number" value="C127" />
-			<property name="Illustrator" value="" />
 		</card>
 		<card name="Twelve" id="ce11072a-726f-286b-1017-ace153181104">
 			<property name="Publisher" value="Capcom" />
@@ -1934,7 +1807,6 @@
 			<property name="Backup 2" value="Spirit" />
 			<property name="Backup 3" value="Experiment" />
 			<property name="Number" value="C128" />
-			<property name="Illustrator" value="" />
 		</card>
 		<card name="Urien" id="d3711b4c-0f76-6322-410f-c0fa147e4778">
 			<property name="Publisher" value="Capcom" />
@@ -1949,7 +1821,6 @@
 			<property name="Backup 2" value="Ninja" />
 			<property name="Backup 3" value="Taekwondo" />
 			<property name="Number" value="C129" />
-			<property name="Illustrator" value="" />
 		</card>
 		<card name="Vega" id="2b5157c2-c99b-61af-253a-f835230dd4df">
 			<property name="Publisher" value="Capcom" />
@@ -1964,7 +1835,6 @@
 			<property name="Backup 2" value="Assassin" />
 			<property name="Backup 3" value="Cursed" />
 			<property name="Number" value="C130" />
-			<property name="Illustrator" value="Jo Chen" />
 		</card>
 		<card name="Yang" id="463e54af-a531-ceeb-a287-81d182014baa">
 			<property name="Publisher" value="Capcom" />
@@ -1979,7 +1849,6 @@
 			<property name="Backup 2" value="Cursed" />
 			<property name="Backup 3" value="Taekwondo" />
 			<property name="Number" value="C131" />
-			<property name="Illustrator" value="" />
 		</card>
 		<card name="Yun" id="92ee3b78-2414-63ee-64b6-83330fa990fd">
 			<property name="Publisher" value="Capcom" />
@@ -1994,7 +1863,6 @@
 			<property name="Backup 2" value="Cursed" />
 			<property name="Backup 3" value="Taekwondo" />
 			<property name="Number" value="C132" />
-			<property name="Illustrator" value="" />
 		</card>
 		<card name="Zangief" id="f640a77c-002c-b194-643a-653154e04102">
 			<property name="Publisher" value="Capcom" />
@@ -2009,7 +1877,6 @@
 			<property name="Backup 2" value="Wrestler" />
 			<property name="Backup 3" value="" />
 			<property name="Number" value="C133" />
-			<property name="Illustrator" value="" />
 		</card>
 		<card name="Option" id="1a9221f6-2c02-3f83-e6d1-a1270349a766">
 			<property name="Publisher" value="Capcom" />
@@ -2024,7 +1891,6 @@
 			<property name="Backup 2" value="Robot" />
 			<property name="Backup 3" value="Robot" />
 			<property name="Number" value="C134" />
-			<property name="Illustrator" value="" />
 		</card>
 		<card name="Strider Hiryu" id="4fc6b7cd-8abc-6111-9737-44e81885e109">
 			<property name="Publisher" value="Capcom" />
@@ -2039,7 +1905,6 @@
 			<property name="Backup 2" value="Robot" />
 			<property name="Backup 3" value="Robot" />
 			<property name="Number" value="C135" />
-			<property name="Illustrator" value="" />
 		</card>
 		<card name="Kikaioh" id="e7caf078-c10a-c29c-3b88-78111359dc3c">
 			<property name="Publisher" value="Capcom" />
@@ -2054,7 +1919,6 @@
 			<property name="Backup 2" value="Pilot" />
 			<property name="Backup 3" value="" />
 			<property name="Number" value="C136" />
-			<property name="Illustrator" value="" />
 		</card>
 		<card name="Anakaris" id="d1227a02-375a-ba04-e323-0d642dd137bb">
 			<property name="Publisher" value="Capcom" />
@@ -2069,7 +1933,6 @@
 			<property name="Backup 2" value="Deity" />
 			<property name="Backup 3" value="" />
 			<property name="Number" value="C137" />
-			<property name="Illustrator" value="" />
 		</card>
 		<card name="B. B. Hood" id="c61d49aa-62c9-726a-e113-1098ddcc1aa3">
 			<property name="Publisher" value="Capcom" />
@@ -2084,7 +1947,6 @@
 			<property name="Backup 2" value="" />
 			<property name="Backup 3" value="" />
 			<property name="Number" value="C138" />
-			<property name="Illustrator" value="" />
 		</card>
 		<card name="Bishamon" id="e0be28aa-a537-2348-6e65-20b1ae467e7c">
 			<property name="Publisher" value="Capcom" />
@@ -2099,7 +1961,6 @@
 			<property name="Backup 2" value="Samurai" />
 			<property name="Backup 3" value="" />
 			<property name="Number" value="C139" />
-			<property name="Illustrator" value="Arnold Tsang" />
 		</card>
 		<card name="Demitri" id="be6519eb-b250-02e9-1109-0b8e3cea1a71">
 			<property name="Publisher" value="Capcom" />
@@ -2114,7 +1975,6 @@
 			<property name="Backup 2" value="Zombie" />
 			<property name="Backup 3" value="Demon" />
 			<property name="Number" value="C140" />
-			<property name="Illustrator" value="Joe Madureira" />
 		</card>
 		<card name="Donovan" id="b46f5325-5622-a40b-020a-ce5618222029">
 			<property name="Publisher" value="Capcom" />
@@ -2129,7 +1989,6 @@
 			<property name="Backup 2" value="Monk" />
 			<property name="Backup 3" value="Agent" />
 			<property name="Number" value="C141" />
-			<property name="Illustrator" value="Arnold Tsang" />
 		</card>
 		<card name="Felicia" id="f041d252-dc90-8722-7514-9db480fba638">
 			<property name="Publisher" value="Capcom" />
@@ -2144,7 +2003,6 @@
 			<property name="Backup 2" value="Beast" />
 			<property name="Backup 3" value="" />
 			<property name="Number" value="C142" />
-			<property name="Illustrator" value="" />
 		</card>
 		<card name="Hsien-Ko" id="8ca792b0-0c6f-367b-19e1-3dceaf080542">
 			<property name="Publisher" value="Capcom" />
@@ -2159,7 +2017,6 @@
 			<property name="Backup 2" value="Brute" />
 			<property name="Backup 3" value="Kung-fu" />
 			<property name="Number" value="C143" />
-			<property name="Illustrator" value="" />
 		</card>
 		<card name="Huitzil" id="9e9175b8-6618-a692-f4e0-f40fcb8b44a5">
 			<property name="Publisher" value="Capcom" />
@@ -2174,7 +2031,6 @@
 			<property name="Backup 2" value="Robot" />
 			<property name="Backup 3" value="" />
 			<property name="Number" value="C144" />
-			<property name="Illustrator" value="" />
 		</card>
 		<card name="J. Talbain" id="84bdd81f-794f-62ca-7b03-a438544ef400">
 			<property name="Publisher" value="Capcom" />
@@ -2189,7 +2045,6 @@
 			<property name="Backup 2" value="Priest" />
 			<property name="Backup 3" value="" />
 			<property name="Number" value="C145" />
-			<property name="Illustrator" value="" />
 		</card>
 		<card name="Jedah" id="0043ce1a-7a74-04ca-3a20-67877a88e624">
 			<property name="Publisher" value="Capcom" />
@@ -2204,7 +2059,6 @@
 			<property name="Backup 2" value="Vampire" />
 			<property name="Backup 3" value="Cursed" />
 			<property name="Number" value="C146" />
-			<property name="Illustrator" value="" />
 		</card>
 		<card name="L. Raptor" id="66050e43-2019-64c5-debf-1f975e1a7808">
 			<property name="Publisher" value="Capcom" />
@@ -2219,7 +2073,6 @@
 			<property name="Backup 2" value="Spirit" />
 			<property name="Backup 3" value="Zombie" />
 			<property name="Number" value="C147" />
-			<property name="Illustrator" value="" />
 		</card>
 		<card name="Lilith" id="15c2e111-4380-fe4b-0d50-f1a4cc508101">
 			<property name="Publisher" value="Capcom" />
@@ -2234,7 +2087,6 @@
 			<property name="Backup 2" value="Student" />
 			<property name="Backup 3" value="" />
 			<property name="Number" value="C148" />
-			<property name="Illustrator" value="Edayan" />
 		</card>
 		<card name="Morrigan" id="441b5683-fd8f-2b32-e692-ab8812284714">
 			<property name="Publisher" value="Capcom" />
@@ -2249,7 +2101,6 @@
 			<property name="Backup 2" value="" />
 			<property name="Backup 3" value="" />
 			<property name="Number" value="C149" />
-			<property name="Illustrator" value="" />
 		</card>
 		<card name="Morrigan Aensland" id="21f02ee2-0298-3e3c-4143-74d3c54ee0e0">
 			<property name="Publisher" value="Capcom" />
@@ -2264,7 +2115,6 @@
 			<property name="Backup 2" value="" />
 			<property name="Backup 3" value="" />
 			<property name="Number" value="C150" />
-			<property name="Illustrator" value="Daichan" />
 		</card>
 		<card name="Pyron" id="11e11004-aa6d-6421-40b6-c5c0dac1e27c">
 			<property name="Publisher" value="Capcom" />
@@ -2279,7 +2129,6 @@
 			<property name="Backup 2" value="" />
 			<property name="Backup 3" value="" />
 			<property name="Number" value="C151" />
-			<property name="Illustrator" value="" />
 		</card>
 		<card name="Q-Bee" id="cd3530b2-6101-eb50-af40-087a194e0758">
 			<property name="Publisher" value="Capcom" />
@@ -2294,7 +2143,6 @@
 			<property name="Backup 2" value="Beast" />
 			<property name="Backup 3" value="" />
 			<property name="Number" value="C152" />
-			<property name="Illustrator" value="" />
 		</card>
 		<card name="Rikuo" id="ca2388e7-7214-1d8e-b681-0a5acf426511">
 			<property name="Publisher" value="Capcom" />
@@ -2309,7 +2157,6 @@
 			<property name="Backup 2" value="Ninja" />
 			<property name="Backup 3" value="" />
 			<property name="Number" value="C153" />
-			<property name="Illustrator" value="" />
 		</card>
 		<card name="Sasquatch" id="f4be6380-aeaf-4868-768b-e3b261bd010d">
 			<property name="Publisher" value="Capcom" />
@@ -2324,7 +2171,6 @@
 			<property name="Backup 2" value="Priest" />
 			<property name="Backup 3" value="Experiment" />
 			<property name="Number" value="C154" />
-			<property name="Illustrator" value="" />
 		</card>
 		<card name="Victor" id="5be08644-8a7a-2de6-4b0b-4e6c1b313248">
 			<property name="Publisher" value="Capcom" />
@@ -2339,7 +2185,6 @@
 			<property name="Backup 2" value="Robot" />
 			<property name="Backup 3" value="" />
 			<property name="Number" value="C155" />
-			<property name="Illustrator" value="" />
 		</card>
 		<card name="Al &amp; Ivan" id="aa06c717-141b-a487-f4b5-9712096c2b0b">
 			<property name="Publisher" value="Capcom" />
@@ -2354,7 +2199,6 @@
 			<property name="Backup 2" value="Magician" />
 			<property name="Backup 3" value="Beast" />
 			<property name="Number" value="C156" />
-			<property name="Illustrator" value="" />
 		</card>
 		<card name="Kenji" id="77379f72-11e6-1628-7048-d941891405d0">
 			<property name="Publisher" value="Capcom" />
@@ -2369,7 +2213,6 @@
 			<property name="Backup 2" value="Ninja" />
 			<property name="Backup 3" value="Mentor" />
 			<property name="Number" value="C157" />
-			<property name="Illustrator" value="" />
 		</card>
 		<card name="Leo" id="ccf84825-1874-2f71-c3bc-898a6c996434">
 			<property name="Publisher" value="Capcom" />
@@ -2384,7 +2227,6 @@
 			<property name="Backup 2" value="Avatar" />
 			<property name="Backup 3" value="Boxer" />
 			<property name="Number" value="C158" />
-			<property name="Illustrator" value="" />
 		</card>
 		<card name="Mai Ling" id="840f72d2-780f-610a-0272-6aa0d1b812aa">
 			<property name="Publisher" value="Capcom" />
@@ -2399,7 +2241,6 @@
 			<property name="Backup 2" value="Deity" />
 			<property name="Backup 3" value="Captain" />
 			<property name="Number" value="C159" />
-			<property name="Illustrator" value="" />
 		</card>
 		<card name="Tessa" id="2b26717b-832d-1452-941d-6b43c47d2306">
 			<property name="Publisher" value="Capcom" />
@@ -2414,7 +2255,6 @@
 			<property name="Backup 2" value="Psychic" />
 			<property name="Backup 3" value="Magician" />
 			<property name="Number" value="C160" />
-			<property name="Illustrator" value="" />
 		</card>
 		<card name="Eiji" id="f4496101-3f86-daf6-c055-11c361310c8f">
 			<property name="Publisher" value="SNK" />
@@ -2429,7 +2269,6 @@
 			<property name="Backup 2" value="Ninja" />
 			<property name="Backup 3" value="Ninja" />
 			<property name="Number" value="C161" />
-			<property name="Illustrator" value="" />
 		</card>
 		<card name="John" id="1bc38240-95e6-89d2-0240-47b57e40f002">
 			<property name="Publisher" value="SNK" />
@@ -2444,7 +2283,6 @@
 			<property name="Backup 2" value="Soldier" />
 			<property name="Backup 3" value="Soldier" />
 			<property name="Number" value="C162" />
-			<property name="Illustrator" value="" />
 		</card>
 		<card name="Kasumi" id="83278e1c-fb0e-68e1-8db1-be674a9604c3">
 			<property name="Publisher" value="SNK" />
@@ -2459,7 +2297,6 @@
 			<property name="Backup 2" value="Aikido" />
 			<property name="Backup 3" value="Mentor" />
 			<property name="Number" value="C163" />
-			<property name="Illustrator" value="" />
 		</card>
 		<card name="King" id="0522012c-4ac5-51aa-9e34-3059ac2b90c9">
 			<property name="Publisher" value="SNK" />
@@ -2474,7 +2311,6 @@
 			<property name="Backup 2" value="Kickboxer" />
 			<property name="Backup 3" value="Kickboxer" />
 			<property name="Number" value="C164" />
-			<property name="Illustrator" value="" />
 		</card>
 		<card name="Lee Pai Long" id="3a0f1363-4895-2953-a0dc-1303f21131ef">
 			<property name="Publisher" value="SNK" />
@@ -2489,7 +2325,6 @@
 			<property name="Backup 2" value="Gangster" />
 			<property name="Backup 3" value="Assassin" />
 			<property name="Number" value="C165" />
-			<property name="Illustrator" value="" />
 		</card>
 		<card name="Mr. Big" id="901b0dd5-6122-8901-7205-ab61f0cc4b37">
 			<property name="Publisher" value="SNK" />
@@ -2504,7 +2339,6 @@
 			<property name="Backup 2" value="Gangster" />
 			<property name="Backup 3" value="Guardian" />
 			<property name="Number" value="C166" />
-			<property name="Illustrator" value="" />
 		</card>
 		<card name="Mr. Karate" id="ba164538-a3c3-adf2-c4dd-ecc410150620">
 			<property name="Publisher" value="SNK" />
@@ -2519,7 +2353,6 @@
 			<property name="Backup 2" value="Karateka" />
 			<property name="Backup 3" value="" />
 			<property name="Number" value="C167" />
-			<property name="Illustrator" value="" />
 		</card>
 		<card name="Robert" id="61805ccc-8ef1-5581-7763-39b640fec825">
 			<property name="Publisher" value="SNK" />
@@ -2534,7 +2367,6 @@
 			<property name="Backup 2" value="Karateka" />
 			<property name="Backup 3" value="Student" />
 			<property name="Number" value="C168" />
-			<property name="Illustrator" value="" />
 		</card>
 		<card name="Ryo" id="79d702d6-16c3-b56a-26ee-7d62dc8c9e57">
 			<property name="Publisher" value="SNK" />
@@ -2549,7 +2381,6 @@
 			<property name="Backup 2" value="Mentor" />
 			<property name="Backup 3" value="" />
 			<property name="Number" value="C169" />
-			<property name="Illustrator" value="" />
 		</card>
 		<card name="Ryo Sakazaki" id="f9140e27-f064-a87e-7ff2-156b0e9bbca1">
 			<property name="Publisher" value="SNK" />
@@ -2564,7 +2395,6 @@
 			<property name="Backup 2" value="Aikido" />
 			<property name="Backup 3" value="Fighter" />
 			<property name="Number" value="C170" />
-			<property name="Illustrator" value="Hiroaki" />
 		</card>
 		<card name="Ryuhaku" id="5b721fa7-2790-497e-9070-5e27e27d6068">
 			<property name="Publisher" value="SNK" />
@@ -2579,7 +2409,6 @@
 			<property name="Backup 2" value="Aikido" />
 			<property name="Backup 3" value="Aikido" />
 			<property name="Number" value="C171" />
-			<property name="Illustrator" value="" />
 		</card>
 		<card name="Takuma" id="0a0e25ef-c89a-631c-250e-9d403301005a">
 			<property name="Publisher" value="SNK" />
@@ -2594,7 +2423,6 @@
 			<property name="Backup 2" value="Mentor" />
 			<property name="Backup 3" value="Karateka" />
 			<property name="Number" value="C172" />
-			<property name="Illustrator" value="" />
 		</card>
 		<card name="Yuri" id="2089e062-c118-a2e2-1e54-1112041d13be">
 			<property name="Publisher" value="SNK" />
@@ -2609,7 +2437,6 @@
 			<property name="Backup 2" value="Karateka" />
 			<property name="Backup 3" value="Karateka" />
 			<property name="Number" value="C173" />
-			<property name="Illustrator" value="" />
 		</card>
 		<card name="Guy Tendo" id="51841d1a-6ebf-7b03-5e6a-ca366266cd17">
 			<property name="Publisher" value="SNK" />
@@ -2624,7 +2451,6 @@
 			<property name="Backup 2" value="Karateka" />
 			<property name="Backup 3" value="" />
 			<property name="Number" value="C174" />
-			<property name="Illustrator" value="" />
 		</card>
 		<card name="Rob Python" id="857bbbe0-d74c-79d9-040d-900097127af1">
 			<property name="Publisher" value="SNK" />
@@ -2639,7 +2465,6 @@
 			<property name="Backup 2" value="Boxer" />
 			<property name="Backup 3" value="Boxer" />
 			<property name="Number" value="C175" />
-			<property name="Illustrator" value="" />
 		</card>
 		<card name="Takato" id="004bde04-d927-7833-c1a4-1d5d5926481a">
 			<property name="Publisher" value="SNK" />
@@ -2654,7 +2479,6 @@
 			<property name="Backup 2" value="Fighter" />
 			<property name="Backup 3" value="Karateka" />
 			<property name="Number" value="C176" />
-			<property name="Illustrator" value="" />
 		</card>
 		<card name="God Rugal" id="22e1766a-c029-1e89-97e9-4f3ba9d23052">
 			<property name="Publisher" value="SNK" />
@@ -2669,7 +2493,6 @@
 			<property name="Backup 2" value="Demon" />
 			<property name="Backup 3" value="" />
 			<property name="Number" value="C177" />
-			<property name="Illustrator" value="" />
 		</card>
 		<card name="Alfred" id="293c1e08-e132-87e1-5ea7-67c106107a1b">
 			<property name="Publisher" value="SNK" />
@@ -2684,7 +2507,6 @@
 			<property name="Backup 2" value="Soldier" />
 			<property name="Backup 3" value="Soldier" />
 			<property name="Number" value="C178" />
-			<property name="Illustrator" value="" />
 		</card>
 		<card name="Andy" id="e3931a50-fb0c-6baf-c054-86da11850e07">
 			<property name="Publisher" value="SNK" />
@@ -2699,7 +2521,6 @@
 			<property name="Backup 2" value="Student" />
 			<property name="Backup 3" value="" />
 			<property name="Number" value="C179" />
-			<property name="Illustrator" value="" />
 		</card>
 		<card name="B. Jenet" id="67bf6e76-868f-16d1-c8b9-0fe1c90222bc">
 			<property name="Publisher" value="SNK" />
@@ -2714,7 +2535,6 @@
 			<property name="Backup 2" value="Pilot" />
 			<property name="Backup 3" value="Captain" />
 			<property name="Number" value="C180" />
-			<property name="Illustrator" value="" />
 		</card>
 		<card name="Billy" id="4eee021d-9263-6d50-3f96-a154de192268">
 			<property name="Publisher" value="SNK" />
@@ -2729,7 +2549,6 @@
 			<property name="Backup 2" value="Deity" />
 			<property name="Backup 3" value="" />
 			<property name="Number" value="C181" />
-			<property name="Illustrator" value="" />
 		</card>
 		<card name="Blue Mary" id="427cebc4-65ac-f2f2-d050-1386f3cea31b">
 			<property name="Publisher" value="SNK" />
@@ -2744,7 +2563,6 @@
 			<property name="Backup 2" value="Mercenary" />
 			<property name="Backup 3" value="Mercenary" />
 			<property name="Number" value="C182" />
-			<property name="Illustrator" value="" />
 		</card>
 		<card name="Bob" id="fbe56c3b-2ddb-1567-7500-f2cb75580b48">
 			<property name="Publisher" value="SNK" />
@@ -2759,7 +2577,6 @@
 			<property name="Backup 2" value="Kickboxer" />
 			<property name="Backup 3" value="Capoeira" />
 			<property name="Number" value="C183" />
-			<property name="Illustrator" value="" />
 		</card>
 		<card name="Dong Hwan" id="d0404206-3a51-1f30-7f48-a8b95fa611c6">
 			<property name="Publisher" value="SNK" />
@@ -2774,7 +2591,6 @@
 			<property name="Backup 2" value="Detective" />
 			<property name="Backup 3" value="Taekwondo" />
 			<property name="Number" value="C184" />
-			<property name="Illustrator" value="" />
 		</card>
 		<card name="Duck King" id="4846b8ee-1ea7-0e10-e501-8d305c7ad347">
 			<property name="Publisher" value="SNK" />
@@ -2789,7 +2605,6 @@
 			<property name="Backup 2" value="Artist" />
 			<property name="Backup 3" value="Kickboxer" />
 			<property name="Number" value="C185" />
-			<property name="Illustrator" value="" />
 		</card>
 		<card name="Freeman" id="10e30506-9c63-7fea-9aed-f4d9437587e5">
 			<property name="Publisher" value="SNK" />
@@ -2804,7 +2619,6 @@
 			<property name="Backup 2" value="Kickboxer" />
 			<property name="Backup 3" value="Zombie" />
 			<property name="Number" value="C186" />
-			<property name="Illustrator" value="Hiroaki" />
 		</card>
 		<card name="Gato" id="1000cbc1-0519-8100-0cbc-1051981000cb">
 			<property name="Publisher" value="SNK" />
@@ -2819,7 +2633,6 @@
 			<property name="Backup 2" value="Kung-fu" />
 			<property name="Backup 3" value="Kung-fu" />
 			<property name="Number" value="C187" />
-			<property name="Illustrator" value="" />
 		</card>
 		<card name="Geese" id="35a44019-cdd9-14a1-1b06-b4be671cf63b">
 			<property name="Publisher" value="SNK" />
@@ -2834,7 +2647,6 @@
 			<property name="Backup 2" value="" />
 			<property name="Backup 3" value="" />
 			<property name="Number" value="C188" />
-			<property name="Illustrator" value="" />
 		</card>
 		<card name="Geese Howard" id="005dafbb-e21d-ce88-6ca1-c6eac03b12b1">
 			<property name="Publisher" value="SNK" />
@@ -2849,7 +2661,6 @@
 			<property name="Backup 2" value="Gangster" />
 			<property name="Backup 3" value="" />
 			<property name="Number" value="C189" />
-			<property name="Illustrator" value="Hiroaki" />
 		</card>
 		<card name="Grant" id="d6300862-18a9-4240-1e7d-0005b2e28511">
 			<property name="Publisher" value="SNK" />
@@ -2864,7 +2675,6 @@
 			<property name="Backup 2" value="Boss" />
 			<property name="Backup 3" value="" />
 			<property name="Number" value="C190" />
-			<property name="Illustrator" value="Eisuke &apos;Eichii&apos; Ogura" />
 		</card>
 		<card name="Griffon Mask" id="005d023a-2321-2fa0-1610-1375240a6001">
 			<property name="Publisher" value="SNK" />
@@ -2879,7 +2689,6 @@
 			<property name="Backup 2" value="Wrestler" />
 			<property name="Backup 3" value="Wrestler" />
 			<property name="Number" value="C191" />
-			<property name="Illustrator" value="" />
 		</card>
 		<card name="Hokutomaru" id="f92638fc-1c5f-66b3-1841-daa20e0cbaa8">
 			<property name="Publisher" value="SNK" />
@@ -2894,7 +2703,6 @@
 			<property name="Backup 2" value="Ninja" />
 			<property name="Backup 3" value="Deity" />
 			<property name="Number" value="C192" />
-			<property name="Illustrator" value="" />
 		</card>
 		<card name="Hon Fu" id="0219bb8d-de69-ad33-c811-900918a06c52">
 			<property name="Publisher" value="SNK" />
@@ -2909,7 +2717,6 @@
 			<property name="Backup 2" value="Kung-fu" />
 			<property name="Backup 3" value="Kung-fu" />
 			<property name="Number" value="C193" />
-			<property name="Illustrator" value="" />
 		</card>
 		<card name="Hotaru" id="e2bd1f72-ea2b-020e-09c3-ac9724e88c20">
 			<property name="Publisher" value="SNK" />
@@ -2924,7 +2731,6 @@
 			<property name="Backup 2" value="Cursed" />
 			<property name="Backup 3" value="Kung-fu" />
 			<property name="Number" value="C194" />
-			<property name="Illustrator" value="" />
 		</card>
 		<card name="Jae Hoon" id="3662aa9e-71f0-ece4-11d2-26577797e133">
 			<property name="Publisher" value="SNK" />
@@ -2939,7 +2745,6 @@
 			<property name="Backup 2" value="Detective" />
 			<property name="Backup 3" value="Taekwondo" />
 			<property name="Number" value="C195" />
-			<property name="Illustrator" value="" />
 		</card>
 		<card name="Jin Chonrei" id="0c364113-0e24-950d-d928-ec9c20fcd80b">
 			<property name="Publisher" value="SNK" />
@@ -2954,7 +2759,6 @@
 			<property name="Backup 2" value="Taekwondo" />
 			<property name="Backup 3" value="Kung-fu" />
 			<property name="Number" value="C196" />
-			<property name="Illustrator" value="" />
 		</card>
 		<card name="Jin Chonshu" id="c79604ff-6f9c-1d0d-36f5-e40195dfbf5f">
 			<property name="Publisher" value="SNK" />
@@ -2969,7 +2773,6 @@
 			<property name="Backup 2" value="Taekwondo" />
 			<property name="Backup 3" value="Kung-fu" />
 			<property name="Number" value="C197" />
-			<property name="Illustrator" value="" />
 		</card>
 		<card name="Joe" id="a56b1f26-43af-0cb0-2e43-c3358232c4d8">
 			<property name="Publisher" value="SNK" />
@@ -2984,7 +2787,6 @@
 			<property name="Backup 2" value="Kickboxer" />
 			<property name="Backup 3" value="Kickboxer" />
 			<property name="Number" value="C198" />
-			<property name="Illustrator" value="" />
 		</card>
 		<card name="Kain" id="564e4eb1-7c35-2202-1622-98195a0dd765">
 			<property name="Publisher" value="SNK" />
@@ -2999,7 +2801,6 @@
 			<property name="Backup 2" value="Guardian" />
 			<property name="Backup 3" value="" />
 			<property name="Number" value="C199" />
-			<property name="Illustrator" value="" />
 		</card>
 		<card name="Kevin" id="59022057-ac36-c258-43a8-6630061dd511">
 			<property name="Publisher" value="SNK" />
@@ -3014,7 +2815,6 @@
 			<property name="Backup 2" value="Robot" />
 			<property name="Backup 3" value="Hunter" />
 			<property name="Number" value="C200" />
-			<property name="Illustrator" value="" />
 		</card>
 		<card name="Kim" id="94479895-1144-f64f-4555-13f38e8639ba">
 			<property name="Publisher" value="SNK" />
@@ -3029,7 +2829,6 @@
 			<property name="Backup 2" value="Taekwondo" />
 			<property name="Backup 3" value="Taekwondo" />
 			<property name="Number" value="C201" />
-			<property name="Illustrator" value="" />
 		</card>
 		<card name="Krauser" id="8a4a1f05-9374-849e-08fa-0662d3f136c4">
 			<property name="Publisher" value="SNK" />
@@ -3044,7 +2843,6 @@
 			<property name="Backup 2" value="" />
 			<property name="Backup 3" value="" />
 			<property name="Number" value="C202" />
-			<property name="Illustrator" value="" />
 		</card>
 		<card name="Li Xiangfei" id="1f147327-bf7b-b534-8e62-49553ac5c71f">
 			<property name="Publisher" value="SNK" />
@@ -3059,7 +2857,6 @@
 			<property name="Backup 2" value="Gymnast" />
 			<property name="Backup 3" value="Monk" />
 			<property name="Number" value="C203" />
-			<property name="Illustrator" value="" />
 		</card>
 		<card name="Mai" id="9ade877e-64e1-03d0-16a9-13261c1a5324">
 			<property name="Publisher" value="SNK" />
@@ -3074,7 +2871,6 @@
 			<property name="Backup 2" value="Student" />
 			<property name="Backup 3" value="Kung-fu" />
 			<property name="Number" value="C204" />
-			<property name="Illustrator" value="" />
 		</card>
 		<card name="Marco R." id="bd2818b1-7740-8bca-4d57-6a82f8216e69">
 			<property name="Publisher" value="SNK" />
@@ -3089,7 +2885,6 @@
 			<property name="Backup 2" value="Mentor" />
 			<property name="Backup 3" value="Karateka" />
 			<property name="Number" value="C205" />
-			<property name="Illustrator" value="" />
 		</card>
 		<card name="Raiden" id="11aa2746-77bf-604f-27b6-bf10f1317c84">
 			<property name="Publisher" value="SNK" />
@@ -3104,7 +2899,6 @@
 			<property name="Backup 2" value="Wrestler" />
 			<property name="Backup 3" value="" />
 			<property name="Number" value="C206" />
-			<property name="Illustrator" value="" />
 		</card>
 		<card name="Rick" id="0c556e75-1b88-8952-6c4a-aa0a1083aea1">
 			<property name="Publisher" value="SNK" />
@@ -3119,7 +2913,6 @@
 			<property name="Backup 2" value="Mercenary" />
 			<property name="Backup 3" value="Boxer" />
 			<property name="Number" value="C207" />
-			<property name="Illustrator" value="" />
 		</card>
 		<card name="Rock Howard" id="20a510e0-3ffd-ee9e-b754-416b84016809">
 			<property name="Publisher" value="SNK" />
@@ -3134,7 +2927,6 @@
 			<property name="Backup 2" value="Fighter" />
 			<property name="Backup 3" value="Warrior" />
 			<property name="Number" value="C208" />
-			<property name="Illustrator" value="" />
 		</card>
 		<card name="Terry" id="e3601c3d-cc89-0165-4711-3f080302054f">
 			<property name="Publisher" value="SNK" />
@@ -3149,7 +2941,6 @@
 			<property name="Backup 2" value="Karateka" />
 			<property name="Backup 3" value="" />
 			<property name="Number" value="C209" />
-			<property name="Illustrator" value="" />
 		</card>
 		<card name="Terry Bogard" id="991111a0-075e-3f8e-502f-a16512c156f0">
 			<property name="Publisher" value="SNK" />
@@ -3164,7 +2955,6 @@
 			<property name="Backup 2" value="" />
 			<property name="Backup 3" value="" />
 			<property name="Number" value="C210" />
-			<property name="Illustrator" value="" />
 		</card>
 		<card name="Tsugumi" id="db0fae01-4f15-d3ea-b056-483a587c5814">
 			<property name="Publisher" value="SNK" />
@@ -3179,7 +2969,6 @@
 			<property name="Backup 2" value="Wrestler" />
 			<property name="Backup 3" value="Wrestler" />
 			<property name="Number" value="C211" />
-			<property name="Illustrator" value="" />
 		</card>
 		<card name="Wild Wolf" id="4e141852-91ab-6609-a4a3-b58b6391136a">
 			<property name="Publisher" value="SNK" />
@@ -3194,7 +2983,6 @@
 			<property name="Backup 2" value="" />
 			<property name="Backup 3" value="" />
 			<property name="Number" value="C212" />
-			<property name="Illustrator" value="Tonko" />
 		</card>
 		<card name="Yamazaki" id="78b7486d-2892-6eb8-b93e-19f11c58fcfe">
 			<property name="Publisher" value="SNK" />
@@ -3209,7 +2997,6 @@
 			<property name="Backup 2" value="Avatar" />
 			<property name="Backup 3" value="Avatar" />
 			<property name="Number" value="C213" />
-			<property name="Illustrator" value="" />
 		</card>
 		<card name="Carol" id="05075a8e-0591-5419-8be5-9011cd5103ec">
 			<property name="Publisher" value="SNK" />
@@ -3224,7 +3011,6 @@
 			<property name="Backup 2" value="Detective" />
 			<property name="Backup 3" value="Gymnast" />
 			<property name="Number" value="C214" />
-			<property name="Illustrator" value="" />
 		</card>
 		<card name="Hayate" id="42580519-0b10-7c3a-3b00-d6d3e1142e09">
 			<property name="Publisher" value="SNK" />
@@ -3239,7 +3025,6 @@
 			<property name="Backup 2" value="Swordsman" />
 			<property name="Backup 3" value="Detective" />
 			<property name="Number" value="C215" />
-			<property name="Illustrator" value="" />
 		</card>
 		<card name="Kim Sue II" id="d03a6111-9328-0fab-f11a-f68d12e0a0ea">
 			<property name="Publisher" value="SNK" />
@@ -3254,7 +3039,6 @@
 			<property name="Backup 2" value="Taekwondo" />
 			<property name="Backup 3" value="Taekwondo" />
 			<property name="Number" value="C216" />
-			<property name="Illustrator" value="" />
 		</card>
 		<card name="King Lion" id="2528ea9d-f88f-5b07-79dc-4652a6d3a260">
 			<property name="Publisher" value="SNK" />
@@ -3269,7 +3053,6 @@
 			<property name="Backup 2" value="Warrior" />
 			<property name="Backup 3" value="" />
 			<property name="Number" value="C217" />
-			<property name="Illustrator" value="" />
 		</card>
 		<card name="Rosa" id="0f13ffa5-2a3b-a2b0-cefa-02229db73262">
 			<property name="Publisher" value="SNK" />
@@ -3284,7 +3067,6 @@
 			<property name="Backup 2" value="Aikido" />
 			<property name="Backup 3" value="Brute" />
 			<property name="Number" value="C218" />
-			<property name="Illustrator" value="" />
 		</card>
 		<card name="Athena Asamiya" id="5790949b-e161-c9e0-fbc4-f3ab21906771">
 			<property name="Publisher" value="SNK" />
@@ -3299,7 +3081,6 @@
 			<property name="Backup 2" value="Psychic" />
 			<property name="Backup 3" value="Psychic" />
 			<property name="Number" value="C219" />
-			<property name="Illustrator" value="" />
 		</card>
 		<card name="Bao" id="84fcfe28-b4f2-2475-08fa-deef1b092db0">
 			<property name="Publisher" value="SNK" />
@@ -3314,7 +3095,6 @@
 			<property name="Backup 2" value="Psychic" />
 			<property name="Backup 3" value="Psychic" />
 			<property name="Number" value="C220" />
-			<property name="Illustrator" value="" />
 		</card>
 		<card name="Benimaru" id="a23bb860-ce57-20a8-d605-c6609329114f">
 			<property name="Publisher" value="SNK" />
@@ -3329,7 +3109,6 @@
 			<property name="Backup 2" value="Gangster" />
 			<property name="Backup 3" value="" />
 			<property name="Number" value="C221" />
-			<property name="Illustrator" value="" />
 		</card>
 		<card name="Chang" id="0670ec42-bd05-1cdf-0616-d0968df7377a">
 			<property name="Publisher" value="SNK" />
@@ -3344,7 +3123,6 @@
 			<property name="Backup 2" value="Taekwondo" />
 			<property name="Backup 3" value="Experiment" />
 			<property name="Number" value="C222" />
-			<property name="Illustrator" value="" />
 		</card>
 		<card name="Chin Gensai" id="04821a48-862c-66df-aca5-99b0ec1b1314">
 			<property name="Publisher" value="SNK" />
@@ -3359,7 +3137,6 @@
 			<property name="Backup 2" value="Psychic" />
 			<property name="Backup 3" value="Psychic" />
 			<property name="Number" value="C223" />
-			<property name="Illustrator" value="" />
 		</card>
 		<card name="Chizuru" id="b72cce61-d14c-fc4c-f987-50f254658a1f">
 			<property name="Publisher" value="SNK" />
@@ -3374,7 +3151,6 @@
 			<property name="Backup 2" value="" />
 			<property name="Backup 3" value="" />
 			<property name="Number" value="C224" />
-			<property name="Illustrator" value="" />
 		</card>
 		<card name="Choi" id="5a5cabd3-a018-8333-0751-0b631f94f432">
 			<property name="Publisher" value="SNK" />
@@ -3389,7 +3165,6 @@
 			<property name="Backup 2" value="Taekwondo" />
 			<property name="Backup 3" value="Assassin" />
 			<property name="Number" value="C225" />
-			<property name="Illustrator" value="" />
 		</card>
 		<card name="Chris" id="c832a30a-b5e9-9251-3323-158e0c4507fb">
 			<property name="Publisher" value="SNK" />
@@ -3404,7 +3179,6 @@
 			<property name="Backup 2" value="Avatar" />
 			<property name="Backup 3" value="" />
 			<property name="Number" value="C226" />
-			<property name="Illustrator" value="" />
 		</card>
 		<card name="Clark" id="05a921da-64c8-e9ab-4d28-0ffbb1d05b03">
 			<property name="Publisher" value="SNK" />
@@ -3419,7 +3193,6 @@
 			<property name="Backup 2" value="Mercenary" />
 			<property name="Backup 3" value="Mercenary" />
 			<property name="Number" value="C227" />
-			<property name="Illustrator" value="" />
 		</card>
 		<card name="Clone Zero" id="1f021b41-e291-1016-8ee7-16d2aa9120ad">
 			<property name="Publisher" value="SNK" />
@@ -3434,7 +3207,6 @@
 			<property name="Backup 2" value="Android" />
 			<property name="Backup 3" value="" />
 			<property name="Number" value="C228" />
-			<property name="Illustrator" value="" />
 		</card>
 		<card name="Daimon" id="880dc451-2206-9695-1659-d703464e2b30">
 			<property name="Publisher" value="SNK" />
@@ -3449,7 +3221,6 @@
 			<property name="Backup 2" value="Karateka" />
 			<property name="Backup 3" value="Boxer" />
 			<property name="Number" value="C229" />
-			<property name="Illustrator" value="" />
 		</card>
 		<card name="Goenitz" id="37d50026-e6fc-428b-504f-34594c140794">
 			<property name="Publisher" value="SNK" />
@@ -3464,7 +3235,6 @@
 			<property name="Backup 2" value="Avatar" />
 			<property name="Backup 3" value="" />
 			<property name="Number" value="C230" />
-			<property name="Illustrator" value="" />
 		</card>
 		<card name="Heidern" id="356f255e-fa19-4009-796f-f81182aac698">
 			<property name="Publisher" value="SNK" />
@@ -3479,7 +3249,6 @@
 			<property name="Backup 2" value="Mercenary" />
 			<property name="Backup 3" value="Mercenary" />
 			<property name="Number" value="C231" />
-			<property name="Illustrator" value="" />
 		</card>
 		<card name="Hinako" id="42b9ed61-1cc6-f187-01c3-502c815b7c1f">
 			<property name="Publisher" value="SNK" />
@@ -3494,7 +3263,6 @@
 			<property name="Backup 2" value="Student" />
 			<property name="Backup 3" value="Artist" />
 			<property name="Number" value="C232" />
-			<property name="Illustrator" value="" />
 		</card>
 		<card name="Iori" id="ce150970-927c-1c43-9a5a-12a1417e513a">
 			<property name="Publisher" value="SNK" />
@@ -3509,7 +3277,6 @@
 			<property name="Backup 2" value="" />
 			<property name="Backup 3" value="" />
 			<property name="Number" value="C233" />
-			<property name="Illustrator" value="" />
 		</card>
 		<card name="Jhun Hoon" id="a3664610-4614-480e-1286-4ed18447f712">
 			<property name="Publisher" value="SNK" />
@@ -3524,7 +3291,6 @@
 			<property name="Backup 2" value="Mercenary" />
 			<property name="Backup 3" value="" />
 			<property name="Number" value="C234" />
-			<property name="Illustrator" value="" />
 		</card>
 		<card name="K&apos;" id="0885955c-81ab-980b-48a4-a6046c1d3740">
 			<property name="Publisher" value="SNK" />
@@ -3539,7 +3305,6 @@
 			<property name="Backup 2" value="Cyborg" />
 			<property name="Backup 3" value="" />
 			<property name="Number" value="C235" />
-			<property name="Illustrator" value="" />
 		</card>
 		<card name="Kensu" id="64211806-3d89-0b4e-533a-8375e00b496b">
 			<property name="Publisher" value="SNK" />
@@ -3554,7 +3319,6 @@
 			<property name="Backup 2" value="Psychic" />
 			<property name="Backup 3" value="Kung-fu" />
 			<property name="Number" value="C236" />
-			<property name="Illustrator" value="" />
 		</card>
 		<card name="Krizalid" id="74e617da-6466-60ca-abc5-a3c30070a356">
 			<property name="Publisher" value="SNK" />
@@ -3569,7 +3333,6 @@
 			<property name="Backup 2" value="Experiment" />
 			<property name="Backup 3" value="" />
 			<property name="Number" value="C237" />
-			<property name="Illustrator" value="" />
 		</card>
 		<card name="Kula" id="69bf7716-8460-c25d-e544-001783719a14">
 			<property name="Publisher" value="SNK" />
@@ -3584,7 +3347,6 @@
 			<property name="Backup 2" value="Monster" />
 			<property name="Backup 3" value="" />
 			<property name="Number" value="C238" />
-			<property name="Illustrator" value="" />
 		</card>
 		<card name="Kyo" id="8a30435a-0511-1107-fe67-4eba402f3128">
 			<property name="Publisher" value="SNK" />
@@ -3599,7 +3361,6 @@
 			<property name="Backup 2" value="" />
 			<property name="Backup 3" value="" />
 			<property name="Number" value="C239" />
-			<property name="Illustrator" value="" />
 		</card>
 		<card name="Kyo Kusanagi" id="1970e069-e3d3-e8ec-d1d3-8394425c8458">
 			<property name="Publisher" value="SNK" />
@@ -3614,7 +3375,6 @@
 			<property name="Backup 2" value="Experiment" />
 			<property name="Backup 3" value="" />
 			<property name="Number" value="C240" />
-			<property name="Illustrator" value="Tonko" />
 		</card>
 		<card name="Leona" id="34030c89-a98e-4e88-fd8e-030d513ade6e">
 			<property name="Publisher" value="SNK" />
@@ -3629,7 +3389,6 @@
 			<property name="Backup 2" value="Mercenary" />
 			<property name="Backup 3" value="Mercenary" />
 			<property name="Number" value="C241" />
-			<property name="Illustrator" value="" />
 		</card>
 		<card name="Lin" id="e1dc76c8-d69a-fcd5-e871-58151df0e2ea">
 			<property name="Publisher" value="SNK" />
@@ -3644,7 +3403,6 @@
 			<property name="Backup 2" value="Ninja" />
 			<property name="Backup 3" value="Gangster" />
 			<property name="Number" value="C242" />
-			<property name="Illustrator" value="" />
 		</card>
 		<card name="Mature" id="95e8b828-4d7c-9ad4-4817-176e50a5563c">
 			<property name="Publisher" value="SNK" />
@@ -3659,7 +3417,6 @@
 			<property name="Backup 2" value="Avatar" />
 			<property name="Backup 3" value="Avatar" />
 			<property name="Number" value="C243" />
-			<property name="Illustrator" value="" />
 		</card>
 		<card name="Maxima" id="19e9bb05-87d7-100c-e0fb-74fc77755fd3">
 			<property name="Publisher" value="SNK" />
@@ -3674,7 +3431,6 @@
 			<property name="Backup 2" value="Experiment" />
 			<property name="Backup 3" value="" />
 			<property name="Number" value="C244" />
-			<property name="Illustrator" value="" />
 		</card>
 		<card name="Orochi" id="01701701-7017-0170-1701-701701701701">
 			<property name="Publisher" value="SNK" />
@@ -3689,7 +3445,6 @@
 			<property name="Backup 2" value="" />
 			<property name="Backup 3" value="" />
 			<property name="Number" value="C245" />
-			<property name="Illustrator" value="" />
 		</card>
 		<card name="Ralf" id="ad49baf9-0732-ab80-9039-0ae9289635c5">
 			<property name="Publisher" value="SNK" />
@@ -3704,7 +3459,6 @@
 			<property name="Backup 2" value="Mercenary" />
 			<property name="Backup 3" value="Mercenary" />
 			<property name="Number" value="C246" />
-			<property name="Illustrator" value="" />
 		</card>
 		<card name="Ramon" id="e58c3ad4-8a1c-8d0f-1c7c-5901c158a936">
 			<property name="Publisher" value="SNK" />
@@ -3719,7 +3473,6 @@
 			<property name="Backup 2" value="Wrestler" />
 			<property name="Backup 3" value="Wrestler" />
 			<property name="Number" value="C247" />
-			<property name="Illustrator" value="" />
 		</card>
 		<card name="Rugal" id="2abb1f62-ac8e-7c03-b4c2-80a36e49b714">
 			<property name="Publisher" value="SNK" />
@@ -3734,7 +3487,6 @@
 			<property name="Backup 2" value="Avatar" />
 			<property name="Backup 3" value="" />
 			<property name="Number" value="C248" />
-			<property name="Illustrator" value="" />
 		</card>
 		<card name="Saishu" id="2509fcbc-8db8-c17d-08dd-442a9da686a1">
 			<property name="Publisher" value="SNK" />
@@ -3749,7 +3501,6 @@
 			<property name="Backup 2" value="Captain" />
 			<property name="Backup 3" value="" />
 			<property name="Number" value="C249" />
-			<property name="Illustrator" value="" />
 		</card>
 		<card name="Seth" id="f75c3b67-0878-bc01-e655-14fbb30c76b9">
 			<property name="Publisher" value="SNK" />
@@ -3764,7 +3515,6 @@
 			<property name="Backup 2" value="Mercenary" />
 			<property name="Backup 3" value="Boxer" />
 			<property name="Number" value="C250" />
-			<property name="Illustrator" value="" />
 		</card>
 		<card name="Shermie" id="4632c5e6-3361-53b4-9a06-4430a3b534a0">
 			<property name="Publisher" value="SNK" />
@@ -3779,7 +3529,6 @@
 			<property name="Backup 2" value="Avatar" />
 			<property name="Backup 3" value="Mentor" />
 			<property name="Number" value="C251" />
-			<property name="Illustrator" value="" />
 		</card>
 		<card name="Shingo" id="041d0666-0231-a17a-1b99-2099c1b5ba45">
 			<property name="Publisher" value="SNK" />
@@ -3794,7 +3543,6 @@
 			<property name="Backup 2" value="Student" />
 			<property name="Backup 3" value="" />
 			<property name="Number" value="C252" />
-			<property name="Illustrator" value="" />
 		</card>
 		<card name="Vanessa" id="12003a54-0a72-4a50-1435-0909c5a1ec45">
 			<property name="Publisher" value="SNK" />
@@ -3809,7 +3557,6 @@
 			<property name="Backup 2" value="Wrestler" />
 			<property name="Backup 3" value="Kickboxer" />
 			<property name="Number" value="C253" />
-			<property name="Illustrator" value="" />
 		</card>
 		<card name="Vice" id="5d40369e-87c7-b7be-a83b-fdc1a6a7d192">
 			<property name="Publisher" value="SNK" />
@@ -3824,7 +3571,6 @@
 			<property name="Backup 2" value="Avatar" />
 			<property name="Backup 3" value="Avatar" />
 			<property name="Number" value="C254" />
-			<property name="Illustrator" value="" />
 		</card>
 		<card name="Whip" id="1db34515-6788-13c7-1ddd-959e3c5341a9">
 			<property name="Publisher" value="SNK" />
@@ -3839,7 +3585,6 @@
 			<property name="Backup 2" value="Mercenary" />
 			<property name="Backup 3" value="" />
 			<property name="Number" value="C255" />
-			<property name="Illustrator" value="" />
 		</card>
 		<card name="Wild Iori" id="40de9f2a-4bc1-7574-8019-c2b000872001">
 			<property name="Publisher" value="SNK" />
@@ -3854,7 +3599,6 @@
 			<property name="Backup 2" value="" />
 			<property name="Backup 3" value="" />
 			<property name="Number" value="C256" />
-			<property name="Illustrator" value="" />
 		</card>
 		<card name="Wild Leona" id="00a0f405-104e-e4ff-8770-c1f4f80d814a">
 			<property name="Publisher" value="SNK" />
@@ -3869,7 +3613,6 @@
 			<property name="Backup 2" value="" />
 			<property name="Backup 3" value="" />
 			<property name="Number" value="C257" />
-			<property name="Illustrator" value="" />
 		</card>
 		<card name="Yashiro" id="d14c689e-1ef0-8502-22bc-c8a853db51ec">
 			<property name="Publisher" value="SNK" />
@@ -3884,7 +3627,6 @@
 			<property name="Backup 2" value="Avatar" />
 			<property name="Backup 3" value="Cyborg" />
 			<property name="Number" value="C258" />
-			<property name="Illustrator" value="" />
 		</card>
 		<card name="Akari" id="85c6dd61-1d24-7afc-40f1-f32c09d02d8f">
 			<property name="Publisher" value="SNK" />
@@ -3899,7 +3641,6 @@
 			<property name="Backup 2" value="Ninja" />
 			<property name="Backup 3" value="" />
 			<property name="Number" value="C259" />
-			<property name="Illustrator" value="" />
 		</card>
 		<card name="Akari (Power)" id="7896b22e-2523-0d6a-0bb0-39b0accd41df">
 			<property name="Publisher" value="SNK" />
@@ -3914,7 +3655,6 @@
 			<property name="Backup 2" value="Psychic" />
 			<property name="Backup 3" value="" />
 			<property name="Number" value="C260" />
-			<property name="Illustrator" value="" />
 		</card>
 		<card name="Akari (Speed)" id="44ae449d-f8ee-0776-fe16-cb74efe437de">
 			<property name="Publisher" value="SNK" />
@@ -3929,7 +3669,6 @@
 			<property name="Backup 2" value="Psychic" />
 			<property name="Backup 3" value="" />
 			<property name="Number" value="C261" />
-			<property name="Illustrator" value="" />
 		</card>
 		<card name="Akari Ichijou" id="cfded429-514d-6af2-5924-1b3b410b8cad">
 			<property name="Publisher" value="SNK" />
@@ -3944,7 +3683,6 @@
 			<property name="Backup 2" value="Magician" />
 			<property name="Backup 3" value="Magician" />
 			<property name="Number" value="C262" />
-			<property name="Illustrator" value="Tonko" />
 		</card>
 		<card name="Amano" id="85ad3e3e-1007-7505-2f15-9edd7951cb42">
 			<property name="Publisher" value="SNK" />
@@ -3959,7 +3697,6 @@
 			<property name="Backup 2" value="Swordsman" />
 			<property name="Backup 3" value="Gymnast" />
 			<property name="Number" value="C263" />
-			<property name="Illustrator" value="" />
 		</card>
 		<card name="Awakened Kaede" id="a5ae8e74-110b-928c-432e-a11654ab8c6d">
 			<property name="Publisher" value="SNK" />
@@ -3974,7 +3711,6 @@
 			<property name="Backup 2" value="Magician" />
 			<property name="Backup 3" value="Kobudo" />
 			<property name="Number" value="C264" />
-			<property name="Illustrator" value="" />
 		</card>
 		<card name="Hibiki" id="21c84de3-0709-2051-6195-da07a18bc196">
 			<property name="Publisher" value="SNK" />
@@ -3989,7 +3725,6 @@
 			<property name="Backup 2" value="Kung-fu" />
 			<property name="Backup 3" value="Kung-fu" />
 			<property name="Number" value="C265" />
-			<property name="Illustrator" value="" />
 		</card>
 		<card name="Juzoh" id="0a5ed803-4605-1c26-503e-ce0ce61c6048">
 			<property name="Publisher" value="SNK" />
@@ -4004,7 +3739,6 @@
 			<property name="Backup 2" value="Magician" />
 			<property name="Backup 3" value="Magician" />
 			<property name="Number" value="C266" />
-			<property name="Illustrator" value="" />
 		</card>
 		<card name="Kaede" id="636e04be-cd6b-3d0d-1902-9467bfd1f690">
 			<property name="Publisher" value="SNK" />
@@ -4019,7 +3753,6 @@
 			<property name="Backup 2" value="Magician" />
 			<property name="Backup 3" value="Kobudo" />
 			<property name="Number" value="C267" />
-			<property name="Illustrator" value="" />
 		</card>
 		<card name="Kagami" id="d3f31145-10bf-0126-932c-c8f9dec86bec">
 			<property name="Publisher" value="SNK" />
@@ -4034,7 +3767,6 @@
 			<property name="Backup 2" value="Karateka" />
 			<property name="Backup 3" value="" />
 			<property name="Number" value="C268" />
-			<property name="Illustrator" value="" />
 		</card>
 		<card name="Kojiroh" id="004836cc-0e69-5147-4ecd-ec2ae99c88c2">
 			<property name="Publisher" value="SNK" />
@@ -4049,7 +3781,6 @@
 			<property name="Backup 2" value="Demon" />
 			<property name="Backup 3" value="Pilot" />
 			<property name="Number" value="C269" />
-			<property name="Illustrator" value="" />
 		</card>
 		<card name="Lee Rekka" id="6d18234e-ec01-2b1c-199e-13029db3a621">
 			<property name="Publisher" value="SNK" />
@@ -4064,7 +3795,6 @@
 			<property name="Backup 2" value="Kung-fu" />
 			<property name="Backup 3" value="Kung-fu" />
 			<property name="Number" value="C270" />
-			<property name="Illustrator" value="" />
 		</card>
 		<card name="Moriya" id="4dfc4d46-eb66-00c4-9e0b-0aac1d82b826">
 			<property name="Publisher" value="SNK" />
@@ -4079,7 +3809,6 @@
 			<property name="Backup 2" value="Kobudo" />
 			<property name="Backup 3" value="" />
 			<property name="Number" value="C271" />
-			<property name="Illustrator" value="" />
 		</card>
 		<card name="Mukuro" id="1110d86e-00ce-81cf-c74a-846f11130b0e">
 			<property name="Publisher" value="SNK" />
@@ -4094,7 +3823,6 @@
 			<property name="Backup 2" value="Zombie" />
 			<property name="Backup 3" value="Zombie" />
 			<property name="Number" value="C272" />
-			<property name="Illustrator" value="" />
 		</card>
 		<card name="Setsuna" id="1a257e8f-42cf-2117-786c-ba44458021a9">
 			<property name="Publisher" value="SNK" />
@@ -4109,7 +3837,6 @@
 			<property name="Backup 2" value="Cursed" />
 			<property name="Backup 3" value="" />
 			<property name="Number" value="C273" />
-			<property name="Illustrator" value="" />
 		</card>
 		<card name="Shigen" id="1a80faba-59d9-4d4f-2ccd-87ec0083a93a">
 			<property name="Publisher" value="SNK" />
@@ -4124,7 +3851,6 @@
 			<property name="Backup 2" value="Warrior" />
 			<property name="Backup 3" value="" />
 			<property name="Number" value="C274" />
-			<property name="Illustrator" value="" />
 		</card>
 		<card name="Wanderer" id="c2ab7b13-dc63-6232-41b1-c312a651ebbb">
 			<property name="Publisher" value="SNK" />
@@ -4139,7 +3865,6 @@
 			<property name="Backup 2" value="Experiment" />
 			<property name="Backup 3" value="" />
 			<property name="Number" value="C275" />
-			<property name="Illustrator" value="" />
 		</card>
 		<card name="Washizuka" id="38c35896-389b-8fd0-64b1-6065ef21d4a7">
 			<property name="Publisher" value="SNK" />
@@ -4154,7 +3879,6 @@
 			<property name="Backup 2" value="Demon" />
 			<property name="Backup 3" value="Guardian" />
 			<property name="Number" value="C276" />
-			<property name="Illustrator" value="" />
 		</card>
 		<card name="Yuki" id="e21ff2ce-db9e-0d81-a77a-8430c522cc21">
 			<property name="Publisher" value="SNK" />
@@ -4169,7 +3893,6 @@
 			<property name="Backup 2" value="Samurai" />
 			<property name="Backup 3" value="Psychic" />
 			<property name="Number" value="C277" />
-			<property name="Illustrator" value="" />
 		</card>
 		<card name="Zantetsu" id="eb46d7b0-78ef-5d38-34bc-26e961e468a1">
 			<property name="Publisher" value="SNK" />
@@ -4184,7 +3907,6 @@
 			<property name="Backup 2" value="Ninja" />
 			<property name="Backup 3" value="Ninja" />
 			<property name="Number" value="C278" />
-			<property name="Illustrator" value="" />
 		</card>
 		<card name="Eri" id="acd1f401-50d4-5721-6021-a28a65948808">
 			<property name="Publisher" value="SNK" />
@@ -4199,7 +3921,6 @@
 			<property name="Backup 2" value="Soldier" />
 			<property name="Backup 3" value="Soldier" />
 			<property name="Number" value="C279" />
-			<property name="Illustrator" value="" />
 		</card>
 		<card name="Fio" id="d18a08f3-e71a-948e-33a9-89c8ba90d37d">
 			<property name="Publisher" value="SNK" />
@@ -4214,7 +3935,6 @@
 			<property name="Backup 2" value="Soldier" />
 			<property name="Backup 3" value="Soldier" />
 			<property name="Number" value="C280" />
-			<property name="Illustrator" value="" />
 		</card>
 		<card name="Marco" id="3b0c4a2e-1b3e-7a47-e511-d7d966c0705a">
 			<property name="Publisher" value="SNK" />
@@ -4229,7 +3949,6 @@
 			<property name="Backup 2" value="Soldier" />
 			<property name="Backup 3" value="Soldier" />
 			<property name="Number" value="C281" />
-			<property name="Illustrator" value="" />
 		</card>
 		<card name="Tarma" id="70652bdb-daf0-6316-9519-aedca2cd521a">
 			<property name="Publisher" value="SNK" />
@@ -4244,7 +3963,6 @@
 			<property name="Backup 2" value="Soldier" />
 			<property name="Backup 3" value="Soldier" />
 			<property name="Number" value="C282" />
-			<property name="Illustrator" value="" />
 		</card>
 		<card name="Amakusa" id="2b117ee4-f0ac-c17c-7e28-3a48e93a49ea">
 			<property name="Publisher" value="SNK" />
@@ -4259,7 +3977,6 @@
 			<property name="Backup 2" value="Deity" />
 			<property name="Backup 3" value="" />
 			<property name="Number" value="C283" />
-			<property name="Illustrator" value="" />
 		</card>
 		<card name="Asura" id="df3a082d-6df3-a082-d6df-3a082d6df3a0">
 			<property name="Publisher" value="SNK" />
@@ -4274,7 +3991,6 @@
 			<property name="Backup 2" value="Cursed" />
 			<property name="Backup 3" value="" />
 			<property name="Number" value="C284" />
-			<property name="Illustrator" value="" />
 		</card>
 		<card name="Basara" id="e0506a12-440c-525d-ca47-46ec9015600a">
 			<property name="Publisher" value="SNK" />
@@ -4289,7 +4005,6 @@
 			<property name="Backup 2" value="Gangster" />
 			<property name="Backup 3" value="Gangster" />
 			<property name="Number" value="C285" />
-			<property name="Illustrator" value="" />
 		</card>
 		<card name="Cham Cham" id="7eba1510-b243-7083-4731-d1948a36f45f">
 			<property name="Publisher" value="SNK" />
@@ -4304,7 +4019,6 @@
 			<property name="Backup 2" value="Beast" />
 			<property name="Backup 3" value="Beast" />
 			<property name="Number" value="C286" />
-			<property name="Illustrator" value="" />
 		</card>
 		<card name="Charlotte" id="5d687c0a-a259-ebd4-cced-3121a781e502">
 			<property name="Publisher" value="SNK" />
@@ -4319,7 +4033,6 @@
 			<property name="Backup 2" value="Kickboxer" />
 			<property name="Backup 3" value="Assassin" />
 			<property name="Number" value="C287" />
-			<property name="Illustrator" value="" />
 		</card>
 		<card name="Gaira" id="a7c8da50-54ce-e0fd-f49d-0d0800255d04">
 			<property name="Publisher" value="SNK" />
@@ -4334,7 +4047,6 @@
 			<property name="Backup 2" value="Demon" />
 			<property name="Backup 3" value="Hunter" />
 			<property name="Number" value="C288" />
-			<property name="Illustrator" value="" />
 		</card>
 		<card name="Galford" id="de8a641b-9262-ec5e-088e-8cf3eaa3778b">
 			<property name="Publisher" value="SNK" />
@@ -4349,7 +4061,6 @@
 			<property name="Backup 2" value="Beast" />
 			<property name="Backup 3" value="Beast" />
 			<property name="Number" value="C289" />
-			<property name="Illustrator" value="" />
 		</card>
 		<card name="Genan" id="58fca996-7226-0c19-1924-71a561af0f59">
 			<property name="Publisher" value="SNK" />
@@ -4364,7 +4075,6 @@
 			<property name="Backup 2" value="Assassin" />
 			<property name="Backup 3" value="Brute" />
 			<property name="Number" value="C290" />
-			<property name="Illustrator" value="" />
 		</card>
 		<card name="Genjuro" id="0d0cb803-14f5-2685-a6d3-328925bf8c2f">
 			<property name="Publisher" value="SNK" />
@@ -4379,7 +4089,6 @@
 			<property name="Backup 2" value="Monster" />
 			<property name="Backup 3" value="Cursed" />
 			<property name="Number" value="C291" />
-			<property name="Illustrator" value="" />
 		</card>
 		<card name="Hanzo" id="f2a75ac2-30a1-3688-e024-a185c1d96860">
 			<property name="Publisher" value="SNK" />
@@ -4394,7 +4103,6 @@
 			<property name="Backup 2" value="Ninja" />
 			<property name="Backup 3" value="" />
 			<property name="Number" value="C292" />
-			<property name="Illustrator" value="" />
 		</card>
 		<card name="Haohmaru" id="0e219614-7bbb-2a67-d087-ac4400036e14">
 			<property name="Publisher" value="SNK" />
@@ -4409,7 +4117,6 @@
 			<property name="Backup 2" value="" />
 			<property name="Backup 3" value="" />
 			<property name="Number" value="C293" />
-			<property name="Illustrator" value="" />
 		</card>
 		<card name="Haohmaru (WR)" id="9f90571d-8d84-979e-20a2-e93a8ee7417f">
 			<property name="Publisher" value="SNK" />
@@ -4424,7 +4131,6 @@
 			<property name="Backup 2" value="" />
 			<property name="Backup 3" value="" />
 			<property name="Number" value="C294" />
-			<property name="Illustrator" value="" />
 		</card>
 		<card name="Jubei" id="7acbbf60-2567-e4da-0ea2-47294d48406d">
 			<property name="Publisher" value="SNK" />
@@ -4439,7 +4145,6 @@
 			<property name="Backup 2" value="Wrestler" />
 			<property name="Backup 3" value="Kickboxer" />
 			<property name="Number" value="C295" />
-			<property name="Illustrator" value="" />
 		</card>
 		<card name="Kazuki" id="0b4612f1-33a1-3990-7376-6410e5a97508">
 			<property name="Publisher" value="SNK" />
@@ -4454,7 +4159,6 @@
 			<property name="Backup 2" value="Karateka" />
 			<property name="Backup 3" value="" />
 			<property name="Number" value="C296" />
-			<property name="Illustrator" value="" />
 		</card>
 		<card name="Kyoshiro" id="0e3e7f47-a44c-ef6a-514d-d6a3ded3c101">
 			<property name="Publisher" value="SNK" />
@@ -4469,7 +4173,6 @@
 			<property name="Backup 2" value="Kickboxer" />
 			<property name="Backup 3" value="Monster" />
 			<property name="Number" value="C297" />
-			<property name="Illustrator" value="" />
 		</card>
 		<card name="Mikoto" id="a16f1bbf-26bd-5c8c-d794-18398a302736">
 			<property name="Publisher" value="SNK" />
@@ -4484,7 +4187,6 @@
 			<property name="Backup 2" value="Cursed" />
 			<property name="Backup 3" value="" />
 			<property name="Number" value="C298" />
-			<property name="Illustrator" value="" />
 		</card>
 		<card name="Nakoruru" id="23a4c546-b839-8ccb-ed4e-cf5aa1c00456">
 			<property name="Publisher" value="SNK" />
@@ -4499,7 +4201,6 @@
 			<property name="Backup 2" value="Android" />
 			<property name="Backup 3" value="" />
 			<property name="Number" value="C299" />
-			<property name="Illustrator" value="Senri Kita" />
 		</card>
 		<card name="Nakoruru (Bust)" id="6b81e694-ee3a-df43-12ce-22cc53ba7c4a">
 			<property name="Publisher" value="SNK" />
@@ -4514,7 +4215,6 @@
 			<property name="Backup 2" value="Beast" />
 			<property name="Backup 3" value="" />
 			<property name="Number" value="C300" />
-			<property name="Illustrator" value="" />
 		</card>
 		<card name="Nakoruru (Slash)" id="b315c729-cb1d-bea4-02d3-c5b81c43a332">
 			<property name="Publisher" value="SNK" />
@@ -4529,7 +4229,6 @@
 			<property name="Backup 2" value="Priest" />
 			<property name="Backup 3" value="" />
 			<property name="Number" value="C301" />
-			<property name="Illustrator" value="" />
 		</card>
 		<card name="Nicotine" id="3bcb7df8-6f08-6f4e-ed08-23658058b862">
 			<property name="Publisher" value="SNK" />
@@ -4544,7 +4243,6 @@
 			<property name="Backup 2" value="Monk" />
 			<property name="Backup 3" value="Hunter" />
 			<property name="Number" value="C302" />
-			<property name="Illustrator" value="" />
 		</card>
 		<card name="Rimoruru" id="651222b6-d147-f287-beca-834a52ff8a14">
 			<property name="Publisher" value="SNK" />
@@ -4559,7 +4257,6 @@
 			<property name="Backup 2" value="Monster" />
 			<property name="Backup 3" value="" />
 			<property name="Number" value="C303" />
-			<property name="Illustrator" value="Senri Kita" />
 		</card>
 		<card name="Rimoruru (Bust)" id="b0e7b45e-6281-b08e-5bd4-0a1f3e8d1780">
 			<property name="Publisher" value="SNK" />
@@ -4574,7 +4271,6 @@
 			<property name="Backup 2" value="Monster" />
 			<property name="Backup 3" value="" />
 			<property name="Number" value="C304" />
-			<property name="Illustrator" value="" />
 		</card>
 		<card name="Rimoruru (Slash)" id="02a50bbf-9813-e41b-6123-f8426c83f2e5">
 			<property name="Publisher" value="SNK" />
@@ -4589,7 +4285,6 @@
 			<property name="Backup 2" value="Priest" />
 			<property name="Backup 3" value="Swordsman" />
 			<property name="Number" value="C305" />
-			<property name="Illustrator" value="" />
 		</card>
 		<card name="Seishiro" id="93b67a7f-17be-cc29-5547-75234a9507da">
 			<property name="Publisher" value="SNK" />
@@ -4604,7 +4299,6 @@
 			<property name="Backup 2" value="Samurai" />
 			<property name="Backup 3" value="" />
 			<property name="Number" value="C306" />
-			<property name="Illustrator" value="" />
 		</card>
 		<card name="Shiki" id="c01c1c15-f030-3bfb-f072-5f266851427e">
 			<property name="Publisher" value="SNK" />
@@ -4619,7 +4313,6 @@
 			<property name="Backup 2" value="Deity" />
 			<property name="Backup 3" value="Assassin" />
 			<property name="Number" value="C307" />
-			<property name="Illustrator" value="Senri Kita" />
 		</card>
 		<card name="Shiki (Bust)" id="d01601d7-03a6-ef33-0266-187717914402">
 			<property name="Publisher" value="SNK" />
@@ -4634,7 +4327,6 @@
 			<property name="Backup 2" value="Assassin" />
 			<property name="Backup 3" value="" />
 			<property name="Number" value="C308" />
-			<property name="Illustrator" value="" />
 		</card>
 		<card name="Shiki (Slash)" id="b8b02b71-bef5-8793-04d2-70f12a963c02">
 			<property name="Publisher" value="SNK" />
@@ -4649,7 +4341,6 @@
 			<property name="Backup 2" value="Assassin" />
 			<property name="Backup 3" value="" />
 			<property name="Number" value="C309" />
-			<property name="Illustrator" value="" />
 		</card>
 		<card name="Shizumaru" id="54a2b703-8008-5b40-1aa1-15010e3fce94">
 			<property name="Publisher" value="SNK" />
@@ -4664,7 +4355,6 @@
 			<property name="Backup 2" value="Soldier" />
 			<property name="Backup 3" value="" />
 			<property name="Number" value="C310" />
-			<property name="Illustrator" value="" />
 		</card>
 		<card name="Sougetsu" id="1396919f-13b5-af11-1378-b16855091bb2">
 			<property name="Publisher" value="SNK" />
@@ -4679,7 +4369,6 @@
 			<property name="Backup 2" value="Monster" />
 			<property name="Backup 3" value="" />
 			<property name="Number" value="C311" />
-			<property name="Illustrator" value="" />
 		</card>
 		<card name="Taizan" id="8f53125c-1c4d-1260-ba28-049117e390e2">
 			<property name="Publisher" value="SNK" />
@@ -4694,7 +4383,6 @@
 			<property name="Backup 2" value="Soldier" />
 			<property name="Backup 3" value="Kickboxer" />
 			<property name="Number" value="C312" />
-			<property name="Illustrator" value="" />
 		</card>
 		<card name="Tam Tam" id="4a12881c-12d6-3ec1-46ad-5b190c89922a">
 			<property name="Publisher" value="SNK" />
@@ -4709,7 +4397,6 @@
 			<property name="Backup 2" value="Assassin" />
 			<property name="Backup 3" value="Cyborg" />
 			<property name="Number" value="C313" />
-			<property name="Illustrator" value="" />
 		</card>
 		<card name="Tohma" id="739cb883-a6c9-4104-6251-0a903fcd8407">
 			<property name="Publisher" value="SNK" />
@@ -4724,7 +4411,6 @@
 			<property name="Backup 2" value="Samurai" />
 			<property name="Backup 3" value="Samurai" />
 			<property name="Number" value="C314" />
-			<property name="Illustrator" value="" />
 		</card>
 		<card name="Ukyo" id="6ae90e91-0144-7402-ece4-24150108c894">
 			<property name="Publisher" value="SNK" />
@@ -4739,7 +4425,6 @@
 			<property name="Backup 2" value="Hunter" />
 			<property name="Backup 3" value="" />
 			<property name="Number" value="C315" />
-			<property name="Illustrator" value="" />
 		</card>
 		<card name="The Ump" id="610f5836-4460-1281-ffc2-369d38df21d1">
 			<property name="Publisher" value="SNK" />
@@ -4754,7 +4439,6 @@
 			<property name="Backup 2" value="Guardian" />
 			<property name="Backup 3" value="Guardian" />
 			<property name="Number" value="C316" />
-			<property name="Illustrator" value="" />
 		</card>
 		<card name="Zankuro" id="a3195315-ba62-a2ab-dd8d-2d02d13139a8">
 			<property name="Publisher" value="SNK" />
@@ -4769,7 +4453,6 @@
 			<property name="Backup 2" value="Samurai" />
 			<property name="Backup 3" value="" />
 			<property name="Number" value="C317" />
-			<property name="Illustrator" value="" />
 		</card>
 		<card name="Athena" id="43edc572-733f-dfe2-dd7f-899a1296e7c0">
 			<property name="Publisher" value="SNK" />
@@ -4784,7 +4467,6 @@
 			<property name="Backup 2" value="" />
 			<property name="Backup 3" value="" />
 			<property name="Number" value="C318" />
-			<property name="Illustrator" value="" />
 		</card>
 		<card name="Cathy" id="6a9181e4-a644-06da-dc5e-7f72808cb520">
 			<property name="Publisher" value="SNK" />
@@ -4799,7 +4481,6 @@
 			<property name="Backup 2" value="Hunter" />
 			<property name="Backup 3" value="Gangster" />
 			<property name="Number" value="C319" />
-			<property name="Illustrator" value="" />
 		</card>
 		<card name="Roddy" id="dfc2c882-954e-1492-7d96-8073f70b23b4">
 			<property name="Publisher" value="SNK" />
@@ -4814,7 +4495,6 @@
 			<property name="Backup 2" value="Hunter" />
 			<property name="Backup 3" value="Experiment" />
 			<property name="Number" value="C320" />
-			<property name="Illustrator" value="" />
 		</card>
 		<card name="Abduction" id="73dc0966-ecb7-c2c6-5642-18fa78544e66">
 			<property name="Publisher" value="" />
@@ -4829,7 +4509,6 @@
 			<property name="Backup 2" value="" />
 			<property name="Backup 3" value="" />
 			<property name="Number" value="A001" />
-			<property name="Illustrator" value="" />
 		</card>
 		<card name="Activate!" id="2097e05f-111f-51f7-f81a-eb127fa10801">
 			<property name="Publisher" value="" />
@@ -4844,7 +4523,6 @@
 			<property name="Backup 2" value="" />
 			<property name="Backup 3" value="" />
 			<property name="Number" value="A002" />
-			<property name="Illustrator" value="" />
 		</card>
 		<card name="Awakening" id="8e16f043-a410-152e-0361-8290c5874a52">
 			<property name="Publisher" value="" />
@@ -4859,7 +4537,6 @@
 			<property name="Backup 2" value="" />
 			<property name="Backup 3" value="" />
 			<property name="Number" value="A003" />
-			<property name="Illustrator" value="" />
 		</card>
 		<card name="Best shot" id="004d8ec7-8c44-01c2-144a-2a60c87cc4a3">
 			<property name="Publisher" value="" />
@@ -4874,7 +4551,6 @@
 			<property name="Backup 2" value="" />
 			<property name="Backup 3" value="" />
 			<property name="Number" value="A004" />
-			<property name="Illustrator" value="" />
 		</card>
 		<card name="Bopper" id="ce7ab7e1-d064-0a26-1e02-b1ca1dd7cda1">
 			<property name="Publisher" value="" />
@@ -4889,7 +4565,6 @@
 			<property name="Backup 2" value="" />
 			<property name="Backup 3" value="" />
 			<property name="Number" value="A005" />
-			<property name="Illustrator" value="" />
 		</card>
 		<card name="Break up" id="141cda8f-6bb1-470d-b685-685012a4f831">
 			<property name="Publisher" value="" />
@@ -4904,7 +4579,6 @@
 			<property name="Backup 2" value="" />
 			<property name="Backup 3" value="" />
 			<property name="Number" value="A006" />
-			<property name="Illustrator" value="" />
 		</card>
 		<card name="Chaos" id="c111098c-2267-3ed4-19cc-08192cd1a654">
 			<property name="Publisher" value="" />
@@ -4919,7 +4593,6 @@
 			<property name="Backup 2" value="" />
 			<property name="Backup 3" value="" />
 			<property name="Number" value="A007" />
-			<property name="Illustrator" value="" />
 		</card>
 		<card name="Cover fire" id="fa0f82da-cc23-07ef-f807-983305a1af33">
 			<property name="Publisher" value="" />
@@ -4934,7 +4607,6 @@
 			<property name="Backup 2" value="" />
 			<property name="Backup 3" value="" />
 			<property name="Number" value="A008" />
-			<property name="Illustrator" value="" />
 		</card>
 		<card name="Crossover" id="2f241e97-2104-4040-1e64-03b0161d8b57">
 			<property name="Publisher" value="" />
@@ -4949,7 +4621,6 @@
 			<property name="Backup 2" value="" />
 			<property name="Backup 3" value="" />
 			<property name="Number" value="A009" />
-			<property name="Illustrator" value="" />
 		</card>
 		<card name="Curse" id="5c0fc163-01c8-7c98-17ce-fe2e90efca91">
 			<property name="Publisher" value="" />
@@ -4964,7 +4635,6 @@
 			<property name="Backup 2" value="" />
 			<property name="Backup 3" value="" />
 			<property name="Number" value="A010" />
-			<property name="Illustrator" value="" />
 		</card>
 		<card name="Domination" id="c79103e8-1812-bfa0-ca54-12543d9df264">
 			<property name="Publisher" value="" />
@@ -4979,7 +4649,6 @@
 			<property name="Backup 2" value="" />
 			<property name="Backup 3" value="" />
 			<property name="Number" value="A011" />
-			<property name="Illustrator" value="" />
 		</card>
 		<card name="Double" id="26aa9474-fab7-f194-0441-a036253533b2">
 			<property name="Publisher" value="" />
@@ -4994,7 +4663,6 @@
 			<property name="Backup 2" value="" />
 			<property name="Backup 3" value="" />
 			<property name="Number" value="A012" />
-			<property name="Illustrator" value="" />
 		</card>
 		<card name="Double KO" id="a12eddbe-a412-034f-8331-132bc2e764cc">
 			<property name="Publisher" value="" />
@@ -5009,7 +4677,6 @@
 			<property name="Backup 2" value="" />
 			<property name="Backup 3" value="" />
 			<property name="Number" value="A013" />
-			<property name="Illustrator" value="" />
 		</card>
 		<card name="Earth&apos;s pike" id="d8047840-37da-624f-d3d0-ea0e91829ce4">
 			<property name="Publisher" value="" />
@@ -5024,7 +4691,6 @@
 			<property name="Backup 2" value="" />
 			<property name="Backup 3" value="" />
 			<property name="Number" value="A014" />
-			<property name="Illustrator" value="" />
 		</card>
 		<card name="Emulate" id="9022d58a-72c4-439e-4333-9565ccea1b73">
 			<property name="Publisher" value="" />
@@ -5039,7 +4705,6 @@
 			<property name="Backup 2" value="" />
 			<property name="Backup 3" value="" />
 			<property name="Number" value="A015" />
-			<property name="Illustrator" value="" />
 		</card>
 		<card name="Engokogeki" id="648c26b4-3450-8d71-f70f-f3af08ae0449">
 			<property name="Publisher" value="" />
@@ -5054,7 +4719,6 @@
 			<property name="Backup 2" value="" />
 			<property name="Backup 3" value="" />
 			<property name="Number" value="A016" />
-			<property name="Illustrator" value="" />
 		</card>
 		<card name="Escape" id="7e482e21-280b-7940-1d19-507136da5431">
 			<property name="Publisher" value="" />
@@ -5069,7 +4733,6 @@
 			<property name="Backup 2" value="" />
 			<property name="Backup 3" value="" />
 			<property name="Number" value="A017" />
-			<property name="Illustrator" value="" />
 		</card>
 		<card name="ESP" id="50cf0ba5-2323-73d9-294a-cb7005d040e4">
 			<property name="Publisher" value="" />
@@ -5084,7 +4747,6 @@
 			<property name="Backup 2" value="" />
 			<property name="Backup 3" value="" />
 			<property name="Number" value="A018" />
-			<property name="Illustrator" value="" />
 		</card>
 		<card name="Fate duel" id="11691ecc-3f04-f0f1-f441-888f52463dbe">
 			<property name="Publisher" value="" />
@@ -5099,7 +4761,6 @@
 			<property name="Backup 2" value="" />
 			<property name="Backup 3" value="" />
 			<property name="Number" value="A019" />
-			<property name="Illustrator" value="" />
 		</card>
 		<card name="Fight!" id="68e7752b-7746-ed06-4421-f60ccc601a9f">
 			<property name="Publisher" value="" />
@@ -5114,7 +4775,6 @@
 			<property name="Backup 2" value="" />
 			<property name="Backup 3" value="" />
 			<property name="Number" value="A020" />
-			<property name="Illustrator" value="" />
 		</card>
 		<card name="Glare off" id="a50010a0-e17d-09a8-6046-dcf489932363">
 			<property name="Publisher" value="" />
@@ -5129,7 +4789,6 @@
 			<property name="Backup 2" value="" />
 			<property name="Backup 3" value="" />
 			<property name="Number" value="A021" />
-			<property name="Illustrator" value="" />
 		</card>
 		<card name="Grace" id="741c1036-730f-0389-8c5c-64fabcbd99c7">
 			<property name="Publisher" value="" />
@@ -5144,7 +4803,6 @@
 			<property name="Backup 2" value="" />
 			<property name="Backup 3" value="" />
 			<property name="Number" value="A022" />
-			<property name="Illustrator" value="" />
 		</card>
 		<card name="Grenade" id="1e8d503e-6d30-74fc-a064-c09cb7b0d329">
 			<property name="Publisher" value="" />
@@ -5159,7 +4817,6 @@
 			<property name="Backup 2" value="" />
 			<property name="Backup 3" value="" />
 			<property name="Number" value="A023" />
-			<property name="Illustrator" value="" />
 		</card>
 		<card name="Heritage" id="57006395-86c1-8204-2806-67f211234d6a">
 			<property name="Publisher" value="" />
@@ -5174,7 +4831,6 @@
 			<property name="Backup 2" value="" />
 			<property name="Backup 3" value="" />
 			<property name="Number" value="A024" />
-			<property name="Illustrator" value="" />
 		</card>
 		<card name="Hey! Hey!" id="c3290aa8-80d5-b603-87fc-19dc00884abb">
 			<property name="Publisher" value="" />
@@ -5189,7 +4845,6 @@
 			<property name="Backup 2" value="" />
 			<property name="Backup 3" value="" />
 			<property name="Number" value="A025" />
-			<property name="Illustrator" value="" />
 		</card>
 		<card name="Indulge" id="e31210c1-099c-8673-2e62-133beee635ca">
 			<property name="Publisher" value="" />
@@ -5204,7 +4859,6 @@
 			<property name="Backup 2" value="" />
 			<property name="Backup 3" value="" />
 			<property name="Number" value="A026" />
-			<property name="Illustrator" value="" />
 		</card>
 		<card name="Last resort" id="2916c6a0-c146-00f2-424d-af52c6cca474">
 			<property name="Publisher" value="" />
@@ -5219,7 +4873,6 @@
 			<property name="Backup 2" value="" />
 			<property name="Backup 3" value="" />
 			<property name="Number" value="A027" />
-			<property name="Illustrator" value="" />
 		</card>
 		<card name="Laundry" id="19add21d-9281-69c0-00d7-5d028dd52164">
 			<property name="Publisher" value="" />
@@ -5234,7 +4887,6 @@
 			<property name="Backup 2" value="" />
 			<property name="Backup 3" value="" />
 			<property name="Number" value="A028" />
-			<property name="Illustrator" value="" />
 		</card>
 		<card name="Lightning" id="56f2f300-50b9-e480-c425-5f44bb8ac17f">
 			<property name="Publisher" value="" />
@@ -5249,7 +4901,6 @@
 			<property name="Backup 2" value="" />
 			<property name="Backup 3" value="" />
 			<property name="Number" value="A029" />
-			<property name="Illustrator" value="" />
 		</card>
 		<card name="Lucky kitty" id="e81ef22e-9d56-0c97-8783-01c85759bc0c">
 			<property name="Publisher" value="" />
@@ -5264,7 +4915,6 @@
 			<property name="Backup 2" value="" />
 			<property name="Backup 3" value="" />
 			<property name="Number" value="A030" />
-			<property name="Illustrator" value="" />
 		</card>
 		<card name="Lunch rush" id="6004548c-0b96-bfdc-6aae-b50a46211dfc">
 			<property name="Publisher" value="" />
@@ -5279,7 +4929,6 @@
 			<property name="Backup 2" value="" />
 			<property name="Backup 3" value="" />
 			<property name="Number" value="A031" />
-			<property name="Illustrator" value="" />
 		</card>
 		<card name="Makeover" id="80b71a46-f87c-9979-78a2-b9d084f72924">
 			<property name="Publisher" value="" />
@@ -5294,7 +4943,6 @@
 			<property name="Backup 2" value="" />
 			<property name="Backup 3" value="" />
 			<property name="Number" value="A032" />
-			<property name="Illustrator" value="" />
 		</card>
 		<card name="Management" id="064293eb-2154-116a-512d-51c5ce104c12">
 			<property name="Publisher" value="" />
@@ -5309,7 +4957,6 @@
 			<property name="Backup 2" value="" />
 			<property name="Backup 3" value="" />
 			<property name="Number" value="A033" />
-			<property name="Illustrator" value="" />
 		</card>
 		<card name="Mega crush" id="e222a5d1-9d1f-710e-33b3-1b7cf4ea4080">
 			<property name="Publisher" value="" />
@@ -5324,7 +4971,6 @@
 			<property name="Backup 2" value="" />
 			<property name="Backup 3" value="" />
 			<property name="Number" value="A034" />
-			<property name="Illustrator" value="" />
 		</card>
 		<card name="Mischief" id="1a0b08ff-5551-b904-10eb-c23fe25159cd">
 			<property name="Publisher" value="" />
@@ -5339,7 +4985,6 @@
 			<property name="Backup 2" value="" />
 			<property name="Backup 3" value="" />
 			<property name="Number" value="A035" />
-			<property name="Illustrator" value="" />
 		</card>
 		<card name="Morph" id="82b20005-e139-c161-fc80-7f240e646ca6">
 			<property name="Publisher" value="" />
@@ -5354,7 +4999,6 @@
 			<property name="Backup 2" value="" />
 			<property name="Backup 3" value="" />
 			<property name="Number" value="A036" />
-			<property name="Illustrator" value="" />
 		</card>
 		<card name="No tricks" id="70f27919-f051-55a0-95ee-13e84aca8271">
 			<property name="Publisher" value="" />
@@ -5369,7 +5013,6 @@
 			<property name="Backup 2" value="" />
 			<property name="Backup 3" value="" />
 			<property name="Number" value="A037" />
-			<property name="Illustrator" value="" />
 		</card>
 		<card name="Nothingness" id="d049b230-a3d1-b0fc-0365-f281f7c687bc">
 			<property name="Publisher" value="" />
@@ -5384,7 +5027,6 @@
 			<property name="Backup 2" value="" />
 			<property name="Backup 3" value="" />
 			<property name="Number" value="A038" />
-			<property name="Illustrator" value="" />
 		</card>
 		<card name="Peacemaker" id="298b360f-6cf0-6120-da1e-c4567607005e">
 			<property name="Publisher" value="" />
@@ -5399,7 +5041,6 @@
 			<property name="Backup 2" value="" />
 			<property name="Backup 3" value="" />
 			<property name="Number" value="A039" />
-			<property name="Illustrator" value="" />
 		</card>
 		<card name="Pester" id="ba82d6dc-0e99-924c-8303-3ce1e7cdd7e5">
 			<property name="Publisher" value="" />
@@ -5414,7 +5055,6 @@
 			<property name="Backup 2" value="" />
 			<property name="Backup 3" value="" />
 			<property name="Number" value="A040" />
-			<property name="Illustrator" value="" />
 		</card>
 		<card name="Pride" id="4485194b-75bc-6836-38c8-82bea9c51df7">
 			<property name="Publisher" value="" />
@@ -5429,7 +5069,6 @@
 			<property name="Backup 2" value="" />
 			<property name="Backup 3" value="" />
 			<property name="Number" value="A041" />
-			<property name="Illustrator" value="" />
 		</card>
 		<card name="Psyche up!" id="41d32042-095e-8f00-7817-529daea80c53">
 			<property name="Publisher" value="" />
@@ -5444,7 +5083,6 @@
 			<property name="Backup 2" value="" />
 			<property name="Backup 3" value="" />
 			<property name="Number" value="A042" />
-			<property name="Illustrator" value="" />
 		</card>
 		<card name="Puppet" id="8541386d-864e-b409-8344-15e44d945090">
 			<property name="Publisher" value="" />
@@ -5459,7 +5097,6 @@
 			<property name="Backup 2" value="" />
 			<property name="Backup 3" value="" />
 			<property name="Number" value="A043" />
-			<property name="Illustrator" value="" />
 		</card>
 		<card name="Raw shield" id="8c6b4f04-1114-4445-2426-78892a3a7aad">
 			<property name="Publisher" value="" />
@@ -5474,7 +5111,6 @@
 			<property name="Backup 2" value="" />
 			<property name="Backup 3" value="" />
 			<property name="Number" value="A044" />
-			<property name="Illustrator" value="" />
 		</card>
 		<card name="Reparation" id="04a26ba0-8e17-86d6-5f39-f71e8039114c">
 			<property name="Publisher" value="" />
@@ -5489,7 +5125,6 @@
 			<property name="Backup 2" value="" />
 			<property name="Backup 3" value="" />
 			<property name="Number" value="A045" />
-			<property name="Illustrator" value="" />
 		</card>
 		<card name="Reset button" id="0d15e0a7-63e4-3b1a-885e-c037fe1b42b3">
 			<property name="Publisher" value="" />
@@ -5504,7 +5139,6 @@
 			<property name="Backup 2" value="" />
 			<property name="Backup 3" value="" />
 			<property name="Number" value="A046" />
-			<property name="Illustrator" value="" />
 		</card>
 		<card name="Revive" id="7012c65c-eea4-34e8-2891-add334c1236c">
 			<property name="Publisher" value="" />
@@ -5519,7 +5153,6 @@
 			<property name="Backup 2" value="" />
 			<property name="Backup 3" value="" />
 			<property name="Number" value="A047" />
-			<property name="Illustrator" value="" />
 		</card>
 		<card name="Roulette" id="2d2a1e6a-0f34-a507-1238-70808317023c">
 			<property name="Publisher" value="" />
@@ -5534,7 +5167,6 @@
 			<property name="Backup 2" value="" />
 			<property name="Backup 3" value="" />
 			<property name="Number" value="A048" />
-			<property name="Illustrator" value="" />
 		</card>
 		<card name="Round 2" id="d3e4d10a-db6d-6f5c-e12a-ca109200ba25">
 			<property name="Publisher" value="" />
@@ -5549,7 +5181,6 @@
 			<property name="Backup 2" value="" />
 			<property name="Backup 3" value="" />
 			<property name="Number" value="A049" />
-			<property name="Illustrator" value="" />
 		</card>
 		<card name="School&apos;s out" id="05c42fed-785f-2e1f-5c8c-f1790c3c472f">
 			<property name="Publisher" value="" />
@@ -5564,7 +5195,6 @@
 			<property name="Backup 2" value="" />
 			<property name="Backup 3" value="" />
 			<property name="Number" value="A050" />
-			<property name="Illustrator" value="" />
 		</card>
 		<card name="Seraphic wing" id="74f504f5-0a6f-0330-fab7-68db3464e01c">
 			<property name="Publisher" value="" />
@@ -5579,7 +5209,6 @@
 			<property name="Backup 2" value="" />
 			<property name="Backup 3" value="" />
 			<property name="Number" value="A051" />
-			<property name="Illustrator" value="" />
 		</card>
 		<card name="Shadow" id="1abab37a-2802-230a-742d-02221a042bf2">
 			<property name="Publisher" value="" />
@@ -5594,7 +5223,6 @@
 			<property name="Backup 2" value="" />
 			<property name="Backup 3" value="" />
 			<property name="Number" value="A052" />
-			<property name="Illustrator" value="" />
 		</card>
 		<card name="Shopping" id="7c6673de-0b4d-ef10-f0b4-a48953cda620">
 			<property name="Publisher" value="" />
@@ -5609,7 +5237,6 @@
 			<property name="Backup 2" value="" />
 			<property name="Backup 3" value="" />
 			<property name="Number" value="A053" />
-			<property name="Illustrator" value="" />
 		</card>
 		<card name="Showtime!" id="b9c3d114-b217-985a-539d-1f4822758898">
 			<property name="Publisher" value="" />
@@ -5624,7 +5251,6 @@
 			<property name="Backup 2" value="" />
 			<property name="Backup 3" value="" />
 			<property name="Number" value="A054" />
-			<property name="Illustrator" value="" />
 		</card>
 		<card name="Slaughter" id="ca186f0c-4006-0a5e-c813-23f13eb4beec">
 			<property name="Publisher" value="" />
@@ -5639,7 +5265,6 @@
 			<property name="Backup 2" value="" />
 			<property name="Backup 3" value="" />
 			<property name="Number" value="A055" />
-			<property name="Illustrator" value="" />
 		</card>
 		<card name="SP partner" id="b786a110-aee0-8710-0f6f-b7a6e84e3cf6">
 			<property name="Publisher" value="" />
@@ -5654,7 +5279,6 @@
 			<property name="Backup 2" value="" />
 			<property name="Backup 3" value="" />
 			<property name="Number" value="A056" />
-			<property name="Illustrator" value="" />
 		</card>
 		<card name="Stifler" id="e1101fc1-421e-5e79-08c2-af7f8015d1c0">
 			<property name="Publisher" value="" />
@@ -5669,7 +5293,6 @@
 			<property name="Backup 2" value="" />
 			<property name="Backup 3" value="" />
 			<property name="Number" value="A057" />
-			<property name="Illustrator" value="" />
 		</card>
 		<card name="Storm rush" id="cf20e53a-8d9b-5cf2-0e53-a8d9b5cf20e5">
 			<property name="Publisher" value="" />
@@ -5684,7 +5307,6 @@
 			<property name="Backup 2" value="" />
 			<property name="Backup 3" value="" />
 			<property name="Number" value="A058" />
-			<property name="Illustrator" value="" />
 		</card>
 		<card name="Study" id="839e6d00-a080-a690-d8e2-4904e084ecc4">
 			<property name="Publisher" value="" />
@@ -5699,7 +5321,6 @@
 			<property name="Backup 2" value="" />
 			<property name="Backup 3" value="" />
 			<property name="Number" value="A059" />
-			<property name="Illustrator" value="" />
 		</card>
 		<card name="Substitute" id="47724641-58bf-1105-c9ee-086099349fa8">
 			<property name="Publisher" value="" />
@@ -5714,7 +5335,6 @@
 			<property name="Backup 2" value="" />
 			<property name="Backup 3" value="" />
 			<property name="Number" value="A060" />
-			<property name="Illustrator" value="" />
 		</card>
 		<card name="Successor" id="49019c62-3098-67c8-356d-bbcd22802ec9">
 			<property name="Publisher" value="" />
@@ -5729,7 +5349,6 @@
 			<property name="Backup 2" value="" />
 			<property name="Backup 3" value="" />
 			<property name="Number" value="A061" />
-			<property name="Illustrator" value="" />
 		</card>
 		<card name="Synchro" id="0118f642-c0ee-e098-7c56-13aceb11640f">
 			<property name="Publisher" value="" />
@@ -5744,7 +5363,6 @@
 			<property name="Backup 2" value="" />
 			<property name="Backup 3" value="" />
 			<property name="Number" value="A062" />
-			<property name="Illustrator" value="" />
 		</card>
 		<card name="Tooptadon" id="20a6ad1e-4138-4a27-4214-3eded400d685">
 			<property name="Publisher" value="" />
@@ -5759,7 +5377,6 @@
 			<property name="Backup 2" value="" />
 			<property name="Backup 3" value="" />
 			<property name="Number" value="A063" />
-			<property name="Illustrator" value="" />
 		</card>
 		<card name="Tri-Quiz" id="076f148c-cf5a-25e1-cb07-46f81cbe3128">
 			<property name="Publisher" value="" />
@@ -5774,7 +5391,6 @@
 			<property name="Backup 2" value="" />
 			<property name="Backup 3" value="" />
 			<property name="Number" value="A064" />
-			<property name="Illustrator" value="" />
 		</card>
 		<card name="Amnesia" id="03852da8-4470-923d-3357-0d51e7ea5169">
 			<property name="Publisher" value="" />
@@ -5789,7 +5405,6 @@
 			<property name="Backup 2" value="" />
 			<property name="Backup 3" value="" />
 			<property name="Number" value="R001" />
-			<property name="Illustrator" value="" />
 		</card>
 		<card name="Ancestry" id="908859f0-c196-942c-37d6-6a220c6190f0">
 			<property name="Publisher" value="" />
@@ -5804,7 +5419,6 @@
 			<property name="Backup 2" value="" />
 			<property name="Backup 3" value="" />
 			<property name="Number" value="R002" />
-			<property name="Illustrator" value="" />
 		</card>
 		<card name="Aura spark" id="4abb3b0c-41c4-65e6-b412-179972892c4d">
 			<property name="Publisher" value="" />
@@ -5819,7 +5433,6 @@
 			<property name="Backup 2" value="" />
 			<property name="Backup 3" value="" />
 			<property name="Number" value="R003" />
-			<property name="Illustrator" value="" />
 		</card>
 		<card name="Bamboo shoots" id="466df0c4-a2b0-4c6b-cec6-f8eda6be47b4">
 			<property name="Publisher" value="" />
@@ -5834,7 +5447,6 @@
 			<property name="Backup 2" value="" />
 			<property name="Backup 3" value="" />
 			<property name="Number" value="R004" />
-			<property name="Illustrator" value="" />
 		</card>
 		<card name="Banquet" id="49251e90-2c79-c2bc-0401-284023b55259">
 			<property name="Publisher" value="" />
@@ -5849,7 +5461,6 @@
 			<property name="Backup 2" value="" />
 			<property name="Backup 3" value="" />
 			<property name="Number" value="R005" />
-			<property name="Illustrator" value="" />
 		</card>
 		<card name="Cash profits" id="26981e23-c141-a141-0560-5b083ea3ab3c">
 			<property name="Publisher" value="" />
@@ -5864,7 +5475,6 @@
 			<property name="Backup 2" value="" />
 			<property name="Backup 3" value="" />
 			<property name="Number" value="R006" />
-			<property name="Illustrator" value="" />
 		</card>
 		<card name="Charm" id="e84d429f-9e89-ed1e-25ef-b70b61c16c84">
 			<property name="Publisher" value="" />
@@ -5879,7 +5489,6 @@
 			<property name="Backup 2" value="" />
 			<property name="Backup 3" value="" />
 			<property name="Number" value="R007" />
-			<property name="Illustrator" value="" />
 		</card>
 		<card name="Clone" id="4ae94eb2-4a2c-0a00-112e-900352aa1148">
 			<property name="Publisher" value="" />
@@ -5894,7 +5503,6 @@
 			<property name="Backup 2" value="" />
 			<property name="Backup 3" value="" />
 			<property name="Number" value="R008" />
-			<property name="Illustrator" value="" />
 		</card>
 		<card name="Cruel hunt" id="f7ad324e-f822-c775-d2f6-11ad1e744d8b">
 			<property name="Publisher" value="" />
@@ -5909,7 +5517,6 @@
 			<property name="Backup 2" value="" />
 			<property name="Backup 3" value="" />
 			<property name="Number" value="R009" />
-			<property name="Illustrator" value="" />
 		</card>
 		<card name="Evil eye" id="88da51b6-09d1-23e0-890e-26771f2e5bf7">
 			<property name="Publisher" value="" />
@@ -5924,7 +5531,6 @@
 			<property name="Backup 2" value="" />
 			<property name="Backup 3" value="" />
 			<property name="Number" value="R010" />
-			<property name="Illustrator" value="" />
 		</card>
 		<card name="Face off" id="d2b24384-f4f5-76f5-f718-8528a81b0abb">
 			<property name="Publisher" value="" />
@@ -5939,7 +5545,6 @@
 			<property name="Backup 2" value="" />
 			<property name="Backup 3" value="" />
 			<property name="Number" value="R011" />
-			<property name="Illustrator" value="" />
 		</card>
 		<card name="Fellowship" id="1acaa213-4b92-1343-1166-b18400741f14">
 			<property name="Publisher" value="" />
@@ -5954,7 +5559,6 @@
 			<property name="Backup 2" value="" />
 			<property name="Backup 3" value="" />
 			<property name="Number" value="R012" />
-			<property name="Illustrator" value="" />
 		</card>
 		<card name="Ferocity" id="b9ccee49-e074-301a-9034-aa8e565101a1">
 			<property name="Publisher" value="" />
@@ -5969,7 +5573,6 @@
 			<property name="Backup 2" value="" />
 			<property name="Backup 3" value="" />
 			<property name="Number" value="R013" />
-			<property name="Illustrator" value="" />
 		</card>
 		<card name="Galactica phantom" id="3f0be371-dd2d-059d-cde2-a9c3d0121c6a">
 			<property name="Publisher" value="" />
@@ -5984,7 +5587,6 @@
 			<property name="Backup 2" value="" />
 			<property name="Backup 3" value="" />
 			<property name="Number" value="R014" />
-			<property name="Illustrator" value="" />
 		</card>
 		<card name="Go home" id="3493d867-bea4-d20d-c034-8f9e014b7655">
 			<property name="Publisher" value="" />
@@ -5999,7 +5601,6 @@
 			<property name="Backup 2" value="" />
 			<property name="Backup 3" value="" />
 			<property name="Number" value="R015" />
-			<property name="Illustrator" value="" />
 		</card>
 		<card name="Grandmaster" id="83962181-1a4c-e40e-c381-247f87307068">
 			<property name="Publisher" value="" />
@@ -6014,7 +5615,6 @@
 			<property name="Backup 2" value="" />
 			<property name="Backup 3" value="" />
 			<property name="Number" value="R016" />
-			<property name="Illustrator" value="" />
 		</card>
 		<card name="Held back" id="ee985309-8cf7-2134-3303-cd1ca6955809">
 			<property name="Publisher" value="" />
@@ -6029,7 +5629,6 @@
 			<property name="Backup 2" value="" />
 			<property name="Backup 3" value="" />
 			<property name="Number" value="R017" />
-			<property name="Illustrator" value="" />
 		</card>
 		<card name="Lend a hand" id="6fd521ff-c7b7-7b67-ef57-3000f9ba20b3">
 			<property name="Publisher" value="" />
@@ -6044,7 +5643,6 @@
 			<property name="Backup 2" value="" />
 			<property name="Backup 3" value="" />
 			<property name="Number" value="R018" />
-			<property name="Illustrator" value="" />
 		</card>
 		<card name="Lucky card" id="fac09ac9-2618-c41e-7259-126a9c506643">
 			<property name="Publisher" value="" />
@@ -6059,7 +5657,6 @@
 			<property name="Backup 2" value="" />
 			<property name="Backup 3" value="" />
 			<property name="Number" value="R019" />
-			<property name="Illustrator" value="" />
 		</card>
 		<card name="Manali&apos;s song" id="c4300cbc-3891-350c-ada3-519e428b0537">
 			<property name="Publisher" value="" />
@@ -6074,7 +5671,6 @@
 			<property name="Backup 2" value="" />
 			<property name="Backup 3" value="" />
 			<property name="Number" value="R020" />
-			<property name="Illustrator" value="" />
 		</card>
 		<card name="Overdoing it" id="e74dbeac-a21a-8859-a935-cb105b91cae7">
 			<property name="Publisher" value="" />
@@ -6089,7 +5685,6 @@
 			<property name="Backup 2" value="" />
 			<property name="Backup 3" value="" />
 			<property name="Number" value="R021" />
-			<property name="Illustrator" value="" />
 		</card>
 		<card name="Overheat" id="d60bd9d8-f4bc-7481-cacb-90ba00842a6d">
 			<property name="Publisher" value="" />
@@ -6104,7 +5699,6 @@
 			<property name="Backup 2" value="" />
 			<property name="Backup 3" value="" />
 			<property name="Number" value="R022" />
-			<property name="Illustrator" value="" />
 		</card>
 		<card name="Painful treatment" id="43854019-27ad-0189-50be-475a0a3063ac">
 			<property name="Publisher" value="" />
@@ -6119,7 +5713,6 @@
 			<property name="Backup 2" value="" />
 			<property name="Backup 3" value="" />
 			<property name="Number" value="R023" />
-			<property name="Illustrator" value="" />
 		</card>
 		<card name="Power mode" id="554c08d8-eea1-bd01-9f8c-4c5c1d627554">
 			<property name="Publisher" value="" />
@@ -6134,7 +5727,6 @@
 			<property name="Backup 2" value="" />
 			<property name="Backup 3" value="" />
 			<property name="Number" value="R024" />
-			<property name="Illustrator" value="" />
 		</card>
 		<card name="Reliable warrior" id="0a8611b4-724f-37ef-8912-88ae6a88c33d">
 			<property name="Publisher" value="" />
@@ -6149,7 +5741,6 @@
 			<property name="Backup 2" value="" />
 			<property name="Backup 3" value="" />
 			<property name="Number" value="R025" />
-			<property name="Illustrator" value="" />
 		</card>
 		<card name="Rest" id="f6c80b10-12c9-a9b8-36f2-7ae7cf2aecbd">
 			<property name="Publisher" value="" />
@@ -6164,7 +5755,6 @@
 			<property name="Backup 2" value="" />
 			<property name="Backup 3" value="" />
 			<property name="Number" value="R026" />
-			<property name="Illustrator" value="" />
 		</card>
 		<card name="Robber" id="ee50860f-c6de-cc51-19bd-2fe877799847">
 			<property name="Publisher" value="" />
@@ -6179,7 +5769,6 @@
 			<property name="Backup 2" value="" />
 			<property name="Backup 3" value="" />
 			<property name="Number" value="R027" />
-			<property name="Illustrator" value="" />
 		</card>
 		<card name="Robot punch" id="40dba9d6-3aef-25d1-34dd-4305dcc0021a">
 			<property name="Publisher" value="" />
@@ -6194,7 +5783,6 @@
 			<property name="Backup 2" value="" />
 			<property name="Backup 3" value="" />
 			<property name="Number" value="R028" />
-			<property name="Illustrator" value="" />
 		</card>
 		<card name="Scan" id="a2121801-e7c1-699d-8748-d371eb839a82">
 			<property name="Publisher" value="" />
@@ -6209,7 +5797,6 @@
 			<property name="Backup 2" value="" />
 			<property name="Backup 3" value="" />
 			<property name="Number" value="R029" />
-			<property name="Illustrator" value="" />
 		</card>
 		<card name="Snared" id="e63069d3-60ed-7496-9a6e-8db0404b83f2">
 			<property name="Publisher" value="" />
@@ -6224,7 +5811,6 @@
 			<property name="Backup 2" value="" />
 			<property name="Backup 3" value="" />
 			<property name="Number" value="R030" />
-			<property name="Illustrator" value="" />
 		</card>
 		<card name="SP leak" id="68a0c597-707a-6149-a865-4285758393a9">
 			<property name="Publisher" value="" />
@@ -6239,7 +5825,6 @@
 			<property name="Backup 2" value="" />
 			<property name="Backup 3" value="" />
 			<property name="Number" value="R031" />
-			<property name="Illustrator" value="" />
 		</card>
 		<card name="Striker" id="087e8dc8-5021-b049-c840-025ee82049e0">
 			<property name="Publisher" value="" />
@@ -6254,7 +5839,6 @@
 			<property name="Backup 2" value="" />
 			<property name="Backup 3" value="" />
 			<property name="Number" value="R032" />
-			<property name="Illustrator" value="" />
 		</card>
 		<card name="Super Art select" id="cbae4a06-42a5-7d4a-e928-ce1e8e6917e8">
 			<property name="Publisher" value="" />
@@ -6269,7 +5853,6 @@
 			<property name="Backup 2" value="" />
 			<property name="Backup 3" value="" />
 			<property name="Number" value="R033" />
-			<property name="Illustrator" value="" />
 		</card>
 		<card name="Suspicious" id="1e9b418e-4581-1cc4-631d-f6a2172ee7dd">
 			<property name="Publisher" value="" />
@@ -6284,7 +5867,6 @@
 			<property name="Backup 2" value="" />
 			<property name="Backup 3" value="" />
 			<property name="Number" value="R034" />
-			<property name="Illustrator" value="" />
 		</card>
 		<card name="Three sisters" id="a440af01-bce2-37f0-9805-f7b12a931820">
 			<property name="Publisher" value="" />
@@ -6299,7 +5881,6 @@
 			<property name="Backup 2" value="" />
 			<property name="Backup 3" value="" />
 			<property name="Number" value="R035" />
-			<property name="Illustrator" value="" />
 		</card>
 		<card name="Time bomb" id="67c66305-ec11-3dc1-3470-30214b540fe0">
 			<property name="Publisher" value="" />
@@ -6314,7 +5895,6 @@
 			<property name="Backup 2" value="" />
 			<property name="Backup 3" value="" />
 			<property name="Number" value="R036" />
-			<property name="Illustrator" value="" />
 		</card>
 		<card name="Vacation" id="243f6f37-0bee-88db-a3c9-0df7fc6c330a">
 			<property name="Publisher" value="" />
@@ -6329,7 +5909,6 @@
 			<property name="Backup 2" value="" />
 			<property name="Backup 3" value="" />
 			<property name="Number" value="R037" />
-			<property name="Illustrator" value="" />
 		</card>
 		<card name="Waiting in vain" id="298046a7-e64a-cca3-00e0-ff03229bcb16">
 			<property name="Publisher" value="" />
@@ -6344,7 +5923,6 @@
 			<property name="Backup 2" value="" />
 			<property name="Backup 3" value="" />
 			<property name="Number" value="R038" />
-			<property name="Illustrator" value="" />
 		</card>
 		<card name="Wanna gimme" id="b95a042f-b8a0-e210-be1e-11cafada290e">
 			<property name="Publisher" value="" />
@@ -6359,7 +5937,6 @@
 			<property name="Backup 2" value="" />
 			<property name="Backup 3" value="" />
 			<property name="Number" value="R039" />
-			<property name="Illustrator" value="" />
 		</card>
 		<card name="Who&apos;s taller" id="79e235b3-f342-5758-1031-bb00fd6f6fe4">
 			<property name="Publisher" value="" />
@@ -6374,7 +5951,6 @@
 			<property name="Backup 2" value="" />
 			<property name="Backup 3" value="" />
 			<property name="Number" value="R040" />
-			<property name="Illustrator" value="" />
 		</card>
 		
 	</cards>
