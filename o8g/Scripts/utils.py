@@ -55,11 +55,13 @@ def chooseSide(): # Called from many functions to check if the player has chosen
 
 def resetAll(): # Clears all the global variables in order to start a new game.
    # Import all our global variables and reset them.
-   global playerside, handsize, debugVerbosity
+   global playerside, handsize, debugVerbosity, slots
    debugNotify(">>> resetAll()") #Debug
    playerside = None
    handsize = 5
-   me.SP = 0 # Wipe the counters
+   slots = {}
+   me.HP = 30  # Wipe the counters
+   me.SP = 0
    backups = eval(getGlobalVariable('Backups'))
    backups.clear()
    setGlobalVariable('Backups',str(backups))
@@ -68,15 +70,15 @@ def resetAll(): # Clears all the global variables in order to start a new game.
    debugNotify("<<< resetAll()") #Debug
 
 def switchAutomation(type, command = None):
-   debugNotify(">>> switchAutomation()") #Debug
-   global Automations
-   if not type in Automations:
+   debugNotify(">>> switchAutomation({})".format(type)) #Debug
+   global automations
+   if not type in automations:
       return
    if command == None:
-      Automations[type] = not Automations[type]
+      automations[type] = not automations[type]
    else:
-      Automations[type] = command
-   notify("--> {}'s {} automations are {}.".format(me, type, Automations[type]))
+      automations[type] = command
+   notify("--> {}'s {} automations are {}.".format(me, type, automations[type]))
 
 #---------------------------------------------------------------------------
 # Card Placement functions
@@ -98,14 +100,26 @@ def cheight(card = None, divisor = 10):
    else: offset = card.height() / divisor
    return (card.height() + offset)
 
-def placeCard(card, type = None, action = None):
+def placeCard(card, type = None, action = None, target = None):
 # This function automatically places a card on the table according to what type of card is being placed
 # It is called by one of the various custom types and each type has a different value depending on if the player is on the X or Y axis.
-   if Automations['Play']:
-      if type == 'Character':
-         card.moveToTable(0, playerside * cheight(card))
-      else: card.moveToTable(0,0)
-   else: card.moveToTable(0,0)
+   debugNotify(">>> placeCard()") #Debug
+   if automations['Play']:
+      if type == 'Character' and action != None:
+         coords = (0,0)
+         if action == 'play':
+            coords = CardsCoords['Slot'+`target`]
+         elif action == 'backup':
+            cx,cy = card.position
+            backups = eval(getGlobalVariable('Backups'))
+            numBkps = len([att_id for att_id in backups if backups[att_id] == target._id])
+            coords(cx, cy-10*(numBkps+1))
+         card.moveToTable(coords[0], coords[1])
+      else:
+         card.moveToTable(0,0)
+   else:
+      card.moveToTable(0,0)
+   debugNotify("<<< placeCard()")
 
 #---------------------------------------------------------------------------
 # Markers functions
@@ -120,12 +134,12 @@ def findMarker(card, markerDesc): # Goes through the markers on the card and loo
    for key in card.markers:
       if markerDesc == key[0] or re.search(r'{}'.format(markerDesc),key[0]):
          debugNotify("### Found {} on {}".format(key[0], card), 2)
-         debugNotify("<<< findMarker()", 3)
+         debugNotify("<<< findMarker()")
          return True
-   debugNotify("<<< findMarker() key not found", 3)
+   debugNotify("<<< findMarker() key not found")
    return False
 
-def changeMarker(cards, marker, question):
+def changeMarker(cards, marker, question):  # Changes the number of markers in one or more cards
    n = 0
    for c in cards:
       if c.markers[marker] > n:
@@ -149,19 +163,19 @@ def modSP(count = 1, silent = False): # A function to modify the players SP coun
    me.SP += count # Now increase the SP by the amount passed to us.
    if not silent and count > 0: notify("{}'s SP has modified by {}. New total is {}.".format(me, count, me.SP))
 
-def payCost(count = 1, silent = False): # Pay an SP cost. However we also check if the cost can actually be paid.
+def spendOrGainSP(count = 1, silent = False): # Pay an SP cost. However we also check if the cost can actually be paid.
    count = num(count)
-   if count == 0 : return # If the card has 0 cost, there's nothing to do.
-   if me.SP < count: # If we don't have enough SP, we assume card effects or mistake and notify the player that they need to do things manually.
-      if not silent:
-         if not confirm("You do not seem to have enough SP to play this card. Are you sure you want to proceed? \
-         \n(If you do, your SP will go to the negative. You will need to increase it manually as required.)"): return 'ABORT'
-         notify("{} was supposed to pay {} SP but only has {}. They'll need to reduce the cost by {} with card effects.".format(me, count, me.SP, count - me.SP))
-         me.SP -= num(count)
-      else: me.SP -= num(count)
+   if count >= 0:
+      modSP(count, silent)
    else:
-      me.SP -= num(count)
-      if not silent: notify("{} has paid {} SP. New total is {}.".format(me, count, me.SP))
+      if me.SP+count < 0: # If we don't have enough SP, we assume card effects or mistake and notify the player that they need to do things manually.
+         if not silent:
+            if not confirm("You do not seem to have enough SP to play this card. Are you sure you want to proceed? \
+            \n(If you do, your SP will go to the negative. You will need to increase it manually as required.)"):
+               return 'ABORT'
+            notify("{} was supposed to pay {} SP but only has {}.".format(me, count, me.SP))
+      me.SP += count
+      if not silent: notify("{} has spent {} SP. New total is {}.".format(me, count, me.SP))
 
 
 #------------------------------------------------------------------------------
@@ -174,7 +188,7 @@ def attach(card, target):
    backups[card._id] = target._id
    target.target(False)
    setGlobalVariable('Backups', str(backups))
-   debugNotify("<<< attachCard()", 3)
+   debugNotify("<<< attachCard()")
    
 def dettach(card):
    debugNotify(">>> dettach()") #Debug
@@ -198,22 +212,34 @@ def dettach(card):
 def clearAttachLinks(card):
 # This function takes care to discard any attachments of a card that left play
 # It also clear the card from the attach dictionary, if it was itself attached to another card
-   debugNotify(">>> clearAttachLinks()") #Debug
+   debugNotify(">>> clearAttachLinks({})".format(card)) #Debug
    backups = eval(getGlobalVariable('Backups'))
    attachements = [att_id for att_id in backups if backups[att_id] == card._id]
    if len(attachements) >= 1:
       for att_id in attachements:
          if attachements[att_id] == card._id:
             if Card(att_id) in table:
-               debugNotify("Attachment exists. Trying to remove.", 2)
+               debugNotify("Removing attached card {}.".format(Card(att_id)), 2)
                discard(Card(att_id))
             del backups[att_id]
-   debugNotify("Checking if the card is attached to unlink.", 2)
    if backups.has_key(card._id):
+      debugNotify("{} is attached to {}. Unattaching.".format(card, Card(backups[card._id])), 2)
       del backups[card._id] # If the card was an attachment, delete the link
    setGlobalVariable('Backups', str(backups))
    debugNotify("<<< clearAttachLinks()") #Debug
-
+   
+def freeSlot(card):
+# Frees a slot of the ring. It normally happens when a character leaves the ring
+   debugNotify(">>> freeSlot({})".format(card)) #Debug
+   
+   myRing = eval(me.getGlobalVariable('Ring'))
+   if card._id in myRing:
+      myRing[myRing.index(card._id)] = None
+   
+   debugNotify("{}'s ring: {}".format(me, myRing))
+   me.setGlobalVariable('Ring', str(myRing))
+   
+   debugNotify("<<< freeSlot()") #Debug
 
 #------------------------------------------------------------------------------
 # Debugging

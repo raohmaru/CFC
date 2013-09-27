@@ -4,7 +4,7 @@
       name="Card Fighters' Clash"
       id="e3d56d9e-900d-49c6-b6ae-22cbb51be153"
       octgnVersion="3.1.56.0"
-      version="1.0.0.0"
+      version="0.1.1.6"
       markersize="16"
       tags="capcom snk fighter"
       description="A card game based in the SNK Playmore’s video game SNK vs. Capcom Card Fighters' Clash 2 Expand Edition.
@@ -17,7 +17,7 @@
 	  usetwosidedtable="True">
 	
 	<scripts>
-		<script src="Scripts/constants.py" />
+		<script src="Scripts/config.py" />
 		<script src="Scripts/actions.py" />
 		<script src="Scripts/events.py" />
 		<script src="Scripts/autoscripts.py" />
@@ -63,11 +63,10 @@
 		<property name="Backup 2" type="String" textKind="Enum" />
 		<property name="Backup 3" type="String" textKind="Enum" />
 		<property name="Number" type="String" ignoreText="True" />
-		<property name="Illustrator" type="String" ignoreText="True" />
 	</card>
 	
 	<table name="Table" visibility="undefined" ordered="False" width="1250" height="750" background="Background/background.jpg" backgroundStyle="uniformToFill" board="Background/ring.png" boardPosition="-327,-342,655,684" >
-		<groupaction menu="Next phase" shortcut="Ctrl+Enter" execute="nextPhase" />
+		<groupaction menu="Next phase" shortcut="Tab" execute="nextPhase" />
 		<groupactions menu="Phases...">
 			<groupaction menu="Go to Activate phase" shortcut="F1" execute="goToActivate" />
 			<groupaction menu="Go to Draw phase" shortcut="F2" execute="goToDraw" />
@@ -120,10 +119,11 @@
 		</cardactions>
 	</table>
 	
-	<player summary="HP: {#Life} | SP: {#Life} | Hand: {#Hand}">
+	<player summary="HP: {#HP} | SP: {#SP} | Hand: {#Hand}">
 		<counter name="HP" icon="counters/hp.png" default="30" reset="True" />
 		<counter name="SP" icon="counters/sp.png" default="0" reset="True" />
-		<!-- <globalvariable name="Hand Rank" value="N/A" /> -->
+		
+		<globalvariable name="Ring" value="[None,None,None,None]" />
 
 		<hand name="Hand" visibility="me" width="90" height="126" icon="Groups/hand.png">
 			<groupaction menu="Random discard" shortcut="Ctrl+Del" execute="randomDiscard" />

@@ -37,10 +37,30 @@ def OnLoadDeckEventHandler(player, groups):
    debugNotify("<<< OnLoadDeckEventHandler()") #Debug
 
 def onMoveCardEventHandler(player, card, fromGroup, toGroup, oldIndex, index, oldX, oldY, x, y, isScriptMove):
-   debugNotify(">>> onMoveCardEventHandler()") #Debug
-   
-   if card.owner == me and fromGroup == table and toGroup != table:
+   if card.owner != me: return
+   # Card is an Empty Slot token
+   if card.model == Tokens['Empty Slot']:
+      debugNotify(">>> Empty Slot moved") #Debug
+      if toGroup != table:
+         card.moveTo(table)
+      elif oldIndex != index:
+         card.setIndex(0)
+      else:
+         debugNotify("Slot number: {}".format(slots.get(card._id, 0)))
+         slotNum = slots.get(card._id, 0)
+         coords = CardsCoords['Slot'+`slotNum`]
+         cx,cy = card.position
+         if cx != coords[0] or cy != coords[1]:
+            debugNotify("Moving slot to: {}".format(coords))
+            card.moveToTable(coords[0], coords[1])
+   # Other card which has been moved out the table
+   elif fromGroup == table and toGroup != table:
       if card.Type == 'Character':
          clearAttachLinks(card)
-      
-   debugNotify("<<< onMoveCardEventHandler()") #Debug
+         freeSlot(card)
+   # Always in front of the Empty Slot tokens
+   elif oldIndex != index and index == 0:
+      if len(players) > 1:
+         card.setIndex(8)
+      else:
+         card.setIndex(4)

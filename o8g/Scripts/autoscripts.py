@@ -22,7 +22,7 @@
 def triggerPhaseEvent(phase = 'Start'): # Function which triggers effects at the start or end of the phase
    debugNotify(">>> triggerPhaseEvent({})".format(phase)) #Debug
    mute()
-   if not Automations['Phase']: return
+   if not automations['Phase']: return
    
    if phase == 'Activate':
       # Unfreeze characters in the player's ring

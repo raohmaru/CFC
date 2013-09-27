@@ -773,7 +773,7 @@
 	
 	<template src="Card/front.png" default="True">
 		<matches>
-			<match name="Type" value="None" />
+			<match name="Type" value="Unknown" />
 		</matches>
 		
 		<overlayblocks>

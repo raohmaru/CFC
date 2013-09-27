@@ -20,7 +20,7 @@
 #---------------------------------------------------------------------------
 import re
 
-phases = [
+Phases = [
    '{} is currently in the Pre-game Setup Phase'.format(me),
    "It is now {}'s ACTIVATE Phase",
    "It is now {}'s DRAW Phase",
@@ -36,18 +36,39 @@ BlockColor = "#ffff00"
 ActivatedColor = "#0000ff"
 DoesntUnfreezeColor = "#000000"
 
-# A dictionary which holds all the hard coded markers (in the markers file)
-mkdict = {
+# Dictionaries which hold all the hard coded markers and tokens (in the markers & tokens set)
+Markers = {
     'HP': ("HP", "b86fc644-d084-43d3-99d2-5b11457321cc")
 }
+Tokens = {
+    'Empty Slot': "75771ec8-47a7-4be6-86dd-781a19755f75"
+}
+
+# A table holding tuples with the original location for various card types
+CardsCoords = dict(
+   #        x     y
+   Slot0 = (-311, 198),
+   Slot1 = (-134, 198),
+   Slot2 = ( 44,  198),
+   Slot3 = ( 221, 198)
+)
 
 # Misc
 Xaxis = 'x'
 Yaxis = 'y'
 
+#---------------------------------------------------------------------------
+# Global variables
+#---------------------------------------------------------------------------
+
+playerside = None # Variable to keep track on which side each player is
+playeraxis = None # Variable to keep track on which axis the player is
+phaseIdx = 0
+handsize = 5 # Used when automatically refilling your hand
+slots = {}
 debugVerbosity = 4 # At -1, means no debugging messages display
 
-Automations = {
+automations = {
    'Play'  : True, # Automatically trigger game effetcs and card effects when playing cards
-   'Phase' : True  # Automatically trigger phase related events, and effects from cards they control.
+   'Phase' : True  # Automatically trigger phase related events, and effects from cards in play
 }

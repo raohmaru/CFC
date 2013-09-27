@@ -5,4 +5,20 @@
 	<markers>
 		<marker name="HP" id="b86fc644-d084-43d3-99d2-5b11457321cc"/>
 	</markers>
+	<cards>
+		<card name="Empty Slot" id="75771ec8-47a7-4be6-86dd-781a19755f75">
+			<property name="Publisher" value="" />
+			<property name="Team" value="" />
+			<property name="Type" value="" />
+			<property name="Subtype" value="" />
+			<property name="Rarity" value="" />
+			<property name="Rules" value="" />
+			<property name="BP" value="" />
+			<property name="SP" value="" />
+			<property name="Backup 1" value="" />
+			<property name="Backup 2" value="" />
+			<property name="Backup 3" value="" />
+			<property name="Number" value="" />
+		</card>
+	</cards>
 </set>
