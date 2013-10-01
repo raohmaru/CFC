@@ -24,7 +24,7 @@ def showCurrentPhase():  # Just say a nice notification about which phase you're
 
 def nextPhase(group = table, x = 0, y = 0):  # Function to take you to the next phase.
    global phaseIdx
-   if phaseIdx >= len(Phases):
+   if phaseIdx >= len(Phases)-1:
       phaseIdx = 1
    else:
       phaseIdx += 1
@@ -73,19 +73,19 @@ def setup(group,x=0,y=0):  # This function is usually the first one the player d
    debugNotify(">>> setup()") #Debug
    global slots
    mute()
-   if not confirm("Are you sure you want to setup for a new game?\n(This action should only be done after a table reset)"):
+   if not confirm("Are you sure you want to setup for a new game?\n(This action should only be done after a game reset)"):
       return
    chooseSide() # The classic place where the players choose their side.
    
    # Adds up to 4 empty slot tokens to the ring
    emptySlotsTokens = [card for card in table
       if card.controller == me
-      and card.model == Tokens['Empty Slot']]
+      and card.model == TokensDict['Empty Slot']]
    if len(emptySlotsTokens) == 0:
       for i in range(4):
          debugNotify("Creating Empty Slot {}".format(i))
          coords = CardsCoords['Slot'+`i`]
-         card = table.create(Tokens['Empty Slot'], coords[0], coords[1], 1, True)
+         card = table.create(TokensDict['Empty Slot'], coords[0], coords[1], 1, True)
          slots[card._id] = i
    # We ensure that player has loaded a deck
    if len(me.Deck) == 0:
@@ -158,6 +158,9 @@ def switchPlayAutomation(group, x = 0, y = 0):
 
 def switchPhaseAutomation(group, x = 0, y = 0):
    switchAutomation('Phase')
+
+def switchWinForms(group, x = 0, y = 0):
+   switchAutomation('WinForms')
 
 #---------------------------------------------------------------------------
 # Table card actions
@@ -262,16 +265,20 @@ def remove(card, x = 0, y = 0):
 def toHand(card, x = 0, y = 0):
    mute()
    src = card.group
-   fromText = " from the ring" if src == table else " from their " + src.name
+   fromText = "from the ring" if src == table else "from their " + src.name
    cardname = card.Name
-   if card.isFaceUp == False:
-      if confirm("Reveal to all players?"):
+   if not card.isFaceUp:
+      if confirm("Reveal card to all players?"):
          card.isFaceUp = True
-         rnd(10,100)  # This delays the next action until all animation is done.
+         rnd(10,100)
+         cardname = card.Name
       else:
          cardname = "a card"
    card.moveTo(me.hand)
-   notify("{} returns {} to their hand{}.".format(me, cardname, fromText))
+   if src == table:
+      notify("{} returns {} to their hand {}.".format(me, cardname, fromText))
+   else:
+      notify("{} puts {} in their hand {}.".format(me, cardname, fromText))
 
 def toDeckTop(card, x = 0, y = 0):
    mute()
@@ -317,15 +324,15 @@ def plusBP(card, x = 0, y = 0, silent = False, count = 1):
    if not silent:
       notify("{} raises {}'s BP by {}".format(me, card, count))
    for i in range(0,count):
-      card.markers[Markers['HP']] += 1
+      card.markers[MarkersDict['HP']] += 1
 
 def minusBP(card, x = 0, y = 0, silent = False, count = 1):
    mute()
    if not silent:
       notify("{} lowers {}'s BP by {}.".format(me, card, count))
    for i in range(0,count):
-      if Markers['HP'] in card.markers:
-         card.markers[Markers['HP']] -= 1
+      if MarkersDict['HP'] in card.markers:
+         card.markers[MarkersDict['HP']] -= 1
 
 def addMarker(cards, x = 0, y = 0):  # A simple function to manually add any of the available markers.
    mute()
@@ -337,7 +344,7 @@ def addMarker(cards, x = 0, y = 0):  # A simple function to manually add any of 
 
 def changeBP(cards, x = 0, y = 0):
    mute()
-   changeMarker(cards, Markers['HP'], "Set character BP to:")
+   changeMarker(cards, MarkersDict['HP'], "Set character BP to:")
 
 #---------------------------------------------------------------------------
 # Hand actions
@@ -350,37 +357,7 @@ def play(card):  # This is the function to play cards from your hand.
    chooseSide()  # Just in case...
    group = card.group
    if automations['Play']:
-      # Player plays a Character card
-      if card.Type == 'Character':
-         myRing = eval(me.getGlobalVariable('Ring'))
-         # Player has any empty slot?
-         if myRing.count(None) == 0:
-            whisper("You need an emply slot in your ring to play a character card")
-            return
-         # Now checks if an Empty Slot token owned by the player has been selected
-         target = [c for c in table
-            if c.targetedBy
-            and c.controller == me
-            and c.model == Tokens['Empty Slot']]
-         if len(target) == 0:
-            whisper("Please select an empty slot in your ring (Shift key + Left click)")
-            return
-         # Is really the slot empty?
-         slotNum = slots.get(target[0]._id, 0)
-         if myRing[slotNum] != None:
-            whisper("The selected slot is not empty (it's taken up by {})".format(Card(myRing[slotNum])))
-            return
-         # Pay SP cost
-         if spendOrGainSP(card.SP) == 'ABORT':
-            return
-         # Finally, the card is played
-         placeCard(card, card.Type, 'play', slotNum)
-         target[0].target(False)
-         myRing[slotNum] = card._id
-         debugNotify("{}'s ring: {}".format(me, myRing))
-         me.setGlobalVariable('Ring', str(myRing))
-      else:
-         placeCard(card, card.Type)
+      if not playAuto(card): return
    else:
       placeCard(card, card.Type)
    notify("{} plays {} from their {}.".format(me, card, group.name))
@@ -391,37 +368,22 @@ def backup(card, x = 0, y = 0):  # Play a card as backup attached to a character
    debugNotify(">>> backup with card {}".format(card)) #Debug
    
    mute()
+   group = card.group
    if automations['Play']:
-      # Only for character cards
-      if card.Type != 'Character':
-         whisper("You can only backup with Character cards")
-         return
-      # Check if a char has been selected
-      target = [c for c in table
-         if c.targetedBy
-         and c.controller == me]
-      if len(target) == 0 or target[0].Type != 'Character':
-         whisper("Please select a character in your ring (Shift key + Left click)")
-         return
-      # Check compatible backups
-      target = target[0]
-      acceptedBackups = (target.properties['Backup 1'], target.properties['Backup 2'], target.properties['Backup 3'])
-      if not card.Subtype in acceptedBackups:
-         whisper("Incompatible backups. {} only accepts {}".format(target, acceptedBackups))
-         return
-      # Backup is valid
-      attach(card, target)
-      placeCard(card, card.Type, 'backup', target)
+      target = backupAuto(card)
+      if target:
+         notify("{} backups {} with {} from their {}.".format(me, target, card, group.name))
    else:
       placeCard(card, card.Type)
-   notify("{} backups {} with {} from their {}.".format(me, target[0], card, card.group.name))
+      notify("{} backups with {} from their {}.".format(me, card, group.name))
    
    debugNotify("<<< backup()") #Debug
 
-def discard(card, x = 0, y = 0):  # Discard a card from your hand.
+def discard(card, x = 0, y = 0):
    mute()
+   group = card.group
    card.moveTo(me.piles['Discard Pile'])
-   notify("{} has discarded {}.".format(me, card))
+   notify("{} has discarded {} from their {}.".format(me, card, group.name))
 
 def randomDiscard(group, x = 0, y = 0):
     mute()

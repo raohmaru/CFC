@@ -84,7 +84,7 @@ def switchAutomation(type, command = None):
 # Card Placement functions
 #---------------------------------------------------------------------------
 
-def cwidth(card = None, divisor = 10):
+def cwidth(card, divisor = 10):
 # This function is used to always return the width of the card plus an offset that is based on the percentage of the width of the card used.
 # The smaller the number given, the less the card is divided into pieces and thus the larger the offset added.
 # For example if a card is 80px wide, a divisor of 4 will means that we will offset the card's size by 80/4 = 20.
@@ -95,7 +95,7 @@ def cwidth(card = None, divisor = 10):
    else: offset = card.width() / divisor
    return (card.width() + offset)
 
-def cheight(card = None, divisor = 10):
+def cheight(card, divisor = 10):
    if divisor == 0: offset = 0
    else: offset = card.height() / divisor
    return (card.height() + offset)
@@ -110,13 +110,13 @@ def placeCard(card, type = None, action = None, target = None):
          if action == 'play':
             coords = CardsCoords['Slot'+`target`]
          elif action == 'backup':
-            cx,cy = card.position
+            cx,cy = target.position
             backups = eval(getGlobalVariable('Backups'))
-            numBkps = len([att_id for att_id in backups if backups[att_id] == target._id])
-            coords(cx, cy-10*(numBkps+1))
+            numBkps = len([id for id in backups if backups[id] == target._id])
+            coords = (cx, cy-(15*numBkps))
          card.moveToTable(coords[0], coords[1])
       else:
-         card.moveToTable(0,0)
+         card.moveToTable(-cwidth(card,0)/2, 0)
    else:
       card.moveToTable(0,0)
    debugNotify("<<< placeCard()")
@@ -161,9 +161,11 @@ def changeMarker(cards, marker, question):  # Changes the number of markers in o
 def modSP(count = 1, silent = False): # A function to modify the players SP counter. Can also notify.
    count = num(count) # We need to make sure we get an integer or we will fail horribly. OCTGN doesn't seem to respect its own definitions.
    me.SP += count # Now increase the SP by the amount passed to us.
-   if not silent and count > 0: notify("{}'s SP has modified by {}. New total is {}.".format(me, count, me.SP))
+   if not silent and count != 0:
+      action = "gains" if count >= 0 else "loses"
+      notify("{} {} {} SP. New total is {}.".format(me, action, count, me.SP))
 
-def spendOrGainSP(count = 1, silent = False): # Pay an SP cost. However we also check if the cost can actually be paid.
+def payCostSP(count = 1, silent = False): # Pay an SP cost. However we also check if the cost can actually be paid.
    count = num(count)
    if count >= 0:
       modSP(count, silent)
@@ -184,26 +186,28 @@ def spendOrGainSP(count = 1, silent = False): # Pay an SP cost. However we also 
 
 def attach(card, target):
    debugNotify(">>> attachCard()") #Debug
+   target.target(False)
    backups = eval(getGlobalVariable('Backups'))
    backups[card._id] = target._id
-   target.target(False)
    setGlobalVariable('Backups', str(backups))
    debugNotify("<<< attachCard()")
    
 def dettach(card):
    debugNotify(">>> dettach()") #Debug
    mute()
-   backups = eval(getGlobalVariable('Backups'))
    card.target(False)
-   if card._id in dict([(v, k) for k, v in backups.iteritems()]):
-      card2 = [k for k, v in backups.iteritems() if v == card._id]
-      for card3 in card2:
-         del backups[card3]
-         notify("{} unattaches {} from {}.".format(me, Card(card3), card))
+   backups = eval(getGlobalVariable('Backups'))
+   # Delete links of cards that were attached to the card
+   attachements = [att_id for att_id in backups if backups[att_id] == card._id]
+   if len(attachements) > 0:
+      for att_id in attachements:
+         if attachements[att_id] == card._id:
+            del backups[att_id]
+            notify("{} unattaches {} from {}.".format(me, Card(att_id), card))
+   # Or, if the card was an attachment, delete the link
    elif card._id in backups:
-      card2 = backups[card._id]
       del backups[card._id]
-      notify("unattaching {} from {}".format(card, Card(card2)))
+      notify("Unattaching {} from {}".format(card, Card(backups[card._id])))
    else:
       return
    setGlobalVariable('Backups', str(backups))
@@ -213,19 +217,30 @@ def clearAttachLinks(card):
 # This function takes care to discard any attachments of a card that left play
 # It also clear the card from the attach dictionary, if it was itself attached to another card
    debugNotify(">>> clearAttachLinks({})".format(card)) #Debug
+   
    backups = eval(getGlobalVariable('Backups'))
-   attachements = [att_id for att_id in backups if backups[att_id] == card._id]
-   if len(attachements) >= 1:
-      for att_id in attachements:
-         if attachements[att_id] == card._id:
-            if Card(att_id) in table:
-               debugNotify("Removing attached card {}.".format(Card(att_id)), 2)
-               discard(Card(att_id))
-            del backups[att_id]
+   # Next line causes an error
+   # attachements = [k for k, v in backups.iteritems() if v == card._id]
+   attach_len = len([id for id in backups if backups[id] == card._id])
+   # Dettach cards that were attached to the card
+   if attach_len > 0:
+      for id in backups:
+         if backups[id] == card._id:
+            attcard = Card(id)
+            debugNotify("Unattaching {} from {}.".format(attcard, card))
+            if attcard in table:
+               discard(attcard)
+            del backups[id]
+   # If the card was an attachment, delete the link
    if backups.has_key(card._id):
-      debugNotify("{} is attached to {}. Unattaching.".format(card, Card(backups[card._id])), 2)
+      debugNotify("{} is attached to {}. Unattaching.".format(card, Card(backups[card._id])))
       del backups[card._id] # If the card was an attachment, delete the link
+   
+   debugNotify("BACKUPS:")
+   for id in backups:
+      debugNotify("   {} backups {}".format(Card(id), Card(backups[id])))
    setGlobalVariable('Backups', str(backups))
+   
    debugNotify("<<< clearAttachLinks()") #Debug
    
 def freeSlot(card):
@@ -248,21 +263,20 @@ def freeSlot(card):
 def debugNotify(msg = 'Debug Ping!', level = 2):
    if not re.search(r'<<<',msg) and not re.search(r'>>>',msg):
       hashes = '#' 
-      for iter in range(level): hashes += '#' # We add extra hashes at the start of debug messages equal to the level of the debug+1, to make them stand out more
+      for i in range(level): hashes += '#' # We add extra hashes at the start of debug messages equal to the level of the debug+1, to make them stand out more
       msg = hashes + ' ' +  msg
-   else: level = 1
-   if debugVerbosity >= level: notify(msg)
+   else:
+      level = 1
+   if debugVerbosity >= level:
+      notify(msg)
 
 def TrialError(group, x=0, y=0):
    global debugVerbosity
    mute()
-   if debugVerbosity >=0:
-      if debugVerbosity == 0:
-         debugVerbosity = 1
-      elif debugVerbosity == 1: debugVerbosity = 2
-      elif debugVerbosity == 2: debugVerbosity = 3
-      elif debugVerbosity == 3: debugVerbosity = 4
-      else: debugVerbosity = 0
+   if debugVerbosity >= 0:
+      debugVerbosity += 1
+      if debugVerbosity > 4:
+         debugVerbosity = 0
       whisper("Debug verbosity is now: {}".format(debugVerbosity))
       return
    delayed_whisper("### Checking Players")

@@ -37,10 +37,10 @@ ActivatedColor = "#0000ff"
 DoesntUnfreezeColor = "#000000"
 
 # Dictionaries which hold all the hard coded markers and tokens (in the markers & tokens set)
-Markers = {
+MarkersDict = {
     'HP': ("HP", "b86fc644-d084-43d3-99d2-5b11457321cc")
 }
-Tokens = {
+TokensDict = {
     'Empty Slot': "75771ec8-47a7-4be6-86dd-781a19755f75"
 }
 
@@ -56,6 +56,7 @@ CardsCoords = dict(
 # Misc
 Xaxis = 'x'
 Yaxis = 'y'
+BackupRaiseBP = 3
 
 #---------------------------------------------------------------------------
 # Global variables
@@ -69,6 +70,7 @@ slots = {}
 debugVerbosity = 4 # At -1, means no debugging messages display
 
 automations = {
-   'Play'  : True, # Automatically trigger game effetcs and card effects when playing cards
-   'Phase' : True  # Automatically trigger phase related events, and effects from cards in play
+   'Play'     : True, # Automatically trigger game effetcs and card effects when playing cards
+   'Phase'    : True, # Automatically trigger phase related events, and effects from cards in play
+   'WinForms' : True # Game will use the custom Windows Forms for displaying multiple-choice and info pop-ups
 }

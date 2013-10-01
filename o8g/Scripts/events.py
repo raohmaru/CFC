@@ -37,9 +37,9 @@ def OnLoadDeckEventHandler(player, groups):
    debugNotify("<<< OnLoadDeckEventHandler()") #Debug
 
 def onMoveCardEventHandler(player, card, fromGroup, toGroup, oldIndex, index, oldX, oldY, x, y, isScriptMove):
-   if card.owner != me: return
+   if card.controller != me: return
    # Card is an Empty Slot token
-   if card.model == Tokens['Empty Slot']:
+   if card.model == TokensDict['Empty Slot']:
       debugNotify(">>> Empty Slot moved") #Debug
       if toGroup != table:
          card.moveTo(table)
