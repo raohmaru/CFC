@@ -1,0 +1,45 @@
+# "D:/Mis documentos/Octgn/OCTGN/o8build.exe" -d=o8g
+# @del "D:/Mis documentos/Octgn/LocalFeed/*.nupkg"
+# @move o8g/*.nupkg "D:/Mis documentos/Octgn/LocalFeed/"
+
+require 'rake/clean'
+
+OCTGN_dir = "D:/MISDOC~1/Octgn"
+
+CLOBBER.include ["o8g/*.o8g", "#{OCTGN_dir}/LocalFeed/*.nupkg"]
+
+task :default => [:build]
+
+desc "Builds the .o8g and .nupkg files from the game definition files"
+task :build => [:versionbump] do
+  sh "#{OCTGN_dir}/OCTGN/o8build.exe -d=o8g"
+end
+
+desc "Increases the build number by 1"
+task :versionbump do
+  filename = "o8g/definition.xml"
+  file = File.open(filename, 'r')
+  str = ''
+  m = nil
+  regexp = /version="\d+\.\d+\.\d+\.(\d+)"/
+	file.each_line do |line|
+    if m.nil?
+      m = line.match(regexp)
+      if m
+        buildnum = m[1].to_i + 1
+        puts "Bump build number to #{buildnum}"
+        line.sub!('.'+m[1]+'"', '.'+buildnum.to_s+'"')
+      end
+    end
+    str += line
+	end
+  file.close
+  File.open(filename, 'w') do |out|
+    out << str
+  end
+end
+
+desc "Builds and moves the NUPKG file to the OCTGN LocalFeed dir"
+task :buildmv => [:clobber, :build] do
+  mv Dir.glob("o8g/*.nupkg"), "#{OCTGN_dir}/LocalFeed/"
+end
