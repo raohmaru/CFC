@@ -51,6 +51,8 @@ def triggerPhaseEvent(phase = 'Start'): # Function which triggers effects at the
 #------------------------------------------------------------------------------
 
 def playAuto(card):
+   debugNotify(">>> playAuto()") #Debug
+   
    # Player plays a Character card
    if card.Type == 'Character':
       # Check if the card can be legally played
@@ -73,12 +75,12 @@ def playAuto(card):
       target = [c for c in targets
          if c.model == TokensDict['Empty Slot']]
       if len(target) == 0:
-         information("Please select an empty slot in your ring to play a character card (Shift key + Left click).")
+         information("Please select an empty slot in your ring to play a character card.\n(Shift key + Left click on an empty slot).")
          return
       # Is really the slot empty?
       slotNum = slots.get(target[0]._id, 0)
       if myRing[slotNum] != None:
-         information("Character card can't be played. The selected slot is not empty (it's taken up by {}).".format(Card(myRing[slotNum]).Name))
+         warning("Character card can't be played.\nThe selected slot is not empty (it's taken up by {}).".format(Card(myRing[slotNum]).Name))
          return
       # Pay SP cost
       if payCostSP(card.SP) == 'ABORT':
@@ -135,26 +137,23 @@ def backupAuto(card):
       if c.targetedBy
       and c.controller == me]
    if len(target) == 0 or target[0].Type != 'Character' or not target[0]._id in myRing:
-      information("Please select a character in your ring (Shift key + Left click).")
+      information("Please select a character in your ring.\n(Shift key + Left click on a character).")
       return
    # Check compatible backups
    target = target[0]
    acceptedBackups = (target.properties['Backup 1'], target.properties['Backup 2'], target.properties['Backup 3'])
    if not card.Subtype in acceptedBackups:
-      information("Incompatible backups.\n{} only accepts {}.".format(target.Name, acceptedBackups))
+      warning("Incompatible backups.\n{} only accepts {}.".format(target.Name, acceptedBackups))
       return
    # Check remaining backups
    avlbckps = acceptedBackups.count(card.Subtype)
-   debugNotify("avlbckps: {}".format(avlbckps))
-   debugNotify("BACKUPS:")
    backups = eval(getGlobalVariable('Backups'))
    for id in backups:
       if backups[id] == target._id:
          if Card(id).Subtype == card.Subtype:
             avlbckps -= 1
-   debugNotify("avlbckps: {}".format(avlbckps))
    if avlbckps <= 0:
-      information("{} can't be backed-up with more than {} {} card(s).".format(target.Name, acceptedBackups.count(card.Subtype), card.Subtype))
+      warning("{} can't be backed-up with more than {} {} card(s).".format(target.Name, acceptedBackups.count(card.Subtype), card.Subtype))
       return   
    # It's a legal backup
    attach(card, target)

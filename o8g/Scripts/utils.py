@@ -190,6 +190,7 @@ def attach(card, target):
    backups = eval(getGlobalVariable('Backups'))
    backups[card._id] = target._id
    setGlobalVariable('Backups', str(backups))
+   debugBackups()
    debugNotify("<<< attachCard()")
    
 def dettach(card):
@@ -197,13 +198,15 @@ def dettach(card):
    mute()
    card.target(False)
    backups = eval(getGlobalVariable('Backups'))
+   # Next line causes an error
+   # attachements = [att_id for att_id in backups if backups[att_id] == card._id]
+   attach_len = len([id for id in backups if backups[id] == card._id])
    # Delete links of cards that were attached to the card
-   attachements = [att_id for att_id in backups if backups[att_id] == card._id]
-   if len(attachements) > 0:
-      for att_id in attachements:
-         if attachements[att_id] == card._id:
-            del backups[att_id]
-            notify("{} unattaches {} from {}.".format(me, Card(att_id), card))
+   if attach_len > 0:
+      for id in backups:
+         if backups[id] == card._id:
+            del backups[id]
+            notify("{} unattaches {} from {}.".format(me, Card(id), card))
    # Or, if the card was an attachment, delete the link
    elif card._id in backups:
       del backups[card._id]
@@ -211,6 +214,7 @@ def dettach(card):
    else:
       return
    setGlobalVariable('Backups', str(backups))
+   debugBackups()
    debugNotify("<<< dettach()")
 
 def clearAttachLinks(card):
@@ -235,12 +239,9 @@ def clearAttachLinks(card):
    if backups.has_key(card._id):
       debugNotify("{} is attached to {}. Unattaching.".format(card, Card(backups[card._id])))
       del backups[card._id] # If the card was an attachment, delete the link
-   
-   debugNotify("BACKUPS:")
-   for id in backups:
-      debugNotify("   {} backups {}".format(Card(id), Card(backups[id])))
    setGlobalVariable('Backups', str(backups))
    
+   debugBackups()   
    debugNotify("<<< clearAttachLinks()") #Debug
    
 def freeSlot(card):
@@ -262,9 +263,7 @@ def freeSlot(card):
 
 def debugNotify(msg = 'Debug Ping!', level = 2):
    if not re.search(r'<<<',msg) and not re.search(r'>>>',msg):
-      hashes = '#' 
-      for i in range(level): hashes += '#' # We add extra hashes at the start of debug messages equal to the level of the debug+1, to make them stand out more
-      msg = hashes + ' ' +  msg
+      msg = '#' * level + ' ' +  msg  # We add extra hashes at the start of debug messages equal to the level of the debug, to make them stand out more
    else:
       level = 1
    if debugVerbosity >= level:
@@ -289,3 +288,10 @@ def TrialError(group, x=0, y=0):
    delayed_whisper("### Setting Table Side")
    if not playerside:  # If we've already run this command once, don't recreate the cards.
       chooseSide()
+
+def debugBackups():
+   backups = eval(getGlobalVariable('Backups'))
+   debugNotify("BACKUPS ({})".format(len(backups)))
+   for id in backups:
+      debugNotify("   {} backups {}".format(Card(id), Card(backups[id])))
+   
