@@ -646,13 +646,13 @@
 			<property name="Backup 3" value="" />
 			<property name="Number" value="C045" />
 		</card>
-		<card name="Claire" id="642f811f-d938-6a4a-5340-65bfca10168c">
+		<card name="Claire" id="f120dd2a-1b58-0324-98a0-41fac8f8d2f1">
 			<property name="Publisher" value="Capcom" />
 			<property name="Team" value="Resident Evil" />
 			<property name="Type" value="Character" />
 			<property name="Subtype" value="Agent" />
 			<property name="Rarity" value="C" />
-			<property name="Rules" value="&#163;  DECOY&#xD;&#xA;KO this character. Shuffle your deck, then look through the top of your deck until you reveal a character card. If you do, put that card into your hand and put the other cards revealed this way on the bottom of your deck any order." />
+			<property name="Rules" value="&#163;  DECOY&#xD;&#xA;KO this character. Shuffle your deck, then look through the top of your deck until you reveal a character card. If you do, put that card into your hand and put the other cards revealed this way on the bottom of your deck in any order." />
 			<property name="BP" value="400" />
 			<property name="SP" value="3" />
 			<property name="Backup 1" value="Agent" />
