@@ -96,25 +96,6 @@ def setup(group,x=0,y=0):  # This function is usually the first one the player d
    notify("Setup for player {} completed.".format(me,))
    debugNotify("<<< setup()") #Debug
 
-def scoop(group, x = 0, y = 0):
-   mute()
-   if not confirm("Are you sure you want to reset?\n(All cards in your ring will return to their owner's hand and your stats will be restored)"):
-      return
-   me.HP = 30
-   me.SP = 0
-   for card in me.Deck:
-      card.moveTo(card.owner.Deck)
-   myCards = (card for card in table
-      if card.controller == me)
-   for card in myCards:
-      card.moveTo(card.owner.Deck)
-   discards = me.piles['Discard Pile']
-   for card in discards:
-      card.moveTo(card.owner.Deck)
-   for card in me.hand:
-      card.moveTo(card.owner.Deck)
-   notify("{} resets.".format(me))
-
 def flipCoin(group, x = 0, y = 0):
    mute()
    n = rnd(1, 2)
@@ -122,18 +103,6 @@ def flipCoin(group, x = 0, y = 0):
       notify("{} flips Heads.".format(me))
    else:
       notify("{} flips Tails.".format(me))
-
-def roll6(group, x = 0, y = 0):
-   mute()
-   rollDie(6)
-
-def roll10(group, x = 0, y = 0):
-   mute()
-   rollDie(10)
-
-def rollDie(num):
-   n = rnd(1, num)
-   notify("{} rolls {} on a {}-sided die.".format(me, n, num))
    
 def randomPick(group, x = 0, y = 0):
     mute()
@@ -166,36 +135,6 @@ def switchWinForms(group, x = 0, y = 0):
 # Table card actions
 #---------------------------------------------------------------------------
 
-def tapUntap(card, x = 0, y = 0, count = None):
-   mute()
-   card.orientation ^= Rot90
-   if card.orientation & Rot90 == Rot90:
-      notify('{} taps {}'.format(me, card))
-   else:
-      notify('{} untaps {}'.format(me, card))
-
-def faceUpDown(card, x = 0, y = 0):
-   mute()
-   if card.isFaceUp == True:
-      card.isFaceUp = False
-      notify("{} faces down {}.".format(me, card))
-   else:
-      card.isFaceUp = True
-      notify("{} faces up {}.".format(me, card))
-
-def flip(card, x = 0, y = 0):
-   mute()
-   if card.orientation & Rot180 == Rot180:
-      notify("{} unflips {}.".format(me, card))
-   else:
-      notify("{} flips {}.".format(me, card))
-   card.orientation ^= Rot180
-
-def clone(cards, x = 0, y = 0):
-   for card in cards:
-      table.create(card.model, x, y, 1)
-      x, y = table.offset(x, y)
-
 def attack(card, x = 0, y = 0):
    mute()
    card.highlight = AttackColor
@@ -226,23 +165,23 @@ def freeze(card, x = 0, y = 0, unfreeze = None, silent = False):
       if not silent: notify('{} freezes {}'.format(me, card))
    else:
       if not silent: notify('{} unfreezes {}'.format(me, card))
-   if card.highlight != DoesntUnfreezeColor:
-      card.highlight = None
+   card.highlight = None
 
 def doesNotUnfreeze(card, x = 0, y = 0):
    mute()
-   if card.highlight != DoesntUnfreezeColor:
+   if not MarkersDict['DoesntUnfreeze'] in card.markers:
       card.highlight = DoesntUnfreezeColor
+      card.markers[MarkersDict['DoesntUnfreeze']] = 1
       notify("{0}'s {1} will not unfreeze during {0}'s next Activate phase.".format(me, card))
    else:
       card.highlight = None
+      card.markers[MarkersDict['DoesntUnfreeze']] = 0
       notify("{0}'s {1} will unfreeze as normal during {0}'s Activate phase.".format(me, card))
 
 def clear(card, x = 0, y = 0, silent = False):
    if not silent: notify("{} clears {}.".format(me, card))
    card.target(False)
-   if card.highlight != DoesntUnfreezeColor:
-      card.highlight = None
+   card.highlight = None
 
 #---------------------------------------------------------------------------
 # Movement actions
@@ -259,7 +198,7 @@ def remove(card, x = 0, y = 0):
 	mute()
 	src = card.group
 	fromText = " from the ring" if src == table else " from their " + src.name
-	card.moveTo(me.piles['Removed Zone'])
+	card.moveTo(me.piles['Kill Pile'])
 	notify("{} kills {}{}.".format(me, card, fromText))
 
 def toHand(card, x = 0, y = 0):
@@ -299,6 +238,7 @@ def toDeckTopAll(group, x = 0, y = 0):
    Deck = me.Deck
    for card in group:
       card.moveTo(Deck)
+   if len(players) > 1: rnd(1, 100) # Wait a bit more, as in multiplayer games, things are slower.
    notify("{} moves all cards from their {} to top of their Deck.".format(me, group.name))
 
 def toDeckBottomAll(group, x = 0, y = 0):
@@ -306,6 +246,7 @@ def toDeckBottomAll(group, x = 0, y = 0):
    Deck = me.Deck
    for card in group:
       card.moveToBottom(Deck)
+   if len(players) > 1: rnd(1, 100) # Wait a bit more, as in multiplayer games, things are slower.
    notify("{} moves all cards from their {} to bottom of their Deck.".format(me, group.name))
 
 def discardAll(group, x = 0, y = 0):
@@ -313,6 +254,7 @@ def discardAll(group, x = 0, y = 0):
    discards = me.piles['Discard Pile']
    for card in group:
       card.moveTo(discards)
+   if len(players) > 1: rnd(1, 100) # Wait a bit more, as in multiplayer games, things are slower.
    notify("{} moves all cards from their {} to their Discard Pile.".format(me, group.name))
 
 #---------------------------------------------------------------------------
@@ -334,6 +276,10 @@ def minusBP(card, x = 0, y = 0, silent = False, count = 1):
       if MarkersDict['HP'] in card.markers:
          card.markers[MarkersDict['HP']] -= 1
 
+def changeBP(cards, x = 0, y = 0):
+   mute()
+   changeMarker(cards, MarkersDict['HP'], "Set character BP to:")
+
 def addMarker(cards, x = 0, y = 0):  # A simple function to manually add any of the available markers.
    mute()
    marker, quantity = askMarker() # Ask the player how many of the same type they want.
@@ -341,10 +287,6 @@ def addMarker(cards, x = 0, y = 0):  # A simple function to manually add any of 
    for card in cards:  # Then go through their cards and add those markers to each.
       card.markers[marker] += quantity
       notify("{} adds {} {} counter to {}.".format(me, quantity, marker[0], card))
-
-def changeBP(cards, x = 0, y = 0):
-   mute()
-   changeMarker(cards, MarkersDict['HP'], "Set character BP to:")
 
 #---------------------------------------------------------------------------
 # Hand actions
@@ -441,8 +383,8 @@ def reshuffle(group = me.piles['Discard Pile']):  # This function reshuffles the
    mute()
    Deck = me.Deck
    for card in group: card.moveTo(Deck) # Move the player's cards from the discard to their deck one-by-one.
-   random = rnd(100, 10000) # Bug 105 workaround. This delays the next action until all animation is done.
-                           # see https://octgn.16bugs.com/projects/3602/bugs/102681
+   rnd(100, 10000) # Bug 105 workaround. This delays the next action until all animation is done.
+                   # see https://octgn.16bugs.com/projects/3602/bugs/102681
    Deck.shuffle() # Then use the built-in shuffle action
    notify("{} reshuffled their {} into their Deck.".format(me, group.name)) # And inform everyone.
 
