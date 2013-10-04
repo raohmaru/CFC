@@ -40,7 +40,7 @@ def messageBox(msg, title, icon):
    debugNotify(">>> messageBox() with message: {}".format(msg))
    if automations['WinForms']:
       Application.EnableVisualStyles()
-      # Trying to display the message box as the top-most window 
+      # Try to display the message box as the top-most window 
       form = Form()
       form.TopMost = True
       form.BringToFront()

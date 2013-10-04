@@ -80,6 +80,11 @@ def switchAutomation(type, command = None):
       automations[type] = command
    notify("--> {}'s {} automations are {}.".format(me, type, automations[type]))
 
+def rollDie(num):
+   n = rnd(1, num)
+   notify("{} rolls {} on a {}-sided die.".format(me, n, num))
+
+
 #---------------------------------------------------------------------------
 # Card Placement functions
 #---------------------------------------------------------------------------
@@ -128,12 +133,12 @@ def placeCard(card, type = None, action = None, target = None):
 def findMarker(card, markerDesc): # Goes through the markers on the card and looks if one exist with a specific description
    debugNotify(">>> findMarker()") #Debug
     # If the marker description is the code of a known marker, then we need to grab the actual name of that.
-   if markerDesc in mdict:
-      markerDesc = mdict[markerDesc][0]
-   debugNotify("### Searching for marker {}".format(markerDesc), 2) # Debug
+   if markerDesc in MarkersDict:
+      markerDesc = MarkersDict[markerDesc][0]
+   debugNotify("### Searching for marker {}".format(markerDesc)) # Debug
    for key in card.markers:
       if markerDesc == key[0] or re.search(r'{}'.format(markerDesc),key[0]):
-         debugNotify("### Found {} on {}".format(key[0], card), 2)
+         debugNotify("### Found {} on {}".format(key[0], card))
          debugNotify("<<< findMarker()")
          return True
    debugNotify("<<< findMarker() key not found")

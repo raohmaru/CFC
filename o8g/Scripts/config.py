@@ -38,7 +38,8 @@ DoesntUnfreezeColor = "#000000"
 
 # Dictionaries which hold all the hard coded markers and tokens (in the markers & tokens set)
 MarkersDict = {
-    'HP': ("HP", "b86fc644-d084-43d3-99d2-5b11457321cc")
+    'HP': ("HP", "b86fc644-d084-43d3-99d2-5b11457321cc"),
+    'DoesntUnfreeze': ("Doesn't Unfreeze", "5231f83b-b78e-48b3-8bce-62031c022bf4"),
 }
 TokensDict = {
     'Empty Slot': "75771ec8-47a7-4be6-86dd-781a19755f75"
@@ -66,7 +67,7 @@ playerside = None # Variable to keep track on which side each player is
 playeraxis = None # Variable to keep track on which axis the player is
 phaseIdx = 0
 handsize = 5 # Used when automatically refilling your hand
-slots = {}
+slots = {}  # Dict holding tuples EmptySlot._id / slot number
 debugVerbosity = 4 # At -1, means no debugging messages display
 
 automations = {

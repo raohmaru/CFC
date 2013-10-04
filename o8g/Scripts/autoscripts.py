@@ -26,10 +26,11 @@ def triggerPhaseEvent(phase = 'Start'): # Function which triggers effects at the
    
    if phase == 'Activate':
       # Unfreeze characters in the player's ring
+      notify("{} unfreezes all characters in their ring.".format(me))
       myCards = (card for card in table
          if card.controller == me)
       for card in myCards:
-         if card.highlight != DoesntUnfreezeColor:
+         if not MarkersDict['DoesntUnfreeze'] in card.markers:
             freeze(card, unfreeze = True, silent = True)
          card.highlight = None
    
@@ -59,14 +60,14 @@ def playAuto(card):
       if not me.isActivePlayer or phaseIdx != 3:
          information("Character cards can only be played on your Main Phase.")
          return
-      # If a char has been selected, backup that char
+      # If a char has been selected, backup that char instead
       targets = [c for c in table
          if c.targetedBy
          and c.controller == me]
       if len(targets) > 0 and targets[0].Type == 'Character':
          backup(card)
          return
-      # Player has any empty slot?
+      # Player has any empty slot in his ring?
       myRing = eval(me.getGlobalVariable('Ring'))
       if myRing.count(None) == 0:
          information("You need an emply slot in your ring to play a character card.")
@@ -77,7 +78,7 @@ def playAuto(card):
       if len(target) == 0:
          information("Please select an empty slot in your ring to play a character card.\n(Shift key + Left click on an empty slot).")
          return
-      # Is really the slot empty?
+      # Is really that slot empty?
       slotNum = slots.get(target[0]._id, 0)
       if myRing[slotNum] != None:
          warning("Character card can't be played.\nThe selected slot is not empty (it's taken up by {}).".format(Card(myRing[slotNum]).Name))
@@ -143,7 +144,7 @@ def backupAuto(card):
    target = target[0]
    acceptedBackups = (target.properties['Backup 1'], target.properties['Backup 2'], target.properties['Backup 3'])
    if not card.Subtype in acceptedBackups:
-      warning("Incompatible backups.\n{} only accepts {}.".format(target.Name, acceptedBackups))
+      warning("Incompatible backups.\n{} only accepts {}.".format(target.Name, ', '.join(filter(None, acceptedBackups))))
       return
    # Check remaining backups
    avlbckps = acceptedBackups.count(card.Subtype)
