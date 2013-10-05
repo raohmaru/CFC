@@ -137,13 +137,17 @@ def switchWinForms(group, x = 0, y = 0):
 
 def attack(card, x = 0, y = 0):
    mute()
+   if automations['Play']:
+      if not attackAuto(card): return
    card.highlight = AttackColor
    notify('{} attacks with {}'.format(me, card))
 
 def attackNoFreeze(card, x = 0, y = 0):
    mute()
+   if automations['Play']:
+      if not attackAuto(card): return
    card.highlight = AttackNoFreezeColor
-   notify('{} attacks with {}'.format(me, card))
+   notify('{} attacks without freeze with {}'.format(me, card))
 	
 def block(card, x = 0, y = 0):
     mute()

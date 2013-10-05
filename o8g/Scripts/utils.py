@@ -118,13 +118,52 @@ def placeCard(card, type = None, action = None, target = None):
             cx,cy = target.position
             backups = eval(getGlobalVariable('Backups'))
             numBkps = len([id for id in backups if backups[id] == target._id])
-            coords = (cx, cy-(15*numBkps))
+            coords = (cx+CardsCoords['BackupOffset'][0]*numBkps, cy+CardsCoords['BackupOffset'][1]*numBkps)
          card.moveToTable(coords[0], coords[1])
       else:
          card.moveToTable(-cwidth(card,0)/2, 0)
    else:
       card.moveToTable(0,0)
    debugNotify("<<< placeCard()")
+
+def freeSlot(card):
+# Frees a slot of the ring. It normally happens when a character leaves the ring
+   debugNotify(">>> freeSlot({})".format(card)) #Debug
+   
+   myRing = eval(me.getGlobalVariable('Ring'))
+   if card._id in myRing:
+      myRing[myRing.index(card._id)] = None
+   
+   debugNotify("{}'s ring: {}".format(me, myRing))
+   me.setGlobalVariable('Ring', str(myRing))
+   
+   debugNotify("<<< freeSlot()")
+   
+def getSlotIdx(card):
+   debugNotify(">>> getSlotIdx({})".format(card)) #Debug
+   
+   if card.model == TokensDict['Empty Slot']:
+      return slots.get(card._id, 0)
+   
+   myRing = eval(me.getGlobalVariable('Ring'))
+   for i, id in enumerate(myRing):
+      if id == card._id:
+         debugNotify("slot idx: {}".format(i))
+         return i
+   debugNotify("card isn't in any slot")
+   return -1
+
+def alignCard(card, x=0, y=0):
+   debugNotify(">>> alignCard({},{},{})".format(card, x, y)) #Debug
+   
+   attachs = getAttachmets(card)
+   ox, oy = CardsCoords['BackupOffset']
+   for i, c in enumerate(attachs):
+      c.moveToTable(x+ox*(i+1), y+oy*(i+1))
+   # Move the card after the attachments, or it will be under them (with a lower z-index)
+   card.moveToTable(x, y)
+   
+   debugNotify("<<< alignCard()")
 
 #---------------------------------------------------------------------------
 # Markers functions
@@ -249,18 +288,13 @@ def clearAttachLinks(card):
    debugBackups()   
    debugNotify("<<< clearAttachLinks()") #Debug
    
-def freeSlot(card):
-# Frees a slot of the ring. It normally happens when a character leaves the ring
-   debugNotify(">>> freeSlot({})".format(card)) #Debug
-   
-   myRing = eval(me.getGlobalVariable('Ring'))
-   if card._id in myRing:
-      myRing[myRing.index(card._id)] = None
-   
-   debugNotify("{}'s ring: {}".format(me, myRing))
-   me.setGlobalVariable('Ring', str(myRing))
-   
-   debugNotify("<<< freeSlot()") #Debug
+def getAttachmets(card):
+   backups = eval(getGlobalVariable('Backups'))
+   attachs = []
+   for id in backups:
+      if backups[id] == card._id:
+         attachs.append(Card(id))
+   return attachs
 
 #------------------------------------------------------------------------------
 # Debugging

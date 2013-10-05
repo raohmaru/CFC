@@ -28,7 +28,8 @@ def triggerPhaseEvent(phase = 'Start'): # Function which triggers effects at the
       # Unfreeze characters in the player's ring
       notify("{} unfreezes all characters in their ring.".format(me))
       myCards = (card for card in table
-         if card.controller == me)
+         if card.controller == me
+         and card.model != TokensDict['Empty Slot'])
       for card in myCards:
          if not MarkersDict['DoesntUnfreeze'] in card.markers:
             freeze(card, unfreeze = True, silent = True)
@@ -36,10 +37,15 @@ def triggerPhaseEvent(phase = 'Start'): # Function which triggers effects at the
    
    elif phase == 'End':
       myCards = (card for card in table
-         if card.controller == me)
+         if card.controller == me
+         and card.model != TokensDict['Empty Slot'])
       for card in myCards:
-         # Clears targets, colors and freeze characters in the player's ring
+         # Clears targets, colors, freeze and resets position of the characters in the player's ring
          if card.highlight == AttackColor or card.highlight == ActivatedColor:
+            slotIdx = getSlotIdx(card)
+            if slotIdx != -1:
+               coords = CardsCoords['Slot'+`slotIdx`]
+               alignCard(card, coords[0], coords[1])
             freeze(card, unfreeze = False, silent = True)
          # Discard any Action or Reaction card left in the table (just in case player forgot to remove them)
          if card.Type == 'Action' or card.Type == 'Reaction':
@@ -79,18 +85,18 @@ def playAuto(card):
          information("Please select an empty slot in your ring to play a character card.\n(Shift key + Left click on an empty slot).")
          return
       # Is really that slot empty?
-      slotNum = slots.get(target[0]._id, 0)
-      if myRing[slotNum] != None:
-         warning("Character card can't be played.\nThe selected slot is not empty (it's taken up by {}).".format(Card(myRing[slotNum]).Name))
+      slotIdx = getSlotIdx(target[0])
+      if slotIdx == -1 or myRing[slotIdx] != None:
+         warning("Character card can't be played.\nThe selected slot is not empty (it's taken up by {}).".format(Card(myRing[slotIdx]).Name))
          return
       # Pay SP cost
       if payCostSP(card.SP) == 'ABORT':
          return
       # Finally, the card is played
-      placeCard(card, card.Type, 'play', slotNum)
+      placeCard(card, card.Type, 'play', slotIdx)
       card.markers[MarkersDict['HP']] = num(card.BP) / 100
       target[0].target(False)
-      myRing[slotNum] = card._id
+      myRing[slotIdx] = card._id
       me.setGlobalVariable('Ring', str(myRing))
       debugNotify("{}'s ring: {}".format(me, myRing))
    
@@ -124,13 +130,13 @@ def playAuto(card):
 def backupAuto(card):
    debugNotify(">>> backupAuto()") #Debug
    
-   # Only for character cards
-   if card.Type != 'Character':
-      information("You can only backup with Character cards.")
-      return
    # Check if the card can be legally played
    if not me.isActivePlayer or phaseIdx != 3:
       information("Characters can only be backed-up on your Main Phase.")
+      return
+   # Only for character cards
+   if card.Type != 'Character':
+      information("You can only backup with Character cards.")
       return
    # Check if a valid char has been selected
    myRing = eval(me.getGlobalVariable('Ring'))
@@ -144,7 +150,7 @@ def backupAuto(card):
    target = target[0]
    acceptedBackups = (target.properties['Backup 1'], target.properties['Backup 2'], target.properties['Backup 3'])
    if not card.Subtype in acceptedBackups:
-      warning("Incompatible backups.\n{} only accepts {}.".format(target.Name, ', '.join(filter(None, acceptedBackups))))
+      warning("Incompatible backups.\n{} only accepts {} character types.".format(target.Name, ', '.join(filter(None, acceptedBackups))))
       return
    # Check remaining backups
    avlbckps = acceptedBackups.count(card.Subtype)
@@ -162,3 +168,26 @@ def backupAuto(card):
    card.sendToBack()
    target.markers[MarkersDict['HP']] += BackupRaiseBP  # Backed-up char's BP is raised
    return target
+
+def attackAuto(card):
+   debugNotify(">>> attackAuto()") #Debug
+   
+   # Check if we can attack
+   if not me.isActivePlayer or phaseIdx != 3:
+      information("You can only attack in your Main Phase.")
+      return
+   # Only for character cards
+   if card.Type != 'Character':
+      information("You can only attack with Character cards.")
+      return
+   # Move the card to the attack position
+   slotIdx = getSlotIdx(card)
+   myRing = eval(me.getGlobalVariable('Ring'))
+   if slotIdx == -1 or myRing[slotIdx] != None:
+      warning("Please attack with a character in your ring.")
+      return
+   # Perform the attack
+   coords = CardsCoords['Attack'+`slotIdx`]
+   alignCard(card, coords[0], coords[1])
+   
+   return True

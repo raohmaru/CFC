@@ -51,7 +51,12 @@ CardsCoords = dict(
    Slot0 = (-311, 198),
    Slot1 = (-134, 198),
    Slot2 = ( 44,  198),
-   Slot3 = ( 221, 198)
+   Slot3 = ( 221, 198),
+   Attack0 = (-311, 29),
+   Attack1 = (-134, 29),
+   Attack2 = ( 44,  29),
+   Attack3 = ( 221, 29),
+   BackupOffset = (0, 10)
 )
 
 # Misc
