@@ -43,3 +43,8 @@ desc "Builds and moves the NUPKG file to the OCTGN LocalFeed dir"
 task :buildmv => [:clobber, :build] do
   mv Dir.glob("o8g/*.nupkg"), "#{OCTGN_dir}/LocalFeed/"
 end
+
+desc "Verifies the files as a valid game definition"
+task :test do
+  sh "#{OCTGN_dir}/OCTGN/o8build.exe -v -d=o8g"
+end
