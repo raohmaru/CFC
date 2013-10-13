@@ -5504,7 +5504,7 @@
 			<property name="Backup 3" value="" />
 			<property name="Number" value="R008" />
 		</card>
-		<card name="Cruel hunt" id="f7ad324e-f822-c775-d2f6-11ad1e744d8b">
+		<card name="Cruel hunt" id="b8c52450-9f85-076f-fafe-22aa730e4c72">
 			<property name="Publisher" value="" />
 			<property name="Team" value="" />
 			<property name="Type" value="Reaction" />
@@ -5512,7 +5512,7 @@
 			<property name="Rarity" value="C" />
 			<property name="Rules" value="KO all attacking characters with BP 800 or greater." />
 			<property name="BP" value="" />
-			<property name="SP" value="-6" />
+			<property name="SP" value="-5" />
 			<property name="Backup 1" value="" />
 			<property name="Backup 2" value="" />
 			<property name="Backup 3" value="" />
