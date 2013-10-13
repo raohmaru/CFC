@@ -15,6 +15,8 @@
 # You should have received a copy of the GNU General Public License
 # along with this script.  If not, see <http://www.gnu.org/licenses/>.
 
+import re
+
 #---------------------------------------------------------------------------
 # Phases
 #---------------------------------------------------------------------------
@@ -65,6 +67,7 @@ def goToEnd(group = table, x = 0, y = 0):
    showCurrentPhase()
    triggerPhaseEvent('End')
 
+
 #---------------------------------------------------------------------------
 # Table group actions
 #---------------------------------------------------------------------------
@@ -89,12 +92,11 @@ def setup(group,x=0,y=0):  # This function is usually the first one the player d
          slots[card._id] = i
    # We ensure that player has loaded a deck
    if len(me.Deck) == 0:
-      whisper("Please load a deck first")
+      warning("Please load a deck first.")
       return
    me.Deck.shuffle()
    refill() # We fill the player's play hand to their hand size
    notify("Setup for player {} completed.".format(me,))
-   debugNotify("<<< setup()") #Debug
 
 def flipCoin(group, x = 0, y = 0):
    mute()
@@ -105,22 +107,36 @@ def flipCoin(group, x = 0, y = 0):
       notify("{} flips Tails.".format(me))
    
 def randomPick(group, x = 0, y = 0):
-    mute()
-    card = group.random()
-    if card == None:
-        return
-    card.select()
-    card.target(True)
-    if group == table:
-        notify("{} randomly selects {}'s {} on the ring.".format(me, card.controller, card))
-    else:
-        notify("{} randomly selects {} from their {}.".format(me, card, group.name))
+   mute()
+   card = None
+   if group == table:
+      ring = eval(me.getGlobalVariable('Ring'))
+      if len(players) > 1:
+         ring += eval(players[1].getGlobalVariable('Ring'))
+      ring = filter(None, ring)
+      if(len(ring)) > 0:
+         card = Card(ring[rnd(0, len(ring)-1)])
+   else:
+      card = group.random()
+   if card == None:
+      return
+   card.select()
+   card.target(True)
+   if group == table:
+      notify("{} randomly selects {}'s {} on the ring.".format(me, card.controller, card))
+   else:
+      notify("{} randomly selects {} from their {}.".format(me, card, group.name))
 
-def clearAll(allPlayers = False):
-   notify("{} clears all targets and highlights.".format(me))
-   for card in table:
-      if allPlayers or card.controller == me:
-         clear(card, silent = True)
+def alignCards(group, x = 0, y = 0):
+   myCards = (card for card in table
+      if card.controller == me
+      and card.Type == 'Character'
+      and card.model != TokensDict['Empty Slot'])
+   for card in myCards:
+      slotIdx = getSlotIdx(card)
+      if slotIdx != -1:
+         coords = CardsCoords['Slot'+`slotIdx`]
+         alignCard(card, coords[0], coords[1])
 
 def switchPlayAutomation(group, x = 0, y = 0):
    switchAutomation('Play')
@@ -130,6 +146,7 @@ def switchPhaseAutomation(group, x = 0, y = 0):
 
 def switchWinForms(group, x = 0, y = 0):
    switchAutomation('WinForms')
+
 
 #---------------------------------------------------------------------------
 # Table card actions
@@ -147,17 +164,35 @@ def attackNoFreeze(card, x = 0, y = 0):
    if automations['Play']:
       if not attackAuto(card): return
    card.highlight = AttackNoFreezeColor
-   notify('{} attacks without freeze with {}'.format(me, card))
+   notify('{} attacks without freeze with {}.'.format(me, card))
+
+def unitedAttack(card, x = 0, y = 0):
+   debugNotify(">>> unitedAttack()") #Debug
+   mute()
+   cardsnames = card
+   if automations['Play']:
+      target = unitedAttackAuto(card)
+      if target:
+         cardsnames = '{} and {}'.format(card, target)
+      else:
+         return
+   card.highlight = UnitedAttackColor
+   notify('{} does an United Attack with {}.'.format(me, cardsnames))
 	
 def block(card, x = 0, y = 0):
-    mute()
-    card.highlight = BlockColor
-    notify('{} counter-attacks with {}'.format(me, card))
+   mute()
+   if automations['Play']:
+      if not blockAuto(card): return
+   card.highlight = BlockColor
+   notify('{} counter-attacks with {}'.format(me, card))
 
 def activate(card, x = 0, y = 0):
-	mute()
-	card.highlight = ActivatedColor
-	notify("{} uses {}'s ability.".format(me, card))
+   debugNotify(">>> activate()") #Debug
+   mute()
+   card.highlight = ActivatedColor
+   ability = Regexps['Ability'].match(card.Rules)
+   ability = ability.group(0) if ability else ''
+   notify("{} activates {}'s ability {}".format(me, card, ability))
 
 def freeze(card, x = 0, y = 0, unfreeze = None, silent = False):
    mute()
@@ -169,23 +204,33 @@ def freeze(card, x = 0, y = 0, unfreeze = None, silent = False):
       if not silent: notify('{} freezes {}'.format(me, card))
    else:
       if not silent: notify('{} unfreezes {}'.format(me, card))
-   card.highlight = None
+   if card.highlight == ActivatedColor:
+      card.highlight = None
 
 def doesNotUnfreeze(card, x = 0, y = 0):
    mute()
    if not MarkersDict['DoesntUnfreeze'] in card.markers:
       card.highlight = DoesntUnfreezeColor
       card.markers[MarkersDict['DoesntUnfreeze']] = 1
-      notify("{0}'s {1} will not unfreeze during {0}'s next Activate phase.".format(me, card))
+      notify("{0}'s {1} will not unfreeze during {0}'s next Activate phase.".format(card.controller, card))
    else:
       card.highlight = None
       card.markers[MarkersDict['DoesntUnfreeze']] = 0
-      notify("{0}'s {1} will unfreeze as normal during {0}'s Activate phase.".format(me, card))
+      notify("{0}'s {1} will unfreeze as normal during {0}'s Activate phase.".format(card.controller, card))
 
 def clear(card, x = 0, y = 0, silent = False):
    if not silent: notify("{} clears {}.".format(me, card))
    card.target(False)
-   card.highlight = None
+   if not card.highlight in [DoesntUnfreezeColor]:
+      card.highlight = None
+
+def alignCardAction(card, x = 0, y = 0):
+   if card.Type == 'Character' and card.model != TokensDict['Empty Slot']:
+      slotIdx = getSlotIdx(card)
+      if slotIdx != -1:
+         coords = CardsCoords['Slot'+`slotIdx`]
+         alignCard(card, coords[0], coords[1])
+
 
 #---------------------------------------------------------------------------
 # Movement actions
@@ -261,24 +306,42 @@ def discardAll(group, x = 0, y = 0):
    if len(players) > 1: rnd(1, 100) # Wait a bit more, as in multiplayer games, things are slower.
    notify("{} moves all cards from their {} to their Discard Pile.".format(me, group.name))
 
+
 #---------------------------------------------------------------------------
 # Marker actions
 #---------------------------------------------------------------------------
 
 def plusBP(card, x = 0, y = 0, silent = False, count = 1):
    mute()
+   card.markers[MarkersDict['HP']] += count
    if not silent:
       notify("{} raises {}'s BP by {}".format(me, card, count))
-   for i in range(0,count):
-      card.markers[MarkersDict['HP']] += 1
 
 def minusBP(card, x = 0, y = 0, silent = False, count = 1):
    mute()
+   if count > card.markers[MarkersDict['HP']]:
+      count = card.markers[MarkersDict['HP']]
+   card.markers[MarkersDict['HP']] -= count
    if not silent:
       notify("{} lowers {}'s BP by {}.".format(me, card, count))
-   for i in range(0,count):
-      if MarkersDict['HP'] in card.markers:
-         card.markers[MarkersDict['HP']] -= 1
+      
+def plusBP2(card, x = 0, y = 0):
+   plusBP(card, count = 2)
+   
+def minusBP2(card, x = 0, y = 0):
+   minusBP(card, count = 2)
+      
+def plusBP3(card, x = 0, y = 0):
+   plusBP(card, count = 3)
+   
+def minusBP3(card, x = 0, y = 0):
+   minusBP(card, count = 3)
+      
+def plusBP4(card, x = 0, y = 0):
+   plusBP(card, count = 4)
+   
+def minusBP4(card, x = 0, y = 0):
+   minusBP(card, count = 4)
 
 def changeBP(cards, x = 0, y = 0):
    mute()
@@ -291,6 +354,7 @@ def addMarker(cards, x = 0, y = 0):  # A simple function to manually add any of 
    for card in cards:  # Then go through their cards and add those markers to each.
       card.markers[marker] += quantity
       notify("{} adds {} {} counter to {}.".format(me, quantity, marker[0], card))
+
 
 #---------------------------------------------------------------------------
 # Hand actions
@@ -342,6 +406,7 @@ def randomDiscard(group, x = 0, y = 0):
 def refill(group = me.hand):  # Refill the player's hand to its hand size.
    playhand = len(me.hand) # count how many cards there are currently there.
    if playhand < handsize: drawMany(me.Deck, handsize - playhand, True) # If there's less cards than the handsize, draw from the deck until it's full.
+
 
 #---------------------------------------------------------------------------
 # Piles actions
@@ -404,9 +469,10 @@ def revealTopDeck(group, x = 0, y = 0):
 def swapWithDeck(group = me.piles['Discard Pile']):  # This function reshuffles the player's discard pile into their deck.
    mute()
    Deck = me.Deck
-   savedDeck = (card for card in Deck)   
+   savedDeck = [card for card in Deck]
    for card in group:
-      card.moveTo(Deck)   
+      card.moveTo(Deck)
+   rnd(1, 100)  # Delay the next action until all animation is done
    for card in savedDeck:
       card.moveTo(group)   
    if len(players) > 1: rnd(1, 100) # Wait a bit more, as in multiplayer games, things are slower.

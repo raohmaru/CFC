@@ -69,6 +69,12 @@ def resetAll(): # Clears all the global variables in order to start a new game.
    elif debugVerbosity != -1 and confirm("Reset Debug Verbosity?"): debugVerbosity = -1
    debugNotify("<<< resetAll()") #Debug
 
+def clearAll(allPlayers = False):
+   notify("{} clears all targets and highlights.".format(me))
+   for card in table:
+      if allPlayers or card.controller == me:
+         clear(card, silent = True)
+
 def switchAutomation(type, command = None):
    debugNotify(">>> switchAutomation({})".format(type)) #Debug
    global automations
@@ -143,7 +149,9 @@ def getSlotIdx(card):
    debugNotify(">>> getSlotIdx({})".format(card)) #Debug
    
    if card.model == TokensDict['Empty Slot']:
-      return slots.get(card._id, 0)
+      i = slots.get(card._id, -1)
+      debugNotify("slot idx: {}".format(i))
+      return i
    
    myRing = eval(me.getGlobalVariable('Ring'))
    for i, id in enumerate(myRing):
@@ -169,20 +177,6 @@ def alignCard(card, x=0, y=0):
 # Markers functions
 #---------------------------------------------------------------------------
 
-def findMarker(card, markerDesc): # Goes through the markers on the card and looks if one exist with a specific description
-   debugNotify(">>> findMarker()") #Debug
-    # If the marker description is the code of a known marker, then we need to grab the actual name of that.
-   if markerDesc in MarkersDict:
-      markerDesc = MarkersDict[markerDesc][0]
-   debugNotify("### Searching for marker {}".format(markerDesc)) # Debug
-   for key in card.markers:
-      if markerDesc == key[0] or re.search(r'{}'.format(markerDesc),key[0]):
-         debugNotify("### Found {} on {}".format(key[0], card))
-         debugNotify("<<< findMarker()")
-         return True
-   debugNotify("<<< findMarker() key not found")
-   return False
-
 def changeMarker(cards, marker, question):  # Changes the number of markers in one or more cards
    n = 0
    for c in cards:
@@ -197,6 +191,10 @@ def changeMarker(cards, marker, question):  # Changes the number of markers in o
       if dif >= 0: dif = "+" + str(dif)   
       notify("{} sets {}'s {} to {}({}).".format(me, c, marker[0], count, dif))
 
+def removeMarker(card, mkname):
+   if MarkersDict[mkname] in card.markers:
+      card.markers[MarkersDict[mkname]] = 0
+      
 
 #---------------------------------------------------------------------------
 # Counter Manipulation
@@ -209,15 +207,15 @@ def modSP(count = 1, silent = False): # A function to modify the players SP coun
       action = "gains" if count >= 0 else "loses"
       notify("{} {} {} SP. New total is {}.".format(me, action, count, me.SP))
 
-def payCostSP(count = 1, silent = False): # Pay an SP cost. However we also check if the cost can actually be paid.
+def payCostSP(count = 1, silent = False, msg = 'play this card'): # Pay an SP cost. However we also check if the cost can actually be paid.
    count = num(count)
    if count >= 0:
       modSP(count, silent)
    else:
       if me.SP+count < 0: # If we don't have enough SP, we assume card effects or mistake and notify the player that they need to do things manually.
          if not silent:
-            if not confirm("You do not seem to have enough SP to play this card. Are you sure you want to proceed? \
-            \n(If you do, your SP will go to the negative. You will need to increase it manually as required.)"):
+            if not confirm("You do not seem to have enough SP to {}. Are you sure you want to proceed? \
+            \n(If you do, your SP will go to the negative. You will need to increase it manually as required.)".format(msg)):
                return 'ABORT'
             notify("{} was supposed to pay {} SP but only has {}.".format(me, count, me.SP))
       me.SP += count
@@ -289,6 +287,7 @@ def clearAttachLinks(card):
    debugNotify("<<< clearAttachLinks()") #Debug
    
 def getAttachmets(card):
+   # Returns a list with all the cards attached to this card
    backups = eval(getGlobalVariable('Backups'))
    attachs = []
    for id in backups:

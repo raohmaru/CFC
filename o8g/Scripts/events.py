@@ -25,16 +25,12 @@ def checkTwoSidedTable():
    if not table.isTwoSided():
       information(":::WARNING::: This game is designed to be played on a two-sided table. Playing could be uncomfortable otherwise! Please start a new game and make sure the appropriate button is checked.")
 
-def OnLoadDeckEventHandler(player, groups):
-   debugNotify(">>> OnLoadDeckEventHandler()") #Debug
-   
+def OnLoadDeckEventHandler(player, groups):   
    if player != me: return # We only want the owner of to run this script
    mute()
    decklen = len(me.Deck)
    if decklen != 50:
-      notify (":::ERROR::: {}'s Deck must have exactly 50 cards (it has {} cards)".format(me,decklen))
-   
-   debugNotify("<<< OnLoadDeckEventHandler()") #Debug
+      notify(":::ERROR::: {}'s Deck must have exactly 50 cards (it has {} cards)".format(me,decklen))
 
 def onMoveCardEventHandler(player, card, fromGroup, toGroup, oldIndex, index, oldX, oldY, x, y, isScriptMove):
    if card.controller != me: return
@@ -65,3 +61,12 @@ def onMoveCardEventHandler(player, card, fromGroup, toGroup, oldIndex, index, ol
          card.setIndex(8)
       else:
          card.setIndex(4)
+         
+def OnTurnEventHandler(player, turnNumber):
+   # Reset some player variables at the start of each turn
+   debugNotify(">>> OnTurnEventHandler()") #Debug
+   global charsPlayed, backupsPlayed
+   charsPlayed = 0  # Num of chars played this turn
+   backupsPlayed = 0  # Num of chars backed-up this turn
+   debugNotify("<<< OnTurnEventHandler()") #Debug
+   
