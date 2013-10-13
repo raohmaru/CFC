@@ -15,8 +15,6 @@
 # You should have received a copy of the GNU General Public License
 # along with this script.  If not, see <http://www.gnu.org/licenses/>.
 
-import re
-
 try:
    import os
    if os.environ['RUNNING_TEST_SUITE'] == 'TRUE':
@@ -36,16 +34,42 @@ try:
 except:
    automations['WinForms'] = False
 
+class CustomForm(Form): # This is a WinForm which creates a simple window, with some text and an OK button to close it.
+   def __init__(self):
+      self.timer = Timer()
+      self.timer.Interval = 200
+      self.timer.Tick += self._onTick
+      self.timer_tries = 0
+      
+   def show(self):
+      # Try to display the message box as the top-most window 
+      self.TopMost = True
+      self.BringToFront()
+      # ... twice
+      self.timer.Start()      
+
+   def _onTick(self, sender, event):
+      if self.timer_tries < 3:
+         self.TopMost = False
+         self.Focus()
+         self.Activate()
+         self.TopMost = True
+         self.timer_tries += 1
+      else:
+         self.timer.Stop()
+      
+class MessageBoxForm(CustomForm):      
+   def __init__(self, msg, title, icon):
+      super(self.__class__, self).__init__()
+      self.show()
+      MessageBox.Show(self, msg, title, MessageBoxButtons.OK, icon)
+      self.Close()            
+
 def messageBox(msg, title, icon):
    debugNotify(">>> messageBox() with message: {}".format(msg))
    if automations['WinForms']:
       Application.EnableVisualStyles()
-      # Try to display the message box as the top-most window 
-      form = Form()
-      form.TopMost = True
-      form.BringToFront()
-      MessageBox.Show(msg, title, MessageBoxButtons.OK, icon)
-      form.Close()
+      form = MessageBoxForm(msg, title, icon)
    else: 
       whisper(msg)
 
