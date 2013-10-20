@@ -293,3 +293,16 @@ def blockAuto(card):
    card.markers[MarkersDict['CounterAttack']] = 1
    return True
    
+
+def activateAuto(card):
+   debugNotify(">>> activateAuto()") #Debug
+   
+   # Character ability
+   if card.Type == 'Character':
+      # Frozen char?
+      if card.orientation & Rot90 == Rot90:
+         warning("Can't activate abilities of frozen characters.")
+         return   
+   
+   return True
+   

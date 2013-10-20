@@ -189,10 +189,18 @@ def block(card, x = 0, y = 0):
 def activate(card, x = 0, y = 0):
    debugNotify(">>> activate()") #Debug
    mute()
+   if automations['Play']:
+      if not activateAuto(card): return
+   if card.Type == 'Character':
+      ability = Regexps['Ability'].match(card.Rules)
+      if ability:
+         ability = "ability {}".format(ability.group(0))
+      else:
+         return
+   else:
+      ability = "effect"
    card.highlight = ActivatedColor
-   ability = Regexps['Ability'].match(card.Rules)
-   ability = ability.group(0) if ability else ''
-   notify("{} activates {}'s ability {}".format(me, card, ability))
+   notify("{} activates {}'s {}".format(me, card, ability))
 
 def freeze(card, x = 0, y = 0, unfreeze = None, silent = False):
    mute()
