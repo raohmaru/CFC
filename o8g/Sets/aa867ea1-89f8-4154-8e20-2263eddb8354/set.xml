@@ -2284,13 +2284,13 @@
 			<property name="Backup 3" value="Soldier" />
 			<property name="Number" value="C162" />
 		</card>
-		<card name="Kasumi" id="83278e1c-fb0e-68e1-8db1-be674a9604c3">
+		<card name="Kasumi" id="0a803936-5e6f-4c26-3181-a83c9a01011b">
 			<property name="Publisher" value="SNK" />
 			<property name="Team" value="Art of Fighting" />
 			<property name="Type" value="Character" />
 			<property name="Subtype" value="Aikido" />
 			<property name="Rarity" value="C" />
-			<property name="Rules" value="&#163;  OVERLAP CRUNCH&#xD;&#xA;Discard an action card. Deals 200 damage points to enemy." />
+			<property name="Rules" value="&#163;  OVERLAP CRUNCH&#xD;&#xA;Discard a card. Deals 200 damage points to enemy." />
 			<property name="BP" value="400" />
 			<property name="SP" value="2" />
 			<property name="Backup 1" value="Kickboxer" />
