@@ -88,7 +88,7 @@ def setup(group,x=0,y=0):  # This function is usually the first one the player d
       for i in range(4):
          debugNotify("Creating Empty Slot {}".format(i))
          coords = CardsCoords['Slot'+`i`]
-         card = table.create(TokensDict['Empty Slot'], coords[0], coords[1], 1, True)
+         card = table.create(TokensDict['Empty Slot'], coords[0], fixY(coords[1]), 1, True)
          slots[card._id] = i
    # We ensure that player has loaded a deck
    if len(me.Deck) == 0:
@@ -192,9 +192,9 @@ def activate(card, x = 0, y = 0):
    if automations['Play']:
       if not activateAuto(card): return
    if card.Type == 'Character':
-      ability = Regexps['Ability'].match(card.Rules)
-      if ability:
-         ability = "ability {}".format(ability.group(0))
+      pcard = getParsedCard(card)
+      if pcard.ability:
+         ability = "ability {}".format(pcard.ability)
       else:
          return
    else:

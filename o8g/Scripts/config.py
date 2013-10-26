@@ -77,6 +77,8 @@ MaxUnitedAttack = 2
 UnitedAttackCost = 5
 
 # Misc
+CardWidth = 90
+CardHeight = 126
 Xaxis = 'x'
 Yaxis = 'y'
 
@@ -84,14 +86,15 @@ Yaxis = 'y'
 # Global variables
 #---------------------------------------------------------------------------
 
-playerside = None # Variable to keep track on which side each player is
-playeraxis = None # Variable to keep track on which axis the player is
+playerside = None  # Variable to keep track on which side each player is
+playeraxis = None  # Variable to keep track on which axis the player is
 phaseIdx = 0
-handsize = 5 # Used when automatically refilling your hand
+handsize = 5  # Used when automatically refilling your hand
 slots = {}  # Dict holding tuples EmptySlot._id / slot number
 charsPlayed = 0  # Num of chars played this turn
 backupsPlayed = 0  # Num of chars backed-up this turn
-debugVerbosity = 4 # At -1, means no debugging messages display
+debugVerbosity = 4  # At -1, means no debugging messages display
+cards = {}  # Dictionary holding all parsed cards
 
 automations = {
    'Play'     : True, # Automatically trigger game effetcs and card effects when playing cards

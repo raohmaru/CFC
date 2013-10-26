@@ -4,7 +4,7 @@
       name="Card Fighters' Clash"
       id="e3d56d9e-900d-49c6-b6ae-22cbb51be153"
       octgnVersion="3.1.56.0"
-      version="0.1.1.45"
+      version="0.1.1.62"
       markersize="16"
       tags="capcom snk fighter"
       description="A card game based in the SNK Playmore’s video game SNK vs. Capcom Card Fighters' Clash 2 Expand Edition.
@@ -77,7 +77,8 @@
 		</groupactions>
 		<groupactions menu="Game...">
 			<groupaction menu="Setup starting cards &amp; hand" shortcut="Ctrl+F1" execute="setup" />
-			<groupaction menu="Debug" execute="TrialError" />
+			<groupaction menu="Debug" execute="trialError" />
+			<groupaction menu="Set debug verbosity" execute="setDebugVerbosity" />
 		</groupactions>
 		<groupaction menu="Realign cards" shortcut="Ctrl+F2" execute="alignCards" />
 		<groupactions menu="Random...">

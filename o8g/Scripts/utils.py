@@ -111,6 +111,15 @@ def cheight(card, divisor = 10):
    else: offset = card.height() / divisor
    return (card.height() + offset)
 
+def fixY(y):
+   # Variable to move the cards played by player 2 on a 2-sided table, more towards their own side. 
+   # Player's 2 axis will fall one extra card length towards their side.
+   # This is because of bug #146 (https://github.com/kellyelton/OCTGN/issues/146)
+   offsetY = 0
+   if me.hasInvertedTable():
+      offsetY = CardHeight
+   return (y + offsetY) * playerside
+   
 def placeCard(card, type = None, action = None, target = None):
 # This function automatically places a card on the table according to what type of card is being placed
 # It is called by one of the various custom types and each type has a different value depending on if the player is on the X or Y axis.
@@ -125,9 +134,9 @@ def placeCard(card, type = None, action = None, target = None):
             backups = eval(getGlobalVariable('Backups'))
             numBkps = len([id for id in backups if backups[id] == target._id])
             coords = (cx+CardsCoords['BackupOffset'][0]*numBkps, cy+CardsCoords['BackupOffset'][1]*numBkps)
-         card.moveToTable(coords[0], coords[1])
+         card.moveToTable(coords[0], fixY(coords[1]))
       else:
-         card.moveToTable(-cwidth(card,0)/2, 0)
+         card.moveToTable(-CardWidth/2, 0)
    else:
       card.moveToTable(0,0)
    debugNotify("<<< placeCard()")
@@ -167,11 +176,40 @@ def alignCard(card, x=0, y=0):
    attachs = getAttachmets(card)
    ox, oy = CardsCoords['BackupOffset']
    for i, c in enumerate(attachs):
-      c.moveToTable(x+ox*(i+1), y+oy*(i+1))
+      c.moveToTable(x+ox*(i+1), fixY(y+oy*(i+1)))
    # Move the card after the attachments, or it will be under them (with a lower z-index)
-   card.moveToTable(x, y)
+   card.moveToTable(x, fixY(y))
    
    debugNotify("<<< alignCard()")
+
+#---------------------------------------------------------------------------
+# Card automation functions
+#---------------------------------------------------------------------------
+def getParsedCard(card):
+   debugNotify(">>> getParsedCard()") #Debug
+   if not card.model in cards:
+      cards[card.model] = ParsedCard(card)
+   debugNotify("Retreiving parsed card for model {} ({})".format(card.model, card.Name))
+   return cards.get(card.model)
+      
+class ParsedCard():
+   """ A class which stores the card ability name and its parsed rule autoscripts """
+   ab_instant = u'\xa2'
+   ab_activated = u'\xa3'
+   ab_auto = u'\xa4'
+   
+   def __init__(self, card):
+      debugNotify(">>> ParsedCard()") #Debug
+   
+      ability = Regexps['Ability'].match(card.Rules)
+      if ability:
+         debugNotify("Parsing {}".format(ability.group(0)))
+         self.ability = ability.group(0)
+         self.ability_type = ability.group(1)
+         self.ability_name = ability.group(2)
+      else:
+         debugNotify("No ability to parse")
+         self.ability = None
 
 #---------------------------------------------------------------------------
 # Markers functions
@@ -301,31 +339,39 @@ def getAttachmets(card):
 
 def debugNotify(msg = 'Debug Ping!', level = 2):
    if not re.search(r'<<<',msg) and not re.search(r'>>>',msg):
-      msg = '#' * level + ' ' +  msg  # We add extra hashes at the start of debug messages equal to the level of the debug, to make them stand out more
+      msg = '#' * level + ' ' + msg  # We add extra hashes at the start of debug messages equal to the level of the debug, to make them stand out more
    else:
       level = 1
    if debugVerbosity >= level:
       notify(msg)
 
-def TrialError(group, x=0, y=0):
+def trialError(group, x=0, y=0):
    global debugVerbosity
    mute()
-   if debugVerbosity >= 0:
-      debugVerbosity += 1
-      if debugVerbosity > 4:
-         debugVerbosity = 0
-      whisper("Debug verbosity is now: {}".format(debugVerbosity))
-      return
    delayed_whisper("### Checking Players")
-   if me.name == 'raohmaru':
+   if me.name == 'raohmaru' and debugVerbosity < 0:
       debugVerbosity = 0
+      delayed_whisper("Reset debug verbosity to: {}".format(debugVerbosity))
    delayed_whisper("### Checking Debug Validity")
-   if not (len(players) == 1 or debugVerbosity >= 0):
+   if len(players) > 1 or debugVerbosity < 0:
       whisper("This function is only for development purposes")
       return
    delayed_whisper("### Setting Table Side")
    if not playerside:  # If we've already run this command once, don't recreate the cards.
       chooseSide()
+
+def setDebugVerbosity(group, x=0, y=0):
+   global debugVerbosity
+   mute()
+   if not me.name == 'raohmaru':
+      whisper("This function is only for development purposes")
+      return
+   n = askInteger('Set debug verbosity to: (-1 to 4)', debugVerbosity)
+   if n == None: return
+   if n < -1: n = -1
+   elif n > 4: n = 4
+   debugVerbosity = n
+   whisper("Debug verbosity is now: {}".format(debugVerbosity))
 
 def debugBackups():
    backups = eval(getGlobalVariable('Backups'))

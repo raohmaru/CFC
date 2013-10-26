@@ -293,16 +293,47 @@ def blockAuto(card):
    card.markers[MarkersDict['CounterAttack']] = 1
    return True
    
-
 def activateAuto(card):
    debugNotify(">>> activateAuto()") #Debug
    
+   if card.highlight == ActivatedColor:
+      return   
    # Character ability
-   if card.Type == 'Character':
-      # Frozen char?
-      if card.orientation & Rot90 == Rot90:
-         warning("Can't activate abilities of frozen characters.")
-         return   
+   if card.Type == 'Character':      
+      pcard = getParsedCard(card)
+      if not pcard.ability:
+         return
+      debugNotify("Trying to activate {}'s ability {} {}'".format(card.Name, pcard.ability_type, pcard.ability_name))
+      # Activate [] and /\ only in player's Main Phase
+      if pcard.ability_type in [ParsedCard.ab_instant, ParsedCard.ab_activated] and (not me.isActivePlayer or phaseIdx != 3):
+         information("You can only activate a [ ] or /\\ abilities in your Main Phase.")
+         return
+      # /\ abilities
+      if pcard.ability_type == ParsedCard.ab_instant:
+         # Activate only once
+         if not MarkersDict['JustEntered'] in card.markers:
+            warning("/\\ abilities can only be activated once when character just enters the ring.")
+            return
+      # [] abilities
+      if pcard.ability_type == ParsedCard.ab_activated:  
+         # Just entered?
+         if MarkersDict['JustEntered'] in card.markers:
+            warning("Can't activate [ ] abilities of characters that just entered the ring.")
+            return
+         # Frozen or attacking?
+         if card.orientation & Rot90 == Rot90 or MarkersDict['Attack'] in card.markers:
+            warning("Can't activate [ ] abilities of frozen or attacking characters.")
+            return
+      # () abilities
+      if pcard.ability_type == ParsedCard.ab_auto:
+         # Nor in a United Attack
+         if MarkersDict['UnitedAttack'] in card.markers:
+            warning("Can't activate ( ) abilities of characters in a United Attack.")
+            return
+      
+      # Activate the ability
+      if pcard.ability_type == ParsedCard.ab_activated:
+         freeze(card, silent = True)
    
    return True
    

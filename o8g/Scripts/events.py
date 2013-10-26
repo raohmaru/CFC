@@ -41,15 +41,15 @@ def onMoveCardEventHandler(player, card, fromGroup, toGroup, oldIndex, index, ol
          card.moveTo(table)
       elif oldIndex != index:
          card.setIndex(0)
-      else:
-         debugNotify("Slot number: {}".format(slots.get(card._id, 0)))
-         slotIdx = getSlotIdx(card)
-         if slotIdx > -1:
-            coords = CardsCoords['Slot'+`slotIdx`]
-            cx,cy = card.position
-            if cx != coords[0] or cy != coords[1]:
-               debugNotify("Moving slot to: {}".format(coords))
-               card.moveToTable(coords[0], coords[1])
+      # else:
+         # debugNotify("Slot number: {}".format(slots.get(card._id, 0)))
+         # slotIdx = getSlotIdx(card)
+         # if slotIdx > -1:
+            # coords = CardsCoords['Slot'+`slotIdx`]
+            # cx,cy = card.position
+            # if cx != coords[0] or cy != coords[1]:
+               # debugNotify("Moving slot to: {}".format(coords))
+               # card.moveToTable(coords[0], fixY(coords[1]))
    # Other card which has been moved out the table
    elif fromGroup == table and toGroup != table:
       if card.Type == 'Character':
