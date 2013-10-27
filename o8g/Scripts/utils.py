@@ -38,33 +38,33 @@ def delayed_whisper(text): # Because whispers for some reason execute before not
 
 def chooseSide(): # Called from many functions to check if the player has chosen a side for this game.
    mute()
-   global playerside, playeraxis
-   if playerside == None:  # Has the player selected a side yet? If not, then...
+   global playerSide, playerAxis
+   if playerSide == None:  # Has the player selected a side yet? If not, then...
       if Table.isTwoSided():
-         playeraxis = Yaxis
+         playerAxis = Yaxis
          if me.hasInvertedTable():
-            playerside = -1
+            playerSide = -1
          else:
-            playerside = 1
+            playerSide = 1
       else:
-         playeraxis = Yaxis
+         playerAxis = Yaxis
          if confirm("Will you play on the bottom side?"): # Ask which side they want
-            playerside = 1 # This is used to swap between the two halves of the X axis of the play field. Positive is on the right.
+            playerSide = 1 # This is used to swap between the two halves of the X axis of the play field. Positive is on the right.
          else:
-            playerside = -1 # Negative is on the left.
+            playerSide = -1 # Negative is on the left.
 
 def resetAll(): # Clears all the global variables in order to start a new game.
    # Import all our global variables and reset them.
-   global playerside, handsize, debugVerbosity, slots
+   global playerSide, handSize, debugVerbosity, slots
    debugNotify(">>> resetAll()") #Debug
-   playerside = None
-   handsize = 5
+   playerSide = None
+   handSize = 5
    slots = {}
    me.HP = 30  # Wipe the counters
    me.SP = 0
-   backups = eval(getGlobalVariable('Backups'))
+   backups = getGlobalVar('Backups')
    backups.clear()
-   setGlobalVariable('Backups',str(backups))
+   setGlobalVar('Backups', backups)
    if len(players) > 1: debugVerbosity = -1 # Reset means normal game.
    elif debugVerbosity != -1 and confirm("Reset Debug Verbosity?"): debugVerbosity = -1
    debugNotify("<<< resetAll()") #Debug
@@ -90,35 +90,30 @@ def rollDie(num):
    n = rnd(1, num)
    notify("{} rolls {} on a {}-sided die.".format(me, n, num))
 
+def getGlobalVar(name, player = None):
+   if player:
+      return eval(player.getGlobalVariable(name))
+   else:
+      return eval(getGlobalVariable(name))
+
+def setGlobalVar(name, value, player = None):
+   if player:
+      player.setGlobalVariable(name, str(value))
+   else:
+      setGlobalVariable(name, str(value))
 
 #---------------------------------------------------------------------------
 # Card Placement functions
 #---------------------------------------------------------------------------
 
-def cwidth(card, divisor = 10):
-# This function is used to always return the width of the card plus an offset that is based on the percentage of the width of the card used.
-# The smaller the number given, the less the card is divided into pieces and thus the larger the offset added.
-# For example if a card is 80px wide, a divisor of 4 will means that we will offset the card's size by 80/4 = 20.
-# In other words, we will return 1 + 1/4 of the card width.
-# Thus, no matter what the size of the table and cards becomes, the distances used will be relatively the same.
-# The default is to return an offset equal to 1/10 of the card width. A divisor of 0 means no offset.
-   if divisor == 0: offset = 0
-   else: offset = card.width() / divisor
-   return (card.width() + offset)
-
-def cheight(card, divisor = 10):
-   if divisor == 0: offset = 0
-   else: offset = card.height() / divisor
-   return (card.height() + offset)
-
-def fixY(y):
+def fixCardY(y):
    # Variable to move the cards played by player 2 on a 2-sided table, more towards their own side. 
    # Player's 2 axis will fall one extra card length towards their side.
    # This is because of bug #146 (https://github.com/kellyelton/OCTGN/issues/146)
    offsetY = 0
    if me.hasInvertedTable():
       offsetY = CardHeight
-   return (y + offsetY) * playerside
+   return (y + offsetY) * playerSide
    
 def placeCard(card, type = None, action = None, target = None):
 # This function automatically places a card on the table according to what type of card is being placed
@@ -131,54 +126,56 @@ def placeCard(card, type = None, action = None, target = None):
             coords = CardsCoords['Slot'+`target`]
          elif action == 'backup':
             cx,cy = target.position
-            backups = eval(getGlobalVariable('Backups'))
+            backups = getGlobalVar('Backups')
             numBkps = len([id for id in backups if backups[id] == target._id])
             coords = (cx+CardsCoords['BackupOffset'][0]*numBkps, cy+CardsCoords['BackupOffset'][1]*numBkps)
-         card.moveToTable(coords[0], fixY(coords[1]))
+         card.moveToTable(coords[0], fixCardY(coords[1]))
       else:
-         card.moveToTable(-CardWidth/2, 0)
+         card.moveToTable(-CardWidth/2, fixCardY(0))
    else:
-      card.moveToTable(0,0)
+      card.moveToTable(0,fixCardY(0))
    debugNotify("<<< placeCard()")
 
 def freeSlot(card):
 # Frees a slot of the ring. It normally happens when a character leaves the ring
    debugNotify(">>> freeSlot({})".format(card)) #Debug
    
-   myRing = eval(me.getGlobalVariable('Ring'))
+   myRing = getGlobalVar('Ring', me)
    if card._id in myRing:
       myRing[myRing.index(card._id)] = None
    
    debugNotify("{}'s ring: {}".format(me, myRing))
-   me.setGlobalVariable('Ring', str(myRing))
+   setGlobalVar('Ring', myRing, me)
    
    debugNotify("<<< freeSlot()")
    
-def getSlotIdx(card):
+def getSlotIdx(card, player = me):
    debugNotify(">>> getSlotIdx({})".format(card)) #Debug
    
    if card.model == TokensDict['Empty Slot']:
       i = slots.get(card._id, -1)
-      debugNotify("slot idx: {}".format(i))
+      debugNotify("Slot idx: {}".format(i))
       return i
    
-   myRing = eval(me.getGlobalVariable('Ring'))
-   for i, id in enumerate(myRing):
+   ring = getGlobalVar('Ring', player)
+   for i, id in enumerate(ring):
       if id == card._id:
-         debugNotify("slot idx: {}".format(i))
+         debugNotify("Slot idx: {}".format(i))
          return i
-   debugNotify("card isn't in any slot")
+   debugNotify("Card isn't in any slot")
    return -1
 
 def alignCard(card, x=0, y=0):
    debugNotify(">>> alignCard({},{},{})".format(card, x, y)) #Debug
    
-   attachs = getAttachmets(card)
-   ox, oy = CardsCoords['BackupOffset']
-   for i, c in enumerate(attachs):
-      c.moveToTable(x+ox*(i+1), fixY(y+oy*(i+1)))
+   if card.Type == 'Character':
+      attachs = getAttachmets(card)
+      if len(attachs) > 0:
+         ox, oy = CardsCoords['BackupOffset']
+         for i, c in enumerate(attachs):
+            c.moveToTable(x+ox*(i+1), fixCardY(y+oy*(i+1)))
    # Move the card after the attachments, or it will be under them (with a lower z-index)
-   card.moveToTable(x, fixY(y))
+   card.moveToTable(x, fixCardY(y))
    
    debugNotify("<<< alignCard()")
 
@@ -267,9 +264,9 @@ def payCostSP(count = 1, silent = False, msg = 'play this card'): # Pay an SP co
 def attach(card, target):
    debugNotify(">>> attachCard()") #Debug
    target.target(False)
-   backups = eval(getGlobalVariable('Backups'))
+   backups = getGlobalVar('Backups')
    backups[card._id] = target._id
-   setGlobalVariable('Backups', str(backups))
+   setGlobalVar('Backups', backups)
    debugBackups()
    debugNotify("<<< attachCard()")
    
@@ -277,7 +274,7 @@ def dettach(card):
    debugNotify(">>> dettach()") #Debug
    mute()
    card.target(False)
-   backups = eval(getGlobalVariable('Backups'))
+   backups = getGlobalVar('Backups')
    # Next line causes an error
    # attachements = [att_id for att_id in backups if backups[att_id] == card._id]
    attach_len = len([id for id in backups if backups[id] == card._id])
@@ -293,7 +290,7 @@ def dettach(card):
       notify("Unattaching {} from {}".format(card, Card(backups[card._id])))
    else:
       return
-   setGlobalVariable('Backups', str(backups))
+   setGlobalVar('Backups', backups)
    debugBackups()
    debugNotify("<<< dettach()")
 
@@ -302,7 +299,7 @@ def clearAttachLinks(card):
 # It also clear the card from the attach dictionary, if it was itself attached to another card
    debugNotify(">>> clearAttachLinks({})".format(card)) #Debug
    
-   backups = eval(getGlobalVariable('Backups'))
+   backups = getGlobalVar('Backups')
    # Next line causes an error
    # attachements = [k for k, v in backups.iteritems() if v == card._id]
    attach_len = len([id for id in backups if backups[id] == card._id])
@@ -319,14 +316,14 @@ def clearAttachLinks(card):
    if backups.has_key(card._id):
       debugNotify("{} is attached to {}. Unattaching.".format(card, Card(backups[card._id])))
       del backups[card._id] # If the card was an attachment, delete the link
-   setGlobalVariable('Backups', str(backups))
+   setGlobalVar('Backups', backups)
    
    debugBackups()   
    debugNotify("<<< clearAttachLinks()") #Debug
    
 def getAttachmets(card):
    # Returns a list with all the cards attached to this card
-   backups = eval(getGlobalVariable('Backups'))
+   backups = getGlobalVar('Backups')
    attachs = []
    for id in backups:
       if backups[id] == card._id:
@@ -354,17 +351,17 @@ def trialError(group, x=0, y=0):
       delayed_whisper("Reset debug verbosity to: {}".format(debugVerbosity))
    delayed_whisper("### Checking Debug Validity")
    if len(players) > 1 or debugVerbosity < 0:
-      whisper("This function is only for development purposes")
+      whisper("This function is only for development purposes.")
       return
    delayed_whisper("### Setting Table Side")
-   if not playerside:  # If we've already run this command once, don't recreate the cards.
+   if not playerSide:  # If we've already run this command once, don't recreate the cards.
       chooseSide()
 
 def setDebugVerbosity(group, x=0, y=0):
    global debugVerbosity
    mute()
    if not me.name == 'raohmaru':
-      whisper("This function is only for development purposes")
+      whisper("This function is only for development purposes.")
       return
    n = askInteger('Set debug verbosity to: (-1 to 4)', debugVerbosity)
    if n == None: return
@@ -374,7 +371,7 @@ def setDebugVerbosity(group, x=0, y=0):
    whisper("Debug verbosity is now: {}".format(debugVerbosity))
 
 def debugBackups():
-   backups = eval(getGlobalVariable('Backups'))
+   backups = getGlobalVar('Backups')
    debugNotify("BACKUPS ({})".format(len(backups)))
    for id in backups:
       debugNotify("   {} backups {}".format(Card(id), Card(backups[id])))

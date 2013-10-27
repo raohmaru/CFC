@@ -3,8 +3,8 @@
       xmlns:xsd="http://www.w3.org/2001/XMLSchema"
       name="Card Fighters' Clash"
       id="e3d56d9e-900d-49c6-b6ae-22cbb51be153"
-      octgnVersion="3.1.56.0"
-      version="0.1.1.62"
+      octgnVersion="3.1.55.0"
+      version="0.1.1.66"
       markersize="16"
       tags="capcom snk fighter"
       description="A card game based in the SNK Playmore’s video game SNK vs. Capcom Card Fighters' Clash 2 Expand Edition.
@@ -29,14 +29,14 @@
 		<event name="OnTableLoad" action="checkTwoSidedTable" />
 		<event name="OnGameStart" action="resetAll" />
 		<event name="OnLoadDeck" action="OnLoadDeckEventHandler" />
-		<event name="OnMoveCard" action="onMoveCardEventHandler"/>
-		<event name="OnTurn" action="OnTurnEventHandler"/>
+		<event name="OnMoveCard" action="onMoveCardEventHandler" />
+		<event name="OnTurn" action="OnTurnEventHandler" />
 	</events>
 	
 	<fonts>
-		<font src="fonts/SourceSansPro-Regular_CFC.ttf" size="12" target="context"/>
-		<font src="fonts/SourceSansPro-Regular_CFC.ttf" size="12" target="chat"/>
-		<font src="fonts/SourceSansPro-Regular_CFC.ttf" size="12" target="deckeditor"/>
+		<font src="fonts/SourceSansPro-Regular_CFC.ttf" size="12" target="context" />
+		<font src="fonts/SourceSansPro-Regular_CFC.ttf" size="12" target="chat" />
+		<font src="fonts/SourceSansPro-Regular_CFC.ttf" size="12" target="deckeditor" />
 	</fonts>
 	
 	<proxygen definitionsrc="Proxy/proxydef.xml">
@@ -49,7 +49,7 @@
 	</documents>
 	
 	<globalvariables>
-		<globalvariable name="Backups" value="{}"/>
+		<globalvariable name="Backups" value="{}" />
 	</globalvariables>
 	
 	<card back="Card/back.jpg" front="Card/front.png" width="90" height="126" cornerRadius="3">
@@ -115,12 +115,14 @@
 				<cardaction menu="by 2" shortcut="Ctrl+2" execute="plusBP2" />
 				<cardaction menu="by 3" shortcut="Ctrl+3" execute="plusBP3" />
 				<cardaction menu="by 4" shortcut="Ctrl+4" execute="plusBP4" />
+				<cardaction menu="by 5" shortcut="Ctrl+5" execute="plusBP5" />
 			</cardactions>
 				<cardactions menu="Lower BP...">
 				<cardaction menu="by 1" shortcut="Ctrl+Shift+1" execute="minusBP" />
 				<cardaction menu="by 2" shortcut="Ctrl+Shift+2" execute="minusBP2" />
 				<cardaction menu="by 3" shortcut="Ctrl+Shift+3" execute="minusBP3" />
 				<cardaction menu="by 4" shortcut="Ctrl+Shift+4" execute="minusBP4" />
+				<cardaction menu="by 5" shortcut="Ctrl+Shift+5" execute="minusBP5" />
 			</cardactions>
 			<cardaction menu="Change BP..." shortcut="Ctrl+Shift+0" batchExecute="changeBP" />
 			<cardaction menu="Add markers..." shortcut="Ctrl+0" batchExecute="addMarker" />
@@ -132,6 +134,7 @@
 		<counter name="SP" icon="counters/sp.png" default="0" reset="True" />
 		
 		<globalvariable name="Ring" value="[None,None,None,None]" />
+		<globalvariable name="PhaseIdx" value="0" />
 
 		<hand name="Hand" visibility="me" width="90" height="126" icon="Groups/hand.png">
 			<groupaction menu="Random discard" shortcut="Ctrl+Del" execute="randomDiscard" />

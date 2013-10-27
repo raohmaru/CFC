@@ -31,35 +31,38 @@ def triggerPhaseEvent(phase = 'Start'): # Function which triggers effects at the
          if card.controller == me
          and card.model != TokensDict['Empty Slot'])
       for card in myCards:
-         if not MarkersDict['DoesntUnfreeze'] in card.markers:
-            freeze(card, unfreeze = True, silent = True)
-         removeMarker(card, 'JustEntered')
-         clear(card, silent = True)
-   
-   if phase == 'Draw':
+         if card.Type == 'Character':
+            if not MarkersDict['DoesntUnfreeze'] in card.markers:
+               freeze(card, unfreeze = True, silent = True)
+            removeMarker(card, 'JustEntered')
+            clear(card, silent = True)
+         # Discard any Action or Reaction card left in the table (just in case player forgot to remove them)
+         elif card.Type == 'Action' or card.Type == 'Reaction':
+            discard(card)
+   elif phase == 'Draw':
       if automations['Play']:
          if len(me.Deck) == 0:
             notify("{} has no cards in their deck and therefore can't draw.\n{} wins the game!".format(me,players[1]))
    
-   if phase == 'Counterattack':
+   elif phase == 'Counterattack':
       if automations['Play']:
          united = [card for card in table
             if card.controller == me
             and MarkersDict['UnitedAttack'] in card.markers]
-         payCostSP(-len(united)*UnitedAttackCost, msg = "do a {} United Attack".format('Double' if len(united) == 0 else 'Triple'))
+         payCostSP(-len(united)*UnitedAttackCost, msg = "do a {} United Attack".format("Double" if len(united) == 0 else "Triple"))
    
-   elif phase == 'End':
+   elif phase == 'Cleanup':
       myCards = (card for card in table
          if card.controller == me
          and card.model != TokensDict['Empty Slot'])
       for card in myCards:
          if card.Type == 'Character':
-            # Clears targets, colors, freeze and resets position
+            # Clears targets, colors, freezes characters and resets position
             slotIdx = getSlotIdx(card)
             if slotIdx != -1:
                coords = CardsCoords['Slot'+`slotIdx`]
                alignCard(card, coords[0], coords[1])
-            if card.highlight in [AttackColor, UnitedAttackColor, ActivatedColor]:
+            if MarkersDict['Attack'] in card.markers and card.highlight != AttackNoFreezeColor:
                freeze(card, unfreeze = False, silent = True)
             # Remove script makers
             removeMarker(card, 'Attack')
@@ -78,6 +81,7 @@ def triggerPhaseEvent(phase = 'Start'): # Function which triggers effects at the
 def playAuto(card):
    debugNotify(">>> playAuto()") #Debug
    global charsPlayed
+   phaseIdx = getGlobalVar('PhaseIdx', me)
    
    # Player plays a Character card
    if card.Type == 'Character':
@@ -93,7 +97,7 @@ def playAuto(card):
          information("Character cards can only be played on your Main Phase.")
          return
       # Player has any empty slot in his ring?
-      myRing = eval(me.getGlobalVariable('Ring'))
+      myRing = getGlobalVar('Ring', me)
       if myRing.count(None) == 0:
          information("You need an emply slot in your ring to play a character card.")
          return
@@ -121,7 +125,7 @@ def playAuto(card):
       card.markers[MarkersDict['JustEntered']] = 1
       target[0].target(False)
       myRing[slotIdx] = card._id
-      me.setGlobalVariable('Ring', str(myRing))
+      setGlobalVar('Ring', myRing, me)
       charsPlayed += 1
       debugNotify("{}'s ring: {}".format(me, myRing))
    
@@ -139,7 +143,7 @@ def playAuto(card):
    # Player plays a Reaction card
    elif card.Type == 'Reaction':
       # Check if the card can be legally played
-      if me.isActivePlayer or phaseIdx != 4:
+      if me.isActivePlayer or getGlobalVar('PhaseIdx', players[1]) != 4:
          information("Reaction cards can only be played in enemy's Counter-attack Phase.")
          return
       # Pay SP cost
@@ -157,7 +161,7 @@ def backupAuto(card):
    global backupsPlayed
    
    # Check if the card can be legally played
-   if not me.isActivePlayer or phaseIdx != 3:
+   if not me.isActivePlayer or getGlobalVar('PhaseIdx', me) != 3:
       information("Characters can only be backed-up on your Main Phase.")
       return
    # Only for character cards
@@ -165,7 +169,7 @@ def backupAuto(card):
       information("You can only backup with Character cards.")
       return
    # Check if a valid char has been selected
-   myRing = eval(me.getGlobalVariable('Ring'))
+   myRing = getGlobalVar('Ring', me)
    target = [c for c in table
       if c.targetedBy
       and c.controller == me]
@@ -192,7 +196,7 @@ def backupAuto(card):
       return
    # Check remaining backups
    avlbckps = acceptedBackups.count(card.Subtype)
-   backups = eval(getGlobalVariable('Backups'))
+   backups = getGlobalVar('Backups')
    for id in backups:
       if backups[id] == target._id:
          if Card(id).Subtype == card.Subtype:
@@ -212,7 +216,7 @@ def attackAuto(card):
    debugNotify(">>> attackAuto()") #Debug
    
    # Check if we can attack
-   if not me.isActivePlayer or phaseIdx != 3:
+   if not me.isActivePlayer or getGlobalVar('PhaseIdx', me) != 3:
       information("You can only attack in your Main Phase.")
       return
    # Only for character cards
@@ -221,7 +225,7 @@ def attackAuto(card):
       return
    # Move the card to the attack position
    slotIdx = getSlotIdx(card)
-   myRing = eval(me.getGlobalVariable('Ring'))
+   myRing = getGlobalVar('Ring', me)
    if slotIdx == -1 or myRing[slotIdx] != card._id:
       warning("Please attack with a character in your ring.")
       return
@@ -244,7 +248,7 @@ def unitedAttackAuto(card):
    debugNotify(">>> unitedAttackAuto()") #Debug
    
    # Check if an attacking char has been selected
-   myRing = eval(me.getGlobalVariable('Ring'))
+   myRing = getGlobalVar('Ring', me)
    targets = [c for c in table
       if c.targetedBy
       and c.controller == me
@@ -278,19 +282,36 @@ def blockAuto(card):
    debugNotify(">>> blockAuto()") #Debug
    
    # Check if the card can be legally played
-   if me.isActivePlayer or phaseIdx != 4:
+   if me.isActivePlayer or getGlobalVar('PhaseIdx', players[1]) != 4:
       information("You can only counter-attack in enemy's Counter-attack Phase.")
       return      
    # Only for character cards
    if card.Type != 'Character':
-      information("You can only counter-attack with Character cards.")
+      information("You can only counter-attack with character cards.")
       return
    # Frozen char?
    if card.orientation & Rot90 == Rot90:
       warning("Frozen characters can't counter-attack.")
       return
+   # Check if an attacking enemy char has been selected
+   enemyRing = getGlobalVar('Ring', players[1])
+   targets = [c for c in table
+      if c.targetedBy
+      and c.controller != me
+      and c.Type == 'Character']
+   if len(targets) == 0 or not targets[0]._id in enemyRing or not MarkersDict['Attack'] in targets[0].markers:
+      information("Please select an attacking enemy character.\n(Shift key + Left click on a character).")
+      return
+   target = targets[0]
    
    card.markers[MarkersDict['CounterAttack']] = 1
+   # card.arrow(target)
+   target.target(False)
+   slotIdx = getSlotIdx(target, players[1])
+   if slotIdx != -1:
+      coords = CardsCoords['Attack'+`slotIdx`]
+      alignCard(card, coords[0], coords[1])
+      
    return True
    
 def activateAuto(card):
@@ -305,8 +326,8 @@ def activateAuto(card):
          return
       debugNotify("Trying to activate {}'s ability {} {}'".format(card.Name, pcard.ability_type, pcard.ability_name))
       # Activate [] and /\ only in player's Main Phase
-      if pcard.ability_type in [ParsedCard.ab_instant, ParsedCard.ab_activated] and (not me.isActivePlayer or phaseIdx != 3):
-         information("You can only activate a [ ] or /\\ abilities in your Main Phase.")
+      if pcard.ability_type in [ParsedCard.ab_instant, ParsedCard.ab_activated] and (not me.isActivePlayer or getGlobalVar('PhaseIdx', me) != 3):
+         information("You can only activate [ ] or /\\ abilities in your Main Phase.")
          return
       # /\ abilities
       if pcard.ability_type == ParsedCard.ab_instant:

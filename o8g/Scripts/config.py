@@ -21,12 +21,12 @@
 import re
 
 Phases = [
-   '{} is currently in the Pre-game Setup Phase'.format(me),
-   "It is now {}'s ACTIVATE Phase",
-   "It is now {}'s DRAW Phase",
-   "It is now {}'s MAIN Phase",
-   "It is now {}'s COUNTERATTACK Phase",
-   "It is now {}'s END Phase"
+   '\n=== PRE-GAME SETUP Phase: {} ==='.format(me),
+   "\n=== ACTIVATE Phase: {} ===",
+   "\n=== DRAW Phase: {} ===",
+   "\n=== MAIN Phase: {} ===",
+   "\n=== COUNTERATTACK Phase: {} ===",
+   "\n=== END Phase: {} ==="
 ]
 
 # Highlight Colours
@@ -86,10 +86,9 @@ Yaxis = 'y'
 # Global variables
 #---------------------------------------------------------------------------
 
-playerside = None  # Variable to keep track on which side each player is
-playeraxis = None  # Variable to keep track on which axis the player is
-phaseIdx = 0
-handsize = 5  # Used when automatically refilling your hand
+playerSide = None  # Variable to keep track on which side each player is
+playerAxis = None  # Variable to keep track on which axis the player is
+handSize = 5
 slots = {}  # Dict holding tuples EmptySlot._id / slot number
 charsPlayed = 0  # Num of chars played this turn
 backupsPlayed = 0  # Num of chars backed-up this turn

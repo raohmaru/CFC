@@ -38,7 +38,14 @@ def onMoveCardEventHandler(player, card, fromGroup, toGroup, oldIndex, index, ol
    if card.model == TokensDict['Empty Slot']:
       debugNotify(">>> Empty Slot moved") #Debug
       if toGroup != table:
-         card.moveTo(table)
+         # card.moveTo(table)
+         slotIdx = getSlotIdx(card)
+         if slotIdx > -1:
+            coords = CardsCoords['Slot'+`slotIdx`]
+            cx,cy = card.position
+            if cx != coords[0] or cy != coords[1]:
+               debugNotify("Restoring slot position {}".format(coords))
+               card.moveToTable(coords[0], fixCardY(coords[1]))
       elif oldIndex != index:
          card.setIndex(0)
       # else:
@@ -49,7 +56,7 @@ def onMoveCardEventHandler(player, card, fromGroup, toGroup, oldIndex, index, ol
             # cx,cy = card.position
             # if cx != coords[0] or cy != coords[1]:
                # debugNotify("Moving slot to: {}".format(coords))
-               # card.moveToTable(coords[0], fixY(coords[1]))
+               # card.moveToTable(coords[0], fixCardY(coords[1]))
    # Other card which has been moved out the table
    elif fromGroup == table and toGroup != table:
       if card.Type == 'Character':
@@ -64,9 +71,13 @@ def onMoveCardEventHandler(player, card, fromGroup, toGroup, oldIndex, index, ol
          
 def OnTurnEventHandler(player, turnNumber):
    # Reset some player variables at the start of each turn
-   debugNotify(">>> OnTurnEventHandler()") #Debug
-   global charsPlayed, backupsPlayed
-   charsPlayed = 0  # Num of chars played this turn
-   backupsPlayed = 0  # Num of chars backed-up this turn
-   debugNotify("<<< OnTurnEventHandler()") #Debug
+   debugNotify(">>> OnTurn({}, {})".format(player, turnNumber)) #Debug
+   if player == me:
+      global charsPlayed, backupsPlayed
+      charsPlayed = 0  # Num of chars played this turn
+      backupsPlayed = 0  # Num of chars backed-up this turn
+      setGlobalVar('PhaseIdx', 0, me)
+   else:
+      triggerPhaseEvent('Cleanup')
+   debugNotify("<<< OnTurn()") #Debug
    

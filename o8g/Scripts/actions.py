@@ -22,48 +22,42 @@ import re
 #---------------------------------------------------------------------------
 
 def showCurrentPhase():  # Just say a nice notification about which phase you're on.
-   notify(Phases[phaseIdx].format(me))
+   notify(Phases[getGlobalVar('PhaseIdx', me)].format(me))
 
 def nextPhase(group = table, x = 0, y = 0):  # Function to take you to the next phase.
-   global phaseIdx
-   if phaseIdx >= len(Phases)-1:
-      phaseIdx = 1
+   idx = getGlobalVar('PhaseIdx', me)
+   if idx >= len(Phases)-1:
+      idx = 1
    else:
-      phaseIdx += 1
-   if phaseIdx == 1:   goToActivate()
-   elif phaseIdx == 2: goToDraw()
-   elif phaseIdx == 3: goToMain()
-   elif phaseIdx == 4: goToCounterattack()
-   elif phaseIdx == 5: goToEnd()
-   else: showCurrentPhase()
+      idx += 1
+   if   idx == 1: goToActivate()
+   elif idx == 2: goToDraw()
+   elif idx == 3: goToMain()
+   elif idx == 4: goToCounterattack()
+   elif idx == 5: goToEnd()
 
 def goToActivate(group = table, x = 0, y = 0):
-   global phaseIdx
-   phaseIdx = 1
+   setGlobalVar('PhaseIdx', 1, me)
    showCurrentPhase()
    triggerPhaseEvent('Activate')
 
 def goToDraw(group = table, x = 0, y = 0):
-   global phaseIdx
-   phaseIdx = 2
+   setGlobalVar('PhaseIdx', 2, me)
    showCurrentPhase()
    triggerPhaseEvent('Draw')
 
 def goToMain(group = table, x = 0, y = 0):
-   global phaseIdx
-   phaseIdx = 3
+   setGlobalVar('PhaseIdx', 3, me)
    showCurrentPhase()
    triggerPhaseEvent('Main')
 
 def goToCounterattack(group = table, x = 0, y = 0):
-   global phaseIdx
-   phaseIdx = 4
+   setGlobalVar('PhaseIdx', 4, me)
    showCurrentPhase()
    triggerPhaseEvent('Counterattack')
 
 def goToEnd(group = table, x = 0, y = 0):
-   global phaseIdx
-   phaseIdx = 5
+   setGlobalVar('PhaseIdx', 5, me)
    showCurrentPhase()
    triggerPhaseEvent('End')
 
@@ -76,10 +70,10 @@ def setup(group,x=0,y=0):  # This function is usually the first one the player d
    debugNotify(">>> setup()") #Debug
    global slots
    mute()
-   if not confirm("Are you sure you want to setup for a new game?\n(This action should only be done after a game reset)"):
+   if not confirm("Are you sure you want to setup for a new game?\n(This action should only be done after a game reset.)"):
       return
-   chooseSide() # The classic place where the players choose their side.
-   
+   notify(Phases[0].format(me))
+   chooseSide() # The classic place where the players choose their side.   
    # Adds up to 4 empty slot tokens to the ring
    emptySlotsTokens = [card for card in table
       if card.controller == me
@@ -88,7 +82,7 @@ def setup(group,x=0,y=0):  # This function is usually the first one the player d
       for i in range(4):
          debugNotify("Creating Empty Slot {}".format(i))
          coords = CardsCoords['Slot'+`i`]
-         card = table.create(TokensDict['Empty Slot'], coords[0], fixY(coords[1]), 1, True)
+         card = table.create(TokensDict['Empty Slot'], coords[0], fixCardY(coords[1]), 1, True)
          slots[card._id] = i
    # We ensure that player has loaded a deck
    if len(me.Deck) == 0:
@@ -110,9 +104,9 @@ def randomPick(group, x = 0, y = 0):
    mute()
    card = None
    if group == table:
-      ring = eval(me.getGlobalVariable('Ring'))
+      ring = getGlobalVar('Ring', me)
       if len(players) > 1:
-         ring += eval(players[1].getGlobalVariable('Ring'))
+         ring += getGlobalVar('Ring', players[1])
       ring = filter(None, ring)
       if(len(ring)) > 0:
          card = Card(ring[rnd(0, len(ring)-1)])
@@ -130,8 +124,7 @@ def randomPick(group, x = 0, y = 0):
 def alignCards(group, x = 0, y = 0):
    myCards = (card for card in table
       if card.controller == me
-      and card.Type == 'Character'
-      and card.model != TokensDict['Empty Slot'])
+      and (card.Type == 'Character' or card.model == TokensDict['Empty Slot']))
    for card in myCards:
       slotIdx = getSlotIdx(card)
       if slotIdx != -1:
@@ -233,7 +226,7 @@ def clear(card, x = 0, y = 0, silent = False):
       card.highlight = None
 
 def alignCardAction(card, x = 0, y = 0):
-   if card.Type == 'Character' and card.model != TokensDict['Empty Slot']:
+   if card.Type == 'Character' or card.model == TokensDict['Empty Slot']:
       slotIdx = getSlotIdx(card)
       if slotIdx != -1:
          coords = CardsCoords['Slot'+`slotIdx`]
@@ -350,6 +343,12 @@ def plusBP4(card, x = 0, y = 0):
    
 def minusBP4(card, x = 0, y = 0):
    minusBP(card, count = 4)
+      
+def plusBP5(card, x = 0, y = 0):
+   plusBP(card, count = 5)
+   
+def minusBP5(card, x = 0, y = 0):
+   minusBP(card, count = 5)
 
 def changeBP(cards, x = 0, y = 0):
    mute()
@@ -413,7 +412,7 @@ def randomDiscard(group, x = 0, y = 0):
 
 def refill(group = me.hand):  # Refill the player's hand to its hand size.
    playhand = len(me.hand) # count how many cards there are currently there.
-   if playhand < handsize: drawMany(me.Deck, handsize - playhand, True) # If there's less cards than the handsize, draw from the deck until it's full.
+   if playhand < handSize: drawMany(me.Deck, handSize - playhand, True) # If there's less cards than the handSize, draw from the deck until it's full.
 
 
 #---------------------------------------------------------------------------
@@ -429,7 +428,7 @@ def draw(group = me.Deck):  # Draws one card from the deck into the player's han
 
 def drawMany(group, count = None, silent = False):  # This function draws a variable number cards into the player's hand.
    mute()
-   if count == None: count = askInteger("Draw how many cards?", handsize) # Ask the player how many cards they want.
+   if count == None: count = askInteger("Draw how many cards?", handSize) # Ask the player how many cards they want.
    for i in range(0, count):
       if len(group) > 0:  # If the deck is not empty...
          group.top().moveTo(me.hand)  # ...then move them one by one into their play hand.
