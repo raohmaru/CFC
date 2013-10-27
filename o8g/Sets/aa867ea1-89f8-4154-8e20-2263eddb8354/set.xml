@@ -492,13 +492,13 @@
 			<property name="Backup 3" value="Ninja" />
 			<property name="Number" value="C034" />
 		</card>
-		<card name="Tron Bonne" id="13fac80c-28db-4f90-12f7-c8a0c2b94035">
+		<card name="Tron Bonne" id="ade47462-6551-0d49-d48a-5c377830f589">
 			<property name="Publisher" value="Capcom" />
 			<property name="Team" value="Megaman" />
 			<property name="Type" value="Character" />
 			<property name="Subtype" value="Pilot" />
 			<property name="Rarity" value="C" />
-			<property name="Rules" value="&#164;  HELP FROM KOBUN&#xD;&#xA;At the end of your Draw phase, draw an additional card." />
+			<property name="Rules" value="&#164;  HELP FROM KOBUN&#xD;&#xA;At the beginning of your Draw phase, draw an additional card." />
 			<property name="BP" value="600" />
 			<property name="SP" value="-1" />
 			<property name="Backup 1" value="Swordsman" />
@@ -2872,7 +2872,7 @@
 			<property name="Backup 3" value="Kung-fu" />
 			<property name="Number" value="C204" />
 		</card>
-		<card name="Marco R." id="bd2818b1-7740-8bca-4d57-6a82f8216e69">
+		<card name="Marco R." id="21c10195-a219-c8bb-ad13-907286eac7b0">
 			<property name="Publisher" value="SNK" />
 			<property name="Team" value="Fatal Fury" />
 			<property name="Type" value="Character" />
