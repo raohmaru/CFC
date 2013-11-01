@@ -279,13 +279,13 @@
 		</block>
 		<!-- Empty backups -->
 		<block type="overlay" id="empty_backup1" src="Proxy/Overlays/backup_none.png">
-			<location x="33" y="547" />
+			<location x="34" y="547" />
 		</block>
 		<block type="overlay" id="empty_backup2" src="Proxy/Overlays/backup_none.png">
-			<location x="33" y="589" />
+			<location x="34" y="589" />
 		</block>
 		<block type="overlay" id="empty_backup3" src="Proxy/Overlays/backup_none.png">
-			<location x="33" y="631" />
+			<location x="34" y="631" />
 		</block>
 		<!-- Backup 1 -->
 		<block type="overlay" id="backup1_agent" src="Proxy/Subtypes/Agent.png">
