@@ -121,19 +121,20 @@ def placeCard(card, type = None, action = None, target = None):
    debugNotify(">>> placeCard()") #Debug
    if automations['Play']:
       if type == 'Character' and action != None:
-         coords = (0,0)
+         coords = (0, fixCardY(0))
          if action == 'play':
             coords = CardsCoords['Slot'+`target`]
+            coords = (coords[0], fixCardY(coords[1]))
          elif action == 'backup':
             cx,cy = target.position
             backups = getGlobalVar('Backups')
             numBkps = len([id for id in backups if backups[id] == target._id])
             coords = (cx+CardsCoords['BackupOffset'][0]*numBkps, cy+CardsCoords['BackupOffset'][1]*numBkps)
-         card.moveToTable(coords[0], fixCardY(coords[1]))
+         card.moveToTable(coords[0], coords[1])
       else:
          card.moveToTable(-CardWidth/2, fixCardY(0))
    else:
-      card.moveToTable(0,fixCardY(0))
+      card.moveToTable(0, fixCardY(0))
    debugNotify("<<< placeCard()")
 
 def freeSlot(card):
