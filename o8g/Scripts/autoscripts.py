@@ -39,6 +39,7 @@ def triggerPhaseEvent(phase = 'Start'): # Function which triggers effects at the
          # Discard any Action or Reaction card left in the table (just in case player forgot to remove them)
          elif card.Type == 'Action' or card.Type == 'Reaction':
             discard(card)
+   
    elif phase == 'Draw':
       if automations['Play']:
          if len(me.Deck) == 0:
@@ -51,6 +52,15 @@ def triggerPhaseEvent(phase = 'Start'): # Function which triggers effects at the
             and MarkersDict['UnitedAttack'] in card.markers]
          payCostSP(-len(united)*UnitedAttackCost, msg = "do a {} United Attack".format("Double" if len(united) == 0 else "Triple"))
    
+   elif phase == 'End':
+      myCards = (card for card in table
+         if card.controller == me
+         and card.model != TokensDict['Empty Slot'])
+      for card in myCards:
+         if card.Type == 'Character':
+            if MarkersDict['Attack'] in card.markers and card.highlight != AttackNoFreezeColor:
+               freeze(card, unfreeze = False, silent = True)
+   
    elif phase == 'Cleanup':
       myCards = (card for card in table
          if card.controller == me
@@ -62,8 +72,6 @@ def triggerPhaseEvent(phase = 'Start'): # Function which triggers effects at the
             if slotIdx != -1:
                coords = CardsCoords['Slot'+`slotIdx`]
                alignCard(card, coords[0], coords[1])
-            if MarkersDict['Attack'] in card.markers and card.highlight != AttackNoFreezeColor:
-               freeze(card, unfreeze = False, silent = True)
             # Remove script makers
             removeMarker(card, 'Attack')
             removeMarker(card, 'UnitedAttack')
@@ -229,6 +237,15 @@ def attackAuto(card):
    if slotIdx == -1 or myRing[slotIdx] != card._id:
       warning("Please attack with a character in your ring.")
       return
+   # Cancels the character's attack if it's already attacking
+   if MarkersDict['Attack'] in card.markers:
+      removeMarker(card, 'Attack')
+      removeMarker(card, 'UnitedAttack')
+      clear(card, silent = True)
+      coords = CardsCoords['Slot'+`slotIdx`]
+      alignCard(card, coords[0], coords[1])
+      notify('{} cancels the attack with {}'.format(me, card))  
+      return
    # Char just entered the ring?
    if MarkersDict['JustEntered'] in card.markers:
       if not confirm("Characters that just entered the ring can't attack this turn.\nProceed anyway?"):
@@ -271,10 +288,12 @@ def unitedAttackAuto(card):
       if not confirm("You do not seem to have enough SP to do a {} United Attack (it costs {}).\nProceed anyway?".format(type, cost)):
          return
    
-   if not attackAuto(card): return
+   atk = attackAuto(card)
+   if atk != True: return atk
    
    card.markers[MarkersDict['UnitedAttack']] = 1
    card.arrow(target)
+   target.target(False)
    
    return target
 
@@ -289,9 +308,23 @@ def blockAuto(card):
    if card.Type != 'Character':
       information("You can only counter-attack with character cards.")
       return
+   # Move the card to the attack position
+   slotIdx = getSlotIdx(card)
+   myRing = getGlobalVar('Ring', me)
+   if slotIdx == -1 or myRing[slotIdx] != card._id:
+      warning("Please counter-attack with a character in your ring.")
+      return
    # Frozen char?
    if card.orientation & Rot90 == Rot90:
       warning("Frozen characters can't counter-attack.")
+      return
+   # Cancels the character's counter-attack if it's already blocking
+   if MarkersDict['CounterAttack'] in card.markers:
+      removeMarker(card, 'CounterAttack')
+      clear(card, silent = True)
+      coords = CardsCoords['Slot'+`slotIdx`]
+      alignCard(card, coords[0], coords[1])
+      notify('{} cancels the counter-attack with {}'.format(me, card))  
       return
    # Check if an attacking enemy char has been selected
    enemyRing = getGlobalVar('Ring', players[1])
@@ -303,6 +336,10 @@ def blockAuto(card):
       information("Please select an attacking enemy character.\n(Shift key + Left click on a character).")
       return
    target = targets[0]
+   # Block the first char in a United Attack
+   if MarkersDict['UnitedAttack'] in target.markers:
+      information("Please select the first attacking character of the United Attack.")
+      return
    
    card.markers[MarkersDict['CounterAttack']] = 1
    # card.arrow(target)
@@ -312,7 +349,7 @@ def blockAuto(card):
       coords = CardsCoords['Attack'+`slotIdx`]
       alignCard(card, coords[0], coords[1])
       
-   return True
+   return target
    
 def activateAuto(card):
    debugNotify(">>> activateAuto()") #Debug
@@ -349,7 +386,7 @@ def activateAuto(card):
       if pcard.ability_type == ParsedCard.ab_auto:
          # Nor in a United Attack
          if MarkersDict['UnitedAttack'] in card.markers:
-            warning("Can't activate ( ) abilities of characters in a United Attack.")
+            warning("Can't activate ( ) abilities of characters which joined a United Attack.")
             return
       
       # Activate the ability

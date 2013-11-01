@@ -4,7 +4,7 @@
       name="Card Fighters' Clash"
       id="e3d56d9e-900d-49c6-b6ae-22cbb51be153"
       octgnVersion="3.1.55.0"
-      version="0.1.1.66"
+      version="0.1.1.71"
       markersize="16"
       tags="capcom snk fighter"
       description="A card game based in the SNK Playmore’s video game SNK vs. Capcom Card Fighters' Clash 2 Expand Edition.
@@ -116,6 +116,7 @@
 				<cardaction menu="by 3" shortcut="Ctrl+3" execute="plusBP3" />
 				<cardaction menu="by 4" shortcut="Ctrl+4" execute="plusBP4" />
 				<cardaction menu="by 5" shortcut="Ctrl+5" execute="plusBP5" />
+				<cardaction menu="by X" shortcut="Ctrl+0" execute="plusBPX" />
 			</cardactions>
 				<cardactions menu="Lower BP...">
 				<cardaction menu="by 1" shortcut="Ctrl+Shift+1" execute="minusBP" />
@@ -123,9 +124,10 @@
 				<cardaction menu="by 3" shortcut="Ctrl+Shift+3" execute="minusBP3" />
 				<cardaction menu="by 4" shortcut="Ctrl+Shift+4" execute="minusBP4" />
 				<cardaction menu="by 5" shortcut="Ctrl+Shift+5" execute="minusBP5" />
+				<cardaction menu="by X" shortcut="Ctrl+Shift+0" execute="minusBPX" />
 			</cardactions>
-			<cardaction menu="Change BP..." shortcut="Ctrl+Shift+0" batchExecute="changeBP" />
-			<cardaction menu="Add markers..." shortcut="Ctrl+0" batchExecute="addMarker" />
+			<cardaction menu="Change BP..." shortcut="Ctrl+Alt+0" batchExecute="changeBP" />
+			<cardaction menu="Add markers..." shortcut="Ctrl+M" batchExecute="addMarker" />
 		</cardactions>
 	</table>
 	
@@ -152,7 +154,7 @@
 		<group name="Deck" visibility="none" width="90" height="126" icon="Groups/deck.png">
 			<groupaction menu="Draw" shortcut="Ctrl+D" default="True" execute="draw" />
 			<groupaction menu="Draw X cards" shortcut="Ctrl+Shift+D" execute="drawMany" />
-			<groupaction menu="Trash X cards" execute="trash" />
+			<groupaction menu="Trash X cards" shortcut="Ctrl+Shift+T" execute="trash" />
 			<groupaction menu="Shuffle" shortcut="Ctrl+S" execute="shuffle" />
 			<groupaction menu="Reveal/Hide top card" shortcut="Ctrl+R" execute="revealTopDeck" />
 			<groupactions menu="Move all cards to...">

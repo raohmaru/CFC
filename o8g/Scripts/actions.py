@@ -174,10 +174,15 @@ def unitedAttack(card, x = 0, y = 0):
 	
 def block(card, x = 0, y = 0):
    mute()
+   text = 'with {}'.format(card)
    if automations['Play']:
-      if not blockAuto(card): return
+      target = blockAuto(card)
+      if target:
+         text = '{} '.format(target) + text
+      else:
+         return
    card.highlight = BlockColor
-   notify('{} counter-attacks with {}'.format(me, card))
+   notify('{} counter-attacks {}'.format(me, text))
 
 def activate(card, x = 0, y = 0):
    debugNotify(">>> activate()") #Debug
@@ -349,6 +354,16 @@ def plusBP5(card, x = 0, y = 0):
    
 def minusBP5(card, x = 0, y = 0):
    minusBP(card, count = 5)
+      
+def plusBPX(card, x = 0, y = 0):
+   n = askInteger("Raise BP by...", 1)
+   if n == None: return
+   plusBP(card, count = n)
+   
+def minusBPX(card, x = 0, y = 0):
+   n = askInteger("Lower BP by...", 1)
+   if n == None: return
+   minusBP(card, count = n)
 
 def changeBP(cards, x = 0, y = 0):
    mute()
