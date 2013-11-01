@@ -30,7 +30,7 @@
 			<property name="Backup 3" value="Warrior" />
 			<property name="Number" value="C001" />
 		</card>
-		<card name="Ryu no Senshi" id="ac20168a-9648-178f-53c6-11c577cea28d">
+		<card name="Ryu no Senshi" id="18748b17-0327-2747-9c76-1ad6aafdec1e">
 			<property name="Publisher" value="Capcom" />
 			<property name="Team" value="Breath of Fire" />
 			<property name="Type" value="Character" />
@@ -44,7 +44,7 @@
 			<property name="Backup 3" value="" />
 			<property name="Number" value="C002" />
 		</card>
-		<card name="Baby Head" id="a943a297-4d1c-b8e1-5508-bf6e185e8e40">
+		<card name="Baby Head" id="c091390e-bd51-9a63-227a-684a00c604d0">
 			<property name="Publisher" value="Capcom" />
 			<property name="Team" value="Captain Commando" />
 			<property name="Type" value="Character" />
@@ -58,7 +58,7 @@
 			<property name="Backup 3" value="Avatar" />
 			<property name="Number" value="C003" />
 		</card>
-		<card name="Cap. Commando" id="9744f8e4-7ea2-1050-514a-fa10011616a3">
+		<card name="Cap. Commando" id="33694802-feb4-f2b2-651d-567d881b029e">
 			<property name="Publisher" value="Capcom" />
 			<property name="Team" value="Captain Commando" />
 			<property name="Type" value="Character" />
@@ -72,7 +72,7 @@
 			<property name="Backup 3" value="Pilot" />
 			<property name="Number" value="C004" />
 		</card>
-		<card name="Ginzu Ninja" id="bcb0ac00-07ef-e157-8383-45c9012f08d0">
+		<card name="Ginzu Ninja" id="bfa00488-2587-e14b-9e0c-bc18d2148780">
 			<property name="Publisher" value="Capcom" />
 			<property name="Team" value="Captain Commando" />
 			<property name="Type" value="Character" />
@@ -86,7 +86,7 @@
 			<property name="Backup 3" value="Ninja" />
 			<property name="Number" value="C005" />
 		</card>
-		<card name="Mack Knife" id="8aa4b02c-6708-0f71-4076-0935d0d4f206">
+		<card name="Mack Knife" id="f646ccad-8adf-4805-1f54-621307062cc3">
 			<property name="Publisher" value="Capcom" />
 			<property name="Team" value="Captain Commando" />
 			<property name="Type" value="Character" />
@@ -212,13 +212,13 @@
 			<property name="Backup 3" value="" />
 			<property name="Number" value="C014" />
 		</card>
-		<card name="Guy" id="af0e6088-3431-aefe-e4e0-a439b5e40218">
+		<card name="Guy" id="f01ad6f2-e2c0-7ec3-c01c-a317510aa39b">
 			<property name="Publisher" value="Capcom" />
 			<property name="Team" value="Final Fight" />
 			<property name="Type" value="Character" />
 			<property name="Subtype" value="Ninja" />
 			<property name="Rarity" value="B" />
-			<property name="Rules" value="&#164;  HAYA-GAKE&#xD;&#xA;This character can&apos;t be countered unless enemy has two or more characters." />
+			<property name="Rules" value="&#164;  HAYA-GAKE&#xD;&#xA;This character can&apos;t be countered unless enemy has two or more characters in his ring." />
 			<property name="BP" value="500" />
 			<property name="SP" value="1" />
 			<property name="Backup 1" value="Fighter" />
@@ -282,7 +282,7 @@
 			<property name="Backup 3" value="" />
 			<property name="Number" value="C019" />
 		</card>
-		<card name="Red Arremer" id="7063d5f5-5ac7-7148-04cb-26bd3dbee1ec">
+		<card name="Red Arremer" id="8426e91e-006c-8033-4ffd-146f4814dfa0">
 			<property name="Publisher" value="Capcom" />
 			<property name="Team" value="Ghost N Goblins" />
 			<property name="Type" value="Character" />
@@ -828,7 +828,7 @@
 			<property name="Backup 3" value="" />
 			<property name="Number" value="C058" />
 		</card>
-		<card name="Hinata" id="12db5040-ae82-493d-0c9c-58c14e315fc6">
+		<card name="Hinata" id="a1f515f0-e91c-c20c-4c17-b18ba0c0e885">
 			<property name="Publisher" value="Capcom" />
 			<property name="Team" value="Rival School" />
 			<property name="Type" value="Character" />
@@ -1038,7 +1038,7 @@
 			<property name="Backup 3" value="Student" />
 			<property name="Number" value="C073" />
 		</card>
-		<card name="Zaki" id="abc64624-92be-1ae1-5167-4a300812d418">
+		<card name="Zaki" id="12330bf2-99b0-410c-b83e-4a44c2eb5861">
 			<property name="Publisher" value="Capcom" />
 			<property name="Team" value="Rival School" />
 			<property name="Type" value="Character" />
@@ -2284,13 +2284,13 @@
 			<property name="Backup 3" value="Soldier" />
 			<property name="Number" value="C162" />
 		</card>
-		<card name="Kasumi" id="0a803936-5e6f-4c26-3181-a83c9a01011b">
+		<card name="Kasumi" id="16b9d661-6845-c93e-bce0-6e8001f00201">
 			<property name="Publisher" value="SNK" />
 			<property name="Team" value="Art of Fighting" />
 			<property name="Type" value="Character" />
 			<property name="Subtype" value="Aikido" />
 			<property name="Rarity" value="C" />
-			<property name="Rules" value="&#163;  OVERLAP CRUNCH&#xD;&#xA;Discard a card. Deals 200 damage points to enemy." />
+			<property name="Rules" value="&#163;  OVERLAP CRUNCH&#xD;&#xA;Discard a card. Deals 200 damage points to enemy or an enemy character." />
 			<property name="BP" value="400" />
 			<property name="SP" value="2" />
 			<property name="Backup 1" value="Kickboxer" />
@@ -2858,7 +2858,7 @@
 			<property name="Backup 3" value="Monk" />
 			<property name="Number" value="C203" />
 		</card>
-		<card name="Mai" id="9ade877e-64e1-03d0-16a9-13261c1a5324">
+		<card name="Mai" id="0f63f67d-38a1-f64e-a319-cd1c8c2f46c2">
 			<property name="Publisher" value="SNK" />
 			<property name="Team" value="Fatal Fury" />
 			<property name="Type" value="Character" />
@@ -2900,7 +2900,7 @@
 			<property name="Backup 3" value="" />
 			<property name="Number" value="C206" />
 		</card>
-		<card name="Rick" id="0c556e75-1b88-8952-6c4a-aa0a1083aea1">
+		<card name="Rick" id="e1823dff-381f-fdd4-b525-f2bb097e9768">
 			<property name="Publisher" value="SNK" />
 			<property name="Team" value="Fatal Fury" />
 			<property name="Type" value="Character" />
