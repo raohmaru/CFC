@@ -5,6 +5,6 @@ Card Fighters' Clash is a card game for two players from SNK Playmore’s video ga
 
 This is a game definition plugin for the free card game engine [Online Card and Tabletop Gaming Network (OCTGN)](http://octgn.net/). This plugin allows online playing and creation of CFC decks.
 
-The python script is based on the great [Doomtown CCG definition](https://github.com/db0/Doomtown-for-OCTGN) by Konstantine Thoukydides.
+The python scripts are based on the great game definitions by [db0](https://github.com/db0).
 
 Released under the GNU General Public License version 3.
