@@ -36,38 +36,36 @@ def onMoveCardEventHandler(player, card, fromGroup, toGroup, oldIndex, index, ol
    if card.controller != me: return
    # Card is an Empty Slot token
    if card.model == TokensDict['Empty Slot']:
-      debugNotify(">>> Empty Slot moved") #Debug
-      if toGroup != table:
-         # card.moveTo(table)
-         slotIdx = getSlotIdx(card)
-         if slotIdx > -1:
-            coords = CardsCoords['Slot'+`slotIdx`]
-            cx,cy = card.position
-            if cx != coords[0] or cy != coords[1]:
-               debugNotify("Restoring slot position {}".format(coords))
-               card.moveToTable(coords[0], fixCardY(coords[1]))
-      elif oldIndex != index:
-         card.setIndex(0)
-      # else:
-         # debugNotify("Slot number: {}".format(slots.get(card._id, 0)))
-         # slotIdx = getSlotIdx(card)
-         # if slotIdx > -1:
-            # coords = CardsCoords['Slot'+`slotIdx`]
-            # cx,cy = card.position
-            # if cx != coords[0] or cy != coords[1]:
-               # debugNotify("Moving slot to: {}".format(coords))
-               # card.moveToTable(coords[0], fixCardY(coords[1]))
+      if not isScriptMove:
+         debugNotify(">>> Empty Slot moved") #Debug
+         if toGroup != table:
+            # card.moveTo(table)
+            slotIdx = getSlotIdx(card)
+            if slotIdx > -1:
+               coords = CardsCoords['Slot'+`slotIdx`]
+               cx,cy = card.position
+               if cx != coords[0] or cy != coords[1]:
+                  debugNotify("Restoring slot position {}".format(coords))
+                  card.moveToTable(coords[0], fixCardY(coords[1]))
+         elif oldIndex != index:
+            card.setIndex(0)
+         # else:
+            # debugNotify("Slot number: {}".format(slots.get(card._id, 0)))
+            # slotIdx = getSlotIdx(card)
+            # if slotIdx > -1:
+               # coords = CardsCoords['Slot'+`slotIdx`]
+               # cx,cy = card.position
+               # if cx != coords[0] or cy != coords[1]:
+                  # debugNotify("Moving slot to: {}".format(coords))
+                  # card.moveToTable(coords[0], fixCardY(coords[1]))
    # Other card which has been moved out the table
    elif fromGroup == table and toGroup != table:
       if card.Type == 'Character':
          clearAttachLinks(card)
          freeSlot(card)
-   # Always in front of the Empty Slot tokens
-   elif oldIndex != index and index == 0:
-      if len(players) > 1:
-         card.setIndex(8)
-      else:
-         card.setIndex(4)
+   # Always in front of any Empty Slot tokens
+   elif oldIndex != index and index < NumSlots*len(players):
+      card.setIndex(NumSlots*len(players))
          
 def OnTurnEventHandler(player, turnNumber):
    # Reset some player variables at the start of each turn

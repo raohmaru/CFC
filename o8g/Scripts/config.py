@@ -70,6 +70,7 @@ Regexps = dict(
 )
 
 # Rules
+NumSlots = 4
 CharsPerTurn = 1
 BackupsPerTurn = 1
 BackupRaiseBP = 3
@@ -98,5 +99,5 @@ cards = {}  # Dictionary holding all parsed cards
 automations = {
    'Play'     : True, # Automatically trigger game effetcs and card effects when playing cards
    'Phase'    : True, # Automatically trigger phase related events, and effects from cards in play
-   'WinForms' : True # Game will use the custom Windows Forms for displaying multiple-choice and info pop-ups
+   'WinForms' : True # Game will use the custom Windows Forms for displaying info pop-ups
 }

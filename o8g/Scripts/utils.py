@@ -187,7 +187,7 @@ def getParsedCard(card):
    debugNotify(">>> getParsedCard()") #Debug
    if not card.model in cards:
       cards[card.model] = ParsedCard(card)
-   debugNotify("Retreiving parsed card for model {} ({})".format(card.model, card.Name))
+   debugNotify("Retrieved parsed card for model {} ({})".format(card.model, card.Name))
    return cards.get(card.model)
       
 class ParsedCard():
@@ -201,7 +201,7 @@ class ParsedCard():
    
       ability = Regexps['Ability'].match(card.Rules)
       if ability:
-         debugNotify("Parsing {}".format(ability.group(0)))
+         debugNotify("Parsing  {}".format(ability.group(0)))  # Causes weird IronPython error
          self.ability = ability.group(0)
          self.ability_type = ability.group(1)
          self.ability_name = ability.group(2)
@@ -238,6 +238,8 @@ def removeMarker(card, mkname):
 
 def modSP(count = 1, silent = False): # A function to modify the players SP counter. Can also notify.
    count = num(count) # We need to make sure we get an integer or we will fail horribly. OCTGN doesn't seem to respect its own definitions.
+   if me.SP+count < 0:
+      count = -me.SP  # SP can't be less than 0
    me.SP += count # Now increase the SP by the amount passed to us.
    if not silent and count != 0:
       action = "gains" if count >= 0 else "loses"
@@ -336,6 +338,8 @@ def getAttachmets(card):
 #------------------------------------------------------------------------------
 
 def debugNotify(msg = 'Debug Ping!', level = 2):
+   if isinstance(msg, (int, long, float)):
+      msg = str(msg)
    if not re.search(r'<<<',msg) and not re.search(r'>>>',msg):
       msg = '#' * level + ' ' + msg  # We add extra hashes at the start of debug messages equal to the level of the debug, to make them stand out more
    else:

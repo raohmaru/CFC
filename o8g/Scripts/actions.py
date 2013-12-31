@@ -73,13 +73,13 @@ def setup(group,x=0,y=0):  # This function is usually the first one the player d
    if not confirm("Are you sure you want to setup for a new game?\n(This action should only be done after a game reset.)"):
       return
    notify(Phases[0].format(me))
-   chooseSide() # The classic place where the players choose their side.   
+   chooseSide() # The classic place where the players choose their side
    # Adds up to 4 empty slot tokens to the ring
    emptySlotsTokens = [card for card in table
       if card.controller == me
       and card.model == TokensDict['Empty Slot']]
    if len(emptySlotsTokens) == 0:
-      for i in range(4):
+      for i in range(NumSlots):
          debugNotify("Creating Empty Slot {}".format(i))
          coords = CardsCoords['Slot'+`i`]
          card = table.create(TokensDict['Empty Slot'], coords[0], fixCardY(coords[1]), 1, True)
@@ -317,6 +317,9 @@ def discardAll(group, x = 0, y = 0):
 # Marker actions
 #---------------------------------------------------------------------------
 
+# --------------
+# Characters' BP
+# --------------
 def plusBP(card, x = 0, y = 0, silent = False, count = 1):
    mute()
    card.markers[MarkersDict['HP']] += count
@@ -331,35 +334,29 @@ def minusBP(card, x = 0, y = 0, silent = False, count = 1):
    if not silent:
       notify("{} lowers {}'s BP by {}.".format(me, card, count))
       
-def plusBP2(card, x = 0, y = 0):
-   plusBP(card, count = 2)
-   
-def minusBP2(card, x = 0, y = 0):
-   minusBP(card, count = 2)
-      
-def plusBP3(card, x = 0, y = 0):
-   plusBP(card, count = 3)
-   
-def minusBP3(card, x = 0, y = 0):
-   minusBP(card, count = 3)
-      
-def plusBP4(card, x = 0, y = 0):
-   plusBP(card, count = 4)
-   
-def minusBP4(card, x = 0, y = 0):
-   minusBP(card, count = 4)
-      
-def plusBP5(card, x = 0, y = 0):
-   plusBP(card, count = 5)
-   
-def minusBP5(card, x = 0, y = 0):
-   minusBP(card, count = 5)
-      
+def plusBP2(card, x = 0, y = 0): plusBP(card, count = 2)
+def plusBP3(card, x = 0, y = 0): plusBP(card, count = 3)
+def plusBP4(card, x = 0, y = 0): plusBP(card, count = 4)
+def plusBP5(card, x = 0, y = 0): plusBP(card, count = 5)
+def plusBP6(card, x = 0, y = 0): plusBP(card, count = 6)
+def plusBP7(card, x = 0, y = 0): plusBP(card, count = 7)
+def plusBP8(card, x = 0, y = 0): plusBP(card, count = 8)
+def plusBP9(card, x = 0, y = 0): plusBP(card, count = 9)
+
 def plusBPX(card, x = 0, y = 0):
    n = askInteger("Raise BP by...", 1)
    if n == None: return
    plusBP(card, count = n)
    
+def minusBP2(card, x = 0, y = 0): minusBP(card, count = 2)
+def minusBP3(card, x = 0, y = 0): minusBP(card, count = 3)
+def minusBP4(card, x = 0, y = 0): minusBP(card, count = 4)
+def minusBP5(card, x = 0, y = 0): minusBP(card, count = 5)
+def minusBP6(card, x = 0, y = 0): minusBP(card, count = 6)
+def minusBP7(card, x = 0, y = 0): minusBP(card, count = 7)
+def minusBP8(card, x = 0, y = 0): minusBP(card, count = 8)
+def minusBP9(card, x = 0, y = 0): minusBP(card, count = 9)
+
 def minusBPX(card, x = 0, y = 0):
    n = askInteger("Lower BP by...", 1)
    if n == None: return
@@ -376,6 +373,39 @@ def addMarker(cards, x = 0, y = 0):  # A simple function to manually add any of 
    for card in cards:  # Then go through their cards and add those markers to each.
       card.markers[marker] += quantity
       notify("{} adds {} {} counter to {}.".format(me, quantity, marker[0], card))
+
+# -----------
+# Players' SP
+# -----------
+def plusSP(group, x = 0, y = 0): modSP(1)
+def plusSP2(group, x = 0, y = 0): modSP(2)
+def plusSP3(group, x = 0, y = 0): modSP(3)
+def plusSP4(group, x = 0, y = 0): modSP(4)
+def plusSP5(group, x = 0, y = 0): modSP(5)
+def plusSP6(group, x = 0, y = 0): modSP(6)
+def plusSP7(group, x = 0, y = 0): modSP(7)
+def plusSP8(group, x = 0, y = 0): modSP(8)
+def plusSP9(group, x = 0, y = 0): modSP(9)
+
+def plusSPX(group, x = 0, y = 0):
+   n = askInteger("Gain SP by...", 1)
+   if n == None: return
+   modSP(n)
+   
+def minusSP(group, x = 0, y = 0): modSP(-1)
+def minusSP2(group, x = 0, y = 0): modSP(-2)
+def minusSP3(group, x = 0, y = 0): modSP(-3)
+def minusSP4(group, x = 0, y = 0): modSP(-4)
+def minusSP5(group, x = 0, y = 0): modSP(-5)
+def minusSP6(group, x = 0, y = 0): modSP(-6)
+def minusSP7(group, x = 0, y = 0): modSP(-7)
+def minusSP8(group, x = 0, y = 0): modSP(-8)
+def minusSP9(group, x = 0, y = 0): modSP(-9)
+
+def minusSPX(group, x = 0, y = 0):
+   n = askInteger("Lose SP by...", 1)
+   if n == None: return
+   modSP(-n)
 
 
 #---------------------------------------------------------------------------
