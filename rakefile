@@ -4,9 +4,9 @@
 
 require 'rake/clean'
 
-OCTGN_dir = "D:/MISDOC~1/Octgn"
+OCTGN_dir = "D:/Documentos/OCTGN"
 
-CLOBBER.include ["o8g/*.o8g", "#{OCTGN_dir}/LocalFeed/*.nupkg"]
+CLOBBER.include ["o8g/*.o8g", "#{OCTGN_dir}/LocalFeed/Card*.nupkg"]
 
 task :default => [:build]
 

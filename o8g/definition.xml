@@ -4,16 +4,17 @@
       name="Card Fighters' Clash"
       id="e3d56d9e-900d-49c6-b6ae-22cbb51be153"
       octgnVersion="3.1.55.0"
-      version="0.1.1.92"
+      version="0.1.1.93"
       markersize="16"
       tags="capcom snk fighter"
       description="A card game based in the SNK Playmore’s video game SNK vs. Capcom Card Fighters' Clash 2 Expand Edition.
-      &#xd;Automation rank: B
+      &#xd;&#xd;Automation rank: B
       &#xd;(This game contains play and event automations to play faster with less mistakes.)"
       setsurl="http://raohmaru.com/"
       gameurl="http://raohmaru.com/"
       authors="raohmaru"
       iconurl="https://raw.github.com/raohmaru/CFC/master/cfc_logo.png"
+      scriptVersion="3.1.0.1"
 	  usetwosidedtable="True">
 	
 	<scripts>
@@ -28,10 +29,14 @@
 	<events>
 		<event name="OnTableLoad" action="checkTwoSidedTable" />
 		<event name="OnGameStart" action="resetAll" />
-		<event name="OnLoadDeck" action="OnLoadDeckEventHandler" />
-		<event name="OnMoveCard" action="onMoveCardEventHandler" />
-		<event name="OnTurn" action="OnTurnEventHandler" />
+		<event name="OnLoadDeck"  action="onLoadDeckEventHandler" />
+		<event name="OnMoveCard"  action="onMoveCardEventHandler" />
+		<event name="OnTurn"      action="onTurnEventHandler" />
 	</events>
+	
+	<!-- <sounds>
+		<sound name="tim" src="sounds/soundfile.mp3"/>
+	</sounds> -->
 	
 	<fonts>
 		<font src="fonts/SourceSansPro-Regular_CFC.ttf" size="12" target="context" />
@@ -43,11 +48,15 @@
 	<proxygen definitionsrc="Proxy/proxydef.xml">
 	</proxygen>
 	
-	<documents>
-		<!-- <document name="Rulebook" icon="Documents/Manual.png" src="Documents/DoomtownRules.htm" />
+	<!-- <documents>
+		<document name="Rulebook" icon="Documents/Manual.png" src="Documents/DoomtownRules.htm" />
 		<document name="FAQ" icon="Documents/Manual.png" src="Documents/Doomtown-FAQ-AEG.htm" />
-		<document name="Accumulated Rulings" icon="Documents/Manual.png" src="Documents/DoomtownAccumulatedRulings.htm" /> -->
-	</documents>
+		<document name="Accumulated Rulings" icon="Documents/Manual.png" src="Documents/DoomtownAccumulatedRulings.htm" />
+	</documents> -->
+
+	<gameModes>
+		<gameMode name="Standard" shortDescription="" image="Art/standard.jpg" playerCount="2" />
+	</gameModes>
 	
 	<globalvariables>
 		<globalvariable name="Backups" value="{}" />

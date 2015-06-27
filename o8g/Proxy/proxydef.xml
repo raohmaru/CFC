@@ -1544,6 +1544,11 @@
 					</default>
 				</switch>
 			</conditional>
+			<!-- Art crop for the card -->
+			<artoverlay>
+				<location x="36" y="36" />
+				<size height="606" width="678" />
+			</artoverlay>
 		</overlayblocks>
 		
 		<textblocks>
