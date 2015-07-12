@@ -24,42 +24,43 @@ import re, time
 def num(s):
 # This function reads the value of a card and returns an integer. For some reason integer values of cards are not processed correctly
 # see bug 373 https://octgn.16bugs.com/projects/3602/bugs/188805
-# This function will also return 0 if a non-integer or an empty value is provided to it as it is required to avoid crashing your functions.
-#   if s == '+*' or s == '*': return 0
    if not s: return 0
    try:
       return int(s)
    except ValueError:
       return 0
 
-def delayed_whisper(text): # Because whispers for some reason execute before notifys
+
+def delayedWhisper(text): # Because whispers for some reason execute before notifys
    rnd(1,10)
    whisper(text)
+
 
 def chooseSide(): # Called from many functions to check if the player has chosen a side for this game.
    mute()
    global playerSide, playerAxis
-   if playerSide == None:  # Has the player selected a side yet? If not, then...
-      if Table.isTwoSided():
-         playerAxis = Yaxis
-         if me.hasInvertedTable():
-            playerSide = -1
-         else:
-            playerSide = 1
+   if playerSide is not None:  # Has the player selected a side yet? If not, then...
+      return;
+   if Table.isTwoSided():
+      playerAxis = Yaxis
+      if me.hasInvertedTable():
+         playerSide = -1
       else:
-         playerAxis = Yaxis
-         if confirm("Will you play on the bottom side?"): # Ask which side they want
-            playerSide = 1 # This is used to swap between the two halves of the X axis of the play field. Positive is on the right.
-         else:
-            playerSide = -1 # Negative is on the left.
+         playerSide = 1
+   else:
+      playerAxis = Yaxis
+      if confirm("Will you play on the bottom side?"): # Ask which side they want
+         playerSide = 1 # This is used to swap between the two halves of the X axis of the play field. Positive is on the right.
+      else:
+         playerSide = -1 # Negative is on the left.
+
 
 def resetAll(): # Clears all the global variables in order to start a new game.
    # Import all our global variables and reset them.
-   global playerSide, handSize, debugVerbosity, slots
+   global playerSide, handSize, debugVerbosity
    debugNotify(">>> resetAll()") #Debug
    playerSide = None
-   handSize = 5
-   slots = {}
+   handSize = HandSize
    me.HP = 30  # Wipe the counters
    me.SP = 0
    backups = getGlobalVar('Backups')
@@ -69,26 +70,33 @@ def resetAll(): # Clears all the global variables in order to start a new game.
    elif debugVerbosity != -1 and confirm("Reset Debug Verbosity?"): debugVerbosity = -1
    debugNotify("<<< resetAll()") #Debug
 
+
 def clearAll(allPlayers = False):
    notify("{} clears all targets and highlights.".format(me))
    for card in table:
       if allPlayers or card.controller == me:
          clear(card, silent = True)
 
-def switchAutomation(type, command = None):
-   debugNotify(">>> switchAutomation({})".format(type)) #Debug
+
+def switchAutomation(name, command = None):
+   debugNotify(">>> switchAutomation({})".format(name)) #Debug
+
    global automations
-   if not type in automations:
+   if not name in automations:
       return
    if command == None:
-      automations[type] = not automations[type]
+      automations[name] = not automations[name]
    else:
-      automations[type] = command
-   notify("--> {}'s {} automations are {}.".format(me, type, automations[type]))
+      automations[name] = command
+   notify("--> {}'s {} automations are {}.".format(me, name, automations[name]))
+
+   debugNotify("<<< switchAutomation({})".format(name)) #Debug
+
 
 def rollDie(num):
    n = rnd(1, num)
    notify("{} rolls {} on a {}-sided die.".format(me, n, num))
+
 
 def getGlobalVar(name, player = None):
    if player:
@@ -96,11 +104,17 @@ def getGlobalVar(name, player = None):
    else:
       return eval(getGlobalVariable(name))
 
+
 def setGlobalVar(name, value, player = None):
    if player:
       player.setGlobalVariable(name, str(value))
    else:
       setGlobalVariable(name, str(value))
+
+
+def fromWhereStr(src):
+   return " from the ring" if src == table else " from its " + src.name
+
 
 #---------------------------------------------------------------------------
 # Card Placement functions
@@ -114,18 +128,20 @@ def fixCardY(y):
    if me.hasInvertedTable():
       offsetY = CardHeight
    return (y + offsetY) * playerSide
+
    
 def placeCard(card, type = None, action = None, target = None):
 # This function automatically places a card on the table according to what type of card is being placed
 # It is called by one of the various custom types and each type has a different value depending on if the player is on the X or Y axis.
    debugNotify(">>> placeCard()") #Debug
+
    if automations['Play']:
       if type == 'Character' and action != None:
          coords = (0, fixCardY(0))
-         if action == 'play':
+         if action == PlayAction:
             coords = CardsCoords['Slot'+`target`]
             coords = (coords[0], fixCardY(coords[1]))
-         elif action == 'backup':
+         elif action == BackupAction:
             cx,cy = target.position
             backups = getGlobalVar('Backups')
             numBkps = len([id for id in backups if backups[id] == target._id])
@@ -135,7 +151,9 @@ def placeCard(card, type = None, action = None, target = None):
          card.moveToTable(-CardWidth/2, fixCardY(0))
    else:
       card.moveToTable(0, fixCardY(0))
+
    debugNotify("<<< placeCard()")
+
 
 def freeSlot(card):
 # Frees a slot of the ring. It normally happens when a character leaves the ring
@@ -149,22 +167,19 @@ def freeSlot(card):
    setGlobalVar('Ring', myRing, me)
    
    debugNotify("<<< freeSlot()")
+
    
 def getSlotIdx(card, player = me):
    debugNotify(">>> getSlotIdx({})".format(card)) #Debug
-   
-   if card.model == TokensDict['Empty Slot']:
-      i = slots.get(card._id, -1)
-      debugNotify("Slot idx: {}".format(i))
-      return i
    
    ring = getGlobalVar('Ring', player)
    for i, id in enumerate(ring):
       if id == card._id:
          debugNotify("Slot idx: {}".format(i))
          return i
-   debugNotify("Card isn't in any slot")
+   debugNotify("Card isn't in a slot")
    return -1
+
 
 def alignCard(card, x=0, y=0):
    debugNotify(">>> alignCard({},{},{})".format(card, x, y)) #Debug
@@ -180,6 +195,7 @@ def alignCard(card, x=0, y=0):
    
    debugNotify("<<< alignCard()")
 
+
 #---------------------------------------------------------------------------
 # Card automation functions
 #---------------------------------------------------------------------------
@@ -191,23 +207,20 @@ def getParsedCard(card):
    return cards.get(card.model)
       
 class ParsedCard():
-   """ A class which stores the card ability name and its parsed rule autoscripts """
-   ab_instant = u'\xa2'
-   ab_activated = u'\xa3'
-   ab_auto = u'\xa4'
-   
+   """ A class which stores the card ability name and its parsed rule autoscripts """   
    def __init__(self, card):
       debugNotify(">>> ParsedCard()") #Debug
    
       ability = Regexps['Ability'].match(card.Rules)
       if ability:
-         debugNotify("Parsing  {}".format(ability.group(0)))  # Causes weird IronPython error
+         debugNotify("Parsing {}".format(ability.group(0)))  # Causes weird IronPython error
          self.ability = ability.group(0)
          self.ability_type = ability.group(1)
          self.ability_name = ability.group(2)
       else:
          debugNotify("No ability to parse")
          self.ability = None
+
 
 #---------------------------------------------------------------------------
 # Markers functions
@@ -227,6 +240,7 @@ def changeMarker(cards, marker, question):  # Changes the number of markers in o
       if dif >= 0: dif = "+" + str(dif)   
       notify("{} sets {}'s {} to {}({}).".format(me, c, marker[0], count, dif))
 
+
 def removeMarker(card, mkname):
    if MarkersDict[mkname] in card.markers:
       card.markers[MarkersDict[mkname]] = 0
@@ -237,24 +251,23 @@ def removeMarker(card, mkname):
 #---------------------------------------------------------------------------
 
 def modSP(count = 1, silent = False): # A function to modify the players SP counter. Can also notify.
-   count = num(count) # We need to make sure we get an integer or we will fail horribly. OCTGN doesn't seem to respect its own definitions.
-   if me.SP+count < 0:
+   if me.SP + count < 0:
       count = -me.SP  # SP can't be less than 0
    me.SP += count # Now increase the SP by the amount passed to us.
    if not silent and count != 0:
       action = "gains" if count >= 0 else "loses"
       notify("{} {} {} SP. New total is {}.".format(me, action, count, me.SP))
 
+
 def payCostSP(count = 1, silent = False, msg = 'play this card'): # Pay an SP cost. However we also check if the cost can actually be paid.
-   count = num(count)
    if count >= 0:
       modSP(count, silent)
    else:
-      if me.SP+count < 0: # If we don't have enough SP, we assume card effects or mistake and notify the player that they need to do things manually.
+      if me.SP + count < 0: # If we don't have enough SP, we assume card effects or mistake and notify the player that they need to do things manually.
          if not silent:
             if not confirm("You do not seem to have enough SP to {}. Are you sure you want to proceed? \
             \n(If you do, your SP will go to the negative. You will need to increase it manually as required.)".format(msg)):
-               return 'ABORT'
+               return ERR_CANT_PAY_SP
             notify("{} was supposed to pay {} SP but only has {}.".format(me, count, me.SP))
       me.SP += count
       if not silent: notify("{} has spent {} SP. New total is {}.".format(me, count, me.SP))
@@ -273,6 +286,7 @@ def attach(card, target):
    debugBackups()
    debugNotify("<<< attachCard()")
    
+
 def dettach(card):
    debugNotify(">>> dettach()") #Debug
    mute()
@@ -296,6 +310,7 @@ def dettach(card):
    setGlobalVar('Backups', backups)
    debugBackups()
    debugNotify("<<< dettach()")
+
 
 def clearAttachLinks(card):
 # This function takes care to discard any attachments of a card that left play
@@ -324,6 +339,7 @@ def clearAttachLinks(card):
    debugBackups()   
    debugNotify("<<< clearAttachLinks()") #Debug
    
+
 def getAttachmets(card):
    # Returns a list with all the cards attached to this card
    backups = getGlobalVar('Backups')
@@ -332,6 +348,7 @@ def getAttachmets(card):
       if backups[id] == card._id:
          attachs.append(Card(id))
    return attachs
+
 
 #------------------------------------------------------------------------------
 # Debugging
@@ -347,20 +364,22 @@ def debugNotify(msg = 'Debug Ping!', level = 2):
    if debugVerbosity >= level:
       notify(msg)
 
-def trialError(group, x=0, y=0):
+
+def testSuite(group, x=0, y=0):
    global debugVerbosity
    mute()
-   delayed_whisper("### Checking Players")
+   delayedWhisper("### Checking Players")
    if me.name == 'raohmaru' and debugVerbosity < 0:
       debugVerbosity = 0
-      delayed_whisper("Reset debug verbosity to: {}".format(debugVerbosity))
-   delayed_whisper("### Checking Debug Validity")
+      delayedWhisper("Reset debug verbosity to: {}".format(debugVerbosity))
+   delayedWhisper("### Checking Debug Validity")
    if len(players) > 1 or debugVerbosity < 0:
       whisper("This function is only for development purposes.")
       return
-   delayed_whisper("### Setting Table Side")
+   delayedWhisper("### Setting Table Side")
    if not playerSide:  # If we've already run this command once, don't recreate the cards.
       chooseSide()
+
 
 def setDebugVerbosity(group, x=0, y=0):
    global debugVerbosity
@@ -374,6 +393,7 @@ def setDebugVerbosity(group, x=0, y=0):
    elif n > 4: n = 4
    debugVerbosity = n
    whisper("Debug verbosity is now: {}".format(debugVerbosity))
+
 
 def debugBackups():
    backups = getGlobalVar('Backups')

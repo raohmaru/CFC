@@ -23,51 +23,26 @@
 def checkTwoSidedTable():
    mute()
    if not table.isTwoSided():
-      information(":::WARNING::: This game is designed to be played on a two-sided table. Playing could be uncomfortable otherwise! Please start a new game and make sure the appropriate button is checked.")
+      information(":::WARNING::: This game is designed to be played on a two-sided table. Playing could be uncomfortable otherwise! Please start a new game and make sure the appropriate option is checked.")
 
-def onLoadDeckEventHandler(player, groups):   
+
+def onLoadDeck(player, groups):   
    if player != me: return # We only want the owner of to run this script
    mute()
-   decklen = len(me.Deck)
-   if decklen != 50:
-      notify(":::ERROR::: {}'s Deck must have exactly 50 cards (it has {} cards)".format(me,decklen))
+   decksize = len(me.Deck)
+   if decksize != DeckSize:
+      notify(":::ERROR::: {}'s deck must have exactly 50 cards (it has {} cards)".format(me,decksize))
 
-def onMoveCardEventHandler(player, card, fromGroup, toGroup, oldIndex, index, oldX, oldY, x, y, isScriptMove):
+
+def onMoveCard(player, card, fromGroup, toGroup, oldIndex, index, oldX, oldY, x, y, isScriptMove):
    if card.controller != me: return
-   # Card is an Empty Slot token
-   if card.model == TokensDict['Empty Slot']:
-      if not isScriptMove:
-         debugNotify(">>> Empty Slot moved") #Debug
-         if toGroup != table:
-            # card.moveTo(table)
-            slotIdx = getSlotIdx(card)
-            if slotIdx > -1:
-               coords = CardsCoords['Slot'+`slotIdx`]
-               cx,cy = card.position
-               if cx != coords[0] or cy != coords[1]:
-                  debugNotify("Restoring slot position {}".format(coords))
-                  card.moveToTable(coords[0], fixCardY(coords[1]))
-         elif oldIndex != index:
-            card.setIndex(0)
-         # else:
-            # debugNotify("Slot number: {}".format(slots.get(card._id, 0)))
-            # slotIdx = getSlotIdx(card)
-            # if slotIdx > -1:
-               # coords = CardsCoords['Slot'+`slotIdx`]
-               # cx,cy = card.position
-               # if cx != coords[0] or cy != coords[1]:
-                  # debugNotify("Moving slot to: {}".format(coords))
-                  # card.moveToTable(coords[0], fixCardY(coords[1]))
-   # Other card which has been moved out the table
-   elif fromGroup == table and toGroup != table:
+   if fromGroup == table and toGroup != table:
       if card.Type == 'Character':
          clearAttachLinks(card)
          freeSlot(card)
-   # Always in front of any Empty Slot tokens
-   elif oldIndex != index and index < NumSlots*len(players):
-      card.setIndex(NumSlots*len(players))
          
-def onTurnEventHandler(player, turnNumber):
+
+def onTurnChange(player, turnNumber):
    # Reset some player variables at the start of each turn
    debugNotify(">>> OnTurn({}, {})".format(player, turnNumber)) #Debug
    if player == me:
@@ -76,6 +51,6 @@ def onTurnEventHandler(player, turnNumber):
       backupsPlayed = 0  # Num of chars backed-up this turn
       setGlobalVar('PhaseIdx', 0, me)
    else:
-      triggerPhaseEvent('Cleanup')
+      triggerPhaseEvent(CleanupPhase)
    debugNotify("<<< OnTurn()") #Debug
    

@@ -58,12 +58,14 @@ class CustomForm(Form): # This is a WinForm which creates a simple window, with 
       else:
          self.timer.Stop()
       
+
 class MessageBoxForm(CustomForm):      
    def __init__(self, msg, title, icon):
       super(self.__class__, self).__init__()
       self.show()
       MessageBox.Show(self, msg, title, MessageBoxButtons.OK, icon)
       self.Close()            
+
 
 def messageBox(msg, title, icon):
    debugNotify(">>> messageBox() with message: {}".format(msg))
@@ -72,6 +74,7 @@ def messageBox(msg, title, icon):
       form = MessageBoxForm(msg, title, icon)
    else: 
       whisper(msg)
+
 
 def information(msg, title = 'Information'):
    messageBox(msg, title, MessageBoxIcon.Information);

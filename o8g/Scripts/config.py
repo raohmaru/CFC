@@ -20,6 +20,7 @@
 #---------------------------------------------------------------------------
 import re
 
+# Phases
 Phases = [
    '\n=== PRE-GAME SETUP Phase: {} ==='.format(me),
    "\n=== ACTIVATE Phase: {} ===",
@@ -28,41 +29,52 @@ Phases = [
    "\n=== COUNTERATTACK Phase: {} ===",
    "\n=== END Phase: {} ==="
 ]
+SetupPhase    = 0
+ActivatePhase = 1
+DrawPhase     = 2
+MainPhase     = 3
+BlockPhase    = 4
+EndPhase      = 5
+CleanupPhase  = 6
 
 # Highlight Colours
-AttackColor = "#ff0000"
+AttackColor         = "#ff0000"
 AttackNoFreezeColor = "#ff8000"
-UnitedAttackColor = "#ff42de"
-BlockColor = "#ffff00"
-ActivatedColor = "#0000ff"
+UnitedAttackColor   = "#ff42de"
+BlockColor          = "#ffff00"
+ActivatedColor      = "#0000ff"
 DoesntUnfreezeColor = "#000000"
 
 # Dictionaries which hold all the hard coded markers and tokens (in the markers & tokens set)
 MarkersDict = {
-   'HP': ("HP", "b86fc644-d084-43d3-99d2-5b11457321cc"),
-   'JustEntered': ("Just entered", "9a52c42c-543f-48bb-9a48-d7599d6c8fae"),
-   'Attack': ("Attack", "023406a3-417c-473d-bc23-481290755a4a"),
-   'UnitedAttack': ("United Attack", "88036e2b-6a1f-40be-a941-988b27c405ba"),
-   'CounterAttack': ("Counter-attack", "2fd7dc74-4149-469d-9bde-53e94b99b934"),
-   'DoesntUnfreeze': ("Doesn't Unfreeze", "5231f83b-b78e-48b3-8bce-62031c022bf4")
+   'BP'            : ("BP",               "b86fc644-d084-43d3-99d2-5b11457321cc"),
+   'JustEntered'   : ("Just entered",     "9a52c42c-543f-48bb-9a48-d7599d6c8fae"),
+   'Attack'        : ("Attack",           "023406a3-417c-473d-bc23-481290755a4a"),
+   'UnitedAttack'  : ("United Attack",    "88036e2b-6a1f-40be-a941-988b27c405ba"),
+   'CounterAttack' : ("Counter-attack",   "2fd7dc74-4149-469d-9bde-53e94b99b934"),
+   'DoesntUnfreeze': ("Doesn't Unfreeze", "5231f83b-b78e-48b3-8bce-62031c022bf4"),
+   'NoFreeze'      : ("No Freeze",        "fec1976b-9ce5-4b32-8c07-76eadc5607f6")
 }
-TokensDict = {
-    'Empty Slot': "75771ec8-47a7-4be6-86dd-781a19755f75"
-}
+TokensDict = {}
 
 # A table holding tuples with the location for the cards according its states
 CardsCoords = dict(
    #        x     y
-   Slot0 = (-311, 198),
-   Slot1 = (-134, 198),
-   Slot2 = ( 44,  198),
-   Slot3 = ( 221, 198),
-   Attack0 = (-311, 29),
-   Attack1 = (-134, 29),
-   Attack2 = ( 44,  29),
-   Attack3 = ( 221, 29),
+   Slot0        = (-311, 198),
+   Slot1        = (-134, 198),
+   Slot2        = ( 44,  198),
+   Slot3        = ( 221, 198),
+   Attack0      = (-311, 29),
+   Attack1      = (-134, 29),
+   Attack2      = ( 44,  29),
+   Attack3      = ( 221, 29),
    BackupOffset = (0, 10)
 )
+
+# Cards abilities
+InstantAbility   = u'\xa2'
+ActivatedAbility = u'\xa3'
+AutoAbility      = u'\xa4'
 
 # A dictionary which holds the regex used in other scripts
 Regexps = dict(
@@ -70,31 +82,36 @@ Regexps = dict(
 )
 
 # Rules
-NumSlots = 4
-CharsPerTurn = 1
-BackupsPerTurn = 1
-BackupRaiseBP = 3
-MaxUnitedAttack = 2
+NumSlots         = 4
+CharsPerTurn     = 1
+BackupsPerTurn   = 1
+BackupRaiseBP    = 3
+MaxUnitedAttack  = 2
 UnitedAttackCost = 5
+DeckSize         = 50
+HandSize         = 5
 
 # Misc
-CardWidth = 90
-CardHeight = 126
-Xaxis = 'x'
-Yaxis = 'y'
+CardWidth    = 90
+CardHeight   = 126
+Xaxis        = 'x'
+Yaxis        = 'y'
+PlayAction   = 'play'
+BackupAction = 'backup'
+
+ERR_CANT_PAY_SP = 400
 
 #---------------------------------------------------------------------------
 # Global variables
 #---------------------------------------------------------------------------
 
-playerSide = None  # Variable to keep track on which side each player is
-playerAxis = None  # Variable to keep track on which axis the player is
-handSize = 5
-slots = {}  # Dict holding tuples EmptySlot._id / slot number
-charsPlayed = 0  # Num of chars played this turn
-backupsPlayed = 0  # Num of chars backed-up this turn
+playerSide     = None  # Variable to keep track on which side each player is
+playerAxis     = None  # Variable to keep track on which axis the player is
+handSize       = HandSize
+charsPlayed    = 0  # Num of chars played this turn
+backupsPlayed  = 0  # Num of chars backed-up this turn
 debugVerbosity = 4  # At -1, means no debugging messages display
-cards = {}  # Dictionary holding all parsed cards
+cards          = {} # Dictionary holding all parsed cards
 
 automations = {
    'Play'     : True, # Automatically trigger game effetcs and card effects when playing cards
