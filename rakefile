@@ -3,6 +3,9 @@
 # @move o8g/*.nupkg "D:/Mis documentos/Octgn/LocalFeed/"
 
 require 'rake/clean'
+require 'rubygems'
+require 'json'
+
 
 OCTGN_dir = "D:/Documentos/OCTGN"
 
@@ -10,10 +13,12 @@ CLOBBER.include ["o8g/*.o8g", "#{OCTGN_dir}/LocalFeed/Card*.nupkg"]
 
 task :default => [:build]
 
+
 desc "Builds the .o8g and .nupkg files from the game definition files"
 task :build => [:versionbump] do
   sh "#{OCTGN_dir}/OCTGN/o8build.exe -d=o8g"
 end
+
 
 desc "Increases the build number by 1"
 task :versionbump do
@@ -21,14 +26,14 @@ task :versionbump do
   file = File.open(filename, 'r')
   str = ''
   m = nil
-  regexp = /version="\d+\.\d+\.\d+\.(\d+)"/
+  regexp = /version="(\d+)\.(\d+)\.(\d+)\.(\d+)"/
 	file.each_line do |line|
     if m.nil?
       m = line.match(regexp)
       if m
-        buildnum = m[1].to_i + 1
-        puts "Bump build number to #{buildnum}"
-        line.sub!('.'+m[1]+'"', '.'+buildnum.to_s+'"')
+        buildnum = m[4].to_i + 1
+        puts "Bump build number to #{buildnum} (#{m[1]}.#{m[2]}.#{m[3]}.#{buildnum})"
+        line.sub!('.'+m[4]+'"', '.'+buildnum.to_s+'"')
       end
     end
     str += line
@@ -39,12 +44,30 @@ task :versionbump do
   end
 end
 
+
 desc "Builds and moves the NUPKG file to the OCTGN LocalFeed dir"
 task :buildmv => [:clobber, :build] do
   mv Dir.glob("o8g/*.nupkg"), "#{OCTGN_dir}/LocalFeed/"
 end
 
+
 desc "Verifies the files as a valid game definition"
 task :test do
   sh "#{OCTGN_dir}/OCTGN/o8build.exe -v -d=o8g"
+end
+
+
+desc "Runs OCTGN in dev mode, in the table view with the CFC game loaded"
+task :octgn do
+  # Fixes bug with OCTGN asking for Wine
+  filename = OCTGN_dir + "/Config/settings.json"
+  file = File.open(filename, 'r')
+  settings = JSON.parse(file.read)
+  file.close
+  settings.delete('AskedIfUsingWine')
+  File.open(filename, 'w') { |f|
+    f.puts JSON.pretty_generate(settings)
+  }
+  
+  system "#{OCTGN_dir}/OCTGN/OCTGN.exe /t /g=e3d56d9e-900d-49c6-b6ae-22cbb51be153 /x"
 end
