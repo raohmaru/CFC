@@ -110,13 +110,13 @@ def playAuto(card):
       # Prompt the player to select an Empty Slot
       emptySlots = []
       for i, id in enumerate(myRing):
-         if id != None:
-            emptySlots.append(i)
+         if id == None:
+            emptySlots.append(str(i+1))
       slotIdx = askChoice("Select an empty slot:", emptySlots)
       if slotIdx == 0:
          return
       # Is really that slot empty?
-      slotIdx = emptySlots[slotIdx-1]
+      slotIdx = int(emptySlots[slotIdx-1])
       if myRing[slotIdx] != None:
          warning("Character card can't be played.\nThe selected slot is not empty (it's taken up by {}).".format(Card(myRing[slotIdx]).Name))
          return
@@ -129,7 +129,7 @@ def playAuto(card):
          return
       # Finally, the card is played
       placeCard(card, card.Type, PlayAction, slotIdx)
-      card.markers[MarkersDict['BP']] = card.BP / 100
+      card.markers[MarkersDict['BP']] = num(card.BP) / 100
       card.markers[MarkersDict['JustEntered']] = 1
       myRing[slotIdx] = card._id
       setGlobalVar('Ring', myRing, me)

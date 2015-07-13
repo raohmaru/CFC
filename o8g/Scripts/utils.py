@@ -260,6 +260,7 @@ def modSP(count = 1, silent = False): # A function to modify the players SP coun
 
 
 def payCostSP(count = 1, silent = False, msg = 'play this card'): # Pay an SP cost. However we also check if the cost can actually be paid.
+   count = num(count)
    if count >= 0:
       modSP(count, silent)
    else:
