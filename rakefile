@@ -1,7 +1,3 @@
-# "D:/Mis documentos/Octgn/OCTGN/o8build.exe" -d=o8g
-# @del "D:/Mis documentos/Octgn/LocalFeed/*.nupkg"
-# @move o8g/*.nupkg "D:/Mis documentos/Octgn/LocalFeed/"
-
 require 'rake/clean'
 require 'rubygems'
 require 'json'
@@ -69,5 +65,7 @@ task :octgn do
     f.puts JSON.pretty_generate(settings)
   }
   
-  system "#{OCTGN_dir}/OCTGN/OCTGN.exe /t /g=e3d56d9e-900d-49c6-b6ae-22cbb51be153 /x"
+  # OCTGN window closes after the loading screen ends
+  # system "#{OCTGN_dir}/OCTGN/OCTGN.exe /t /g=e3d56d9e-900d-49c6-b6ae-22cbb51be153 /x"
+  puts "#{OCTGN_dir}/OCTGN/OCTGN.exe /t /g=e3d56d9e-900d-49c6-b6ae-22cbb51be153 /x"
 end
