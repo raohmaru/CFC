@@ -42,7 +42,7 @@ end
 
 
 desc "Builds and moves the NUPKG file to the OCTGN LocalFeed dir"
-task :buildmv => [:clobber, :build] do
+task :deploy => [:clobber, :build] do
   mv Dir.glob("o8g/*.nupkg"), "#{OCTGN_dir}/LocalFeed/"
 end
 
