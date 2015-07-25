@@ -15,72 +15,129 @@
 # You should have received a copy of the GNU General Public License
 # along with this script.  If not, see <http://www.gnu.org/licenses/>.
 
-try:
-   import os
-   if os.environ['RUNNING_TEST_SUITE'] == 'TRUE':
-      from meta import automations
-      Form = object
-except ImportError:
-   pass
-
 #---------------------------------------------------------------------------
 # Custom Windows Forms
 #---------------------------------------------------------------------------
 
 try:
    import clr
+   clr.AddReference("System.Drawing")
    clr.AddReference("System.Windows.Forms")
-   from System.Windows.Forms import *
-except:
-   automations['WinForms'] = False
 
-class CustomForm(Form): # This is a WinForm which creates a simple window, with some text and an OK button to close it.
+   from System.Windows.Forms import *
+   from System.Drawing import *
+except:
+   Automations['WinForms'] = False
+
+
+# Base class for custom forms
+class CustomForm(Form):
    def __init__(self):
-      self.timer = Timer()
-      self.timer.Interval = 200
-      self.timer.Tick += self._onTick
-      self.timer_tries = 0
+      self.bringToFront()
       
-   def show(self):
-      # Try to display the message box as the top-most window 
+   # Try to display the message box as the top-most window 
+   def bringToFront(self):
       self.TopMost = True
       self.BringToFront()
-      # ... twice
-      self.timer.Start()      
+	  
+   # Return the size of the string when drawn with the specified Font for a fixed width
+   def calcStringSize(self, str, width):
+      form = Form()
+      g = form.CreateGraphics()
+      size = g.MeasureString(str, form.Font, width).ToSize()
+      g.Dispose()
+      form.Dispose()
+      return size
 
-   def _onTick(self, sender, event):
-      if self.timer_tries < 3:
-         self.TopMost = False
-         self.Focus()
-         self.Activate()
-         self.TopMost = True
-         self.timer_tries += 1
-      else:
-         self.timer.Stop()
-      
+   # Escapes some characters that are not otherwise displayed by WinForms, like '&'
+   def stringEscape(self, str):
+      return str.replace('&', '&&')
+   
 
-class MessageBoxForm(CustomForm):      
-   def __init__(self, msg, title, icon):
+# This is a WinForm which creates a simple window, with some text and an OK button to close it.
+class MessageBoxForm(CustomForm):
+   Width = 400
+   TextPadding = 20
+
+   def __init__(self, msg, title, icon = None):
       super(self.__class__, self).__init__()
-      self.show()
-      MessageBox.Show(self, msg, title, MessageBoxButtons.OK, icon)
-      self.Close()            
+   
+      labelPanel = Panel()
+      buttonPanel = FlowLayoutPanel()
+      # self.pictureBox = PictureBox()
+	  
+      labelPanel.SuspendLayout()
+      buttonPanel.SuspendLayout()
+      # self.pictureBox.BeginInit()
+      self.SuspendLayout()
+	  	  
+      formSize = self.calcStringSize(msg, self.Width - self.TextPadding * 2)
+      self.StartPosition = FormStartPosition.CenterScreen
+      self.Text = title
+      self.Size = Size(self.Width, formSize.Height + 130)
+      self.AutoSize = True
+      self.MinimizeBox = False
+      self.MaximizeBox = False
+      self.Icon = icon
+      
+      label = Label()
+      label.Text = self.stringEscape(msg)
+      label.Location = Point(0, 0)
+      label.Dock = DockStyle.Fill
+      label.Padding = Padding(self.TextPadding)
+			
+      labelPanel.Dock = DockStyle.Fill
+      labelPanel.BackColor = Color.White
+      labelPanel.Controls.Add(label)
+			
+      button = Button()
+      button.Text = "OK"
+      button.Click += self.button_Click
+	  
+      buttonPanel.Dock = DockStyle.Bottom
+      buttonPanel.FlowDirection = FlowDirection.RightToLeft
+      buttonPanel.Size = Size(self.ClientSize.Width, button.Height + 15)
+      buttonPanel.Padding = Padding(5)
+      buttonPanel.Controls.Add(button)
+      
+      # self.pictureBox.Location = Point(13, 13)
+      # self.pictureBox.Size = Size(self.Icon.Width, self.Icon.Height)
+      # self.pictureBox.BackColor = Color.Transparent
+      # self.pictureBox.Paint += self.pictureBox_Paint
+
+      # self.Controls.Add(self.pictureBox)
+      self.Controls.Add(labelPanel)
+      self.Controls.Add(buttonPanel)
+      
+      labelPanel.ResumeLayout(False)
+      buttonPanel.ResumeLayout(False)
+      # self.pictureBox.EndInit()
+      self.ResumeLayout(False)
+
+   def button_Click(self, sender, args):
+      self.Close()
+
+   # Drawing graphics only seems to work on click
+   # def pictureBox_Paint(self, e):
+      # g = self.pictureBox.CreateGraphics()
+      # g.DrawIcon(self.Icon, 0, 0)
 
 
-def messageBox(msg, title, icon):
-   debugNotify(">>> messageBox() with message: {}".format(msg))
+def messageBox(msg, title, icon = None):
+   debugNotify(">>> messageBox({}) with message: {}".format(title, msg))
    if automations['WinForms']:
       Application.EnableVisualStyles()
       form = MessageBoxForm(msg, title, icon)
+      showWinForm(form)
    else: 
-      whisper(msg)
-
+      confirm(msg)
+   
 
 def information(msg, title = 'Information'):
-   messageBox(msg, title, MessageBoxIcon.Information);
+   messageBox(msg, title, SystemIcons.Information)
 
 def warning(msg, title = 'Warning'):
-   messageBox(msg, title, MessageBoxIcon.Warning);
+   messageBox(msg, title, SystemIcons.Warning)
 
 def error(msg, title = 'Error'):
-   messageBox(msg, title, MessageBoxIcon.Error);
+   messageBox(msg, title, SystemIcons.Error)
