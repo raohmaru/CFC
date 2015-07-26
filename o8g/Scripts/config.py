@@ -15,6 +15,13 @@
 # You should have received a copy of the GNU General Public License
 # along with this script.  If not, see <http://www.gnu.org/licenses/>.
 
+
+# Helper class to convert a dict to an object (to be accesed with dot notation)
+# http://stackoverflow.com/questions/1305532/convert-python-dict-to-object
+class Struct:
+    def __init__(self, **entries): 
+        self.__dict__.update(entries)
+
 #---------------------------------------------------------------------------
 # Constants
 #---------------------------------------------------------------------------
@@ -91,6 +98,23 @@ UnitedAttackCost = 5
 DeckSize         = 50
 HandSize         = 5
 
+# Debug
+DebugLevel   = Struct(**{
+   'Off'    : -1,
+   'Info'   : 0,
+   'Debug'  : 1,
+   'Warning': 2,
+   'Error'  : 3,
+   'All'    : 4
+})
+DebugLevelPrefixes = [
+   '[i]',
+   '[#]=>',
+   '[!]==>',
+   '[?]===>',
+   '[x]====>'
+]
+
 # Misc
 CardWidth    = 90
 CardHeight   = 126
@@ -98,6 +122,7 @@ Xaxis        = 'x'
 Yaxis        = 'y'
 PlayAction   = 'play'
 BackupAction = 'backup'
+Author       = 'raohmaru'
 
 ERR_CANT_PAY_SP = 400
 
@@ -110,7 +135,7 @@ playerAxis     = None  # Variable to keep track on which axis the player is
 handSize       = HandSize
 charsPlayed    = 0  # Num of chars played this turn
 backupsPlayed  = 0  # Num of chars backed-up this turn
-debugVerbosity = 4  # At -1, means no debugging messages display
+debugVerbosity = -1 # -1..4 (At -1 means no debugging messages display)
 cards          = {} # Dictionary holding all parsed cards
 
 automations = {

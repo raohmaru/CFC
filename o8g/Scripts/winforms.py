@@ -124,7 +124,7 @@ class MessageBoxForm(CustomForm):
 
 
 def messageBox(msg, title, icon = None):
-   debugNotify(">>> messageBox({}) with message: {}".format(title, msg))
+   debug(">>> messageBox({}) with message: {}".format(title, msg))
    if automations['WinForms']:
       Application.EnableVisualStyles()
       form = MessageBoxForm(msg, title, icon)

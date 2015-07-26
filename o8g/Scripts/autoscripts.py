@@ -20,7 +20,7 @@
 #------------------------------------------------------------------------------
 
 def triggerPhaseEvent(phase): # Function which triggers effects at the start or end of the phase
-   debugNotify(">>> triggerPhaseEvent({})".format(phase)) #Debug
+   debug(">>> triggerPhaseEvent({})".format(phase)) #Debug
    mute()
    if not automations['Phase']: return
    
@@ -85,7 +85,7 @@ def triggerPhaseEvent(phase): # Function which triggers effects at the start or 
 #------------------------------------------------------------------------------
 
 def playAuto(card):
-   debugNotify(">>> playAuto()") #Debug
+   debug(">>> playAuto({})".format(card)) #Debug
    global charsPlayed
    phaseIdx = getGlobalVar('PhaseIdx', me)
    
@@ -134,7 +134,7 @@ def playAuto(card):
       myRing[slotIdx] = card._id
       setGlobalVar('Ring', myRing, me)
       charsPlayed += 1
-      debugNotify("{}'s ring: {}".format(me, myRing))
+      debug("{}'s ring: {}".format(me, myRing))
    
    # Player plays an Action card
    elif card.Type == 'Action':
@@ -165,7 +165,7 @@ def playAuto(card):
 
 
 def backupAuto(card):
-   debugNotify(">>> backupAuto()") #Debug
+   debug(">>> backupAuto()") #Debug
    global backupsPlayed
    
    # Check if the card can be legally played
@@ -222,7 +222,7 @@ def backupAuto(card):
 
 
 def attackAuto(card):
-   debugNotify(">>> attackAuto()") #Debug
+   debug(">>> attackAuto()") #Debug
    
    # Check if we can attack
    if not me.isActivePlayer or getGlobalVar('PhaseIdx', me) != MainPhase:
@@ -265,7 +265,7 @@ def attackAuto(card):
 
 
 def unitedAttackAuto(card):
-   debugNotify(">>> unitedAttackAuto()") #Debug
+   debug(">>> unitedAttackAuto()") #Debug
    
    # Check if an attacking char has been selected
    myRing = getGlobalVar('Ring', me)
@@ -302,7 +302,7 @@ def unitedAttackAuto(card):
 
 
 def blockAuto(card):
-   debugNotify(">>> blockAuto()") #Debug
+   debug(">>> blockAuto()") #Debug
    
    # Check if the card can be legally played
    if me.isActivePlayer or getGlobalVar('PhaseIdx', players[1]) != BlockPhase:
@@ -357,7 +357,7 @@ def blockAuto(card):
    
 
 def activateAuto(card):
-   debugNotify(">>> activateAuto()") #Debug
+   debug(">>> activateAuto()") #Debug
    
    if card.highlight == ActivatedColor:
       return   
@@ -366,7 +366,7 @@ def activateAuto(card):
       pcard = getParsedCard(card)
       if not pcard.ability:
          return
-      debugNotify("Trying to activate {}'s ability {} {}'".format(card.Name, pcard.ability_type, pcard.ability_name))
+      debug("Trying to activate {}'s ability {} {}'".format(card.Name, pcard.ability_type, pcard.ability_name))
       # Activate [] and /\ only in player's Main Phase
       if pcard.ability_type in [InstantAbility, ActivatedAbility] and (not me.isActivePlayer or getGlobalVar('PhaseIdx', me) != MainPhase):
          information("You can only activate [ ] or /\\ abilities in your Main Phase.")

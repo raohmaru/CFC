@@ -73,16 +73,16 @@ def goToEnd(group = table, x = 0, y = 0):
 #---------------------------------------------------------------------------
 
 def setup(group, x=0, y=0):  # This function is usually the first one the player does
-   debugNotify(">>> setup()") #Debug
+   debug(">>> setup()") #Debug
    mute()
    if not confirm("Are you sure you want to setup for a new game?\n(This action should only be done after a game reset.)"):
       return
-   notify(Phases[SetupPhase].format(me))
    chooseSide() # The classic place where the players choose their side
    # We ensure that player has loaded a deck
    if len(me.Deck) == 0:
       warning("Please load a deck first.")
       return
+   notify(Phases[SetupPhase].format(me))
    me.Deck.shuffle()
    refill() # We fill the player's play hand to their hand size
    notify("Setup for player {} completed.".format(me,))
@@ -164,7 +164,7 @@ def attackNoFreeze(card, x = 0, y = 0):
 
 
 def unitedAttack(card, x = 0, y = 0):
-   debugNotify(">>> unitedAttack()") #Debug
+   debug(">>> unitedAttack()") #Debug
    mute()
    cardsnames = card
    if automations['Play']:
@@ -191,7 +191,7 @@ def block(card, x = 0, y = 0):
 
 
 def activate(card, x = 0, y = 0):
-   debugNotify(">>> activate()") #Debug
+   debug(">>> activate()") #Debug
    mute()
    if automations['Play']:
       if not activateAuto(card): return
@@ -426,7 +426,7 @@ def minusSPX(group, x = 0, y = 0):
 #---------------------------------------------------------------------------
 
 def play(card):  # This is the function to play cards from your hand.
-   debugNotify(">>> playing card {}".format(card)) #Debug
+   debug(">>> playing card {}".format(card)) #Debug
    
    mute()
    chooseSide()  # Just in case...
@@ -436,11 +436,11 @@ def play(card):  # This is the function to play cards from your hand.
       placeCard(card, card.Type)
    notify("{} plays {} from its {}.".format(me, card, card.group.name))
    
-   debugNotify("<<< playing card end") #Debug
+   debug("<<< playing card end") #Debug
 
 
 def backup(card, x = 0, y = 0):  # Play a card as backup attached to a character in the player's ring
-   debugNotify(">>> backup with card {}".format(card)) #Debug
+   debug(">>> backup with card {}".format(card)) #Debug
    
    mute()
    group = card.group
@@ -452,7 +452,7 @@ def backup(card, x = 0, y = 0):  # Play a card as backup attached to a character
       placeCard(card, card.Type)
       notify("{} backups with {} from its {}.".format(me, card, group.name))
    
-   debugNotify("<<< backup()") #Debug
+   debug("<<< backup()") #Debug
 
 
 def discard(card, x = 0, y = 0):

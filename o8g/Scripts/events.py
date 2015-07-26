@@ -23,7 +23,7 @@
 def checkTwoSidedTable():
    mute()
    if not table.isTwoSided():
-      information(":::WARNING::: This game is designed to be played on a two-sided table. Playing could be uncomfortable otherwise! Please start a new game and make sure the appropriate option is checked.")
+      warning("This game is designed to be played on a two-sided table.\nPlease start a new game and make sure the appropriate option is checked.")
 
 
 def onLoadDeck(player, groups):   
@@ -31,7 +31,7 @@ def onLoadDeck(player, groups):
    mute()
    decksize = len(me.Deck)
    if decksize != DeckSize:
-      notify(":::ERROR::: {}'s deck must have exactly 50 cards (it has {} cards)".format(me,decksize))
+      notify(":::ERROR::: {}'s deck must have exactly {} cards (it has {} cards)".format(DeckSize, me,decksize))
 
 
 def onMoveCard(player, card, fromGroup, toGroup, oldIndex, index, oldX, oldY, x, y, isScriptMove):
@@ -44,7 +44,7 @@ def onMoveCard(player, card, fromGroup, toGroup, oldIndex, index, oldX, oldY, x,
 
 def onTurnChange(player, turnNumber):
    # Reset some player variables at the start of each turn
-   debugNotify(">>> OnTurn({}, {})".format(player, turnNumber)) #Debug
+   debug(">>> OnTurn({}, {})".format(player, turnNumber)) #Debug
    if player == me:
       global charsPlayed, backupsPlayed
       charsPlayed = 0  # Num of chars played this turn
@@ -52,5 +52,5 @@ def onTurnChange(player, turnNumber):
       setGlobalVar('PhaseIdx', 0, me)
    else:
       triggerPhaseEvent(CleanupPhase)
-   debugNotify("<<< OnTurn()") #Debug
+   debug("<<< OnTurn()") #Debug
    

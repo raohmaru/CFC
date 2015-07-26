@@ -58,7 +58,7 @@ def chooseSide(): # Called from many functions to check if the player has chosen
 def resetAll(): # Clears all the global variables in order to start a new game.
    # Import all our global variables and reset them.
    global playerSide, handSize, debugVerbosity
-   debugNotify(">>> resetAll()") #Debug
+   debug(">>> resetAll()") #Debug
    playerSide = None
    handSize = HandSize
    me.HP = 30  # Wipe the counters
@@ -66,9 +66,9 @@ def resetAll(): # Clears all the global variables in order to start a new game.
    backups = getGlobalVar('Backups')
    backups.clear()
    setGlobalVar('Backups', backups)
-   if len(players) > 1: debugVerbosity = -1 # Reset means normal game.
-   elif debugVerbosity != -1 and confirm("Reset Debug Verbosity?"): debugVerbosity = -1
-   debugNotify("<<< resetAll()") #Debug
+   if len(players) > 1: debugVerbosity = DebugLevel.Off # Reset means normal game.
+   elif debugVerbosity != DebugLevel.Off: debugVerbosity = DebugLevel.All
+   debug("<<< resetAll()") #Debug
 
 
 def clearAll(allPlayers = False):
@@ -79,7 +79,7 @@ def clearAll(allPlayers = False):
 
 
 def switchAutomation(name, command = None):
-   debugNotify(">>> switchAutomation({})".format(name)) #Debug
+   debug(">>> switchAutomation({})".format(name)) #Debug
 
    global automations
    if not name in automations:
@@ -90,7 +90,7 @@ def switchAutomation(name, command = None):
       automations[name] = command
    notify("--> {}'s {} automations are {}.".format(me, name, automations[name]))
 
-   debugNotify("<<< switchAutomation({})".format(name)) #Debug
+   debug("<<< switchAutomation({})".format(name)) #Debug
 
 
 def rollDie(num):
@@ -133,7 +133,7 @@ def fixCardY(y):
 def placeCard(card, type = None, action = None, target = None):
 # This function automatically places a card on the table according to what type of card is being placed
 # It is called by one of the various custom types and each type has a different value depending on if the player is on the X or Y axis.
-   debugNotify(">>> placeCard()") #Debug
+   debug(">>> placeCard()") #Debug
 
    if automations['Play']:
       if type == 'Character' and action != None:
@@ -152,37 +152,37 @@ def placeCard(card, type = None, action = None, target = None):
    else:
       card.moveToTable(0, fixCardY(0))
 
-   debugNotify("<<< placeCard()")
+   debug("<<< placeCard()")
 
 
 def freeSlot(card):
 # Frees a slot of the ring. It normally happens when a character leaves the ring
-   debugNotify(">>> freeSlot({})".format(card)) #Debug
+   debug(">>> freeSlot({})".format(card)) #Debug
    
    myRing = getGlobalVar('Ring', me)
    if card._id in myRing:
       myRing[myRing.index(card._id)] = None
    
-   debugNotify("{}'s ring: {}".format(me, myRing))
+   debug("{}'s ring: {}".format(me, myRing))
    setGlobalVar('Ring', myRing, me)
    
-   debugNotify("<<< freeSlot()")
+   debug("<<< freeSlot()")
 
    
 def getSlotIdx(card, player = me):
-   debugNotify(">>> getSlotIdx({})".format(card)) #Debug
+   debug(">>> getSlotIdx({})".format(card)) #Debug
    
    ring = getGlobalVar('Ring', player)
    for i, id in enumerate(ring):
       if id == card._id:
-         debugNotify("Slot idx: {}".format(i))
+         debug("Slot idx: {}".format(i))
          return i
-   debugNotify("Card isn't in a slot")
+   debug("Card isn't in a slot")
    return -1
 
 
 def alignCard(card, x=0, y=0):
-   debugNotify(">>> alignCard({},{},{})".format(card, x, y)) #Debug
+   debug(">>> alignCard({},{},{})".format(card, x, y)) #Debug
    
    if card.Type == 'Character':
       attachs = getAttachmets(card)
@@ -193,32 +193,33 @@ def alignCard(card, x=0, y=0):
    # Move the card after the attachments, or it will be under them (with a lower z-index)
    card.moveToTable(x, fixCardY(y))
    
-   debugNotify("<<< alignCard()")
+   debug("<<< alignCard()")
 
 
 #---------------------------------------------------------------------------
 # Card automation functions
 #---------------------------------------------------------------------------
+
 def getParsedCard(card):
-   debugNotify(">>> getParsedCard()") #Debug
+   debug(">>> getParsedCard()") #Debug
    if not card.model in cards:
       cards[card.model] = ParsedCard(card)
-   debugNotify("Retrieved parsed card for model {} ({})".format(card.model, card.Name))
+   debug("Retrieved parsed card for model {} ({})".format(card.model, card.Name))
    return cards.get(card.model)
       
 class ParsedCard():
    """ A class which stores the card ability name and its parsed rule autoscripts """   
    def __init__(self, card):
-      debugNotify(">>> ParsedCard()") #Debug
+      debug(">>> ParsedCard()") #Debug
    
       ability = Regexps['Ability'].match(card.Rules)
       if ability:
-         debugNotify("Parsing {}".format(ability.group(0)))  # Causes weird IronPython error
+         debug("Parsing {}".format(ability.group(0)))  # Causes weird IronPython error
          self.ability = ability.group(0)
          self.ability_type = ability.group(1)
          self.ability_name = ability.group(2)
       else:
-         debugNotify("No ability to parse")
+         debug("No ability to parse")
          self.ability = None
 
 
@@ -279,17 +280,17 @@ def payCostSP(count = 1, silent = False, msg = 'play this card'): # Pay an SP co
 #------------------------------------------------------------------------------
 
 def attach(card, target):
-   debugNotify(">>> attachCard()") #Debug
+   debug(">>> attachCard()") #Debug
    target.target(False)
    backups = getGlobalVar('Backups')
    backups[card._id] = target._id
    setGlobalVar('Backups', backups)
    debugBackups()
-   debugNotify("<<< attachCard()")
+   debug("<<< attachCard()")
    
 
 def dettach(card):
-   debugNotify(">>> dettach()") #Debug
+   debug(">>> dettach()") #Debug
    mute()
    card.target(False)
    backups = getGlobalVar('Backups')
@@ -310,13 +311,13 @@ def dettach(card):
       return
    setGlobalVar('Backups', backups)
    debugBackups()
-   debugNotify("<<< dettach()")
+   debug("<<< dettach()")
 
 
 def clearAttachLinks(card):
 # This function takes care to discard any attachments of a card that left play
 # It also clear the card from the attach dictionary, if it was itself attached to another card
-   debugNotify(">>> clearAttachLinks({})".format(card)) #Debug
+   debug(">>> clearAttachLinks({})".format(card)) #Debug
    
    backups = getGlobalVar('Backups')
    # Next line causes an error
@@ -327,18 +328,18 @@ def clearAttachLinks(card):
       for id in backups:
          if backups[id] == card._id:
             attcard = Card(id)
-            debugNotify("Unattaching {} from {}.".format(attcard, card))
+            debug("Unattaching {} from {}.".format(attcard, card))
             if attcard in table:
                discard(attcard)
             del backups[id]
    # If the card was an attachment, delete the link
    if backups.has_key(card._id):
-      debugNotify("{} is attached to {}. Unattaching.".format(card, Card(backups[card._id])))
+      debug("{} is attached to {}. Unattaching.".format(card, Card(backups[card._id])))
       del backups[card._id] # If the card was an attachment, delete the link
    setGlobalVar('Backups', backups)
    
    debugBackups()   
-   debugNotify("<<< clearAttachLinks()") #Debug
+   debug("<<< clearAttachLinks()") #Debug
    
 
 def getAttachmets(card):
@@ -355,50 +356,53 @@ def getAttachmets(card):
 # Debugging
 #------------------------------------------------------------------------------
 
-def debugNotify(msg = 'Debug Ping!', level = 2):
+def debug(msg = 'Debug Ping!', level = 1):
+   global debugVerbosity
+   if debugVerbosity < DebugLevel.Info:
+      return
    if isinstance(msg, (int, long, float)):
       msg = str(msg)
-   if not re.search(r'<<<',msg) and not re.search(r'>>>',msg):
-      msg = '#' * level + ' ' + msg  # We add extra hashes at the start of debug messages equal to the level of the debug, to make them stand out more
+   if not re.search(r'(<<<|>>>)',msg):
+      lvlPrefix = DebugLevelPrefixes[level]
+      msg = lvlPrefix + ' ' + msg
    else:
-      level = 1
+      level = DebugLevel.Debug
    if debugVerbosity >= level:
-      notify(msg)
+      whisper(msg)
 
 
 def testSuite(group, x=0, y=0):
    global debugVerbosity
    mute()
-   delayedWhisper("### Checking Players")
-   if me.name == 'raohmaru' and debugVerbosity < 0:
-      debugVerbosity = 0
-      delayedWhisper("Reset debug verbosity to: {}".format(debugVerbosity))
-   delayedWhisper("### Checking Debug Validity")
-   if len(players) > 1 or debugVerbosity < 0:
+   whisper("### Checking Debug Validity")
+   if len(players) > 1 or not me.name == Author:
       whisper("This function is only for development purposes.")
       return
-   delayedWhisper("### Setting Table Side")
-   if not playerSide:  # If we've already run this command once, don't recreate the cards.
-      chooseSide()
+   whisper("### Checking Players")
+   if debugVerbosity < DebugLevel.Info:
+      debugVerbosity = DebugLevel.All
+      whisper("Reset debug verbosity to: {}".format(debugVerbosity))
+   whisper("### Setting Table Side")
+   chooseSide()
 
 
 def setDebugVerbosity(group, x=0, y=0):
    global debugVerbosity
    mute()
-   if not me.name == 'raohmaru':
+   if not me.name == Author:
       whisper("This function is only for development purposes.")
       return
-   n = askInteger('Set debug verbosity to: (-1 to 4)', debugVerbosity)
+   n = askInteger("Set debug verbosity to: ({} to {})".format(DebugLevel.Off, DebugLevel.All), debugVerbosity)
    if n == None: return
-   if n < -1: n = -1
-   elif n > 4: n = 4
+   if n < DebugLevel.Off: n = DebugLevel.off
+   elif n > DebugLevel.All: n = DebugLevel.All
    debugVerbosity = n
    whisper("Debug verbosity is now: {}".format(debugVerbosity))
 
 
 def debugBackups():
    backups = getGlobalVar('Backups')
-   debugNotify("BACKUPS ({})".format(len(backups)))
+   debug("BACKUPS ({})".format(len(backups)))
    for id in backups:
-      debugNotify("   {} backups {}".format(Card(id), Card(backups[id])))
+      debug("   {} backups {}".format(Card(id), Card(backups[id])))
    
