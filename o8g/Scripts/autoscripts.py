@@ -102,6 +102,10 @@ def playAuto(card):
       if not me.isActivePlayer or phaseIdx != MainPhase:
          information("Character cards can only be played on your Main Phase.")
          return
+      # Limit of chars played per turn
+      if charsPlayed >= CharsPerTurn:
+         if not confirm("Only {} character per turn can be played.\nProceed anyway?".format(CharsPerTurn)):
+            return
       # Player has any empty slot in his ring?
       myRing = getGlobalVar('Ring', me)
       if myRing.count(None) == 0:
@@ -113,17 +117,15 @@ def playAuto(card):
          if id == None:
             emptySlots.append(str(i+1))
       slotIdx = askChoice("Select an empty slot:", emptySlots)
+      debug("Selected option {} ({})".format(slotIdx, slotIdx-1))
       if slotIdx == 0:
          return
       # Is really that slot empty?
-      slotIdx = int(emptySlots[slotIdx-1])
+      slotIdx = int(emptySlots[slotIdx-1]) - 1
+      debug("Selected slot: {} ({})".format(slotIdx, myRing[slotIdx]))
       if myRing[slotIdx] != None:
-         warning("Character card can't be played.\nThe selected slot is not empty (it's taken up by {}).".format(Card(myRing[slotIdx]).Name))
+         warning("Character card can't be played.\nThe selected slot is not empty (it's taken up by {}).\nIf you want to backup, please first target a character in your ring.".format(Card(myRing[slotIdx]).Name))
          return
-      # Limit of chars played per turn
-      if charsPlayed >= CharsPerTurn:
-         if not confirm("Only {} character per turn can be played.\nProceed anyway?".format(CharsPerTurn)):
-            return
       # Pay SP cost
       if payCostSP(card.SP) == ERR_CANT_PAY_SP:
          return
