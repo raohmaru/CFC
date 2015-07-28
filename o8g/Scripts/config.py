@@ -75,7 +75,7 @@ CardsCoords = dict(
    Attack1      = (-134, 29),
    Attack2      = ( 44,  29),
    Attack3      = ( 221, 29),
-   BackupOffset = (0, 10)
+   BackupOffset = (0, 13)
 )
 
 # Cards abilities
