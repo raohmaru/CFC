@@ -34,12 +34,15 @@ def onLoadDeck(player, groups):
       notify(":::ERROR::: {}'s deck must have exactly {} cards (it has {} cards)".format(DeckSize, me,decksize))
 
 
-def onMoveCard(player, card, fromGroup, toGroup, oldIndex, index, oldX, oldY, x, y, isScriptMove):
+def onMoveCard(player, card, fromGroup, toGroup, oldIndexs, indexs, oldX, oldY, x, y, faceup, highlights, markers):
    if card.controller != me: return
    if fromGroup == table and toGroup != table:
       if card.Type == 'Character':
          clearAttachLinks(card)
          freeSlot(card)
+   elif fromGroup == table and toGroup == table:
+      if card.Type == 'Character':
+         alignBackups(card, x, y)
          
 
 def onTurnChange(player, turnNumber):

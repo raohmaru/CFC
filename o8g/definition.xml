@@ -4,7 +4,7 @@
       name="Card Fighters' Clash"
       id="e3d56d9e-900d-49c6-b6ae-22cbb51be153"
       octgnVersion="3.1.55.0"
-      version="0.1.1.123"
+      version="0.1.1.127"
       markersize="16"
       tags="capcom snk fighter"
       description="A card game based in the SNK Playmore’s video game SNK vs. Capcom Card Fighters' Clash 2 Expand Edition.
@@ -27,11 +27,12 @@
 	</scripts>
 	
 	<events>
-		<event name="OnTableLoad" action="checkTwoSidedTable" />
-		<event name="OnGameStart" action="resetAll" />
-		<event name="OnLoadDeck"  action="onLoadDeck" />
-		<event name="OnMoveCard"  action="onMoveCard" />
-		<event name="OnTurn"      action="onTurnChange" />
+		<event name="OnTableLoad"        action="checkTwoSidedTable" />
+		<event name="OnGameStart"        action="resetAll" />
+		<event name="OnLoadDeck"         action="onLoadDeck" />
+		<event name="OnMoveCard"         action="onMoveCard" />
+		<event name="OnScriptedMoveCard" action="onMoveCard" />
+		<event name="OnTurn"             action="onTurnChange" />
 	</events>
 	
 	<!-- <sounds>
@@ -83,6 +84,7 @@
 			<groupaction menu="Go to Activate phase" shortcut="F1" execute="goToActivate" />
 			<groupaction menu="Go to Draw phase" shortcut="F2" execute="goToDraw" />
 			<groupaction menu="Go to Main phase" shortcut="F3" execute="goToMain" />
+			<groupaction menu="Go to Counterattack phase" shortcut="F4" execute="goToCounterattack" />
 			<groupaction menu="Go to End phase" shortcut="F12" execute="goToEnd" />
 		</groupactions>
 		<groupactions menu="SP...">

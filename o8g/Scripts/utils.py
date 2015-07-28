@@ -66,8 +66,10 @@ def resetAll(): # Clears all the global variables in order to start a new game.
    backups = getGlobalVar('Backups')
    backups.clear()
    setGlobalVar('Backups', backups)
-   if len(players) > 1: debugVerbosity = DebugLevel.Off # Reset means normal game.
-   elif debugVerbosity != DebugLevel.Off: debugVerbosity = DebugLevel.All
+   if len(players) > 1:
+      debugVerbosity = DebugLevel.Off # Reset means normal game.
+   elif debugVerbosity == DebugLevel.Off:
+      debugVerbosity = DebugLevel.All
    debug("<<< resetAll()") #Debug
 
 
@@ -185,15 +187,21 @@ def alignCard(card, x=0, y=0):
    debug(">>> alignCard({},{},{})".format(card, x, y)) #Debug
    
    if card.Type == 'Character':
-      attachs = getAttachmets(card)
-      if len(attachs) > 0:
-         ox, oy = CardsCoords['BackupOffset']
-         for i, c in enumerate(attachs):
-            c.moveToTable(x+ox*(i+1), fixCardY(y+oy*(i+1)))
+      alignBackups(card, x, y)
    # Move the card after the attachments, or it will be under them (with a lower z-index)
    card.moveToTable(x, fixCardY(y))
    
    debug("<<< alignCard()")
+
+
+def alignBackups(card, x=0, y=0):
+   attachs = getAttachmets(card)
+   if len(attachs) > 0:
+      ox, oy = CardsCoords['BackupOffset']
+      z = card.getIndex
+      for i, c in enumerate(attachs):
+         c.moveToTable(x+ox*(i+1), fixCardY(y+oy*(i+1)))
+         c.setIndex(max(z-1, 0))
 
 
 #---------------------------------------------------------------------------
