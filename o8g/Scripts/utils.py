@@ -185,16 +185,11 @@ def getSlotIdx(card, player = me):
 
 def alignCard(card, x=0, y=0):
    debug(">>> alignCard({},{},{})".format(card, x, y)) #Debug
-   
-   if card.Type == 'Character':
-      alignBackups(card, x, y)
-   # Move the card after the attachments, or it will be under them (with a lower z-index)
    card.moveToTable(x, fixCardY(y))
-   
-   debug("<<< alignCard()")
 
 
 def alignBackups(card, x=0, y=0):
+   debug(">>> alignBackups({})".format(card)) #Debug
    attachs = getAttachmets(card)
    if len(attachs) > 0:
       ox, oy = CardsCoords['BackupOffset']
