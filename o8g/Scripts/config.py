@@ -33,6 +33,7 @@ Phases = [
    "\n=== ACTIVATE Phase: {} ===",
    "\n=== DRAW Phase: {} ===",
    "\n=== MAIN Phase: {} ===",
+   "\n=== ATTACK Phase: {} ===",
    "\n=== COUNTERATTACK Phase: {} ===",
    "\n=== END Phase: {} ==="
 ]
@@ -40,9 +41,10 @@ SetupPhase    = 0
 ActivatePhase = 1
 DrawPhase     = 2
 MainPhase     = 3
-BlockPhase    = 4
-EndPhase      = 5
-CleanupPhase  = 6
+AttackPhase   = 4
+BlockPhase    = 5
+EndPhase      = 6
+CleanupPhase  = 7
 
 # Highlight Colours
 AttackColor         = "#ff0000"
@@ -75,7 +77,7 @@ CardsCoords = dict(
    Attack1      = (-134, 29),
    Attack2      = ( 44,  29),
    Attack3      = ( 221, 29),
-   BackupOffset = (0, 13)
+   BackupOffset = ( 0,   13)
 )
 
 # Cards abilities

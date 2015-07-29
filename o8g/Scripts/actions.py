@@ -34,6 +34,7 @@ def nextPhase(group = table, x = 0, y = 0):  # Function to take you to the next 
    if   idx == ActivatePhase: goToActivate()
    elif idx == DrawPhase:     goToDraw()
    elif idx == MainPhase:     goToMain()
+   elif idx == AttackPhase:   goToAttack()
    elif idx == BlockPhase:    goToCounterattack()
    elif idx == EndPhase:      goToEnd()
 
@@ -54,6 +55,12 @@ def goToMain(group = table, x = 0, y = 0):
    setGlobalVar('PhaseIdx', MainPhase, me)
    showCurrentPhase()
    triggerPhaseEvent(MainPhase)
+
+
+def goToAttack(group = table, x = 0, y = 0):
+   setGlobalVar('PhaseIdx', AttackPhase, me)
+   showCurrentPhase()
+   triggerPhaseEvent(AttackPhase)
 
 
 def goToCounterattack(group = table, x = 0, y = 0):
@@ -255,8 +262,11 @@ def alignCardAction(card, x = 0, y = 0):
 def destroy(card, x = 0, y = 0):
 	mute()
 	fromText = fromWhereStr(card.group)
+   action = 'moves'
 	card.moveTo(me.piles['Discard Pile'])
-	notify("{} KOs {}{}.".format(me, card, fromText))
+   if card.Type == 'Character':
+      action = 'KOs'
+	notify("{} {} {}{}.".format(me, action, card, fromText))
 	
 
 def remove(card, x = 0, y = 0):

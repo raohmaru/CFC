@@ -227,7 +227,7 @@ def attackAuto(card):
    debug(">>> attackAuto()") #Debug
    
    # Check if we can attack
-   if not me.isActivePlayer or getGlobalVar('PhaseIdx', me) != MainPhase:
+   if not me.isActivePlayer or getGlobalVar('PhaseIdx', me) != AttackPhase:
       information("You can only attack in your Main Phase.")
       return
    # Only for character cards...
