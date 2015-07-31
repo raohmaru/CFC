@@ -56,7 +56,7 @@ def triggerPhaseEvent(phase): # Function which triggers effects at the start or 
          if card.controller == me)
       for card in myCards:
          if card.Type == 'Character':
-            if MarkersDict['Attack'] in card.markers and not MarkersDict['NoFreeze'] in card.markers:
+            if (MarkersDict['Attack'] in card.markers or MarkersDict['UnitedAttack'] in card.markers) and not MarkersDict['NoFreeze'] in card.markers:
                freeze(card, unfreeze = False, silent = True)
    
    elif phase == CleanupPhase:
@@ -296,6 +296,7 @@ def unitedAttackAuto(card):
    atk = attackAuto(card)
    if atk != True: return atk
    
+   removeMarker(card, 'Attack')
    card.markers[MarkersDict['UnitedAttack']] = 1
    card.arrow(target)
    target.target(False)
