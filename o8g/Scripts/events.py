@@ -54,6 +54,6 @@ def onTurnChange(player, turnNumber):
       backupsPlayed = 0  # Num of chars backed-up this turn
       setGlobalVar('PhaseIdx', 0, me)
    else:
-      triggerPhaseEvent(CleanupPhase)
+      goToCleanup()
    debug("<<< OnTurn()") #Debug
    
