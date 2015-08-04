@@ -195,7 +195,11 @@ def alignBackups(card, x=0, y=0):
       ox, oy = CardsCoords['BackupOffset']
       z = card.getIndex
       for i, c in enumerate(attachs):
-         c.moveToTable(x+ox*(i+1), fixCardY(y+oy*(i+1)))
+         x = x+ox*(i+1)
+         y = fixCardY(y+oy*(i+1))
+         cx, cy = c.position
+         if x != cx or y != cy:
+            c.moveToTable(x, y)
          c.setIndex(max(z-1, 0))
 
 

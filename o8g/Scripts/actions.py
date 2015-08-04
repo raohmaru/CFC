@@ -261,6 +261,11 @@ def alignCardAction(card, x = 0, y = 0):
       if slotIdx != -1:
          coords = CardsCoords['Slot'+`slotIdx`]
          alignCard(card, coords[0], coords[1])
+      else:
+         backups = getGlobalVar('Backups')
+         if backups[card._id]:
+            c = Card(backups[card._id])
+            alignBackups(c, *c.position)
 
 
 #---------------------------------------------------------------------------
