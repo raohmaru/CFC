@@ -65,10 +65,7 @@ def triggerPhaseEvent(phase): # Function which triggers effects at the start or 
       for card in myCards:
          if card.Type == 'Character':
             # Clears targets, colors, freezes characters and resets position
-            slotIdx = getSlotIdx(card)
-            if slotIdx != -1:
-               coords = CardsCoords['Slot'+`slotIdx`]
-               alignCard(card, coords[0], coords[1])
+            alignCard(card)
             # Remove script makers
             removeMarker(card, 'Attack')
             removeMarker(card, 'UnitedAttack')
@@ -247,8 +244,7 @@ def attackAuto(card, targets):
       removeMarker(card, 'UnitedAttack')
       removeMarker(card, 'NoFreeze')
       clear(card, silent = True)
-      coords = CardsCoords['Slot'+`slotIdx`]
-      alignCard(card, coords[0], coords[1])
+      alignCard(card)
       notify('{} cancels the attack with {}'.format(me, card))  
       return
    # Char just entered the ring?
@@ -265,8 +261,7 @@ def attackAuto(card, targets):
       
    # Perform the attack
    card.markers[MarkersDict['Attack']] = 1
-   coords = CardsCoords['Attack'+`slotIdx`]
-   alignCard(card, coords[0], coords[1])
+   alignCard(card)
    
    return True
 
@@ -297,8 +292,7 @@ def unitedAttackAuto(card, targets, slotIdx):
    card.markers[MarkersDict['UnitedAttack']] = 1
    card.arrow(target)
    target.target(False)
-   coords = CardsCoords['Attack'+`slotIdx`]
-   alignCard(card, coords[0], coords[1])
+   alignCard(card)
    
    return target
 
@@ -328,8 +322,7 @@ def blockAuto(card):
    if MarkersDict['CounterAttack'] in card.markers:
       removeMarker(card, 'CounterAttack')
       clear(card, silent = True)
-      coords = CardsCoords['Slot'+`slotIdx`]
-      alignCard(card, coords[0], coords[1])
+      alignCard(card)
       notify('{} cancels the counter-attack with {}'.format(me, card))  
       return
    # Check if an attacking enemy char has been selected

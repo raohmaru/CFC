@@ -183,8 +183,17 @@ def getSlotIdx(card, player = me):
    return -1
 
 
-def alignCard(card, x=0, y=0):
+def alignCard(card, x=None, y=None, slotIdx=None):
    debug(">>> alignCard({},{},{})".format(card, x, y)) #Debug
+   if x == None or y == None:
+      if slotIdx == None:
+         slotIdx = getSlotIdx(card)
+      if slotIdx == -1:
+         return
+      if MarkersDict['Attack'] in card.markers or MarkersDict['UnitedAttack'] in card.markers:
+         x, y = CardsCoords['Attack'+`slotIdx`]
+      else:
+         x, y = CardsCoords['Slot'+`slotIdx`]
    card.moveToTable(x, fixCardY(y))
 
 

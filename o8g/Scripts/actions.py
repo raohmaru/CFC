@@ -139,10 +139,7 @@ def alignCards(group, x = 0, y = 0):
       if card.controller == me
       and (card.Type == 'Character'))
    for card in myCards:
-      slotIdx = getSlotIdx(card)
-      if slotIdx != -1:
-         coords = CardsCoords['Slot'+`slotIdx`]
-         alignCard(card, coords[0], coords[1])
+      alignCard(card)
 
 
 def switchPlayAutomation(group, x = 0, y = 0):
@@ -261,8 +258,7 @@ def alignCardAction(card, x = 0, y = 0):
    if card.Type == 'Character':
       slotIdx = getSlotIdx(card)
       if slotIdx != -1:
-         coords = CardsCoords['Slot'+`slotIdx`]
-         alignCard(card, coords[0], coords[1])
+         alignCard(card, slotIdx=slotIdx)
       else:
          backups = getGlobalVar('Backups')
          if backups[card._id]:
