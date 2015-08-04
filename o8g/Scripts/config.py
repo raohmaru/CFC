@@ -62,7 +62,8 @@ MarkersDict = {
    'UnitedAttack'  : ("United Attack",    "88036e2b-6a1f-40be-a941-988b27c405ba"),
    'CounterAttack' : ("Counter-attack",   "2fd7dc74-4149-469d-9bde-53e94b99b934"),
    'DoesntUnfreeze': ("Doesn't Unfreeze", "5231f83b-b78e-48b3-8bce-62031c022bf4"),
-   'NoFreeze'      : ("No Freeze",        "fec1976b-9ce5-4b32-8c07-76eadc5607f6")
+   'NoFreeze'      : ("No Freeze",        "fec1976b-9ce5-4b32-8c07-76eadc5607f6"),
+   'Backup'        : ("Backup",           "efd3208d-2ec3-44ca-be1d-858e91628da4")
 }
 TokensDict = {}
 

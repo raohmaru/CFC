@@ -41,7 +41,7 @@ def onMoveCard(player, card, fromGroup, toGroup, oldIndexs, indexs, oldX, oldY, 
          clearAttachLinks(card)
          freeSlot(card)
    elif fromGroup == table and toGroup == table:
-      if card.Type == 'Character' and (oldX != x or oldY != y):
+      if card.Type == 'Character' and not MarkersDict['Backup'] in card.markers:
          alignBackups(card, x, y)
          
 

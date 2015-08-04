@@ -218,6 +218,7 @@ def backupAuto(card):
    attach(card, target)
    placeCard(card, card.Type, BackupAction, target)
    card.sendToBack()
+   card.markers[MarkersDict['Backup']] = 1
    target.markers[MarkersDict['BP']] += BackupRaiseBP  # Backed-up char's BP is raised
    backupsPlayed += 1
    return target
