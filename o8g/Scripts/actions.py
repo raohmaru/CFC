@@ -163,10 +163,25 @@ def switchWinForms(group, x = 0, y = 0):
 
 def attack(card, x = 0, y = 0):
    mute()
+   cardsnames = card
+   targets = [c for c in table
+      if  c != card
+      and c.targetedBy == me
+      and c.controller == me
+      and c.Type == 'Character']
    if automations['Play']:
-      if not attackAuto(card): return
-   card.highlight = AttackColor
-   notify('{} attacks with {}'.format(me, card))
+      result = attackAuto(card, targets)
+      if result:
+         if isinstance(result, Card):
+            cardsnames = '{} and {}'.format(card, result)
+      else:
+         return
+   if len(targets) > 0:
+      card.highlight = UnitedAttackColor
+      notify('{} does an United Attack with {}.'.format(me, cardsnames))
+   else:
+      card.highlight = AttackColor
+      notify('{} attacks with {}'.format(me, cardsnames))
 
 
 def attackNoFreeze(card, x = 0, y = 0):
@@ -176,20 +191,6 @@ def attackNoFreeze(card, x = 0, y = 0):
    card.highlight = AttackNoFreezeColor
    card.markers[MarkersDict['NoFreeze']] = 1
    notify('{} attacks without freeze with {}.'.format(me, card))
-
-
-def unitedAttack(card, x = 0, y = 0):
-   debug(">>> unitedAttack()") #Debug
-   mute()
-   cardsnames = card
-   if automations['Play']:
-      target = unitedAttackAuto(card)
-      if target:
-         cardsnames = '{} and {}'.format(card, target)
-      else:
-         return
-   card.highlight = UnitedAttackColor
-   notify('{} does an United Attack with {}.'.format(me, cardsnames))
 
 
 def block(card, x = 0, y = 0):
@@ -251,6 +252,7 @@ def doesNotUnfreeze(card, x = 0, y = 0):
 def clear(card, x = 0, y = 0, silent = False):
    if not silent: notify("{} clears {}.".format(me, card))
    card.target(False)
+   card.arrow(card, False)
    if not card.highlight in [DoesntUnfreezeColor]:
       card.highlight = None
 

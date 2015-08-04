@@ -224,12 +224,12 @@ def backupAuto(card):
    return target
 
 
-def attackAuto(card):
+def attackAuto(card, targets):
    debug(">>> attackAuto()") #Debug
    
    # Check if we can attack
    if not me.isActivePlayer or getGlobalVar('PhaseIdx', me) != AttackPhase:
-      information("You can only attack in your Main Phase.")
+      information("You can only attack in your Attack Phase.")
       return
    # Only for character cards...
    if card.Type != 'Character':
@@ -242,7 +242,7 @@ def attackAuto(card):
       warning("Please attack with a character in your ring.")
       return
    # Cancels the character's attack if it's already attacking
-   if MarkersDict['Attack'] in card.markers:
+   if MarkersDict['Attack'] in card.markers or MarkersDict['UnitedAttack'] in card.markers:
       removeMarker(card, 'Attack')
       removeMarker(card, 'UnitedAttack')
       removeMarker(card, 'NoFreeze')
@@ -259,6 +259,10 @@ def attackAuto(card):
    if card.orientation & Rot90 == Rot90:
       warning("Frozen characters can't attack this turn.")
       return
+   # United attack?
+   if len(targets) > 0:
+      return unitedAttackAuto(card, targets, slotIdx)
+      
    # Perform the attack
    card.markers[MarkersDict['Attack']] = 1
    coords = CardsCoords['Attack'+`slotIdx`]
@@ -267,15 +271,11 @@ def attackAuto(card):
    return True
 
 
-def unitedAttackAuto(card):
+def unitedAttackAuto(card, targets, slotIdx):
    debug(">>> unitedAttackAuto()") #Debug
    
    # Check if an attacking char has been selected
    myRing = getGlobalVar('Ring', me)
-   targets = [c for c in table
-      if c.targetedBy
-      and c.controller == me
-      and c.Type == 'Character']
    if len(targets) == 0 or not targets[0]._id in myRing or not MarkersDict['Attack'] in targets[0].markers:
       information("Please select an attacking character in your ring.\n(Shift key + Left click on a character).")
       return
@@ -294,13 +294,11 @@ def unitedAttackAuto(card):
       if not confirm("You do not seem to have enough SP to do a {} United Attack (it costs {}).\nProceed anyway?".format(type, cost)):
          return
    
-   atk = attackAuto(card)
-   if atk != True: return atk
-   
-   removeMarker(card, 'Attack')
    card.markers[MarkersDict['UnitedAttack']] = 1
    card.arrow(target)
    target.target(False)
+   coords = CardsCoords['Attack'+`slotIdx`]
+   alignCard(card, coords[0], coords[1])
    
    return target
 
