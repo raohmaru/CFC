@@ -4,7 +4,7 @@
       name="Card Fighters' Clash"
       id="e3d56d9e-900d-49c6-b6ae-22cbb51be153"
       octgnVersion="3.1.55.0"
-      version="0.1.1.144"
+      version="0.1.1.147"
       markersize="20"
       tags="capcom snk fighter"
       description="A card game based in the SNK Playmore’s video game SNK vs. Capcom Card Fighters' Clash 2 Expand Edition.
@@ -136,7 +136,7 @@
 		<cardactions menu="Combat...">
 			<cardaction menu="Attack" shortcut="Ctrl+A" execute="attack" />
 			<cardaction menu="Attack without freezing" shortcut="Ctrl+Shift+A" execute="attackNoFreeze" />
-			<cardaction menu="United Attack" shortcut="Ctrl+A" execute="attack" />
+			<cardaction menu="United Attack" shortcut="Ctrl+Alt+A" execute="attack" />
 			<cardaction menu="Counter-attack" shortcut="Ctrl+B" execute="block" />
 		</cardactions>
 		<cardactions menu="Move...">

@@ -335,15 +335,16 @@ def blockAuto(card):
    if MarkersDict['UnitedAttack'] in target.markers:
       information("Please select the first attacking character of the United Attack.")
       return
+   # An attacker can only be blocked by exactly 1 char
    slotIdx = getSlotIdx(target, players[1])
+   if slotIdx == -1 or myRing[slotIdx] == None:
+      information("An attacking character can only be blocked by exactly one char")
    
    card.markers[MarkersDict['CounterAttack']] = 1
    # card.arrow(target)
    target.target(False)
-   slotIdx = getSlotIdx(target, players[1])
-   if slotIdx != -1:
-      coords = CardsCoords['Attack'+`slotIdx`]
-      alignCard(card, coords[0], coords[1])
+   coords = CardsCoords['Attack'+`slotIdx`]
+   alignCard(card, coords[0], coords[1])
       
    return target
    
