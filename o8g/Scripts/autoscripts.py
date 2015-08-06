@@ -104,7 +104,7 @@ def playAuto(card):
       # Player has any empty slot in his ring?
       myRing = getGlobalVar('Ring', me)
       if myRing.count(None) == 0:
-         information("There is no emply slot in your ring where to play a character card.")
+         warning("There is no emply slot in your ring where to play a character card.")
          return
       # Prompt the player to select an Empty Slot
       emptySlots = []
@@ -171,13 +171,13 @@ def backupAuto(card):
       return
    # Only for character cards
    if card.Type != 'Character':
-      information("You can only backup with Character cards.")
+      warning("You can only backup with Character cards.")
       return
    # Check if a valid char has been selected
    myRing = getGlobalVar('Ring', me)
    targets = getTargetedCards(card)
    if len(targets) == 0 or not targets[0]._id in myRing:
-      information("Please select a character in your ring.\n(Shift key + Left click on a character).")
+      warning("Please select a character in your ring.\n(Shift key + Left click on a character).")
       return
    target = targets[0]
    # Backup limit
@@ -271,7 +271,7 @@ def unitedAttackAuto(card):
    myRing = getGlobalVar('Ring', me)
    targets = getTargetedCards(card)
    if len(targets) == 0 or not targets[0]._id in myRing or not MarkersDict['Attack'] in targets[0].markers:
-      information("Please select an attacking character in your ring.\n(Shift key + Left click on a character).")
+      warning("Please select an attacking character in your ring.\n(Shift key + Left click on a character).")
       return
    target = targets[0]   
    # Max chars per United Attack
@@ -328,17 +328,17 @@ def blockAuto(card):
    enemyRing = getGlobalVar('Ring', players[1])
    targets = getTargetedCards(card, True, False)
    if len(targets) == 0 or not targets[0]._id in enemyRing or not MarkersDict['Attack'] in targets[0].markers:
-      information("Please select an attacking enemy character.\n(Shift key + Left click on a character).")
+      warning("Please select an attacking enemy character.\n(Shift key + Left click on a character).")
       return
    target = targets[0]
    # Block the first char in a United Attack
    if MarkersDict['UnitedAttack'] in target.markers:
-      information("Please select the first attacking character of the United Attack.")
+      warning("Please select the first attacking character of the United Attack.")
       return
    # An attacker can only be blocked by exactly 1 char
    slotIdx = getSlotIdx(target, players[1])
    if slotIdx == -1 or myRing[slotIdx] == None:
-      information("An attacking character can only be blocked by exactly one char")
+      warning("An attacking character can only be blocked by exactly one char")
    
    card.markers[MarkersDict['CounterAttack']] = 1
    # card.arrow(target)
