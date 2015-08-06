@@ -165,6 +165,7 @@ def attack(card, x = 0, y = 0):
    card.highlight = AttackColor
    notify('{} attacks with {}'.format(me, card))
 
+
 def attackNoFreeze(card, x = 0, y = 0):
    mute()
    if automations['Play']:
@@ -172,6 +173,7 @@ def attackNoFreeze(card, x = 0, y = 0):
    card.highlight = AttackNoFreezeColor
    card.markers[MarkersDict['NoFreeze']] = 1
    notify('{} attacks without freeze with {}.'.format(me, card))
+
 
 def unitedAttack(card, x = 0, y = 0):
    debug(">>> unitedAttack()") #Debug
@@ -185,6 +187,7 @@ def unitedAttack(card, x = 0, y = 0):
          return
    card.highlight = UnitedAttackColor
    notify('{} does an United Attack with {}.'.format(me, cardsnames))
+
 
 def block(card, x = 0, y = 0):
    mute()
@@ -260,6 +263,14 @@ def alignCardAction(card, x = 0, y = 0):
          if backups[card._id]:
             c = Card(backups[card._id])
             alignBackups(c, *c.position)
+
+
+def askCardBackups(card, x = 0, y = 0):
+   if card.Type == 'Character':
+      acceptedBackups = (card.properties['Backup 1'], card.properties['Backup 2'], card.properties['Backup 3'])
+      information("{} can be backed-up with this character types:\n- {}".format(card.Name, '\n- '.join(filter(None, acceptedBackups))))
+   else:
+      information("Only character cards can be backed-up.")
 
 
 #---------------------------------------------------------------------------
