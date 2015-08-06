@@ -212,6 +212,16 @@ def alignBackups(card, x=0, y=0):
          c.setIndex(max(z-1, 0))
 
 
+def getTargetedCards(card=None, targetedByMe=True, controlledByMe=True, type='Character'):
+   targetedBy   = me if targetedByMe   or len(players) == 1 else players[1]
+   controlledBy = me if controlledByMe or len(players) == 1 else players[1]
+   targets = [c for c in table
+      if  c != card
+      and c.targetedBy == targetedBy
+      and c.controller == controlledBy
+      and c.Type == type]
+   return targets
+
 #---------------------------------------------------------------------------
 # Card automation functions
 #---------------------------------------------------------------------------

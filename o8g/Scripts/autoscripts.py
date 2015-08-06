@@ -89,10 +89,8 @@ def playAuto(card):
    # Player plays a Character card
    if card.Type == 'Character':
       # If a char has been selected, backup that char instead
-      targets = [c for c in table
-         if c.targetedBy
-         and c.controller == me]
-      if len(targets) > 0 and targets[0].Type == 'Character':
+      targets = getTargetedCards(card)
+      if len(targets) > 0:
          backup(card)
          return
       # Check if the card can be legally played
@@ -177,13 +175,11 @@ def backupAuto(card):
       return
    # Check if a valid char has been selected
    myRing = getGlobalVar('Ring', me)
-   target = [c for c in table
-      if c.targetedBy
-      and c.controller == me]
-   if len(target) == 0 or target[0].Type != 'Character' or not target[0]._id in myRing:
+   targets = getTargetedCards(card)
+   if len(targets) == 0 or not targets[0]._id in myRing:
       information("Please select a character in your ring.\n(Shift key + Left click on a character).")
       return
-   target = target[0]
+   target = targets[0]
    # Backup limit
    if backupsPlayed >= BackupsPerTurn:
       if not confirm("Can't backup more than {} character per turn.\nProceed anyway?".format(CharsPerTurn)):
@@ -221,7 +217,7 @@ def backupAuto(card):
    return target
 
 
-def attackAuto(card, targets):
+def attackAuto(card):
    debug(">>> attackAuto()") #Debug
    
    # Check if we can attack
@@ -256,21 +252,24 @@ def attackAuto(card, targets):
       warning("Frozen characters can't attack this turn.")
       return
    # United attack?
+   targets = getTargetedCards(card)
    if len(targets) > 0:
-      return unitedAttackAuto(card, targets, slotIdx)
+      unitedAttack(card)
+      return
       
    # Perform the attack
    card.markers[MarkersDict['Attack']] = 1
-   alignCard(card)
+   alignCard(card, slotIdx)
    
    return True
 
 
-def unitedAttackAuto(card, targets, slotIdx):
+def unitedAttackAuto(card):
    debug(">>> unitedAttackAuto()") #Debug
    
    # Check if an attacking char has been selected
    myRing = getGlobalVar('Ring', me)
+   targets = getTargetedCards(card)
    if len(targets) == 0 or not targets[0]._id in myRing or not MarkersDict['Attack'] in targets[0].markers:
       information("Please select an attacking character in your ring.\n(Shift key + Left click on a character).")
       return
@@ -292,7 +291,7 @@ def unitedAttackAuto(card, targets, slotIdx):
    card.markers[MarkersDict['UnitedAttack']] = 1
    card.arrow(target)
    target.target(False)
-   alignCard(card)
+   alignCard(card, getSlotIdx(card))
    
    return target
 
@@ -327,10 +326,7 @@ def blockAuto(card):
       return
    # Check if an attacking enemy char has been selected
    enemyRing = getGlobalVar('Ring', players[1])
-   targets = [c for c in table
-      if c.targetedBy
-      and c.controller != me
-      and c.Type == 'Character']
+   targets = getTargetedCards(card, True, False)
    if len(targets) == 0 or not targets[0]._id in enemyRing or not MarkersDict['Attack'] in targets[0].markers:
       information("Please select an attacking enemy character.\n(Shift key + Left click on a character).")
       return
@@ -339,6 +335,7 @@ def blockAuto(card):
    if MarkersDict['UnitedAttack'] in target.markers:
       information("Please select the first attacking character of the United Attack.")
       return
+   slotIdx = getSlotIdx(target, players[1])
    
    card.markers[MarkersDict['CounterAttack']] = 1
    # card.arrow(target)
