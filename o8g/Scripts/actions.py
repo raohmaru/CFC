@@ -209,7 +209,7 @@ def activate(card, x = 0, y = 0):
       if not activateAuto(card): return
    if card.Type == 'Character':
       pcard = getParsedCard(card)
-      if pcard.ability:
+      if pcard.hasEffect():
          ability = "ability {}".format(pcard.ability)
       else:
          return

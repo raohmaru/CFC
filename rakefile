@@ -44,6 +44,7 @@ end
 desc "Builds and moves the NUPKG file to the OCTGN LocalFeed dir"
 task :deploy => [:clobber, :build] do
   mv Dir.glob("o8g/*.nupkg"), "#{OCTGN_dir}/LocalFeed/"
+  Rake::Task["octgn"].execute
 end
 
 
@@ -55,7 +56,7 @@ end
 
 desc "Runs OCTGN in dev mode, in the table view with the CFC game loaded"
 task :octgn do
-  # Fixes bug with OCTGN asking for Wine
+  puts "\nFixing bug with OCTGN asking for Wine..."
   filename = OCTGN_dir + "/Config/settings.json"
   file = File.open(filename, 'r')
   settings = JSON.parse(file.read)
@@ -67,5 +68,5 @@ task :octgn do
   
   # OCTGN window closes after the loading screen ends
   # system "#{OCTGN_dir}/OCTGN/OCTGN.exe /t /g=e3d56d9e-900d-49c6-b6ae-22cbb51be153 /x"
-  puts "#{OCTGN_dir}/OCTGN/OCTGN.exe /t /g=e3d56d9e-900d-49c6-b6ae-22cbb51be153 /x"
+  puts "Run #{OCTGN_dir}/OCTGN/OCTGN.exe /t /g=e3d56d9e-900d-49c6-b6ae-22cbb51be153 /x"
 end

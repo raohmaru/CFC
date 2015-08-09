@@ -36,6 +36,13 @@ def delayedWhisper(text): # Because whispers for some reason execute before noti
    whisper(text)
 
 
+def checkTwoSidedTable():
+   debug(">>> checkTwoSidedTable()") #Debug
+   mute()
+   if not table.isTwoSided():
+      warning("This game is designed to be played on a two-sided table.\nPlease start a new game and make sure the appropriate option is checked.")
+
+      
 def chooseSide(): # Called from many functions to check if the player has chosen a side for this game.
    mute()
    global playerSide, playerAxis
@@ -57,10 +64,11 @@ def chooseSide(): # Called from many functions to check if the player has chosen
 
 def resetAll(): # Clears all the global variables in order to start a new game.
    # Import all our global variables and reset them.
-   global playerSide, handSize, debugVerbosity
+   global playerSide, handSize, debugVerbosity, cards
    debug(">>> resetAll()") #Debug
    playerSide = None
    handSize = HandSize
+   cards = {}
    me.HP = 30  # Wipe the counters
    me.SP = 0
    backups = getGlobalVar('Backups')
@@ -223,33 +231,6 @@ def getTargetedCards(card=None, targetedByMe=True, controlledByMe=True, type='Ch
    return targets
 
 #---------------------------------------------------------------------------
-# Card automation functions
-#---------------------------------------------------------------------------
-
-def getParsedCard(card):
-   debug(">>> getParsedCard()") #Debug
-   if not card.model in cards:
-      cards[card.model] = ParsedCard(card)
-   debug("Retrieved parsed card for model {} ({})".format(card.model, card.Name))
-   return cards.get(card.model)
-      
-class ParsedCard():
-   """ A class which stores the card ability name and its parsed rule autoscripts """   
-   def __init__(self, card):
-      debug(">>> ParsedCard()") #Debug
-   
-      ability = Regexps['Ability'].match(card.Rules)
-      if ability:
-         debug("Parsing {}".format(ability.group(0)))  # Causes weird IronPython error
-         self.ability = ability.group(0)
-         self.ability_type = ability.group(1)
-         self.ability_name = ability.group(2)
-      else:
-         debug("No ability to parse")
-         self.ability = None
-
-
-#---------------------------------------------------------------------------
 # Markers functions
 #---------------------------------------------------------------------------
 
@@ -395,6 +376,35 @@ def debug(msg = 'Debug Ping!', level = 1):
       level = DebugLevel.Debug
    if debugVerbosity >= level:
       whisper(msg)
+      
+
+def setupDebug(group, x=0, y=0):
+   # setup(group)
+   debug(">>> setupDebug()") #Debug
+   
+   mute()
+   
+   if len(players) > 1 or not me.name == Author:
+      whisper("This function is only for development purposes.")
+      return
+      
+   if turnNumber() == 0:
+      warning("Start the game prior to setup the debug environment")
+      return
+   
+   global charsPlayed
+   me.SP = 50
+   chooseSide()
+   goToMain()
+   cards = ['aa867ea1-89f8-4154-8e20-2263edd00009', 'aa867ea1-89f8-4154-8e20-2263edd00014', 'aa867ea1-89f8-4154-8e20-2263edd00135', 'aa867ea1-89f8-4154-8e20-2263edd00240']
+   for i, id in enumerate(cards):
+      debug("Creating card {} at slot {}".format(id, i))
+      card = table.create(id, 0, 0, quantity=1, persist=True)
+      playAuto(card, i)
+      card.markers[MarkersDict['JustEntered']] = 0
+      charsPlayed = 0
+   
+   debug("<<< setupDebug()") #Debug
 
 
 def testSuite(group, x=0, y=0):

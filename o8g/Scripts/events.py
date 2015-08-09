@@ -20,13 +20,15 @@
 # Event handlers
 #---------------------------------------------------------------------------
 
-def checkTwoSidedTable():
-   mute()
-   if not table.isTwoSided():
-      warning("This game is designed to be played on a two-sided table.\nPlease start a new game and make sure the appropriate option is checked.")
+def onTableLoad():
+   checkTwoSidedTable()
 
 
-def onLoadDeck(player, groups):   
+def onGameStart():
+   resetAll()
+
+   
+def onLoadDeck(player, groups):
    if player != me: return # We only want the owner of to run this script
    mute()
    decksize = len(me.Deck)

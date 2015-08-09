@@ -3,3 +3,4 @@
 *.o8g
 proxy_glob.rb
 psd/
+*.pyc

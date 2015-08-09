@@ -41,7 +41,7 @@ def triggerPhaseEvent(phase): # Function which triggers effects at the start or 
    
    elif phase == DrawPhase:
       if automations['Play']:
-         if len(me.Deck) == 0:
+         if len(me.Deck) == 0 and len(players) > 1:
             notify("{} has no cards in their deck and therefore can't draw.\n{} wins the game!".format(me,players[1]))
    
    elif phase == BlockPhase:
@@ -81,7 +81,7 @@ def triggerPhaseEvent(phase): # Function which triggers effects at the start or 
 # Play automations
 #------------------------------------------------------------------------------
 
-def playAuto(card):
+def playAuto(card, slotIdx=None):
    debug(">>> playAuto({})".format(card)) #Debug
    global charsPlayed
    phaseIdx = getGlobalVar('PhaseIdx', me)
@@ -107,16 +107,17 @@ def playAuto(card):
          warning("There is no emply slot in your ring where to play a character card.")
          return
       # Prompt the player to select an Empty Slot
-      emptySlots = []
-      for i, id in enumerate(myRing):
-         if id == None:
-            emptySlots.append(str(i+1))
-      slotIdx = askChoice("Select an empty slot:", emptySlots)
-      debug("Selected option {} ({})".format(slotIdx, slotIdx-1))
-      if slotIdx == 0:
-         return
+      if slotIdx == None:
+         emptySlots = []
+         for i, id in enumerate(myRing):
+            if id == None:
+               emptySlots.append(str(i+1))
+         slotIdx = askChoice("Select an empty slot:", emptySlots)
+         debug("Selected option {} ({})".format(slotIdx, slotIdx-1))
+         if slotIdx == 0:
+            return
+         slotIdx = int(emptySlots[slotIdx-1]) - 1
       # Is really that slot empty?
-      slotIdx = int(emptySlots[slotIdx-1]) - 1
       debug("Selected slot: {} ({})".format(slotIdx, myRing[slotIdx]))
       if myRing[slotIdx] != None:
          warning("Character card can't be played.\nThe selected slot is not empty (it's taken up by {}).\nIf you want to backup, please first target a character in your ring.".format(Card(myRing[slotIdx]).Name))
@@ -337,7 +338,7 @@ def blockAuto(card):
       return
    # An attacker can only be blocked by exactly 1 char
    slotIdx = getSlotIdx(target, players[1])
-   if slotIdx == -1 or myRing[slotIdx] == None:
+   if slotIdx == -1 or myRing[slotIdx] != None:
       warning("An attacking character can only be blocked by exactly one char")
    
    card.markers[MarkersDict['CounterAttack']] = 1
@@ -355,11 +356,13 @@ def activateAuto(card):
    if card.highlight == ActivatedColor:
       return   
    # Character ability
-   if card.Type == 'Character':      
-      pcard = getParsedCard(card)
-      if not pcard.ability:
+   if card.Type == 'Character':
+      if MarkersDict['NoAbility'] in card.markers:
          return
-      debug("Trying to activate {}'s ability {} {}'".format(card.Name, pcard.ability_type, pcard.ability_name))
+      pcard = getParsedCard(card)
+      if not pcard.hasEffect():
+         return
+      debug("Trying to activate {}'s ability {} {}".format(card.Name, pcard.ability_type, pcard.ability_name))
       # Activate [] and /\ only in player's Main Phase
       if pcard.ability_type in [InstantAbility, ActivatedAbility] and (not me.isActivePlayer or getGlobalVar('PhaseIdx', me) != MainPhase):
          information("You can only activate [ ] or /\\ abilities in your Main Phase.")
@@ -387,9 +390,18 @@ def activateAuto(card):
             warning("Can't activate ( ) abilities of characters which joined a United Attack.")
             return
       
+      # Activate [] ability?
+      if pcard.ability_type == ActivatedAbility:
+         if not confirm("Activate {}'s ability {} {}?".format(card.Name, pcard.ability_type, pcard.ability_name)):
+            return
       # Activate the ability
+      pcard.activateEffect()
       if pcard.ability_type == ActivatedAbility:
          freeze(card, silent = True)
+   # Rest of cards
+   else:
+      pcard = getParsedCard(card)
+      pcard.activateEffect()
    
    return True
    
