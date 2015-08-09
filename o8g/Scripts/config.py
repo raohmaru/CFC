@@ -19,8 +19,8 @@
 # Helper class to convert a dict to an object (to be accesed with dot notation)
 # http://stackoverflow.com/questions/1305532/convert-python-dict-to-object
 class Struct:
-    def __init__(self, **entries): 
-        self.__dict__.update(entries)
+   def __init__(self, **entries): 
+      self.__dict__.update(entries)
 
 #---------------------------------------------------------------------------
 # Constants
@@ -63,7 +63,8 @@ MarkersDict = {
    'CounterAttack' : ("Counter-attack",   "2fd7dc74-4149-469d-9bde-53e94b99b934"),
    'DoesntUnfreeze': ("Doesn't Unfreeze", "5231f83b-b78e-48b3-8bce-62031c022bf4"),
    'NoFreeze'      : ("No Freeze",        "fec1976b-9ce5-4b32-8c07-76eadc5607f6"),
-   'Backup'        : ("Backup",           "efd3208d-2ec3-44ca-be1d-858e91628da4")
+   'Backup'        : ("Backup",           "efd3208d-2ec3-44ca-be1d-858e91628da4"),
+   'NoAbility'     : ("No Ability",       "d045fc42-1c47-474a-8bed-248ed80b5f3d")
 }
 TokensDict = {}
 
