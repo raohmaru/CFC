@@ -66,7 +66,6 @@ zone:
       deck
       discard
       kill
-      *
    Prefixes:
       my
       opp

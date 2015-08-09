@@ -54,7 +54,7 @@ AS_PREFIX_RESTRS = [
 ]
 
 # Keywords
-AS_KW_ALL    = '*'
+AS_KW_ALL = '*'
 
 AS_KW_TARGET_PLAYER   = 'player'
 AS_KW_TARGET_ME       = 'me'
@@ -86,8 +86,7 @@ AS_KW_ZONES = [
    AS_KW_ZONE_HAND,
    AS_KW_ZONE_DECK,
    AS_KW_ZONE_DISCARD,
-   AS_KW_ZONE_KILL,
-   AS_KW_ALL
+   AS_KW_ZONE_KILL
 ]
 
 AS_KW_RESTR_BP        = 'bp'
@@ -120,8 +119,8 @@ AS_KW_RESTRS = [
 class Rules():
    """ Rule scripts parser """
    rule_id = ''
-   parsed       = False
-   has_target   = False
+   parsed  = False
+   target  = None
 
    def __init__(self, rule):
       self.rule_id = rule
@@ -133,6 +132,7 @@ class Rules():
          return      
       self.parsed = True
       
+      # Get the rules
       rules = RulesDict[self.rule_id.lower()]
       if not rules:
          return
@@ -151,76 +151,91 @@ class Rules():
          line = line.split(AS_COMMENT_CHAR)[0].rstrip()
 
          # Check for target command
-         if self.has_target != False:
+         if self.target == None:
+            target = AS_RGX_CMD_TARGET.match(line)
+            if target:
+               self.target = self.parseTarget( line[len(target.group()):] )
+         else:
             debug("Target already defined. Line skipped")
-            continue
-         self.has_target = AS_RGX_CMD_TARGET.match(line)
-         if self.has_target:
-            res = self.parseTarget( line[len(self.has_target.group()):] )
-            if not res:
-               self.has_target = None
 
 
    def parseTarget(self, str):
-      str = str.strip()
+      str    = str.strip()
       debug("Parsing target '%s'" % str)
 
-      # Get the type
-      type = AS_RGX_TARGET_TYPE.split(str)
-      if not type[0]:
+      # Get the types
+      types = AS_RGX_TARGET_TYPE.split(str)
+      if not types[0]:
          debug("ParseError: 'target' has no type parameter")
          return False
-      self.target_types = type[0].split(AS_OP_OR)
-      if AS_KW_ALL in self.target_types:
-         self.target_types = [AS_KW_ALL]
-      debug("-- types: %s" % self.target_types)
+      types = types[0].split(AS_OP_OR)
+      # AS_KW_ALL overrides the rest
+      if AS_KW_ALL in types:
+         types = [AS_KW_ALL]
+      debug("-- types: %s" % types)
 
-      # get the restrictions
-      self.target_restrs = AS_RGX_TARGET_RESTR.search(str)
-      if self.target_restrs:
-         self.target_restrs = self.target_restrs.group(1).split(AS_OP_OR)
-         debug("-- restrictions: %s" % self.target_restrs)
+      # Get the restrictions
+      restrs = AS_RGX_TARGET_RESTR.search(str)
+      restrs_arr = []
+      if restrs:
+         restrs = restrs.group(1).split(AS_OP_OR)
+         # Check restrictions
+         for restr in restrs:
+            # AND restrictions
+            restr = restr.split(AS_OP_AND)
+            arr = []
+            for r in restr:
+               r = self.getRestr(r)
+               # Check valid restriction kw
+               if r[1] not in AS_KW_RESTRS:
+                  debug("KeywordError: Invalid restriction '%s'" % r[1])
+                  continue
+               arr.append(r)
+            debug("--- restr: %s" % arr)
+            if len(arr) > 0:
+               restrs_arr.append(arr if len(arr) > 1 else arr[0])
 
-      # get the zone
+      # Get the zone
       zone = AS_RGX_TARGET_ZONE.search(str)
+      zone_prefix = ''
       if zone:
-         self.target_zone = zone.group(1)
+         zone = zone.group(1)
       else:
-         self.target_zone = AS_KW_ZONE_ARENA
-      debug("-- zone: '%s'" % self.target_zone)
-
-      return True
+         zone = AS_KW_ZONE_ARENA
+      # Check for zone prefixes
+      if zone != AS_KW_ZONE_ARENA:
+         zone_prefix, zone = self.getPrefix(AS_PREFIX_ZONES, zone)
+      # Check valid zones
+      if zone not in AS_KW_ZONES:
+         debug("KeywordError: Invalid zone '%s'. Assuming '%s'" % (zone, AS_KW_ZONE_ARENA))
+         zone = AS_KW_ZONE_ARENA
+      debug("--- zone prefix: %s" % zone_prefix)
+      debug("--- zone: %s" % zone)
+      
+      return {
+         'types' : types,
+         'restrs': restrs_arr,
+         'zone'  : [zone_prefix, zone]
+      }
 
 
    def activate(self):
       debug("\nExecuting rules")
-      if self.has_target:
-         if not self.getTarget():
+      if self.target:
+         if not self.checkTargets(self.target):
             debug("Targeting canceled")
             return
 
 
-   def getTarget(self):
+   def checkTargets(self, target):
       debug("Checking targets")
 
-      types       = self.target_types
-      zone        = self.target_zone
-      zone_prefix = ''
-      restrs      = self.target_restrs
-
-      # Check for zone prefixes
-      if zone != AS_KW_ALL:
-         zone_prefix, zone = self.getPrefix(AS_PREFIX_ZONES, zone)
-      debug("--- zone prefix: %s" % zone_prefix)
-      debug("--- zone: %s" % zone)
-
-      # Check valid zones
-      if not zone in AS_KW_ZONES:
-         debug("KeywordError: Invalid zone '%s'. Assuming '%s'" % (zone, AS_KW_ZONE_ARENA))
-         zone = AS_KW_ZONE_ARENA
+      types  = target['types']
+      zone   = target['zone']
+      restrs = target['restrs']
 
       # Check target type
-      # If two or more targets, maybe ask for a target
+      # If two or more targets, maybe ask for a single target
       if len(types) > 1:
          # Check if there is any keyword in the target types
          kw_types = set(AS_KW_TARGETS) & set(types)
@@ -234,19 +249,19 @@ class Rules():
             types = [types[t-1]]
       debug("--- types: %s" % types)
       
-      # Check restrictions
-      if restrs:
-         for restr in restrs:
-            # AND restrictions
-            restr = restr.split(AS_OP_AND)
-            for r in restr:
-               r = self.getRestr(r)
-               debug("--- restr: %s" % r)
+      # Get the zone object
+      cards = self.getZoneCards(zone)
+      debug("--- zone %s cards: %s" % (''.join(zone), cards))
+      
+      # If target is a player...
+      # for type in types:
+         # if self.isPlayer(types):
       
       return True
       
    
    def getRestr(self, str):
+   # Returns a restriction as an array
       str  = str.strip()
       args = ''
       
@@ -263,12 +278,49 @@ class Rules():
       
    
    def getPrefix(self, prefixes, str):
+   # Get the prefix for a given string
       for p in prefixes:
          if str[:len(p)] == p:
             cmd = str[len(p):].strip()
             return (p, cmd)
       return ('', str)
       
+      
+   def getPrefixObj(self, prefix):
+      if prefix == AS_PREFIX_MY:
+         return me
+      if prefix == AS_PREFIX_OPP:
+         return players[1] if len(players) > 1 else me
+      return None
+      
+   
+   def getZoneCards(self, zone):
+      prefix  = zone[0]
+      zone    = zone[1]
+      player  = self.getPrefixObj(prefix)
+      targets = []
+      
+      if zone == AS_KW_ZONE_ARENA:
+         targets = [c for c in table]
+      
+      if zone == AS_KW_ZONE_RING:
+         targets = [c for c in table
+            if not player
+            or c.controller == player]
+      
+      if zone == AS_KW_ZONE_HAND and player:
+         targets = [c for c in player.hand]
+      
+      if zone == AS_KW_ZONE_DECK and player:
+         targets = [c for c in player.Deck]
+      
+      if zone == AS_KW_ZONE_DISCARD and player:
+         targets = [c for c in player.piles['Discard Pile']]
+      
+      if zone == AS_KW_ZONE_KILL and player:
+         targets = [c for c in player.piles['Kill Pile']]
+            
+      return targets
 
 
 # Enabled only from the python terminal
@@ -276,6 +328,7 @@ class Rules():
    # def debug(str):
       # print str
       
-   # from cardsRules import RulesDict
+   # if 'RulesDict' not in globals():
+      # from cardsRules import RulesDict 
    # rules = Rules('aa867ea1-89f8-4154-8e20-2263edd00014')
    # rules.activate()
