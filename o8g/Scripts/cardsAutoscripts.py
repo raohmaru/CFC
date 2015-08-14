@@ -34,11 +34,13 @@ def getParsedCard(card):
 
 class GameCard(object):
    """ A class which stores the card effect name and its parsed rule scripts """   
+   card_id = None
    rule_id = None
    rules   = None
    
    def __init__(self, card):
       debug(">>> GameCard()") #Debug
+      self.card_id = card._id
       self.rule_id = card.model
 
          
@@ -50,7 +52,7 @@ class GameCard(object):
       if not self.hasEffect():
          return
       if self.rules == None:
-         self.rules = Rules(self.rule_id)
+         self.rules = Rules(self.rule_id, self.card_id)
       self.rules.activate()
 
 

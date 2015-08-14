@@ -19,111 +19,16 @@
 # RuleScript 0.0.1
 #---------------------------------------------------------------------------
 
-import re
-
-# CONST LANGUAGE DEFINITION
-# Regular expressions
-AS_RGX_CMD_TARGET   = re.compile(r'^target\s*=\s*')
-AS_RGX_TARGET_TYPE  = re.compile(r'\||\[')
-AS_RGX_TARGET_RESTR = re.compile(r'\[(.+)\]')
-AS_RGX_TARGET_PARAM = re.compile(r'(\w+)\s*([=><]+)\s*(\w+)')
-AS_RGX_TARGET_ZONE  = re.compile(r'\|\s*([\w*]+).*$')
-
-# Comments
-AS_COMMENT_CHAR = '#'
-
-# Operators
-AS_OP_OR    = ','
-AS_OP_AND   = '&'
-AS_OP_EQUAL = '='
-AS_OP_LTE   = '>='
-AS_OP_GTE   = '<='
-
-# Prefixes
-AS_PREFIX_NOT = '-'
-AS_PREFIX_MY  = 'my'
-AS_PREFIX_OPP = 'opp'
-
-AS_PREFIX_ZONES = [
-   AS_PREFIX_MY,
-   AS_PREFIX_OPP
-]
-
-AS_PREFIX_RESTRS = [
-   AS_PREFIX_NOT
-]
-
-# Keywords
-AS_KW_ALL = '*'
-
-AS_KW_TARGET_PLAYER   = 'player'
-AS_KW_TARGET_ME       = 'me'
-AS_KW_TARGET_OPP      = 'opp'
-AS_KW_TARGET_THIS     = 'this'
-AS_KW_TARGET_CHAR     = 'character'
-AS_KW_TARGET_ACTION   = 'action'
-AS_KW_TARGET_REACTION = 'reaction'
-AS_KW_TARGETS = [
-   AS_KW_TARGET_PLAYER,
-   AS_KW_TARGET_ME,
-   AS_KW_TARGET_OPP,
-   AS_KW_TARGET_THIS,
-   AS_KW_TARGET_CHAR,
-   AS_KW_TARGET_ACTION,
-   AS_KW_TARGET_REACTION,
-   AS_KW_ALL
-]
-
-AS_KW_ZONE_ARENA   = 'arena'
-AS_KW_ZONE_RING    = 'ring'
-AS_KW_ZONE_HAND    = 'hand'
-AS_KW_ZONE_DECK    = 'deck'
-AS_KW_ZONE_DISCARD = 'discard'
-AS_KW_ZONE_KILL    = 'kill'
-AS_KW_ZONES = [
-   AS_KW_ZONE_ARENA,
-   AS_KW_ZONE_RING,
-   AS_KW_ZONE_HAND,
-   AS_KW_ZONE_DECK,
-   AS_KW_ZONE_DISCARD,
-   AS_KW_ZONE_KILL
-]
-
-AS_KW_RESTR_BP        = 'bp'
-AS_KW_RESTR_SP        = 'sp'
-AS_KW_RESTR_BACKED    = 'backed'
-AS_KW_RESTR_BACKUP    = 'backup'
-AS_KW_RESTR_ATTACK    = 'attack'
-AS_KW_RESTR_UATTACK   = 'uattack'
-AS_KW_RESTR_BLOCK     = 'block'
-AS_KW_RESTR_FREEZED   = 'freezed'
-AS_KW_RESTR_FRESH     = 'fresh'
-AS_KW_RESTR_POWERLESS = 'powerless'
-AS_KW_RESTRS = [
-   AS_KW_RESTR_BP,
-   AS_KW_RESTR_SP,
-   AS_KW_RESTR_BACKED,
-   AS_KW_RESTR_BACKUP,
-   AS_KW_RESTR_ATTACK,
-   AS_KW_RESTR_UATTACK,
-   AS_KW_RESTR_BLOCK,
-   AS_KW_RESTR_FREEZED,
-   AS_KW_RESTR_FRESH,
-   AS_KW_RESTR_POWERLESS,
-   AS_KW_TARGET_CHAR,
-   AS_KW_TARGET_ACTION,
-   AS_KW_TARGET_REACTION
-]
-
-
 class Rules():
    """ Rule scripts parser """
    rule_id = ''
+   card_id = ''
    parsed  = False
    target  = None
 
-   def __init__(self, rule):
+   def __init__(self, rule, cid):
       self.rule_id = rule
+      self.card_id = cid
       self.parse()
 
 
@@ -174,26 +79,26 @@ class Rules():
          types = [AS_KW_ALL]
       debug("-- types: %s" % types)
 
-      # Get the restrictions
-      restrs = AS_RGX_TARGET_RESTR.search(str)
-      restrs_arr = []
-      if restrs:
-         restrs = restrs.group(1).split(AS_OP_OR)
-         # Check restrictions
-         for restr in restrs:
-            # AND restrictions
-            restr = restr.split(AS_OP_AND)
+      # Get the filters
+      filters = AS_RGX_TARGET_RESTR.search(str)
+      filters_arr = []
+      if filters:
+         filters = filters.group(1).split(AS_OP_OR)
+         # Check filters
+         for filter in filters:
+            # AND filters
+            filter = filter.split(AS_OP_AND)
             arr = []
-            for r in restr:
-               r = self.getRestr(r)
-               # Check valid restriction kw
-               if r[1] not in AS_KW_RESTRS:
-                  debug("KeywordError: Invalid restriction '%s'" % r[1])
+            for f in filter:
+               f = self.getFilter(f)
+               # Check valid filter kw
+               if f[1] not in AS_KW_FILTERS:
+                  debug("KeywordError: Invalid filter '%s'" % f[1])
                   continue
-               arr.append(r)
-            debug("--- restr: %s" % arr)
+               arr.append(f)
+            debug("--- filter: %s" % arr)
             if len(arr) > 0:
-               restrs_arr.append(arr if len(arr) > 1 else arr[0])
+               filters_arr.append(arr if len(arr) > 1 else arr[0])
 
       # Get the zone
       zone = AS_RGX_TARGET_ZONE.search(str)
@@ -214,7 +119,7 @@ class Rules():
       
       return {
          'types' : types,
-         'restrs': restrs_arr,
+         'filters': filters_arr,
          'zone'  : [zone_prefix, zone]
       }
 
@@ -222,7 +127,8 @@ class Rules():
    def activate(self):
       debug("\nExecuting rules")
       if self.target:
-         if not self.checkTargets(self.target):
+         target = self.checkTargets(self.target)
+         if not target:
             debug("Targeting canceled")
             return
 
@@ -232,7 +138,7 @@ class Rules():
 
       types  = target['types']
       zone   = target['zone']
-      restrs = target['restrs']
+      filters = target['filters']
 
       # Check target type
       # If two or more targets, maybe ask for a single target
@@ -240,28 +146,41 @@ class Rules():
          # Check if there is any keyword in the target types
          kw_types = set(AS_KW_TARGETS) & set(types)
          if len(kw_types) > 0:
-            if 'askChoice' in globals():  # For debug in the terminal
-               t = askChoice("Select a target:", types)
-            else:
-               t = 1
+            t = askChoice("Select a target:", types)
             if t == 0:
                return False
             types = [types[t-1]]
-      debug("--- types: %s" % types)
+            debug("--- type selected: %s" % types)
       
       # Get the zone object
+      debug("--- Getting card from zone %s" % ''.join(zone))
       cards = self.getZoneCards(zone)
-      debug("--- zone %s cards: %s" % (''.join(zone), cards))
+      debug("--- Retrieved %s cards" % len(zone))
       
-      # If target is a player...
-      # for type in types:
-         # if self.isPlayer(types):
+      # Filter targets
+      for type in types:
+         # If kw player then must choose between himself or enemy
+         if type == AS_KW_TARGET_PLAYER:
+            t = askChoice("Select a player:", AS_KW_PLAYERS)
+            if t == 0:
+               return False
+            type = AS_KW_PLAYERS[t-1]
       
-      return True
+         target = self.getTarget(type, filters, zone, cards)
+         debug("--- target: %s" % target)
+         
+         if target:
+            # If an error was returned
+            if isinstance(target, Exception):
+               warning(ErrStrings[str(target)])
+               return False
+            break
+      
+      return target
       
    
-   def getRestr(self, str):
-   # Returns a restriction as an array
+   def getFilter(self, str):
+   # Returns a filter as an array
       str  = str.strip()
       args = ''
       
@@ -286,7 +205,7 @@ class Rules():
       return ('', str)
       
       
-   def getPrefixObj(self, prefix):
+   def getObjFromPrefix(self, prefix):
       if prefix == AS_PREFIX_MY:
          return me
       if prefix == AS_PREFIX_OPP:
@@ -297,38 +216,106 @@ class Rules():
    def getZoneCards(self, zone):
       prefix  = zone[0]
       zone    = zone[1]
-      player  = self.getPrefixObj(prefix)
-      targets = []
+      player  = self.getObjFromPrefix(prefix)
+      cards = []
       
       if zone == AS_KW_ZONE_ARENA:
-         targets = [c for c in table]
+         cards = [c for c in table]
       
       if zone == AS_KW_ZONE_RING:
-         targets = [c for c in table
+         cards = [c for c in table
             if not player
             or c.controller == player]
       
       if zone == AS_KW_ZONE_HAND and player:
-         targets = [c for c in player.hand]
+         cards = [c for c in player.hand]
       
       if zone == AS_KW_ZONE_DECK and player:
-         targets = [c for c in player.Deck]
+         cards = [c for c in player.Deck]
       
       if zone == AS_KW_ZONE_DISCARD and player:
-         targets = [c for c in player.piles['Discard Pile']]
+         cards = [c for c in player.piles['Discard Pile']]
       
       if zone == AS_KW_ZONE_KILL and player:
-         targets = [c for c in player.piles['Kill Pile']]
+         cards = [c for c in player.piles['Kill Pile']]
             
-      return targets
-
-
-# Enabled only from the python terminal
-# if 'debug' not in globals():
-   # def debug(str):
-      # print str
+      return cards
       
-   # if 'RulesDict' not in globals():
-      # from cardsRules import RulesDict 
-   # rules = Rules('aa867ea1-89f8-4154-8e20-2263edd00014')
-   # rules.activate()
+      
+   def getTarget(self, type, filters, zone, cards):
+      if type == AS_KW_TARGET_THIS:
+         return Card(self.card_id)
+      # If target is a player
+      elif type in AS_KW_TARGET_IS_PLAYER:
+         return self.applyFilterToPlayer(type, filters)
+      else:
+         # Filter cards with a target
+         return self.applyFilterToCards(type, filters, zone, cards)
+      
+      
+   def applyFilterToPlayer(type, filters):
+      if isinstance(type, basestring):
+         if type == AS_KW_TARGET_ME:
+            player = me
+         if type == AS_KW_TARGET_OPP:
+            player = players[1] if len(players) > 1 else me
+            
+      # TODO Apply filters
+      # for f in filters:
+         
+      return player
+   
+   
+   def applyFilterToCards(type, filters, zone, cards):
+      cards_f1 = []
+      cards_f2 = []
+
+      # Look for targeted cards
+      if zone[1] in AS_KW_TARGET_ZONES:
+         cards_f1 = [c for c in cards
+            if c.targetedBy == me]
+         if len(cards_f1) == 0:
+            return Exception(ERR_NO_CARD_TARGETED)
+            
+      if type != AS_KW_ALL:
+         # Look for (super) type
+         if type in AS_KW_CARD_TYPES:
+            cards_f1 = [c for c in cards
+               if c.Type.lower() == type]
+         # Look for subtype
+         else:
+            cards_f1 = [c for c in cards
+               if c.Subtype.lower() == type]
+      
+      if len(cards_f1) == 0:
+         return Exception(ERR_NO_CARDS)
+            
+      for filter in filters:
+         # filter could be a list of chained filters
+         if isinstance(filter[0], list):
+            cards_f2 = cards_f1
+            for f in filter:
+               cards_f2 = self.applyFilter(f, cards_f2)
+         else:
+            cards_f2 = self.applyFilter(filter, cards_f1)
+         # Break on any match
+         if len(cards_f2) > 0:
+            break
+         
+      if len(cards_f2) == 0:
+         return Exception(ERR_NO_CARDS)
+      return cards_f2
+   
+   
+   def applyFilter(self, filter, cards):
+      include = filter[0] != AS_PREFIX_NOT
+      kw = filter[1]
+   
+      cards = [c for c in cards
+         # filter = [prfx, cmd, [args]]
+         if kw == AS_KW_FILTER_BP   and filterBP(c, include, *filter[2])
+         or kw in AS_KW_CARD_TYPES and filterType(c, include, kw)
+         or                            filterSubtype(c, include, kw)
+      ]
+         
+      return cards

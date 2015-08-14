@@ -119,6 +119,15 @@ DebugLevelPrefixes = [
    '[x]====>'
 ]
 
+# Errors
+ERR_CANT_PAY_SP      = 400
+ERR_NO_CARDS         = 401
+ERR_NO_CARD_TARGETED = 402
+
+ErrStrings = {}
+ErrStrings[ERR_NO_CARDS] = "There are no cards to select"
+ErrStrings[ERR_NO_CARD_TARGETED] = "Please select a card"
+
 # Misc
 CardWidth    = 90
 CardHeight   = 126
@@ -127,8 +136,6 @@ Yaxis        = 'y'
 PlayAction   = 'play'
 BackupAction = 'backup'
 Author       = 'raohmaru'
-
-ERR_CANT_PAY_SP = 400
 
 #---------------------------------------------------------------------------
 # Global variables

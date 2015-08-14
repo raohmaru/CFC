@@ -20,7 +20,7 @@
 Case Insensitive
 Whitespace Insensitive
 
-target=type[restr]|zone
+target=type[filters]|zone
 
 type:
    Operators:
@@ -37,7 +37,7 @@ type:
    Example:
       Character,player
 
-restr:
+filters:
    Operators:
       , (or)
       & (and)
@@ -88,20 +88,24 @@ target = me,opp[  attack  &  bp >= 4, -  backup  ]|  oppRing  ,  hand
 
 # Jin Saotome's SAOTOME DYNAMITE
 RulesDict['aa867ea1-89f8-4154-8e20-2263edd00009'] = """
+target = character|myhand
 target = character|oppRing
 """
 
 # Damn D's WHISTLE
 RulesDict['aa867ea1-89f8-4154-8e20-2263edd00014'] = """
+target = character[bp<=500]|arena
 target = character[bp<=500]|myDeck
 """
 
 # Strider Hiryu's CYPHER
 RulesDict['aa867ea1-89f8-4154-8e20-2263edd00135'] = """
+target = character[backed, -Gangster]
 target = character[backed]
 """
 
 # Kyo Kusanagi's 182 WAYS
 RulesDict['aa867ea1-89f8-4154-8e20-2263edd00240'] = """
+target = opp,character[pilot]|oppRing
 target = opp,character|oppRing
 """
