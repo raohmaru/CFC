@@ -45,7 +45,7 @@ class Rules():
 
       for line in rules:
          line = line.strip().lower()
-         debug("\nParsing line '%s'" % line)
+         debug("Parsing line '%s'" % line)
 
          # Skip comment lines
          if line[0] == AS_COMMENT_CHAR:
@@ -77,7 +77,9 @@ class Rules():
       # AS_KW_ALL overrides the rest
       if AS_KW_ALL in types:
          types = [AS_KW_ALL]
-      debug("-- types: %s" % types)
+      else:
+         types = map(String.strip, types)
+      debug("--- types: %s" % types)
 
       # Get the filters
       filters = AS_RGX_TARGET_RESTR.search(str)
@@ -90,12 +92,7 @@ class Rules():
             filter = filter.split(AS_OP_AND)
             arr = []
             for f in filter:
-               f = self.getFilter(f)
-               # Check valid filter kw
-               if f[1] not in AS_KW_FILTERS:
-                  debug("KeywordError: Invalid filter '%s'" % f[1])
-                  continue
-               arr.append(f)
+               arr.append(self.getFilter(f))
             debug("--- filter: %s" % arr)
             if len(arr) > 0:
                filters_arr.append(arr if len(arr) > 1 else arr[0])
@@ -118,30 +115,30 @@ class Rules():
       debug("--- zone: %s" % zone)
       
       return {
-         'types' : types,
+         'types'  : types,
          'filters': filters_arr,
-         'zone'  : [zone_prefix, zone]
+         'zone'   : [zone_prefix, zone]
       }
 
 
    def activate(self):
-      debug("\nExecuting rules")
+      debug("Executing rules")
       if self.target:
          target = self.checkTargets(self.target)
          if not target:
             debug("Targeting canceled")
-            return
+            return False
+      return True
 
 
    def checkTargets(self, target):
       debug("Checking targets")
 
-      types  = target['types']
-      zone   = target['zone']
-      filters = target['filters']
-
-      # Check target type
-      # If two or more targets, maybe ask for a single target
+      types       = target['types']
+      zone        = target['zone']
+      filters     = target['filters']
+      
+      # If two or more targets, ask for a single target
       if len(types) > 1:
          # Check if there is any keyword in the target types
          kw_types = set(AS_KW_TARGETS) & set(types)
@@ -155,25 +152,29 @@ class Rules():
       # Get the zone object
       debug("--- Getting card from zone %s" % ''.join(zone))
       cards = self.getZoneCards(zone)
-      debug("--- Retrieved %s cards" % len(zone))
+      debug("--- Retrieved %s cards" % len(cards))
+      
+      if len(cards) == 0:
+         warning(ErrStrings[ERR_NO_CARDS])
+         return False
       
       # Filter targets
       for type in types:
-         # If kw player then must choose between himself or enemy
+         # If kw is 'player' then must choose between himself or enemy
          if type == AS_KW_TARGET_PLAYER:
             t = askChoice("Select a player:", AS_KW_PLAYERS)
             if t == 0:
                return False
             type = AS_KW_PLAYERS[t-1]
       
-         target = self.getTarget(type, filters, zone, cards)
-         debug("--- target: %s" % target)
+         target = self.getTargets(type, filters, zone, cards, targeted=True)
          
          if target:
             # If an error was returned
-            if isinstance(target, Exception):
-               warning(ErrStrings[str(target)])
+            if isinstance(target, GameException):
+               warning(ErrStrings[target.value])
                return False
+               
             break
       
       return target
@@ -185,7 +186,7 @@ class Rules():
       args = ''
       
       # Look for prefixes
-      prfx, cmd = self.getPrefix(AS_PREFIX_RESTRS, str)
+      prfx, cmd = self.getPrefix(AS_PREFIX_FILTERS, str)
       
       # Look for parameters
       params = AS_RGX_TARGET_PARAM.match(cmd)
@@ -205,7 +206,17 @@ class Rules():
       return ('', str)
       
       
+   def getSuffix(self, suffixes, str):
+   # Get the suffix for a given string
+      for p in suffixes:
+         if str[-len(p):] == p:
+            cmd = str[:-len(p)].strip()
+            return (p, cmd)
+      return ('', str)
+      
+      
    def getObjFromPrefix(self, prefix):
+   # Returns an object of the game from the given prefix
       if prefix == AS_PREFIX_MY:
          return me
       if prefix == AS_PREFIX_OPP:
@@ -214,6 +225,7 @@ class Rules():
       
    
    def getZoneCards(self, zone):
+   # Get all the cards from the given zone
       prefix  = zone[0]
       zone    = zone[1]
       player  = self.getObjFromPrefix(prefix)
@@ -242,80 +254,136 @@ class Rules():
       return cards
       
       
-   def getTarget(self, type, filters, zone, cards):
+   def getTargets(self, type, filters, zone, cards, targeted=False):
+      debug("--- get targets by type '%s' in zone %s" % (type, zone))
       if type == AS_KW_TARGET_THIS:
-         return Card(self.card_id)
+         targets = [Card(self.card_id)]
       # If target is a player
       elif type in AS_KW_TARGET_IS_PLAYER:
-         return self.applyFilterToPlayer(type, filters)
+         targets = self.applyFilterToPlayer(type, filters)
       else:
          # Filter cards with a target
-         return self.applyFilterToCards(type, filters, zone, cards)
+         targets = self.applyFilterToCards(type, filters, zone, cards, targeted)
+         
+      debug("--- %s targets retrieved" % len(targets))
+      if len(targets) < 10:
+         for t in targets:
+            debug(" '- target: {}".format(t))
+      return targets
       
       
-   def applyFilterToPlayer(type, filters):
+   def applyFilterToPlayer(self, type, filters):
       if isinstance(type, basestring):
          if type == AS_KW_TARGET_ME:
-            player = me
-         if type == AS_KW_TARGET_OPP:
-            player = players[1] if len(players) > 1 else me
+            player = [me]
+         elif type == AS_KW_TARGET_OPP:
+            player = [players[1]] if len(players) > 1 else [me]
+         elif type == AS_KW_TARGET_PLAYERS:
+            player = [me]
+            if len(players) > 1:
+               player.append(players[1])
             
+      debug("--- applying %s filters to player %s" % (len(filters), player))
       # TODO Apply filters
-      # for f in filters:
          
       return player
    
    
-   def applyFilterToCards(type, filters, zone, cards):
-      cards_f1 = []
-      cards_f2 = []
+   def applyFilterToCards(self, type, filters, zone, cards, targeted=False):
+      debug("--- applying %s filters to %s cards" % (len(filters), len(cards)))
+      
+      cards_f1 = cards
+      multiple = False
 
       # Look for targeted cards
-      if zone[1] in AS_KW_TARGET_ZONES:
-         cards_f1 = [c for c in cards
-            if c.targetedBy == me]
-         if len(cards_f1) == 0:
-            return Exception(ERR_NO_CARD_TARGETED)
+      if targeted:
+         if zone[1] in AS_KW_TARGET_ZONES:
+            cards_f1 = [c for c in cards_f1
+               if c.targetedBy == me]
+            if len(cards_f1) == 0:
+               return GameException(ERR_NO_CARD_TARGETED)
+         debug("--- %s cards targeted" % len(filters))
+      
+      # Check for type prefixes
+      typePrefix, type = self.getPrefix(AS_PREFIX_TYPES, type)
+      if typePrefix:
+         debug("--- found prefix '%s' in '%s'" % (typePrefix, typePrefix+type))
+         # Targetting other cards?
+         if typePrefix == AS_PREFIX_OTHER:
+            # Current card can't be selected
+            if Card(self.card_id) in cards_f1:
+               return GameException(ERR_TARGET_OTHER)
+            
+      # Check for type suffixes
+      typeSuffix, type = self.getSuffix(AS_SUFFIX_TYPES, type)
+      if typeSuffix:
+         debug("--- found suffix '%s' in '%s'" % (typeSuffix, type+typeSuffix))
+         # Allow multiple selection?
+         if typeSuffix == AS_SUFFIX_PLURAL:
+            multiple = True        
+         
+      # Check if only 1 target has been selected
+      if not multiple and targeted and len(cards_f1) > 1:
+         return GameException(ERR_MULTIPLE_TARGET)
             
       if type != AS_KW_ALL:
          # Look for (super) type
          if type in AS_KW_CARD_TYPES:
-            cards_f1 = [c for c in cards
+            debug("--- checking if card type '%s' matches '%s'" % (c.Type.lower(), type))
+            cards_f1 = [c for c in cards_f1
                if c.Type.lower() == type]
          # Look for subtype
          else:
-            cards_f1 = [c for c in cards
+            debug("--- checking if card subtype '%s' matches '%s'" % (c.Subtype.lower(), type))
+            cards_f1 = [c for c in cards_f1
                if c.Subtype.lower() == type]
       
       if len(cards_f1) == 0:
-         return Exception(ERR_NO_CARDS)
+         return GameException(ERR_NO_FILTERED_CARDS)
             
-      for filter in filters:
-         # filter could be a list of chained filters
-         if isinstance(filter[0], list):
-            cards_f2 = cards_f1
-            for f in filter:
-               cards_f2 = self.applyFilter(f, cards_f2)
-         else:
-            cards_f2 = self.applyFilter(filter, cards_f1)
-         # Break on any match
-         if len(cards_f2) > 0:
-            break
+      # Apply filters
+      if len(filters) > 0:
+         for filter in filters:
+            # filter could be a list of chained filters
+            if isinstance(filter[0], list):
+               cards_f2 = cards_f1
+               for f in filter:
+                  cards_f2 = self.applyFilter(f, cards_f2)
+            else:
+               cards_f2 = self.applyFilter(filter, cards_f1)
+            # Break on any match
+            if len(cards_f2) > 0:
+               break
+         cards_f1 = cards_f2
          
-      if len(cards_f2) == 0:
-         return Exception(ERR_NO_CARDS)
-      return cards_f2
+      if len(cards_f1) == 0:
+         return GameException(ERR_NO_FILTERED_CARDS)
+      
+      return cards_f1
    
    
    def applyFilter(self, filter, cards):
+      # filter = [prfx, cmd, [args]]
       include = filter[0] != AS_PREFIX_NOT
-      kw = filter[1]
+      cmd = filter[1]
+      
+      # Get the filter function
+      if   cmd == AS_KW_FILTER_BP    : func = filterBP
+      elif cmd == AS_KW_FILTER_BACKED: func = filterBacked
+      elif cmd in AS_KW_CARD_TYPES   : func = filterType
+      else                           : func = filterSubtype
    
+      debug("--- applying filter %s to %s cards" % (filter, len(cards)))
       cards = [c for c in cards
-         # filter = [prfx, cmd, [args]]
-         if kw == AS_KW_FILTER_BP   and filterBP(c, include, *filter[2])
-         or kw in AS_KW_CARD_TYPES and filterType(c, include, kw)
-         or                            filterSubtype(c, include, kw)
-      ]
+         if func(c, include, cmd, *filter[2])
+      ]      
+      debug("--- %s cards match the filter" % len(cards))
          
       return cards
+
+
+class GameException(Exception):
+   def __init__(self, value):
+      self.value = value
+   def __str__(self):
+      return repr(self.value)

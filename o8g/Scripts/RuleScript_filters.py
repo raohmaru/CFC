@@ -20,8 +20,28 @@
 # Filter functions
 #---------------------------------------------------------------------------
 
-def filterBP(card, include, cmp, value):
+def isPlayer(obj):
+   return isinstance(obj, Player)
+
+
+def isCard(obj):
+   return isinstance(obj, Card)
+
+
+def filterBP(card, include, cmd, *args):
+   debug(">>> filterBP({}, {}, {}, {})".format(card, include, cmd, args)) #Debug
+   
 # Filter card by BP
+   if not isCard(card):
+      return False
+      
+   # Get additional parameters
+   try:
+      cmp, value = args
+   except:
+      return False
+   value = num(value)
+
    if card.markers[MarkersDict['BP']] > 0:
       bp = card.markers[MarkersDict['BP']]
    else:
@@ -40,17 +60,40 @@ def filterBP(card, include, cmp, value):
    return False
       
 
-def filterType(card, include, value):
+def filterType(card, include, cmd, *args):
+   debug(">>> filterType({}, {}, {}, {})".format(card, include, cmd, args)) #Debug
+   
+   if not isCard(card):
+      return False
+      
    type = card.Type.lower()
    if include:
-      return type == value
-   else
-      return type != value
+      return type == cmd
+   else:
+      return type != cmd
    
 
-def filterSubtype(card, include, value):
+def filterSubtype(card, include, cmd, *args):
+   debug(">>> filterSubtype({}, {}, {}, {})".format(card, include, cmd, args)) #Debug
+   
+   if not isCard(card):
+      return False
+      
    subtype = card.Subtype.lower()
    if include:
-      return subtype == value
-   else
-      return subtype != value
+      return subtype == cmd
+   else:
+      return subtype != cmd
+   
+
+def filterBacked(card, include, cmd, *args):
+   debug(">>> filterBacked({}, {}, {}, {})".format(card, include, cmd, args)) #Debug
+
+   if not isCard(card):
+      return False
+      
+   backups = getAttachmets(card)
+   if include:
+      return len(backups) > 0
+   else:
+      return len(backups) == 0

@@ -39,17 +39,29 @@ AS_OP_LTE   = '<='
 AS_OP_GTE   = '>='
 
 # Prefixes
-AS_PREFIX_NOT = '-'
-AS_PREFIX_MY  = 'my'
-AS_PREFIX_OPP = 'opp'
+AS_PREFIX_NOT   = '-'
+AS_PREFIX_MY    = 'my'
+AS_PREFIX_OPP   = 'opp'
+AS_PREFIX_OTHER = '^'
+
+AS_PREFIX_TYPES = [
+   AS_PREFIX_OTHER
+]
 
 AS_PREFIX_ZONES = [
    AS_PREFIX_MY,
    AS_PREFIX_OPP
 ]
 
-AS_PREFIX_RESTRS = [
+AS_PREFIX_FILTERS = [
    AS_PREFIX_NOT
+]
+
+# Sufixes
+AS_SUFFIX_PLURAL = 's'
+
+AS_SUFFIX_TYPES = [
+   AS_SUFFIX_PLURAL
 ]
 
 # Keywords
@@ -57,6 +69,7 @@ AS_KW_ALL = '*'
 
 # Target keywords
 AS_KW_TARGET_PLAYER   = 'player'
+AS_KW_TARGET_PLAYERS  = 'players'
 AS_KW_TARGET_ME       = 'me'
 AS_KW_TARGET_OPP      = 'opp'
 AS_KW_TARGET_THIS     = 'this'
@@ -75,6 +88,7 @@ AS_KW_TARGETS = [
 ]
 AS_KW_TARGET_IS_PLAYER = [
    AS_KW_TARGET_PLAYER,
+   AS_KW_TARGET_PLAYERS,
    AS_KW_TARGET_ME,
    AS_KW_TARGET_OPP
 ]

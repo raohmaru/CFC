@@ -4,7 +4,7 @@ require 'json'
 
 
 OCTGN_dir = "D:/Documentos/OCTGN"
-
+start_time = Time.now
 CLOBBER.include ["o8g/*.o8g", "#{OCTGN_dir}/LocalFeed/Card*.nupkg"]
 
 task :default => [:build]
@@ -45,6 +45,10 @@ desc "Builds and moves the NUPKG file to the OCTGN LocalFeed dir"
 task :deploy => [:clobber, :build] do
   mv Dir.glob("o8g/*.nupkg"), "#{OCTGN_dir}/LocalFeed/"
   Rake::Task["octgn"].execute
+  
+  end_time = Time.now
+  puts "\nTask completed at " + Time.now.strftime("%d-%m-%Y %H:%M")
+  puts "Time elapsed: #{(end_time - start_time)*1000} milliseconds"
 end
 
 

@@ -120,13 +120,19 @@ DebugLevelPrefixes = [
 ]
 
 # Errors
-ERR_CANT_PAY_SP      = 400
-ERR_NO_CARDS         = 401
-ERR_NO_CARD_TARGETED = 402
+ERR_CANT_PAY_SP      = '400'
+ERR_NO_CARDS         = '401'
+ERR_NO_FILTERED_CARDS= '402'
+ERR_NO_CARD_TARGETED = '403'
+ERR_TARGET_OTHER     = '404'
+ERR_MULTIPLE_TARGET  = '405'
 
 ErrStrings = {}
-ErrStrings[ERR_NO_CARDS] = "There are no cards to select"
-ErrStrings[ERR_NO_CARD_TARGETED] = "Please select a card"
+ErrStrings[ERR_NO_CARDS] = "There are no cards to select."
+ErrStrings[ERR_NO_FILTERED_CARDS] = "Select cards don't match the requeriments of this card's ability."
+ErrStrings[ERR_NO_CARD_TARGETED] = "Please select a card."
+ErrStrings[ERR_TARGET_OTHER] = "Please select a card other than the card you're activating its ability."
+ErrStrings[ERR_MULTIPLE_TARGET] = "Please select only one card."
 
 # Misc
 CardWidth    = 90
@@ -147,7 +153,7 @@ handSize       = HandSize
 charsPlayed    = 0  # Num of chars played this turn
 backupsPlayed  = 0  # Num of chars backed-up this turn
 debugVerbosity = -1 # -1..4 (At -1 means no debugging messages display)
-cards          = {} # Dictionary holding all parsed cards
+parsedCards    = {} # Dictionary holding all parsed cards
 
 automations = {
    'Play'     : True, # Automatically trigger game effetcs and card effects when playing cards

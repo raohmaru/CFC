@@ -23,13 +23,13 @@ import re
 
 def getParsedCard(card):
    debug(">>> getParsedCard()") #Debug
-   if not card._id in cards:
+   if not card._id in parsedCards:
       if card.Type == 'Character':
-         cards[card._id] = CharCard(card)
+         parsedCards[card._id] = CharCard(card)
       else:
-         cards[card._id] = GameCard(card)
-   debug("Retrieved parsed card for card {} ({})".format(card._id, card.Name))
-   return cards.get(card._id)
+         parsedCards[card._id] = GameCard(card)
+   debug("Retrieved parsed card for ID {} ({})".format(card._id, card.Name))
+   return parsedCards.get(card._id)
 
 
 class GameCard(object):
@@ -53,7 +53,7 @@ class GameCard(object):
          return
       if self.rules == None:
          self.rules = Rules(self.rule_id, self.card_id)
-      self.rules.activate()
+      return self.rules.activate()
 
 
 class CharCard(GameCard):

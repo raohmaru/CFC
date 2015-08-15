@@ -210,6 +210,8 @@ def activate(card, x = 0, y = 0):
    if card.Type == 'Character':
       pcard = getParsedCard(card)
       if pcard.hasEffect():
+         if pcard.ability_type == ActivatedAbility:
+            freeze(card, silent = True)
          ability = "ability {}".format(pcard.ability)
       else:
          return
@@ -268,7 +270,7 @@ def alignCardAction(card, x = 0, y = 0):
 def askCardBackups(card, x = 0, y = 0):
    if card.Type == 'Character':
       acceptedBackups = (card.properties['Backup 1'], card.properties['Backup 2'], card.properties['Backup 3'])
-      information("{} can be backed-up with this character types:\n- {}".format(card.Name, '\n- '.join(filter(None, acceptedBackups))))
+      information("{} can be backed-up with the following character types:\n- {}".format(card.Name, '\n- '.join(filter(None, acceptedBackups))))
    else:
       information("Only character cards can be backed-up.")
 

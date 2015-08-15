@@ -64,11 +64,11 @@ def chooseSide(): # Called from many functions to check if the player has chosen
 
 def resetAll(): # Clears all the global variables in order to start a new game.
    # Import all our global variables and reset them.
-   global playerSide, handSize, debugVerbosity, cards
+   global playerSide, handSize, debugVerbosity, parsedCards
    debug(">>> resetAll()") #Debug
    playerSide = None
    handSize = HandSize
-   cards = {}
+   parsedCards = {}
    me.HP = 30  # Wipe the counters
    me.SP = 0
    backups = getGlobalVar('Backups')
@@ -350,12 +350,16 @@ def clearAttachLinks(card):
    
 
 def getAttachmets(card):
+   debug(">>> getAttachmets({})".format(card)) #Debug
+   
    # Returns a list with all the cards attached to this card
    backups = getGlobalVar('Backups')
    attachs = []
    for id in backups:
       if backups[id] == card._id:
          attachs.append(Card(id))
+         
+   debug("{} has {} cards attached".format(card, len(attachs)))
    return attachs
 
 
@@ -391,6 +395,10 @@ def setupDebug(group, x=0, y=0):
    if turnNumber() == 0:
       warning("Start the game prior to setup the debug environment")
       return
+      
+   if len(me.Deck) == 0:
+      warning("Please load a deck first.")
+      return
    
    global charsPlayed
    me.SP = 50
@@ -401,8 +409,11 @@ def setupDebug(group, x=0, y=0):
       debug("Creating card {} at slot {}".format(id, i))
       card = table.create(id, 0, 0, quantity=1, persist=True)
       playAuto(card, i)
-      card.markers[MarkersDict['JustEntered']] = 0
+      ability = Regexps['Ability'].match(card.Rules)
+      if ability and ability.group(1) != InstantAbility:
+         card.markers[MarkersDict['JustEntered']] = 0
       charsPlayed = 0
+   drawMany(me.Deck, HandSize, True)
    
    debug("<<< setupDebug()") #Debug
 

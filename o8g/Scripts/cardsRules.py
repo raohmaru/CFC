@@ -34,8 +34,10 @@ type:
       opp
       this
       *
-   Example:
-      Character,player
+   Prefixes:
+      ^ (other)
+   Sufixes:
+      s (plural) (valid on Type, Subtype, player or *)
 
 filters:
    Operators:
@@ -60,7 +62,7 @@ filters:
 
 zone:
    Keywords:
-      arena
+      arena (default)
       ring
       hand
       deck
@@ -88,24 +90,27 @@ target = me,opp[  attack  &  bp >= 4, -  backup  ]|  oppRing  ,  hand
 
 # Jin Saotome's SAOTOME DYNAMITE
 RulesDict['aa867ea1-89f8-4154-8e20-2263edd00009'] = """
+target = this
 target = character|myhand
 target = character|oppRing
 """
 
 # Damn D's WHISTLE
 RulesDict['aa867ea1-89f8-4154-8e20-2263edd00014'] = """
-target = character[bp<=500]|arena
-target = character[bp<=500]|myDeck
+target = characters|myhand
+target = ^character[bp>=5 & Pilot]|arena
+target = character[bp<=5]|myDeck
 """
 
 # Strider Hiryu's CYPHER
 RulesDict['aa867ea1-89f8-4154-8e20-2263edd00135'] = """
-target = character[backed, -Gangster]
+target = character[backed, -Pilot]
 target = character[backed]
 """
 
 # Kyo Kusanagi's 182 WAYS
 RulesDict['aa867ea1-89f8-4154-8e20-2263edd00240'] = """
-target = opp,character[pilot]|oppRing
+target = players
+target = opp,character[pilot, Gangster]|oppRing
 target = opp,character|oppRing
 """

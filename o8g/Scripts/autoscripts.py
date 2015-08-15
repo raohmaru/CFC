@@ -354,6 +354,7 @@ def activateAuto(card):
    debug(">>> activateAuto()") #Debug
    
    if card.highlight == ActivatedColor:
+      whisper("{}'s ability or effect has already been activated".format(card))
       return   
    # Character ability
    if card.Type == 'Character':
@@ -395,13 +396,9 @@ def activateAuto(card):
          if not confirm("Activate {}'s ability {} {}?".format(card.Name, pcard.ability_type, pcard.ability_name)):
             return
       # Activate the ability
-      pcard.activateEffect()
-      if pcard.ability_type == ActivatedAbility:
-         freeze(card, silent = True)
+      return pcard.activateEffect()
    # Rest of cards
    else:
       pcard = getParsedCard(card)
-      pcard.activateEffect()
-   
-   return True
+      return pcard.activateEffect()
    
