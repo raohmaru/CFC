@@ -4,7 +4,7 @@
       name="Card Fighters' Clash"
       id="e3d56d9e-900d-49c6-b6ae-22cbb51be153"
       octgnVersion="3.1.55.0"
-      version="0.2.0.29"
+      version="0.2.0.35"
       markersize="20"
       tags="capcom snk fighter"
       description="A card game based in the SNK Playmore’s video game SNK vs. Capcom Card Fighters' Clash 2 Expand Edition.
@@ -66,6 +66,7 @@
 	
 	<globalvariables>
 		<globalvariable name="Backups" value="{}" />
+		<globalvariable name="UnitedAttack" value="[]" />
 	</globalvariables>
 	
 	<card back="Card/back.jpg" front="Card/front.png" width="90" height="126" cornerRadius="3">
@@ -153,7 +154,7 @@
 			<cardaction menu="Put into Deck (Bottom)" shortcut="Ctrl+Shift+D" execute="toDeckBottom" />
 		</cardactions>
 		<cardaction menu="Realign card" shortcut="Ctrl+F2" execute="alignCardAction" />
-		<cardaction menu="Clear" shortcut="esc" execute="clear" />
+		<cardaction menu="Clear" shortcut="Esc" execute="clear" />
 		<cardaction menu="List backups" shortcut="Ctrl+Alt+B" execute="askCardBackups" />
 		<cardactions menu="Markers...">
 			<cardactions menu="Raise BP...">
@@ -181,7 +182,7 @@
 				<cardaction menu="by X" shortcut="Ctrl+Shift+0" execute="minusBPX" />
 			</cardactions>
 			<cardaction menu="Change BP..." shortcut="Ctrl+Alt+0" batchExecute="changeBP" />
-			<cardaction menu="Add markers..." shortcut="Ctrl+M" batchExecute="addMarker" />
+			<cardaction menu="Add markers..." shortcut="Ctrl+M" batchExecute="addMarkerAction" />
 		</cardactions>
 	</table>
 	

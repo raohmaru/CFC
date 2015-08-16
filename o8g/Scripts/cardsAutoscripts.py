@@ -28,7 +28,7 @@ def getParsedCard(card):
          parsedCards[card._id] = CharCard(card)
       else:
          parsedCards[card._id] = GameCard(card)
-   debug("Retrieved parsed card for ID {} ({})".format(card._id, card.Name))
+   debug("Retrieved parsed card for ID {} ({})".format(card._id, card))
    return parsedCards.get(card._id)
 
 

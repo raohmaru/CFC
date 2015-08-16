@@ -31,7 +31,8 @@ def num(s):
       return 0
 
 
-def delayedWhisper(text): # Because whispers for some reason execute before notifys
+def delayedWhisper(text):
+# Because whispers for some reason execute before notifys
    rnd(1,10)
    whisper(text)
 
@@ -43,7 +44,8 @@ def checkTwoSidedTable():
       warning("This game is designed to be played on a two-sided table.\nPlease start a new game and make sure the appropriate option is checked.")
 
       
-def chooseSide(): # Called from many functions to check if the player has chosen a side for this game.
+def chooseSide():
+# Called from many functions to check if the player has chosen a side for this game.
    mute()
    global playerSide, playerAxis
    if playerSide is not None:  # Has the player selected a side yet? If not, then...
@@ -62,18 +64,19 @@ def chooseSide(): # Called from many functions to check if the player has chosen
          playerSide = -1 # Negative is on the left.
 
 
-def resetAll(): # Clears all the global variables in order to start a new game.
+def resetAll():
+# Clears all the global variables in order to start a new game.
+   debug(">>> resetAll()") #Debug
    # Import all our global variables and reset them.
    global playerSide, handSize, debugVerbosity, parsedCards
-   debug(">>> resetAll()") #Debug
    playerSide = None
    handSize = HandSize
    parsedCards = {}
    me.HP = 30  # Wipe the counters
    me.SP = 0
-   backups = getGlobalVar('Backups')
-   backups.clear()
-   setGlobalVar('Backups', backups)
+   clearGlobalVar('Backups')
+   clearGlobalVar('UnitedAttack')
+   
    if len(players) > 1:
       debugVerbosity = DebugLevel.Off # Reset means normal game.
    elif debugVerbosity == DebugLevel.Off:
@@ -121,6 +124,19 @@ def setGlobalVar(name, value, player = None):
    else:
       setGlobalVariable(name, str(value))
 
+
+def clearGlobalVar(name, player = None):
+   gvar = getGlobalVar(name, player)
+   if isinstance(gvar, list):
+      del gvar[:]  # Clear list
+   elif isinstance(gvar, dict):
+      gvar.clear()
+   elif isinstance(gvar, basestring):
+      gvar = ''
+   elif isinstance(gvar, int):
+      gvar = 0
+   setGlobalVar(name, gvar, player)
+   
 
 def fromWhereStr(src):
    return " from the ring" if src == table else " from its " + src.name
@@ -234,7 +250,12 @@ def getTargetedCards(card=None, targetedByMe=True, controlledByMe=True, type='Ch
 # Markers functions
 #---------------------------------------------------------------------------
 
-def changeMarker(cards, marker, question):  # Changes the number of markers in one or more cards
+def getMarker(card, mkname):
+   return card.markers[MarkersDict[mkname]]
+
+      
+def changeMarker(cards, marker, question):
+# Changes the number of markers in one or more cards
    n = 0
    for c in cards:
       if c.markers[marker] > n:
@@ -249,16 +270,25 @@ def changeMarker(cards, marker, question):  # Changes the number of markers in o
       notify("{} sets {}'s {} to {}({}).".format(me, c, marker[0], count, dif))
 
 
+def setMarker(card, mkname, qty=1):
+   card.markers[MarkersDict[mkname]] = qty
+
+
+def addMarker(card, mkname, qty=1):
+   card.markers[MarkersDict[mkname]] += qty
+
+
 def removeMarker(card, mkname):
    if MarkersDict[mkname] in card.markers:
-      card.markers[MarkersDict[mkname]] = 0
+      setMarker(card, mkname, 0)
       
 
 #---------------------------------------------------------------------------
 # Counter Manipulation
 #---------------------------------------------------------------------------
 
-def modSP(count = 1, silent = False): # A function to modify the players SP counter. Can also notify.
+def modSP(count = 1, silent = False):
+# A function to modify the players SP counter. Can also notify.
    if me.SP + count < 0:
       count = -me.SP  # SP can't be less than 0
    me.SP += count # Now increase the SP by the amount passed to us.
@@ -267,7 +297,8 @@ def modSP(count = 1, silent = False): # A function to modify the players SP coun
       notify("{} {} {} SP. New total is {}.".format(me, action, count, me.SP))
 
 
-def payCostSP(count = 1, silent = False, msg = 'play this card'): # Pay an SP cost. However we also check if the cost can actually be paid.
+def payCostSP(count = 1, silent = False, msg = 'play this card'):
+# Pay an SP cost. However we also check if the cost can actually be paid.
    count = num(count)
    if count >= 0:
       modSP(count, silent)

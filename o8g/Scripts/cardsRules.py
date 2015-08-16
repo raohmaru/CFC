@@ -49,7 +49,7 @@ filters:
    Keywords:
       bp [=|>=|<=] number
       sp [=|>=|<=] number
-      backed
+      backedup
       backup
       attack
       uattack
@@ -69,48 +69,33 @@ zone:
       discard
       kill
    Prefixes:
-      my
+      my (default)
       opp
 
 """
 
 RulesDict = {}
 
-RulesDict['dragon transform'] = """
-target = ME
-target = * # A comment
-# target = *
-target = player,Character
-target = [-backup]|oppRing
-target = character[-backup]
-target = Warrior,*[attack,-backup]|arena
-target = this|wrongZone
-target = me,opp[  attack  &  bp >= 4, -  backup  ]|  oppRing  ,  hand  
-"""
-
 # Jin Saotome's SAOTOME DYNAMITE
 RulesDict['aa867ea1-89f8-4154-8e20-2263edd00009'] = """
-target = this
-target = character|myhand
+target = character[attack]
 target = character|oppRing
 """
 
 # Damn D's WHISTLE
 RulesDict['aa867ea1-89f8-4154-8e20-2263edd00014'] = """
-target = characters|myhand
-target = ^character[bp>=5 & Pilot]|arena
+target = ^character[bp>=5 & uattack]|arena
 target = character[bp<=5]|myDeck
 """
 
 # Strider Hiryu's CYPHER
 RulesDict['aa867ea1-89f8-4154-8e20-2263edd00135'] = """
-target = character[backed, -Pilot]
-target = character[backed]
+target = character[backup, -Pilot]
+target = character[backedup]
 """
 
 # Kyo Kusanagi's 182 WAYS
 RulesDict['aa867ea1-89f8-4154-8e20-2263edd00240'] = """
-target = players
 target = opp,character[pilot, Gangster]|oppRing
 target = opp,character|oppRing
 """

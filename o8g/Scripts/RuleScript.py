@@ -29,7 +29,6 @@ class Rules():
    def __init__(self, rule, cid):
       self.rule_id = rule
       self.card_id = cid
-      self.parse()
 
 
    def parse(self):
@@ -122,6 +121,9 @@ class Rules():
 
 
    def activate(self):
+      if not self.parsed:
+         self.parse()
+   
       debug("Executing rules")
       if self.target:
          target = self.checkTargets(self.target)
@@ -167,17 +169,24 @@ class Rules():
                return False
             type = AS_KW_PLAYERS[t-1]
       
-         target = self.getTargets(type, filters, zone, cards, targeted=True)
+         targets = self.getTargets(type, filters, zone, cards, targeted=True)
          
-         if target:
+         if targets:
             # If an error was returned
-            if isinstance(target, GameException):
-               warning(ErrStrings[target.value])
+            if isinstance(targets, GameException):
+               warning(ErrStrings[targets.value])
                return False
-               
             break
+            
+      # If zone is a Pile, ask for card
+      if zone[1] in AS_KW_ZONES_PILES:
+         card = askCard(targets, "Select a card from {}".format(zone[1]), "Select a card")
+         if not card:
+            return False
+         debug("{} has selected from {} the card {}".format(me, zone, card))
+         targets = [card]
       
-      return target
+      return targets
       
    
    def getFilter(self, str):
@@ -228,27 +237,26 @@ class Rules():
    # Get all the cards from the given zone
       prefix  = zone[0]
       zone    = zone[1]
-      player  = self.getObjFromPrefix(prefix)
+      player  = self.getObjFromPrefix(prefix) or me
       cards = []
       
       if zone == AS_KW_ZONE_ARENA:
          cards = [c for c in table]
       
-      if zone == AS_KW_ZONE_RING:
+      elif zone == AS_KW_ZONE_RING:
          cards = [c for c in table
-            if not player
-            or c.controller == player]
+            if c.controller == player]
       
-      if zone == AS_KW_ZONE_HAND and player:
+      elif zone == AS_KW_ZONE_HAND:
          cards = [c for c in player.hand]
       
-      if zone == AS_KW_ZONE_DECK and player:
+      elif zone == AS_KW_ZONE_DECK:
          cards = [c for c in player.Deck]
       
-      if zone == AS_KW_ZONE_DISCARD and player:
+      elif zone == AS_KW_ZONE_DISCARD:
          cards = [c for c in player.piles['Discard Pile']]
       
-      if zone == AS_KW_ZONE_KILL and player:
+      elif zone == AS_KW_ZONE_KILL:
          cards = [c for c in player.piles['Kill Pile']]
             
       return cards
@@ -260,36 +268,42 @@ class Rules():
          targets = [Card(self.card_id)]
       # If target is a player
       elif type in AS_KW_TARGET_IS_PLAYER:
-         targets = self.applyFilterToPlayer(type, filters)
+         targets = self.filterPlayers(type, filters)
       else:
          # Filter cards with a target
-         targets = self.applyFilterToCards(type, filters, zone, cards, targeted)
+         targets = self.filterCards(type, filters, zone, cards, targeted)
          
-      debug("--- %s targets retrieved" % len(targets))
-      if len(targets) < 10:
-         for t in targets:
-            debug(" '- target: {}".format(t))
+      if isinstance(targets, list):
+         debug("--- %s targets retrieved" % len(targets))
+         if len(targets) < 10:
+            for t in targets:
+               debug(" '- target: {}".format(t))
       return targets
       
       
-   def applyFilterToPlayer(self, type, filters):
+   def filterPlayers(self, type, filters):
       if isinstance(type, basestring):
          if type == AS_KW_TARGET_ME:
-            player = [me]
+            arr = [me]
          elif type == AS_KW_TARGET_OPP:
-            player = [players[1]] if len(players) > 1 else [me]
+            arr = [players[1]] if len(players) > 1 else [me]
          elif type == AS_KW_TARGET_PLAYERS:
-            player = [me]
+            arr = [me]
             if len(players) > 1:
-               player.append(players[1])
+               arr.append(players[1])
             
-      debug("--- applying %s filters to player %s" % (len(filters), player))
-      # TODO Apply filters
+      debug("--- applying {} filters to player {}".format(len(filters), arr))
+            
+      # Apply filters      
+      arr = self.applyFiltersTo(arr, filters)
          
-      return player
+      if len(arr) == 0:
+         return GameException(ERR_NO_FILTERED_PLAYERS)
+      
+      return arr
    
    
-   def applyFilterToCards(self, type, filters, zone, cards, targeted=False):
+   def filterCards(self, type, filters, zone, cards, targeted=False):
       debug("--- applying %s filters to %s cards" % (len(filters), len(cards)))
       
       cards_f1 = cards
@@ -302,7 +316,9 @@ class Rules():
                if c.targetedBy == me]
             if len(cards_f1) == 0:
                return GameException(ERR_NO_CARD_TARGETED)
-         debug("--- %s cards targeted" % len(filters))
+            debug("--- %s cards targeted" % len(filters))
+         else:
+            targeted = False
       
       # Check for type prefixes
       typePrefix, type = self.getPrefix(AS_PREFIX_TYPES, type)
@@ -329,12 +345,12 @@ class Rules():
       if type != AS_KW_ALL:
          # Look for (super) type
          if type in AS_KW_CARD_TYPES:
-            debug("--- checking if card type '%s' matches '%s'" % (c.Type.lower(), type))
+            debug("--- checking if any card match type '%s'" % type)
             cards_f1 = [c for c in cards_f1
                if c.Type.lower() == type]
          # Look for subtype
          else:
-            debug("--- checking if card subtype '%s' matches '%s'" % (c.Subtype.lower(), type))
+            debug("--- checking if any card match subtype '%s'" % type)
             cards_f1 = [c for c in cards_f1
                if c.Subtype.lower() == type]
       
@@ -342,44 +358,54 @@ class Rules():
          return GameException(ERR_NO_FILTERED_CARDS)
             
       # Apply filters
-      if len(filters) > 0:
-         for filter in filters:
-            # filter could be a list of chained filters
-            if isinstance(filter[0], list):
-               cards_f2 = cards_f1
-               for f in filter:
-                  cards_f2 = self.applyFilter(f, cards_f2)
-            else:
-               cards_f2 = self.applyFilter(filter, cards_f1)
-            # Break on any match
-            if len(cards_f2) > 0:
-               break
-         cards_f1 = cards_f2
+      cards_f1 = self.applyFiltersTo(cards_f1, filters)
          
       if len(cards_f1) == 0:
          return GameException(ERR_NO_FILTERED_CARDS)
       
       return cards_f1
+      
+    
+   def applyFiltersTo(self, arr, filters):
+      if len(filters) > 0:
+         for filter in filters:
+            # filter could be a list of chained filters
+            if isinstance(filter[0], list):
+               arr2 = arr
+               for f in filter:
+                  arr2 = self.applyFilter(f, arr2)
+            else:
+               arr2 = self.applyFilter(filter, arr)
+            # Break on any match
+            if len(arr2) > 0:
+               break
+         arr = arr2
+      
+      return arr
    
    
-   def applyFilter(self, filter, cards):
+   def applyFilter(self, filter, arr):
       # filter = [prfx, cmd, [args]]
       include = filter[0] != AS_PREFIX_NOT
       cmd = filter[1]
       
       # Get the filter function
-      if   cmd == AS_KW_FILTER_BP    : func = filterBP
-      elif cmd == AS_KW_FILTER_BACKED: func = filterBacked
-      elif cmd in AS_KW_CARD_TYPES   : func = filterType
-      else                           : func = filterSubtype
+      if   cmd == AS_KW_FILTER_BP     : func = filterBP
+      elif cmd == AS_KW_FILTER_SP     : func = filterSP
+      elif cmd == AS_KW_FILTER_BACKED : func = filterBackedup
+      elif cmd == AS_KW_FILTER_BACKUP : func = filterBackup
+      elif cmd == AS_KW_FILTER_ATTACK : func = filterAttack
+      elif cmd == AS_KW_FILTER_UATTACK: func = filterUnitedAttack
+      elif cmd in AS_KW_CARD_TYPES    : func = filterType
+      else                            : func = filterSubtype
    
-      debug("--- applying filter %s to %s cards" % (filter, len(cards)))
-      cards = [c for c in cards
+      debug("--- applying filter %s to %s objects" % (filter, len(arr)))
+      arr = [c for c in arr
          if func(c, include, cmd, *filter[2])
       ]      
-      debug("--- %s cards match the filter" % len(cards))
+      debug("--- %s objects match the filter" % len(arr))
          
-      return cards
+      return arr
 
 
 class GameException(Exception):

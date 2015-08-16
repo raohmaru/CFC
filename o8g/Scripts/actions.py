@@ -171,7 +171,7 @@ def attackNoFreeze(card, x = 0, y = 0):
    if automations['Play']:
       if not attackAuto(card): return
    card.highlight = AttackNoFreezeColor
-   card.markers[MarkersDict['NoFreeze']] = 1
+   setMarker(card, 'NoFreeze')
    notify('{} attacks without freeze with {}.'.format(me, card))
 
 
@@ -239,11 +239,11 @@ def doesNotUnfreeze(card, x = 0, y = 0):
    mute()
    if not MarkersDict['DoesntUnfreeze'] in card.markers:
       card.highlight = DoesntUnfreezeColor
-      card.markers[MarkersDict['DoesntUnfreeze']] = 1
+      setMarker(card, 'DoesntUnfreeze')
       notify("{0}'s {1} will not unfreeze during {0}'s next Activate phase.".format(card.controller, card))
    else:
       card.highlight = None
-      card.markers[MarkersDict['DoesntUnfreeze']] = 0
+      removeMarker(card, 'DoesntUnfreeze')
       notify("{0}'s {1} will unfreeze as normal during {0}'s Activate phase.".format(card.controller, card))
 
 
@@ -251,7 +251,7 @@ def clear(card, x = 0, y = 0, silent = False):
    if not silent: notify("{} clears {}.".format(me, card))
    card.target(False)
    card.arrow(card, False)
-   if not card.highlight in [DoesntUnfreezeColor]:
+   if not card.highlight in [ActivatedColor]:
       card.highlight = None
 
 
@@ -262,7 +262,7 @@ def alignCardAction(card, x = 0, y = 0):
          alignCard(card, slotIdx=slotIdx)
       else:
          backups = getGlobalVar('Backups')
-         if backups[card._id]:
+         if backups.get(card._id):
             c = Card(backups[card._id])
             alignBackups(c, *c.position)
 
@@ -365,15 +365,15 @@ def discardAll(group, x = 0, y = 0):
 # --------------
 def plusBP(card, x = 0, y = 0, silent = False, count = 1):
    mute()
-   card.markers[MarkersDict['BP']] += count
+   addMarker(card, 'BP', count)
    if not silent:
       notify("{} raises {}'s BP by {}".format(me, card, count))
 
 def minusBP(card, x = 0, y = 0, silent = False, count = 1):
    mute()
-   if count > card.markers[MarkersDict['BP']]:
-      count = card.markers[MarkersDict['BP']]
-   card.markers[MarkersDict['BP']] -= count
+   if count > getMarker(card, 'BP'):
+      count = getMarker(card, 'BP')
+   addMarker(card, 'BP', -count)
    if not silent:
       notify("{} lowers {}'s BP by {}.".format(me, card, count))
       
@@ -409,7 +409,7 @@ def changeBP(cards, x = 0, y = 0):
    mute()
    changeMarker(cards, MarkersDict['BP'], "Set character BP to:")
 
-def addMarker(cards, x = 0, y = 0):  # A simple function to manually add any of the available markers.
+def addMarkerAction(cards, x = 0, y = 0):  # A simple function to manually add any of the available markers.
    mute()
    marker, quantity = askMarker() # Ask the player how many of the same type they want.
    if quantity == 0: return

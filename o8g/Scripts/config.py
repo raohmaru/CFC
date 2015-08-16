@@ -97,8 +97,8 @@ NumSlots         = 4
 CharsPerTurn     = 1
 BackupsPerTurn   = 1
 BackupRaiseBP    = 3
-MaxUnitedAttack  = 2
-UnitedAttackCost = 5
+MaxCharsUAttack  = 2
+UAttackCost      = 5
 DeckSize         = 50
 HandSize         = 5
 
@@ -120,18 +120,20 @@ DebugLevelPrefixes = [
 ]
 
 # Errors
-ERR_CANT_PAY_SP      = '400'
-ERR_NO_CARDS         = '401'
-ERR_NO_FILTERED_CARDS= '402'
-ERR_NO_CARD_TARGETED = '403'
-ERR_TARGET_OTHER     = '404'
-ERR_MULTIPLE_TARGET  = '405'
+ERR_CANT_PAY_SP         = '400'
+ERR_NO_CARDS            = '401'
+ERR_NO_FILTERED_CARDS   = '402'
+ERR_NO_FILTERED_PLAYERS = '403'
+ERR_NO_CARD_TARGETED    = '404'
+ERR_TARGET_OTHER        = '405'
+ERR_MULTIPLE_TARGET     = '406'
 
 ErrStrings = {}
 ErrStrings[ERR_NO_CARDS] = "There are no cards to select."
-ErrStrings[ERR_NO_FILTERED_CARDS] = "Select cards don't match the requeriments of this card's ability."
+ErrStrings[ERR_NO_FILTERED_CARDS] = "Selected cards don't match the requeriments of this card's effect."
+ErrStrings[ERR_NO_FILTERED_PLAYERS] = "No player match the requeriments of this card's effect."
 ErrStrings[ERR_NO_CARD_TARGETED] = "Please select a card."
-ErrStrings[ERR_TARGET_OTHER] = "Please select a card other than the card you're activating its ability."
+ErrStrings[ERR_TARGET_OTHER] = "Please select a card other than the card you're activating its effect."
 ErrStrings[ERR_MULTIPLE_TARGET] = "Please select only one card."
 
 # Misc

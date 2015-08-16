@@ -46,10 +46,10 @@ def triggerPhaseEvent(phase): # Function which triggers effects at the start or 
    
    elif phase == BlockPhase:
       if automations['Play']:
-         united = [card for card in table
-            if card.controller == me
-            and MarkersDict['UnitedAttack'] in card.markers]
-         payCostSP(-len(united)*UnitedAttackCost, msg = "do a {} United Attack".format("Double" if len(united) == 1 else "Triple"))
+         uattack = getGlobalVar('UnitedAttack')
+         if len(uattack) > 0:
+            chars = len(uattack) - 1
+            payCostSP(-chars*UAttackCost, msg = "do a {} United Attack".format("Double" if chars == 1 else "Triple"))
    
    elif phase == EndPhase:
       myCards = (card for card in table
@@ -127,8 +127,8 @@ def playAuto(card, slotIdx=None):
          return
       # Finally, the card is played
       placeCard(card, card.Type, PlayAction, slotIdx)
-      card.markers[MarkersDict['BP']] = num(card.BP) / 100
-      card.markers[MarkersDict['JustEntered']] = 1
+      setMarker(card, 'BP', num(card.BP) / 100)
+      setMarker(card, 'JustEntered')
       myRing[slotIdx] = card._id
       setGlobalVar('Ring', myRing, me)
       charsPlayed += 1
@@ -212,8 +212,8 @@ def backupAuto(card):
    attach(card, target)
    placeCard(card, card.Type, BackupAction, target)
    card.sendToBack()
-   card.markers[MarkersDict['Backup']] = 1
-   target.markers[MarkersDict['BP']] += BackupRaiseBP  # Backed-up char's BP is raised
+   setMarker(card, 'Backup')
+   addMarker(target, 'BP', BackupRaiseBP)  # Backed-up char's BP is raised
    backupsPlayed += 1
    return target
 
@@ -242,7 +242,22 @@ def attackAuto(card):
       removeMarker(card, 'NoFreeze')
       clear(card, silent = True)
       alignCard(card)
-      notify('{} cancels the attack with {}'.format(me, card))  
+      notify('{} cancels the attack with {}'.format(me, card))
+      # Was the card in a uattack?
+      uattack = getGlobalVar('UnitedAttack')
+      if card._id in uattack:
+         uatttackIdx = uattack.index(card._id)
+         uattack.remove(card._id)
+         setGlobalVar('UnitedAttack', uattack)
+         # If it was the lead card, or only 1 char left, cancel uattack
+         if uatttackIdx == 0 or len(uattack) == 1:
+            for cid in uattack:
+               c = Card(cid)
+               removeMarker(c, 'UnitedAttack')
+               setMarker(c, 'Attack')
+               c.highlight = AttackColor
+            clearGlobalVar('UnitedAttack')
+         debug("UnitedAttack: {}".format(getGlobalVar('UnitedAttack')))
       return
    # Char just entered the ring?
    if MarkersDict['JustEntered'] in card.markers:
@@ -259,7 +274,7 @@ def attackAuto(card):
       return
       
    # Perform the attack
-   card.markers[MarkersDict['Attack']] = 1
+   setMarker(card, 'Attack')
    alignCard(card, slotIdx)
    
    return True
@@ -271,28 +286,47 @@ def unitedAttackAuto(card):
    # Check if an attacking char has been selected
    myRing = getGlobalVar('Ring', me)
    targets = getTargetedCards(card)
-   if len(targets) == 0 or not targets[0]._id in myRing or not MarkersDict['Attack'] in targets[0].markers:
+   if len(targets) == 0 or not targets[0]._id in myRing or (not MarkersDict['Attack'] in targets[0].markers and not MarkersDict['UnitedAttack'] in targets[0].markers):
       warning("Please select an attacking character in your ring.\n(Shift key + Left click on a character).")
       return
    target = targets[0]   
+   # Allowed uattacks
+   uattack = getGlobalVar('UnitedAttack')
+   if len(uattack) > 0:
+      if uattack[0] != target._id:
+         # If targetting other char in the uattack, change target to lead char
+         if target._id in uattack:
+            target = Card(uattack[0])
+         else:
+            warning("Only one United Attack is allowed.")
+            return
    # Max chars per United Attack
    united = [c for c in table
       if c.controller == me
       and MarkersDict['UnitedAttack'] in c.markers]
-   if len(united) >= MaxUnitedAttack:
-      warning("Can't be more than {} characters in a United Attack.".format(MaxUnitedAttack+1))
+   if len(united) >= MaxCharsUAttack:
+      warning("Can't be more than {} characters in a United Attack.".format(MaxCharsUAttack+1))
       return
    # Cost
-   cost = (len(united)+1) * UnitedAttackCost
+   cost = (len(united)+1) * UAttackCost
    if cost > me.SP:
       type = 'Double' if len(united) == 0 else 'Triple'
       if not confirm("You do not seem to have enough SP to do a {} United Attack (it costs {}).\nProceed anyway?".format(type, cost)):
          return
    
-   card.markers[MarkersDict['UnitedAttack']] = 1
+   setMarker(card, 'UnitedAttack')
    card.arrow(target)
    target.target(False)
    alignCard(card, getSlotIdx(card))
+   
+   # Update UnitedAttack list
+   uattack = getGlobalVar('UnitedAttack')
+   if len(uattack) == 0:
+      uattack.extend([target._id, card._id])
+   else:
+      uattack.append(card._id)
+   setGlobalVar('UnitedAttack', uattack)
+   debug("UnitedAttack: {}".format(uattack))
    
    return target
 
@@ -341,7 +375,7 @@ def blockAuto(card):
    if slotIdx == -1 or myRing[slotIdx] != None:
       warning("An attacking character can only be blocked by exactly one char")
    
-   card.markers[MarkersDict['CounterAttack']] = 1
+   setMarker(card, 'CounterAttack')
    # card.arrow(target)
    target.target(False)
    coords = CardsCoords['Attack'+`slotIdx`]

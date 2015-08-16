@@ -20,45 +20,49 @@
 # Filter functions
 #---------------------------------------------------------------------------
 
-def isPlayer(obj):
-   return isinstance(obj, Player)
-
-
-def isCard(obj):
-   return isinstance(obj, Card)
-
-
 def filterBP(card, include, cmd, *args):
    debug(">>> filterBP({}, {}, {}, {})".format(card, include, cmd, args)) #Debug
    
-# Filter card by BP
    if not isCard(card):
       return False
       
    # Get additional parameters
    try:
-      cmp, value = args
+      op, value = args
    except:
       return False
    value = num(value)
 
-   if card.markers[MarkersDict['BP']] > 0:
-      bp = card.markers[MarkersDict['BP']]
+   if getMarker(card, 'BP') > 0:
+      bp = getMarker(card, 'BP')
    else:
       bp = num(card.BP)
+      
+   # Compare values
+   res = compareValuesByOp(bp, value, op)
+   if not include:
+      res = not res
+   return res
 
-   if cmp == AS_OP_EQUAL:
-      if include:
-         return bp == value
-      else:
-         return bp != value
-   elif cmp == AS_OP_LTE:
-      return bp <= value
-   elif cmp == AS_OP_GTE:
-      return bp >= value
+   
+def filterSP(card, include, cmd, *args):
+   debug(">>> filterSP({}, {}, {}, {})".format(card, include, cmd, args)) #Debug
       
-   return False
+   # Get additional parameters
+   try:
+      op, value = args
+   except:
+      return False
+   value = num(value)
+
+   sp = num(card.SP)
       
+   # Compare values
+   res = compareValuesByOp(sp, value, op)
+   if not include:
+      res = not res
+   return res
+   
 
 def filterType(card, include, cmd, *args):
    debug(">>> filterType({}, {}, {}, {})".format(card, include, cmd, args)) #Debug
@@ -86,7 +90,7 @@ def filterSubtype(card, include, cmd, *args):
       return subtype != cmd
    
 
-def filterBacked(card, include, cmd, *args):
+def filterBackedup(card, include, cmd, *args):
    debug(">>> filterBacked({}, {}, {}, {})".format(card, include, cmd, args)) #Debug
 
    if not isCard(card):
@@ -97,3 +101,70 @@ def filterBacked(card, include, cmd, *args):
       return len(backups) > 0
    else:
       return len(backups) == 0
+      
+      
+def filterBackup(card, include, cmd, *args):
+   debug(">>> filterBackup({}, {}, {}, {})".format(card, include, cmd, args)) #Debug
+
+   if not isCard(card):
+      return False
+      
+   isBackup = isAttached(card)
+   if include:
+      return isBackup
+   else:
+      return not isBackup
+      
+      
+def filterAttack(card, include, cmd, *args):
+   debug(">>> filterAttack({}, {}, {}, {})".format(card, include, cmd, args)) #Debug
+
+   if not isCard(card):
+      return False
+      
+   attacking = MarkersDict['Attack'] in card.markers
+   if include:
+      return attacking
+   else:
+      return not attacking
+      
+      
+def filterUnitedAttack(card, include, cmd, *args):
+   debug(">>> filterUnitedAttack({}, {}, {}, {})".format(card, include, cmd, args)) #Debug
+
+   if not isCard(card):
+      return False
+      
+   attacking = card._id in getGlobalVar('UnitedAttack')   
+   if include:
+      return attacking
+   else:
+      return not attacking
+      
+
+#---------------------------------------------------------------------------
+# Helpers
+#---------------------------------------------------------------------------
+
+def isPlayer(obj):
+   return isinstance(obj, Player)
+
+
+def isCard(obj):
+   return isinstance(obj, Card)
+
+
+def isAttached(card):
+   backups = getGlobalVar('Backups')
+   return bool(backups.get(card._id))
+
+
+def compareValuesByOp(v1, v2, op):
+   if op == AS_OP_EQUAL:
+      return v1 == v2
+   elif op == AS_OP_LTE:
+      return v1 <= v2
+   elif op == AS_OP_GTE:
+      return v1 >= v2
+      
+   return False

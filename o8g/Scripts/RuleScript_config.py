@@ -120,14 +120,20 @@ AS_KW_ZONES = [
 
 AS_KW_TARGET_ZONES = [
    AS_KW_ZONE_ARENA,
-   AS_KW_ZONE_RING,
-   AS_KW_ZONE_HAND
+   AS_KW_ZONE_RING
+]
+
+AS_KW_ZONES_PILES = [
+   AS_KW_ZONE_HAND,
+   AS_KW_ZONE_DECK,
+   AS_KW_ZONE_DISCARD,
+   AS_KW_ZONE_KILL
 ]
 
 # Restrictions keywords
 AS_KW_FILTER_BP        = 'bp'
 AS_KW_FILTER_SP        = 'sp'
-AS_KW_FILTER_BACKED    = 'backed'
+AS_KW_FILTER_BACKED    = 'backedup'
 AS_KW_FILTER_BACKUP    = 'backup'
 AS_KW_FILTER_ATTACK    = 'attack'
 AS_KW_FILTER_UATTACK   = 'uattack'
