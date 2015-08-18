@@ -54,7 +54,7 @@ filters:
       attack
       uattack
       block
-      freezed
+      frozen
       fresh
       powerless
    Prefixes:
@@ -78,24 +78,24 @@ RulesDict = {}
 
 # Jin Saotome's SAOTOME DYNAMITE
 RulesDict['aa867ea1-89f8-4154-8e20-2263edd00009'] = """
-target = character[attack]
+target = character[block]
 target = character|oppRing
 """
 
 # Damn D's WHISTLE
 RulesDict['aa867ea1-89f8-4154-8e20-2263edd00014'] = """
-target = ^character[bp>=5 & uattack]|arena
+target = ^character[-frozen]|arena
 target = character[bp<=5]|myDeck
 """
 
 # Strider Hiryu's CYPHER
 RulesDict['aa867ea1-89f8-4154-8e20-2263edd00135'] = """
-target = character[backup, -Pilot]
+target = character[fresh]
 target = character[backedup]
 """
 
 # Kyo Kusanagi's 182 WAYS
 RulesDict['aa867ea1-89f8-4154-8e20-2263edd00240'] = """
-target = opp,character[pilot, Gangster]|oppRing
+target = ^character[powerless]
 target = opp,character|oppRing
 """

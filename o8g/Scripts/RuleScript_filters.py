@@ -20,6 +20,11 @@
 # Filter functions
 #---------------------------------------------------------------------------
 
+RulesFilters = {}
+def registerFilter(name, filter):
+   RulesFilters[name] = filter
+
+
 def filterBP(card, include, cmd, *args):
    debug(">>> filterBP({}, {}, {}, {})".format(card, include, cmd, args)) #Debug
    
@@ -43,7 +48,8 @@ def filterBP(card, include, cmd, *args):
    if not include:
       res = not res
    return res
-
+registerFilter('bp', filterBP)
+   
    
 def filterSP(card, include, cmd, *args):
    debug(">>> filterSP({}, {}, {}, {})".format(card, include, cmd, args)) #Debug
@@ -62,7 +68,8 @@ def filterSP(card, include, cmd, *args):
    if not include:
       res = not res
    return res
-   
+registerFilter('sp', filterSP)
+
 
 def filterType(card, include, cmd, *args):
    debug(">>> filterType({}, {}, {}, {})".format(card, include, cmd, args)) #Debug
@@ -75,7 +82,8 @@ def filterType(card, include, cmd, *args):
       return type == cmd
    else:
       return type != cmd
-   
+registerFilter('type', filterType)
+
 
 def filterSubtype(card, include, cmd, *args):
    debug(">>> filterSubtype({}, {}, {}, {})".format(card, include, cmd, args)) #Debug
@@ -88,7 +96,8 @@ def filterSubtype(card, include, cmd, *args):
       return subtype == cmd
    else:
       return subtype != cmd
-   
+registerFilter('subtype', filterSubtype)
+
 
 def filterBackedup(card, include, cmd, *args):
    debug(">>> filterBacked({}, {}, {}, {})".format(card, include, cmd, args)) #Debug
@@ -101,8 +110,9 @@ def filterBackedup(card, include, cmd, *args):
       return len(backups) > 0
    else:
       return len(backups) == 0
-      
-      
+registerFilter('backedup', filterBackedup)
+    
+    
 def filterBackup(card, include, cmd, *args):
    debug(">>> filterBackup({}, {}, {}, {})".format(card, include, cmd, args)) #Debug
 
@@ -114,21 +124,15 @@ def filterBackup(card, include, cmd, *args):
       return isBackup
    else:
       return not isBackup
-      
-      
+registerFilter('backup', filterBackup)
+   
+   
 def filterAttack(card, include, cmd, *args):
    debug(">>> filterAttack({}, {}, {}, {})".format(card, include, cmd, args)) #Debug
-
-   if not isCard(card):
-      return False
-      
-   attacking = MarkersDict['Attack'] in card.markers
-   if include:
-      return attacking
-   else:
-      return not attacking
-      
-      
+   return filterHasMarker(card, 'Attack', include)
+registerFilter('attack', filterAttack)
+    
+    
 def filterUnitedAttack(card, include, cmd, *args):
    debug(">>> filterUnitedAttack({}, {}, {}, {})".format(card, include, cmd, args)) #Debug
 
@@ -140,6 +144,39 @@ def filterUnitedAttack(card, include, cmd, *args):
       return attacking
    else:
       return not attacking
+registerFilter('uattack', filterUnitedAttack)
+   
+   
+def filterBlock(card, include, cmd, *args):
+   debug(">>> filterBlock({}, {}, {}, {})".format(card, include, cmd, args)) #Debug
+   return filterHasMarker(card, 'CounterAttack', include)
+registerFilter('block', filterBlock)
+    
+    
+def filterFrozen(card, include, cmd, *args):
+   debug(">>> filterFrozen({}, {}, {}, {})".format(card, include, cmd, args)) #Debug
+
+   if not isCard(card):
+      return False
+      
+   frozen = isFrozen(card)
+   if include:
+      return frozen
+   else:
+      return not frozen
+registerFilter('frozen', filterFrozen)
+   
+   
+def filterJustEntered(card, include, cmd, *args):
+   debug(">>> filterJustEntered({}, {}, {}, {})".format(card, include, cmd, args)) #Debug
+   return filterHasMarker(card, 'JustEntered', include)
+registerFilter('fresh', filterJustEntered)
+   
+   
+def filterNoAbility(card, include, cmd, *args):
+   debug(">>> filterNoAbility({}, {}, {}, {})".format(card, include, cmd, args)) #Debug
+   return filterHasMarker(card, 'NoAbility', include)
+registerFilter('powerless', filterNoAbility)
       
 
 #---------------------------------------------------------------------------
@@ -157,6 +194,10 @@ def isCard(obj):
 def isAttached(card):
    backups = getGlobalVar('Backups')
    return bool(backups.get(card._id))
+   
+   
+def isFrozen(card):
+   return card.orientation & Rot90 == Rot90
 
 
 def compareValuesByOp(v1, v2, op):
@@ -168,3 +209,14 @@ def compareValuesByOp(v1, v2, op):
       return v1 >= v2
       
    return False
+
+
+def filterHasMarker(card, marker, include):
+   if not isCard(card):
+      return False
+      
+   res = MarkersDict[marker] in card.markers
+   if include:
+      return res
+   else:
+      return not res

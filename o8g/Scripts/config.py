@@ -71,15 +71,16 @@ TokensDict = {}
 # A table holding tuples with the location for the cards according its states
 CardsCoords = dict(
    #        x     y
-   Slot0        = (-311, 198),
-   Slot1        = (-134, 198),
-   Slot2        = ( 44,  198),
-   Slot3        = ( 221, 198),
-   Attack0      = (-311, 29),
-   Attack1      = (-134, 29),
-   Attack2      = ( 44,  29),
-   Attack3      = ( 221, 29),
-   BackupOffset = ( 0,   13)
+   Slot0         = (-311, 198),
+   Slot1         = (-134, 198),
+   Slot2         = ( 44,  198),
+   Slot3         = ( 221, 198),
+   Attack0       = (-311, 29),
+   Attack1       = (-134, 29),
+   Attack2       = ( 44,  29),
+   Attack3       = ( 221, 29),
+   BackupOffset  = ( 0,  13),
+   UAttackOffset = ( 38,  0)
 )
 
 # Cards abilities

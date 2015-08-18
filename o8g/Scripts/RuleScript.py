@@ -126,14 +126,14 @@ class Rules():
    
       debug("Executing rules")
       if self.target:
-         target = self.checkTargets(self.target)
+         target = self.getTargets(self.target)
          if not target:
             debug("Targeting canceled")
             return False
       return True
 
 
-   def checkTargets(self, target):
+   def getTargets(self, target):
       debug("Checking targets")
 
       types       = target['types']
@@ -169,7 +169,7 @@ class Rules():
                return False
             type = AS_KW_PLAYERS[t-1]
       
-         targets = self.getTargets(type, filters, zone, cards, targeted=True)
+         targets = self.filterTargets(type, filters, zone, cards, targeted=True)
          
          if targets:
             # If an error was returned
@@ -262,8 +262,8 @@ class Rules():
       return cards
       
       
-   def getTargets(self, type, filters, zone, cards, targeted=False):
-      debug("--- get targets by type '%s' in zone %s" % (type, zone))
+   def filterTargets(self, type, filters, zone, cards, targeted=False):
+      debug("--- filter targets by type '%s' in zone %s" % (type, zone))
       if type == AS_KW_TARGET_THIS:
          targets = [Card(self.card_id)]
       # If target is a player
@@ -390,14 +390,9 @@ class Rules():
       cmd = filter[1]
       
       # Get the filter function
-      if   cmd == AS_KW_FILTER_BP     : func = filterBP
-      elif cmd == AS_KW_FILTER_SP     : func = filterSP
-      elif cmd == AS_KW_FILTER_BACKED : func = filterBackedup
-      elif cmd == AS_KW_FILTER_BACKUP : func = filterBackup
-      elif cmd == AS_KW_FILTER_ATTACK : func = filterAttack
-      elif cmd == AS_KW_FILTER_UATTACK: func = filterUnitedAttack
-      elif cmd in AS_KW_CARD_TYPES    : func = filterType
-      else                            : func = filterSubtype
+      if   cmd in RulesFilters    : func = RulesFilters[cmd]
+      elif cmd in AS_KW_CARD_TYPES: func = filterType
+      else                        : func = filterSubtype
    
       debug("--- applying filter %s to %s objects" % (filter, len(arr)))
       arr = [c for c in arr

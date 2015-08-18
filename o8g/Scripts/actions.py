@@ -227,7 +227,7 @@ def freeze(card, x = 0, y = 0, unfreeze = None, silent = False):
       card.orientation = Rot0 if unfreeze else Rot90
    else:
       card.orientation ^= Rot90
-   if card.orientation & Rot90 == Rot90:
+   if isFrozen(card):
       if not silent: notify('{} freezes {}'.format(me, card))
    else:
       if not silent: notify('{} unfreezes {}'.format(me, card))

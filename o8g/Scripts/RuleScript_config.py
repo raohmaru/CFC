@@ -15,11 +15,11 @@
 # You should have received a copy of the GNU General Public License
 # along with this script.  If not, see <http://www.gnu.org/licenses/>.
 
+import re
 
 #---------------------------------------------------------------------------
 # RULESCRIPT CONST LANGUAGE DEFINITION
 #---------------------------------------------------------------------------
-import re
 
 # Regular expressions
 AS_RGX_CMD_TARGET   = re.compile(r'^target\s*=\s*')
@@ -128,31 +128,4 @@ AS_KW_ZONES_PILES = [
    AS_KW_ZONE_DECK,
    AS_KW_ZONE_DISCARD,
    AS_KW_ZONE_KILL
-]
-
-# Restrictions keywords
-AS_KW_FILTER_BP        = 'bp'
-AS_KW_FILTER_SP        = 'sp'
-AS_KW_FILTER_BACKED    = 'backedup'
-AS_KW_FILTER_BACKUP    = 'backup'
-AS_KW_FILTER_ATTACK    = 'attack'
-AS_KW_FILTER_UATTACK   = 'uattack'
-AS_KW_FILTER_BLOCK     = 'block'
-AS_KW_FILTER_FREEZED   = 'freezed'
-AS_KW_FILTER_FRESH     = 'fresh'
-AS_KW_FILTER_POWERLESS = 'powerless'
-AS_KW_FILTERS = [
-   AS_KW_FILTER_BP,
-   AS_KW_FILTER_SP,
-   AS_KW_FILTER_BACKED,
-   AS_KW_FILTER_BACKUP,
-   AS_KW_FILTER_ATTACK,
-   AS_KW_FILTER_UATTACK,
-   AS_KW_FILTER_BLOCK,
-   AS_KW_FILTER_FREEZED,
-   AS_KW_FILTER_FRESH,
-   AS_KW_FILTER_POWERLESS,
-   AS_KW_TARGET_CHAR,
-   AS_KW_TARGET_ACTION,
-   AS_KW_TARGET_REACTION
 ]

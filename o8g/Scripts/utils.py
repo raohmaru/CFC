@@ -147,9 +147,9 @@ def fromWhereStr(src):
 #---------------------------------------------------------------------------
 
 def fixCardY(y):
-   # Variable to move the cards played by player 2 on a 2-sided table, more towards their own side. 
-   # Player's 2 axis will fall one extra card length towards their side.
-   # This is because of bug #146 (https://github.com/kellyelton/OCTGN/issues/146)
+# Variable to move the cards played by player 2 on a 2-sided table, more towards their own side. 
+# Player's 2 axis will fall one extra card length towards their side.
+# This is because of bug #146 (https://github.com/kellyelton/OCTGN/issues/146)
    offsetY = 0
    if me.hasInvertedTable():
       offsetY = CardHeight
@@ -208,17 +208,34 @@ def getSlotIdx(card, player = me):
 
 
 def alignCard(card, x=None, y=None, slotIdx=None):
-   debug(">>> alignCard({},{},{})".format(card, x, y)) #Debug
+   debug(">>> alignCard({}, {}, {}, {})".format(card, x, y, slotIdx)) #Debug
+   z = None
    if x == None or y == None:
       if slotIdx == None:
          slotIdx = getSlotIdx(card)
       if slotIdx == -1:
          return
-      if MarkersDict['Attack'] in card.markers or MarkersDict['UnitedAttack'] in card.markers:
+      # Align attacking chars
+      if MarkersDict['Attack'] in card.markers:
          x, y = CardsCoords['Attack'+`slotIdx`]
+      # Align chars in a uattack
+      elif MarkersDict['UnitedAttack'] in card.markers:
+         uattack = getGlobalVar('UnitedAttack')
+         if len(uattack) <= 1 or card._id not in uattack:
+            return
+         idx = uattack.index(card._id)
+         ox, oy = CardsCoords['UAttackOffset']
+         lead = Card(uattack[0])
+         x, y = lead.position
+         x += ox * idx * playerSide
+         y += oy * idx
+         z = lead.getIndex - 1 * idx
+      # Align char in his assigned slot
       else:
          x, y = CardsCoords['Slot'+`slotIdx`]
    card.moveToTable(x, fixCardY(y))
+   if z != None:
+      card.setIndex(max(z, 0))
 
 
 def alignBackups(card, x=0, y=0):
