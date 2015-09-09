@@ -16,15 +16,14 @@
 # along with this script.  If not, see <http://www.gnu.org/licenses/>.
 
 #---------------------------------------------------------------------------
-# RuleScript 0.0.1
+# RuleScript 0.0.2
 #---------------------------------------------------------------------------
 
 class Rules():
-   """ Rule scripts parser """
-   rule_id = ''
-   card_id = ''
-   parsed  = False
-   target  = None
+   rule_id     = ''
+   card_id     = ''
+   parsed      = False
+   rules_dict  = None
 
    def __init__(self, rule, cid):
       self.rule_id = rule
@@ -40,96 +39,24 @@ class Rules():
       rules = RulesDict[self.rule_id.lower()]
       if not rules:
          return
-      rules = rules.strip().split('\n')
-
-      for line in rules:
-         line = line.strip().lower()
-         debug("Parsing line '%s'" % line)
-
-         # Skip comment lines
-         if line[0] == AS_COMMENT_CHAR:
-            debug("Leading comment char found. Line skipped")
-            continue
-
-         # Remove comments at the end of the line
-         line = line.split(AS_COMMENT_CHAR)[0].rstrip()
-
-         # Check for target command
-         if self.target == None:
-            target = AS_RGX_CMD_TARGET.match(line)
-            if target:
-               self.target = self.parseTarget( line[len(target.group()):] )
-         else:
-            debug("Target already defined. Line skipped")
-
-
-   def parseTarget(self, str):
-      str    = str.strip()
-      debug("Parsing target '%s'" % str)
-
-      # Get the types
-      types = AS_RGX_TARGET_TYPE.split(str)
-      if not types[0]:
-         debug("ParseError: 'target' has no type parameter")
-         return False
-      types = types[0].split(AS_OP_OR)
-      # AS_KW_ALL overrides the rest
-      if AS_KW_ALL in types:
-         types = [AS_KW_ALL]
-      else:
-         types = map(String.strip, types)
-      debug("--- types: %s" % types)
-
-      # Get the filters
-      filters = AS_RGX_TARGET_RESTR.search(str)
-      filters_arr = []
-      if filters:
-         filters = filters.group(1).split(AS_OP_OR)
-         # Check filters
-         for filter in filters:
-            # AND filters
-            filter = filter.split(AS_OP_AND)
-            arr = []
-            for f in filter:
-               arr.append(self.getFilter(f))
-            debug("--- filter: %s" % arr)
-            if len(arr) > 0:
-               filters_arr.append(arr if len(arr) > 1 else arr[0])
-
-      # Get the zone
-      zone = AS_RGX_TARGET_ZONE.search(str)
-      zone_prefix = ''
-      if zone:
-         zone = zone.group(1)
-      else:
-         zone = AS_KW_ZONE_ARENA
-      # Check for zone prefixes
-      if zone != AS_KW_ZONE_ARENA:
-         zone_prefix, zone = self.getPrefix(AS_PREFIX_ZONES, zone)
-      # Check valid zones
-      if zone not in AS_KW_ZONES:
-         debug("KeywordError: Invalid zone '%s'. Assuming '%s'" % (zone, AS_KW_ZONE_ARENA))
-         zone = AS_KW_ZONE_ARENA
-      debug("--- zone prefix: %s" % zone_prefix)
-      debug("--- zone: %s" % zone)
+      self.rules_dict = RulesLexer.parse(rules)
       
-      return {
-         'types'  : types,
-         'filters': filters_arr,
-         'zone'   : [zone_prefix, zone]
-      }
-
 
    def activate(self):
       if not self.parsed:
          self.parse()
    
       debug("Executing rules")
-      if self.target:
-         target = self.getTargets(self.target)
+      target = None
+      if 'target' in self.rules_dict:
+         target = self.getTargets(self.rules_dict['target'])
          if not target:
             debug("Targeting canceled")
             return False
+      
+      if 'action' in self.rules_dict:
+         self.execAbilities(self.rules_dict['action'], target)
+      
       return True
 
 
@@ -149,12 +76,12 @@ class Rules():
             if t == 0:
                return False
             types = [types[t-1]]
-            debug("--- type selected: %s" % types)
+            debug("-- type selected: %s" % types)
       
       # Get the zone object
-      debug("--- Getting card from zone %s" % ''.join(zone))
-      cards = self.getZoneCards(zone)
-      debug("--- Retrieved %s cards" % len(cards))
+      debug("-- Getting card from zone %s" % ''.join(zone))
+      cards = self.getCardsFromZone(zone)
+      debug("-- Retrieved %s cards" % len(cards))
       
       if len(cards) == 0:
          warning(ErrStrings[ERR_NO_CARDS])
@@ -188,41 +115,6 @@ class Rules():
       
       return targets
       
-   
-   def getFilter(self, str):
-   # Returns a filter as an array
-      str  = str.strip()
-      args = ''
-      
-      # Look for prefixes
-      prfx, cmd = self.getPrefix(AS_PREFIX_FILTERS, str)
-      
-      # Look for parameters
-      params = AS_RGX_TARGET_PARAM.match(cmd)
-      if params:
-         cmd = params.group(1)
-         args = params.group(2, 3)
-      
-      return [prfx, cmd, args]
-      
-   
-   def getPrefix(self, prefixes, str):
-   # Get the prefix for a given string
-      for p in prefixes:
-         if str[:len(p)] == p:
-            cmd = str[len(p):].strip()
-            return (p, cmd)
-      return ('', str)
-      
-      
-   def getSuffix(self, suffixes, str):
-   # Get the suffix for a given string
-      for p in suffixes:
-         if str[-len(p):] == p:
-            cmd = str[:-len(p)].strip()
-            return (p, cmd)
-      return ('', str)
-      
       
    def getObjFromPrefix(self, prefix):
    # Returns an object of the game from the given prefix
@@ -233,7 +125,7 @@ class Rules():
       return None
       
    
-   def getZoneCards(self, zone):
+   def getCardsFromZone(self, zone):
    # Get all the cards from the given zone
       prefix  = zone[0]
       zone    = zone[1]
@@ -263,7 +155,7 @@ class Rules():
       
       
    def filterTargets(self, type, filters, zone, cards, targeted=False):
-      debug("--- filter targets by type '%s' in zone %s" % (type, zone))
+      debug("-- filter targets by type '%s' in zone %s" % (type, zone))
       if type == AS_KW_TARGET_THIS:
          targets = [Card(self.card_id)]
       # If target is a player
@@ -274,7 +166,7 @@ class Rules():
          targets = self.filterCards(type, filters, zone, cards, targeted)
          
       if isinstance(targets, list):
-         debug("--- %s targets retrieved" % len(targets))
+         debug("-- %s targets retrieved" % len(targets))
          if len(targets) < 10:
             for t in targets:
                debug(" '- target: {}".format(t))
@@ -292,7 +184,7 @@ class Rules():
             if len(players) > 1:
                arr.append(players[1])
             
-      debug("--- applying {} filters to player {}".format(len(filters), arr))
+      debug("-- applying {} filters to player {}".format(len(filters), arr))
             
       # Apply filters      
       arr = self.applyFiltersTo(arr, filters)
@@ -304,7 +196,7 @@ class Rules():
    
    
    def filterCards(self, type, filters, zone, cards, targeted=False):
-      debug("--- applying %s filters to %s cards" % (len(filters), len(cards)))
+      debug("-- applying %s filters to %s cards" % (len(filters), len(cards)))
       
       cards_f1 = cards
       multiple = False
@@ -316,14 +208,14 @@ class Rules():
                if c.targetedBy == me]
             if len(cards_f1) == 0:
                return GameException(ERR_NO_CARD_TARGETED)
-            debug("--- %s cards targeted" % len(filters))
+            debug("-- %s cards targeted" % len(filters))
          else:
             targeted = False
       
       # Check for type prefixes
-      typePrefix, type = self.getPrefix(AS_PREFIX_TYPES, type)
+      typePrefix, type = RulesLexer.getPrefix(AS_PREFIX_TYPES, type)
       if typePrefix:
-         debug("--- found prefix '%s' in '%s'" % (typePrefix, typePrefix+type))
+         debug("-- found prefix '%s' in '%s'" % (typePrefix, typePrefix+type))
          # Targetting other cards?
          if typePrefix == AS_PREFIX_OTHER:
             # Current card can't be selected
@@ -331,9 +223,9 @@ class Rules():
                return GameException(ERR_TARGET_OTHER)
             
       # Check for type suffixes
-      typeSuffix, type = self.getSuffix(AS_SUFFIX_TYPES, type)
+      typeSuffix, type = RulesLexer.getSuffix(AS_SUFFIX_TYPES, type)
       if typeSuffix:
-         debug("--- found suffix '%s' in '%s'" % (typeSuffix, type+typeSuffix))
+         debug("-- found suffix '%s' in '%s'" % (typeSuffix, type+typeSuffix))
          # Allow multiple selection?
          if typeSuffix == AS_SUFFIX_PLURAL:
             multiple = True        
@@ -345,12 +237,12 @@ class Rules():
       if type != AS_KW_ALL:
          # Look for (super) type
          if type in AS_KW_CARD_TYPES:
-            debug("--- checking if any card match type '%s'" % type)
+            debug("-- checking if any card match type '%s'" % type)
             cards_f1 = [c for c in cards_f1
                if c.Type.lower() == type]
          # Look for subtype
          else:
-            debug("--- checking if any card match subtype '%s'" % type)
+            debug("-- checking if any card match subtype '%s'" % type)
             cards_f1 = [c for c in cards_f1
                if c.Subtype.lower() == type]
       
@@ -394,15 +286,21 @@ class Rules():
       elif cmd in AS_KW_CARD_TYPES: func = filterType
       else                        : func = filterSubtype
    
-      debug("--- applying filter %s to %s objects" % (filter, len(arr)))
+      debug("-- applying filter %s to %s objects" % (filter, len(arr)))
       arr = [c for c in arr
          if func(c, include, cmd, *filter[2])
       ]      
-      debug("--- %s objects match the filter" % len(arr))
+      debug("-- %s objects match the filter" % len(arr))
          
       return arr
 
-
+      
+   def execAbilities(self, ability, target):
+      return true
+      # if ability['effects'][0] == AS_KW_COND_MAY:
+         # if not confirm("May {}?".format(question)):
+            # break
+      
 class GameException(Exception):
    def __init__(self, value):
       self.value = value

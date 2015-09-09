@@ -18,8 +18,8 @@
 """
 ***RuleScript***
 Case Insensitive
-Whitespace Insensitive
 
+---------------------------------------------------
 target=type[filters]|zone
 
 type:
@@ -72,9 +72,42 @@ zone:
       my (default)
       opp
 
+---------------------------------------------------
+action={cost}: [cond] effect [& effect] [->(target)] [restr]; ...
+
+cost:
+   Keywords:
+      F, S(target), D(target), E(target)
+
+cond:
+   Keywords:
+      may
+      may('Question')
+      
+effect:
+   Values:
+      Valid effect followed by () with 0 or more parameters
+   Operators:
+      & (and)
+      
+->:
+   Parameters:
+      A valid target
+      
+restr:
+   Keywords:
+      ueot, uynt
+
+---------------------------------------------------
 """
 
 RulesDict = {}
+
+# Ryu no Senshi's DRAGON TRANSFORM
+RulesDict['aa867ea1-89f8-4154-8e20-2263edd00002'] = """
+target = character[-block]|oppRing
+action = {F(action|kill)}: may('Question?') freeze() & damage(1)->(characters[-backup]|oppRing) ueot; draw(1, me)
+"""
 
 # Jin Saotome's SAOTOME DYNAMITE
 RulesDict['aa867ea1-89f8-4154-8e20-2263edd00009'] = """

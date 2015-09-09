@@ -452,7 +452,12 @@ def setupDebug(group, x=0, y=0):
    me.SP = 50
    chooseSide()
    goToMain()
-   cards = ['aa867ea1-89f8-4154-8e20-2263edd00009', 'aa867ea1-89f8-4154-8e20-2263edd00014', 'aa867ea1-89f8-4154-8e20-2263edd00135', 'aa867ea1-89f8-4154-8e20-2263edd00240']
+   cards = [
+      'aa867ea1-89f8-4154-8e20-2263edd00002',
+      'aa867ea1-89f8-4154-8e20-2263edd00014',
+      'aa867ea1-89f8-4154-8e20-2263edd00135',
+      'aa867ea1-89f8-4154-8e20-2263edd00240'
+   ]
    for i, id in enumerate(cards):
       debug("Creating card {} at slot {}".format(id, i))
       card = table.create(id, 0, 0, quantity=1, persist=True)

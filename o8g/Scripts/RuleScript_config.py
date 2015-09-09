@@ -21,6 +21,8 @@ import re
 # RULESCRIPT CONST LANGUAGE DEFINITION
 #---------------------------------------------------------------------------
 
+AS_VERSION = '0.0.2'
+
 # Regular expressions
 AS_RGX_CMD_TARGET   = re.compile(r'^target\s*=\s*')
 AS_RGX_TARGET_TYPE  = re.compile(r'\||\[')
@@ -28,12 +30,20 @@ AS_RGX_TARGET_RESTR = re.compile(r'\[(.+)\]')
 AS_RGX_TARGET_PARAM = re.compile(r'(\w+)\s*([=><]+)\s*(\w+)')
 AS_RGX_TARGET_ZONE  = re.compile(r'\|\s*([\w*]+).*$')
 
+AS_RGX_CMD_ACTION   = re.compile(r'^action\s*=\s*')
+AS_RGX_EF_COST      = re.compile(r'\{\s*([^}]+)\s*\}\s*:\s*')
+AS_RGX_EF_TARGET    = re.compile(r'->\s*\((.+)\)')
+AS_RGX_EF_EFFECT    = re.compile(r'(?:(\w+)\((.*?)\))')
+
+AS_RGX_PARAM        = re.compile(r'\(([^)]*)\)')
+
 # Comments
 AS_COMMENT_CHAR = '#'
 
 # Operators
 AS_OP_OR    = ','
 AS_OP_AND   = '&'
+AS_OP_SEP   = ';'
 AS_OP_EQUAL = '='
 AS_OP_LTE   = '<='
 AS_OP_GTE   = '>='
@@ -128,4 +138,24 @@ AS_KW_ZONES_PILES = [
    AS_KW_ZONE_DECK,
    AS_KW_ZONE_DISCARD,
    AS_KW_ZONE_KILL
+]
+
+# Cost keywords
+AS_KW_COST_FREEZE    = 'f'
+AS_KW_COST_SACRIFICE = 's'
+AS_KW_COST_DISCARD   = 'd'
+AS_KW_COST_EXILE     = 'e'
+
+# Effect conditions
+AS_KW_COND_MAY = 'may'
+AS_KW_EFFECT_COND = [
+   AS_KW_COND_MAY
+]
+
+# Effect restrictions
+AS_KW_RESTR_UEOT = 'ueot'
+AS_KW_RESTR_UYNT = 'uynt'
+AS_KW_EFFECT_RESTRS = [
+   AS_KW_RESTR_UEOT,
+   AS_KW_RESTR_UYNT
 ]
