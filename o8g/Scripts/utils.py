@@ -448,7 +448,8 @@ def setupDebug(group, x=0, y=0):
       warning("Please load a deck first.")
       return
    
-   global charsPlayed
+   global charsPlayed, debugVerbosity
+   debugVerbosity = DebugLevel.All
    me.SP = 50
    chooseSide()
    goToMain()
