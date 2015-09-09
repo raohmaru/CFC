@@ -296,7 +296,7 @@ class Rules():
 
       
    def execAbilities(self, ability, target):
-      return true
+      return True
       # if ability['effects'][0] == AS_KW_COND_MAY:
          # if not confirm("May {}?".format(question)):
             # break
