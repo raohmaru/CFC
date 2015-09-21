@@ -27,13 +27,25 @@ def onTableLoad():
 def onGameStart():
    resetAll()
 
-   
+
 def onLoadDeck(player, groups):
    if player != me: return # We only want the owner of to run this script
+   debug(">>> onLoadDeck({})".format(player)) #Debug
+   notify("{} has loaded a deck. Now his deck has {} cards.".format(player, len(me.Deck)))
    mute()
-   decksize = len(me.Deck)
-   if decksize != DeckSize:
-      notify(":::ERROR::: {}'s deck must have exactly {} cards (it has {} cards)".format(DeckSize, me,decksize))
+   cards = {}
+   for card in me.Deck:
+      if card.model in cards:
+         cards[card.model] += 1
+      else:
+         cards[card.model] = 1
+      if cards[card.model] > MaxCardCopies:
+         msg = "INVALID DECK: {0}'s deck has more than {1} copies of a card (only {1} are allowed)".format(player, MaxCardCopies)
+         notify(msg)
+         # A more visible notification for all players
+         for p in players:
+            remoteCall(p, "notifyBar", ["#FF0000", msg])
+         break
 
 
 def onMoveCard(player, card, fromGroup, toGroup, oldIndexs, indexs, oldX, oldY, x, y, faceup, highlights, markers):

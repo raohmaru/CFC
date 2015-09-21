@@ -100,7 +100,7 @@ BackupsPerTurn   = 1
 BackupRaiseBP    = 3
 MaxCharsUAttack  = 2
 UAttackCost      = 5
-DeckSize         = 50
+MaxCardCopies    = 3
 HandSize         = 5
 
 # Debug
