@@ -49,6 +49,9 @@ class GameCard(object):
 
       
    def activateEffect(self):
+      # Temporary disable auto effects
+      return True
+      
       if not self.hasEffect():
          return
       if self.rules == None:

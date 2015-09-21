@@ -238,5 +238,4 @@ class RulesLexer():
             params = match.group(1).split(',')
             kw.append(params)
             str = str[len(match.group()):]
-            print str
       return (kw, str)
