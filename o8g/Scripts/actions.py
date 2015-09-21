@@ -87,7 +87,8 @@ def goToCleanup(group = table, x = 0, y = 0):
 # Table group actions
 #---------------------------------------------------------------------------
 
-def setup(group, x=0, y=0):  # This function is usually the first one the player does
+def setup(group, x=0, y=0):
+# This function is usually the first one the player does
    debug(">>> setup()") #Debug
    mute()
    if not confirm("Are you sure you want to setup for a new game?\n(This action should only be done after a game reset.)"):
@@ -100,7 +101,25 @@ def setup(group, x=0, y=0):  # This function is usually the first one the player
    notify(Phases[SetupPhase].format(me))
    me.Deck.shuffle()
    refill() # We fill the player's play hand to their hand size
-   notify("Setup for player {} completed.".format(me,))
+   notify("Setup for player {} completed.".format(me))
+
+   
+def scoop(group, x=0, y=0):
+# Reset the game
+   debug(">>> reset()") #Debug
+   mute()
+   if not confirm("Are you sure you want to reset the game?"):
+      return
+      
+   resetAll()   
+   myCards = (card for card in table
+      if card.controller == me)        
+   toOwnerDeck(myCards)
+   toOwnerDeck(me.Deck)
+   toOwnerDeck(me.hand)
+   toOwnerDeck(me.piles['Discard Pile'])
+   toOwnerDeck(me.piles['Kill Pile'])
+   notify("{} resets the game.".format(me,))
 
 
 def flipCoin(group, x = 0, y = 0):
@@ -345,6 +364,11 @@ def toDeckBottomAll(group, x = 0, y = 0):
       card.moveToBottom(Deck)
    if len(players) > 1: rnd(1, 100) # Wait a bit more, as in multiplayer games, things are slower.
    notify("{} moves all cards from their {} to the bottom of its Deck.".format(me, group.name))
+
+   
+def toOwnerDeck(cards):
+   for card in cards:
+      card.moveTo(card.owner.Deck)
 
 
 def discardAll(group, x = 0, y = 0):

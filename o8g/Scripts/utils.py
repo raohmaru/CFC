@@ -68,11 +68,13 @@ def resetAll():
 # Clears all the global variables in order to start a new game.
    debug(">>> resetAll()") #Debug
    # Import all our global variables and reset them.
-   global playerSide, handSize, debugVerbosity, parsedCards
+   global playerSide, handSize, debugVerbosity, parsedCards, charsPlayed, backupsPlayed
    playerSide = None
    handSize = HandSize
    parsedCards = {}
-   me.HP = 30  # Wipe the counters
+   charsPlayed = 0
+   backupsPlayed = 0
+   me.HP = 30
    me.SP = 0
    clearGlobalVar('Backups')
    clearGlobalVar('UnitedAttack')
