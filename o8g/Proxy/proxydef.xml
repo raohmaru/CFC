@@ -12,15 +12,18 @@
 		<block type="overlay" id="sp_box" src="Proxy/Overlays/sp_box.png">
 			<location x="381" y="89" />
 		</block>
+		<block type="overlay" id="sp_box2" src="Proxy/Overlays/sp_box.png">
+			<location x="381" y="38" />
+		</block>
 		<!-- Publisher -->
-		<block type="overlay" id="pub_capcom" src="Proxy/Logos/Capcom.png">
+		<!-- <block type="overlay" id="pub_capcom" src="Proxy/Logos/Capcom.png">
 			<location x="366" y="330" />
 		</block>
 		<block type="overlay" id="pub_snk" src="Proxy/Logos/SNK.png">
 			<location x="366" y="330" />
-		</block>
+		</block> -->
 		<!-- Team -->
-		<block type="overlay" id="team_art_of_fighting" src="Proxy/Logos/Art_of_Fighting.png">
+		<!-- <block type="overlay" id="team_art_of_fighting" src="Proxy/Logos/Art_of_Fighting.png">
 			<location x="348" y="366" />
 		</block>
 		<block type="overlay" id="team_breath_of_fire" src="Proxy/Logos/Breath_of_Fire.png">
@@ -112,7 +115,7 @@
 		</block>
 		<block type="overlay" id="team_warzard" src="Proxy/Logos/Warzard.png">
 			<location x="348" y="366" />
-		</block>
+		</block> -->
 		<!-- Subtype -->
 		<block type="overlay" id="subtype_agent" src="Proxy/Subtypes/Agent.png">
 			<location x="311" y="448" />
@@ -744,6 +747,18 @@
 			<border color="#102267" size="6" />
 			<wordwrap width="65" height="25" align="far" shrinktofit="True" />
 		</block>
+		<block type="text" id="sp2">
+			<location x="398" y="47" />
+			<text color="#e7ecfa" size="23" font="Fonts/m04b_CFC.ttf" />
+			<border color="#102267" size="6" />
+			<wordwrap width="65" height="25" align="far" shrinktofit="True" />
+		</block>
+		<block type="text" id="team">
+			<location x="208" y="407" />
+			<text color="#f3db58" size="18" font="Fonts/ArchivoNarrow-Bold.ttf" />
+			<border color="#000000" size="3" />
+			<wordwrap width="272" height="30" shrinktofit="True" align="far" />
+		</block>
 		<block type="text" id="name">
 			<location x="23" y="442" />
 			<text color="#FFFFFF" size="46" font="Fonts/PassionOne-Regular.ttf" />
@@ -799,7 +814,7 @@
 			<link block="bp_box" />
 			<link block="sp_box" />
 			<!-- Publisher -->
-			<conditional>
+			<!-- <conditional>
 				<switch property="Publisher">
 					<case value="Capcom" break="True">
 						<link block="pub_capcom" />
@@ -808,9 +823,9 @@
 						<link block="pub_snk" />
 					</case>
 				</switch>
-			</conditional>
+			</conditional> -->
 			<!-- Team -->
-			<conditional>
+			<!-- <conditional>
 				<switch property="Team">
 					<case value="Art of Fighting" break="True">
 						<link block="team_art_of_fighting" />
@@ -906,7 +921,7 @@
 						<link block="team_warzard" />
 					</case>
 				</switch>
-			</conditional>
+			</conditional> -->
 			<!-- Subtype -->
 			<conditional>
 				<switch property="Subtype">
@@ -1558,6 +1573,9 @@
 			<link block="sp">
 				<property name="SP" />
 			</link>
+			<link block="team">
+				<property name="Team" />
+			</link>
 			<link block="type">
 				<property name="Type" />
 			</link>
@@ -1582,7 +1600,7 @@
 		</matches>
 		
 		<overlayblocks>
-			<link block="sp_box" />
+			<link block="sp_box2" />
 			<!-- Rarity -->
 			<conditional>
 				<switch property="Rarity">
@@ -1606,7 +1624,7 @@
 		</overlayblocks>
 		
 		<textblocks>
-			<link block="sp">
+			<link block="sp2">
 				<property name="SP" />
 			</link>
 			<link block="type">
@@ -1633,7 +1651,7 @@
 		</matches>
 		
 		<overlayblocks>
-			<link block="sp_box" />
+			<link block="sp_box2" />
 			<!-- Rarity -->
 			<conditional>
 				<switch property="Rarity">
@@ -1657,7 +1675,7 @@
 		</overlayblocks>
 		
 		<textblocks>
-			<link block="sp">
+			<link block="sp2">
 				<property name="SP" />
 			</link>
 			<link block="type">
