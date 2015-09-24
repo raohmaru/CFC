@@ -86,13 +86,6 @@ def resetAll():
    debug("<<< resetAll()") #Debug
 
 
-def clearAll(allPlayers = False):
-   notify("{} clears all targets and highlights.".format(me))
-   for card in table:
-      if allPlayers or card.controller == me:
-         clear(card, silent = True)
-
-
 def switchAutomation(name, command = None):
    debug(">>> switchAutomation({})".format(name)) #Debug
 
@@ -141,7 +134,7 @@ def clearGlobalVar(name, player = None):
    
 
 def fromWhereStr(src):
-   return " from the ring" if src == table else " from its " + src.name
+   return "from the ring" if src == table else "from its " + src.name
 
 
 #---------------------------------------------------------------------------
@@ -265,6 +258,21 @@ def getTargetedCards(card=None, targetedByMe=True, controlledByMe=True, type='Ch
       and c.Type == type]
    return targets
 
+   
+def revealDrawnCard(card, type = None):
+   cardname = card.Name
+   if not card.isFaceUp:
+      if confirm("Reveal card to all players?"):
+         card.isFaceUp = True
+         rnd(1,100) # Small wait (bug workaround) to make sure all animations are done.
+         cardname = card.Name
+      else:
+         type = type + " " if type != None else ""
+         cardname = "a {}card".format(type)
+         
+   return cardname
+   
+   
 #---------------------------------------------------------------------------
 # Markers functions
 #---------------------------------------------------------------------------

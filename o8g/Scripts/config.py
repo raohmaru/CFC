@@ -35,7 +35,8 @@ Phases = [
    "\n=== MAIN Phase: {} ===",
    "\n=== ATTACK Phase: {} ===",
    "\n=== COUNTERATTACK Phase: {} ===",
-   "\n=== END Phase: {} ==="
+   "\n=== END Phase: {} ===",
+   "\n=== CLEANUP Phase: {} ==="
 ]
 SetupPhase    = 0
 ActivatePhase = 1
@@ -70,7 +71,7 @@ TokensDict = {}
 
 # A table holding tuples with the location for the cards according its states
 CardsCoords = dict(
-   #        x     y
+   #                x     y
    Slot0         = (-311, 198),
    Slot1         = (-134, 198),
    Slot2         = ( 44,  198),
@@ -94,17 +95,17 @@ Regexps = dict(
 )
 
 # Rules
-NumSlots         = 4
-CharsPerTurn     = 1
-BackupsPerTurn   = 1
-BackupRaiseBP    = 3
-MaxCharsUAttack  = 2
-UAttackCost      = 5
-MaxCardCopies    = 3
-HandSize         = 5
+NumSlots        = 4
+CharsPerTurn    = 1
+BackupsPerTurn  = 1
+BackupRaiseBP   = 3
+MaxCharsUAttack = 2
+UAttackCost     = 5
+MaxCardCopies   = 3
+HandSize        = 5
 
 # Debug
-DebugLevel   = Struct(**{
+DebugLevel = Struct(**{
    'Off'    : -1,
    'Info'   : 0,
    'Debug'  : 1,
@@ -161,5 +162,5 @@ parsedCards    = {} # Dictionary holding all parsed cards
 automations = {
    'Play'     : True, # Automatically trigger game effetcs and card effects when playing cards
    'Phase'    : True, # Automatically trigger phase related events, and effects from cards in play
-   'WinForms' : True # Game will use the custom Windows Forms for displaying info pop-ups
+   'WinForms' : True  # Game will use the custom Windows Forms for displaying info pop-ups
 }

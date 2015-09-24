@@ -379,6 +379,7 @@ def blockAuto(card):
    slotIdx = getSlotIdx(target, players[1])
    if slotIdx == -1 or myRing[slotIdx] != None:
       warning("An attacking character can only be blocked by exactly one char")
+      return
    
    setMarker(card, 'CounterAttack')
    # card.arrow(target)

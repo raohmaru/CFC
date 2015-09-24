@@ -33,7 +33,7 @@ def getParsedCard(card):
 
 
 class GameCard(object):
-   """ A class which stores the card effect name and its parsed rule scripts """   
+""" A class which stores the card effect name and its parsed rule scripts """   
    card_id = None
    rule_id = None
    rules   = None
@@ -60,7 +60,7 @@ class GameCard(object):
 
 
 class CharCard(GameCard):
-   """ A class which stores the character card ability name and its parsed rule scripts """   
+""" A class which stores the character card ability name and its parsed rule scripts """   
    
    def __init__(self, card):
       super(self.__class__, self).__init__(card)
@@ -69,7 +69,7 @@ class CharCard(GameCard):
       ability = Regexps['Ability'].match(card.Rules)
       if ability:
          debug("Found ability {}".format(ability.group(0)))  # Causes weird IronPython error
-         self.ability = ability.group(0)
+         self.ability      = ability.group(0)
          self.ability_type = ability.group(1)
          self.ability_name = ability.group(2)
       else:

@@ -31,15 +31,16 @@ def nextPhase(group = table, x = 0, y = 0):  # Function to take you to the next 
       idx = ActivatePhase
    else:
       idx += 1
-   if   idx == ActivatePhase:
-      if oldIdx != CleanupPhase:
+   if idx == ActivatePhase:
+      if oldIdx != CleanupPhase:  # Force cleanup
          triggerPhaseEvent(CleanupPhase)
       goToActivate()
-   elif idx == DrawPhase:     goToDraw()
-   elif idx == MainPhase:     goToMain()
-   elif idx == AttackPhase:   goToAttack()
-   elif idx == BlockPhase:    goToCounterattack()
-   elif idx == EndPhase:      goToEnd()
+   elif idx == DrawPhase:    goToDraw()
+   elif idx == MainPhase:    goToMain()
+   elif idx == AttackPhase:  goToAttack()
+   elif idx == BlockPhase:   goToCounterattack()
+   elif idx == EndPhase:     goToEnd()
+   elif idx == CleanupPhase: goToCleanup()
 
 
 def goToActivate(group = table, x = 0, y = 0):
@@ -131,12 +132,13 @@ def flipCoin(group, x = 0, y = 0):
       notify("{} flips Tails.".format(me))
 
 
-def randomPick(group, x = 0, y = 0):
+def randomPick(group, x = 0, y = 0, fromPlayer = None):
    mute()
    card = None
+   player = fromPlayer if fromPlayer != None else me
    if group == table:
-      ring = getGlobalVar('Ring', me)
-      if len(players) > 1:
+      ring = getGlobalVar('Ring', player)
+      if fromPlayer == None and len(players) > 1:
          ring += getGlobalVar('Ring', players[1])
       ring = filter(None, ring)
       if(len(ring)) > 0:
@@ -147,10 +149,27 @@ def randomPick(group, x = 0, y = 0):
       return
    card.select()
    card.target(True)
+   revealDrawnCard(card)
    if group == table:
       notify("{} randomly selects {}'s {} on the ring.".format(me, card.controller, card))
    else:
       notify("{} randomly selects {} from their {}.".format(me, card, group.name))
+      
+
+def randomPickMine(group, x = 0, y = 0):
+   randomPick(group, x, y, me)
+      
+
+def randomPickEnemy(group, x = 0, y = 0):
+   if len(players) > 1:
+      randomPick(group, x, y, players[1])
+
+      
+def clearAll(group = table, x = 0, y = 0, allPlayers = False):
+   notify("{} clears all targets and highlights.".format(me))
+   for card in table:
+      if allPlayers or card.controller == me:
+         clear(card, silent = True)
 
 
 def alignCards(group, x = 0, y = 0):
@@ -233,11 +252,12 @@ def activate(card, x = 0, y = 0):
             freeze(card, silent = True)
          ability = "ability {}".format(pcard.ability)
       else:
+         whisper("{} has no ability.".format(card))
          return
    else:
       ability = "effect"
    card.highlight = ActivatedColor
-   notify("{} activates {}'s {}".format(me, card, ability))
+   notify("{} activates {}'s {}.".format(me, card, ability))
 
 
 def freeze(card, x = 0, y = 0, unfreeze = None, silent = False):
@@ -256,14 +276,16 @@ def freeze(card, x = 0, y = 0, unfreeze = None, silent = False):
 
 def doesNotUnfreeze(card, x = 0, y = 0):
    mute()
+   msg = "not unfreeze"
    if not MarkersDict['DoesntUnfreeze'] in card.markers:
       card.highlight = DoesntUnfreezeColor
       setMarker(card, 'DoesntUnfreeze')
-      notify("{0}'s {1} will not unfreeze during {0}'s next Activate phase.".format(card.controller, card))
    else:
       card.highlight = None
       removeMarker(card, 'DoesntUnfreeze')
-      notify("{0}'s {1} will unfreeze as normal during {0}'s Activate phase.".format(card.controller, card))
+      msg = "unfreeze as normal"
+   
+   notify("{0}'s {1} will {2} during {0}'s Activate phase.".format(card.controller, card, {2}))
 
 
 def clear(card, x = 0, y = 0, silent = False):
@@ -305,28 +327,21 @@ def destroy(card, x = 0, y = 0):
    card.moveTo(me.piles['Discard Pile'])
    if card.Type == 'Character':
       action = "KOs"
-   notify("{} {} {}{}.".format(me, action, card, fromText))
+   notify("{} {} {} {}.".format(me, action, card, fromText))
    
 
 def remove(card, x = 0, y = 0):
    mute()
    fromText = fromWhereStr(card.group)
    card.moveTo(me.piles['Kill Pile'])
-   notify("{} kills {}{}.".format(me, card, fromText))
+   notify("{} kills {} {}.".format(me, card, fromText))
 
 
 def toHand(card, x = 0, y = 0):
    mute()
    src = card.group
    fromText = fromWhereStr(card.group)
-   cardname = card.Name
-   if not card.isFaceUp:
-      if confirm("Reveal card to all players?"):
-         card.isFaceUp = True
-         rnd(1,100) # Small wait (bug workaround) to make sure all animations are done.
-         cardname = card.Name
-      else:
-         cardname = "a card"
+   cardname = revealDrawnCard(card)
    card.moveTo(me.hand)
    if src == table:
       notify("{} returns {} to its hand {}.".format(me, cardname, fromText))
@@ -338,14 +353,14 @@ def toDeckTop(card, x = 0, y = 0):
    mute()
    fromText = fromWhereStr(card.group)
    card.moveTo(me.Deck)
-   notify("{} puts {}{} on the top of its Deck.".format(me, card, fromText))
+   notify("{} puts {} {} on the top of its Deck.".format(me, card, fromText))
 
 
 def toDeckBottom(card, x = 0, y = 0):
    mute()
    fromText = fromWhereStr(card.group)
    card.moveToBottom(me.Deck)
-   notify("{} puts {}{} on the bottom of its Deck.".format(me, card, fromText))
+   notify("{} puts {} {} on the bottom of its Deck.".format(me, card, fromText))
 
 
 def toDeckTopAll(group, x = 0, y = 0):
@@ -554,7 +569,39 @@ def drawMany(group, count = None, silent = False):  # This function draws a vari
       notify("{} draws {} cards.".format(me, count))
 
 
-def trash(group = me.Deck, x = 0, y = 0, silent = False):  # Draws one card from the deck into the discard pile
+def randomDraw(group = me.Deck, type = None):
+   mute()
+   if len(group) == 0:
+      whisper("Can't draw from an empty {}.".format(group.name))
+      return
+   if type == None:
+      card = group.random()
+   else:
+      cards = [card for card in group
+         if card.Type == type]
+      if len(cards) == 0:
+         whisper("There is no cards of type {} in the {}.".format(type, group.name))
+         return
+      card = cards[rnd(0, len(cards)-1)]
+   cardname = revealDrawnCard(card, type)
+   card.moveTo(me.hand)
+   notify("{} draws {} at random {}.".format(me, cardname, fromWhereStr(group)))
+   
+   
+def randomDrawCHA(group = me.Deck):
+   randomDraw(group, 'Character')
+   
+   
+def randomDrawAC(group = me.Deck):
+   randomDraw(group, 'Action')
+   
+   
+def randomDrawRE(group = me.Deck):
+   randomDraw(group, 'Reaction')
+
+
+def trash(group = me.Deck, x = 0, y = 0, silent = False):
+# Draws one card from the deck into the discard pile
    mute()
    if len(group) == 0:
       return
@@ -569,7 +616,8 @@ def trash(group = me.Deck, x = 0, y = 0, silent = False):  # Draws one card from
       notify("{} trash top {} cards from {}.".format(me, count, group.name))
 
 
-def shuffle(group):  # A simple function to shuffle piles
+def shuffle(group):
+# A simple function to shuffle piles
    mute()
    for card in group:
       if card.isFaceUp:
@@ -578,13 +626,14 @@ def shuffle(group):  # A simple function to shuffle piles
    notify("{} shuffled its {}".format(me, group.name))
 
 
-def reshuffle(group = me.piles['Discard Pile']):  # This function reshuffles the player's discard pile into its deck.
+def reshuffle(group = me.piles['Discard Pile']):
+# This function reshuffles the player's discard pile into its deck.
    mute()
    Deck = me.Deck
    for card in group:
       card.moveTo(Deck) # Move the player's cards from the discard to its deck one-by-one.
    rnd(1, 100) # Bug 105 workaround. This delays the next action until all animation is done.
-                   # see https://octgn.16bugs.com/projects/3602/bugs/102681
+               # see https://octgn.16bugs.com/projects/3602/bugs/102681
    Deck.shuffle() # Then use the built-in shuffle action
    notify("{} reshuffled its {} into its Deck.".format(me, group.name)) # And inform everyone.
 
@@ -599,7 +648,8 @@ def revealTopDeck(group, x = 0, y = 0):
       notify("{} reveals {} from top of Library.".format(me, group[0]))
 
 
-def swapWithDeck(group = me.piles['Discard Pile']):  # This function swap the deck with the discard pile.
+def swapWithDeck(group = me.piles['Discard Pile']):
+# This function swap the deck with the discard pile.
    mute()
    Deck = me.Deck
    savedDeck = [card for card in Deck]
