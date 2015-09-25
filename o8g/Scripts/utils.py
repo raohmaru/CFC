@@ -78,6 +78,7 @@ def resetAll():
    me.SP = 0
    clearGlobalVar('Backups')
    clearGlobalVar('UnitedAttack')
+   clearGlobalVar('Blockers')
    
    if len(players) > 1:
       debugVerbosity = DebugLevel.Off # Reset means normal game.
@@ -96,7 +97,8 @@ def switchAutomation(name, command = None):
       automations[name] = not automations[name]
    else:
       automations[name] = command
-   notify("--> {}'s {} automations are {}.".format(me, name, automations[name]))
+   status = "ON" if automations[name] else "OFF"
+   notify("--> {}'s {} automations are {}.".format(me, name, status))
 
    debug("<<< switchAutomation({})".format(name)) #Debug
 
@@ -149,6 +151,13 @@ def fixCardY(y):
    if me.hasInvertedTable():
       offsetY = CardHeight
    return (y + offsetY) * playerSide
+   
+   
+def fixSlotIdx(slotIdx, player = me):
+# Fixes the slot index for players playing with the inverted table
+   if player.hasInvertedTable():
+      slotIdx = abs(slotIdx - (NumSlots-1))
+   return slotIdx
 
    
 def placeCard(card, type = None, action = None, target = None):
@@ -160,7 +169,7 @@ def placeCard(card, type = None, action = None, target = None):
       if type == 'Character' and action != None:
          coords = (0, fixCardY(0))
          if action == PlayAction:
-            coords = CardsCoords['Slot'+`target`]
+            coords = CardsCoords['Slot'+`fixSlotIdx(target)`]
             coords = (coords[0], fixCardY(coords[1]))
          elif action == BackupAction:
             cx,cy = target.position
@@ -196,6 +205,8 @@ def getSlotIdx(card, player = me):
    ring = getGlobalVar('Ring', player)
    for i, id in enumerate(ring):
       if id == card._id:
+         if card.controller != me:
+            i = fixSlotIdx(i, player)
          debug("Slot idx: {}".format(i))
          return i
    debug("Card isn't in a slot")
@@ -210,9 +221,11 @@ def alignCard(card, x=None, y=None, slotIdx=None):
          slotIdx = getSlotIdx(card)
       if slotIdx == -1:
          return
+      slotIdx = fixSlotIdx(slotIdx)
       # Align attacking chars
       if MarkersDict['Attack'] in card.markers:
          x, y = CardsCoords['Attack'+`slotIdx`]
+         y = fixCardY(y)
       # Align chars in a uattack
       elif MarkersDict['UnitedAttack'] in card.markers:
          uattack = getGlobalVar('UnitedAttack')
@@ -228,7 +241,8 @@ def alignCard(card, x=None, y=None, slotIdx=None):
       # Align char in his assigned slot
       else:
          x, y = CardsCoords['Slot'+`slotIdx`]
-   card.moveToTable(x, fixCardY(y))
+         y = fixCardY(y)
+   card.moveToTable(x, y)
    if z != None:
       card.setIndex(max(z, 0))
 
@@ -241,7 +255,7 @@ def alignBackups(card, x=0, y=0):
       z = card.getIndex
       for i, c in enumerate(attachs):
          x = x+ox*(i+1)
-         y = fixCardY(y+oy*(i+1))
+         y = y+oy*(i+1)
          cx, cy = c.position
          if x != cx or y != cy:
             c.moveToTable(x, y)
@@ -310,6 +324,15 @@ def removeMarker(card, mkname):
       setMarker(card, mkname, 0)
       
 
+def dealDamage(dmg, target, source, isPiercing = False):
+   if isinstance(target, Card):
+      addMarker(target, 'BP', -dmg)
+      notify("{} deals {} damage to {} (new BP is {})".format(source, dmg, target, getMarker(target, 'BP')))
+   else:
+      target.HP -= dmg
+      piercing = " piercing" if isPiercing else ""
+      notify("{} deals {} {}damage to {} (new HP is {})".format(source, dmg, piercing, target, target.HP))
+      
 #---------------------------------------------------------------------------
 # Counter Manipulation
 #---------------------------------------------------------------------------

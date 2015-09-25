@@ -68,7 +68,8 @@ def onTurnChange(player, turnNumber):
       backupsPlayed = 0  # Num of chars backed-up this turn
       setGlobalVar('PhaseIdx', 0, me)
       clearGlobalVar('UnitedAttack')
+      clearGlobalVar('Blockers')
    else:
-      goToCleanup()
+      goToCleanup(silent = True)
    debug("<<< OnTurn()") #Debug
    

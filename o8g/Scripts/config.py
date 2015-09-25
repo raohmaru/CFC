@@ -162,5 +162,6 @@ parsedCards    = {} # Dictionary holding all parsed cards
 automations = {
    'Play'     : True, # Automatically trigger game effetcs and card effects when playing cards
    'Phase'    : True, # Automatically trigger phase related events, and effects from cards in play
-   'WinForms' : True  # Game will use the custom Windows Forms for displaying info pop-ups
+   'WinForms' : True,  # Game will use the custom Windows Forms for displaying info pop-ups
+   'AttackDmg': True  # Applies attack damage automatically
 }

@@ -60,22 +60,70 @@ def triggerPhaseEvent(phase): # Function which triggers effects at the start or 
          if card.Type == 'Character':
             if (MarkersDict['Attack'] in card.markers or MarkersDict['UnitedAttack'] in card.markers) and not MarkersDict['NoFreeze'] in card.markers:
                freeze(card, unfreeze = False, silent = True)
+      # Calculates and applies attack damage
+      if automations['AttackDmg']:
+         blockers = getGlobalVar('Blockers')
+         uattack = getGlobalVar('UnitedAttack')
+         atkCards = (card for card in table
+            if card.controller == me
+            and card.Type == 'Character'
+            and MarkersDict['Attack'] in card.markers)
+         for card in atkCards:
+            dmg = getMarker(card, 'BP')
+            pdmg = 0  # Piercing damage
+            if len(uattack) > 0 and uattack[0] == card._id:
+               for x in range(1, len(uattack)):
+                  pdmg += getMarker(Card(uattack[x]), 'BP')
+            # Attacker is blocked
+            if card._id in blockers:
+               blocker = Card(blockers[card._id])
+               blocker_bp = getMarker(blocker, 'BP')
+               dealDamage(dmg + pdmg, blocker, card)
+               dealDamage(blocker_bp, card, blocker)
+               # Blocker damages to chars in an United Attack
+               if len(uattack) > 0 and blocker_bp > dmg:
+                  new_bp = blocker_bp - dmg
+                  for x in range(1, len(uattack)):
+                     uacard = Card(uattack[x])
+                     new_bp = getMarker(uacard, 'BP') - new_bp
+                     setMarker(uacard, 'BP', new_bp)
+                     if new_bp < 0:
+                        new_bp = abs(new_bp)
+                     else:
+                        break
+               # Piercing damage of an United Attack
+               if len(players) > 1 and pdmg > 0 and dmg + pdmg > blocker_bp:
+                  dmg = dmg + pdmg - blocker_bp
+                  dealDamage(dmg, players[1], card, isPiercing = True)
+            # Unblocked attacker
+            elif len(players) > 1:
+               dealDamage(dmg + pdmg, players[1], card)
    
    elif phase == CleanupPhase:
+      # KOs characters with 0 BP
+      if automations['AttackDmg']:
+         charCards = (card for card in table
+            if card.Type == 'Character')
+         for card in charCards:
+            if getMarker(card, 'BP') == 0:
+               notify("{}'s {} BP is 0.".format(card.controller, card))
+               remoteCall(card.controller, "destroy", [card])
+      # Clean my ring
       myCards = (card for card in table
          if card.controller == me)
       for card in myCards:
          if card.Type == 'Character':
-            # Clears targets, colors, freezes characters and resets position
-            alignCard(card)
             # Remove script makers
             removeMarker(card, 'Attack')
             removeMarker(card, 'UnitedAttack')
             removeMarker(card, 'CounterAttack')
             removeMarker(card, 'NoFreeze')
+            # Clears targets, colors, freezes characters and resets position
+            alignCard(card)
          # Discard any Action or Reaction card left in the table (just in case player forgot to remove them)
          elif card.Type == 'Action' or card.Type == 'Reaction':
             discard(card)
+      
       clearAll()
 
 
@@ -233,8 +281,7 @@ def attackAuto(card):
       return
    # ... in player's ring
    slotIdx = getSlotIdx(card)
-   myRing = getGlobalVar('Ring', me)
-   if slotIdx == -1 or myRing[slotIdx] != card._id:
+   if slotIdx == -1:
       warning("Please attack with a character in your ring.")
       return
    # Cancels the character's attack if it's already attacking
@@ -353,8 +400,7 @@ def blockAuto(card):
       return
    # ... in player's ring
    slotIdx = getSlotIdx(card)
-   myRing = getGlobalVar('Ring', me)
-   if slotIdx == -1 or myRing[slotIdx] != card._id:
+   if slotIdx == -1:
       warning("Please counter-attack with a character in your ring.")
       return
    # Frozen char?
@@ -362,10 +408,17 @@ def blockAuto(card):
       warning("Frozen characters can't counter-attack.")
       return
    # Cancels the character's counter-attack if it's already blocking
+   blockers = getGlobalVar('Blockers')
    if MarkersDict['CounterAttack'] in card.markers:
       removeMarker(card, 'CounterAttack')
       clear(card, silent = True)
       alignCard(card)
+      for i in blockers:
+         if blockers[i] == card._id:
+            del blockers[i]
+            debug("Removed blocker {}".format(blockers)) #Debug
+            setGlobalVar('Blockers', blockers)
+            break
       notify('{} cancels the counter-attack with {}'.format(me, card))  
       return
    # Check if an attacking enemy char has been selected
@@ -376,16 +429,19 @@ def blockAuto(card):
       return
    target = targets[0]
    # An attacker can only be blocked by exactly 1 char
-   slotIdx = getSlotIdx(target, players[1])
-   if slotIdx == -1 or myRing[slotIdx] != None:
+   if target._id in blockers:
       warning("An attacking character can only be blocked by exactly one char")
       return
    
    setMarker(card, 'CounterAttack')
    # card.arrow(target)
    target.target(False)
+   slotIdx = getSlotIdx(target, players[1])
    coords = CardsCoords['Attack'+`slotIdx`]
    alignCard(card, coords[0], coords[1])
+   # Save attacker => blocker
+   blockers[target._id] = card._id
+   setGlobalVar('Blockers', blockers)
       
    return target
    

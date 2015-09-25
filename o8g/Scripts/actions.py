@@ -79,8 +79,10 @@ def goToEnd(group = table, x = 0, y = 0):
    triggerPhaseEvent(EndPhase)
 
 
-def goToCleanup(group = table, x = 0, y = 0):
+def goToCleanup(group = table, x = 0, y = 0, silent = False):
    setGlobalVar('PhaseIdx', CleanupPhase, me)
+   if not silent:
+      showCurrentPhase()
    triggerPhaseEvent(CleanupPhase)
 
 
@@ -190,6 +192,10 @@ def switchPhaseAutomation(group, x = 0, y = 0):
 
 def switchWinForms(group, x = 0, y = 0):
    switchAutomation('WinForms')
+
+
+def switchAttackDamage(group, x = 0, y = 0):
+   switchAutomation('AttackDmg')
 
 
 #---------------------------------------------------------------------------
@@ -499,11 +505,13 @@ def play(card):  # This is the function to play cards from your hand.
    
    mute()
    chooseSide()  # Just in case...
+   slot = ""
    if automations['Play']:
       if not playAuto(card): return
+      slot = " in slot {}".format(getSlotIdx(card))
    else:
       placeCard(card, card.Type)
-   notify("{} plays {} from its {}.".format(me, card, card.group.name))
+   notify("{} plays {} from its {}{}.".format(me, card, card.group.name, slot))
    
    debug("<<< playing card end") #Debug
 
@@ -516,7 +524,7 @@ def backup(card, x = 0, y = 0):  # Play a card as backup attached to a character
    if automations['Play']:
       target = backupAuto(card)
       if target:
-         notify("{} backups {} with {} from its {}.".format(me, target, card, group.name))
+         notify("{} backups {} with {} from its {} (new BP is {}).".format(me, target, card, group.name, getMarker(target, 'BP')))
    else:
       placeCard(card, card.Type)
       notify("{} backups with {} from its {}.".format(me, card, group.name))
