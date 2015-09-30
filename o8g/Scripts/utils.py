@@ -160,7 +160,7 @@ def fixSlotIdx(slotIdx, player = me):
    return slotIdx
 
    
-def placeCard(card, type = None, action = None, target = None):
+def placeCard(card, type = None, action = None, target = None, faceDown = False):
 # This function automatically places a card on the table according to what type of card is being placed
 # It is called by one of the various custom types and each type has a different value depending on if the player is on the X or Y axis.
    debug(">>> placeCard()") #Debug
@@ -176,11 +176,11 @@ def placeCard(card, type = None, action = None, target = None):
             backups = getGlobalVar('Backups')
             numBkps = len([id for id in backups if backups[id] == target._id])
             coords = (cx+CardsCoords['BackupOffset'][0]*numBkps, cy+CardsCoords['BackupOffset'][1]*numBkps)
-         card.moveToTable(coords[0], coords[1])
+         card.moveToTable(coords[0], coords[1], faceDown)
       else:
-         card.moveToTable(-CardWidth/2, fixCardY(0))
+         card.moveToTable(-CardWidth/2, fixCardY(0), faceDown)
    else:
-      card.moveToTable(0, fixCardY(0))
+      card.moveToTable(0, fixCardY(0), faceDown)
 
    debug("<<< placeCard()")
 
@@ -238,11 +238,21 @@ def alignCard(card, x=None, y=None, slotIdx=None):
          x += ox * idx * playerSide
          y += oy * idx
          z = lead.getIndex - 1 * idx
+      # Align blockers
+      elif MarkersDict['CounterAttack'] in card.markers:
+         blockers = getGlobalVar('Blockers')         
+         for i in blockers:
+            if blockers[i] == card._id:
+               atkIdx = getSlotIdx(Card(i), players[1])
+               x, y = CardsCoords['Attack'+`atkIdx`]
+               y = fixCardY(y)
+               break
       # Align char in his assigned slot
       else:
          x, y = CardsCoords['Slot'+`slotIdx`]
          y = fixCardY(y)
-   card.moveToTable(x, y)
+   if x != None and y != None:
+      card.moveToTable(x, y)
    if z != None:
       card.setIndex(max(z, 0))
 
@@ -273,11 +283,12 @@ def getTargetedCards(card=None, targetedByMe=True, controlledByMe=True, type='Ch
    return targets
 
    
-def revealDrawnCard(card, type = None):
+def revealDrawnCard(card, type = None, faceUp = True):
    cardname = card.Name
    if not card.isFaceUp:
       if confirm("Reveal card to all players?"):
-         card.isFaceUp = True
+         if faceUp:
+            card.isFaceUp = True
          rnd(1,100) # Small wait (bug workaround) to make sure all animations are done.
          cardname = card.Name
       else:
@@ -322,15 +333,23 @@ def addMarker(card, mkname, qty=1):
 def removeMarker(card, mkname):
    if MarkersDict[mkname] in card.markers:
       setMarker(card, mkname, 0)
+
+
+def toggleMarker(card, mkname):
+   if MarkersDict[mkname] in card.markers:
+      removeMarker(card, mkname)
+   else:
+      setMarker(card, mkname, 1)
       
 
 def dealDamage(dmg, target, source, isPiercing = False):
    if isinstance(target, Card):
+      dmg = min(dmg, getMarker(target, 'BP'))
       addMarker(target, 'BP', -dmg)
       notify("{} deals {} damage to {} (new BP is {})".format(source, dmg, target, getMarker(target, 'BP')))
    else:
       target.HP -= dmg
-      piercing = " piercing" if isPiercing else ""
+      piercing = "piercing " if isPiercing else ""
       notify("{} deals {} {}damage to {} (new HP is {})".format(source, dmg, piercing, target, target.HP))
       
 #---------------------------------------------------------------------------

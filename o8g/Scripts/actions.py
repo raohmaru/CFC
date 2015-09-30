@@ -317,7 +317,9 @@ def alignCardAction(card, x = 0, y = 0):
 def askCardBackups(card, x = 0, y = 0):
    if card.Type == 'Character':
       acceptedBackups = (card.properties['Backup 1'], card.properties['Backup 2'], card.properties['Backup 3'])
-      information("{} can be backed-up with the following character types:\n- {}".format(card.Name, '\n- '.join(filter(None, acceptedBackups))))
+      msg = "{} can be backed-up with the following character types:\n- {}".format(card.Name, '\n- '.join(filter(None, acceptedBackups)))
+      information(msg)
+      whisper(msg)
    else:
       information("Only character cards can be backed-up.")
 
@@ -358,8 +360,9 @@ def toHand(card, x = 0, y = 0):
 def toDeckTop(card, x = 0, y = 0):
    mute()
    fromText = fromWhereStr(card.group)
+   cardname = revealDrawnCard(card, faceUp = False)
    card.moveTo(me.Deck)
-   notify("{} puts {} {} on the top of its Deck.".format(me, card, fromText))
+   notify("{} puts {} {} on the top of its Deck.".format(me, cardname, fromText))
 
 
 def toDeckBottom(card, x = 0, y = 0):
@@ -400,6 +403,14 @@ def discardAll(group, x = 0, y = 0):
    if len(players) > 1: rnd(1, 100) # Wait a bit more, as in multiplayer games, things are slower.
    notify("{} moves all cards from their {} to its Discard Pile.".format(me, group.name))
 
+   
+def toTableFaceDown(card, x = 0, y = 0):
+   debug(">>> toTableFaceDown {}".format(card)) #Debug
+   mute()
+   fromText = fromWhereStr(card.group)
+   placeCard(card, card.Type, faceDown=True)
+   notify("{} puts a card face down in the Arena {}.".format(me, fromText))
+
 
 #---------------------------------------------------------------------------
 # Marker actions
@@ -412,15 +423,16 @@ def plusBP(card, x = 0, y = 0, silent = False, count = 1):
    mute()
    addMarker(card, 'BP', count)
    if not silent:
-      notify("{} raises {}'s BP by {}".format(me, card, count))
+      notify("{} raises {}'s BP by {} (new BP is {})".format(me, card, count, getMarker(card, 'BP')))
 
 def minusBP(card, x = 0, y = 0, silent = False, count = 1):
    mute()
-   if count > getMarker(card, 'BP'):
-      count = getMarker(card, 'BP')
-   addMarker(card, 'BP', -count)
+   c = count
+   if c > getMarker(card, 'BP'):
+      c = getMarker(card, 'BP')
+   addMarker(card, 'BP', -c)
    if not silent:
-      notify("{} lowers {}'s BP by {}.".format(me, card, count))
+      notify("{} lowers {}'s BP by {} (new BP is {}).".format(me, card, count, getMarker(card, 'BP')))
       
 def plusBP2(card, x = 0, y = 0): plusBP(card, count = 2)
 def plusBP3(card, x = 0, y = 0): plusBP(card, count = 3)
@@ -495,6 +507,10 @@ def minusSPX(group, x = 0, y = 0):
    if n == None: return
    modSP(-n)
 
+
+def toggleNoAbility(cards, x = 0, y = 0):
+   for card in cards:
+      toggleMarker(card, 'NoAbility')
 
 #---------------------------------------------------------------------------
 # Hand actions

@@ -85,10 +85,10 @@ def triggerPhaseEvent(phase): # Function which triggers effects at the start or 
                   new_bp = blocker_bp - dmg
                   for x in range(1, len(uattack)):
                      uacard = Card(uattack[x])
-                     new_bp = getMarker(uacard, 'BP') - new_bp
-                     setMarker(uacard, 'BP', new_bp)
-                     if new_bp < 0:
-                        new_bp = abs(new_bp)
+                     rest_bp = getMarker(uacard, 'BP') - new_bp
+                     dealDamage(new_bp, uacard, blocker)
+                     if rest_bp < 0:
+                        new_bp = abs(rest_bp)
                      else:
                         break
                # Piercing damage of an United Attack
@@ -434,14 +434,12 @@ def blockAuto(card):
       return
    
    setMarker(card, 'CounterAttack')
-   # card.arrow(target)
-   target.target(False)
-   slotIdx = getSlotIdx(target, players[1])
-   coords = CardsCoords['Attack'+`slotIdx`]
-   alignCard(card, coords[0], coords[1])
    # Save attacker => blocker
    blockers[target._id] = card._id
    setGlobalVar('Blockers', blockers)
+   # card.arrow(target)
+   target.target(False)
+   alignCard(card)
       
    return target
    
@@ -474,8 +472,8 @@ def activateAuto(card):
       if pcard.ability_type == ActivatedAbility:  
          # Just entered?
          if MarkersDict['JustEntered'] in card.markers:
-            warning("Can't activate [ ] abilities of characters that just entered the ring.")
-            return
+            if not confirm("Can't activate [ ] abilities of characters that just entered the ring.\nProceed anyway?"):
+               return
          # Frozen or attacking?
          if isFrozen(card) or MarkersDict['Attack'] in card.markers:
             warning("Can't activate [ ] abilities of frozen or attacking characters.")
