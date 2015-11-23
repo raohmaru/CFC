@@ -24,107 +24,118 @@ def triggerPhaseEvent(phase): # Function which triggers effects at the start or 
    mute()
    if not automations['Phase']: return
    
-   if phase == ActivatePhase:
-      # Unfreeze characters in the player's ring, clear colors and remove script markers
-      notify("{} unfreezes all characters in their ring.".format(me))
-      myCards = (card for card in table
-         if card.controller == me)
-      for card in myCards:
-         if card.Type == 'Character':
-            if not MarkersDict['DoesntUnfreeze'] in card.markers:
-               freeze(card, unfreeze = True, silent = True)
-            removeMarker(card, 'JustEntered')
-            clear(card, silent = True)
-         # Discard any Action or Reaction card left in the table (just in case player forgot to remove them)
-         elif card.Type == 'Action' or card.Type == 'Reaction':
-            discard(card)
+   if   phase == ActivatePhase: activatePhaseStart()
+   elif phase == DrawPhase:     drawPhaseStart()
+   elif phase == BlockPhase:    blockPhaseStart()
+   elif phase == EndPhase:      endPhaseStart()
+   elif phase == CleanupPhase:  cleanupPhaseStart()
+
+
+def activatePhaseStart():
+   # Unfreeze characters in the player's ring, clear colors and remove script markers
+   notify("{} unfreezes all characters in their ring.".format(me))
+   myCards = (card for card in table
+      if card.controller == me)
+   for card in myCards:
+      if card.Type == 'Character':
+         if not MarkersDict['DoesntUnfreeze'] in card.markers:
+            freeze(card, unfreeze = True, silent = True)
+         removeMarker(card, 'JustEntered')
+         clear(card, silent = True)
+      # Discard any Action or Reaction card left in the table (just in case player forgot to remove them)
+      elif card.Type == 'Action' or card.Type == 'Reaction':
+         discard(card)
+         
+            
+def drawPhaseStart():
+   if automations['Play']:
+      if len(me.Deck) == 0 and len(players) > 1:
+         notify("{} has no cards in their deck and therefore can't draw.\n{} wins the game!".format(me,players[1]))
+
+         
+def blockPhaseStart():
+   if automations['Play']:
+      uattack = getGlobalVar('UnitedAttack')
+      if len(uattack) > 0:
+         chars = len(uattack) - 1
+         uatype = "Double" if chars == 1 else "Triple"
+         payCostSP(-chars*UAttackCost, msg = "do a {} United Attack".format(uatype))
+         notify("{} has paid the cost of the {} United Attack".format(me, uatype))
    
-   elif phase == DrawPhase:
-      if automations['Play']:
-         if len(me.Deck) == 0 and len(players) > 1:
-            notify("{} has no cards in their deck and therefore can't draw.\n{} wins the game!".format(me,players[1]))
    
-   elif phase == BlockPhase:
-      if automations['Play']:
-         uattack = getGlobalVar('UnitedAttack')
-         if len(uattack) > 0:
-            chars = len(uattack) - 1
-            uatype = "Double" if chars == 1 else "Triple"
-            payCostSP(-chars*UAttackCost, msg = "do a {} United Attack".format(uatype))
-            notify("{} have paid the cost of the {} United Attack".format(me, uatype))
-   
-   elif phase == EndPhase:
-      myCards = (card for card in table
-         if card.controller == me)
-      for card in myCards:
-         if card.Type == 'Character':
-            if (MarkersDict['Attack'] in card.markers or MarkersDict['UnitedAttack'] in card.markers) and not MarkersDict['NoFreeze'] in card.markers:
-               freeze(card, unfreeze = False, silent = True)
-      # Calculates and applies attack damage
-      if automations['AttackDmg']:
-         blockers = getGlobalVar('Blockers')
-         uattack = getGlobalVar('UnitedAttack')
-         atkCards = (card for card in table
-            if card.controller == me
-            and card.Type == 'Character'
-            and MarkersDict['Attack'] in card.markers)
-         for card in atkCards:
-            dmg = getMarker(card, 'BP')
-            pdmg = 0  # Piercing damage
-            if len(uattack) > 0 and uattack[0] == card._id:
+def endPhaseStart():
+   myCards = (card for card in table
+      if card.controller == me)
+   for card in myCards:
+      if card.Type == 'Character':
+         if (MarkersDict['Attack'] in card.markers or MarkersDict['UnitedAttack'] in card.markers) and not MarkersDict['NoFreeze'] in card.markers:
+            freeze(card, unfreeze = False, silent = True)
+   # Calculates and applies attack damage
+   if automations['AttackDmg']:
+      blockers = getGlobalVar('Blockers')
+      uattack = getGlobalVar('UnitedAttack')
+      atkCards = (card for card in table
+         if card.controller == me
+         and card.Type == 'Character'
+         and MarkersDict['Attack'] in card.markers)
+      for card in atkCards:
+         dmg = getMarker(card, 'BP')
+         pdmg = 0  # Piercing damage
+         if len(uattack) > 0 and uattack[0] == card._id:
+            for x in range(1, len(uattack)):
+               pdmg += getMarker(Card(uattack[x]), 'BP')
+         # Attacker is blocked
+         if card._id in blockers:
+            blocker = Card(blockers[card._id])
+            blocker_bp = getMarker(blocker, 'BP')
+            dealDamage(dmg + pdmg, blocker, card)
+            dealDamage(blocker_bp, card, blocker)
+            # Blocker damages to chars in an United Attack
+            if len(uattack) > 0 and blocker_bp > dmg:
+               new_bp = blocker_bp - dmg
                for x in range(1, len(uattack)):
-                  pdmg += getMarker(Card(uattack[x]), 'BP')
-            # Attacker is blocked
-            if card._id in blockers:
-               blocker = Card(blockers[card._id])
-               blocker_bp = getMarker(blocker, 'BP')
-               dealDamage(dmg + pdmg, blocker, card)
-               dealDamage(blocker_bp, card, blocker)
-               # Blocker damages to chars in an United Attack
-               if len(uattack) > 0 and blocker_bp > dmg:
-                  new_bp = blocker_bp - dmg
-                  for x in range(1, len(uattack)):
-                     uacard = Card(uattack[x])
-                     rest_bp = getMarker(uacard, 'BP') - new_bp
-                     dealDamage(new_bp, uacard, blocker)
-                     if rest_bp < 0:
-                        new_bp = abs(rest_bp)
-                     else:
-                        break
-               # Piercing damage of an United Attack
-               if len(players) > 1 and pdmg > 0 and dmg + pdmg > blocker_bp:
-                  dmg = dmg + pdmg - blocker_bp
-                  dealDamage(dmg, players[1], card, isPiercing = True)
-            # Unblocked attacker
-            elif len(players) > 1:
-               dealDamage(dmg + pdmg, players[1], card)
+                  uacard = Card(uattack[x])
+                  rest_bp = getMarker(uacard, 'BP') - new_bp
+                  dealDamage(new_bp, uacard, blocker)
+                  if rest_bp < 0:
+                     new_bp = abs(rest_bp)
+                  else:
+                     break
+            # Piercing damage of an United Attack
+            if len(players) > 1 and pdmg > 0 and dmg + pdmg > blocker_bp:
+               dmg = dmg + pdmg - blocker_bp
+               dealDamage(dmg, players[1], card, isPiercing = True)
+         # Unblocked attacker
+         elif len(players) > 1:
+            dealDamage(dmg + pdmg, players[1], card)
    
-   elif phase == CleanupPhase:
-      # KOs characters with 0 BP
-      if automations['AttackDmg']:
-         charCards = (card for card in table
-            if card.Type == 'Character')
-         for card in charCards:
-            if getMarker(card, 'BP') == 0:
-               notify("{}'s {} BP is 0.".format(card.controller, card))
-               remoteCall(card.controller, "destroy", [card])
-      # Clean my ring
-      myCards = (card for card in table
-         if card.controller == me)
-      for card in myCards:
-         if card.Type == 'Character':
-            # Remove script makers
-            removeMarker(card, 'Attack')
-            removeMarker(card, 'UnitedAttack')
-            removeMarker(card, 'CounterAttack')
-            removeMarker(card, 'NoFreeze')
-            # Clears targets, colors, freezes characters and resets position
-            alignCard(card)
-         # Discard any Action or Reaction card left in the table (just in case player forgot to remove them)
-         elif card.Type == 'Action' or card.Type == 'Reaction':
-            discard(card)
-      
-      clearAll()
+   
+def cleanupPhaseStart():
+   # KOs characters with 0 BP
+   if automations['AttackDmg']:
+      charCards = (card for card in table
+         if card.Type == 'Character')
+      for card in charCards:
+         if getMarker(card, 'BP') == 0:
+            notify("{}'s {} BP is 0.".format(card.controller, card))
+            remoteCall(card.controller, "destroy", [card])
+   # Clean my ring
+   myCards = (card for card in table
+      if card.controller == me)
+   for card in myCards:
+      if card.Type == 'Character':
+         # Remove script makers
+         removeMarker(card, 'Attack')
+         removeMarker(card, 'UnitedAttack')
+         removeMarker(card, 'CounterAttack')
+         removeMarker(card, 'NoFreeze')
+         # Clears targets, colors, freezes characters and resets position
+         alignCard(card)
+      # Discard any Action or Reaction card left in the table (just in case player forgot to remove them)
+      elif card.Type == 'Action' or card.Type == 'Reaction':
+         discard(card)
+   
+   clearAll()
 
 
 #------------------------------------------------------------------------------
@@ -179,10 +190,8 @@ def playAuto(card, slotIdx=None):
       placeCard(card, card.Type, PlayAction, slotIdx)
       setMarker(card, 'BP', num(card.BP) / 100)
       setMarker(card, 'JustEntered')
-      myRing[slotIdx] = card._id
-      setGlobalVar('Ring', myRing, me)
+      putAtSlot(card, slotIdx)
       charsPlayed += 1
-      debug("{}'s ring: {}".format(me, myRing))
    
    # Player plays an Action card
    elif card.Type == 'Action':

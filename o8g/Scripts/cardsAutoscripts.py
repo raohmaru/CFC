@@ -73,6 +73,7 @@ class CharCard(GameCard):
          self.ability_type = ability.group(1)
          self.ability_name = ability.group(2)
       else:
+         self.ability = None
          debug("No ability found")
 
          
