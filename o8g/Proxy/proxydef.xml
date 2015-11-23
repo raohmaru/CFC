@@ -811,6 +811,11 @@
 		</matches>
 		
 		<overlayblocks>
+			<!-- Art crop for the card -->
+			<artoverlay>
+				<location x="25" y="25" />
+				<size width="466" height="416" />
+			</artoverlay>
 			<link block="bp_box" />
 			<link block="sp_box" />
 			<!-- Publisher -->
@@ -1559,11 +1564,6 @@
 					</default>
 				</switch>
 			</conditional>
-			<!-- Art crop for the card -->
-			<artoverlay>
-				<location x="36" y="36" />
-				<size height="606" width="678" />
-			</artoverlay>
 		</overlayblocks>
 		
 		<textblocks>
@@ -1600,6 +1600,11 @@
 		</matches>
 		
 		<overlayblocks>
+			<!-- Art crop for the card -->
+			<artoverlay>
+				<location x="25" y="25" />
+				<size width="466" height="416" />
+			</artoverlay>
 			<link block="sp_box2" />
 			<!-- Rarity -->
 			<conditional>
@@ -1651,6 +1656,11 @@
 		</matches>
 		
 		<overlayblocks>
+			<!-- Art crop for the card -->
+			<artoverlay>
+				<location x="25" y="25" />
+				<size width="466" height="416" />
+			</artoverlay>
 			<link block="sp_box2" />
 			<!-- Rarity -->
 			<conditional>
