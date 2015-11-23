@@ -4,7 +4,7 @@
       name="Card Fighters' Clash"
       id="e3d56d9e-900d-49c6-b6ae-22cbb51be153"
       octgnVersion="3.1.55.0"
-      version="0.2.1.4"
+      version="0.2.1.12"
       markersize="20"
       tags="capcom snk fighter"
       description="A card game based in the SNK Playmore’s video game SNK vs. Capcom Card Fighters' Clash 2 Expand Edition.
@@ -161,9 +161,11 @@
 			<cardaction menu="Put into Deck (Top)" shortcut="Ctrl+D" execute="toDeckTop" />
 			<cardaction menu="Put into Deck (Bottom)" shortcut="Ctrl+Shift+D" execute="toDeckBottom" />
 		</cardactions>
+		<cardaction menu="Lose/Restore abilities" shortcut="Ctrl+N" batchExecute="toggleNoAbility" />
+		<cardaction menu="Transform" shortcut="Ctrl+T" batchExecute="transformCards" />
 		<cardaction menu="Realign card" shortcut="Ctrl+F2" execute="alignCardAction" />
 		<cardaction menu="Clear" shortcut="Esc" execute="clear" />
-		<cardaction menu="List backups" shortcut="Ctrl+Alt+B" execute="askCardBackups" />
+		<cardaction menu="Show backups types" shortcut="Ctrl+Alt+B" execute="askCardBackups" />
 		<cardactions menu="Markers...">
 			<cardactions menu="Raise BP...">
 				<cardaction menu="by 1" shortcut="Ctrl+1" execute="plusBP" />
@@ -190,7 +192,6 @@
 				<cardaction menu="by X" shortcut="Ctrl+Shift+0" execute="minusBPX" />
 			</cardactions>
 			<cardaction menu="Change BP..." shortcut="Ctrl+Alt+0" batchExecute="changeBP" />
-			<cardaction menu="No Ability" shortcut="Ctrl+N" batchExecute="toggleNoAbility" />
 			<cardaction menu="Add markers..." shortcut="Ctrl+M" batchExecute="addMarkerAction" />
 		</cardactions>
 	</table>
@@ -217,25 +218,27 @@
 				<cardaction menu="Put into Deck (Top)" shortcut="Ctrl+D" execute="toDeckTop" />
 				<cardaction menu="Put into Deck (Bottom)" shortcut="Ctrl+Shift+D" execute="toDeckBottom" />
 			</cardactions>
+			<cardaction menu="Transform" shortcut="Ctrl+T" batchExecute="transformCards" />
 		</hand>
 		<group name="Deck" visibility="none" width="90" height="126" icon="Groups/deck.png">
 			<groupaction menu="Draw" shortcut="Ctrl+D" default="True" execute="draw" />
 			<groupaction menu="Draw X cards" shortcut="Ctrl+Shift+D" execute="drawMany" />
+			<groupactions menu="Random draw...">
+				<groupaction menu="Draw a random card" shortcut="Ctrl+Alt+R" execute="randomDraw" />
+				<groupaction menu="Draw a random Character card" execute="randomDrawCHA" />
+				<groupaction menu="Draw a random Action card" execute="randomDrawAC" />
+				<groupaction menu="Draw a random Reaction card" execute="randomDrawRE" />
+			</groupactions>
 			<groupaction menu="Trash X cards" shortcut="Ctrl+Shift+T" execute="trash" />
 			<groupaction menu="Shuffle" shortcut="Ctrl+S" execute="shuffle" />
 			<groupaction menu="Reveal/Hide top card" shortcut="Ctrl+R" execute="revealTopDeck" />
 			<groupactions menu="Move all cards to...">
 				<groupaction menu="Discard pile" execute="discardAll" />
 			</groupactions>
-			<groupactions menu="Random...">
-				<groupaction menu="Draw a random card" shortcut="Ctrl+Alt+R" execute="randomDraw" />
-				<groupaction menu="Draw a random Character card" execute="randomDrawCHA" />
-				<groupaction menu="Draw a random Action card" execute="randomDrawAC" />
-				<groupaction menu="Draw a random Reaction card" execute="randomDrawRE" />
-			</groupactions>
 			<cardaction menu="Put card into Hand" shortcut="Ctrl+H" execute="toHand" />
 			<cardaction menu="Put card into Discard pile" shortcut="Del" execute="discard" />
 			<cardaction menu="Put into Deck (Top)" shortcut="Ctrl+D" execute="toDeckTop" />
+			<cardaction menu="Put into Deck (Bottom)" shortcut="Ctrl+Shift+D" execute="toDeckBottom" />
 		</group>
 		<group name="Discard Pile" visibility="all" width="90" height="126" icon="Groups/discards.png">
 			<groupaction menu="Shuffle" shortcut="Ctrl+S" execute="shuffle" />

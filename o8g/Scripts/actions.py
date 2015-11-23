@@ -322,7 +322,37 @@ def askCardBackups(card, x = 0, y = 0):
       whisper(msg)
    else:
       information("Only character cards can be backed-up.")
+      
 
+def toggleNoAbility(cards, x = 0, y = 0):
+   mute()
+   for card in cards:
+      parsedCards.pop(card._id, None)
+      if card.alternate == '':
+         card.switchTo('noability')
+         notify("{} removes {}'s abilities".format(me, card))
+      else:
+         card.switchTo()
+         notify("{} restores {}'s abilities".format(me, card))
+      
+
+def transformCards(cards, x = 0, y = 0):
+   mute()
+   cardModel = None
+   targets =  [c for c in table   if c.targetedBy == me]
+   targets += [c for c in me.hand if c.targetedBy == me]
+   targets += [c for c in me.piles['Discard Pile'] if c.targetedBy == me]
+   if len(targets) > 0:
+      cardModel = targets[0].model
+   else:
+      cardtype = cards[0].Type
+      card, quantity = askCard({"Type":cardtype}, "and", "Choose a card")
+      if quantity > 0:
+         cardModel = card
+   if cardModel:
+      for card in cards:
+         transformCard(card, cardModel)
+      if len(players) > 1: rnd(1, 100) # Wait a bit more, as in multiplayer games, things are slower.
 
 #---------------------------------------------------------------------------
 # Movement actions
@@ -506,11 +536,7 @@ def minusSPX(group, x = 0, y = 0):
    n = askInteger("Lose SP by...", 1)
    if n == None: return
    modSP(-n)
-
-
-def toggleNoAbility(cards, x = 0, y = 0):
-   for card in cards:
-      toggleMarker(card, 'NoAbility')
+   
 
 #---------------------------------------------------------------------------
 # Hand actions
@@ -524,7 +550,7 @@ def play(card):  # This is the function to play cards from your hand.
    slot = ""
    if automations['Play']:
       if not playAuto(card): return
-      slot = " in slot {}".format(getSlotIdx(card))
+      slot = " in slot {}".format(getSlotIdx(card)+1)
    else:
       placeCard(card, card.Type)
    notify("{} plays {} from its {}{}.".format(me, card, card.group.name, slot))

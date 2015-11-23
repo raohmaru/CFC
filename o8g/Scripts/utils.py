@@ -212,6 +212,16 @@ def getSlotIdx(card, player = me):
    debug("Card isn't in a slot")
    return -1
 
+   
+def putAtSlot(card, idx, player = me):
+   debug(">>> putAtSlot({}, {})".format(card, idx)) #Debug
+   
+   if idx < NumSlots:
+      ring = getGlobalVar('Ring', player)
+      ring[idx] = card._id
+      setGlobalVar('Ring', ring, player)
+      debug("{}'s ring: {}".format(me, ring))
+
 
 def alignCard(card, x=None, y=None, slotIdx=None):
    debug(">>> alignCard({}, {}, {}, {})".format(card, x, y, slotIdx)) #Debug
@@ -298,6 +308,27 @@ def revealDrawnCard(card, type = None, faceUp = True):
    return cardname
    
    
+def transformCard(card, cardModel):
+   debug(">>> transformCard({}, {})".format(card, cardModel)) #Debug
+   
+   group = card.group
+   cx, cy = card.position
+   if group == table:
+      newCard = group.create(cardModel, cx, cy, quantity = 1, persist = True)
+      slotIdx = getSlotIdx(card)
+      if slotIdx != -1:
+         setMarker(newCard, 'BP', num(newCard.BP) / 100)
+         putAtSlot(newCard, slotIdx)
+         clearAttachLinks(card)
+   else:
+      newCard = group.create(cardModel, quantity = 1)
+   if group == table and card.isFaceUp:
+      notify("{} transform {} into {}.".format(me, card, newCard))
+   else:
+      notify("{} transformed a card {}.".format(me, fromWhereStr(group)))
+   card.delete()
+   
+
 #---------------------------------------------------------------------------
 # Markers functions
 #---------------------------------------------------------------------------
