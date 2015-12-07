@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
-<set name="Markers" id="243f4bca-ce77-47cc-a652-ee5de6b176b0" version="1.0.0" 
-     gameId="e3d56d9e-900d-49c6-b6ae-22cbb51be153" gameVersion="1.0.0"
+<set name="Markers" id="243f4bca-ce77-47cc-a652-ee5de6b176b0" version="1.0.0.0" 
+     gameId="e3d56d9e-900d-49c6-b6ae-22cbb51be153" gameVersion="0.3.0.0"
      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="CardSet.xsd">
 	<markers>
 		<marker name="BP" id="b86fc644-d084-43d3-99d2-5b11457321cc"/>
