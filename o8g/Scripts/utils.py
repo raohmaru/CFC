@@ -351,15 +351,15 @@ def addAlternateRules(card, target):
       rules = target.Rules
    if rules:
       debug("Found rule '{}'".format(rules))
-      ability = Regexps['Ability'].match(rules)
-      altname = sanitizeStr(ability.group(2))
+      ability = Ability(rules)
+      altname = sanitizeStr(ability.name)
       cardData = _extapi.getCardDataById(card._id)
       cardData.Properties[altname] = cardData.Properties[''].Clone()
       _extapi.setCardProperty(cardData, "Rules", rules, altname)
       debug("Adding new alternate '{}' and generating proxy".format(altname))
       _extapi.generateProxy(cardData, altname)
       card.switchTo(altname)
-      return ability.group(2)
+      return ability.name
    return None
    
 
@@ -580,8 +580,8 @@ def setupDebug(group, x=0, y=0):
       debug("Creating card {} at slot {}".format(id, i))
       card = table.create(id, 0, 0, quantity=1, persist=True)
       playAuto(card, i)
-      ability = Regexps['Ability'].match(card.Rules)
-      if ability and ability.group(1) != InstantAbility:
+      ability = Ability(card.Rules)
+      if ability.type and ability.type != InstantAbility:
          card.markers[MarkersDict['JustEntered']] = 0
       charsPlayed = 0
    drawMany(me.Deck, HandSize, True)

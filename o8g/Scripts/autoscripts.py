@@ -466,19 +466,19 @@ def activateAuto(card):
       pcard = getParsedCard(card)
       if not pcard.hasEffect():
          return
-      debug("Trying to activate {}'s ability {} {}".format(card.Name, pcard.ability_type, pcard.ability_name))
+      debug("Trying to activate {}'s ability {} {}".format(card.Name, pcard.ability.type, pcard.ability.name))
       # Activate [] and /\ only in player's Main Phase
-      if pcard.ability_type in [InstantAbility, ActivatedAbility] and (not me.isActivePlayer or getGlobalVar('PhaseIdx', me) != MainPhase):
+      if pcard.ability.type in [InstantAbility, ActivatedAbility] and (not me.isActivePlayer or getGlobalVar('PhaseIdx', me) != MainPhase):
          information("You can only activate [ ] or /\\ abilities in your Main Phase.")
          return
       # /\ abilities
-      if pcard.ability_type == InstantAbility:
+      if pcard.ability.type == InstantAbility:
          # Activate only once
          if not MarkersDict['JustEntered'] in card.markers:
             warning("/\\ abilities can only be activated once when character just enters the ring.")
             return
       # [] abilities
-      if pcard.ability_type == ActivatedAbility:  
+      if pcard.ability.type == ActivatedAbility:  
          # Just entered?
          if MarkersDict['JustEntered'] in card.markers:
             if not confirm("Can't activate [ ] abilities of characters that just entered the ring.\nProceed anyway?"):
@@ -488,15 +488,15 @@ def activateAuto(card):
             warning("Can't activate [ ] abilities of frozen or attacking characters.")
             return
       # () abilities
-      if pcard.ability_type == AutoAbility:
+      if pcard.ability.type == AutoAbility:
          # Nor in a United Attack
          if MarkersDict['UnitedAttack'] in card.markers:
             warning("Can't activate ( ) abilities of characters which joined a United Attack.")
             return
       
       # Activate [] ability?
-      if pcard.ability_type == ActivatedAbility:
-         if not confirm("Activate {}'s ability {} {}?".format(card.Name, pcard.ability_type, pcard.ability_name)):
+      if pcard.ability.type == ActivatedAbility:
+         if not confirm("Activate {}'s ability {} {}?".format(card.Name, pcard.ability.utype, pcard.ability.name)):
             return
       # Activate the ability
       return pcard.activateEffect()

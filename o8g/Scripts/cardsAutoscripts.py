@@ -42,11 +42,9 @@ class GameCard(object):
       debug(">>> GameCard()") #Debug
       self.card_id = card._id
       self.rule_id = card.model
-
          
    def hasEffect(self):
       return True
-
       
    def activateEffect(self):
       # Temporary disable auto effects
@@ -60,24 +58,43 @@ class GameCard(object):
 
 
 class CharCard(GameCard):
-   """ A class which stores the character card ability name and its parsed rule scripts """   
+   """ A class which stores the character card ability name and its parsed rule scripts """
+   ability = None
    
    def __init__(self, card):
       super(self.__class__, self).__init__(card)
       debug(">>> CharCard()") #Debug
    
-      ability = Regexps['Ability'].match(card.Rules)
+      ability = Ability(card.Rules)
       if ability:
-         debug("Found ability {}".format(ability.group(0)))
-         self.ability      = ability.group(0)
-         self.ability_type = ability.group(1)
-         self.ability_name = ability.group(2)
+         debug("Found ability {}".format(ability))
+         self.ability = ability
       else:
-         self.ability = None
          debug("No ability found")
-
          
    def hasEffect(self):
-      if self.ability != None:
-         return True
-      return False
+      return self.ability != None
+      
+
+class Ability(object):
+   """ A class that represents an ability """   
+   ability = None
+   type    = None
+   name    = None
+   
+   @property
+   def utype(self):
+      # Returns an unicode symbol for the type (for window forms)
+      if self.type == InstantAbility:   return u'\u25B2'
+      if self.type == ActivatedAbility: return u'\u25A0'
+      return u'\u25CF'  # AutoAbility
+   
+   def __init__(self, rules):
+      ability = Regexps['Ability'].match(rules)
+      if ability:
+         self.ability = ability.group(0)
+         self.type    = ability.group(1)
+         self.name    = ability.group(2)
+         
+   def __str__(self):
+      return self.ability

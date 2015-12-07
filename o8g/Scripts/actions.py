@@ -254,7 +254,7 @@ def activate(card, x = 0, y = 0):
    if card.Type == 'Character':
       pcard = getParsedCard(card)
       if pcard.hasEffect():
-         if pcard.ability_type == ActivatedAbility:
+         if pcard.ability.type == ActivatedAbility:
             freeze(card, silent = True)
          ability = "ability {}".format(pcard.ability)
       else:
