@@ -351,11 +351,11 @@ def copyAlternateRules(card, target):
       rules = target.Rules
    if rules:
       debug("Found rule '{}'".format(rules))
-      return addAlternateRules(card, rules, switch=True)
+      return addAlternateRules(card, rules)
    return None
    
    
-def addAlternateRules(card, rules, altname=None, switch=False):
+def addAlternateRules(card, rules, altname=None):
    debug(">>> addAlternateRules({}, {})".format(card, rules)) #Debug
    
    if not automations['ExtAPI']:
@@ -368,8 +368,7 @@ def addAlternateRules(card, rules, altname=None, switch=False):
    _extapi.setCardProperty(cardData, "Rules", rules, altname)
    debug("Adding new alternate '{}' and generating proxy".format(altname))
    _extapi.generateProxy(cardData, altname)
-   if switch:
-      card.switchTo(altname)
+   card.switchTo(altname)
    return altname
    
 

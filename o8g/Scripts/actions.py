@@ -337,8 +337,6 @@ def toggleAbility(cards, x = 0, y = 0):
          # Updates proxy image of other players
          for p in players:
             remoteCall(p, "addAlternateRules", [card, '', 'noability'])
-         update() # Wait until queued networking processes are finished
-         card.switchTo('noability')
          notify("{} removes {}'s abilities".format(me, card))
       
 
@@ -386,7 +384,6 @@ def copyAbility(card, x = 0, y = 0):
             if p != me:
                remoteCall(p, "copyAlternateRules", [card, target])
          notify("{} copies ability {} to {}.".format(me, result, card))
-         update() # Wait until queued networking processes are finished
       else:
          warning("Target character card doesn't have an ability to copy.")
    else:
