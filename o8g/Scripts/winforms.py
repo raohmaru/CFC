@@ -27,7 +27,7 @@ try:
    from System.Windows.Forms import *
    from System.Drawing import *
 except:
-   Automations['WinForms'] = False
+   automations['WinForms'] = False
 
 
 # Base class for custom forms

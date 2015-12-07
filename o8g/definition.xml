@@ -4,7 +4,7 @@
       name="Card Fighters' Clash"
       id="e3d56d9e-900d-49c6-b6ae-22cbb51be153"
       octgnVersion="3.1.55.0"
-      version="0.2.1.12"
+      version="0.2.1.18"
       markersize="20"
       tags="capcom snk fighter"
       description="A card game based in the SNK Playmore’s video game SNK vs. Capcom Card Fighters' Clash 2 Expand Edition.
@@ -30,6 +30,7 @@
 		<script src="Scripts/RuleScript_filters.py" />
 		<script src="Scripts/utils.py" />
 		<script src="Scripts/winforms.py" />
+		<script src="Scripts/extendedAPI.py" />
 	</scripts>
 	
 	<events>
@@ -123,7 +124,7 @@
 				<groupaction menu="by X" shortcut="Ctrl+Shift+0" execute="minusSPX" />
 			</groupactions>
 		</groupactions>
-		<groupaction menu="Realign cards" shortcut="Ctrl+F2" execute="alignCards" />
+		<groupaction menu="Realign cards" shortcut="Ctrl+L" execute="alignCards" />
 		<groupaction menu="Clear cards" shortcut="esc" execute="clearAll" />
 		<groupactions menu="Random...">
 			<groupaction menu="Flip a coin" shortcut="Ctrl+Alt+2" execute="flipCoin" />
@@ -161,9 +162,12 @@
 			<cardaction menu="Put into Deck (Top)" shortcut="Ctrl+D" execute="toDeckTop" />
 			<cardaction menu="Put into Deck (Bottom)" shortcut="Ctrl+Shift+D" execute="toDeckBottom" />
 		</cardactions>
-		<cardaction menu="Lose/Restore abilities" shortcut="Ctrl+N" batchExecute="toggleNoAbility" />
+		<cardactions menu="Abilities...">
+			<cardaction menu="Lose/Restore abilities" shortcut="Ctrl+N" batchExecute="toggleAbility" />
+			<cardaction menu="Copy ability" shortcut="Ctrl+C" execute="copyAbility" />
+		</cardactions>
 		<cardaction menu="Transform" shortcut="Ctrl+T" batchExecute="transformCards" />
-		<cardaction menu="Realign card" shortcut="Ctrl+F2" execute="alignCardAction" />
+		<cardaction menu="Realign card" shortcut="Ctrl+L" execute="alignCardAction" />
 		<cardaction menu="Clear" shortcut="Esc" execute="clear" />
 		<cardaction menu="Show backups types" shortcut="Ctrl+Alt+B" execute="askCardBackups" />
 		<cardactions menu="Markers...">

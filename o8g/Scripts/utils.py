@@ -138,6 +138,14 @@ def clearGlobalVar(name, player = None):
 def fromWhereStr(src):
    return "from the ring" if src == table else "from its " + src.name
 
+   
+def sanitizeStr(str):
+# Strips the string, replaces spaces with dashes and removes characters not in
+# a-z, 0-9
+   valid_chars = '-abcdefghijklmnopqrstuvwxyz0123456789'
+   str = str.strip().lower().replace(" ", "-")
+   str = ''.join(c for c in str if c in valid_chars)
+   return str
 
 #---------------------------------------------------------------------------
 # Card Placement functions
@@ -327,6 +335,32 @@ def transformCard(card, cardModel):
    else:
       notify("{} transformed a card {}.".format(me, fromWhereStr(group)))
    card.delete()
+   
+   
+def addAlternateRules(card, target):
+   debug(">>> addAlternateRules({}, {})".format(card, target)) #Debug
+   
+   if not automations['ExtAPI']:
+      return ' '
+   rules = None
+   if isinstance(target, basestring):
+      targetData = _extapi.getCardDataByModel(target)
+      if targetData:
+         rules = _extapi.getCardProperty(targetData, "Rules")
+   else:
+      rules = target.Rules
+   if rules:
+      debug("Found rule '{}'".format(rules))
+      ability = Regexps['Ability'].match(rules)
+      altname = sanitizeStr(ability.group(2))
+      cardData = _extapi.getCardDataById(card._id)
+      cardData.Properties[altname] = cardData.Properties[''].Clone()
+      _extapi.setCardProperty(cardData, "Rules", rules, altname)
+      debug("Adding new alternate '{}' and generating proxy".format(altname))
+      _extapi.generateProxy(cardData, altname)
+      card.switchTo(altname)
+      return ability.group(2)
+   return None
    
 
 #---------------------------------------------------------------------------

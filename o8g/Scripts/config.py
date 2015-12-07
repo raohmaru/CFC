@@ -129,6 +129,7 @@ ERR_NO_FILTERED_PLAYERS = '403'
 ERR_NO_CARD_TARGETED    = '404'
 ERR_TARGET_OTHER        = '405'
 ERR_MULTIPLE_TARGET     = '406'
+ERR_EXTAPI_DISABLED     = '407'
 
 ErrStrings = {}
 ErrStrings[ERR_NO_CARDS] = "There are no cards to select."
@@ -162,6 +163,7 @@ parsedCards    = {} # Dictionary holding all parsed cards
 automations = {
    'Play'     : True, # Automatically trigger game effetcs and card effects when playing cards
    'Phase'    : True, # Automatically trigger phase related events, and effects from cards in play
-   'WinForms' : True,  # Game will use the custom Windows Forms for displaying info pop-ups
-   'AttackDmg': True  # Applies attack damage automatically
+   'WinForms' : True, # Game will use the custom Windows Forms for displaying info pop-ups
+   'AttackDmg': True, # Applies attack damage automatically
+   'ExtAPI'   : True  # Make use of the extended API to access the C# API
 }

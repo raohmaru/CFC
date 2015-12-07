@@ -68,7 +68,7 @@ class CharCard(GameCard):
    
       ability = Regexps['Ability'].match(card.Rules)
       if ability:
-         debug("Found ability {}".format(ability.group(0)))  # Causes weird IronPython error
+         debug("Found ability {}".format(ability.group(0)))
          self.ability      = ability.group(0)
          self.ability_type = ability.group(1)
          self.ability_name = ability.group(2)
