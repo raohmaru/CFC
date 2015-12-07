@@ -337,11 +337,11 @@ def transformCard(card, cardModel):
    card.delete()
    
    
-def addAlternateRules(card, target):
-   debug(">>> addAlternateRules({}, {})".format(card, target)) #Debug
+def copyAlternateRules(card, target):
+   debug(">>> copyAlternateRules({}, {})".format(card, target)) #Debug
    
    if not automations['ExtAPI']:
-      return ' '
+      return None
    rules = None
    if isinstance(target, basestring):
       targetData = _extapi.getCardDataByModel(target)
@@ -351,16 +351,26 @@ def addAlternateRules(card, target):
       rules = target.Rules
    if rules:
       debug("Found rule '{}'".format(rules))
+      return addAlternateRules(card, rules, switch=True)
+   return None
+   
+   
+def addAlternateRules(card, rules, altname=None, switch=False):
+   debug(">>> addAlternateRules({}, {})".format(card, rules)) #Debug
+   
+   if not automations['ExtAPI']:
+      return None
+   if not altname:
       ability = Ability(rules)
       altname = sanitizeStr(ability.name)
-      cardData = _extapi.getCardDataById(card._id)
-      cardData.Properties[altname] = cardData.Properties[''].Clone()
-      _extapi.setCardProperty(cardData, "Rules", rules, altname)
-      debug("Adding new alternate '{}' and generating proxy".format(altname))
-      _extapi.generateProxy(cardData, altname)
+   cardData = _extapi.getCardDataById(card._id)
+   cardData.Properties[altname] = cardData.Properties[''].Clone()
+   _extapi.setCardProperty(cardData, "Rules", rules, altname)
+   debug("Adding new alternate '{}' and generating proxy".format(altname))
+   _extapi.generateProxy(cardData, altname)
+   if switch:
       card.switchTo(altname)
-      return ability.name
-   return None
+   return altname
    
 
 #---------------------------------------------------------------------------

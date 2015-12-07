@@ -328,12 +328,18 @@ def toggleAbility(cards, x = 0, y = 0):
    mute()
    for card in cards:
       parsedCards.pop(card._id, None)
-      if card.alternate == '':
-         card.switchTo('noability')
-         notify("{} removes {}'s abilities".format(me, card))
-      else:
+      if card.alternate == '' and card.Rules == '':
+         continue
+      if card.alternate == 'noability':
          card.switchTo()
          notify("{} restores {}'s abilities".format(me, card))
+      else:
+         # Updates proxy image of other players
+         for p in players:
+            remoteCall(p, "addAlternateRules", [card, '', 'noability'])
+         update() # Wait until queued networking processes are finished
+         card.switchTo('noability')
+         notify("{} removes {}'s abilities".format(me, card))
       
 
 def transformCards(cards, x = 0, y = 0):
@@ -373,14 +379,14 @@ def copyAbility(card, x = 0, y = 0):
       else:
          return
    if target:
-      result = addAlternateRules(card, target)
+      result = copyAlternateRules(card, target)
       if result:
          # Updates proxy image of other players
          for p in players:
             if p != me:
-               remoteCall(p, "addAlternateRules", [card, target])
+               remoteCall(p, "copyAlternateRules", [card, target])
          notify("{} copies ability {} to {}.".format(me, result, card))
-         if len(players) > 1: rnd(1, 100) # Wait a bit more, as in multiplayer games, things are slower.
+         update() # Wait until queued networking processes are finished
       else:
          warning("Target character card doesn't have an ability to copy.")
    else:
