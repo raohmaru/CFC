@@ -147,6 +147,7 @@ def sanitizeStr(str):
    str = ''.join(c for c in str if c in valid_chars)
    return str
 
+
 #---------------------------------------------------------------------------
 # Card Placement functions
 #---------------------------------------------------------------------------
@@ -174,7 +175,7 @@ def placeCard(card, type = None, action = None, target = None, faceDown = False)
    debug(">>> placeCard()") #Debug
 
    if automations['Play']:
-      if type == 'Character' and action != None:
+      if type == CharType and action != None:
          coords = (0, fixCardY(0))
          if action == PlayAction:
             coords = CardsCoords['Slot'+`fixSlotIdx(target)`]
@@ -221,11 +222,14 @@ def getSlotIdx(card, player = me):
    return -1
 
    
-def putAtSlot(card, idx, player = me):
-   debug(">>> putAtSlot({}, {})".format(card, idx)) #Debug
-   
+def putAtSlot(card, idx, player = me, move = False):
+   debug(">>> putAtSlot({}, {}, move={})".format(card, idx, move)) #Debug
    if idx < NumSlots:
       ring = getGlobalVar('Ring', player)
+      if move:
+         oldIdx = getSlotIdx(card, player)
+         if oldIdx != -1:
+            ring[oldIdx] = None         
       ring[idx] = card._id
       setGlobalVar('Ring', ring, player)
       debug("{}'s ring: {}".format(me, ring))
@@ -290,7 +294,7 @@ def alignBackups(card, x=0, y=0):
          c.setIndex(max(z-1, 0))
 
 
-def getTargetedCards(card=None, targetedByMe=True, controlledByMe=True, type='Character'):
+def getTargetedCards(card=None, targetedByMe=True, controlledByMe=True, type=CharType):
    targetedBy   = me if targetedByMe   or len(players) == 1 else players[1]
    controlledBy = me if controlledByMe or len(players) == 1 else players[1]
    targets = [c for c in table
@@ -372,6 +376,23 @@ def addAlternateRules(card, rules, altname=None):
    return altname
    
 
+def askForSlot(player = me, showEmptySlots = True):
+   ring = getGlobalVar('Ring', player)
+   if showEmptySlots and ring.count(None) == 0:
+      warning("There is no emply slot in your ring where to put a character card.")
+      return -1
+   # Prompt the player to select an empty slot
+   slots = []
+   for i, id in enumerate(ring):
+      if not showEmptySlots or id == None:
+         slots.append(str(i+1))
+   slotIdx = askChoice("Select an {}slot:".format("empty " if showEmptySlots else ""), slots)
+   debug("Selected option {} ({})".format(slotIdx, slotIdx-1))
+   if slotIdx == 0:
+      return -1
+   return int(slots[slotIdx-1]) - 1
+
+
 #---------------------------------------------------------------------------
 # Markers functions
 #---------------------------------------------------------------------------
@@ -426,6 +447,7 @@ def dealDamage(dmg, target, source, isPiercing = False):
       piercing = "piercing " if isPiercing else ""
       notify("{} deals {} {}damage to {} (new HP is {})".format(source, dmg, piercing, target, target.HP))
       
+
 #---------------------------------------------------------------------------
 # Counter Manipulation
 #---------------------------------------------------------------------------

@@ -51,11 +51,11 @@ def onLoadDeck(player, groups):
 def onMoveCard(player, card, fromGroup, toGroup, oldIndexs, indexs, oldX, oldY, x, y, faceup, highlights, markers):
    if card.controller != me: return
    if fromGroup == table and toGroup != table:
-      if card.Type == 'Character':
+      if card.Type == CharType:
          clearAttachLinks(card)
          freeSlot(card)
    elif fromGroup == table and toGroup == table:
-      if card.Type == 'Character' and not MarkersDict['Backup'] in card.markers:
+      if card.Type == CharType and not MarkersDict['Backup'] in card.markers:
          alignBackups(card, x, y)
          
 

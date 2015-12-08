@@ -37,13 +37,13 @@ def activatePhaseStart():
    myCards = (card for card in table
       if card.controller == me)
    for card in myCards:
-      if card.Type == 'Character':
+      if card.Type == CharType:
          if not MarkersDict['DoesntUnfreeze'] in card.markers:
             freeze(card, unfreeze = True, silent = True)
          removeMarker(card, 'JustEntered')
          clear(card, silent = True)
       # Discard any Action or Reaction card left in the table (just in case player forgot to remove them)
-      elif card.Type == 'Action' or card.Type == 'Reaction':
+      elif card.Type == ActionType or card.Type == ReactionType:
          discard(card)
          
             
@@ -67,7 +67,7 @@ def endPhaseStart():
    myCards = (card for card in table
       if card.controller == me)
    for card in myCards:
-      if card.Type == 'Character':
+      if card.Type == CharType:
          if (MarkersDict['Attack'] in card.markers or MarkersDict['UnitedAttack'] in card.markers) and not MarkersDict['NoFreeze'] in card.markers:
             freeze(card, unfreeze = False, silent = True)
    # Calculates and applies attack damage
@@ -76,7 +76,7 @@ def endPhaseStart():
       uattack = getGlobalVar('UnitedAttack')
       atkCards = (card for card in table
          if card.controller == me
-         and card.Type == 'Character'
+         and card.Type == CharType
          and MarkersDict['Attack'] in card.markers)
       for card in atkCards:
          dmg = getMarker(card, 'BP')
@@ -114,7 +114,7 @@ def cleanupPhaseStart():
    # KOs characters with 0 BP
    if automations['AttackDmg']:
       charCards = (card for card in table
-         if card.Type == 'Character')
+         if card.Type == CharType)
       for card in charCards:
          if getMarker(card, 'BP') == 0:
             notify("{}'s {} BP is 0.".format(card.controller, card))
@@ -123,7 +123,7 @@ def cleanupPhaseStart():
    myCards = (card for card in table
       if card.controller == me)
    for card in myCards:
-      if card.Type == 'Character':
+      if card.Type == CharType:
          # Remove script makers
          removeMarker(card, 'Attack')
          removeMarker(card, 'UnitedAttack')
@@ -132,7 +132,7 @@ def cleanupPhaseStart():
          # Clears targets, colors, freezes characters and resets position
          alignCard(card)
       # Discard any Action or Reaction card left in the table (just in case player forgot to remove them)
-      elif card.Type == 'Action' or card.Type == 'Reaction':
+      elif card.Type == ActionType or card.Type == ReactionType:
          discard(card)
    
    clearAll()
@@ -148,7 +148,7 @@ def playAuto(card, slotIdx=None):
    phaseIdx = getGlobalVar('PhaseIdx', me)
    
    # Player plays a Character card
-   if card.Type == 'Character':
+   if card.Type == CharType:
       # If a char has been selected, backup that char instead
       targets = getTargetedCards(card)
       if len(targets) > 0:
@@ -169,15 +169,9 @@ def playAuto(card, slotIdx=None):
          return
       # Prompt the player to select an Empty Slot
       if slotIdx == None:
-         emptySlots = []
-         for i, id in enumerate(myRing):
-            if id == None:
-               emptySlots.append(str(i+1))
-         slotIdx = askChoice("Select an empty slot:", emptySlots)
-         debug("Selected option {} ({})".format(slotIdx, slotIdx-1))
-         if slotIdx == 0:
+         slotIdx = askForSlot()         
+         if slotIdx == -1:
             return
-         slotIdx = int(emptySlots[slotIdx-1]) - 1
       # Is really that slot empty?
       debug("Selected slot: {} ({})".format(slotIdx, myRing[slotIdx]))
       if myRing[slotIdx] != None:
@@ -194,7 +188,7 @@ def playAuto(card, slotIdx=None):
       charsPlayed += 1
    
    # Player plays an Action card
-   elif card.Type == 'Action':
+   elif card.Type == ActionType:
       # Check if the card can be legally played
       if not me.isActivePlayer or phaseIdx != MainPhase:
          information("Action cards can only be played on your Main Phase.")
@@ -205,7 +199,7 @@ def playAuto(card, slotIdx=None):
       placeCard(card, card.Type, PlayAction)
    
    # Player plays a Reaction card
-   elif card.Type == 'Reaction':
+   elif card.Type == ReactionType:
       # Check if the card can be legally played
       if me.isActivePlayer or getGlobalVar('PhaseIdx', players[1]) != BlockPhase:
          information("Reaction cards can only be played in enemy's Counter-attack Phase.")
@@ -230,14 +224,14 @@ def backupAuto(card):
       information("Characters can only be backed-up on your Main Phase.")
       return
    # Only for character cards
-   if card.Type != 'Character':
+   if card.Type != CharType:
       warning("You can only backup with Character cards.")
       return
    # Check if a valid char has been selected
    myRing = getGlobalVar('Ring', me)
    targets = getTargetedCards(card)
    if len(targets) == 0 or not targets[0]._id in myRing:
-      warning("Please select a character in your ring.\n(Shift key + Left click on a character).")
+      warning(MSG_SEL_CHAR_RING)
       return
    target = targets[0]
    # Backup limit
@@ -285,7 +279,7 @@ def attackAuto(card):
       information("You can only attack in your Attack Phase.")
       return
    # Only for character cards...
-   if card.Type != 'Character':
+   if card.Type != CharType:
       information("You can only attack with Character cards.")
       return
    # ... in player's ring
@@ -404,7 +398,7 @@ def blockAuto(card):
       information("You can only counter-attack in enemy's Counter-attack Phase.")
       return      
    # Only for character cards...
-   if card.Type != 'Character':
+   if card.Type != CharType:
       information("You can only counter-attack with character cards.")
       return
    # ... in player's ring
@@ -460,7 +454,7 @@ def activateAuto(card):
       whisper("{}'s ability or effect has already been activated".format(card))
       return   
    # Character ability
-   if card.Type == 'Character':
+   if card.Type == CharType:
       if MarkersDict['NoAbility'] in card.markers:
          return
       pcard = getParsedCard(card)

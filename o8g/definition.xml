@@ -4,7 +4,7 @@
       name="Card Fighters' Clash"
       id="e3d56d9e-900d-49c6-b6ae-22cbb51be153"
       octgnVersion="3.1.55.0"
-      version="0.3.0.1"
+      version="0.3.0.4"
       markersize="20"
       tags="capcom snk fighter"
       description="A card game based in the SNK Playmore’s video game SNK vs. Capcom Card Fighters' Clash 2 Expand Edition.
@@ -161,6 +161,7 @@
 			<cardaction menu="Return to Hand" shortcut="Ctrl+H" execute="toHand" />
 			<cardaction menu="Put into Deck (Top)" shortcut="Ctrl+D" execute="toDeckTop" />
 			<cardaction menu="Put into Deck (Bottom)" shortcut="Ctrl+Shift+D" execute="toDeckBottom" />
+			<cardaction menu="Change/Swap slot" execute="changeSlot" />
 		</cardactions>
 		<cardactions menu="Abilities...">
 			<cardaction menu="Lose/Restore abilities" shortcut="Ctrl+N" batchExecute="toggleAbility" />
@@ -246,7 +247,12 @@
 		</group>
 		<group name="Discard Pile" visibility="all" width="90" height="126" icon="Groups/discards.png">
 			<groupaction menu="Shuffle" shortcut="Ctrl+S" execute="shuffle" />
-			<groupaction menu="Shuffle into Deck" shortcut="Ctrl+Shift+S" execute="reshuffle" />
+			<groupactions menu="Shuffle into Deck...">
+				<groupaction menu="All cards" shortcut="Ctrl+Shift+S" execute="reshuffle" />
+				<groupaction menu="All Character cards" execute="reshuffleCHA" />
+				<groupaction menu="All Action cards" execute="reshuffleAC" />
+				<groupaction menu="All Reaction cards" execute="reshuffleRE" />
+			</groupactions>
 			<groupaction menu="Swap with Deck" shortcut="Ctrl+Alt+S" execute="swapWithDeck" />
 			<groupaction menu="Pick a random card" shortcut="Ctrl+Alt+R" execute="randomPick" />
 			<groupactions menu="Move all cards to...">

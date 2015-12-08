@@ -24,7 +24,7 @@ import re
 def getParsedCard(card):
    debug(">>> getParsedCard()") #Debug
    if not card._id in parsedCards:
-      if card.Type == 'Character':
+      if card.Type == CharType:
          parsedCards[card._id] = CharCard(card)
       else:
          parsedCards[card._id] = GameCard(card)
@@ -76,7 +76,7 @@ class CharCard(GameCard):
       return self.ability != None
       
 
-class Ability(object):
+class Ability:
    """ A class that represents an ability """   
    ability = None
    type    = None

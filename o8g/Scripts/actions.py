@@ -177,7 +177,7 @@ def clearAll(group = table, x = 0, y = 0, allPlayers = False):
 def alignCards(group, x = 0, y = 0):
    myCards = (card for card in table
       if card.controller == me
-      and (card.Type == 'Character'))
+      and (card.Type == CharType))
    for card in myCards:
       alignCard(card)
 
@@ -251,7 +251,7 @@ def activate(card, x = 0, y = 0):
    mute()
    if automations['Play']:
       if not activateAuto(card): return
-   if card.Type == 'Character':
+   if card.Type == CharType:
       pcard = getParsedCard(card)
       if pcard.hasEffect():
          if pcard.ability.type == ActivatedAbility:
@@ -303,7 +303,7 @@ def clear(card, x = 0, y = 0, silent = False):
 
 
 def alignCardAction(card, x = 0, y = 0):
-   if card.Type == 'Character':
+   if card.Type == CharType:
       slotIdx = getSlotIdx(card)
       if slotIdx != -1:
          alignCard(card, slotIdx=slotIdx)
@@ -315,7 +315,7 @@ def alignCardAction(card, x = 0, y = 0):
 
 
 def askCardBackups(card, x = 0, y = 0):
-   if card.Type == 'Character':
+   if card.Type == CharType:
       acceptedBackups = (card.properties['Backup 1'], card.properties['Backup 2'], card.properties['Backup 3'])
       msg = "{} can be backed-up with the following character types:\n- {}".format(card.Name, '\n- '.join(filter(None, acceptedBackups)))
       information(msg)
@@ -356,22 +356,21 @@ def transformCards(cards, x = 0, y = 0):
    if cardModel:
       for card in cards:
          transformCard(card, cardModel)
-      if len(players) > 1: rnd(1, 100) # Wait a bit more, as in multiplayer games, things are slower.
       
 
 def copyAbility(card, x = 0, y = 0):
    debug(">>> copyAbility()") #Debug
    mute()
-   if card.Type != 'Character':
+   if card.Type != CharType:
       whisper("Abilities can only be copied to character cards.")
       return
    target = None
    targets =  [c for c in table   if c.targetedBy == me]
    targets += [c for c in me.piles['Discard Pile'] if c.targetedBy == me]
-   if len(targets) > 0 and targets[0].Type == 'Character' and targets[0] != card:
+   if len(targets) > 0 and targets[0].Type == CharType and targets[0] != card:
       target = targets[0]
    else:
-      model, quantity = askCard({"Type":'Character'}, "and", "Choose a character with an ability")
+      model, quantity = askCard({"Type":CharType}, "and", "Choose a character with an ability")
       if quantity > 0:
          target = model
       else:
@@ -401,7 +400,7 @@ def destroy(card, x = 0, y = 0):
    fromText = fromWhereStr(card.group)
    action = "discards"
    card.moveTo(me.piles['Discard Pile'])
-   if card.Type == 'Character':
+   if card.Type == CharType:
       action = "KOs"
    notify("{} {} {} {}.".format(me, action, card, fromText))
    
@@ -479,6 +478,34 @@ def toTableFaceDown(card, x = 0, y = 0):
    placeCard(card, card.Type, faceDown=True)
    notify("{} puts a card face down in the Arena {}.".format(me, fromText))
 
+   
+def changeSlot(card, x = 0, y = 0):
+   debug(">>> changeSlot {}".format(card)) #Debug
+   mute()
+   cardSlot = getSlotIdx(card, card.controller)
+   if cardSlot == -1:
+      warning(MSG_SEL_CHAR_RING)
+      return
+   targets = getTargetedCards(card, True, card.controller == me)
+   if len(targets) > 0:
+      target = targets[0]
+      targetSlot = getSlotIdx(target, target.controller)
+      if targetSlot == -1:
+         warning(MSG_SEL_CHAR_RING)
+         return
+      putAtSlot(card, targetSlot, card.controller)
+      putAtSlot(target, cardSlot, target.controller)
+      alignCard(card)
+      alignCard(target)
+      target.target(False)
+      notify("{} swapped positions of {} and {}.".format(me, card, target))
+   else:
+      slotIdx = askForSlot(card.controller)
+      if slotIdx > -1:
+         putAtSlot(card, slotIdx, card.controller, True)
+         alignCard(card)
+         notify("{} moved {} to slot {}.".format(me, card, slotIdx+1))
+      
 
 #---------------------------------------------------------------------------
 # Marker actions
@@ -677,19 +704,19 @@ def randomDraw(group = me.Deck, type = None):
    
    
 def randomDrawCHA(group = me.Deck):
-   randomDraw(group, 'Character')
+   randomDraw(group, CharType)
    
    
 def randomDrawAC(group = me.Deck):
-   randomDraw(group, 'Action')
+   randomDraw(group, ActionType)
    
    
 def randomDrawRE(group = me.Deck):
-   randomDraw(group, 'Reaction')
+   randomDraw(group, ReactionType)
 
 
 def trash(group = me.Deck, x = 0, y = 0, silent = False):
-# Draws one card from the deck into the discard pile
+# Draws one or more cards from the deck into the discard pile
    mute()
    if len(group) == 0:
       return
@@ -701,7 +728,7 @@ def trash(group = me.Deck, x = 0, y = 0, silent = False):
       card.moveTo(discards)
    if len(players) > 1: rnd(1, 100)  # Wait a bit more, as in multiplayer games, things are slower.
    if not silent:
-      notify("{} trash top {} cards from {}.".format(me, count, group.name))
+      notify("{} trash top {} cards {}.".format(me, count, fromWhereStr(group)))
 
 
 def shuffle(group):
@@ -720,10 +747,35 @@ def reshuffle(group = me.piles['Discard Pile']):
    Deck = me.Deck
    for card in group:
       card.moveTo(Deck) # Move the player's cards from the discard to its deck one-by-one.
-   rnd(1, 100) # Bug 105 workaround. This delays the next action until all animation is done.
+   rnd(100, 10000) # Bug 105 workaround. This delays the next action until all animation is done.
                # see https://octgn.16bugs.com/projects/3602/bugs/102681
    Deck.shuffle() # Then use the built-in shuffle action
    notify("{} reshuffled its {} into its Deck.".format(me, group.name)) # And inform everyone.
+   
+
+def reshuffleCards(group, cardType):
+# This function reshuffles the player's discard pile into its deck.
+   Deck = me.Deck
+   for card in group:
+      if card.Type == cardType:
+         card.moveTo(Deck) # Move the player's cards from the discard to its deck one-by-one.
+   update()  # Trying this method to delay next actions until networked tasks are complete
+   Deck.shuffle()
+   notify("{} shuffles all {} cards from his {} into its Deck.".format(me, cardType, group.name)) # And inform everyone.
+   
+
+def reshuffleCHA(group = me.piles['Discard Pile']):
+   mute()
+   reshuffleCards(group, CharType)
+
+def reshuffleAC(group = me.piles['Discard Pile']):
+   mute()
+   reshuffleCards(group, ActionType)
+
+def reshuffleRE(group = me.piles['Discard Pile']):
+   mute()
+   reshuffleCards(group, ReactionType)
+   
 
 
 def revealTopDeck(group, x = 0, y = 0):
@@ -743,7 +795,7 @@ def swapWithDeck(group = me.piles['Discard Pile']):
    savedDeck = [card for card in Deck]
    for card in group:
       card.moveTo(Deck)
-   rnd(1, 100)  # Delay the next action until all animation is done
+   rnd(100, 10000)  # Delay the next action until all animation is done
    for card in savedDeck:
       card.moveTo(group)   
    if len(players) > 1: rnd(1, 100) # Wait a bit more, as in multiplayer games, things are slower.

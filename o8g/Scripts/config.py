@@ -84,7 +84,12 @@ CardsCoords = dict(
    UAttackOffset = ( 38,  0)
 )
 
-# Cards abilities
+# Card types
+CharType     = 'Character'
+ActionType   = 'Action'
+ReactionType = 'Reaction'
+
+# Card abilities
 InstantAbility   = u'\xa2'
 ActivatedAbility = u'\xa3'
 AutoAbility      = u'\xa4'
@@ -138,6 +143,9 @@ ErrStrings[ERR_NO_FILTERED_PLAYERS] = "No player match the requeriments of this 
 ErrStrings[ERR_NO_CARD_TARGETED] = "Please select a card."
 ErrStrings[ERR_TARGET_OTHER] = "Please select a card other than the card you're activating its effect."
 ErrStrings[ERR_MULTIPLE_TARGET] = "Please select only one card."
+
+# Messages
+MSG_SEL_CHAR_RING = "Please select a character in your ring.\n(Shift key + Left click on a character)."
 
 # Misc
 CardWidth    = 90
