@@ -731,6 +731,39 @@ def trash(group = me.Deck, x = 0, y = 0, silent = False):
       notify("{} trash top {} cards {}.".format(me, count, fromWhereStr(group)))
 
 
+def prophecy(group = me.Deck, x = 0, y = 0):
+   mute()
+   if len(group) == 0:
+      return
+   global defProphecyCount
+   count = askInteger("How many cards do you want to see?", defProphecyCount)
+   if count == None:
+      return
+   defProphecyCount = count
+   cards = [c for c in group[:count]]
+   cardsPos = []
+   while len(cards) > 0:
+      card = askCard(cards, "Select a card to put on top or bottom of the deck", "Select a card")
+      if card == None:
+         return
+      choice = askChoice("Put {} on top or bottom of the deck?".format(card.Name), ['Top', 'Bottom'])
+      if choice == 0:
+         return
+      cards.remove(card)
+      cardsPos.append((card, choice))
+   fromText = fromWhereStr(group)
+   for item in cardsPos:
+      card = item[0]
+      choice = item[1]
+      cardname = card.Name if card.isFaceUp else "a card"
+      if choice == 1:         
+         card.moveTo(me.Deck)
+         notify("{} puts {} {} on the top of its Deck.".format(me, cardname, fromText))
+      else:      
+         card.moveToBottom(me.Deck)
+         notify("{} puts {} {} on the bottom of its Deck.".format(me, cardname, fromText))
+
+
 def shuffle(group):
 # A simple function to shuffle piles
    mute()
@@ -754,7 +787,7 @@ def reshuffle(group = me.piles['Discard Pile']):
    
 
 def reshuffleCards(group, cardType):
-# This function reshuffles the player's discard pile into its deck.
+# Reshuffles all the cards of the given type into the player's deck
    Deck = me.Deck
    for card in group:
       if card.Type == cardType:

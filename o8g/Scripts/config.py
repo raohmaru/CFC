@@ -175,3 +175,6 @@ automations = {
    'AttackDmg': True, # Applies attack damage automatically
    'ExtAPI'   : True  # Make use of the extended API to access the C# API
 }
+
+# Default values used in dialogs that can be overriden by the user to remember his last choice
+defProphecyCount = 1
