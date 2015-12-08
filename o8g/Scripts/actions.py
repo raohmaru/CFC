@@ -676,7 +676,7 @@ def draw(group = me.Deck):  # Draws one card from the deck into the player's han
 def drawMany(group, count = None, silent = False):  # This function draws a variable number cards into the player's hand.
    mute()
    if count == None:
-      count = askInteger("Draw how many cards?", handSize) # Ask the player how many cards they want.
+      count = askInteger("How many cards do you want to draw?", handSize) # Ask the player how many cards they want.
    for i in range(0, count):
       if len(group) > 0:  # If the deck is not empty...
          group.top().moveTo(me.hand)  # ...then move them one by one into their play hand.
@@ -720,9 +720,11 @@ def trash(group = me.Deck, x = 0, y = 0, silent = False):
    mute()
    if len(group) == 0:
       return
-   count = askInteger("Trash how many cards?", 1)
+   global defTrashCount
+   count = askInteger("How many cards do you want to trash?", defTrashCount)
    if count == None:
       return
+   defTrashCount = count
    discards = me.piles['Discard Pile']
    for card in group.top(count):
       card.moveTo(discards)
