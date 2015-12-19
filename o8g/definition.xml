@@ -4,7 +4,7 @@
       name="Card Fighters' Clash"
       id="e3d56d9e-900d-49c6-b6ae-22cbb51be153"
       octgnVersion="3.1.55.0"
-      version="0.3.0.11"
+      version="0.3.0.12"
       markersize="20"
       tags="capcom snk fighter"
       description="A card game based in the SNK Playmore’s video game SNK vs. Capcom Card Fighters' Clash 2 Expand Edition.
@@ -166,6 +166,7 @@
 		<cardactions menu="Abilities...">
 			<cardaction menu="Lose/Restore abilities" shortcut="Ctrl+N" batchExecute="toggleAbility" />
 			<cardaction menu="Copy ability" shortcut="Ctrl+C" execute="copyAbility" />
+			<cardaction menu="Swap abilities" shortcut="Ctrl+Shift+C" execute="swapAbilities" />
 		</cardactions>
 		<cardaction menu="Transform" shortcut="Ctrl+T" batchExecute="transformCards" />
 		<cardaction menu="Realign card" shortcut="Ctrl+L" execute="alignCardAction" />

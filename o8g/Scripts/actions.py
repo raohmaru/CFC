@@ -360,23 +360,23 @@ def transformCards(cards, x = 0, y = 0):
          target.target(False)
       
 
-def copyAbility(card, x = 0, y = 0):
+def copyAbility(card, x = 0, y = 0, target = None):
    debug(">>> copyAbility()") #Debug
    mute()
    if card.Type != CharType:
       whisper("Abilities can only be copied to character cards.")
       return
-   target = None
-   targets =  [c for c in table   if c.targetedBy == me]
-   targets += [c for c in me.piles['Discard Pile'] if c.targetedBy == me]
-   if len(targets) > 0 and targets[0].Type == CharType and targets[0] != card:
-      target = targets[0]
-   else:
-      model, quantity = askCard({"Type":CharType}, "and", "Choose a character with an ability")
-      if quantity > 0:
-         target = model
+   if target == None:
+      targets =  [c for c in table   if c.targetedBy == me]
+      targets += [c for c in me.piles['Discard Pile'] if c.targetedBy == me]
+      if len(targets) > 0 and targets[0].Type == CharType and targets[0] != card:
+         target = targets[0]
       else:
-         return
+         model, quantity = askCard({"Type":CharType}, "and", "Choose a character with an ability")
+         if quantity > 0:
+            target = model
+         else:
+            return
    if target:
       result = copyAlternateRules(card, target)
       if result:
@@ -384,14 +384,31 @@ def copyAbility(card, x = 0, y = 0):
          for p in players:
             if p != me:
                remoteCall(p, "copyAlternateRules", [card, target])
+         update()  # Trying this method to delay next actions until networked tasks are complete
          notify("{} copies ability {} to {}.".format(me, result, card))
       else:
          warning("Target character card doesn't have an ability to copy.")
    else:
       warning("Please select a valid character card.")
-      
    debug("<<< copyAbility()") #Debug
-
+         
+         
+def swapAbilities(card, x = 0, y = 0):
+   debug(">>> swapAbilities()") #Debug
+   mute()
+   if card.Type != CharType or getSlotIdx(card, card.controller) == -1:
+      whisper("Abilities can only be swapped between character cards in the ring.")
+      return
+   target = None
+   targets =  [c for c in table   if c.targetedBy == me]
+   if len(targets) > 0 and targets[0].Type == CharType and targets[0] != card and getSlotIdx(targets[0], targets[0].controller) > -1:
+      target = targets[0]
+      model = card.model
+      copyAbility(card,   target = target)
+      copyAbility(target, target = model)
+      target.target(False)
+   else:
+      warning("Please select a valid character card in the ring.")
       
 #---------------------------------------------------------------------------
 # Movement actions
