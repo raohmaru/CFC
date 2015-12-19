@@ -5216,7 +5216,7 @@
 			<property name="Type"      value="Action" />
 			<property name="Subtype"   value="" />
 			<property name="Rarity"    value="A" />
-			<property name="Rules"     value="Select a character. Look through the top of any deck until you reveal a character card. If you do, selected character becomes that card. Put the cards revealed this way on the bottom of that deck. (It loses his back-ups.)" />
+			<property name="Rules"     value="Select a character. Look through the top of any deck until you reveal a character card. If you do, selected character becomes that card. (It loses his back-ups.) Put the cards revealed this way on the bottom of that deck in any order." />
 			<property name="BP"        value="" />
 			<property name="SP"        value="-4" />
 			<property name="Backup 1"  value="" />
