@@ -286,13 +286,14 @@ def alignBackups(card, x=0, y=0):
    if len(attachs) > 0:
       ox, oy = CardsCoords['BackupOffset']
       z = card.getIndex
+      debug("{}'s index: {}".format(card, z))
       for i, c in enumerate(attachs):
-         x = x+ox*(i+1)
-         y = y+oy*(i+1)
+         nx = x+ox*(i+1)
+         ny = y+oy*(i+1)
          cx, cy = c.position
-         if x != cx or y != cy:
-            c.moveToTable(x, y)
-         c.setIndex(max(z-1, 0))
+         if nx != cx or ny != cy:
+            c.moveToTable(nx, ny)
+         c.setIndex(max(z-i-1, 0))
 
 
 def getTargetedCards(card=None, targetedByMe=True, controlledByMe=True, type=CharType):
