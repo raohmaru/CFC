@@ -4,7 +4,7 @@
       name="Card Fighters' Clash"
       id="e3d56d9e-900d-49c6-b6ae-22cbb51be153"
       octgnVersion="3.1.55.0"
-      version="0.3.0.5"
+      version="0.3.0.9"
       markersize="20"
       tags="capcom snk fighter"
       description="A card game based in the SNK Playmore’s video game SNK vs. Capcom Card Fighters' Clash 2 Expand Edition.
@@ -173,28 +173,28 @@
 		<cardaction menu="Show backups types" shortcut="Ctrl+Alt+B" execute="askCardBackups" />
 		<cardactions menu="Markers...">
 			<cardactions menu="Raise BP...">
-				<cardaction menu="by 1" shortcut="Ctrl+1" execute="plusBP" />
-				<cardaction menu="by 2" shortcut="Ctrl+2" execute="plusBP2" />
-				<cardaction menu="by 3" shortcut="Ctrl+3" execute="plusBP3" />
-				<cardaction menu="by 4" shortcut="Ctrl+4" execute="plusBP4" />
-				<cardaction menu="by 5" shortcut="Ctrl+5" execute="plusBP5" />
-				<cardaction menu="by 6" shortcut="Ctrl+6" execute="plusBP6" />
-				<cardaction menu="by 7" shortcut="Ctrl+7" execute="plusBP7" />
-				<cardaction menu="by 8" shortcut="Ctrl+8" execute="plusBP8" />
-				<cardaction menu="by 9" shortcut="Ctrl+9" execute="plusBP9" />
-				<cardaction menu="by X" shortcut="Ctrl+0" execute="plusBPX" />
+				<cardaction menu="by 1" shortcut="Ctrl+1" batchExecute="plusBP" />
+				<cardaction menu="by 2" shortcut="Ctrl+2" batchExecute="plusBP2" />
+				<cardaction menu="by 3" shortcut="Ctrl+3" batchExecute="plusBP3" />
+				<cardaction menu="by 4" shortcut="Ctrl+4" batchExecute="plusBP4" />
+				<cardaction menu="by 5" shortcut="Ctrl+5" batchExecute="plusBP5" />
+				<cardaction menu="by 6" shortcut="Ctrl+6" batchExecute="plusBP6" />
+				<cardaction menu="by 7" shortcut="Ctrl+7" batchExecute="plusBP7" />
+				<cardaction menu="by 8" shortcut="Ctrl+8" batchExecute="plusBP8" />
+				<cardaction menu="by 9" shortcut="Ctrl+9" batchExecute="plusBP9" />
+				<cardaction menu="by X" shortcut="Ctrl+0" batchExecute="plusBPX" />
 			</cardactions>
 				<cardactions menu="Lower BP...">
-				<cardaction menu="by 1" shortcut="Ctrl+Shift+1" execute="minusBP" />
-				<cardaction menu="by 2" shortcut="Ctrl+Shift+2" execute="minusBP2" />
-				<cardaction menu="by 3" shortcut="Ctrl+Shift+3" execute="minusBP3" />
-				<cardaction menu="by 4" shortcut="Ctrl+Shift+4" execute="minusBP4" />
-				<cardaction menu="by 5" shortcut="Ctrl+Shift+5" execute="minusBP5" />
-				<cardaction menu="by 6" shortcut="Ctrl+Shift+6" execute="minusBP6" />
-				<cardaction menu="by 7" shortcut="Ctrl+Shift+7" execute="minusBP7" />
-				<cardaction menu="by 8" shortcut="Ctrl+Shift+8" execute="minusBP8" />
-				<cardaction menu="by 9" shortcut="Ctrl+Shift+9" execute="minusBP9" />
-				<cardaction menu="by X" shortcut="Ctrl+Shift+0" execute="minusBPX" />
+				<cardaction menu="by 1" shortcut="Ctrl+Shift+1" batchExecute="minusBP" />
+				<cardaction menu="by 2" shortcut="Ctrl+Shift+2" batchExecute="minusBP2" />
+				<cardaction menu="by 3" shortcut="Ctrl+Shift+3" batchExecute="minusBP3" />
+				<cardaction menu="by 4" shortcut="Ctrl+Shift+4" batchExecute="minusBP4" />
+				<cardaction menu="by 5" shortcut="Ctrl+Shift+5" batchExecute="minusBP5" />
+				<cardaction menu="by 6" shortcut="Ctrl+Shift+6" batchExecute="minusBP6" />
+				<cardaction menu="by 7" shortcut="Ctrl+Shift+7" batchExecute="minusBP7" />
+				<cardaction menu="by 8" shortcut="Ctrl+Shift+8" batchExecute="minusBP8" />
+				<cardaction menu="by 9" shortcut="Ctrl+Shift+9" batchExecute="minusBP9" />
+				<cardaction menu="by X" shortcut="Ctrl+Shift+0" batchExecute="minusBPX" />
 			</cardactions>
 			<cardaction menu="Change BP..." shortcut="Ctrl+Alt+0" batchExecute="changeBP" />
 			<cardaction menu="Add markers..." shortcut="Ctrl+M" batchExecute="addMarkerAction" />
@@ -213,7 +213,7 @@
 			<groupactions menu="Move all cards to...">
 				<groupaction menu="Deck (Top)" execute="toDeckTopAll" />
 				<groupaction menu="Deck (Bottom)" execute="toDeckBottomAll" />
-				<groupaction menu="Discard pile" execute="discardAll" />
+				<groupaction menu="Discard pile" shortcut="Ctrl+Shift+Del" execute="discardAll" />
 			</groupactions>
 			<cardaction menu="Play card" default="True" shortcut="Ctrl+P" execute="play" />
 			<cardaction menu="Play as backup" shortcut="Ctrl+B" execute="backup" />
@@ -239,7 +239,7 @@
 			<groupaction menu="Rearrange X cards" shortcut="Ctrl+Shift+S" execute="prophecy" />
 			<groupaction menu="Reveal/Hide top card" shortcut="Ctrl+R" execute="revealTopDeck" />
 			<groupactions menu="Move all cards to...">
-				<groupaction menu="Discard pile" execute="discardAll" />
+				<groupaction menu="Discard pile" shortcut="Ctrl+Shift+Del" execute="discardAll" />
 			</groupactions>
 			<cardaction menu="Put card into Hand" shortcut="Ctrl+H" execute="toHand" />
 			<cardaction menu="Put card into Discard pile" shortcut="Del" execute="discard" />
@@ -269,7 +269,7 @@
 			<groupactions menu="Move All Cards To...">
 				<groupaction menu="Library (Top)" execute="toDeckTopAll" />
 				<groupaction menu="Library (Bottom)" execute="toDeckBottomAll" />
-				<groupaction menu="Discard pile" execute="discardAll" />
+				<groupaction menu="Discard pile" shortcut="Ctrl+Shift+Del" execute="discardAll" />
 			</groupactions>
 			<cardaction menu="Return card to Hand" shortcut="Ctrl+H" default="True" execute="toHand" />
 			<cardaction menu="Put card into Discard pile" shortcut="Del" execute="discard" />
