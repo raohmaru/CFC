@@ -356,6 +356,8 @@ def transformCards(cards, x = 0, y = 0):
    if cardModel:
       for card in cards:
          transformCard(card, cardModel)
+      for target in targets:
+         target.target(False)
       
 
 def copyAbility(card, x = 0, y = 0):
@@ -378,7 +380,7 @@ def copyAbility(card, x = 0, y = 0):
    if target:
       result = copyAlternateRules(card, target)
       if result:
-         # Updates proxy image of other players
+         # Updates proxy image for the other players
          for p in players:
             if p != me:
                remoteCall(p, "copyAlternateRules", [card, target])
@@ -833,5 +835,5 @@ def swapWithDeck(group = me.piles['Discard Pile']):
    rnd(100, 10000)  # Delay the next action until all animation is done
    for card in savedDeck:
       card.moveTo(group)   
-   if len(players) > 1: rnd(1, 100) # Wait a bit more, as in multiplayer games, things are slower.
+   if len(players) > 1: rnd(10, 100) # Wait a bit more, as in multiplayer games, things are slower.
    notify("{} swaps its {} with its Deck.".format(me, group.name)) # And inform everyone.

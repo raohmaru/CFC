@@ -80,7 +80,7 @@ CardsCoords = dict(
    Attack1       = (-134, 29),
    Attack2       = ( 44,  29),
    Attack3       = ( 221, 29),
-   BackupOffset  = ( 0,  13),
+   BackupOffset  = ( 0,   13),
    UAttackOffset = ( 38,  0)
 )
 
@@ -157,7 +157,7 @@ BackupAction = 'backup'
 Author       = 'raohmaru'
 
 #---------------------------------------------------------------------------
-# Global variables
+# Global variables (fo the current user)
 #---------------------------------------------------------------------------
 
 playerSide     = None  # Variable to keep track on which side each player is
@@ -167,6 +167,7 @@ charsPlayed    = 0  # Num of chars played this turn
 backupsPlayed  = 0  # Num of chars backed-up this turn
 debugVerbosity = -1 # -1..4 (At -1 means no debugging messages display)
 parsedCards    = {} # Dictionary holding all parsed cards
+transfCards    = {} # Dictionary holding all transformed cards
 
 automations = {
    'Play'     : True, # Automatically trigger game effetcs and card effects when playing cards

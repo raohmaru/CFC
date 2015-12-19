@@ -68,10 +68,11 @@ def resetAll():
 # Clears all the global variables in order to start a new game.
    debug(">>> resetAll()") #Debug
    # Import all our global variables and reset them.
-   global playerSide, handSize, debugVerbosity, parsedCards, charsPlayed, backupsPlayed
+   global playerSide, handSize, debugVerbosity, parsedCards, transfCards, charsPlayed, backupsPlayed
    playerSide = None
    handSize = HandSize
    parsedCards = {}
+   transfCards = {}
    charsPlayed = 0
    backupsPlayed = 0
    me.HP = 30
@@ -338,6 +339,7 @@ def transformCard(card, cardModel):
       notify("{} transform {} into {}.".format(me, card, newCard))
    else:
       notify("{} transformed a card {}.".format(me, fromWhereStr(group)))
+   transfCards[newCard._id] = card.model
    card.delete()
    
    

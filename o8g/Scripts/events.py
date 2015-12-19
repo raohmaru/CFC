@@ -48,7 +48,8 @@ def onLoadDeck(player, groups):
          break
 
 
-def onMoveCard(player, card, fromGroup, toGroup, oldIndexs, indexs, oldX, oldY, x, y, faceup, highlights, markers):
+def onMoveCard(player, card, fromGroup, toGroup, oldIndex, index, oldX, oldY, x, y, faceup, highlights, markers):
+   mute()
    if card.controller != me: return
    if fromGroup == table and toGroup != table:
       if card.Type == CharType:
@@ -57,6 +58,14 @@ def onMoveCard(player, card, fromGroup, toGroup, oldIndexs, indexs, oldX, oldY, 
    elif fromGroup == table and toGroup == table:
       if card.Type == CharType and not MarkersDict['Backup'] in card.markers:
          alignBackups(card, x, y)
+   # Restore transformed card if it goes to a pile
+   if toGroup._name in me.piles:
+      if card._id in transfCards:
+         newCard = toGroup.create(transfCards[card._id], quantity = 1)
+         newCard.moveTo(toGroup, index)
+         whisper("Transformed card {} is restored into {}".format(card, newCard))
+         del transfCards[card._id]
+         card.delete()
          
 
 def onTurnChange(player, turnNumber):
