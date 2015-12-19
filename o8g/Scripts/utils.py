@@ -340,7 +340,11 @@ def transformCard(card, cardModel):
       notify("{} transform {} into {}.".format(me, card, newCard))
    else:
       notify("{} transformed a card {}.".format(me, fromWhereStr(group)))
-   transfCards[newCard._id] = card.model
+   model = card.model
+   if card._id in transfCards:
+      model = transfCards[card._id]
+      del transfCards[card._id]
+   transfCards[newCard._id] = model
    card.delete()
    
    
