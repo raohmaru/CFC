@@ -690,6 +690,8 @@ def drawMany(group, count = None, silent = False):  # This function draws a vari
    mute()
    if count == None:
       count = askInteger("How many cards do you want to draw?", handSize) # Ask the player how many cards they want.
+   if count == None:
+      return
    for i in range(0, count):
       if len(group) > 0:  # If the deck is not empty...
          group.top().moveTo(me.hand)  # ...then move them one by one into their play hand.
