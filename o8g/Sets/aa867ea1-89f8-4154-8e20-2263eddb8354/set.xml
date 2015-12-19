@@ -4866,7 +4866,7 @@
 			<property name="Type"      value="Action" />
 			<property name="Subtype"   value="" />
 			<property name="Rarity"    value="A" />
-			<property name="Rules"     value="Search your deck for five cards and put them aside. Discard your hand and put your deck into your discard pile. Then put the cards set aside this way on the top of your deck in any order." />
+			<property name="Rules"     value="Search your deck for five cards and put them aside. Discard your hand and put your deck into your discard pile. Then shuffle the cards set aside this way on your deck." />
 			<property name="BP"        value="" />
 			<property name="SP"        value="-8" />
 			<property name="Backup 1"  value="" />
