@@ -441,6 +441,14 @@ def toDeckBottom(card, x = 0, y = 0):
    notify("{} puts {} {} on the bottom of its Deck.".format(me, card, fromText))
 
 
+def toHandAll(group, x = 0, y = 0):
+   mute()
+   for card in group:
+      card.moveTo(me.hand)
+   if len(players) > 1: rnd(1, 100) # Wait a bit more, as in multiplayer games, things are slower.
+   notify("{} moves all cards from their {} to its hand.".format(me, group.name))
+
+
 def toDeckTopAll(group, x = 0, y = 0):
    mute()
    Deck = me.Deck
