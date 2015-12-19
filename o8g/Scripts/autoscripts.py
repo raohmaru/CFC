@@ -463,34 +463,34 @@ def activateAuto(card):
       debug("Trying to activate {}'s ability {} {}".format(card.Name, pcard.ability.type, pcard.ability.name))
       # Activate [] and /\ only in player's Main Phase
       if pcard.ability.type in [InstantAbility, ActivatedAbility] and (not me.isActivePlayer or getGlobalVar('PhaseIdx', me) != MainPhase):
-         information("You can only activate [ ] or /\\ abilities in your Main Phase.")
+         information("You can only activate {} or {} abilities in your Main Phase.".format(ActivatedUniChar, InstantUniChar))
          return
       # /\ abilities
       if pcard.ability.type == InstantAbility:
          # Activate only once
          if not MarkersDict['JustEntered'] in card.markers:
-            warning("/\\ abilities can only be activated once when character just enters the ring.")
+            warning("{} abilities can only be activated once when character just enters the ring.".format(ActivatedUniChar))
             return
       # [] abilities
       if pcard.ability.type == ActivatedAbility:  
          # Just entered?
          if MarkersDict['JustEntered'] in card.markers:
-            if not confirm("Can't activate [ ] abilities of characters that just entered the ring.\nProceed anyway?"):
+            if not confirm("Can't activate {} abilities of characters that just entered the ring.\nProceed anyway?".format(ActivatedUniChar)):
                return
          # Frozen or attacking?
          if isFrozen(card) or MarkersDict['Attack'] in card.markers:
-            warning("Can't activate [ ] abilities of frozen or attacking characters.")
+            warning("Can't activate {} abilities of frozen or attacking characters.".format(ActivatedUniChar))
             return
       # () abilities
       if pcard.ability.type == AutoAbility:
          # Nor in a United Attack
          if MarkersDict['UnitedAttack'] in card.markers:
-            warning("Can't activate ( ) abilities of characters which joined a United Attack.")
+            warning("Can't activate {} abilities of characters which joined a United Attack.".format(AutoUniChar))
             return
       
       # Activate [] ability?
       if pcard.ability.type == ActivatedAbility:
-         if not confirm("Activate {}'s ability {} {}?".format(card.Name, pcard.ability.utype, pcard.ability.name)):
+         if not confirm("Activate {}'s ability {} {}?".format(card.Name, pcard.ability.unitype, pcard.ability.name)):
             return
       # Activate the ability
       return pcard.activateEffect()

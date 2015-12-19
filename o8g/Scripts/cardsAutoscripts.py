@@ -83,11 +83,11 @@ class Ability:
    name    = None
    
    @property
-   def utype(self):
+   def unitype(self):
       # Returns an unicode symbol for the type (for window forms)
-      if self.type == InstantAbility:   return u'\u25B2'
-      if self.type == ActivatedAbility: return u'\u25A0'
-      return u'\u25CF'  # AutoAbility
+      if self.type == InstantAbility:   return InstantUniChar
+      if self.type == ActivatedAbility: return ActivatedUniChar
+      return AutoUniChar  # AutoAbility
    
    def __init__(self, rules):
       ability = Regexps['Ability'].match(rules)

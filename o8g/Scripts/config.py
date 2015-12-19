@@ -94,6 +94,10 @@ InstantAbility   = u'\xa2'
 ActivatedAbility = u'\xa3'
 AutoAbility      = u'\xa4'
 
+InstantUniChar   = u'\u25B2'
+ActivatedUniChar = u'\u25A0'
+AutoUniChar      = u'\u25CF'
+
 # A dictionary which holds the regex used in other scripts
 Regexps = dict(
    Ability = re.compile(r'(.)\s+([^\r]+)')
