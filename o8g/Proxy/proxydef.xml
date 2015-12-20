@@ -779,6 +779,11 @@
 			<text color="#000000" size="22" font="Fonts/ArchivoNarrow-Regular_CFC.ttf" />
 			<wordwrap width="380" height="155" />
 		</block>
+		<block type="text" id="illustrator">
+			<location x="80" y="674" />
+			<text color="#ffffff" size="15" font="Fonts/SourceSansPro-Regular_CFC.ttf" />
+			<wordwrap width="215" height="21" shrinktofit="True" />
+		</block>
 		<block type="text" id="number">
 			<location x="435" y="674" />
 			<text color="#ffffff" size="15" font="Fonts/SourceSansPro-Regular_CFC.ttf" />
@@ -1588,6 +1593,9 @@
 			<link block="rules">
 				<property name="Rules" />
 			</link>
+			<link block="illustrator">
+				<property name="Illustrator" />
+			</link>
 			<link block="number">
 				<property name="Number" />
 			</link>
@@ -1644,6 +1652,9 @@
 			<link block="rules">
 				<property name="Rules" />
 			</link>
+			<link block="illustrator">
+				<property name="Illustrator" />
+			</link>
 			<link block="number">
 				<property name="Number" />
 			</link>
@@ -1699,6 +1710,9 @@
 			</link>
 			<link block="rules">
 				<property name="Rules" />
+			</link>
+			<link block="illustrator">
+				<property name="Illustrator" />
 			</link>
 			<link block="number">
 				<property name="Number" />

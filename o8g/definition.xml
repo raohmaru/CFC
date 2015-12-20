@@ -4,7 +4,7 @@
       name="Card Fighters' Clash"
       id="e3d56d9e-900d-49c6-b6ae-22cbb51be153"
       octgnVersion="3.1.55.0"
-      version="0.3.0.15"
+      version="0.3.0.19"
       markersize="20"
       tags="capcom snk fighter"
       description="A card game based in the SNK Playmore’s video game SNK vs. Capcom Card Fighters' Clash 2 Expand Edition.
@@ -64,7 +64,7 @@
 	</documents>
 
 	<gameModes>
-		<gameMode name="Standard" shortDescription="" image="Art/standard.jpg" playerCount="2" />
+		<gameMode name="Standard" shortDescription="Regular game where Player's ring has 4 slots for characters" image="Art/standard.jpg" playerCount="2" />
 	</gameModes>
 	
 	<globalvariables>
@@ -86,6 +86,7 @@
 		<property name="Backup 2" type="String" textKind="Enum" />
 		<property name="Backup 3" type="String" textKind="Enum" />
 		<property name="Number" type="String" ignoreText="True" />
+		<property name="Illustrator" type="String" ignoreText="True" />
 	</card>
 	
 	<table name="Table" visibility="undefined" ordered="False" width="1250" height="750" background="Background/background.jpg" backgroundStyle="uniformToFill" board="Background/ring.png" boardPosition="-327,-342,655,684" >

@@ -109,7 +109,8 @@ Finally, no matter how detailed the rules are, there will be situations with spe
 ### 800. General
 
 ## 9. Casual Variants
-### 900. Last Man Standing (1 vs 1)
-### 901. Restricted Mode
+### 900. Classic
+### 901. Last Man Standing (1 vs 1)
+### 902. Restricted Mode
 
 ## Glossary
