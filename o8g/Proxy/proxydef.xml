@@ -774,6 +774,21 @@
 			<text color="#ffffff" size="18" font="Fonts/ArchivoNarrow-Bold.ttf" />
 			<wordwrap width="92" height="21" shrinktofit="True" />
 		</block>
+		<block type="text" id="ability_type">
+			<location x="95" y="507" />
+			<text color="#dd0000" size="22" font="Fonts/ArchivoNarrow-Regular_CFC.ttf" />
+			<wordwrap width="25" height="25" />
+		</block>		
+		<block type="text" id="ability_name">
+			<location x="122" y="506" />
+			<text color="#000000" size="22" font="Fonts/ArchivoNarrow-Bold.ttf" />
+			<wordwrap width="363" height="26" />
+		</block>		
+		<block type="text" id="rules_char">
+			<location x="95" y="533" />
+			<text color="#000000" size="22" font="Fonts/ArchivoNarrow-Regular_CFC.ttf" />
+			<wordwrap width="380" height="130" />
+		</block>
 		<block type="text" id="rules">
 			<location x="95" y="507" />
 			<text color="#000000" size="22" font="Fonts/ArchivoNarrow-Regular_CFC.ttf" />
@@ -1590,7 +1605,13 @@
 			<link block="name">
 				<property name="Name" />
 			</link>
-			<link block="rules">
+			<link block="ability_type">
+				<property name="Ability Type" />
+			</link>
+			<link block="ability_name">
+				<property name="Ability Name" />
+			</link>
+			<link block="rules_char">
 				<property name="Rules" />
 			</link>
 			<link block="illustrator">

@@ -354,29 +354,34 @@ def copyAlternateRules(card, target):
    if not automations['ExtAPI']:
       return None
    rules = None
+   ability = None
    if isinstance(target, basestring):
       targetData = _extapi.getCardDataByModel(target)
       if targetData:
          rules = _extapi.getCardProperty(targetData, "Rules")
+         ability = _extapi.getCardProperty(targetData, "Ability")
    else:
       rules = target.Rules
+      ability = target.Ability
    if rules:
-      debug("Found rule '{}'".format(rules))
-      return addAlternateRules(card, rules)
+      debug("Found rule '{} {}'".format(ability, rules))
+      return addAlternateRules(card, ability, rules)
    return None
    
    
-def addAlternateRules(card, rules, altname=None):
-   debug(">>> addAlternateRules({}, {})".format(card, rules)) #Debug
+def addAlternateRules(card, ability, rules, altname=None):
+   debug(">>> addAlternateRules({}, {}, {})".format(card, ability, altname)) #Debug
    
    if not automations['ExtAPI']:
       return None
+   ability = Ability(ability)
    if not altname:
-      ability = Ability(rules)
       altname = sanitizeStr(ability.name)
    cardData = _extapi.getCardDataById(card._id)
    cardData.Properties[altname] = cardData.Properties[''].Clone()
    _extapi.setCardProperty(cardData, "Rules", rules, altname)
+   _extapi.setCardProperty(cardData, "Ability Type", ability.type, altname)
+   _extapi.setCardProperty(cardData, "Ability Name", ability.name, altname)
    debug("Adding new alternate '{}' and generating proxy".format(altname))
    _extapi.generateProxy(cardData, altname)
    card.switchTo(altname)
@@ -618,7 +623,7 @@ def setupDebug(group, x=0, y=0):
       debug("Creating card {} at slot {}".format(id, i))
       card = table.create(id, 0, 0, quantity=1, persist=True)
       playAuto(card, i)
-      ability = Ability(card.Rules)
+      ability = Ability(card)
       if ability.type and ability.type != InstantAbility:
          card.markers[MarkersDict['JustEntered']] = 0
       charsPlayed = 0

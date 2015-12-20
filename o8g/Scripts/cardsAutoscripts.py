@@ -65,7 +65,7 @@ class CharCard(GameCard):
       super(self.__class__, self).__init__(card)
       debug(">>> CharCard()") #Debug
    
-      ability = Ability(card.Rules)
+      ability = Ability(card)
       if ability:
          debug("Found ability {}".format(ability))
          self.ability = ability
@@ -78,23 +78,29 @@ class CharCard(GameCard):
 
 class Ability:
    """ A class that represents an ability """   
-   ability = None
-   type    = None
-   name    = None
+   ability = ""
+   type    = ""
+   name    = ""
    
    @property
    def unitype(self):
       # Returns an unicode symbol for the type (for window forms)
       if self.type == InstantAbility:   return InstantUniChar
       if self.type == ActivatedAbility: return ActivatedUniChar
-      return AutoUniChar  # AutoAbility
+      if self.type == AutoAbility:      return AutoUniChar
+      return ""
    
-   def __init__(self, rules):
-      ability = Regexps['Ability'].match(rules)
-      if ability:
-         self.ability = ability.group(0)
-         self.type    = ability.group(1)
-         self.name    = ability.group(2)
+   def __init__(self, obj):
+      if isinstance(obj, basestring):      
+         ability = Regexps['Ability'].match(obj)
+         if ability:
+            self.ability = ability.group(0)
+            self.type    = ability.group(1)
+            self.name    = ability.group(2)
+      elif obj.Ability:
+         self.ability = obj.Ability
+         self.type    = obj.properties['Ability Type']
+         self.name    = obj.properties['Ability Name']
          
    def __str__(self):
       return self.ability

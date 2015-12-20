@@ -4,7 +4,7 @@
       name="Card Fighters' Clash"
       id="e3d56d9e-900d-49c6-b6ae-22cbb51be153"
       octgnVersion="3.1.55.0"
-      version="0.3.0.19"
+      version="0.3.0.23"
       markersize="20"
       tags="capcom snk fighter"
       description="A card game based in the SNK Playmore’s video game SNK vs. Capcom Card Fighters' Clash 2 Expand Edition.
@@ -79,6 +79,9 @@
 		<property name="Type" type="String" textKind="Enum" />
 		<property name="Subtype" type="String" textKind="Tokens" />
 		<property name="Rarity" type="String" ignoreText="True" textKind="Enum" />
+		<property name="Ability" type="String" />
+		<property name="Ability Type" type="String" ignoreText="True" textKind="Enum" hidden="True" />
+		<property name="Ability Name" type="String" ignoreText="True" hidden="True" />
 		<property name="Rules" type="String" />
 		<property name="BP" type="String" textKind="Enum" />
 		<property name="SP" type="String" textKind="Enum" />

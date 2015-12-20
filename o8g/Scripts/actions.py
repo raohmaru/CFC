@@ -336,7 +336,7 @@ def toggleAbility(cards, x = 0, y = 0):
       else:
          # Updates proxy image of other players
          for p in players:
-            remoteCall(p, "addAlternateRules", [card, '', 'noability'])
+            remoteCall(p, "addAlternateRules", [card, '', '', 'noability'])
          notify("{} removes {}'s abilities".format(me, card))
       
 
