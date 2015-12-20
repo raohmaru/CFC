@@ -1,5 +1,4 @@
-Card Fighters' Clash Changelog
-==============================
+# Card Fighters' Clash Changelog
 
 ## 0.3.0.13
 New action: Put card in the Discards pile into the Kill pile.  

@@ -4,3 +4,5 @@
 psd/
 utils/
 *.pyc
+Gemfile.lock
+o8g/Documents/*.html

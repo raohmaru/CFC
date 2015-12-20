@@ -1,6 +1,7 @@
 require 'rake/clean'
 require 'rubygems'
 require 'json'
+require 'redcarpet'
 
 
 OCTGN_dir = "D:/Documentos/OCTGN"
@@ -11,7 +12,7 @@ task :default => [:build]
 
 
 desc "Builds the .o8g and .nupkg files from the game definition files"
-task :build => [:versionbump] do
+task :build => [:versionbump, :docs] do
   sh "#{OCTGN_dir}/OCTGN/o8build.exe -d=o8g"
 end
 
@@ -28,7 +29,7 @@ task :versionbump do
       m = line.match(regexp)
       if m
         buildnum = m[4].to_i + 1
-        puts "Bump build number to #{buildnum} (#{m[1]}.#{m[2]}.#{m[3]}.#{buildnum})"
+        puts "Bump build number to #{buildnum} (#{m[1]}.#{m[2]}.#{m[3]}.#{buildnum})\n\r"
         line.sub!('.'+m[4]+'"', '.'+buildnum.to_s+'"')
       end
     end
@@ -73,4 +74,40 @@ task :octgn do
   # OCTGN window closes after the loading screen ends
   # system "#{OCTGN_dir}/OCTGN/OCTGN.exe /t /g=e3d56d9e-900d-49c6-b6ae-22cbb51be153 /x"
   puts "Run #{OCTGN_dir}/OCTGN/OCTGN.exe /t /g=e3d56d9e-900d-49c6-b6ae-22cbb51be153 /x"
+end
+
+
+desc "Converts Markdown documents in Documents/ folder into HTML"
+task :docs do
+  puts "Converting Markdown files into HTML"
+  # Initializes a Markdown parser
+  renderer = Redcarpet::Render::HTML.new({:with_toc_data=>true, :hard_wrap=>true})
+  # Initializes a Markdown HTML renderer
+  markdown = Redcarpet::Markdown.new(renderer, {:autolink=>true, :underline=>true})
+  toc_md = Redcarpet::Markdown.new(Redcarpet::Render::HTML_TOC.new)
+  Dir.glob("o8g/Documents/*.md") do |md_file|
+	puts "   " + md_file
+	base_name = File.basename(md_file, ".md")
+    html_file = File.join(File.dirname(md_file), base_name + ".html")
+    File.open(html_file, 'w') { |f|
+	  file_contents = File.read(md_file)
+	  doc = markdown.render(file_contents)
+	  toc_idx = file_contents.index('<!-- toc -->')
+	  if toc_idx
+	    toc = toc_md.render(file_contents[toc_idx..-1])
+	    doc.sub!('<!-- toc -->', toc)
+      end
+      f.puts <<EOD
+<html>
+<head>
+	<title>#{base_name}</title>
+</head>
+<body>
+#{doc}
+</body>
+</html>
+EOD
+    }
+  end
+  puts ""
 end
