@@ -29,7 +29,7 @@ def onGameStart():
 
 
 def onLoadDeck(player, groups):
-   if player != me: return # We only want the owner of to run this script
+   if player != me: return # We only want the owner of the deck to run this script
    debug(">>> onLoadDeck({})".format(player)) #Debug
    notify("{} has loaded a deck. Now his deck has {} cards.".format(player, len(me.Deck)))
    mute()
