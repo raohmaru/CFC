@@ -13,7 +13,6 @@ This document includes a series of numbered rules followed by a glossary. Many o
 Finally, no matter how detailed the rules are, there will be situations with specific cards that will require a precise answer. If you have questions, you can look at the [FAQ](CFC-FAQ.html) page or you can get the answers at https://github.com/raohmaru/CFC.
 
 ## Contents
-
 <!-- toc -->
 
 ## 1. Game Concepts
@@ -63,7 +62,7 @@ Finally, no matter how detailed the rules are, there will be situations with spe
 ### 402. Hand
 ### 403. Ring
 ### 404. Discards Pile
-### 405. Kill Pile
+### 405. Removed Pile
 
 ## 5. Turn Structure
 ### 500. General
@@ -114,3 +113,13 @@ Finally, no matter how detailed the rules are, there will be situations with spe
 ### 902. Restricted Mode
 
 ## Glossary
+Arena
+Ring
+Deck
+Discards Pile
+Removed Pile
+Enemy
+Attack Line
+Select a card
+KO
+KO'ed

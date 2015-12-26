@@ -101,6 +101,18 @@ task :docs do
 <html>
 <head>
 	<title>#{base_name}</title>
+	<style>
+	html, body {
+		font-family: Tahoma, Arial, "Helvetica Neue", Helvetica, sans-serif;
+		background-color: #FFFBF2;
+	}	
+	li {
+		margin-bottom: 0.5em;
+	}
+	img {
+		max-width: 100%;
+	}
+	</style>
 </head>
 <body>
 #{doc}
