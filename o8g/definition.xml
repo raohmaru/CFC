@@ -162,7 +162,7 @@
 		</cardactions>
 		<cardactions menu="Move...">
 			<cardaction menu="KO" shortcut="Del" execute="destroy" />
-			<cardaction menu="Kill" shortcut="Shift+Del" execute="remove" />
+			<cardaction menu="Remove" shortcut="Shift+Del" execute="remove" />
 			<cardaction menu="Return to Hand" shortcut="Ctrl+H" execute="toHand" />
 			<cardaction menu="Put into Deck (Top)" shortcut="Ctrl+D" execute="toDeckTop" />
 			<cardaction menu="Put into Deck (Bottom)" shortcut="Ctrl+Shift+D" execute="toDeckBottom" />
@@ -270,9 +270,9 @@
 			<cardaction menu="Return card to Hand" shortcut="Ctrl+H" default="True" execute="toHand" />
 			<cardaction menu="Put into Deck (Top)" shortcut="Ctrl+D" execute="toDeckTop" />
 			<cardaction menu="Put into Deck (Bottom)" shortcut="Ctrl+Shift+D" execute="toDeckBottom" />
-			<cardaction menu="Put into Kill Pile" shortcut="Shift+Del" execute="remove" />
+			<cardaction menu="Put into Removed Pile" shortcut="Shift+Del" execute="remove" />
 		</group>
-		<group name="Kill Pile" visibility="all" width="90" height="126" icon="Groups/removed.png" collapsed="True">
+		<group name="Removed Pile" visibility="all" width="90" height="126" icon="Groups/removed.png" collapsed="True">
 			<groupaction menu="Shuffle" shortcut="Ctrl+S" execute="shuffle" />
 			<groupactions menu="Move All Cards To...">
 				<groupaction menu="Hand" execute="toHandAll" />

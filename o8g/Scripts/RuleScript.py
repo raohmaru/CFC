@@ -149,7 +149,7 @@ class Rules():
          cards = [c for c in player.piles['Discard Pile']]
       
       elif zone == AS_KW_ZONE_KILL:
-         cards = [c for c in player.piles['Kill Pile']]
+         cards = [c for c in player.piles['Removed Pile']]
             
       return cards
       

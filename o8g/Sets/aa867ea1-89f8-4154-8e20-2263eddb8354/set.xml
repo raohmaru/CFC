@@ -7135,7 +7135,7 @@
 			<property name="Ability"      value="" />
 			<property name="Ability Type" value="" />
 			<property name="Ability Name" value="" />
-			<property name="Rules"        value="Kill any number of character cards in your discard pile. Gain 1 SP for each card killed this way." />
+			<property name="Rules"        value="Remove any number of character cards in your discard pile. Gain 1 SP for each card removed this way." />
 			<property name="BP"           value="" />
 			<property name="SP"           value="0" />
 			<property name="Backup 1"     value="" />

@@ -121,7 +121,7 @@ def scoop(group, x=0, y=0):
    toOwnerDeck(me.Deck)
    toOwnerDeck(me.hand)
    toOwnerDeck(me.piles['Discard Pile'])
-   toOwnerDeck(me.piles['Kill Pile'])
+   toOwnerDeck(me.piles['Removed Pile'])
    notify("{} resets the game.".format(me,))
 
 
@@ -427,8 +427,8 @@ def destroy(card, x = 0, y = 0):
 def remove(card, x = 0, y = 0):
    mute()
    fromText = fromWhereStr(card.group)
-   card.moveTo(me.piles['Kill Pile'])
-   notify("{} kills {} {}.".format(me, card, fromText))
+   card.moveTo(me.piles['Removed Pile'])
+   notify("{} removes {} {}.".format(me, card, fromText))
 
 
 def toHand(card, x = 0, y = 0):
