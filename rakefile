@@ -100,12 +100,16 @@ task :docs do
       f.puts <<EOD
 <html>
 <head>
+	<meta charset="utf-8">
 	<title>#{base_name}</title>
 	<style>
 	html, body {
 		font-family: Tahoma, Arial, "Helvetica Neue", Helvetica, sans-serif;
 		background-color: #FFFBF2;
-	}	
+	}
+	h2 {
+		margin-top: 1.6em;
+	}
 	li {
 		margin-bottom: 0.5em;
 	}

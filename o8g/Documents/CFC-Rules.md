@@ -2,34 +2,34 @@
 This document is designed for people who want to start learning the rules and gameplay of Card Fighters' Clash. For a more advanced set of rules and further explanations, please see the [Comprehensive rules](CFC-CompRules.html) document.
 
 ## Introduction
-Card Fighters' Clash (we will refer to as CFC) is a collectible card game for two players based on SNK Playmore’s video game [SNK vs. Capcom Card Fighters' Clash 2 Expand Edition](http://neogeo.freeplaytech.com/svc-2/). Players try to defeat each other in a battle playing powerful characters based on Capcom and SNK Playmore video games. Characters have unique abilities that can dramatically change the course of the game, and the character's KI energy is manifested in the form of Soul Points, which can be used to attack the opponent or to play Action cards and Reaction cards –they add exciting effects to the battle that can be played even in opponent's turn.
+Card Fighters' Clash (we will refer to it as CFC) is a collectible card game for two players based on SNK Playmore’s video game [SNK vs. Capcom Card Fighters' Clash 2 Expand Edition](http://neogeo.freeplaytech.com/svc-2/). Players try to defeat each other in a battle playing powerful characters based on Capcom and SNK Playmore video games. Characters have unique abilities that can dramatically change the course of the game, and the character's KI energy is manifested in the form of Soul Points, which can be used to attack the opponent or to play Action cards and Reaction cards –they add exciting effects to the battle that can be played even in opponent's turn.
 
-Players start the game (in CFC every game is a battle!) with a deck of cards. A deck may contain any number Character, Action or Reaction cards, but it can't have more than three copies of any single card with the same name. Each player shuffles his or her deck and draws an initial hand of 5 cards, and then they are ready to fight.
+Players start the game (in CFC every game is a battle!) with a deck of cards. A deck may contain any number Character, Action or Reaction cards, but it can't have more than three copies of any single card with the same name. Each player shuffles his deck and draws an initial hand of 5 cards, and then they are ready to fight.
 
-In their respective turn, players draw cards from his or her deck, play cards from his or her hand and attack the opponent (in CFC we refer to an opponent as an "enemy") with the characters he has in play. The the enemy has the opportunity to counterattack with his characters or by playing Reaction cards.
+In their respective turn, players draw cards from his deck, play cards from his hand and attack the opponent (in CFC we refer to an opponent as an "enemy") with the characters he has in play. The the enemy has the opportunity to counterattack with his characters or by playing Reaction cards.
 
-The battle ends when a player's HP (Hit Points or player's life) drops to 0 or less, that is when dealt damage by a character or by the effect of a card. But also a player can lose the battle if he runs out of cards in his or her deck. So be ready to strike hard and block enemy's attacks and you will have a chance to win the battle.
+The battle ends when a player's HP (Hit Points or player's life) drops to 0 or less, that is when dealt damage by a character or by the effect of a card. But also a player can lose the battle if he runs out of cards in his deck. So be ready to strike hard and block enemy's attacks, and you will have a chance to win the battle.
 
 Round 1, start!
 
 ## The Game Board
 ![Game board zones](imgs/gameboard-1.jpg)
 
-The game board of CFC has two different zones: the Game Area (**1**) (also called **Arena**) where the players plays their cards, and the Piles Zone where the card stacks are (the Deck, the Discards Pile and the Removed Pile).
+The game board of CFC has two different zones: the Game Area (**1**) (also called **Arena**) where the players play their cards, and the Piles Zone where the card stacks are (the Deck (**5**), the Discards Pile (**6**) and the Removed Pile).
 
-The Arena is divided into two parts, one for each player, and they are called the **Ring** (**2**). The Ring is where the players places their character cards, and always in an empty slot (**3**). In a regular CFC game, each Ring has four slots, that means that players can play up to four characters by placing the cards in an empty slot.
+The Arena is divided into two parts, one for each player, called the **Ring** (**2**). The Ring is where the players places their character cards, always in an empty slot (**3**). In a regular CFC game, each Ring has four slots, that means that players can play up to four characters by placing the cards in an empty slot.
 
-When a player attacks with their characters, these cards are moved to the Attack Line (**4**) by moving them one space forward (but without invading the other player's ring). If the other player blocks an attack (he counterattacks) with a character, he moves that card to its Attack Line in front of the attacking card.
+When a player attacks with their characters, these cards are placed in the Attack Line (**4**) by moving them one space forward (but without invading the other player's ring). If the other player blocks an attack (he does a counterattack) with a character, he moves that card to its Attack Line in front of the attacking card.
 
 At the end of a turn, character cards are moved back to their slot.
 
 ### Deck
-Players need a deck (**5**) of at least 50 cards to play CFC. A deck can contain any type of card but with the following limitation: it can't have more than three copies of any single card with the same name (for example, a deck can contain three cards named "Akuma" and another three cards named "Shinjin Akuma").
+Players need a deck (**5**) of at least 50 cards to play CFC. A deck can contain any type of card but with the following limitation: it can't have more than three copies of any single card with the same name (*for example, a deck can contain three cards named "Akuma" and another three cards named "Shinjin Akuma"*).
 
 When a player draws a card, he must draw from the top of his deck (unless an effect says the opposite).
 
 ### Discards Pile
-When a character is KO'ed (that is, his Battle Points lowers to 0 or by an effect) it's moved from a Ring to its controller Discard Pile (**6**), faced up.
+When a character is KO'ed (that is, its Battle Points lowers to 0 or by an effect) it's moved from a Ring to its controller Discard Pile (**6**), faced up.
 Action cards and Reaction cards go to the Discard Pile as well, after their effects are resolved.
 
 Any player may look at a Discards Pile, but the order of the cards can't be changed.
@@ -50,37 +50,40 @@ By playing cards players can bring into the battle powerful fighters and effects
 ### Anatomy of a Card
 ![Parts of a card](imgs/card-parts-1.jpg)
 
-1. Card name
+1. **Card name**.
 2. **Battle Points (BP)**. It represents a character's attack power and its strength. When a character is dealt damage, its BP is reduced by that number of damage points.
    If the BP lowers to zero, that character is KO'ed and goes to the discard pile.
 3. **Soul Points (SP)**. It represents Ki energy in battles. Players can spend SP to play Action and Reaction cards, and to make United Attacks.  
-   When a character card enters the Ring, its controller gains the SP listed in that card.
+   When a player plays a card, he gains the SP listed in that card. If the SP is a negative value, then the player must spend that amount from his SP or that card can't be played.
+4. **Type and Subtype**. The upper line is the card type (Character, Action or Reaction), and the lower line is the card subtype. Only Characters have a subtype.  
+   The icon on the left represents the card subtype.
+5. **Text box**. This is where a card’s rules appears, which explains the effects it has in the game. Character cards have an ability symbol (▲, ■ or ●) and an ability name at the beginning of the text, printed in bold.  
+   Below the rules text it can appear an italicized text (the flavour text) that adds some description of the CFC world. It has no effect on game play.
+6. **Backups**. The list and number of subtypes with whom a character can be backed up. Every icon represents a card subtype. Only Characters can have backups, up to three.
+7. **Publisher and Team**. These are the name of the video game where a character appeared (second logo) and that game publisher (first logo).
+8. **Rarity**. The letter and the color indicates the rarity of the card and its power.  
+   **D** Very common.  
+   **C** Common.  
+   **B** Uncommon.  
+   **A** Rare; very powerful, balanced, and/or great ability.  
+   **S** Very rare, unusual ability.
+9. **Information line**. Here is shown the illustration credit and the collector number within a set.
+10. **Expansion symbol**. This symbol indicates which set the card is from.
 
 ### Card Types
 A card has one type, that tells when it can be played and what happens to the card after it's played.
 
 #### Character
-Characters are powerful cards
-that are placed in your ring.
+Characters are cards that represent a character in a video game, and they are placed into an empty slot of your ring. They can attack and deal damage to an enemy, or they can protect and battle against attacking characters.
 
-Characters can attack and deal
-damage to the enemy, or they
-can protect against attacking
-characters.
+Some characters have abilities, represented by an ability symbol (▲, ■ or ●) followed by the ability name in bold.
 
-Players can only play one
-CHA card per turn.
+Only one character card can be played per turn.
 
 #### Action
-Action cards offers useful
-effects that affects the game.
+Action cards offers a variety of effects, like special powers or events that can help in a battle. You can play them only in your turn.
 
-AC cards have a "COST", a
-number of SP a player must spend
-to play that card.
-
-Players may play any number of
-AC cards in their turn.
+Each action card have a cost, a number of SP (usually negative) a player must spend to play that card. After it has been played and its effects followed, the card is put into the discard pile.
 
 #### Reaction
 Reaction cards are like AC cards
