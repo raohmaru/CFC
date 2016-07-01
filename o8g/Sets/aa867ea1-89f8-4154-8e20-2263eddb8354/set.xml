@@ -25,7 +25,7 @@
 			<property name="Ability"      value="&#164; WINGS" />
 			<property name="Ability Type" value="&#164;" />
 			<property name="Ability Name" value="WINGS" />
-			<property name="Rules"        value="If your hand is empty, this character can&apos;t be countered." />
+			<property name="Rules"        value="If your hand is empty, this character cannot be countered." />
 			<property name="BP"           value="400" />
 			<property name="SP"           value="2" />
 			<property name="Backup 1"     value="Warrior" />
@@ -115,7 +115,7 @@
 			<property name="Ability"      value="&#163; GRAVE KEEPER" />
 			<property name="Ability Type" value="&#163;" />
 			<property name="Ability Name" value="GRAVE KEEPER" />
-			<property name="Rules"        value="Discard a card. An enemy character can&apos;t counter-attack this turn." />
+			<property name="Rules"        value="Discard a card. An enemy character cannot counter-attack this turn." />
 			<property name="BP"           value="400" />
 			<property name="SP"           value="2" />
 			<property name="Backup 1"     value="Ninja" />
@@ -151,9 +151,9 @@
 			<property name="Ability"      value="&#162; ENERGY COST" />
 			<property name="Ability Type" value="&#162;" />
 			<property name="Ability Name" value="ENERGY COST" />
-			<property name="Rules"        value="Deals 500 points damage to you." />
+			<property name="Rules"        value="Deals 300 points damage to you." />
 			<property name="BP"           value="1000" />
-			<property name="SP"           value="2" />
+			<property name="SP"           value="1" />
 			<property name="Backup 1"     value="Pilot" />
 			<property name="Backup 2"     value="Robot" />
 			<property name="Backup 3"     value="" />
@@ -241,7 +241,7 @@
 			<property name="Ability"      value="&#164; BAD STONE" />
 			<property name="Ability Type" value="&#164;" />
 			<property name="Ability Name" value="BAD STONE" />
-			<property name="Rules"        value="Single attacker characters with BP 300 or less can&apos;t be countered." />
+			<property name="Rules"        value="Single attacker characters with BP 300 or less cannot be countered." />
 			<property name="BP"           value="300" />
 			<property name="SP"           value="2" />
 			<property name="Backup 1"     value="Ninja" />
@@ -277,7 +277,7 @@
 			<property name="Ability"      value="&#164; HAYA-GAKE" />
 			<property name="Ability Type" value="&#164;" />
 			<property name="Ability Name" value="HAYA-GAKE" />
-			<property name="Rules"        value="This character can&apos;t be countered unless enemy has two or more characters in his ring." />
+			<property name="Rules"        value="This character cannot be countered unless defending enemy has two or more characters in his ring." />
 			<property name="BP"           value="500" />
 			<property name="SP"           value="1" />
 			<property name="Backup 1"     value="Fighter" />
@@ -421,7 +421,7 @@
 			<property name="Ability"      value="&#162; ANTISOCIAL" />
 			<property name="Ability Type" value="&#162;" />
 			<property name="Ability Name" value="ANTISOCIAL" />
-			<property name="Rules"        value="KO a character in your ring." />
+			<property name="Rules"        value="KO another character in your ring." />
 			<property name="BP"           value="1200" />
 			<property name="SP"           value="-4" />
 			<property name="Backup 1"     value="Wrestler" />
@@ -457,9 +457,9 @@
 			<property name="Ability"      value="&#162; BUNSHIN" />
 			<property name="Ability Type" value="&#162;" />
 			<property name="Ability Name" value="BUNSHIN" />
-			<property name="Rules"        value="If enemy has more cards in hand than you, draw cards until you have the same number." />
+			<property name="Rules"        value="If an enemy has more cards in hand than you, draw cards until you have the same number." />
 			<property name="BP"           value="300" />
-			<property name="SP"           value="1" />
+			<property name="SP"           value="2" />
 			<property name="Backup 1"     value="Monk" />
 			<property name="Backup 2"     value="Kung-fu" />
 			<property name="Backup 3"     value="Gangster" />
@@ -529,7 +529,7 @@
 			<property name="Ability"      value="&#163; BOUKEN" />
 			<property name="Ability Type" value="&#163;" />
 			<property name="Ability Name" value="BOUKEN" />
-			<property name="Rules"        value="Put a card from your hand on top of enemy&apos;s deck. Put the bottom card of his deck into your hand." />
+			<property name="Rules"        value="Put a card from your hand on top of an enemy&apos;s deck. Put the bottom card of his deck into your hand." />
 			<property name="BP"           value="600" />
 			<property name="SP"           value="0" />
 			<property name="Backup 1"     value="Android" />
@@ -567,7 +567,7 @@
 			<property name="Ability Name" value="OPERATE" />
 			<property name="Rules"        value="Put a character in your ring on the bottom of your deck." />
 			<property name="BP"           value="500" />
-			<property name="SP"           value="1" />
+			<property name="SP"           value="2" />
 			<property name="Backup 1"     value="Android" />
 			<property name="Backup 2"     value="Android" />
 			<property name="Backup 3"     value="" />
@@ -711,7 +711,7 @@
 			<property name="Ability Name" value="BUTTERFLY ILLUSION" />
 			<property name="Rules"        value="At the beginning of your turn, return this character to your hand." />
 			<property name="BP"           value="300" />
-			<property name="SP"           value="4" />
+			<property name="SP"           value="5" />
 			<property name="Backup 1"     value="Ninja" />
 			<property name="Backup 2"     value="Ninja" />
 			<property name="Backup 3"     value="Mentor" />
@@ -817,7 +817,7 @@
 			<property name="Ability"      value="&#162; DISORDER" />
 			<property name="Ability Type" value="&#162;" />
 			<property name="Ability Name" value="DISORDER" />
-			<property name="Rules"        value="If enemy has three or more characters in his ring, it deals 200 damage points to each enemy character." />
+			<property name="Rules"        value="If an enemy has three or more characters in his ring, it deals 200 damage points to each character in his ring." />
 			<property name="BP"           value="600" />
 			<property name="SP"           value="0" />
 			<property name="Backup 1"     value="Agent" />
@@ -835,7 +835,7 @@
 			<property name="Ability"      value="&#163; DECOY" />
 			<property name="Ability Type" value="&#163;" />
 			<property name="Ability Name" value="DECOY" />
-			<property name="Rules"        value="KO this character. Draw a character card at random from your deck. (To draw a card at random, shuffle that deck and look through the top of it until you reveal a card of the selected type. If you do, put that card into your hand. Then shuffle that deck.)" />
+			<property name="Rules"        value="KO this character. Draw a character card at random from your deck. (To draw a card at random, shuffle your deck and look through the top of it until you reveal a card of the selected type. If you do, put that card into your hand. Then shuffle your deck.)" />
 			<property name="BP"           value="400" />
 			<property name="SP"           value="2" />
 			<property name="Backup 1"     value="Agent" />
@@ -853,7 +853,7 @@
 			<property name="Ability"      value="&#163; BERETTA" />
 			<property name="Ability Type" value="&#163;" />
 			<property name="Ability Name" value="BERETTA" />
-			<property name="Rules"        value="Deals 100 damage points to enemy or an enemy character." />
+			<property name="Rules"        value="Deals 100 damage points to an enemy or an enemy character." />
 			<property name="BP"           value="400" />
 			<property name="SP"           value="2" />
 			<property name="Backup 1"     value="Agent" />
@@ -871,7 +871,7 @@
 			<property name="Ability"      value="&#163; HANDGUN" />
 			<property name="Ability Type" value="&#163;" />
 			<property name="Ability Name" value="HANDGUN" />
-			<property name="Rules"        value="Discard a reaction card. Deals 300 damage points to enemy or an enemy character." />
+			<property name="Rules"        value="Discard a reaction card. Deals 300 damage points to an enemy or an enemy character." />
 			<property name="BP"           value="500" />
 			<property name="SP"           value="1" />
 			<property name="Backup 1"     value="Agent" />
@@ -889,7 +889,7 @@
 			<property name="Ability"      value="&#163; CONFINEMENT" />
 			<property name="Ability Type" value="&#163;" />
 			<property name="Ability Name" value="CONFINEMENT" />
-			<property name="Rules"        value="Enemy can&apos;t play action cards in his next turn." />
+			<property name="Rules"        value="An enemy cannot play action cards on his next turn." />
 			<property name="BP"           value="600" />
 			<property name="SP"           value="0" />
 			<property name="Backup 1"     value="Agent" />
@@ -911,7 +911,7 @@
 			<property name="BP"           value="700" />
 			<property name="SP"           value="1" />
 			<property name="Backup 1"     value="Wrestler" />
-			<property name="Backup 2"     value="Wrestler" />
+			<property name="Backup 2"     value="Zombie" />
 			<property name="Backup 3"     value="" />
 			<property name="Number"       value="C050" />
 			<property name="Illustrator"  value="Art by Shigeomi Okamura" />
@@ -927,7 +927,7 @@
 			<property name="Ability Name" value="RESIDENT EVIL" />
 			<property name="Rules"        value="KO this character. A character becomes a Zombie card. (It loses his back-ups.)" />
 			<property name="BP"           value="200" />
-			<property name="SP"           value="0" />
+			<property name="SP"           value="3" />
 			<property name="Backup 1"     value="Zombie" />
 			<property name="Backup 2"     value="Zombie" />
 			<property name="Backup 3"     value="Zombie" />
@@ -997,7 +997,7 @@
 			<property name="Ability"      value="&#162; FINISH IT!" />
 			<property name="Ability Type" value="&#162;" />
 			<property name="Ability Name" value="FINISH IT!" />
-			<property name="Rules"        value="If enemy has three or more characters in his ring, double this character&apos;s BP." />
+			<property name="Rules"        value="If an enemy has three or more characters in his ring, double this character&apos;s BP." />
 			<property name="BP"           value="800" />
 			<property name="SP"           value="-2" />
 			<property name="Backup 1"     value="Pilot" />
@@ -1125,7 +1125,7 @@
 			<property name="Ability Name" value="MADNESS" />
 			<property name="Rules"        value="At the beginning of your turn, KO this character." />
 			<property name="BP"           value="800" />
-			<property name="SP"           value="3" />
+			<property name="SP"           value="5" />
 			<property name="Backup 1"     value="Artist" />
 			<property name="Backup 2"     value="Gangster" />
 			<property name="Backup 3"     value="" />
@@ -1159,7 +1159,7 @@
 			<property name="Ability"      value="&#164; COOL" />
 			<property name="Ability Type" value="&#164;" />
 			<property name="Ability Name" value="COOL" />
-			<property name="Rules"        value="Action cards cost 2 SP less to play. This ability can&apos;t reduce the cost of action cards to less than 1 SP." />
+			<property name="Rules"        value="Action cards cost 2 SP less to play.&#xD;&#xA;This ability cannot reduce the cost of action cards to less than 1 SP." />
 			<property name="BP"           value="600" />
 			<property name="SP"           value="0" />
 			<property name="Backup 1"     value="Swordsman" />
@@ -1177,7 +1177,7 @@
 			<property name="Ability"      value="&#162; DADAKKO" />
 			<property name="Ability Type" value="&#162;" />
 			<property name="Ability Name" value="DADAKKO" />
-			<property name="Rules"        value="Enemy can&apos;t play reaction cards this turn." />
+			<property name="Rules"        value="An enemy cannot play reaction cards this turn." />
 			<property name="BP"           value="300" />
 			<property name="SP"           value="3" />
 			<property name="Backup 1"     value="Priest" />
@@ -1303,7 +1303,7 @@
 			<property name="Ability"      value="&#162; GROOVY KNUCKLES" />
 			<property name="Ability Type" value="&#162;" />
 			<property name="Ability Name" value="GROOVY KNUCKLES" />
-			<property name="Rules"        value="Enemy discards a card at random." />
+			<property name="Rules"        value="An enemy discards a card at random." />
 			<property name="BP"           value="400" />
 			<property name="SP"           value="2" />
 			<property name="Backup 1"     value="Gymnast" />
@@ -1413,7 +1413,7 @@
 			<property name="Ability Name" value="ASHURA" />
 			<property name="Rules"        value="Reveal your hand, then discard all action cards. Raise this character&apos;s BP 200 points for each card discarded this way." />
 			<property name="BP"           value="700" />
-			<property name="SP"           value="-1" />
+			<property name="SP"           value="0" />
 			<property name="Backup 1"     value="Gymnast" />
 			<property name="Backup 2"     value="Gymnast" />
 			<property name="Backup 3"     value="" />
@@ -1449,7 +1449,7 @@
 			<property name="Ability Name" value="BACK OFF!" />
 			<property name="Rules"        value="Return a character in your ring to your hand." />
 			<property name="BP"           value="600" />
-			<property name="SP"           value="0" />
+			<property name="SP"           value="1" />
 			<property name="Backup 1"     value="Student" />
 			<property name="Backup 2"     value="Kickboxer" />
 			<property name="Backup 3"     value="Swordsman" />
@@ -1501,7 +1501,7 @@
 			<property name="Ability"      value="&#164; SONIC HEADBUTT" />
 			<property name="Ability Type" value="&#164;" />
 			<property name="Ability Name" value="SONIC HEADBUTT" />
-			<property name="Rules"        value="Whenever this character damages the enemy, enemy can&apos;t play action cards in his next turn." />
+			<property name="Rules"        value="Whenever this character damages an enemy, that enemy cannot play action cards on his next turn." />
 			<property name="BP"           value="600" />
 			<property name="SP"           value="0" />
 			<property name="Backup 1"     value="Wrestler" />
@@ -1557,7 +1557,7 @@
 			<property name="Ability Name" value="ELECTRIC DISCHARGE" />
 			<property name="Rules"        value="Each player puts the top five cards of his deck into his discard pile." />
 			<property name="BP"           value="400" />
-			<property name="SP"           value="2" />
+			<property name="SP"           value="3" />
 			<property name="Backup 1"     value="Karateka" />
 			<property name="Backup 2"     value="Assassin" />
 			<property name="Backup 3"     value="Boxer" />
@@ -1582,7 +1582,7 @@
 			<property name="Number"       value="C087" />
 			<property name="Illustrator"  value="Art by Jonathan Kuo" />
 		</card>
-		<card name="Cammy White" id="aa867ea1-89f8-4154-8e20-2263edd00088">
+		<card name="Cammy (Zero)" id="aa867ea1-89f8-4154-8e20-2263edd00088">
 			<property name="Publisher"    value="Capcom" />
 			<property name="Team"         value="Street Fighter" />
 			<property name="Type"         value="Character" />
@@ -1636,7 +1636,7 @@
 			<property name="Number"       value="C090" />
 			<property name="Illustrator"  value="Art by Jo Chen" />
 		</card>
-		<card name="Chun-Li Zang" id="aa867ea1-89f8-4154-8e20-2263edd00091">
+		<card name="Chun-Li (Zero)" id="aa867ea1-89f8-4154-8e20-2263edd00091">
 			<property name="Publisher"    value="Capcom" />
 			<property name="Team"         value="Street Fighter" />
 			<property name="Type"         value="Character" />
@@ -1645,7 +1645,7 @@
 			<property name="Ability"      value="&#162; GOMEN-NE!" />
 			<property name="Ability Type" value="&#162;" />
 			<property name="Ability Name" value="GOMEN-NE!" />
-			<property name="Rules"        value="Look at the top three cards of enemy&apos;s deck. Put two of them into enemy&apos;s discard pile and the rest on top of enemy&apos;s deck." />
+			<property name="Rules"        value="Look at the top three cards of an enemy&apos;s deck. Put two of them into his discard pile and the rest on top of his deck." />
 			<property name="BP"           value="500" />
 			<property name="SP"           value="2" />
 			<property name="Backup 1"     value="Soldier" />
@@ -1663,7 +1663,7 @@
 			<property name="Ability"      value="&#162; WHAT GIVES?" />
 			<property name="Ability Type" value="&#162;" />
 			<property name="Ability Name" value="WHAT GIVES?" />
-			<property name="Rules"        value="Enemy loses 6 SP." />
+			<property name="Rules"        value="An enemy loses 6 SP." />
 			<property name="BP"           value="500" />
 			<property name="SP"           value="0" />
 			<property name="Backup 1"     value="Karateka" />
@@ -1899,7 +1899,7 @@
 			<property name="Ability Name" value="HANA UTA" />
 			<property name="Rules"        value="Raise 300 points the BP of an enemy character and a character in your ring." />
 			<property name="BP"           value="400" />
-			<property name="SP"           value="2" />
+			<property name="SP"           value="3" />
 			<property name="Backup 1"     value="Gangster" />
 			<property name="Backup 2"     value="Ninja" />
 			<property name="Backup 3"     value="Assassin" />
@@ -1915,7 +1915,7 @@
 			<property name="Ability"      value="&#163; PSYCHO CHARGE ALPHA" />
 			<property name="Ability Type" value="&#163;" />
 			<property name="Ability Name" value="PSYCHO CHARGE ALPHA" />
-			<property name="Rules"        value="Discard a character card. Gain SP equal to that card&apos;s absolute SP plus one." />
+			<property name="Rules"        value="Discard a character card. Gain SP equal to that card&apos;s absolute SP." />
 			<property name="BP"           value="400" />
 			<property name="SP"           value="2" />
 			<property name="Backup 1"     value="Boss" />
@@ -1951,7 +1951,7 @@
 			<property name="Ability"      value="&#164; COMPENSATION" />
 			<property name="Ability Type" value="&#164;" />
 			<property name="Ability Name" value="COMPENSATION" />
-			<property name="Rules"        value="Whenever this character is countered, it deals 200 damage points to enemy." />
+			<property name="Rules"        value="Whenever this character is countered, it deals 200 damage points to defending enemy." />
 			<property name="BP"           value="500" />
 			<property name="SP"           value="1" />
 			<property name="Backup 1"     value="Karateka" />
@@ -2194,7 +2194,7 @@
 			<property name="Number"       value="C121" />
 			<property name="Illustrator"  value="Art by Jo Chen" />
 		</card>
-		<card name="Ryu Hoshi" id="aa867ea1-89f8-4154-8e20-2263edd00122">
+		<card name="Ryu (Zero)" id="aa867ea1-89f8-4154-8e20-2263edd00122">
 			<property name="Publisher"    value="Capcom" />
 			<property name="Team"         value="Street Fighter" />
 			<property name="Type"         value="Character" />
@@ -2241,7 +2241,7 @@
 			<property name="Ability Name" value="FIGHTING SPIRIT" />
 			<property name="Rules"        value="If you have 1000 or less HP, double this character&apos;s BP." />
 			<property name="BP"           value="500" />
-			<property name="SP"           value="1" />
+			<property name="SP"           value="2" />
 			<property name="Backup 1"     value="Student" />
 			<property name="Backup 2"     value="Student" />
 			<property name="Backup 3"     value="" />
@@ -2257,7 +2257,7 @@
 			<property name="Ability"      value="&#164; SORE LOSER" />
 			<property name="Ability Type" value="&#164;" />
 			<property name="Ability Name" value="SORE LOSER" />
-			<property name="Rules"        value="At the end of your turn, if you have less cards in hand than enemy, draw a card." />
+			<property name="Rules"        value="At the end of your turn, if you have less cards in hand than any other player, draw a card." />
 			<property name="BP"           value="400" />
 			<property name="SP"           value="2" />
 			<property name="Backup 1"     value="Student" />
@@ -2311,9 +2311,9 @@
 			<property name="Ability"      value="&#164; X.C.O.P.Y." />
 			<property name="Ability Type" value="&#164;" />
 			<property name="Ability Name" value="X.C.O.P.Y." />
-			<property name="Rules"        value="Whenever this character counter-attacks, its BP become same as the BP of the countered attacker or attackers." />
+			<property name="Rules"        value="Whenever this character counter-attacks, its BP become same as the BP of the countered attacker(s)." />
 			<property name="BP"           value="100" />
-			<property name="SP"           value="0" />
+			<property name="SP"           value="3" />
 			<property name="Backup 1"     value="Guardian" />
 			<property name="Backup 2"     value="Spirit" />
 			<property name="Backup 3"     value="Experiment" />
@@ -2329,7 +2329,7 @@
 			<property name="Ability"      value="&#163; DESPOT" />
 			<property name="Ability Type" value="&#163;" />
 			<property name="Ability Name" value="DESPOT" />
-			<property name="Rules"        value="Look at enemy&apos;s hand. Enemy discards all reaction cards." />
+			<property name="Rules"        value="Look at enemy&apos;s hand. That enemy discards all reaction cards." />
 			<property name="BP"           value="700" />
 			<property name="SP"           value="-2" />
 			<property name="Backup 1"     value="Kung-fu" />
@@ -2547,7 +2547,7 @@
 			<property name="Ability Name" value="CHANGE IMMORTAL" />
 			<property name="Rules"        value="Discard a card. Raise this character&apos;s BP 300 points." />
 			<property name="BP"           value="500" />
-			<property name="SP"           value="1" />
+			<property name="SP"           value="2" />
 			<property name="Backup 1"     value="Demon" />
 			<property name="Backup 2"     value="Monk" />
 			<property name="Backup 3"     value="Agent" />
@@ -2563,7 +2563,7 @@
 			<property name="Ability"      value="&#163; SIDEKICK ART" />
 			<property name="Ability Type" value="&#163;" />
 			<property name="Ability Name" value="SIDEKICK ART" />
-			<property name="Rules"        value="Draw an action card at random from your deck. (To draw a card at random, shuffle that deck and look through the top of it until you reveal a card of the selected type. If you do, put that card into your hand. Then shuffle that deck.)" />
+			<property name="Rules"        value="Draw an action card at random from your deck. (To draw a card at random, shuffle your deck and look through the top of it until you reveal a card of the selected type. If you do, put that card into your hand. Then shuffle your deck.)" />
 			<property name="BP"           value="500" />
 			<property name="SP"           value="1" />
 			<property name="Backup 1"     value="Beast" />
@@ -2617,7 +2617,7 @@
 			<property name="Ability"      value="&#162; SEETHING BLOOD" />
 			<property name="Ability Type" value="&#162;" />
 			<property name="Ability Name" value="SEETHING BLOOD" />
-			<property name="Rules"        value="If enemy was dealt damage this turn, raise this character&apos;s BP 300 points." />
+			<property name="Rules"        value="If an enemy was dealt damage this turn, raise this character&apos;s BP 300 points." />
 			<property name="BP"           value="400" />
 			<property name="SP"           value="2" />
 			<property name="Backup 1"     value="Ninja" />
@@ -2635,7 +2635,7 @@
 			<property name="Ability"      value="&#164; P.D.C." />
 			<property name="Ability Type" value="&#164;" />
 			<property name="Ability Name" value="P.D.C." />
-			<property name="Rules"        value="Whenever this character damages the enemy, draw a card." />
+			<property name="Rules"        value="Whenever this character damages an enemy, draw a card." />
 			<property name="BP"           value="500" />
 			<property name="SP"           value="1" />
 			<property name="Backup 1"     value="Beast" />
@@ -2689,7 +2689,7 @@
 			<property name="Ability"      value="&#164; LIFE SUCKER" />
 			<property name="Ability Type" value="&#164;" />
 			<property name="Ability Name" value="LIFE SUCKER" />
-			<property name="Rules"        value="Whenever this character damages the enemy, you gain that much HP." />
+			<property name="Rules"        value="Whenever this character damages an enemy, you gain that much HP." />
 			<property name="BP"           value="700" />
 			<property name="SP"           value="-1" />
 			<property name="Backup 1"     value="Ninja" />
@@ -2725,7 +2725,7 @@
 			<property name="Ability"      value="&#164; COSMO POWER" />
 			<property name="Ability Type" value="&#164;" />
 			<property name="Ability Name" value="COSMO POWER" />
-			<property name="Rules"        value="At the end of your turn, if you have less SP than enemy, gain 3 SP." />
+			<property name="Rules"        value="At the end of your turn, if you have less SP than any enemy, gain 3 SP." />
 			<property name="BP"           value="800" />
 			<property name="SP"           value="-2" />
 			<property name="Backup 1"     value="Demon" />
@@ -2833,7 +2833,7 @@
 			<property name="Ability"      value="&#162; MITTEI" />
 			<property name="Ability Type" value="&#162;" />
 			<property name="Ability Name" value="MITTEI" />
-			<property name="Rules"        value="Draw a card from enemy&apos;s deck, then put a card from your hand into enemy&apos;s discard pile." />
+			<property name="Rules"        value="Draw a card from an enemy&apos;s deck, then put a card from your hand into that enemy&apos;s discard pile." />
 			<property name="BP"           value="400" />
 			<property name="SP"           value="2" />
 			<property name="Backup 1"     value="Ninja" />
@@ -2941,7 +2941,7 @@
 			<property name="Ability"      value="&#163; OVERLAP CRUNCH" />
 			<property name="Ability Type" value="&#163;" />
 			<property name="Ability Name" value="OVERLAP CRUNCH" />
-			<property name="Rules"        value="Discard a card. Deals 200 damage points to enemy or an enemy character." />
+			<property name="Rules"        value="Discard a card. Deals 200 damage points to an enemy or an enemy character." />
 			<property name="BP"           value="400" />
 			<property name="SP"           value="2" />
 			<property name="Backup 1"     value="Kickboxer" />
@@ -2997,7 +2997,7 @@
 			<property name="Ability Name" value="BIG FREEBIE" />
 			<property name="Rules"        value="Discard a character card with an ability. A character in your ring gets a copy of that ability." />
 			<property name="BP"           value="600" />
-			<property name="SP"           value="0" />
+			<property name="SP"           value="1" />
 			<property name="Backup 1"     value="Gangster" />
 			<property name="Backup 2"     value="Gangster" />
 			<property name="Backup 3"     value="Guardian" />
@@ -3015,7 +3015,7 @@
 			<property name="Ability Name" value="M.I.A." />
 			<property name="Rules"        value="Shuffle this character into your deck." />
 			<property name="BP"           value="700" />
-			<property name="SP"           value="-1" />
+			<property name="SP"           value="0" />
 			<property name="Backup 1"     value="Karateka" />
 			<property name="Backup 2"     value="Karateka" />
 			<property name="Backup 3"     value="" />
@@ -3121,7 +3121,7 @@
 			<property name="Ability"      value="&#163; BRING IT ON!" />
 			<property name="Ability Type" value="&#163;" />
 			<property name="Ability Name" value="BRING IT ON!" />
-			<property name="Rules"        value="Enemy loses 3 SP." />
+			<property name="Rules"        value="An enemy loses 3 SP." />
 			<property name="BP"           value="500" />
 			<property name="SP"           value="1" />
 			<property name="Backup 1"     value="Karateka" />
@@ -3212,7 +3212,7 @@
 			<property name="Ability Type" value="&#164;" />
 			<property name="Ability Name" value="WAVE RIDER" />
 			<property name="Rules"        value="This character can attack the turn it enters the ring." />
-			<property name="BP"           value="300" />
+			<property name="BP"           value="200" />
 			<property name="SP"           value="3" />
 			<property name="Backup 1"     value="Gangster" />
 			<property name="Backup 2"     value="Soldier" />
@@ -3229,7 +3229,7 @@
 			<property name="Ability"      value="&#162; SHADOW SLICER" />
 			<property name="Ability Type" value="&#162;" />
 			<property name="Ability Name" value="SHADOW SLICER" />
-			<property name="Rules"        value="Enemy discards a card at random." />
+			<property name="Rules"        value="An enemy discards a card at random." />
 			<property name="BP"           value="800" />
 			<property name="SP"           value="-2" />
 			<property name="Backup 1"     value="Ninja" />
@@ -3265,7 +3265,7 @@
 			<property name="Ability"      value="&#162; SHRIKE DROP" />
 			<property name="Ability Type" value="&#162;" />
 			<property name="Ability Name" value="SHRIKE DROP" />
-			<property name="Rules"        value="Look at enemy&apos;s hand and select an action card from it. Enemy discards that card." />
+			<property name="Rules"        value="Look at enemy&apos;s hand and select an action card from it. That enemy discards that card." />
 			<property name="BP"           value="700" />
 			<property name="SP"           value="-1" />
 			<property name="Backup 1"     value="Boss" />
@@ -3283,7 +3283,7 @@
 			<property name="Ability"      value="&#163; MARY ARACHNID" />
 			<property name="Ability Type" value="&#163;" />
 			<property name="Ability Name" value="MARY ARACHNID" />
-			<property name="Rules"        value="A frozen enemy character doesn&apos;t unfreeze during enemy&apos;s next Activate phase." />
+			<property name="Rules"        value="A frozen enemy character doesn&apos;t unfreeze during its controller&apos;s next Activate phase." />
 			<property name="BP"           value="500" />
 			<property name="SP"           value="1" />
 			<property name="Backup 1"     value="Fighter" />
@@ -3302,8 +3302,8 @@
 			<property name="Ability Type" value="" />
 			<property name="Ability Name" value="" />
 			<property name="Rules"        value="" />
-			<property name="BP"           value="200" />
-			<property name="SP"           value="6" />
+			<property name="BP"           value="300" />
+			<property name="SP"           value="5" />
 			<property name="Backup 1"     value="Capoeira" />
 			<property name="Backup 2"     value="Kickboxer" />
 			<property name="Backup 3"     value="Capoeira" />
@@ -3571,7 +3571,7 @@
 			<property name="Ability"      value="&#163; SCREW UPPER" />
 			<property name="Ability Type" value="&#163;" />
 			<property name="Ability Name" value="SCREW UPPER" />
-			<property name="Rules"        value="Put the top two cards of enemy&apos;s deck into his discard pile." />
+			<property name="Rules"        value="Put the top two cards of an enemy&apos;s deck into his discard pile." />
 			<property name="BP"           value="700" />
 			<property name="SP"           value="-1" />
 			<property name="Backup 1"     value="Fighter" />
@@ -3643,7 +3643,7 @@
 			<property name="Ability"      value="&#162; GIGANTIC CYCLONE" />
 			<property name="Ability Type" value="&#162;" />
 			<property name="Ability Name" value="GIGANTIC CYCLONE" />
-			<property name="Rules"        value="KO a character in your ring." />
+			<property name="Rules"        value="KO another character in your ring." />
 			<property name="BP"           value="1200" />
 			<property name="SP"           value="-4" />
 			<property name="Backup 1"     value="Gangster" />
@@ -3751,9 +3751,9 @@
 			<property name="Ability"      value="&#163; NEO DEADLY RAVE" />
 			<property name="Ability Type" value="&#163;" />
 			<property name="Ability Name" value="NEO DEADLY RAVE" />
-			<property name="Rules"        value="KO this character. Deals 100 damage points to enemy for each card in his hand." />
+			<property name="Rules"        value="KO this character. Deals 100 damage points to an enemy for each card in his hand." />
 			<property name="BP"           value="500" />
-			<property name="SP"           value="0" />
+			<property name="SP"           value="1" />
 			<property name="Backup 1"     value="Boss" />
 			<property name="Backup 2"     value="Fighter" />
 			<property name="Backup 3"     value="Warrior" />
@@ -3789,7 +3789,7 @@
 			<property name="Ability Name" value="POWER GEYSER" />
 			<property name="Rules"        value="Discard a card from your hand. KO a character with BP 800 or greater." />
 			<property name="BP"           value="700" />
-			<property name="SP"           value="-2" />
+			<property name="SP"           value="-1" />
 			<property name="Backup 1"     value="Fighter" />
 			<property name="Backup 2"     value="" />
 			<property name="Backup 3"     value="" />
@@ -3933,7 +3933,7 @@
 			<property name="Ability Name" value="GET BACK!" />
 			<property name="Rules"        value="Return a character in your ring to your hand." />
 			<property name="BP"           value="600" />
-			<property name="SP"           value="0" />
+			<property name="SP"           value="1" />
 			<property name="Backup 1"     value="Fighter" />
 			<property name="Backup 2"     value="Aikido" />
 			<property name="Backup 3"     value="Brute" />
@@ -4057,7 +4057,7 @@
 			<property name="Ability"      value="&#162; I&apos;LL CUT YOU GOOD!" />
 			<property name="Ability Type" value="&#162;" />
 			<property name="Ability Name" value="I&apos;LL CUT YOU GOOD!" />
-			<property name="Rules"        value="Look at enemy&apos;s hand and select a reaction card from it. Enemy discards that card." />
+			<property name="Rules"        value="Look at enemy&apos;s hand and select a reaction card from it. That enemy discards that card." />
 			<property name="BP"           value="300" />
 			<property name="SP"           value="3" />
 			<property name="Backup 1"     value="Taekwondo" />
@@ -4165,7 +4165,7 @@
 			<property name="Ability"      value="&#164; STORM BRINGER" />
 			<property name="Ability Type" value="&#164;" />
 			<property name="Ability Name" value="STORM BRINGER" />
-			<property name="Rules"        value="Whenever this character damages the enemy, steal up to 3 SP from enemy." />
+			<property name="Rules"        value="Whenever this character damages an enemy, steal up to 3 SP from that enemy." />
 			<property name="BP"           value="600" />
 			<property name="SP"           value="0" />
 			<property name="Backup 1"     value="Mercenary" />
@@ -4201,7 +4201,7 @@
 			<property name="Ability"      value="&#164; BLOOD CONTRACT" />
 			<property name="Ability Type" value="&#164;" />
 			<property name="Ability Name" value="BLOOD CONTRACT" />
-			<property name="Rules"        value="This character can&apos;t counter-attack." />
+			<property name="Rules"        value="This character cannot counter-attack." />
 			<property name="BP"           value="1000" />
 			<property name="SP"           value="0" />
 			<property name="Backup 1"     value="Demon" />
@@ -4219,7 +4219,7 @@
 			<property name="Ability"      value="&#163; BROMIDE" />
 			<property name="Ability Type" value="&#163;" />
 			<property name="Ability Name" value="BROMIDE" />
-			<property name="Rules"        value="Enemy draws 3 cards." />
+			<property name="Rules"        value="An enemy draws 3 cards." />
 			<property name="BP"           value="500" />
 			<property name="SP"           value="1" />
 			<property name="Backup 1"     value="Taekwondo" />
@@ -4309,7 +4309,7 @@
 			<property name="Ability"      value="&#162; OROCHI WAVE" />
 			<property name="Ability Type" value="&#162;" />
 			<property name="Ability Name" value="OROCHI WAVE" />
-			<property name="Rules"        value="Deals 500 damage points to enemy." />
+			<property name="Rules"        value="Deals 500 damage points to an enemy." />
 			<property name="BP"           value="800" />
 			<property name="SP"           value="-4" />
 			<property name="Backup 1"     value="Fighter" />
@@ -4327,7 +4327,7 @@
 			<property name="Ability"      value="&#162; 182 WAYS" />
 			<property name="Ability Type" value="&#162;" />
 			<property name="Ability Name" value="182 WAYS" />
-			<property name="Rules"        value="Deals 300 damage points to enemy or an enemy character." />
+			<property name="Rules"        value="Deals 300 damage points to an enemy or an enemy character." />
 			<property name="BP"           value="700" />
 			<property name="SP"           value="-2" />
 			<property name="Backup 1"     value="Student" />
@@ -4363,7 +4363,7 @@
 			<property name="Ability"      value="&#164; DOKUSHU" />
 			<property name="Ability Type" value="&#164;" />
 			<property name="Ability Name" value="DOKUSHU" />
-			<property name="Rules"        value="Whenever this character is countered, enemy loses 3 SP." />
+			<property name="Rules"        value="Whenever this character is countered, defending enemy loses 3 SP." />
 			<property name="BP"           value="500" />
 			<property name="SP"           value="1" />
 			<property name="Backup 1"     value="Ninja" />
@@ -4489,7 +4489,7 @@
 			<property name="Ability"      value="&#162; EXORCISM" />
 			<property name="Ability Type" value="&#162;" />
 			<property name="Ability Name" value="EXORCISM" />
-			<property name="Rules"        value="Deals 200 damage points to enemy." />
+			<property name="Rules"        value="Deals 200 damage points to an enemy." />
 			<property name="BP"           value="400" />
 			<property name="SP"           value="2" />
 			<property name="Backup 1"     value="Mentor" />
@@ -4525,7 +4525,7 @@
 			<property name="Ability"      value="&#162; GO EASY ON ME" />
 			<property name="Ability Type" value="&#162;" />
 			<property name="Ability Name" value="GO EASY ON ME" />
-			<property name="Rules"        value="In enemy&apos;s next turn, enemy&apos;s characters can&apos;t attack." />
+			<property name="Rules"        value="In enemy&apos;s next turn, that enemy&apos;s characters cannot attack." />
 			<property name="BP"           value="500" />
 			<property name="SP"           value="1" />
 			<property name="Backup 1"     value="Avatar" />
@@ -4561,7 +4561,7 @@
 			<property name="Ability"      value="&#164; FOOTWORK" />
 			<property name="Ability Type" value="&#164;" />
 			<property name="Ability Name" value="FOOTWORK" />
-			<property name="Rules"        value="Reaction cards cost 2 SP less to play. This ability can&apos;t reduce the cost reaction cards to less than 1 SP." />
+			<property name="Rules"        value="Reaction cards cost 2 SP less to play.&#xD;&#xA;This ability cannot reduce the cost reaction cards to less than 1 SP." />
 			<property name="BP"           value="700" />
 			<property name="SP"           value="-1" />
 			<property name="Backup 1"     value="Mercenary" />
@@ -4617,7 +4617,7 @@
 			<property name="Ability Name" value="KURF" />
 			<property name="Rules"        value="KO a character with BP 800 or greater." />
 			<property name="BP"           value="1000" />
-			<property name="SP"           value="-4" />
+			<property name="SP"           value="-3" />
 			<property name="Backup 1"     value="Cursed" />
 			<property name="Backup 2"     value="" />
 			<property name="Backup 3"     value="" />
@@ -4635,7 +4635,7 @@
 			<property name="Ability Name" value="AWAKENING" />
 			<property name="Rules"        value="Deals 400 damage points to a character." />
 			<property name="BP"           value="800" />
-			<property name="SP"           value="-3" />
+			<property name="SP"           value="-2" />
 			<property name="Backup 1"     value="Cursed" />
 			<property name="Backup 2"     value="" />
 			<property name="Backup 3"     value="" />
@@ -4885,7 +4885,7 @@
 			<property name="Ability"      value="&#164; OBORO" />
 			<property name="Ability Type" value="&#164;" />
 			<property name="Ability Name" value="OBORO" />
-			<property name="Rules"        value="At the beginning of your turn, it deals 100 damage points to enemy." />
+			<property name="Rules"        value="At the beginning of your turn, it deals 100 damage points to an enemy." />
 			<property name="BP"           value="500" />
 			<property name="SP"           value="1" />
 			<property name="Backup 1"     value="Samurai" />
@@ -4923,7 +4923,7 @@
 			<property name="Ability Name" value="LIFE SIGN" />
 			<property name="Rules"        value="KO this character unless you discard a character card." />
 			<property name="BP"           value="600" />
-			<property name="SP"           value="4" />
+			<property name="SP"           value="3" />
 			<property name="Backup 1"     value="Brute" />
 			<property name="Backup 2"     value="Cursed" />
 			<property name="Backup 3"     value="" />
@@ -4959,7 +4959,7 @@
 			<property name="Ability Name" value="CHANGE!" />
 			<property name="Rules"        value="This character&apos;s BP become same as an enemy character&apos;s BP." />
 			<property name="BP"           value="100" />
-			<property name="SP"           value="1" />
+			<property name="SP"           value="2" />
 			<property name="Backup 1"     value="Guardian" />
 			<property name="Backup 2"     value="Experiment" />
 			<property name="Backup 3"     value="" />
@@ -4993,7 +4993,7 @@
 			<property name="Ability"      value="&#164; PRIESTESS SEAL" />
 			<property name="Ability Type" value="&#164;" />
 			<property name="Ability Name" value="PRIESTESS SEAL" />
-			<property name="Rules"        value="Players can&apos;t play characters with BP 800 or greater." />
+			<property name="Rules"        value="Players cannot play characters with BP 800 or greater." />
 			<property name="BP"           value="300" />
 			<property name="SP"           value="2" />
 			<property name="Backup 1"     value="Samurai" />
@@ -5245,7 +5245,7 @@
 			<property name="Ability"      value="&#164; I KNEW IT!" />
 			<property name="Ability Type" value="&#164;" />
 			<property name="Ability Name" value="I KNEW IT!" />
-			<property name="Rules"        value="This character can&apos;t counter-attack." />
+			<property name="Rules"        value="This character cannot counter-attack." />
 			<property name="BP"           value="700" />
 			<property name="SP"           value="3" />
 			<property name="Backup 1"     value="Fighter" />
@@ -5281,7 +5281,7 @@
 			<property name="Ability"      value="&#164; IRON SLICE" />
 			<property name="Ability Type" value="&#164;" />
 			<property name="Ability Name" value="IRON SLICE" />
-			<property name="Rules"        value="Whenever this character is countered, it deals piercing damage to enemy." />
+			<property name="Rules"        value="Whenever this character is countered, it deals piercing damage to defending enemy." />
 			<property name="BP"           value="1000" />
 			<property name="SP"           value="-4" />
 			<property name="Backup 1"     value="Swordsman" />
@@ -5371,7 +5371,7 @@
 			<property name="Ability"      value="&#164; RED EYES" />
 			<property name="Ability Type" value="&#164;" />
 			<property name="Ability Name" value="RED EYES" />
-			<property name="Rules"        value="Whenever this character attacks, enemy can&apos;t play reaction cards until end of turn." />
+			<property name="Rules"        value="Whenever this character attacks, defending enemy cannot play reaction cards until end of turn." />
 			<property name="BP"           value="600" />
 			<property name="SP"           value="0" />
 			<property name="Backup 1"     value="Samurai" />
@@ -5461,9 +5461,9 @@
 			<property name="Ability"      value="&#163; I&apos;LL PUNISH YOU!" />
 			<property name="Ability Type" value="&#163;" />
 			<property name="Ability Name" value="I&apos;LL PUNISH YOU!" />
-			<property name="Rules"        value="Deals 200 points damage to enemy." />
+			<property name="Rules"        value="Deals 200 points damage to an enemy." />
 			<property name="BP"           value="500" />
-			<property name="SP"           value="1" />
+			<property name="SP"           value="0" />
 			<property name="Backup 1"     value="Experiment" />
 			<property name="Backup 2"     value="Monster" />
 			<property name="Backup 3"     value="" />
@@ -5605,7 +5605,7 @@
 			<property name="Ability"      value="&#162; FRIGID SMIRK" />
 			<property name="Ability Type" value="&#162;" />
 			<property name="Ability Name" value="FRIGID SMIRK" />
-			<property name="Rules"        value="Enemy skips his next Draw phase." />
+			<property name="Rules"        value="An enemy skips his next Draw phase." />
 			<property name="BP"           value="700" />
 			<property name="SP"           value="-2" />
 			<property name="Backup 1"     value="Cursed" />
@@ -5695,7 +5695,7 @@
 			<property name="Ability"      value="&#164; MYSTIC" />
 			<property name="Ability Type" value="&#164;" />
 			<property name="Ability Name" value="MYSTIC" />
-			<property name="Rules"        value="This character can&apos;t attack or counter-attack." />
+			<property name="Rules"        value="This character cannot attack or counter-attack." />
 			<property name="BP"           value="100" />
 			<property name="SP"           value="5" />
 			<property name="Backup 1"     value="Priest" />
@@ -5731,9 +5731,9 @@
 			<property name="Ability"      value="&#164; FIRE SWORD" />
 			<property name="Ability Type" value="&#164;" />
 			<property name="Ability Name" value="FIRE SWORD" />
-			<property name="Rules"        value="Whenever this character would deal damage to enemy, it deals 600 damage points instead." />
+			<property name="Rules"        value="Whenever this character would deal damage to an enemy, it deals 600 damage points instead." />
 			<property name="BP"           value="600" />
-			<property name="SP"           value="-1" />
+			<property name="SP"           value="0" />
 			<property name="Backup 1"     value="Warrior" />
 			<property name="Backup 2"     value="" />
 			<property name="Backup 3"     value="" />
@@ -5983,7 +5983,7 @@
 			<property name="Ability"      value="" />
 			<property name="Ability Type" value="" />
 			<property name="Ability Name" value="" />
-			<property name="Rules"        value="A frozen enemy character doesn&apos;t unfreeze during enemy&apos;s next Activate phase." />
+			<property name="Rules"        value="A frozen enemy character doesn&apos;t unfreeze during its controller&apos;s next Activate phase." />
 			<property name="BP"           value="" />
 			<property name="SP"           value="-4" />
 			<property name="Backup 1"     value="" />
@@ -6019,7 +6019,7 @@
 			<property name="Ability"      value="" />
 			<property name="Ability Type" value="" />
 			<property name="Ability Name" value="" />
-			<property name="Rules"        value="Deals 500 damage points to enemy." />
+			<property name="Rules"        value="Deals 500 damage points to an enemy." />
 			<property name="BP"           value="" />
 			<property name="SP"           value="-8" />
 			<property name="Backup 1"     value="" />
@@ -6037,7 +6037,7 @@
 			<property name="Ability"      value="" />
 			<property name="Ability Type" value="" />
 			<property name="Ability Name" value="" />
-			<property name="Rules"        value="Mimics the effect of an action card not named Emulate from enemy&apos;s discard pile." />
+			<property name="Rules"        value="Mimics the effect of an action card not named Emulate from an enemy&apos;s discard pile." />
 			<property name="BP"           value="" />
 			<property name="SP"           value="-5" />
 			<property name="Backup 1"     value="" />
@@ -6055,7 +6055,7 @@
 			<property name="Ability"      value="" />
 			<property name="Ability Type" value="" />
 			<property name="Ability Name" value="" />
-			<property name="Rules"        value="Deals 100 damage points to enemy." />
+			<property name="Rules"        value="Deals 100 damage points to an enemy." />
 			<property name="BP"           value="" />
 			<property name="SP"           value="-2" />
 			<property name="Backup 1"     value="" />
@@ -6145,7 +6145,7 @@
 			<property name="Ability"      value="" />
 			<property name="Ability Type" value="" />
 			<property name="Ability Name" value="" />
-			<property name="Rules"        value="This turn and enemy&apos;s next turn, characters can&apos;t attack." />
+			<property name="Rules"        value="Until your next turn, characters cannot attack." />
 			<property name="BP"           value="" />
 			<property name="SP"           value="-2" />
 			<property name="Backup 1"     value="" />
@@ -6181,7 +6181,7 @@
 			<property name="Ability"      value="" />
 			<property name="Ability Type" value="" />
 			<property name="Ability Name" value="" />
-			<property name="Rules"        value="Deals 300 damage points to enemy." />
+			<property name="Rules"        value="Deals 300 damage points to an enemy." />
 			<property name="BP"           value="" />
 			<property name="SP"           value="-5" />
 			<property name="Backup 1"     value="" />
@@ -6415,7 +6415,7 @@
 			<property name="Ability"      value="" />
 			<property name="Ability Type" value="" />
 			<property name="Ability Name" value="" />
-			<property name="Rules"        value="Select a character and reveal the top card of enemy&apos;s deck. If that card is a character card, that character&apos;s BP become the same as that card. Otherwise, KO that character. Put that card on the top of enemy&apos;s deck." />
+			<property name="Rules"        value="Select a character and reveal the top card of an enemy&apos;s deck. If that card is a character card, that character&apos;s BP become the same as that card. Otherwise, KO that character. Put that card on the top of that enemy&apos;s deck." />
 			<property name="BP"           value="" />
 			<property name="SP"           value="-5" />
 			<property name="Backup 1"     value="" />
@@ -6487,7 +6487,7 @@
 			<property name="Ability"      value="" />
 			<property name="Ability Type" value="" />
 			<property name="Ability Name" value="" />
-			<property name="Rules"        value="Put the top three cards of enemy&apos;s deck into his discard pile." />
+			<property name="Rules"        value="Put the top three cards of an enemy&apos;s deck into his discard pile." />
 			<property name="BP"           value="" />
 			<property name="SP"           value="-4" />
 			<property name="Backup 1"     value="" />
@@ -6595,7 +6595,7 @@
 			<property name="Ability"      value="" />
 			<property name="Ability Type" value="" />
 			<property name="Ability Name" value="" />
-			<property name="Rules"        value="Take another turn after this one." />
+			<property name="Rules"        value="Freeze all characters in your ring.&#xD;&#xA;Take another turn after this one." />
 			<property name="BP"           value="" />
 			<property name="SP"           value="-15" />
 			<property name="Backup 1"     value="" />
@@ -6631,7 +6631,7 @@
 			<property name="Ability"      value="" />
 			<property name="Ability Type" value="" />
 			<property name="Ability Name" value="" />
-			<property name="Rules"        value="Put a random card from your discard pile or enemy&apos;s discard pile on top of your deck or enemy&apos;s deck." />
+			<property name="Rules"        value="Put a random card from your discard pile or an enemy&apos;s discard pile on top of your deck or that enemy&apos;s deck." />
 			<property name="BP"           value="" />
 			<property name="SP"           value="-2" />
 			<property name="Backup 1"     value="" />
@@ -6793,7 +6793,7 @@
 			<property name="Ability"      value="" />
 			<property name="Ability Type" value="" />
 			<property name="Ability Name" value="" />
-			<property name="Rules"        value="Look at enemy&apos;s hand. Select a card from it, then enemy discards that card." />
+			<property name="Rules"        value="Look at enemy&apos;s hand. Select a card from it, then that enemy discards that card." />
 			<property name="BP"           value="" />
 			<property name="SP"           value="-3" />
 			<property name="Backup 1"     value="" />
@@ -6883,7 +6883,7 @@
 			<property name="Ability"      value="" />
 			<property name="Ability Type" value="" />
 			<property name="Ability Name" value="" />
-			<property name="Rules"        value="Draw a card from enemy&apos;s deck, then enemy draws a card from your deck." />
+			<property name="Rules"        value="Draw a card from an enemy&apos;s deck, then that enemy draws a card from your deck." />
 			<property name="BP"           value="" />
 			<property name="SP"           value="-1" />
 			<property name="Backup 1"     value="" />
@@ -6919,7 +6919,7 @@
 			<property name="Ability"      value="" />
 			<property name="Ability Type" value="" />
 			<property name="Ability Name" value="" />
-			<property name="Rules"        value="Choose one:&#xD;&#xA;— Deal 300 damage points to enemy.&#xD;&#xA;— Gain 500 HP.&#xD;&#xA;— Raise the BP of all characters in your ring&#xD;&#xA;     200 points." />
+			<property name="Rules"        value="Choose one:&#xD;&#xA;— Deal 300 damage points to an enemy.&#xD;&#xA;— Gain 500 HP.&#xD;&#xA;— Raise the BP of all characters in your ring&#xD;&#xA;     200 points." />
 			<property name="BP"           value="" />
 			<property name="SP"           value="-7" />
 			<property name="Backup 1"     value="" />
@@ -6991,7 +6991,7 @@
 			<property name="Ability"      value="" />
 			<property name="Ability Type" value="" />
 			<property name="Ability Name" value="" />
-			<property name="Rules"        value="Gain 100 HP for each card in enemy&apos;s hand." />
+			<property name="Rules"        value="Gain 100 HP for each card in attacking enemy&apos;s hand." />
 			<property name="BP"           value="" />
 			<property name="SP"           value="-4" />
 			<property name="Backup 1"     value="" />
@@ -7117,7 +7117,7 @@
 			<property name="Ability"      value="" />
 			<property name="Ability Type" value="" />
 			<property name="Ability Name" value="" />
-			<property name="Rules"        value="Enemy draws three cards.&#xD;&#xA;Draw two cards." />
+			<property name="Rules"        value="Attacking enemy draws three cards.&#xD;&#xA;Draw two cards." />
 			<property name="BP"           value="" />
 			<property name="SP"           value="0" />
 			<property name="Backup 1"     value="" />
@@ -7315,7 +7315,7 @@
 			<property name="Ability"      value="" />
 			<property name="Ability Type" value="" />
 			<property name="Ability Name" value="" />
-			<property name="Rules"        value="Enemy discards two card at random." />
+			<property name="Rules"        value="Attacking enemy discards two card at random." />
 			<property name="BP"           value="" />
 			<property name="SP"           value="-2" />
 			<property name="Backup 1"     value="" />
@@ -7387,7 +7387,7 @@
 			<property name="Ability"      value="" />
 			<property name="Ability Type" value="" />
 			<property name="Ability Name" value="" />
-			<property name="Rules"        value="Discard a character card. Gain SP equal to that card&apos;s absolute SP plus one." />
+			<property name="Rules"        value="Discard a character card. Gain SP equal to that card&apos;s absolute SP." />
 			<property name="BP"           value="" />
 			<property name="SP"           value="0" />
 			<property name="Backup 1"     value="" />
@@ -7441,7 +7441,7 @@
 			<property name="Ability"      value="" />
 			<property name="Ability Type" value="" />
 			<property name="Ability Name" value="" />
-			<property name="Rules"        value="Look at enemy&apos;s hand. For each reaction card in his hand, draw two cards." />
+			<property name="Rules"        value="Look at attacking enemy&apos;s hand. For each reaction card in his hand, draw two cards." />
 			<property name="BP"           value="" />
 			<property name="SP"           value="-1" />
 			<property name="Backup 1"     value="" />
@@ -7477,7 +7477,7 @@
 			<property name="Ability"      value="" />
 			<property name="Ability Type" value="" />
 			<property name="Ability Name" value="" />
-			<property name="Rules"        value="Enemy loses 5 SP." />
+			<property name="Rules"        value="Attacking enemy loses 5 SP." />
 			<property name="BP"           value="" />
 			<property name="SP"           value="0" />
 			<property name="Backup 1"     value="" />
@@ -7531,7 +7531,7 @@
 			<property name="Ability"      value="" />
 			<property name="Ability Type" value="" />
 			<property name="Ability Name" value="" />
-			<property name="Rules"        value="Look at enemy&apos;s hand. Enemy discards all non character cards." />
+			<property name="Rules"        value="Look at attacking enemy&apos;s hand. That enemy discards all non character cards." />
 			<property name="BP"           value="" />
 			<property name="SP"           value="-4" />
 			<property name="Backup 1"     value="" />
