@@ -123,3 +123,4 @@ Attack Line
 Select a card
 KO
 KO'ed
+Nullify

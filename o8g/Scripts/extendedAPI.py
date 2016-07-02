@@ -128,12 +128,9 @@ class ExtendedApi(object):
          crop = None
          if Directory.Exists(cropPath):
             crops = Directory.GetFiles(cropPath, cardData.ImageUri + ".jpg")
-            debug(Path.Combine(cropPath, cardData.ImageUri + ".jpg"))
             if crops.Length == 0:
-               debug("No crop found")
                self._gameMethods.GetCardProxyDef(self._game).SaveProxyImage(self._cardMethods.GetProxyMappings(cardData), uri.LocalPath)
             else:
-               debug("Crop found")
                self._gameMethods.GetCardProxyDef(self._game).SaveProxyImage(self._cardMethods.GetProxyMappings(cardData), uri.LocalPath, crops[0])
       cardData.Alternate = currAlternate
    

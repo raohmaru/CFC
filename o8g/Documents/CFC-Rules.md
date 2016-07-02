@@ -28,6 +28,8 @@ Players need a deck (**5**) of at least 50 cards to play CFC. A deck can contain
 
 When a player draws a card, he must draw from the top of his deck (unless an effect says the opposite).
 
+If a player cannot draw cards form his deck during his Draw Phase, he loses the battle.
+
 ### Discards Pile
 When a character is KO'ed (that is, its Battle Points lowers to 0 or by an effect) it's moved from a Ring to its controller Discard Pile (**6**), faced up.
 Action cards and Reaction cards go to the Discard Pile as well, after their effects are resolved.
@@ -53,8 +55,8 @@ By playing cards players can bring into the battle powerful fighters and effects
 1. **Card name**.
 2. **Battle Points (BP)**. It represents a character's attack power and its strength. When a character is dealt damage, its BP is reduced by that number of damage points.
    If the BP lowers to zero, that character is KO'ed and goes to the discard pile.
-3. **Soul Points (SP)**. It represents Ki energy in battles. Players can spend SP to play Action and Reaction cards, and to make United Attacks.  
-   When a player plays a card, he gains the SP listed in that card. If the SP is a negative value, then the player must spend that amount from his SP or that card can't be played.
+3. **Soul Points (SP)**. It represents Ki energy in battles. Players can spend SP to play cards and to make United Attacks.  
+   When a player plays a card, he gains the SP listed in that card. If the SP is 0 or is a negative value, then the player must spend that amount from his SP or that card can't be played.
 4. **Type and Subtype**. The upper line is the card type (Character, Action or Reaction), and the lower line is the card subtype. Only Characters have a subtype.  
    The icon on the left represents the card subtype.
 5. **Text box**. This is where a card’s rules appears, which explains the effects it has in the game. Character cards have an ability symbol (▲, ■ or ●) and an ability name at the beginning of the text, printed in bold.  
@@ -78,6 +80,8 @@ Characters are cards that represent a character in a video game, and they are pl
 
 Some characters have abilities, represented by an ability symbol (▲, ■ or ●) followed by the ability name in bold.
 
+Character cards have a SP value that is used when played. If it is 0 or more, you gain that amount of SP. If the SP is a negative, then you must pay that cost to play the card.
+
 Only one character card can be played per turn.
 
 #### Action
@@ -85,87 +89,44 @@ Action cards offers a variety of effects, like special powers or events that can
 
 Each action card have a cost, a number of SP (usually negative) a player must spend to play that card. After it has been played and its effects followed, the card is put into the discard pile.
 
+There is no limitation in the number of Action cards a player may play.
+
 #### Reaction
-Reaction cards are like AC cards
-but that can be only played
-during enemy's Attack phase.
+Reaction cards are like Action cards but that can be only played during an enemy's Attack phase, and only if that enemy is attacking you.
 
-RE cards have a "COST", a
-number of SP a player must spend
-to play that card.
+Reaction cards have a cost, a number of SP (usually negative) a player must spend to play that card.
 
-Players may play any number of
-RE cards in enemy's attack.
+There is no limitation in the number of Reaction cards a player may play.
 
+## The Abilities
+Some characters may have an special effect (called Ability), which is represented by an ability type (symbols ▲, ■ or ●) followed with the ability name at the beginning of the rule text.
 
-▲ ABILITY
+Every type of ability tells in which moment of the game its effect can be activated.
 
-The ▲ ABILITY is an effect that
-is activated when that character
-enters the ring.
+### ▲ Ability
+A ▲ ability is activated when that character enters the ring.
 
+### ■ ABILITY
+A ■ ability can be activated only in your Main phase. When it is activated the character enters the freeze state.
 
+Frozen characters and characters that just entered the ring cannot activate a ■ ability in that turn.
 
+### ● ABILITY
+A ● ability's effect is always active as long as that character is on the ring.
 
-■ ABILITY
+Whenever a character with a ● ability takes part in a United Attack, that ability is nullified until the end of the turn.
 
-The ■ ABILITY is an effect that
-you can activate only in your
-Main phase.
-When activated that character
-enters the freeze state.
+## The Players
+CFC is designed for two players, each of whom has a customized deck of cards.
 
-Characters just entered the ring
-can't activate a ■ ABILITY in
-that turn.
+### HP
+The Hit Points represents a player's life. When a player is dealt damage, he loses that much HP.
+A player loses the battle when his HP drops to 0 or less.
 
-
-
-
-● ABILITY
-
-The ● ABILITY is an effect that
-is always active as long as that
-character is on the ring.
-
-Whenever a character with a
-● ABILITY takes part in a United
-Attack, that ability is nullified
-until the end of the turn.
-
+### SP
+The Soul Points represents a player's Ki energy. They can be spend to pay the cost of playing cards with a negative SP value, or the cost of United Attacks.
 
 ## Game Structure
-
-## Attacking
-
-## Blocking
-
-
-
-HP
-
-Hit Points represents each
-players' life.
-
-When a player is dealt damage,
-he loses that much HP.
-A player loses the game when
-his HP drops to 0.
-
-Maximum HP value is 9900.
-
-
-
-
-RING
-
-Characters enter and fight in
-a field called the "RING".
-
-Players can place up to 3 CHA
-cards in their ring.
-
-
 
 
 TURN
