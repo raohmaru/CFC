@@ -4,11 +4,11 @@
 
 ## Introduction
 
-This document is designed for people who wants to deep into the rules of the Card Fighters' Clash (CFC) game. They explain the internal mechanics of the game and they add clarification for some obscure parts. You wonít usually need to refer to them except in specific cases.
+This document is designed for people who wants to deep into the rules of the Card Fighters' Clash (CFC) game. They explain the internal mechanics of the game and they add clarification for some obscure parts. You won‚Äôt usually need to refer to them except in specific cases.
 
-For casual play youíll find what you need in the [CFC rulebook](CFC-Rules.html).
+For casual play you‚Äôll find what you need in the [CFC rulebook](CFC-Rules.html).
 
-This document includes a series of numbered rules followed by a glossary. Many of the numbered rules are divided into subrules, and each separate rule and subrule of the game has its own number. (Note that subrules skip the letters ìlî and ìoî due to potential confusion with the numbers ì1î and ì0î.)
+This document includes a series of numbered rules followed by a glossary. Many of the numbered rules are divided into subrules, and each separate rule and subrule of the game has its own number. (Note that subrules skip the letters ‚Äúl‚Äù and ‚Äúo‚Äù due to potential confusion with the numbers ‚Äú1‚Äù and ‚Äú0‚Äù.)
 
 Finally, no matter how detailed the rules are, there will be situations with specific cards that will require a precise answer. If you have questions, you can look at the [FAQ](CFC-FAQ.html) page or you can get the answers at https://github.com/raohmaru/CFC.
 
@@ -111,16 +111,3 @@ Finally, no matter how detailed the rules are, there will be situations with spe
 ### 900. Classic
 ### 901. Last Man Standing (1 vs 1)
 ### 902. Restricted Mode
-
-## Glossary
-Arena
-Ring
-Deck
-Discards Pile
-Removed Pile
-Enemy
-Attack Line
-Select a card
-KO
-KO'ed
-Nullify

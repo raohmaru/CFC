@@ -60,7 +60,7 @@
 		<document name="Rulebook" icon="Documents/manual.png" src="Documents/CFC-Rules.html" />
 		<document name="OCTGN Gameplay" icon="Documents/manual-octgn.png" src="Documents/CFC-Octgn.html" />
 		<document name="FAQ" icon="Documents/manual-faq.png" src="Documents/CFC-FAQ.html" />
-		<document name="Comprehensive Rules" icon="Documents/manual-comp.png" src="Documents/CFC-CompRules.html" />
+		<!-- <document name="Comprehensive Rules" icon="Documents/manual-comp.png" src="Documents/CFC-CompRules.html" /> -->
 	</documents>
 
 	<gameModes>
