@@ -1,6 +1,8 @@
 # Card Fighters' Clash Rulebook
 This document is designed for people who want to start learning the rules and gameplay of Card Fighters' Clash. For a more advanced set of rules and further explanations, please see the [Comprehensive rules](CFC-CompRules.html) document.
 
+(To change the font size of the document, press <span class=kb>Ctrl</span>+<span class=kb>+</span> or <span class=kb>Ctrl</span>+<span class=kb>-</span> or <span class=kb>Ctrl</span>+Mouse Wheel.)
+
 ## Introduction
 Card Fighters' Clash (we will refer to it as CFC) is a card game for two players based on SNK Playmore’s video game [SNK vs. Capcom Card Fighters' Clash 2 Expand Edition](http://neogeo.freeplaytech.com/svc-2/). Players try to defeat each other in a battle playing powerful characters based on Capcom and SNK Playmore video games. Characters have unique abilities that can dramatically change the course of the game, and the character's KI energy is manifested in the form of Soul Points, which can be used to attack the opponent or to play Action cards and Reaction cards –they add exciting effects to the battle that can be played even in opponent's turn.
 
@@ -12,6 +14,8 @@ The battle ends when a player's HP (Hit Points or player's life) drops to 0 or l
 
 Round 1, start!
 
+## Contents
+<!-- toc -->
 
 ## The Game Board
 ![Game board zones](imgs/gameboard-1.jpg)
@@ -231,36 +235,38 @@ When this phase ends, your turn ends and next player's turn begins.
 
 ## Glossary
 
-#### Freeze
-A character in a "freeze" state (or *frozen*) can't attack, counterattack or activate ■ abilities.
-
-#### Piercing Damage
-If the total BP of the attacking character(s) is higher than the BP of the character that counters, this BP difference is dealt as damage to the enemy.
-
-#### KO
-Whenever a character's BP lowers to zero, that character is KO'ed and it is into the discard pile.
-
-#### Nullify
-Some effects nullifies the abilities of the cards on the ring. Nullified abilities can't be activated.
-
-#### Steal Ability
-To remove an ability from a character in the arena and give it to another character. Any existing abilities of the target character are replaced with the new one.
-
-#### Steal SP
-When you steal SP from an enemy, that enemy loses an amount of SP and you gain that same amount.
-
-#### Give Ability
-See "Steal Ability".
-
-#### Copy Ability
-To copy an ability from a character and give it to another character. Any existing abilities of the target character are replaced with the copy ability.
-
-#### Lose Ability
-To remove an ability from a character.
-
-#### Become Another Card
+__Become Another Card__
 When a card becomes another card, all of the card's properties are replaced by the other card's properties. If the card is a character, the BP is replaced by the other card BP (even if that character has received damage). Any back-up on that card is discarded.
 
+__Copy Ability__
+To copy an ability from a character and give it to another character. Any existing abilities of the target character are replaced with the copy ability.
+
+__Give Ability__
+See "Steal Ability".
+
+__Freeze__
+A character in a "freeze" state (or *frozen*) can't attack, counterattack or activate ■ abilities.
+
+__KO__
+Whenever a character's BP lowers to zero, that character is KO'ed and it is into the discard pile.
+
+__Lose Ability__
+To remove an ability from a character.
+
+__Nullify__
+Some effects nullifies the abilities of the cards on the ring. Nullified abilities can't be activated.
+
+__Piercing Damage__
+If the total BP of the attacking character(s) is higher than the BP of the character that counters, this BP difference is dealt as damage to the enemy.
+
+__Steal Ability__
+To remove an ability from a character in the arena and give it to another character. Any existing abilities of the target character are replaced with the new one.
+
+__Steal SP__
+When you steal SP from an enemy, that enemy loses an amount of SP and you gain that same amount.
+
+__Trash__
+To put cards from the top of your deck into your discard pile.
 
 
 ## Additional Links
