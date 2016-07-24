@@ -592,18 +592,15 @@ def debug(msg = 'Debug Ping!', level = 1):
 
 def setupDebug(group, x=0, y=0):
    # setup(group)
-   debug(">>> setupDebug()") #Debug
-   
+   debug(">>> setupDebug()") #Debug   
    mute()
    
    if len(players) > 1 or not me.name == Author:
       whisper("This function is only for development purposes.")
-      return
-      
+      return      
    if turnNumber() == 0:
       warning("Start the game prior to setup the debug environment")
-      return
-      
+      return      
    if len(me.Deck) == 0:
       warning("Please load a deck first.")
       return

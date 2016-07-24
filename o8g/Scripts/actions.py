@@ -90,12 +90,13 @@ def goToCleanup(group = table, x = 0, y = 0, silent = False):
 # Table group actions
 #---------------------------------------------------------------------------
 
-def setup(group, x=0, y=0):
+def setup(group=table, x=0, y=0, silent=False):
 # This function is usually the first one the player does
    debug(">>> setup()") #Debug
    mute()
-   if not confirm("Are you sure you want to setup for a new game?\n(This action should only be done after a game reset.)"):
-      return
+   if not silent:
+      if not confirm("Are you sure you want to setup for a new game?"):
+         return
    chooseSide() # The classic place where the players choose their side
    # We ensure that player has loaded a deck
    if len(me.Deck) == 0:
@@ -112,8 +113,7 @@ def scoop(group, x=0, y=0):
    debug(">>> reset()") #Debug
    mute()
    if not confirm("Are you sure you want to reset the game?"):
-      return
-      
+      return      
    resetAll()   
    myCards = (card for card in table
       if card.controller == me)        

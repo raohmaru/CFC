@@ -45,7 +45,9 @@ def onLoadDeck(player, groups):
          # A more visible notification for all players
          for p in players:
             remoteCall(p, "notifyBar", ["#FF0000", msg])
-         break
+         return
+   if automations['Play']:
+      setup(silent=True)
 
 
 def onMoveCard(player, card, fromGroup, toGroup, oldIndex, index, oldX, oldY, x, y, faceup, highlights, markers):
