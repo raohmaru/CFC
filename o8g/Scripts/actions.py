@@ -106,6 +106,9 @@ def setup(group=table, x=0, y=0, silent=False):
    me.Deck.shuffle()
    refill() # We fill the player's play hand to their hand size
    notify("Setup for player {} completed.".format(me))
+   # Start the turn of the first player to setup
+   if automations['Play']:
+      me.setActivePlayer()
 
    
 def scoop(group, x=0, y=0):

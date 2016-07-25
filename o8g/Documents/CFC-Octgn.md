@@ -5,13 +5,13 @@ The game expects you to be playing on a two sided table. When you host a game of
 
 The game can be played with 2 players.
 
-Once the game is started you will need to load your deck. Unless you have turned off Play automation, when you load a deck the game will automate player setup. If you have turned automation off you can activate this function manually using the "Setup game option from the table menu or by using the <span class=kb>Ctrl</span>+<span class=kb>Shift</span>+<span class=kb>S</span> shortcut. This will
+Once the game is started you will need to load your deck. Unless you have turned off Play automation, when you load a deck the game will automate player setup. If you have turned automation off you can activate this function manually using the "Setup game" option from the table menu or by using the <span class=kb>Ctrl</span>+<span class=kb>Shift</span>+<span class=kb>S</span> shortcut. This will
 - Check your deck
 - Shuffle your deck
 - Draw 5 cards
 
 ## Playing the Game
-The best way to learn how to play CFC is by playing [SNK vs. Capcom Card Fighters' Clash 2 Expand Edition](http://neogeo.freeplaytech.com/svc-2/). But if you don't have a Neo Geo Pocket Color, or you aren't one of lucky owners of a Card Fighters' Clash 2 cartridge, you can try with [CFC2 English patch](http://cfc2english.blogspot.com.es/).
+The best way to learn how to play CFC is by playing [SNK vs. Capcom Card Fighters' Clash 2 Expand Edition](http://neogeo.freeplaytech.com/svc-2/). If you don't have a Neo Geo Pocket Color, or you aren't one of the lucky owners of a Card Fighters' Clash 2 cartridge, you can try [CFC2 English patch](http://cfc2english.blogspot.com.es/).
 
 CFC is a turn-based game. To move to the next phase you can press <span class=kb>Tab</span> key or functions keys <span class=kb>F1</span> to <span class=kb>F7</span>. Once you're in the Cleanup phase, pass the turn to your opponent by clicking in the green triangle after its name.
 
@@ -32,9 +32,9 @@ In OCTGN there are two kinds of actions: *group actions* and *card actions*. To 
 
 To activate a card action, move the cursor to a card and then right click to show the menu or press the keyboard shortcut.
 
-### Table
-<div class=col2></div>
-| Group Actions    |                                                  |
+### Table ![Table](imgs/table.png)
+#### Group Actions
+| Keys             | Description                                      |
 |:-----------------|:-------------------------------------------------|
 | <span class=kb>Ctrl</span>+<span class=kb>Shift</span>+<span class=kb>S</span> | Setup <span class=sm>(Should be activated on every new game)</span> |
 | <span class=kb>Tab</span> | Next phase <span class=sm>(Or double click)</span> |
@@ -50,7 +50,8 @@ To activate a card action, move the cursor to a card and then right click to sho
 | <span class=kb>Ctrl</span>+<span class=kb>L</span> | Realign all your cards in the ring |
 | <span class=kb>Esc</span> | Clear all your cards <span class=sm>(removes targets and highlight colors)</span> |
 
-| Card Actions     |                                                  |
+#### Card Actions
+| Keys             | Description                                      |
 |:-----------------|:-------------------------------------------------|
 | <span class=kb>Double click</span> | Use card ability / Resolve effect |
 | <span class=kb>Ctrl</span>+<span class=kb>F</span> | Freeze / Unfreeze character |
@@ -76,15 +77,16 @@ To activate a card action, move the cursor to a card and then right click to sho
 | <span class=kb>Ctrl</span>+<span class=kb>Alt</span>+<span class=kb>0</span> | Change BP |
 
 ### Hand ![Hand](../Groups/hand.png)
-<div class=col2></div>
-| Group Actions    |                                                  |
+#### Group Actions
+| Keys             | Description                                      |
 |:-----------------|:-------------------------------------------------|
 | <span class=kb>Ctrl</span>+<span class=kb>Del</span> | Random discard |
 | <span class=kb>Ctrl</span>+<span class=kb>D</span> | Put hand on top of the deck |
 | <span class=kb>Ctrl</span>+<span class=kb>Shift</span>+<span class=kb>D</span> | Put hand on bottom of the deck |
 | <span class=kb>Ctrl</span>+<span class=kb>Shift</span>+<span class=kb>Del</span> | Discard hand |
 
-| Card Actions     |                                                  |
+#### Card Actions
+| Keys             | Description                                      |
 |:-----------------|:-------------------------------------------------|
 | <span class=kb>Double click</span> | Play card |
 | ![Target](imgs/target.png) <span class=kb>Ctrl</span>+<span class=kb>B</span> | Play as backup |
@@ -96,8 +98,8 @@ To activate a card action, move the cursor to a card and then right click to sho
 | ![Target](imgs/target.png) <span class=kb>Ctrl</span>+<span class=kb>T</span><br><span class=kb>Ctrl</span>+<span class=kb>T</span> | Transform |
 
 ### Deck ![Deck](../Groups/deck.png)
-<div class=col2></div>
-| Group Actions    |                                                  |
+#### Group Actions
+| Keys             | Description                                      |
 |:-----------------|:-------------------------------------------------|
 | <span class=kb>Double click</span> | Draw card |
 | <span class=kb>Ctrl</span>+<span class=kb>Shift</span>+<span class=kb>D</span> | Draw X cards |
@@ -111,7 +113,8 @@ To activate a card action, move the cursor to a card and then right click to sho
 | <span class=kb>Ctrl</span>+<span class=kb>R</span> | Reveal/Hide top card |
 | <span class=kb>Ctrl</span>+<span class=kb>Shift</span>+<span class=kb>Del</span> | Discard hand |
 
-| Card Actions     |                                                  |
+#### Card Actions
+| Keys             | Description                                      |
 |:-----------------|:-------------------------------------------------|
 | <span class=kb>Ctrl</span>+<span class=kb>H</span> | Put card into Hand |
 | <span class=kb>Del</span> | Discard card |
@@ -119,8 +122,8 @@ To activate a card action, move the cursor to a card and then right click to sho
 | <span class=kb>Ctrl</span>+<span class=kb>Shift</span>+<span class=kb>D</span> | Put card on bottom of the deck |
 
 ### Discard Pile ![Discard Pile](../Groups/discards.png)
-<div class=col2></div>
-| Group Actions    |                                                  |
+#### Group Actions
+| Keys             | Description                                      |
 |:-----------------|:-------------------------------------------------|
 | <span class=kb>Ctrl</span>+<span class=kb>S</span> | Shuffle |
 | <span class=kb>Ctrl</span>+<span class=kb>Shift</span>+<span class=kb>S</span> | Shuffle all cards into deck |
@@ -130,7 +133,8 @@ To activate a card action, move the cursor to a card and then right click to sho
 | <span class=kb>Ctrl</span>+<span class=kb>D</span> | Put all cards on top of the deck |
 | <span class=kb>Ctrl</span>+<span class=kb>Shift</span>+<span class=kb>D</span> | Put all cards on bottom of the deck |
 
-| Card Actions     |                                                  |
+#### Card Actions
+| Keys             | Description                                      |
 |:-----------------|:-------------------------------------------------|
 | <span class=kb>Ctrl</span>+<span class=kb>H</span> | Put card into Hand |
 | <span class=kb>Ctrl</span>+<span class=kb>D</span> | Put card on top of the deck |
@@ -138,8 +142,8 @@ To activate a card action, move the cursor to a card and then right click to sho
 | <span class=kb>Shift</span>+<span class=kb>Del</span> | Remove card from the game |
 
 ### Removed Pile ![Removed Pile](../Groups/removed.png)
-<div class=col2></div>
-| Group Actions    |                                                  |
+#### Group Actions
+| Keys             | Description                                      |
 |:-----------------|:-------------------------------------------------|
 | <span class=kb>Ctrl</span>+<span class=kb>S</span> | Shuffle |
 | <span class=kb>Ctrl</span>+<span class=kb>H</span> | Put all cards into Hand |
@@ -147,7 +151,8 @@ To activate a card action, move the cursor to a card and then right click to sho
 | <span class=kb>Ctrl</span>+<span class=kb>Shift</span>+<span class=kb>D</span> | Put all cards on bottom of the deck |
 | <span class=kb>Ctrl</span>+<span class=kb>Shift</span>+<span class=kb>Del</span> | Put all cards into Discard pile |
 
-| Card Actions     |                                                  |
+#### Card Actions
+| Keys             | Description                                      |
 |:-----------------|:-------------------------------------------------|
 | <span class=kb>Ctrl</span>+<span class=kb>H</span> | Put card into Hand |
 | <span class=kb>Del</span> | Put card into Discard pile |
@@ -184,3 +189,5 @@ Press <span class=kb>Ctrl</span>+<span class=kb>P</span> while hovering a face-d
 
 __Bring card to front or back__
 Press <span class=kb>Page Up</span>/<span class=kb>Page Down</span> over a card to bring it to front or to back.
+
+https://github.com/kellyelton/OCTGN/wiki/Octgn-Keyboard-Shortcuts

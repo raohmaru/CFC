@@ -105,6 +105,7 @@ task :docs do
 	<style>
 	html, body {
 		font-family: Tahoma, Arial, "Helvetica Neue", Helvetica, sans-serif;
+    font-size: 14px;
 		background-color: #FFFBF2;
 	}
 	h2 {
@@ -125,19 +126,16 @@ task :docs do
     padding: 0 0.2em;
     font-family: "Courier New", Courier, monospace;
     line-height: 1.6em;
-    background-color: #eee;
+    background-color: #fff;
     border: solid 1px #bbb;
     border-radius: 3px;
+    box-shadow: 0 2px 0px 0px rgba(0, 0, 0, 0.33);
   }
   .sm {
     font-size: 80%;
   }
-  .col2 + table {
-    clear: left;
-    float: left;
-    margin: 0 1em 2em 0;
-  }
   table {
+    font-size: 14px;
     border-collapse: collapse;
   }
   th {
@@ -151,6 +149,7 @@ task :docs do
   }
   td {
     padding-right: 0.6em;
+    border-bottom: solid 1px #e1e1e1;
   }
 	</style>
 </head>
