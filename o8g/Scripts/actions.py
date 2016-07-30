@@ -256,13 +256,10 @@ def activate(card, x = 0, y = 0):
       if not activateAuto(card): return
    if card.Type == CharType:
       pcard = getParsedCard(card)
-      if pcard.hasEffect():
+      if pcard.ability:
          if pcard.ability.type == ActivatedAbility:
             freeze(card, silent = True)
-         ability = "ability {}".format(pcard.ability)
-      else:
-         whisper("{} has no ability.".format(card))
-         return
+      ability = "ability {}".format(pcard.ability)
    else:
       ability = "effect"
    card.highlight = ActivatedColor
@@ -327,21 +324,20 @@ def askCardBackups(card, x = 0, y = 0):
       information("Only character cards can be backed-up.")
       
 
-def toggleAbility(cards, x = 0, y = 0):
+def toggleAbility(card, x = 0, y = 0):
    mute()
-   for card in cards:
-      parsedCards.pop(card._id, None)
-      if card.alternate == '' and card.Rules == '':
-         continue
-      if card.alternate == 'noability':
-         card.switchTo()
-         notify("{} restores {}'s abilities".format(me, card))
-      else:
-         # Updates proxy image of other players
-         for p in players:
-            remoteCall(p, "addAlternateRules", [card, '', '', 'noability'])
-         notify("{} removes {}'s abilities".format(me, card))
-      
+   parsedCards.pop(card._id, None)
+   if card.alternate == '' and card.Rules == '':
+      return
+   if card.alternate == 'noability':
+      card.switchTo()
+      notify("{} restores {}'s abilities".format(me, card))
+   else:
+      # Updates proxy image of other players
+      for p in players:
+         remoteCall(p, "addAlternateRules", [card, '', '', 'noability'])
+      notify("{} removes {}'s abilities".format(me, card))
+   
 
 def transformCards(cards, x = 0, y = 0):
    mute()
@@ -383,12 +379,13 @@ def copyAbility(card, x = 0, y = 0, target = None):
    if target:
       result = copyAlternateRules(card, target)
       if result:
+         parsedCards.pop(card._id, None)
          # Updates proxy image for the other players
          for p in players:
             if p != me:
                remoteCall(p, "copyAlternateRules", [card, target])
          update()  # Trying this method to delay next actions until networked tasks are complete
-         notify("{} copies ability {} to {}.".format(me, result, card))
+         notify("{} copies ability {} to {}.".format(me, getParsedCard(card).ability.name, card))
       else:
          warning("Target character card doesn't have an ability to copy.")
    else:
@@ -406,9 +403,15 @@ def swapAbilities(card, x = 0, y = 0):
    targets =  [c for c in table   if c.targetedBy == me]
    if len(targets) > 0 and targets[0].Type == CharType and targets[0] != card and getSlotIdx(targets[0], targets[0].controller) > -1:
       target = targets[0]
-      model = card.model
-      copyAbility(card,   target = target)
-      copyAbility(target, target = model)
+      if card.Rules and target.Rules:
+         ab = Struct(**{
+            'Rules'  : card.Rules,
+            'Ability': card.Ability
+         })
+         copyAbility(card,   target = target)
+         copyAbility(target, target = ab)
+      else:
+         warning("Please select two character cards with abilities.")
       target.target(False)
    else:
       warning("Please select a valid character card in the ring.")

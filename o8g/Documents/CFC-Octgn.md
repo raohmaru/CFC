@@ -47,7 +47,7 @@ To activate a card action, move the cursor to a card and then right click to sho
 | <span class=kb>F7</span> | Go to Cleanup phase       |
 | <span class=kb>Ctrl</span>+<span class=kb>0~9</span> | Gain X or 1~9 SP |
 | <span class=kb>Ctrl</span>+<span class=kb>Shift</span>+<span class=kb>0~9</span> | Lose X or 1~9 SP |
-| <span class=kb>Ctrl</span>+<span class=kb>L</span> | Realign all your cards in the ring |
+| <span class=kb>Ctrl</span>+<span class=kb>I</span> | Realign all your cards in the ring |
 | <span class=kb>Esc</span> | Clear all your cards <span class=sm>(removes targets and highlight colors)</span> |
 
 #### Card Actions
@@ -69,7 +69,7 @@ To activate a card action, move the cursor to a card and then right click to sho
 | ![Target](imgs/target.png) <span class=kb>Ctrl</span>+<span class=kb>C</span> | Copy ability |
 | ![Target](imgs/target.png) <span class=kb>Ctrl</span>+<span class=kb>Shift</span>+<span class=kb>C</span> | Swap abilities |
 | ![Target](imgs/target.png) <span class=kb>Ctrl</span>+<span class=kb>T</span><br><span class=kb>Ctrl</span>+<span class=kb>T</span> | Transform |
-| <span class=kb>Ctrl</span>+<span class=kb>L</span> | Realign card in the ring |
+| <span class=kb>Ctrl</span>+<span class=kb>I</span> | Realign card in the ring |
 | <span class=kb>Esc</span> | Clear card <span class=sm>(removes targets and highlight colors)</span> |
 | <span class=kb>Ctrl</span>+<span class=kb>Alt</span>+<span class=kb>B</span> | Show compatible backups types |
 | <span class=kb>Ctrl</span>+<span class=kb>0~9</span> | Raise BP of character by X or 1~9 |

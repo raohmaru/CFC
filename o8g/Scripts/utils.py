@@ -382,8 +382,11 @@ def addAlternateRules(card, ability, rules, altname=None):
    _extapi.setCardProperty(cardData, "Rules", rules, altname)
    _extapi.setCardProperty(cardData, "Ability Type", ability.type, altname)
    _extapi.setCardProperty(cardData, "Ability Name", ability.name, altname)
+   _extapi.setCardProperty(cardData, "Ability", (ability.type+' '+ability.name).strip(), altname)
    debug("Adding new alternate '{}' and generating proxy".format(altname))
    _extapi.generateProxy(cardData, altname)
+   # Need to be here, otherwise if active player switches the card and network tasks are not
+   # completed, the card won't switch at all
    card.switchTo(altname)
    return altname
    

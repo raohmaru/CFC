@@ -175,7 +175,11 @@ registerFilter('fresh', filterJustEntered)
    
 def filterNoAbility(card, include, cmd, *args):
    debug(">>> filterNoAbility({}, {}, {}, {})".format(card, include, cmd, args)) #Debug
-   return filterHasMarker(card, 'NoAbility', include)
+
+   if not isCard(card):
+      return False
+	  
+   return not card.properties['Ability Type']
 registerFilter('powerless', filterNoAbility)
       
 

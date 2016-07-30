@@ -66,7 +66,7 @@ class CharCard(GameCard):
       debug(">>> CharCard()") #Debug
    
       ability = Ability(card)
-      if ability:
+      if ability.name:
          debug("Found ability {}".format(ability))
          self.ability = ability
       else:
