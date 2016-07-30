@@ -737,76 +737,76 @@
 		<!-- Text blocks -->
 		<block type="text" id="bp">
 			<location x="340" y="47" />
-			<text color="#fdeaea" size="29" font="Fonts/m04b_CFC.ttf" />
+			<text color="#fdeaea" size="29" font="Resources/Fonts/m04b_CFC.ttf" />
 			<border color="#691e1e" size="6" />
 			<wordwrap width="124" height="32" align="far" shrinktofit="True" />
 		</block>
 		<block type="text" id="sp">
 			<location x="398" y="98" />
-			<text color="#e7ecfa" size="23" font="Fonts/m04b_CFC.ttf" />
+			<text color="#e7ecfa" size="23" font="Resources/Fonts/m04b_CFC.ttf" />
 			<border color="#102267" size="6" />
 			<wordwrap width="65" height="25" align="far" shrinktofit="True" />
 		</block>
 		<block type="text" id="sp2">
 			<location x="398" y="47" />
-			<text color="#e7ecfa" size="23" font="Fonts/m04b_CFC.ttf" />
+			<text color="#e7ecfa" size="23" font="Resources/Fonts/m04b_CFC.ttf" />
 			<border color="#102267" size="6" />
 			<wordwrap width="65" height="25" align="far" shrinktofit="True" />
 		</block>
 		<block type="text" id="team">
 			<location x="208" y="407" />
-			<text color="#f3db58" size="18" font="Fonts/ArchivoNarrow-Bold.ttf" />
+			<text color="#f3db58" size="18" font="Resources/Fonts/ArchivoNarrow-Bold.ttf" />
 			<border color="#000000" size="3" />
 			<wordwrap width="272" height="30" shrinktofit="True" align="far" />
 		</block>
 		<block type="text" id="name">
 			<location x="23" y="442" />
-			<text color="#FFFFFF" size="46" font="Fonts/PassionOne-Regular.ttf" />
+			<text color="#FFFFFF" size="46" font="Resources/Fonts/PassionOne-Regular.ttf" />
 			<wordwrap width="295" height="52" shrinktofit="True" />
 		</block>
 		<block type="text" id="type">
 			<location x="350" y="446" />
-			<text color="#cecece" size="24" font="Fonts/ArchivoNarrow-Bold.ttf" />
+			<text color="#cecece" size="24" font="Resources/Fonts/ArchivoNarrow-Bold.ttf" />
 			<wordwrap width="92" height="26" shrinktofit="True" />
 		</block>
 		<block type="text" id="subtype">
 			<location x="352" y="469" />
-			<text color="#ffffff" size="18" font="Fonts/ArchivoNarrow-Bold.ttf" />
+			<text color="#ffffff" size="18" font="Resources/Fonts/ArchivoNarrow-Bold.ttf" />
 			<wordwrap width="92" height="21" shrinktofit="True" />
 		</block>
 		<block type="text" id="ability_type">
 			<location x="95" y="507" />
-			<text color="#dd0000" size="22" font="Fonts/ArchivoNarrow-Regular_CFC.ttf" />
+			<text color="#dd0000" size="22" font="Resources/Fonts/ArchivoNarrow-Regular_CFC.ttf" />
 			<wordwrap width="25" height="25" />
 		</block>		
 		<block type="text" id="ability_name">
 			<location x="122" y="506" />
-			<text color="#000000" size="22" font="Fonts/ArchivoNarrow-Bold.ttf" />
+			<text color="#000000" size="22" font="Resources/Fonts/ArchivoNarrow-Bold.ttf" />
 			<wordwrap width="363" height="26" />
 		</block>		
 		<block type="text" id="rules_char">
 			<location x="95" y="533" />
-			<text color="#000000" size="22" font="Fonts/ArchivoNarrow-Regular_CFC.ttf" />
+			<text color="#000000" size="22" font="Resources/Fonts/ArchivoNarrow-Regular_CFC.ttf" />
 			<wordwrap width="380" height="130" />
 		</block>
 		<block type="text" id="rules">
 			<location x="95" y="507" />
-			<text color="#000000" size="22" font="Fonts/ArchivoNarrow-Regular_CFC.ttf" />
+			<text color="#000000" size="22" font="Resources/Fonts/ArchivoNarrow-Regular_CFC.ttf" />
 			<wordwrap width="380" height="155" />
 		</block>
 		<block type="text" id="illustrator">
 			<location x="80" y="674" />
-			<text color="#ffffff" size="15" font="Fonts/SourceSansPro-Regular_CFC.ttf" />
+			<text color="#ffffff" size="15" font="Resources/Fonts/SourceSansPro-Regular_CFC.ttf" />
 			<wordwrap width="215" height="21" shrinktofit="True" />
 		</block>
 		<block type="text" id="number">
 			<location x="435" y="674" />
-			<text color="#ffffff" size="15" font="Fonts/SourceSansPro-Regular_CFC.ttf" />
+			<text color="#ffffff" size="15" font="Resources/Fonts/SourceSansPro-Regular_CFC.ttf" />
 			<wordwrap width="50" height="15" align="far" />
 		</block>
 	</blocks>
 	
-	<template src="Card/front.png" default="True">
+	<template src="Resources/Card/front.png" default="True">
 		<matches>
 			<match name="Type" value="Unknown" />
 		</matches>

@@ -76,7 +76,7 @@ To activate a card action, move the cursor to a card and then right click to sho
 | <span class=kb>Ctrl</span>+<span class=kb>Shift</span>+<span class=kb>0~9</span> | Lower BP of character by X or 1~9 |
 | <span class=kb>Ctrl</span>+<span class=kb>Alt</span>+<span class=kb>0</span> | Change BP |
 
-### Hand ![Hand](../Groups/hand.png)
+### Hand ![Hand](../Resources/Groups/hand.png)
 #### Group Actions
 | Keys             | Description                                      |
 |:-----------------|:-------------------------------------------------|
@@ -97,7 +97,7 @@ To activate a card action, move the cursor to a card and then right click to sho
 | <span class=kb>Ctrl</span>+<span class=kb>F</span> | Put card into Arena face down |
 | ![Target](imgs/target.png) <span class=kb>Ctrl</span>+<span class=kb>Shift</span>+<span class=kb>T</span><br><span class=kb>Ctrl</span>+<span class=kb>Shift</span>+<span class=kb>T</span> | Transform |
 
-### Deck ![Deck](../Groups/deck.png)
+### Deck ![Deck](../Resources/Groups/deck.png)
 #### Group Actions
 | Keys             | Description                                      |
 |:-----------------|:-------------------------------------------------|
@@ -121,7 +121,7 @@ To activate a card action, move the cursor to a card and then right click to sho
 | <span class=kb>Ctrl</span>+<span class=kb>D</span> | Put card on top of the deck |
 | <span class=kb>Ctrl</span>+<span class=kb>Shift</span>+<span class=kb>D</span> | Put card on bottom of the deck |
 
-### Discard Pile ![Discard Pile](../Groups/discards.png)
+### Discard Pile ![Discard Pile](../Resources/Groups/discards.png)
 #### Group Actions
 | Keys             | Description                                      |
 |:-----------------|:-------------------------------------------------|
@@ -141,7 +141,7 @@ To activate a card action, move the cursor to a card and then right click to sho
 | <span class=kb>Ctrl</span>+<span class=kb>Shift</span>+<span class=kb>D</span> | Put card on bottom of the deck |
 | <span class=kb>Shift</span>+<span class=kb>Del</span> | Remove card from the game |
 
-### Removed Pile ![Removed Pile](../Groups/removed.png)
+### Removed Pile ![Removed Pile](../Resources/Groups/removed.png)
 #### Group Actions
 | Keys             | Description                                      |
 |:-----------------|:-------------------------------------------------|

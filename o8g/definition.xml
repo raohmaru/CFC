@@ -4,7 +4,7 @@
       name="Card Fighters' Clash"
       id="e3d56d9e-900d-49c6-b6ae-22cbb51be153"
       octgnVersion="3.1.228.0"
-      version="0.4.0.14"
+      version="0.4.0.15"
       markersize="20"
       tags="capcom snk fighter"
       description="A card game based in the SNK Playmore’s video game SNK vs. Capcom Card Fighters' Clash 2 Expand Edition.
@@ -47,10 +47,10 @@
 	</sounds> -->
 	
 	<fonts>
-		<font src="fonts/SourceSansPro-Regular_CFC.ttf" size="12" target="context" />
-		<font src="fonts/SourceSansPro-Regular_CFC.ttf" size="12" target="chat" />
-		<font src="fonts/SourceSansPro-Regular_CFC.ttf" size="12" target="deckeditor" />
-		<!-- <font src="fonts/SourceSansPro-Regular_CFC.ttf" size="12" target="notes" /> -->
+		<font src="Resources/Fonts/SourceSansPro-Regular_CFC.ttf" size="12" target="context" />
+		<font src="Resources/Fonts/SourceSansPro-Regular_CFC.ttf" size="12" target="chat" />
+		<font src="Resources/Fonts/SourceSansPro-Regular_CFC.ttf" size="12" target="deckeditor" />
+		<!-- <font src="Resources/Fonts/SourceSansPro-Regular_CFC.ttf" size="12" target="notes" /> -->
 	</fonts>
 	
 	<proxygen definitionsrc="Proxy/proxydef.xml">
@@ -64,7 +64,7 @@
 	</documents>
 
 	<gameModes>
-		<gameMode name="Standard" shortDescription="Regular game where Player's ring has 4 slots for characters" image="Art/standard.jpg" playerCount="2" />
+		<gameMode name="Standard" shortDescription="Regular game where Player's ring has 4 slots for characters" image="Resources/Art/standard.jpg" playerCount="2" />
 	</gameModes>
 	
 	<globalvariables>
@@ -73,7 +73,7 @@
 		<globalvariable name="Blockers" value="{}" />
 	</globalvariables>
 	
-	<card back="Card/back.jpg" front="Card/front.png" width="90" height="126" cornerRadius="3">
+	<card back="Resources/Card/back.jpg" front="Resources/Card/front.png" width="90" height="126" cornerRadius="3">
 		<property name="Publisher" type="String" ignoreText="True" textKind="Enum" />
 		<property name="Team" type="String" ignoreText="True" textKind="Enum" />
 		<property name="Type" type="String" textKind="Enum" />
@@ -92,7 +92,7 @@
 		<property name="Illustrator" type="String" ignoreText="True" />
 	</card>
 	
-	<table name="Table" visibility="undefined" ordered="False" width="1250" height="750" background="Background/background.jpg" backgroundStyle="uniformToFill" board="Background/ring.png" boardPosition="-327,-342,655,684" >
+	<table name="Table" visibility="undefined" ordered="False" width="1250" height="750" background="Resources/Background/background.jpg" backgroundStyle="uniformToFill" board="Resources/Background/ring.png" boardPosition="-327,-342,655,684" >
 		<groupaction menu="Next phase" default="True" shortcut="Tab" execute="nextPhase" />
 		<groupactions menu="Phases...">
 			<groupaction menu="Go to Activate phase" shortcut="F1" execute="goToActivate" />
@@ -208,13 +208,13 @@
 	</table>
 	
 	<player summary="HP: {#HP} | SP: {#SP} | Hand: {#Hand}">
-		<counter name="HP" icon="counters/hp.png" default="30" reset="True" />
-		<counter name="SP" icon="counters/sp.png" default="0"  reset="True" />
+		<counter name="HP" icon="Resources/Counters/hp.png" default="30" reset="True" />
+		<counter name="SP" icon="Resources/Counters/sp.png" default="0"  reset="True" />
 		
 		<globalvariable name="Ring" value="[None,None,None,None]" />
 		<globalvariable name="PhaseIdx" value="0" />
 
-		<hand name="Hand" visibility="me" width="90" height="126" icon="Groups/hand.png">
+		<hand name="Hand" visibility="me" width="90" height="126" icon="Resources/Groups/hand.png">
 			<groupaction menu="Random discard" shortcut="Ctrl+Del" execute="randomDiscard" />
 			<groupactions menu="Move all cards to...">
 				<groupaction menu="Deck (Top)" shortcut="Ctrl+D" execute="toDeckTopAll" />
@@ -232,7 +232,7 @@
 			</cardactions>
 			<cardaction menu="Transform" shortcut="Ctrl+Shift+T" batchExecute="transformCards" />
 		</hand>
-		<group name="Deck" visibility="none" width="90" height="126" icon="Groups/deck.png">
+		<group name="Deck" visibility="none" width="90" height="126" icon="Resources/Groups/deck.png">
 			<groupaction menu="Draw" shortcut="Ctrl+D" default="True" execute="draw" />
 			<groupaction menu="Draw X cards" shortcut="Ctrl+Shift+D" execute="drawMany" />
 			<groupactions menu="Random draw...">
@@ -253,7 +253,7 @@
 			<cardaction menu="Put into Deck (Top)" shortcut="Ctrl+D" execute="toDeckTop" />
 			<cardaction menu="Put into Deck (Bottom)" shortcut="Ctrl+Shift+D" execute="toDeckBottom" />
 		</group>
-		<group name="Discard Pile" visibility="all" width="90" height="126" icon="Groups/discards.png">
+		<group name="Discard Pile" visibility="all" width="90" height="126" icon="Resources/Groups/discards.png">
 			<groupaction menu="Shuffle" shortcut="Ctrl+S" execute="shuffle" />
 			<groupactions menu="Shuffle into Deck...">
 				<groupaction menu="All cards" shortcut="Ctrl+Shift+S" execute="reshuffle" />
@@ -273,7 +273,7 @@
 			<cardaction menu="Put into Deck (Bottom)" shortcut="Ctrl+Shift+D" execute="toDeckBottom" />
 			<cardaction menu="Put into Removed Pile" shortcut="Shift+Del" execute="remove" />
 		</group>
-		<group name="Removed Pile" visibility="all" width="90" height="126" icon="Groups/removed.png" collapsed="True">
+		<group name="Removed Pile" visibility="all" width="90" height="126" icon="Resources/Groups/removed.png" collapsed="True">
 			<groupaction menu="Shuffle" shortcut="Ctrl+S" execute="shuffle" />
 			<groupactions menu="Move All Cards To...">
 				<groupaction menu="Hand" shortcut="Ctrl+H" execute="toHandAll" />
