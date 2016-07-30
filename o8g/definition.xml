@@ -3,8 +3,8 @@
       xmlns:xsd="http://www.w3.org/2001/XMLSchema"
       name="Card Fighters' Clash"
       id="e3d56d9e-900d-49c6-b6ae-22cbb51be153"
-      octgnVersion="3.1.55.0"
-      version="0.3.1.10"
+      octgnVersion="3.1.228.0"
+      version="0.4.0.14"
       markersize="20"
       tags="capcom snk fighter"
       description="A card game based in the SNK Playmore’s video game SNK vs. Capcom Card Fighters' Clash 2 Expand Edition.
@@ -14,7 +14,7 @@
       gameurl="https://github.com/raohmaru/CFC"
       authors="raohmaru"
       iconurl="https://raw.github.com/raohmaru/CFC/master/cfc_logo.png"
-      scriptVersion="3.1.0.1"
+      scriptVersion="3.1.0.2"
 	  usetwosidedtable="True">
 	
 	<scripts>
@@ -23,10 +23,10 @@
 		<script src="Scripts/events.py" />
 		<script src="Scripts/autoscripts.py" />
 		<script src="Scripts/cardsAutoscripts.py" />
-		<script src="Scripts/cardsRules.py" />
+		<!-- <script src="Scripts/cardsRules.py" />
 		<script src="Scripts/RuleScript.py" />
 		<script src="Scripts/RuleScript_config.py" />
-		<script src="Scripts/RuleScript_lexer.py" />
+		<script src="Scripts/RuleScript_lexer.py" /> -->
 		<script src="Scripts/RuleScript_filters.py" />
 		<script src="Scripts/utils.py" />
 		<script src="Scripts/winforms.py" />
@@ -34,12 +34,12 @@
 	</scripts>
 	
 	<events>
-		<event name="OnTableLoad"        action="onTableLoad" />
-		<event name="OnGameStart"        action="onGameStart" />
-		<event name="OnLoadDeck"         action="onLoadDeck" />
-		<event name="OnMoveCard"         action="onMoveCard" />
-		<event name="OnScriptedMoveCard" action="onMoveCard" />
-		<event name="OnTurn"             action="onTurnChange" />
+		<event name="OnTableLoaded"        action="onTableLoaded" />
+		<event name="OnGameStarted"        action="onGameStarted" />
+		<event name="OnDeckLoaded"         action="onDeckLoaded" />
+		<event name="OnCardsMoved"         action="onCardsMoved" />
+		<event name="OnScriptedCardsMoved" action="onCardsMoved" />
+		<event name="OnTurnPassed"         action="onTurnPassed" />
 	</events>
 	
 	<!-- <sounds>
@@ -138,7 +138,7 @@
 			<groupaction menu="Pick a random card (Enemy)" execute="randomPickEnemy" />
 		</groupactions>
 		<groupaction menu="Setup game" shortcut="Ctrl+Shift+S" execute="setup" />
-		<groupaction menu="Reset game" execute="scoop" />
+		<groupaction menu="Restart game" execute="scoop" />
 		<groupactions menu="Settings...">
 			<groupaction menu="Switch Play automation ON/OFF" execute="switchPlayAutomation" />
 			<groupaction menu="Switch Phase Triggers automation ON/OFF" execute="switchPhaseAutomation" />
@@ -173,7 +173,7 @@
 			<cardaction menu="Copy ability" shortcut="Ctrl+C" execute="copyAbility" />
 			<cardaction menu="Swap abilities" shortcut="Ctrl+Shift+C" execute="swapAbilities" />
 		</cardactions>
-		<cardaction menu="Transform" shortcut="Ctrl+T" batchExecute="transformCards" />
+		<cardaction menu="Transform" shortcut="Ctrl+Shift+T" batchExecute="transformCards" />
 		<cardaction menu="Realign card" shortcut="Ctrl+I" execute="alignCardAction" />
 		<cardaction menu="Clear" shortcut="Esc" execute="clear" />
 		<cardaction menu="Show backups types" shortcut="Ctrl+Alt+B" execute="askCardBackups" />
@@ -209,7 +209,7 @@
 	
 	<player summary="HP: {#HP} | SP: {#SP} | Hand: {#Hand}">
 		<counter name="HP" icon="counters/hp.png" default="30" reset="True" />
-		<counter name="SP" icon="counters/sp.png" default="0" reset="True" />
+		<counter name="SP" icon="counters/sp.png" default="0"  reset="True" />
 		
 		<globalvariable name="Ring" value="[None,None,None,None]" />
 		<globalvariable name="PhaseIdx" value="0" />
@@ -230,7 +230,7 @@
 				<cardaction menu="Put into Deck (Top)" shortcut="Ctrl+D" execute="toDeckTop" />
 				<cardaction menu="Put into Deck (Bottom)" shortcut="Ctrl+Shift+D" execute="toDeckBottom" />
 			</cardactions>
-			<cardaction menu="Transform" shortcut="Ctrl+T" batchExecute="transformCards" />
+			<cardaction menu="Transform" shortcut="Ctrl+Shift+T" batchExecute="transformCards" />
 		</hand>
 		<group name="Deck" visibility="none" width="90" height="126" icon="Groups/deck.png">
 			<groupaction menu="Draw" shortcut="Ctrl+D" default="True" execute="draw" />

@@ -1,5 +1,8 @@
 # Card Fighters' Clash Changelog
 
+## 0.4.0
+Using Python 3.1.0.2 API.  
+Improved documentation.  
 ## 0.3.0.13
 New action: Put card in the Discards pile into the Kill pile.  
 New action swapAbilities().  

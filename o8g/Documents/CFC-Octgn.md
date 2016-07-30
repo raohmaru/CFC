@@ -68,7 +68,7 @@ To activate a card action, move the cursor to a card and then right click to sho
 | <span class=kb>Ctrl</span>+<span class=kb>X</span> | Lose/Restore abilities |
 | ![Target](imgs/target.png) <span class=kb>Ctrl</span>+<span class=kb>C</span> | Copy ability |
 | ![Target](imgs/target.png) <span class=kb>Ctrl</span>+<span class=kb>Shift</span>+<span class=kb>C</span> | Swap abilities |
-| ![Target](imgs/target.png) <span class=kb>Ctrl</span>+<span class=kb>T</span><br><span class=kb>Ctrl</span>+<span class=kb>T</span> | Transform |
+| ![Target](imgs/target.png) <span class=kb>Ctrl</span>+<span class=kb>Shift</span>+<span class=kb>T</span><br><span class=kb>Ctrl</span>+<span class=kb>Shift</span>+<span class=kb>T</span> | Transform |
 | <span class=kb>Ctrl</span>+<span class=kb>I</span> | Realign card in the ring |
 | <span class=kb>Esc</span> | Clear card <span class=sm>(removes targets and highlight colors)</span> |
 | <span class=kb>Ctrl</span>+<span class=kb>Alt</span>+<span class=kb>B</span> | Show compatible backups types |
@@ -89,13 +89,13 @@ To activate a card action, move the cursor to a card and then right click to sho
 | Keys             | Description                                      |
 |:-----------------|:-------------------------------------------------|
 | <span class=kb>Double click</span> | Play card |
-| ![Target](imgs/target.png) <span class=kb>Ctrl</span>+<span class=kb>B</span> | Play as backup |
+| ![Target](imgs/target.png) <span class=kb>Ctrl</span>+<span class=kb>B</span><br>![Target](imgs/target.png) Double click | Play as backup |
 | <span class=kb>Ctrl</span>+<span class=kb>Alt</span>+<span class=kb>B</span> | Show compatible backups types |
 | <span class=kb>Del</span> | Discard card |
 | <span class=kb>Ctrl</span>+<span class=kb>D</span> | Put card on top of the deck |
 | <span class=kb>Ctrl</span>+<span class=kb>Shift</span>+<span class=kb>D</span> | Put card on bottom of the deck |
 | <span class=kb>Ctrl</span>+<span class=kb>F</span> | Put card into Arena face down |
-| ![Target](imgs/target.png) <span class=kb>Ctrl</span>+<span class=kb>T</span><br><span class=kb>Ctrl</span>+<span class=kb>T</span> | Transform |
+| ![Target](imgs/target.png) <span class=kb>Ctrl</span>+<span class=kb>Shift</span>+<span class=kb>T</span><br><span class=kb>Ctrl</span>+<span class=kb>Shift</span>+<span class=kb>T</span> | Transform |
 
 ### Deck ![Deck](../Groups/deck.png)
 #### Group Actions

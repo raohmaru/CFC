@@ -50,11 +50,11 @@ class GameCard(object):
       # Temporary disable auto effects
       return True
       
-      if not self.hasEffect():
-         return
-      if self.rules == None:
-         self.rules = Rules(self.rule_id, self.card_id)
-      return self.rules.activate()
+      # if not self.hasEffect():
+         # return
+      # if self.rules == None:
+         # self.rules = Rules(self.rule_id, self.card_id)
+      # return self.rules.activate()
 
 
 class CharCard(GameCard):

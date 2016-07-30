@@ -52,7 +52,7 @@ def chooseSide():
       return;
    if Table.isTwoSided():
       playerAxis = Yaxis
-      if me.hasInvertedTable():
+      if me.isInverted:
          playerSide = -1
       else:
          playerSide = 1
@@ -158,14 +158,14 @@ def fixCardY(y):
 # Player's 2 axis will fall one extra card length towards their side.
 # This is because of bug #146 (https://github.com/kellyelton/OCTGN/issues/146)
    offsetY = 0
-   if me.hasInvertedTable():
+   if me.isInverted:
       offsetY = CardHeight
    return (y + offsetY) * playerSide
    
    
 def fixSlotIdx(slotIdx, player = me):
 # Fixes the slot index for players playing with the inverted table
-   if player.hasInvertedTable():
+   if player.isInverted:
       slotIdx = abs(slotIdx - (NumSlots-1))
    return slotIdx
 
@@ -260,7 +260,7 @@ def alignCard(card, x=None, y=None, slotIdx=None):
          x, y = lead.position
          x += ox * idx * playerSide
          y += oy * idx
-         z = lead.getIndex - 1 * idx
+         z = lead.index - 1 * idx
       # Align blockers
       elif MarkersDict['CounterAttack'] in card.markers:
          blockers = getGlobalVar('Blockers')         
@@ -277,15 +277,15 @@ def alignCard(card, x=None, y=None, slotIdx=None):
    if x != None and y != None:
       card.moveToTable(x, y)
    if z != None:
-      card.setIndex(max(z, 0))
+      card.index = max(z, 0)
 
 
 def alignBackups(card, x=0, y=0):
-   debug(">>> alignBackups({})".format(card)) #Debug
+   debug(">>> alignBackups({}, {}, {})".format(card, x, y)) #Debug
    attachs = getAttachmets(card)
    if len(attachs) > 0:
       ox, oy = CardsCoords['BackupOffset']
-      z = card.getIndex
+      z = card.index
       debug("{}'s index: {}".format(card, z))
       for i, c in enumerate(attachs):
          nx = x+ox*(i+1)
@@ -293,7 +293,7 @@ def alignBackups(card, x=0, y=0):
          cx, cy = c.position
          if nx != cx or ny != cy:
             c.moveToTable(nx, ny)
-         c.setIndex(max(z-i-1, 0))
+         c.index = max(z-i-1, 0)
 
 
 def getTargetedCards(card=None, targetedByMe=True, controlledByMe=True, type=CharType):
@@ -387,7 +387,7 @@ def addAlternateRules(card, ability, rules, altname=None):
    _extapi.generateProxy(cardData, altname)
    # Need to be here, otherwise if active player switches the card and network tasks are not
    # completed, the card won't switch at all
-   card.switchTo(altname)
+   card.alternate = altname
    return altname
    
 

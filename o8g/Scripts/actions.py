@@ -108,7 +108,7 @@ def setup(group=table, x=0, y=0, silent=False):
    notify("Setup for player {} completed.".format(me))
    # Start the turn of the first player to setup
    if automations['Play']:
-      me.setActivePlayer()
+      me.setActive()
 
    
 def scoop(group, x=0, y=0):
@@ -330,7 +330,7 @@ def toggleAbility(card, x = 0, y = 0):
    if card.alternate == '' and card.Rules == '':
       return
    if card.alternate == 'noability':
-      card.switchTo()
+      card.alternate = ''
       notify("{} restores {}'s abilities".format(me, card))
    else:
       # Updates proxy image of other players
@@ -677,8 +677,9 @@ def backup(card, x = 0, y = 0):  # Play a card as backup attached to a character
 
 def discard(card, x = 0, y = 0):
    mute()
+   group = card.group
    card.moveTo(me.piles['Discard Pile'])
-   notify("{} has discarded {} from its {}.".format(me, card, card.group.name))
+   notify("{} has discarded {} from its {}.".format(me, card, group.name))
 
 
 def randomDiscard(group, x = 0, y = 0):
@@ -783,9 +784,14 @@ def prophecy(group = me.Deck, x = 0, y = 0):
    cards = [c for c in group[:count]]
    cardsPos = []
    while len(cards) > 0:
-      card = askCard(cards, "Select a card to put on top or bottom of the deck", "Select a card")
+      dlg = cardDlg(cards)
+      dlg.title = "Select a card to put on top or bottom of the deck"
+      dlg.text = "Select a Card"
+      dlg.max = 1
+      card = dlg.show()      
       if card == None:
          return
+      card = card[0]
       choice = askChoice("Put {} on top or bottom of the deck?".format(card.Name), ['Top', 'Bottom'])
       if choice == 0:
          return

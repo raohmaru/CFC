@@ -20,26 +20,28 @@
 # Event handlers
 #---------------------------------------------------------------------------
 
-def onTableLoad():
+def onTableLoaded():
    checkTwoSidedTable()
 
 
-def onGameStart():
+def onGameStarted():
    resetAll()
 
 
-def onLoadDeck(player, groups):
+def onDeckLoaded(args):
+   player = args.player
+   groups = args.groups
    if player != me: return # We only want the owner of the deck to run this script
-   debug(">>> onLoadDeck({})".format(player)) #Debug
+   debug(">>> onDeckLoaded({})".format(player)) #Debug
    notify("{} has loaded a deck. Now his deck has {} cards.".format(player, len(me.Deck)))
    mute()
    cards = {}
    for card in me.Deck:
-      if card.model in cards:
-         cards[card.model] += 1
+      if card.Name in cards:
+         cards[card.Name] += 1
       else:
-         cards[card.model] = 1
-      if cards[card.model] > MaxCardCopies:
+         cards[card.Name] = 1
+      if cards[card.Name] > MaxCardCopies:
          msg = "INVALID DECK: {0}'s deck has more than {1} copies of a card (only {1} are allowed)".format(player, MaxCardCopies)
          notify(msg)
          # A more visible notification for all players
@@ -50,30 +52,42 @@ def onLoadDeck(player, groups):
       setup(silent=True)
 
 
-def onMoveCard(player, card, fromGroup, toGroup, oldIndex, index, oldX, oldY, x, y, faceup, highlights, markers):
+def onCardsMoved(args):
    mute()
-   if card.controller != me: return
-   if fromGroup == table and toGroup != table:
-      if card.Type == CharType:
-         clearAttachLinks(card)
-         freeSlot(card)
-   elif fromGroup == table and toGroup == table:
-      if card.Type == CharType and not MarkersDict['Backup'] in card.markers:
-         alignBackups(card, x, y)
-   # Restore transformed card if it goes to a pile
-   if toGroup._name in me.piles:
-      if card._id in transfCards:
-         newCard = toGroup.create(transfCards[card._id], quantity = 1)
-         newCard.moveTo(toGroup, index)
-         whisper("Transformed card {} is restored into {}".format(card, newCard))
-         del transfCards[card._id]
-         card.delete()
+   cards = args.cards
+   for iter in range(len(cards)):
+      card      = args.cards[iter]
+      fromGroup = args.fromGroups[iter]
+      toGroup   = args.toGroups[iter]
+      index     = args.indexs[iter]
+      x         = args.xs[iter]
+      y         = args.ys[iter]
+      faceup    = args.faceups[iter]
+      highlight = args.highlights[iter]
+      markers   = args.markers[iter]
+      
+      if card.controller != me: return
+      if fromGroup == table and toGroup != table:
+         if card.Type == CharType:
+            clearAttachLinks(card)
+            freeSlot(card)
+      elif fromGroup == table and toGroup == table:
+         if card.Type == CharType and not MarkersDict['Backup'] in card.markers:
+            alignBackups(card, *card.position)
+      # Restore transformed card if it goes to a pile
+      if toGroup._name in me.piles:
+         if card._id in transfCards:
+            newCard = toGroup.create(transfCards[card._id], quantity = 1)
+            newCard.moveTo(toGroup, index)
+            whisper("Transformed card {} is restored into {}".format(card, newCard))
+            del transfCards[card._id]
+            card.delete()
          
 
-def onTurnChange(player, turnNumber):
+def onTurnPassed(args):
    # Reset some player variables at the start of each turn
-   debug(">>> OnTurn({}, {})".format(player, turnNumber)) #Debug
-   if player == me:
+   debug(">>> onTurnPassed({}, {})".format(args.player, turnNumber())) #Debug
+   if args.player == me:
       global charsPlayed, backupsPlayed
       charsPlayed = 0  # Num of chars played this turn
       backupsPlayed = 0  # Num of chars backed-up this turn
