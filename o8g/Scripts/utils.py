@@ -401,7 +401,10 @@ def askForSlot(player = me, showEmptySlots = True):
    for i, id in enumerate(ring):
       if not showEmptySlots or id == None:
          slots.append(str(i+1))
-   slotIdx = askChoice("Select an {}slot:".format("empty " if showEmptySlots else ""), slots)
+   # Don't ask of only 1 slot is empty
+   if len(slots) == 1:
+      return int(slots[0]) - 1
+   slotIdx = askChoice("Select a{}slot:".format("n empty " if showEmptySlots else " "), slots)
    debug("Selected option {} ({})".format(slotIdx, slotIdx-1))
    if slotIdx == 0:
       return -1
