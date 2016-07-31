@@ -252,6 +252,10 @@ def block(card, x = 0, y = 0):
 def activate(card, x = 0, y = 0):
    debug(">>> activate()") #Debug
    mute()
+   if card.highlight == ActivatedColor:
+      card.highlight = None
+      notify("{} deactivates {}.".format(me, card))
+      return
    if automations['Play']:
       if not activateAuto(card): return
    if card.Type == CharType:

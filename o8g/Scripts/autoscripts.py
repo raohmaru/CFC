@@ -467,7 +467,7 @@ def activateAuto(card):
       if pcard.ability.type == InstantAbility:
          # Activate only once
          if not MarkersDict['JustEntered'] in card.markers:
-            warning("{} abilities can only be activated once when character just enters the ring.".format(ActivatedUniChar))
+            warning("{} abilities can only be activated once when character just enters the ring.".format(InstantUniChar))
             return
       # [] abilities
       if pcard.ability.type == ActivatedAbility:  
