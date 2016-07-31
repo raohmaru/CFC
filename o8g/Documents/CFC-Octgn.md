@@ -37,7 +37,7 @@ To activate a card action, move the cursor to a card and then right click to sho
 | Keys             | Description                                      |
 |:-----------------|:-------------------------------------------------|
 | <span class=kb>Ctrl</span>+<span class=kb>Shift</span>+<span class=kb>S</span> | Setup <span class=sm>(Should be activated on every new game)</span> |
-| <span class=kb>Tab</span> | Next phase <span class=sm>(Or double click)</span> |
+| <span class=kb>Tab</span> | Next phase |
 | <span class=kb>F1</span> | Go to Activate phase      |
 | <span class=kb>F2</span> | Go to Draw phase          |
 | <span class=kb>F3</span> | Go to Main phase          |

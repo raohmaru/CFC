@@ -184,7 +184,9 @@ The Hit Points represents a player's life. When a player is dealt damage, he los
 A player loses the battle when his HP drops to 0 or less.
 
 ### SP
-The Soul Points represents a player's Ki energy. They can be spend to pay the cost of playing cards with a negative SP value, or the cost of United Attacks.
+The Soul Points represents a player's Ki energy. They can be spend to pay the cost of playing cards with a negative SP value, or to pay the cost of United Attacks.
+
+SP can never drop to less than 0. If you don't have enough SP to play a card, then you cannot.
 
 
 ## Game Structure

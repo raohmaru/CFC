@@ -70,6 +70,8 @@ def goToAttack(group = table, x = 0, y = 0):
 def goToCounterattack(group = table, x = 0, y = 0):
    setGlobalVar('PhaseIdx', BlockPhase, me)
    showCurrentPhase()
+   if len(players) > 1:
+      notify("(Now defending player {} may choose if block attackers)".format(players[1]))
    triggerPhaseEvent(BlockPhase)
 
 
@@ -335,7 +337,10 @@ def toggleAbility(card, x = 0, y = 0):
       return
    if card.alternate == 'noability':
       card.alternate = ''
-      notify("{} restores {}'s abilities".format(me, card))
+      if card.Rules != '':
+         notify("{} restores {}'s abilities".format(me, card))
+      else:
+         notify("{} tried to restore {}'s abilities, but it doesn't have any core ability".format(me, card))
    else:
       # Updates proxy image of other players
       for p in players:
@@ -408,12 +413,9 @@ def swapAbilities(card, x = 0, y = 0):
    if len(targets) > 0 and targets[0].Type == CharType and targets[0] != card and getSlotIdx(targets[0], targets[0].controller) > -1:
       target = targets[0]
       if card.Rules and target.Rules:
-         ab = Struct(**{
-            'Rules'  : card.Rules,
-            'Ability': card.Ability
-         })
+         card_copy = (card.Rules, card.Ability)
          copyAbility(card,   target = target)
-         copyAbility(target, target = ab)
+         copyAbility(target, target = card_copy)
       else:
          warning("Please select two character cards with abilities.")
       target.target(False)

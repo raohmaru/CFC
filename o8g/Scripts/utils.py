@@ -355,11 +355,9 @@ def copyAlternateRules(card, target):
       return None
    rules = None
    ability = None
-   if isinstance(target, basestring):
-      targetData = _extapi.getCardDataByModel(target)
-      if targetData:
-         rules = _extapi.getCardProperty(targetData, "Rules")
-         ability = _extapi.getCardProperty(targetData, "Ability")
+   if isinstance(target, tuple):
+      rules = target[0]
+      ability = target[1]
    else:
       rules = target.Rules
       ability = target.Ability
@@ -488,8 +486,8 @@ def payCostSP(count = 1, silent = False, msg = 'play this card'):
    else:
       if me.SP + count < 0: # If we don't have enough SP, we assume card effects or mistake and notify the player that they need to do things manually.
          if not silent:
-            if not confirm("You do not seem to have enough SP to {}. Are you sure you want to proceed? \
-            \n(If you do, your SP will go to the negative. You will need to increase it manually as required.)".format(msg)):
+            if not confirm("You do not seem to have enough SP to {}.\nAre you sure you want to proceed? \
+            \n\n(If you do, your SP will go to the negative. You will need to increase it manually as required.)".format(msg)):
                return ERR_CANT_PAY_SP
             notify("{} was supposed to pay {} SP but only has {}.".format(me, count, me.SP))
       me.SP += count
@@ -546,6 +544,7 @@ def clearAttachLinks(card):
    attach_len = len([id for id in backups if backups[id] == card._id])
    # Dettach cards that were attached to the card
    if attach_len > 0:
+      notify("{} clears all backups of {}.".format(me, card))
       for id in backups:
          if backups[id] == card._id:
             attcard = Card(id)

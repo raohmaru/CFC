@@ -131,6 +131,8 @@ def cleanupPhaseStart():
          removeMarker(card, 'NoFreeze')
          # Clears targets, colors, freezes characters and resets position
          alignCard(card)
+         if card.highlight == ActivatedColor:
+            card.highlight = None
       # Discard any Action or Reaction card left in the table (just in case player forgot to remove them)
       elif card.Type == ActionType or card.Type == ReactionType:
          discard(card)

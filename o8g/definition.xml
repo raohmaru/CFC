@@ -4,7 +4,7 @@
       name="Card Fighters' Clash"
       id="e3d56d9e-900d-49c6-b6ae-22cbb51be153"
       octgnVersion="3.1.228.0"
-      version="0.4.0.18"
+      version="0.4.0.24"
       markersize="20"
       tags="capcom snk fighter"
       description="A card game based in the SNK Playmore’s video game SNK vs. Capcom Card Fighters' Clash 2 Expand Edition.
@@ -93,7 +93,7 @@
 	</card>
 	
 	<table name="Table" visibility="undefined" ordered="False" width="1250" height="750" background="Resources/Background/background.jpg" backgroundStyle="uniformToFill" board="Resources/Background/ring.png" boardPosition="-327,-342,655,684" >
-		<groupaction menu="Next phase" default="True" shortcut="Tab" execute="nextPhase" />
+		<groupaction menu="Next phase" shortcut="Tab" execute="nextPhase" />
 		<groupactions menu="Phases...">
 			<groupaction menu="Go to Activate phase" shortcut="F1" execute="goToActivate" />
 			<groupaction menu="Go to Draw phase" shortcut="F2" execute="goToDraw" />
@@ -151,7 +151,7 @@
 			<groupaction menu="Set debug verbosity" execute="setDebugVerbosity" />
 		</groupactions>
 		
-		<cardaction menu="Use ability/Resolve" default="True" execute="activate" />
+		<cardaction menu="Use ability / Resolve" default="True" execute="activate" />
 		<cardaction menu="(Un)Freeze" shortcut="Ctrl+F" execute="freeze" />
 		<cardaction menu="Don't unfreeze on Activate phase" shortcut="Ctrl+Shift+F" execute="doesNotUnfreeze" />
 		<cardactions menu="Combat...">
@@ -173,11 +173,7 @@
 			<cardaction menu="Copy ability" shortcut="Ctrl+C" execute="copyAbility" />
 			<cardaction menu="Swap abilities" shortcut="Ctrl+Shift+C" execute="swapAbilities" />
 		</cardactions>
-		<cardaction menu="Transform" shortcut="Ctrl+Shift+T" batchExecute="transformCards" />
-		<cardaction menu="Realign card" shortcut="Ctrl+I" execute="alignCardAction" />
-		<cardaction menu="Clear" shortcut="Esc" execute="clear" />
-		<cardaction menu="Show backups types" shortcut="Ctrl+Alt+B" execute="askCardBackups" />
-		<cardactions menu="Markers...">
+		<cardactions menu="BP / Markers...">
 			<cardactions menu="Raise BP...">
 				<cardaction menu="by 1" shortcut="Ctrl+1" batchExecute="plusBP" />
 				<cardaction menu="by 2" shortcut="Ctrl+2" batchExecute="plusBP2" />
@@ -205,6 +201,10 @@
 			<cardaction menu="Change BP..." shortcut="Ctrl+Alt+0" batchExecute="changeBP" />
 			<cardaction menu="Add markers..." shortcut="Ctrl+M" batchExecute="addMarkerAction" />
 		</cardactions>
+		<cardaction menu="Transform" shortcut="Ctrl+Shift+T" batchExecute="transformCards" />
+		<cardaction menu="Realign card" shortcut="Ctrl+I" execute="alignCardAction" />
+		<cardaction menu="Clear" shortcut="Esc" execute="clear" />
+		<cardaction menu="Show backups types" shortcut="Ctrl+Alt+B" execute="askCardBackups" />
 	</table>
 	
 	<player summary="HP: {#HP} | SP: {#SP} | Hand: {#Hand}">
