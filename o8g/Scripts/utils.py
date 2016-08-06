@@ -629,7 +629,6 @@ def setupDebug(group, x=0, y=0):
       if ability.type and ability.type != InstantAbility:
          card.markers[MarkersDict['JustEntered']] = 0
       charsPlayed = 0
-   drawMany(me.Deck, HandSize, True)
    
    debug("<<< setupDebug()") #Debug
 
@@ -655,12 +654,14 @@ def setDebugVerbosity(group, x=0, y=0):
    if not me.name == Author:
       whisper("This function is only for development purposes.")
       return
-   n = askInteger("Set debug verbosity to: ({} to {})".format(DebugLevel.Off, DebugLevel.All), debugVerbosity)
-   if n == None: return
-   if n < DebugLevel.Off: n = DebugLevel.off
-   elif n > DebugLevel.All: n = DebugLevel.All
-   debugVerbosity = n
-   whisper("Debug verbosity is now: {}".format(debugVerbosity))
+   levels = [None] * len(DebugLevel.__dict__)
+   for attr, value in DebugLevel.__dict__.iteritems():
+      levels[value+1] = attr
+   choice = askChoice("Set debug verbosity to:", levels)
+   if choice == 0:
+      return
+   debugVerbosity = choice - 2
+   whisper("Debug verbosity is now: {} ({})".format(levels[choice-1], debugVerbosity))
 
 
 def debugBackups():

@@ -862,7 +862,6 @@ def reshuffleRE(group = me.piles['Discard Pile']):
    reshuffleCards(group, ReactionType)
    
 
-
 def revealTopDeck(group, x = 0, y = 0):
    mute()
    if group[0].isFaceUp:
