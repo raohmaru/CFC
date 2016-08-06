@@ -11,7 +11,7 @@ Once the game is started you will need to load your deck. Unless you have turned
 - Draw 5 cards
 
 ## Playing the Game
-The best way to learn how to play CFC is by playing [SNK vs. Capcom Card Fighters' Clash 2 Expand Edition](http://neogeo.freeplaytech.com/svc-2/). If you don't have a Neo Geo Pocket Color, or you aren't one of the lucky owners of a Card Fighters' Clash 2 cartridge, you can try [CFC2 English patch](http://cfc2english.blogspot.com.es/).
+The best way to learn how to play CFC is by playing the videogame [SNK vs. Capcom Card Fighters' Clash 2 Expand Edition](http://neogeo.freeplaytech.com/svc-2/). If you don't have a Neo Geo Pocket Color, or you aren't one of the lucky owners of a Card Fighters' Clash 2 cartridge, you can try [CFC2 English patch](http://cfc2english.blogspot.com.es/).
 
 CFC is a turn-based game. To move to the next phase you can press <span class=kb>Tab</span> key or functions keys <span class=kb>F1</span> to <span class=kb>F7</span>. Once you're in the Cleanup phase, pass the turn to your opponent by clicking in the green triangle after its name.
 
