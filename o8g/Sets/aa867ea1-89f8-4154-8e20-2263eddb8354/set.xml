@@ -2619,7 +2619,7 @@
 			<property name="Ability Name" value="SEETHING BLOOD" />
 			<property name="Rules"        value="If an enemy was dealt damage this turn, raise this character&apos;s BP 300 points." />
 			<property name="BP"           value="400" />
-			<property name="SP"           value="2" />
+			<property name="SP"           value="3" />
 			<property name="Backup 1"     value="Ninja" />
 			<property name="Backup 2"     value="Priest" />
 			<property name="Backup 3"     value="" />
