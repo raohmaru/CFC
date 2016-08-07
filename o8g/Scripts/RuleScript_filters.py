@@ -149,7 +149,7 @@ registerFilter('uattack', filterUnitedAttack)
    
 def filterBlock(card, include, cmd, *args):
    debug(">>> filterBlock({}, {}, {}, {})".format(card, include, cmd, args)) #Debug
-   return filterHasMarker(card, 'CounterAttack', include)
+   return filterHasMarker(card, 'Counter-attack', include)
 registerFilter('block', filterBlock)
     
     
@@ -169,7 +169,7 @@ registerFilter('frozen', filterFrozen)
    
 def filterJustEntered(card, include, cmd, *args):
    debug(">>> filterJustEntered({}, {}, {}, {})".format(card, include, cmd, args)) #Debug
-   return filterHasMarker(card, 'JustEntered', include)
+   return filterHasMarker(card, 'Just Entered', include)
 registerFilter('fresh', filterJustEntered)
    
    

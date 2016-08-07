@@ -250,7 +250,7 @@ def alignCard(card, x=None, y=None, slotIdx=None):
          x, y = CardsCoords['Attack'+`slotIdx`]
          y = fixCardY(y)
       # Align chars in a uattack
-      elif MarkersDict['UnitedAttack'] in card.markers:
+      elif MarkersDict['United Attack'] in card.markers:
          uattack = getGlobalVar('UnitedAttack')
          if len(uattack) <= 1 or card._id not in uattack:
             return
@@ -262,7 +262,7 @@ def alignCard(card, x=None, y=None, slotIdx=None):
          y += oy * idx
          z = lead.index - 1 * idx
       # Align blockers
-      elif MarkersDict['CounterAttack'] in card.markers:
+      elif MarkersDict['Counter-attack'] in card.markers:
          blockers = getGlobalVar('Blockers')         
          for i in blockers:
             if blockers[i] == card._id:
@@ -329,11 +329,14 @@ def transformCard(card, cardModel):
    cx, cy = card.position
    if group == table:
       newCard = group.create(cardModel, cx, cy, quantity = 1, persist = True)
+      clearAttachLinks(card)
       slotIdx = getSlotIdx(card)
       if slotIdx != -1:
          setMarker(newCard, 'BP', num(newCard.BP) / 100)
          putAtSlot(newCard, slotIdx)
-         clearAttachLinks(card)
+      for m in card.markers:
+         if m[0] != 'BP':
+            setMarker(newCard, m[0], card.markers[m])
    else:
       newCard = group.create(cardModel, quantity = 1)
    if group == table and card.isFaceUp:
@@ -627,7 +630,7 @@ def setupDebug(group, x=0, y=0):
       playAuto(card, i)
       ability = Ability(card)
       if ability.type and ability.type != InstantAbility:
-         card.markers[MarkersDict['JustEntered']] = 0
+         card.markers[MarkersDict['Just Entered']] = 0
       charsPlayed = 0
    
    debug("<<< setupDebug()") #Debug

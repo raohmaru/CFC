@@ -220,7 +220,7 @@ def attackNoFreeze(card, x = 0, y = 0):
    if automations['Play']:
       if not attackAuto(card): return
    card.highlight = AttackNoFreezeColor
-   setMarker(card, 'NoFreeze')
+   setMarker(card, 'No Freeze')
    notify('{} attacks without freeze with {}.'.format(me, card))
 
 
@@ -289,12 +289,12 @@ def freeze(card, x = 0, y = 0, unfreeze = None, silent = False):
 def doesNotUnfreeze(card, x = 0, y = 0):
    mute()
    msg = "not unfreeze"
-   if not MarkersDict['DoesntUnfreeze'] in card.markers:
+   if not MarkersDict["Doesn't Unfreeze"] in card.markers:
       card.highlight = DoesntUnfreezeColor
-      setMarker(card, 'DoesntUnfreeze')
+      setMarker(card, "Doesn't Unfreeze")
    else:
       card.highlight = None
-      removeMarker(card, 'DoesntUnfreeze')
+      removeMarker(card, "Doesn't Unfreeze")
       msg = "unfreeze as normal"
    
    notify("{0}'s {1} will {2} during {0}'s Activate phase.".format(card.controller, card, {2}))
