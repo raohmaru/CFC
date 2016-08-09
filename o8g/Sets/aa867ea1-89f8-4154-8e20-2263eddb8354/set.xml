@@ -423,7 +423,7 @@
 			<property name="Ability Name" value="ANTISOCIAL" />
 			<property name="Rules"        value="KO another character in your ring." />
 			<property name="BP"           value="1200" />
-			<property name="SP"           value="-4" />
+			<property name="SP"           value="-3" />
 			<property name="Backup 1"     value="Wrestler" />
 			<property name="Backup 2"     value="" />
 			<property name="Backup 3"     value="" />
@@ -1791,7 +1791,7 @@
 			<property name="Ability Name" value="EVIL ENERGY" />
 			<property name="Rules"        value="KO a frozen character." />
 			<property name="BP"           value="700" />
-			<property name="SP"           value="-3" />
+			<property name="SP"           value="-2" />
 			<property name="Backup 1"     value="Deity" />
 			<property name="Backup 2"     value="" />
 			<property name="Backup 3"     value="" />
@@ -2961,7 +2961,7 @@
 			<property name="Ability Name" value="DEALER" />
 			<property name="Rules"        value="Discard your hand. Select a card from your deck and put it into your hand. Then shuffle your deck." />
 			<property name="BP"           value="600" />
-			<property name="SP"           value="-2" />
+			<property name="SP"           value="0" />
 			<property name="Backup 1"     value="Karateka" />
 			<property name="Backup 2"     value="Kickboxer" />
 			<property name="Backup 3"     value="Kickboxer" />
@@ -3645,7 +3645,7 @@
 			<property name="Ability Name" value="GIGANTIC CYCLONE" />
 			<property name="Rules"        value="KO another character in your ring." />
 			<property name="BP"           value="1200" />
-			<property name="SP"           value="-4" />
+			<property name="SP"           value="-3" />
 			<property name="Backup 1"     value="Gangster" />
 			<property name="Backup 2"     value="" />
 			<property name="Backup 3"     value="" />
