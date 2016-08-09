@@ -68,11 +68,10 @@ def resetAll():
 # Clears all the global variables in order to start a new game.
    debug(">>> resetAll()") #Debug
    # Import all our global variables and reset them.
-   global playerSide, handSize, debugVerbosity, parsedCards, transfCards, charsPlayed, backupsPlayed
+   global playerSide, handSize, debugVerbosity, parsedCards, charsPlayed, backupsPlayed
    playerSide = None
    handSize = HandSize
    parsedCards = {}
-   transfCards = {}
    charsPlayed = 0
    backupsPlayed = 0
    me.HP = 30
@@ -80,6 +79,7 @@ def resetAll():
    clearGlobalVar('Backups')
    clearGlobalVar('UnitedAttack')
    clearGlobalVar('Blockers')
+   clearGlobalVar('Transformed')
    
    if len(players) > 1:
       debugVerbosity = DebugLevel.Off # Reset means normal game.
@@ -344,10 +344,12 @@ def transformCard(card, cardModel):
    else:
       notify("{} transformed a card {}.".format(me, fromWhereStr(group)))
    model = card.model
+   transfCards = getGlobalVar('Transformed')
    if card._id in transfCards:
       model = transfCards[card._id]
       del transfCards[card._id]
    transfCards[newCard._id] = model
+   setGlobalVar('Transformed', transfCards)
    card.delete()
    
    

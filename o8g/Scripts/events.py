@@ -55,6 +55,7 @@ def onDeckLoaded(args):
 def onCardsMoved(args):
    mute()
    cards = args.cards
+   transfCards = getGlobalVar('Transformed')
    for iter in range(len(cards)):
       card      = args.cards[iter]
       fromGroup = args.fromGroups[iter]
@@ -66,7 +67,8 @@ def onCardsMoved(args):
       highlight = args.highlights[iter]
       markers   = args.markers[iter]
       
-      if card.controller != me: return
+      if card.controller != me:
+         return
       if fromGroup == table and toGroup != table:
          if card.Type == CharType:
             clearAttachLinks(card)
@@ -78,11 +80,11 @@ def onCardsMoved(args):
       if toGroup._name in me.piles:
          if card._id in transfCards:
             newCard = toGroup.create(transfCards[card._id], quantity = 1)
-            newCard.moveTo(toGroup, index)
+            newCard.moveTo(toGroup, card.index)
             whisper("Transformed card {} is restored into {}".format(card, newCard))
             del transfCards[card._id]
             card.delete()
-         
+   setGlobalVar('Transformed', transfCards)
 
 def onTurnPassed(args):
    # Reset some player variables at the start of each turn

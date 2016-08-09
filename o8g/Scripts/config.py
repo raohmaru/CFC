@@ -36,7 +36,7 @@ Phases = [
    "\n=== ATTACK Phase: {} ===",
    "\n=== COUNTERATTACK Phase: {} ===",
    "\n=== END Phase: {} ===",
-   "\n=== CLEANUP Phase: {} ==="
+   "\n=== CLEANUP Phase: {} ===\n(This is the last phase of your turn)"
 ]
 SetupPhase    = 0
 ActivatePhase = 1
@@ -170,7 +170,6 @@ charsPlayed    = 0  # Num of chars played this turn
 backupsPlayed  = 0  # Num of chars backed-up this turn
 debugVerbosity = -1 # -1..4 (At -1 means no debugging messages display)
 parsedCards    = {} # Dictionary holding all parsed cards
-transfCards    = {} # Dictionary holding all transformed cards
 
 automations = {
    'Play'     : True, # Automatically trigger game effetcs and card effects when playing cards
