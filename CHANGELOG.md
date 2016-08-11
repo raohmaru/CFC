@@ -3,6 +3,7 @@
 ## 0.4.1
 Added GUID to cards of core set.
 Store transformed card in a global variable.
+Reviewed SP of some cards.
 ## 0.4.0
 Using Python 3.1.0.2 API.  
 Improved documentation.  

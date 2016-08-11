@@ -4,7 +4,7 @@
       name="Card Fighters' Clash"
       id="e3d56d9e-900d-49c6-b6ae-22cbb51be153"
       octgnVersion="3.1.228.0"
-      version="0.4.1.33"
+      version="0.4.1.36"
       markersize="20"
       tags="capcom snk fighter"
       description="A card game based in the SNK Playmore’s video game SNK vs. Capcom Card Fighters' Clash 2 Expand Edition.
@@ -23,14 +23,14 @@
 		<script src="Scripts/events.py" />
 		<script src="Scripts/autoscripts.py" />
 		<script src="Scripts/cardsAutoscripts.py" />
-		<!-- <script src="Scripts/cardsRules.py" />
-		<script src="Scripts/RuleScript.py" />
-		<script src="Scripts/RuleScript_config.py" />
-		<script src="Scripts/RuleScript_lexer.py" /> -->
-		<script src="Scripts/RuleScript_filters.py" />
 		<script src="Scripts/utils.py" />
 		<script src="Scripts/winforms.py" />
 		<script src="Scripts/extendedAPI.py" />
+		<!-- <script src="Scripts/cardsRules.py" />
+		<script src="Scripts/rs/RuleScript.py" />
+		<script src="Scripts/rs/RuleScript_config.py" />
+		<script src="Scripts/rs/RuleScript_lexer.py" /> -->
+		<script src="Scripts/rs/RuleScript_filters.py" />
 	</scripts>
 	
 	<events>
@@ -224,7 +224,6 @@
 			</groupactions>
 			<cardaction menu="Play card" default="True" shortcut="Ctrl+P" execute="play" />
 			<cardaction menu="Play as backup" shortcut="Ctrl+B" execute="backup" />
-			<cardaction menu="Show backups types" shortcut="Ctrl+Alt+B" execute="askCardBackups" />
 			<cardaction menu="Discard card" shortcut="Del" execute="discard" />
 			<cardactions menu="Move...">
 				<cardaction menu="Put into Arena face down" shortcut="Ctrl+F" execute="toTableFaceDown" />
@@ -232,6 +231,7 @@
 				<cardaction menu="Put into Deck (Bottom)" shortcut="Ctrl+Shift+D" execute="toDeckBottom" />
 			</cardactions>
 			<cardaction menu="Transform" shortcut="Ctrl+Shift+T" batchExecute="transformCards" />
+			<cardaction menu="Show backups types" shortcut="Ctrl+Alt+B" execute="askCardBackups" />
 		</hand>
 		<group name="Deck" visibility="none" width="90" height="126" icon="Resources/Groups/deck.png">
 			<groupaction menu="Draw" shortcut="Ctrl+D" default="True" execute="draw" />
