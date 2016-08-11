@@ -376,6 +376,7 @@ def copyAbility(card, x = 0, y = 0, target = None):
       return
    if target == None:
       targets =  [c for c in table   if c.targetedBy == me]
+      targets += [c for c in me.hand if c.targetedBy == me]
       targets += [c for c in me.piles['Discard Pile'] if c.targetedBy == me]
       if len(targets) > 0 and targets[0].Type == CharType and targets[0] != card:
          target = targets[0]
