@@ -65,7 +65,7 @@ By playing cards players can bring into the battle powerful fighters and effects
    When a player plays a card, he gains the SP listed in that card. If the SP is 0 or is a negative value, then the player must spend that amount from his SP or that card can't be played.
 4. **Type and Subtype**. The upper line is the card type (Character, Action or Reaction), and the lower line is the card subtype. Only Characters have a subtype.  
    The icon on the left represents the card subtype.
-5. **Text box**. This is where a card’s rules appears, which explains the effects it has in the game. Character cards have an ability symbol (▲, ■ or ●) and an ability name at the beginning of the text, printed in bold.  
+5. **Text box**. This is where a card’s rules appears, which explains the effects it has in the game. Character cards have an ability symbol (<span class="ab ab-instant">▲</span>, <span class="ab ab-activated">■</span> or <span class="ab ab-auto">●</span>) and an ability name at the beginning of the text, printed in bold.  
    Below the rules text it can appear an italicized text (the flavour text) that adds some description of the CFC world. It has no effect on game play.
 6. **Backups**. The list and number of subtypes with whom a character can be backed up. Every icon represents a card subtype. Only Characters can have backups, up to three.
 7. **Publisher and Team**. These are the name of the video game where a character appeared (second logo) and that game publisher (first logo).
@@ -86,7 +86,7 @@ A card has one type, that tells when it can be played and what happens to the ca
 
 Characters are cards that represent a character in a video game, and they are placed into an empty slot of your ring. They can attack and deal damage to an enemy, or they can protect and battle against attacking characters.
 
-Some characters have abilities, represented by an ability symbol (▲, ■ or ●) followed by the ability name in bold.
+Some characters have abilities, represented by an ability symbol (<span class="ab ab-instant">▲</span>, <span class="ab ab-activated">■</span> or <span class="ab ab-auto">●</span>) followed by the ability name in bold.
 
 Character cards have a SP value that is used when played. If it is 0 or more, you gain that amount of SP. If the SP is a negative, then you must pay that cost to play the card.
 
@@ -112,22 +112,22 @@ There is no limitation in the number of Reaction cards a player may play.
 
 
 ## The Abilities
-Some characters may have an special effect (called *Ability*), which is represented by an ability type (symbols ▲, ■ or ●) followed with the ability name at the beginning of the rule text.
+Some characters may have an special effect (called *Ability*), which is represented by an ability type (symbols <span class="ab ab-instant">▲</span>, <span class="ab ab-activated">■</span> or <span class="ab ab-auto">●</span>) followed with the ability name at the beginning of the rule text.
 
 Every type of ability tells in which moment of the game the ability can be activated. Once activated its effect applies immediately.
 
-### ▲ Ability
-A ▲ ability is activated when that character enters the ring.
+### <span class="ab ab-instant">▲</span> Ability
+A <span class="ab ab-instant">▲</span> ability is activated when that character enters the ring.
 
-### ■ ABILITY
-A ■ ability can be activated only in your Main phase. When it is activated the character enters the freeze state.
+### <span class="ab ab-activated">■</span> Ability
+A <span class="ab ab-activated">■</span> ability can be activated only in your Main phase. When it is activated the character enters the freeze state.
 
-Frozen characters and characters that just entered the ring cannot activate a ■ ability in that turn.
+Frozen characters and characters that just entered the ring cannot activate a <span class="ab ab-activated">■</span> ability in that turn.
 
-### ● ABILITY
-A ● ability is always active as long as that character is on the ring.
+### <span class="ab ab-auto">●</span> Ability
+A <span class="ab ab-auto">●</span> ability is always active as long as that character is on the ring.
 
-Whenever a character with a ● ability takes part in a United Attack, that ability is nullified until the end of the turn.
+Whenever a character with a <span class="ab ab-auto">●</span> ability takes part in a United Attack, that ability is nullified until the end of the turn.
 
 
 ## Back-ups
@@ -195,7 +195,7 @@ Each game (also called *Battle*) consists of a number of turns. Players take tur
 The player that is taking his turn is called the *active player*.
 
 ### Parts of the turn
-Each turn is composed of a set of different parts or *phases*. Whenever you enter a new phase, any ● abilities that happen during that phase are triggered and its effects apply.
+Each turn is composed of a set of different parts or *phases*. Whenever you enter a new phase, any <span class="ab ab-auto">●</span> abilities that happen during that phase are triggered and its effects apply.
 
 1. Activate phase
 2. Draw phase
@@ -218,7 +218,7 @@ You can do any of the following actions in any order:
 
 - Play up to one Character card in an empty slot of your ring.
 - Back-up up to one character in your ring.
-- Activate a ■ ability.
+- Activate a <span class="ab ab-activated">■</span> ability.
 - Play any number of Action cards.
 
 #### 4. Attack phase
@@ -247,13 +247,16 @@ __Give Ability__
 See "Steal Ability".
 
 __Freeze__
-A character in a "freeze" state (or *frozen*) can't attack, counterattack or activate ■ abilities.
+A character in a "freeze" state (or *frozen*) can't attack, counterattack or activate <span class="ab ab-activated">■</span> abilities.
 
 __KO__
 Whenever a character's BP lowers to zero, that character is KO'ed and it is into the discard pile.
 
 __Lose Ability__
 To remove an ability from a character.
+
+__Mimic__
+To copy an ability or effect from a card and then resolve it. Once resolved, it ceases to exist.
 
 __Nullify__
 Some effects nullifies the abilities of the cards on the ring. Nullified abilities can't be activated.
@@ -276,4 +279,4 @@ Source code: https://github.com/raohmaru/CFC
 Issues: https://github.com/raohmaru/CFC/issues
 Changelog: https://github.com/raohmaru/CFC/blob/master/CHANGELOG.md
 SNK vs. Capcom Card Fighters' Clash 2 Expand Edition official website (Japanese): http://neogeo.freeplaytech.com/svc-2/
-English translation: http://cfc2english.blogspot.com.es/
+SNK Vs. Capcom Card Fighters' Clash 2 English Edition: http://cfc2english.blogspot.com.es/

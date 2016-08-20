@@ -172,7 +172,7 @@ Use the <span class=kb>+</span>/<span class=kb>-</span> keys on your keyboard's 
 __Move counters from one card to another__
 Click & drag the counter to the other card.
 
-__Target/untarget a card__
+__Target/Untarget a card__
 Hold <span class=kb>Shift</span> and click on the card.
 
 __Draw an Arrow between two cards__
