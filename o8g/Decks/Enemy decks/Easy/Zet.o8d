@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<deck game="e3d56d9e-900d-49c6-b6ae-22cbb51be153" sleeveid="0">
+  <section name="Main" shared="False">
+    <card qty="2" id="bfb5d6cd-afca-4aeb-a1da-8204eb4b2eed">Raiden</card>
+    <card qty="2" id="ae20ea05-0df7-4360-99a5-11a7dfe44b9f">Mikoto</card>
+    <card qty="2" id="2981e9ad-11e1-4f14-a707-2120bfc0cc2f">Sagat</card>
+    <card qty="2" id="7f5099da-4bcf-4895-9493-e83a993118b7">Sean</card>
+    <card qty="2" id="6c8ec7ed-2442-4847-8f38-8c8f5967b2ba">Rikuo</card>
+    <card qty="2" id="1d07a01b-e099-44a8-87eb-71fb2f3fa762">Jedah</card>
+    <card qty="3" id="65c91e9d-761c-4978-ba3e-6e05026f080e">Q-Bee</card>
+    <card qty="2" id="60b0d429-c2bf-482d-84f1-10c78f424cc6">Lilith</card>
+    <card qty="2" id="c09e1c30-468b-4173-8aa8-3e6ba31cd3e8">Strider Hiryu</card>
+    <card qty="3" id="c3a432e3-3642-46a2-a1e2-e2d5d5f698ab">Option</card>
+    <card qty="2" id="af43872e-e47d-4fe0-9b55-aedd8a0d0fc7">Jin Saotome</card>
+    <card qty="2" id="b8a8653c-0286-4b05-a255-c436fd23132d">Blodia</card>
+    <card qty="2" id="79239cad-fd51-4557-9534-af96bd1302bc">Urien</card>
+    <card qty="2" id="a7b36a01-dbb4-4442-aaf8-e415611581a9">Shoma</card>
+    <card qty="2" id="7e0c215c-72f6-4967-83a5-27491376280f">Natsu</card>
+    <card qty="2" id="6b1e210a-4846-419c-87f8-875aae812c6e">Roberto</card>
+    <card qty="2" id="770a55b0-f68d-46ce-bb52-23ec3372b92a">Roy</card>
+    <card qty="2" id="40ef0410-798f-4d60-865b-9af14ed4e355">Tiffany</card>
+    <card qty="2" id="5ac04e26-4811-4064-8386-0e25beb8f974">Boman</card>
+    <card qty="2" id="99081829-e898-4766-8727-b0a2918df49f">Kikaioh</card>
+    <card qty="2" id="9610668a-18c9-4448-8216-f40119a03269">Lucky kitty</card>
+    <card qty="2" id="e2597326-5639-435f-ae33-3303b181527c">Activate!</card>
+    <card qty="2" id="f4df6ee6-2fcd-4ba1-b86f-59d5028eb96b">Vacation</card>
+    <card qty="2" id="130c068d-bf62-4013-8b17-32af4a3f6994">Face off</card>
+  </section>
+  <notes><![CDATA[]]></notes>
+</deck>
