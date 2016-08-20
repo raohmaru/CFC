@@ -52,6 +52,8 @@ def goToActivate(group = table, x = 0, y = 0):
 def goToDraw(group = table, x = 0, y = 0):
    setGlobalVar('PhaseIdx', DrawPhase, me)
    showCurrentPhase()
+   if turnNumber() == 1:
+      notify("(The player who goes first should skip his Draw phase during their first turn.)")
    triggerPhaseEvent(DrawPhase)
 
 

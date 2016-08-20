@@ -1,5 +1,7 @@
 # Card Fighters' Clash Changelog
 
+## 0.5.0
+Added decks from the video game.
 ## 0.4.1
 Added GUID to cards of core set.
 Store transformed card in a global variable.

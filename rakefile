@@ -151,6 +151,19 @@ task :docs do
     padding-right: 0.6em;
     border-bottom: solid 1px #e1e1e1;
   }
+  .ab {
+    font-size: 120%;
+    line-height: 0;
+    color: #990000;
+  }
+  .ab-activated {
+    font-size: 170%;
+  }
+  .ab-auto {
+    position: relative;
+    top: 0.1em;
+    font-size: 175%;
+  }
 	</style>
 </head>
 <body>
