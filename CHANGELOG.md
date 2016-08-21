@@ -2,6 +2,7 @@
 
 ## 0.5.0
 Added decks from the video game.
+Adjusted the SP cost of character cards.
 ## 0.4.1
 Added GUID to cards of core set.
 Store transformed card in a global variable.
