@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+﻿<?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <deck game="e3d56d9e-900d-49c6-b6ae-22cbb51be153" sleeveid="0">
   <section name="Main" shared="False">
     <card qty="3" id="299685df-122c-4fbe-a8dd-05ceaaf41055">Andy</card>
@@ -28,15 +28,14 @@
     <card qty="1" id="298bd386-e304-4739-95c6-78c9de4c17e4">Gill</card>
     <card qty="2" id="40ef0410-798f-4d60-865b-9af14ed4e355">Tiffany</card>
     <card qty="1" id="e22264db-d58f-48ce-9be7-608bdfdd4299">Double KO</card>
-    <card qty="1" id="9610668a-18c9-4448-8216-f40119a03269">Lucky kitty</card>
     <card qty="3" id="77792408-ba0f-4e5f-a079-f7eca5955543">Stifler</card>
     <card qty="2" id="a8b949ff-7def-4c0a-8d79-49ad2a1d02d8">Pride</card>
     <card qty="1" id="96f72173-528d-4a3a-a85c-9cf92439435a">Laundry</card>
-    <card qty="1" id="2d3891a7-6fc0-4793-9122-5abfc0bb3e22">Tri-Quiz</card>
     <card qty="1" id="48a11103-e08d-4237-952e-bf4cdc2868f7">Time bomb</card>
     <card qty="1" id="dd49c2e2-3455-481d-b8a7-5f813796b3f4">Galactica phantom</card>
-    <card qty="1" id="fef1b38c-a055-4cd7-9436-34e220c30d52">Cover fire</card>
+    <card qty="1" id="fef1b38c-a055-4cd7-9436-34e220c30d52">Cruel hunt</card>
     <card qty="3" id="27befc33-c2be-40d2-8839-bb8ee41f8d95">Overheat</card>
+    <card qty="2" id="11fa47f0-9573-48ca-9a4a-7aa16a4ec76e">Psyche up!</card>
   </section>
   <notes><![CDATA[]]></notes>
 </deck>

@@ -496,7 +496,8 @@ def payCostSP(count = 1, silent = False, msg = 'play this card'):
                return ERR_CANT_PAY_SP
             notify("{} was supposed to pay {} SP but only has {}.".format(me, count, me.SP))
       me.SP += count
-      if not silent: notify("{} has spent {} SP. New total is {}.".format(me, count, me.SP))
+      if not silent:
+         notify("{} has spent {} SP. New total is {}.".format(me, count, me.SP))
 
 
 #------------------------------------------------------------------------------

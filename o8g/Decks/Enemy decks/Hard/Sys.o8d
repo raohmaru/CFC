@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+﻿<?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <deck game="e3d56d9e-900d-49c6-b6ae-22cbb51be153" sleeveid="0">
   <section name="Main" shared="False">
     <card qty="1" id="f286cc08-ae18-4a40-bd66-17aedcfd9267">Krauser</card>
@@ -33,13 +33,13 @@
     <card qty="1" id="6c6fd560-017e-4819-accf-a66faef84218">Nothingness</card>
     <card qty="1" id="e22264db-d58f-48ce-9be7-608bdfdd4299">Double KO</card>
     <card qty="2" id="62a6c4e0-51d0-4a23-9854-9ba0a25bc751">Slaughter</card>
-    <card qty="1" id="0035d193-fe4b-4927-9dc1-6124b26768bc">Shopping</card>
-    <card qty="1" id="96f72173-528d-4a3a-a85c-9cf92439435a">Laundry</card>
     <card qty="3" id="2d3891a7-6fc0-4793-9122-5abfc0bb3e22">Tri-Quiz</card>
     <card qty="2" id="48a11103-e08d-4237-952e-bf4cdc2868f7">Time bomb</card>
     <card qty="1" id="dd49c2e2-3455-481d-b8a7-5f813796b3f4">Galactica phantom</card>
     <card qty="2" id="fef1b38c-a055-4cd7-9436-34e220c30d52">Cruel hunt</card>
-    <card qty="1" id="130c068d-bf62-4013-8b17-32af4a3f6994">Face off</card>
+    <card qty="1" id="2644337b-a5f8-4669-858b-824d9607f2d8">Fellowship</card>
+    <card qty="1" id="11fa47f0-9573-48ca-9a4a-7aa16a4ec76e">Psyche up!</card>
+    <card qty="1" id="f7a00823-d37b-48eb-b2f6-c530623a2a9c">Abduction</card>
   </section>
   <notes><![CDATA[]]></notes>
 </deck>
