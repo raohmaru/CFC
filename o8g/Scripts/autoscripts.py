@@ -313,7 +313,7 @@ def attackAuto(card):
                c.highlight = AttackColor
                alignCard(c)
             clearGlobalVar('UnitedAttack')
-         # Reorder reamining united attackers
+         # Reorder remaining united attackers
          else:
             for cid in uattack[1:]:
                alignCard(Card(cid))

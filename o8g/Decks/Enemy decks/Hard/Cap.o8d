@@ -15,13 +15,12 @@
     <card qty="1" id="03a6a70c-6f38-48b5-bcc0-4529ec0a18c2">Ryu (Zero)</card>
     <card qty="1" id="759b3fef-e5c0-406e-b186-a94b211e8735">Evil Ryu</card>
     <card qty="1" id="4e34756e-34e4-45e5-a6ab-698604c6fb99">Morrigan</card>
-    <card qty="1" id="d646ffc5-bec9-4e98-b799-510b4e1ea464">Pyron</card>
+    <card qty="1" id="73e4c201-f462-4106-9e03-3b63ecd04aab">Morrigan Aensland</card>
+    <card qty="2" id="d646ffc5-bec9-4e98-b799-510b4e1ea464">Pyron</card>
     <card qty="1" id="d44d9e8a-785c-48f2-85a5-ed076c1aa518">B. B. Hood</card>
     <card qty="1" id="af43872e-e47d-4fe0-9b55-aedd8a0d0fc7">Jin Saotome</card>
     <card qty="1" id="e6e46f83-d089-4762-8d8e-2a3252cfc9db">Daigo</card>
-    <card qty="1" id="09dfc071-ce3a-448f-86fe-502bd5d1392b">Kyoko</card>
     <card qty="1" id="fd1a3f1c-7df1-443e-97b1-f093d66e74c9">Zero Akuma</card>
-    <card qty="1" id="6f733db6-883b-41f5-a657-4e19784d183c">Falcon</card>
     <card qty="1" id="c09e1c30-468b-4173-8aa8-3e6ba31cd3e8">Strider Hiryu</card>
     <card qty="1" id="8ce9a56f-8c0c-49e7-879c-12179c63f288">Cap. Commando</card>
     <card qty="1" id="79239cad-fd51-4557-9534-af96bd1302bc">Urien</card>
@@ -30,12 +29,12 @@
     <card qty="1" id="e22264db-d58f-48ce-9be7-608bdfdd4299">Double KO</card>
     <card qty="3" id="77792408-ba0f-4e5f-a079-f7eca5955543">Stifler</card>
     <card qty="2" id="a8b949ff-7def-4c0a-8d79-49ad2a1d02d8">Pride</card>
+    <card qty="2" id="11fa47f0-9573-48ca-9a4a-7aa16a4ec76e">Psyche up!</card>
     <card qty="1" id="96f72173-528d-4a3a-a85c-9cf92439435a">Laundry</card>
     <card qty="1" id="48a11103-e08d-4237-952e-bf4cdc2868f7">Time bomb</card>
     <card qty="1" id="dd49c2e2-3455-481d-b8a7-5f813796b3f4">Galactica phantom</card>
     <card qty="1" id="fef1b38c-a055-4cd7-9436-34e220c30d52">Cruel hunt</card>
     <card qty="3" id="27befc33-c2be-40d2-8839-bb8ee41f8d95">Overheat</card>
-    <card qty="2" id="11fa47f0-9573-48ca-9a4a-7aa16a4ec76e">Psyche up!</card>
   </section>
   <notes><![CDATA[]]></notes>
 </deck>
