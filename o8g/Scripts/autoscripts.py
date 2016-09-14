@@ -296,28 +296,7 @@ def attackAuto(card):
       clear(card, silent = True)
       alignCard(card)
       notify('{} cancels the attack with {}'.format(me, card))
-      # Was the card in a uattack?
-      uattack = getGlobalVar('UnitedAttack')
-      if card._id in uattack:
-         uatttackIdx = uattack.index(card._id)
-         uattack.remove(card._id)
-         uattack = filter(None, uattack)
-         setGlobalVar('UnitedAttack', uattack)
-         # If it was the lead card, or only 1 char left, cancel uattack
-         if uatttackIdx == 0 or len(uattack) == 1:
-            notify('{} cancels the United Attack with'.format(me))
-            for cid in uattack:
-               c = Card(cid)
-               removeMarker(c, 'United Attack')
-               setMarker(c, 'Attack')
-               c.highlight = AttackColor
-               alignCard(c)
-            clearGlobalVar('UnitedAttack')
-         # Reorder remaining united attackers
-         else:
-            for cid in uattack[1:]:
-               alignCard(Card(cid))
-         debug("UnitedAttack: {}".format(getGlobalVar('UnitedAttack')))
+      rearrangeUAttack(card)
       return
    # Char just entered the ring?
    if MarkersDict['Just Entered'] in card.markers:
@@ -354,7 +333,7 @@ def unitedAttackAuto(card):
    uattack = getGlobalVar('UnitedAttack')
    if len(uattack) > 0:
       if uattack[0] != target._id:
-         # If targetting other char in the uattack, change target to lead char
+         # If targeting other char in the uattack, change target to lead char
          if target._id in uattack:
             target.target(False)
             target = Card(uattack[0])
@@ -499,3 +478,29 @@ def activateAuto(card):
       pcard = getParsedCard(card)
       return pcard.activateEffect()
    
+   
+def rearrangeUAttack(card):
+   # Rearrange or cancels a uattack if the card was part of it
+   debug(">>> rearrangeUAttack()") #Debug
+   uattack = getGlobalVar('UnitedAttack')
+   if card._id in uattack:
+      notify("{} was part of an United Attack. Now it will be rearranged.".format(card))
+      uatttackIdx = uattack.index(card._id)
+      uattack.remove(card._id)
+      uattack = filter(None, uattack)
+      setGlobalVar('UnitedAttack', uattack)
+      # If it was the lead card, or only 1 char left, cancel uattack
+      if uatttackIdx == 0 or len(uattack) == 1:
+         notify('{} cancels the United Attack'.format(me))
+         for cid in uattack:
+            c = Card(cid)
+            removeMarker(c, 'United Attack')
+            setMarker(c, 'Attack')
+            c.highlight = AttackColor
+            alignCard(c)
+         clearGlobalVar('UnitedAttack')
+      # Reorder remaining united attackers
+      else:
+         for cid in uattack[1:]:
+            alignCard(Card(cid))
+      debug("UnitedAttack: {}".format(getGlobalVar('UnitedAttack')))

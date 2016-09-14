@@ -51,7 +51,7 @@ def onDeckLoaded(args):
    if automations['Play']:
       setup(silent=True)
 
-
+      
 def onCardsMoved(args):
    mute()
    cards = args.cards
@@ -65,7 +65,7 @@ def onCardsMoved(args):
       y         = args.ys[iter]
       faceup    = args.faceups[iter]
       highlight = args.highlights[iter]
-      markers   = args.markers[iter]
+      markers   = eval(args.markers[iter])  # markers it's a string equivalent of the Marker object
       
       if card.controller != me:
          return
@@ -73,6 +73,8 @@ def onCardsMoved(args):
          if card.Type == CharType:
             clearAttachLinks(card)
             freeSlot(card)
+            if MarkersDict['Attack'] in markers or MarkersDict['United Attack'] in markers:
+               rearrangeUAttack(card)
       elif fromGroup == table and toGroup == table:
          if card.Type == CharType and not MarkersDict['Backup'] in card.markers:
             alignBackups(card, *card.position)
@@ -86,6 +88,7 @@ def onCardsMoved(args):
             card.delete()
    setGlobalVar('Transformed', transfCards)
 
+   
 def onTurnPassed(args):
    # Reset some player variables at the start of each turn
    debug(">>> onTurnPassed({}, {})".format(args.player, turnNumber())) #Debug
