@@ -4,7 +4,7 @@
       name="Card Fighters' Clash"
       id="e3d56d9e-900d-49c6-b6ae-22cbb51be153"
       octgnVersion="3.1.228.0"
-      version="0.5.1.55"
+      version="0.5.1.57"
       markersize="20"
       tags="capcom snk fighter"
       description="A card game based in the SNK Playmore’s video game SNK vs. Capcom Card Fighters' Clash 2 Expand Edition.
@@ -146,11 +146,11 @@
 			<groupaction menu="Switch Alert Messages ON/OFF" execute="switchWinForms" />
 			<groupaction menu="Switch Attack Damage automation ON/OFF" execute="switchAttackDamage" />
 		</groupactions>
-		<groupactions menu="Debug...">
+		<!-- <groupactions menu="Debug...">
 			<groupaction menu="Setup" shortcut="Ctrl+Alt+S" execute="setupDebug" />
 			<groupaction menu="Debug" execute="testSuite" />
 			<groupaction menu="Set debug verbosity" execute="setDebugVerbosity" />
-		</groupactions>
+		</groupactions> -->
 		
 		<cardaction menu="Use ability / Resolve" default="True" execute="activate" />
 		<cardaction menu="(Un)Freeze" shortcut="Ctrl+F" execute="freeze" />
