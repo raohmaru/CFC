@@ -325,6 +325,10 @@ def alignCardAction(card, x = 0, y = 0):
 def askCardBackups(card, x = 0, y = 0):
    if card.Type == CharType:
       acceptedBackups = (card.properties['Backup 1'], card.properties['Backup 2'], card.properties['Backup 3'])
+      for c in me.hand:
+         if c != card and c.Type == CharType and c.Subtype in acceptedBackups:
+            c.highlight = InfoColor
+      whisper("Highlighting compatible back-ups cards in your hand")
       msg = "{} can be backed-up with the following character types:\n- {}".format(card.Name, '\n- '.join(filter(None, acceptedBackups)))
       information(msg)
       whisper(msg)

@@ -1,5 +1,7 @@
 # Card Fighters' Clash Changelog
 
+## 0.6.0
+Highlight compatible back-ups in the hand.
 ## 0.5.0
 Added decks from the video game.
 Adjusted the SP cost of character cards.

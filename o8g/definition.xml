@@ -4,7 +4,7 @@
       name="Card Fighters' Clash"
       id="e3d56d9e-900d-49c6-b6ae-22cbb51be153"
       octgnVersion="3.1.228.0"
-      version="0.5.1.57"
+      version="0.6.0.59"
       markersize="20"
       tags="capcom snk fighter"
       description="A card game based in the SNK Playmore’s video game SNK vs. Capcom Card Fighters' Clash 2 Expand Edition.
@@ -204,8 +204,8 @@
 		</cardactions>
 		<cardaction menu="Transform" shortcut="Ctrl+Shift+T" batchExecute="transformCards" />
 		<cardaction menu="Realign card" shortcut="Ctrl+I" execute="alignCardAction" />
-		<cardaction menu="Clear" shortcut="Esc" execute="clear" />
 		<cardaction menu="Show backups types" shortcut="Ctrl+Alt+B" execute="askCardBackups" />
+		<cardaction menu="Clear" shortcut="Esc" execute="clear" />
 	</table>
 	
 	<player summary="HP: {#HP} | SP: {#SP} | Hand: {#Hand}">
@@ -232,6 +232,7 @@
 			</cardactions>
 			<cardaction menu="Transform" shortcut="Ctrl+Shift+T" batchExecute="transformCards" />
 			<cardaction menu="Show backups types" shortcut="Ctrl+Alt+B" execute="askCardBackups" />
+			<cardaction menu="Clear" shortcut="Esc" execute="clear" />
 		</hand>
 		<group name="Deck" visibility="none" width="90" height="126" icon="Resources/Groups/deck.png">
 			<groupaction menu="Draw" shortcut="Ctrl+D" default="True" execute="draw" />
