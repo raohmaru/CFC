@@ -21,73 +21,59 @@ import re
 # Phases
 #---------------------------------------------------------------------------
 
-def showCurrentPhase():  # Just say a nice notification about which phase you're on.
-   notify(Phases[getGlobalVar('PhaseIdx', me)].format(me))
-
-
 def nextPhase(group = table, x = 0, y = 0):  # Function to take you to the next phase.
-   idx = oldIdx = getGlobalVar('PhaseIdx', me)
+   idx = currentPhase()[1]
    if idx >= len(Phases) - 1:
       idx = ActivatePhase
    else:
       idx += 1
+   setPhase(idx)
+
+   
+def gotoPhase(idx, oldIdx = 0):
    if idx == ActivatePhase:
       if oldIdx != CleanupPhase:  # Force cleanup
          triggerPhaseEvent(CleanupPhase)
-      goToActivate()
-   elif idx == DrawPhase:    goToDraw()
-   elif idx == MainPhase:    goToMain()
-   elif idx == AttackPhase:  goToAttack()
-   elif idx == BlockPhase:   goToCounterattack()
-   elif idx == EndPhase:     goToEnd()
-   elif idx == CleanupPhase: goToCleanup()
+   elif idx == DrawPhase:
+      if turnNumber() == 1:
+         notify("(The player who goes first should skip his Draw phase during their first turn.)")
+   # elif idx == MainPhase:  
+   # elif idx == AttackPhase:
+   elif idx == BlockPhase: 
+      if len(players) > 1:
+         notify("(Now defending player {} may choose if block attackers)".format(players[1]))
+   # elif idx == EndPhase:   
+   elif idx == CleanupPhase:
+      whisper("This is the last phase of your turn")   
+   triggerPhaseEvent(idx)
+
+   
+def gotoActivate(group = table, x = 0, y = 0):
+   setPhase(ActivatePhase)
 
 
-def goToActivate(group = table, x = 0, y = 0):
-   setGlobalVar('PhaseIdx', ActivatePhase, me)
-   showCurrentPhase()
-   triggerPhaseEvent(ActivatePhase)
+def gotoDraw(group = table, x = 0, y = 0):
+   setPhase(DrawPhase)
 
 
-def goToDraw(group = table, x = 0, y = 0):
-   setGlobalVar('PhaseIdx', DrawPhase, me)
-   showCurrentPhase()
-   if turnNumber() == 1:
-      notify("(The player who goes first should skip his Draw phase during their first turn.)")
-   triggerPhaseEvent(DrawPhase)
+def gotoMain(group = table, x = 0, y = 0):
+   setPhase(MainPhase)
 
 
-def goToMain(group = table, x = 0, y = 0):
-   setGlobalVar('PhaseIdx', MainPhase, me)
-   showCurrentPhase()
-   triggerPhaseEvent(MainPhase)
+def gotoAttack(group = table, x = 0, y = 0):
+   setPhase(AttackPhase)
 
 
-def goToAttack(group = table, x = 0, y = 0):
-   setGlobalVar('PhaseIdx', AttackPhase, me)
-   showCurrentPhase()
-   triggerPhaseEvent(AttackPhase)
+def gotoCounterattack(group = table, x = 0, y = 0):
+   setPhase(BlockPhase)
 
 
-def goToCounterattack(group = table, x = 0, y = 0):
-   setGlobalVar('PhaseIdx', BlockPhase, me)
-   showCurrentPhase()
-   if len(players) > 1:
-      notify("(Now defending player {} may choose if block attackers)".format(players[1]))
-   triggerPhaseEvent(BlockPhase)
+def gotoEnd(group = table, x = 0, y = 0):
+   setPhase(EndPhase)
 
 
-def goToEnd(group = table, x = 0, y = 0):
-   setGlobalVar('PhaseIdx', EndPhase, me)
-   showCurrentPhase()
-   triggerPhaseEvent(EndPhase)
-
-
-def goToCleanup(group = table, x = 0, y = 0, silent = False):
-   setGlobalVar('PhaseIdx', CleanupPhase, me)
-   if not silent:
-      showCurrentPhase()
-   triggerPhaseEvent(CleanupPhase)
+def gotoCleanup(group = table, x = 0, y = 0, silent = False):
+   setPhase(CleanupPhase)
 
 
 #---------------------------------------------------------------------------
@@ -324,7 +310,7 @@ def alignCardAction(card, x = 0, y = 0):
 
 def askCardBackups(card, x = 0, y = 0):
    if card.Type == CharType:
-      acceptedBackups = (card.properties['Backup 1'], card.properties['Backup 2'], card.properties['Backup 3'])
+      acceptedBackups = getAcceptedBackups(card)
       for c in me.hand:
          if c != card and c.Type == CharType and c.Subtype in acceptedBackups:
             c.highlight = InfoColor

@@ -36,7 +36,7 @@ Phases = [
    "\n=== ATTACK Phase: {} ===",
    "\n=== COUNTERATTACK Phase: {} ===",
    "\n=== END Phase: {} ===",
-   "\n=== CLEANUP Phase: {} ===\n(This is the last phase of your turn)"
+   "\n=== CLEANUP Phase: {} ==="
 ]
 SetupPhase    = 0
 ActivatePhase = 1

@@ -146,7 +146,7 @@ def cleanupPhaseStart():
 def playAuto(card, slotIdx=None):
    debug(">>> playAuto({})".format(card)) #Debug
    global charsPlayed
-   phaseIdx = getGlobalVar('PhaseIdx', me)
+   phaseIdx = currentPhase()[1]
    
    # Player plays a Character card
    if card.Type == CharType:
@@ -202,7 +202,7 @@ def playAuto(card, slotIdx=None):
    # Player plays a Reaction card
    elif card.Type == ReactionType:
       # Check if the card can be legally played
-      if me.isActive or getGlobalVar('PhaseIdx', players[1]) != BlockPhase:
+      if me.isActive or phaseIdx != BlockPhase:
          information("Reaction cards can only be played in enemy's Counter-attack Phase.")
          return
       # Pay SP cost
@@ -221,7 +221,7 @@ def backupAuto(card):
    global backupsPlayed
    
    # Check if the card can be legally played
-   if not me.isActive or getGlobalVar('PhaseIdx', me) != MainPhase:
+   if not me.isActive or currentPhase()[1] != MainPhase:
       information("Characters can only be backed-up on your Main Phase.")
       return
    # Only for character cards
@@ -248,7 +248,7 @@ def backupAuto(card):
       warning("Frozen characters can't be backed-up.")
       return
    # Check compatible backups
-   acceptedBackups = (target.properties['Backup 1'], target.properties['Backup 2'], target.properties['Backup 3'])
+   acceptedBackups = getAcceptedBackups(target)
    if not card.Subtype in acceptedBackups:
       warning("Incompatible backups.\n{} only accepts {} character types.".format(target.Name, ', '.join(filter(None, acceptedBackups))))
       return
@@ -276,7 +276,7 @@ def attackAuto(card):
    debug(">>> attackAuto()") #Debug
    
    # Check if we can attack
-   if not me.isActive or getGlobalVar('PhaseIdx', me) != AttackPhase:
+   if not me.isActive or currentPhase()[1] != AttackPhase:
       information("You can only attack in your Attack Phase.")
       return
    # Only for character cards...
@@ -374,7 +374,7 @@ def blockAuto(card):
    debug(">>> blockAuto()") #Debug
    
    # Check if the card can be legally played
-   if me.isActive or getGlobalVar('PhaseIdx', players[1]) != BlockPhase:
+   if me.isActive or currentPhase()[1] != BlockPhase:
       information("You can only counter-attack in enemy's Counter-attack Phase.")
       return      
    # Only for character cards...
@@ -441,7 +441,7 @@ def activateAuto(card):
          return
       debug("Trying to activate {}'s ability {} {}".format(card.Name, pcard.ability.type, pcard.ability.name))
       # Activate [] and /\ only in player's Main Phase
-      if pcard.ability.type in [InstantAbility, ActivatedAbility] and (not me.isActive or getGlobalVar('PhaseIdx', me) != MainPhase):
+      if pcard.ability.type in [InstantAbility, ActivatedAbility] and (not me.isActive or currentPhase()[1] != MainPhase):
          information("You can only activate {} or {} abilities in your Main Phase.".format(ActivatedUniChar, InstantUniChar))
          return
       # /\ abilities

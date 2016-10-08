@@ -96,10 +96,14 @@ def onTurnPassed(args):
       global charsPlayed, backupsPlayed
       charsPlayed = 0  # Num of chars played this turn
       backupsPlayed = 0  # Num of chars backed-up this turn
-      setGlobalVar('PhaseIdx', 0, me)
       clearGlobalVar('UnitedAttack')
       clearGlobalVar('Blockers')
-   else:
-      goToCleanup(silent = True)
-   debug("<<< OnTurn()") #Debug
-   
+   elif args.player is not None:
+      gotoCleanup(silent = True)
+   debug("<<< onTurnPassed()") #Debug
+
+
+def onPhasePassed(args):
+   name, idx = currentPhase()
+   debug(">>> onPhasePassed: {} => {}".format(args.id, idx))
+   gotoPhase(idx, args.id)

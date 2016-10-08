@@ -580,6 +580,9 @@ def getAttachmets(card):
          
    debug("{} has {} cards attached".format(card, len(attachs)))
    return attachs
+   
+def getAcceptedBackups(card):
+   return (card.properties['Backup 1'], card.properties['Backup 2'], card.properties['Backup 3'])
 
 
 #------------------------------------------------------------------------------
@@ -620,7 +623,7 @@ def setupDebug(group, x=0, y=0):
    debugVerbosity = DebugLevel.All
    me.SP = 50
    chooseSide()
-   goToMain()
+   gotoMain()
    cards = [
       'aa867ea1-89f8-4154-8e20-2263edd00002',
       'aa867ea1-89f8-4154-8e20-2263edd00014',

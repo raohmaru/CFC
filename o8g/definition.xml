@@ -4,7 +4,7 @@
       name="Card Fighters' Clash"
       id="e3d56d9e-900d-49c6-b6ae-22cbb51be153"
       octgnVersion="3.1.228.0"
-      version="0.6.0.59"
+      version="0.6.0.66"
       markersize="20"
       tags="capcom snk fighter"
       description="A card game based in the SNK Playmore’s video game SNK vs. Capcom Card Fighters' Clash 2 Expand Edition.
@@ -40,6 +40,7 @@
 		<event name="OnCardsMoved"         action="onCardsMoved" />
 		<event name="OnScriptedCardsMoved" action="onCardsMoved" />
 		<event name="OnTurnPassed"         action="onTurnPassed" />
+		<event name="OnPhasePassed"        action="onPhasePassed" />
 	</events>
 	
 	<!-- <sounds>
@@ -55,6 +56,16 @@
 	
 	<proxygen definitionsrc="Proxy/proxydef.xml">
 	</proxygen>
+	
+	<phases>
+		<phase name="Activate Phase"       icon="Resources/Phases/phase.png" />
+		<phase name="Draw Phase"           icon="Resources/Phases/phase.png" />
+		<phase name="Main Phase"           icon="Resources/Phases/phase.png" />
+		<phase name="Attack Phase"         icon="Resources/Phases/phase4.png" />
+		<phase name="Counter-attack Phase" icon="Resources/Phases/phase5.png" />
+		<phase name="End Phase"            icon="Resources/Phases/phase.png" />
+		<phase name="Cleanup Phase"        icon="Resources/Phases/phase.png" />
+	</phases> 
 	
 	<documents>
 		<document name="Rulebook" icon="Documents/manual.png" src="Documents/CFC-Rules.html" />
@@ -96,13 +107,13 @@
 	<table name="Table" visibility="undefined" ordered="False" width="1250" height="750" background="Resources/Background/background.jpg" backgroundStyle="uniformToFill" board="Resources/Background/ring.png" boardPosition="-327,-342,655,684" >
 		<groupaction menu="Next phase" shortcut="Tab" execute="nextPhase" />
 		<groupactions menu="Phases...">
-			<groupaction menu="Go to Activate phase" shortcut="F1" execute="goToActivate" />
-			<groupaction menu="Go to Draw phase" shortcut="F2" execute="goToDraw" />
-			<groupaction menu="Go to Main phase" shortcut="F3" execute="goToMain" />
-			<groupaction menu="Go to Attack phase" shortcut="F4" execute="goToAttack" />
-			<groupaction menu="Go to Counterattack phase" shortcut="F5" execute="goToCounterattack" />
-			<groupaction menu="Go to End phase" shortcut="F6" execute="goToEnd" />
-			<groupaction menu="Go to Cleanup phase" shortcut="F7" execute="goToCleanup" />
+			<groupaction menu="Go to Activate phase" shortcut="F1" execute="gotoActivate" />
+			<groupaction menu="Go to Draw phase" shortcut="F2" execute="gotoDraw" />
+			<groupaction menu="Go to Main phase" shortcut="F3" execute="gotoMain" />
+			<groupaction menu="Go to Attack phase" shortcut="F4" execute="gotoAttack" />
+			<groupaction menu="Go to Counterattack phase" shortcut="F5" execute="gotoCounterattack" />
+			<groupaction menu="Go to End phase" shortcut="F6" execute="gotoEnd" />
+			<groupaction menu="Go to Cleanup phase" shortcut="F7" execute="gotoCleanup" />
 		</groupactions>
 		<groupactions menu="SP...">
 			<groupactions menu="Gain SP...">
@@ -213,7 +224,6 @@
 		<counter name="SP" icon="Resources/Counters/sp.png" default="0"  reset="True" />
 		
 		<globalvariable name="Ring" value="[None,None,None,None]" />
-		<globalvariable name="PhaseIdx" value="0" />
 
 		<hand name="Hand" visibility="me" width="90" height="126" icon="Resources/Groups/hand.png">
 			<groupaction menu="Random discard" shortcut="Ctrl+Del" execute="randomDiscard" />

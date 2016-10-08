@@ -2,6 +2,7 @@
 
 ## 0.6.0
 Highlight compatible back-ups in the hand.
+Added phases to show the Phase Toolbar.
 ## 0.5.0
 Added decks from the video game.
 Adjusted the SP cost of character cards.
