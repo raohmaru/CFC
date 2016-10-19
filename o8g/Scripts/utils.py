@@ -589,15 +589,13 @@ def getAcceptedBackups(card):
 # Debugging
 #------------------------------------------------------------------------------
 
-def debug(msg = 'Debug Ping!', level = 1):
+def debug(msg, level = 1):
    global debugVerbosity
    if debugVerbosity < DebugLevel.Info:
       return
-   if isinstance(msg, (int, long, float)):
-      msg = str(msg)
-   if not re.search(r'(<<<|>>>)',msg):
-      lvlPrefix = DebugLevelPrefixes[level]
-      msg = lvlPrefix + ' ' + msg
+   msg = "{}".format(msg)
+   if not re.search(r'(<<<|>>>)', msg):
+      msg = DebugLevelPrefixes[level] + ' ' + msg
    else:
       level = DebugLevel.Debug
    if debugVerbosity >= level:

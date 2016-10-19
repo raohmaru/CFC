@@ -4,7 +4,7 @@
       name="Card Fighters' Clash"
       id="e3d56d9e-900d-49c6-b6ae-22cbb51be153"
       octgnVersion="3.1.228.0"
-      version="0.6.0.68"
+      version="0.6.0.72"
       markersize="20"
       tags="capcom snk fighter"
       description="A card game based in the SNK Playmore’s video game SNK vs. Capcom Card Fighters' Clash 2 Expand Edition.
@@ -26,6 +26,7 @@
 		<script src="Scripts/utils.py" />
 		<script src="Scripts/winforms.py" />
 		<script src="Scripts/extendedAPI.py" />
+		<script src="Scripts/actionLabels.py" />
 		<!-- <script src="Scripts/cardsRules.py" />
 		<script src="Scripts/rs/RuleScript.py" />
 		<script src="Scripts/rs/RuleScript_config.py" />
@@ -163,14 +164,14 @@
 			<groupaction menu="Set debug verbosity" execute="setDebugVerbosity" />
 		</groupactions> -->
 		
-		<cardaction menu="Use ability / Resolve" default="True" execute="activate" />
-		<cardaction menu="(Un)Freeze" shortcut="Ctrl+F" execute="freeze" />
+		<cardaction menu="Use ability / Resolve" default="True" execute="activate" getName="aclb_Resolve" />
+		<cardaction menu="(Un)Freeze" shortcut="Ctrl+F" execute="freeze" getName="aclb_Freeze" />
 		<cardaction menu="Don't unfreeze on Activate phase" shortcut="Ctrl+Shift+F" execute="doesNotUnfreeze" />
 		<cardactions menu="Combat...">
-			<cardaction menu="Attack" shortcut="Ctrl+A" execute="attack" />
-			<cardaction menu="Attack without freezing" shortcut="Ctrl+Shift+A" execute="attackNoFreeze" />
-			<cardaction menu="United Attack" shortcut="Ctrl+Alt+A" execute="attack" />
-			<cardaction menu="Counter-attack" shortcut="Ctrl+B" execute="block" />
+			<cardaction menu="Attack" shortcut="Ctrl+A" execute="attack" getName="aclb_Attack" />
+			<cardaction menu="Attack without freezing" shortcut="Ctrl+Shift+A" execute="attackNoFreeze" getName="aclb_Attack" />
+			<cardaction menu="United Attack" shortcut="Ctrl+Alt+A" execute="attack" getName="aclb_Attack" />
+			<cardaction menu="Counter-attack" shortcut="Ctrl+B" execute="block" getName="aclb_Block" />
 		</cardactions>
 		<cardactions menu="Move...">
 			<cardaction menu="KO" shortcut="Del" execute="destroy" />
@@ -178,10 +179,10 @@
 			<cardaction menu="Return to Hand" shortcut="Ctrl+H" execute="toHand" />
 			<cardaction menu="Put into Deck (Top)" shortcut="Ctrl+D" execute="toDeckTop" />
 			<cardaction menu="Put into Deck (Bottom)" shortcut="Ctrl+Shift+D" execute="toDeckBottom" />
-			<cardaction menu="Change/Swap slot" execute="changeSlot" />
+			<cardaction menu="Change/Swap slot" execute="changeSlot" getName="aclb_ChangeSlot" />
 		</cardactions>
 		<cardactions menu="Abilities...">
-			<cardaction menu="Lose/Restore abilities" shortcut="Ctrl+X" execute="toggleAbility" />
+			<cardaction menu="Lose/Restore abilities" shortcut="Ctrl+X" execute="toggleAbility" getName="aclb_Ability" />
 			<cardaction menu="Copy ability" shortcut="Ctrl+C" execute="copyAbility" />
 			<cardaction menu="Swap abilities" shortcut="Ctrl+Shift+C" execute="swapAbilities" />
 		</cardactions>
