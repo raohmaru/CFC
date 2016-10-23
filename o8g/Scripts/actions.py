@@ -312,8 +312,11 @@ def askCardBackups(card, x = 0, y = 0):
    if card.Type == CharType:
       acceptedBackups = getAcceptedBackups(card)
       for c in me.hand:
-         if c != card and c.Type == CharType and c.Subtype in acceptedBackups:
-            c.highlight = InfoColor
+         if c.Type == CharType:
+            if c != card and c.Subtype in acceptedBackups:
+               c.highlight = InfoColor
+            elif c.highlight == InfoColor:
+               c.highlight = None
       whisper("Highlighting compatible back-ups cards in your hand")
       msg = "{} can be backed-up with the following character types:\n- {}".format(card.Name, '\n- '.join(filter(None, acceptedBackups)))
       information(msg)
