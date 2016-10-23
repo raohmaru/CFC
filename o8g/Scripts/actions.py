@@ -325,7 +325,7 @@ def askCardBackups(card, x = 0, y = 0):
 def toggleAbility(card, x = 0, y = 0):
    mute()
    parsedCards.pop(card._id, None)
-   if card.alternate == '' and card.Rules == '':
+   if card.Type != CharType or (card.alternate == '' and card.Rules == ''):
       return
    if card.alternate == 'noability':
       card.alternate = ''
