@@ -58,18 +58,16 @@ def aclb_ChangeSlot(args):
       
 def aclb_Ability(args):
    card = args[0]
-   if card.alternate == '' and card.Rules == '':
-      return "------"
    if card.alternate == 'noability':
       return "Restore abilities"
    else:
       return "Lose abilities"
 
       
-# Doesn't work yet, no parameters are passed to the function
 def aclb_RevealTopDeck(args):
-   debug(args)
-   group = args[0]
+   # Doesn't work yet, args is an empty array
+   # group = args[0]
+   group = me.Deck
    if group[0].isFaceUp:
       return "Hide top card"
    else:
