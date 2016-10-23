@@ -1249,7 +1249,7 @@
 			<property name="Ability"      value="&#162; GOAL KEEPER" />
 			<property name="Ability Type" value="&#162;" />
 			<property name="Ability Name" value="GOAL KEEPER" />
-			<property name="Rules"        value="Choose one:&#xD;&#xA;— Swap the positions of two characters in the&#xD;&#xA;     same ring.&#xD;&#xA;— Move a character to an empty slot in the&#xD;&#xA;     same ring." />
+			<property name="Rules"        value="Choose one:&#xD;&#xA;— Swap the positions of two characters in&#xD;&#xA;     the same ring.&#xD;&#xA;— Move a character to an empty slot in the&#xD;&#xA;     same ring." />
 			<property name="BP"           value="500" />
 			<property name="SP"           value="2" />
 			<property name="Backup 1"     value="Gymnast" />
