@@ -58,14 +58,14 @@ InfoColor           = "#00ff00"
 
 # Dictionaries which hold all the hard coded markers and tokens (in the markers & tokens set)
 MarkersDict = {
-   "BP"              : ("BP",               "b86fc644-d084-43d3-99d2-5b11457321cc"),
-   "Just Entered"    : ("Just Entered",     "9a52c42c-543f-48bb-9a48-d7599d6c8fae"),
-   "Attack"          : ("Attack",           "023406a3-417c-473d-bc23-481290755a4a"),
-   "United Attack"   : ("United Attack",    "88036e2b-6a1f-40be-a941-988b27c405ba"),
-   "Counter-attack"  : ("Counter-attack",   "2fd7dc74-4149-469d-9bde-53e94b99b934"),
-   "Doesn't Unfreeze": ("Doesn't Unfreeze", "5231f83b-b78e-48b3-8bce-62031c022bf4"),
-   "No Freeze"       : ("No Freeze",        "fec1976b-9ce5-4b32-8c07-76eadc5607f6"),
-   "Backup"          : ("Backup",           "efd3208d-2ec3-44ca-be1d-858e91628da4")
+   "BP"               : ("BP",               "b86fc644-d084-43d3-99d2-5b11457321cc"),
+   "Just Entered"     : ("Just Entered",     "9a52c42c-543f-48bb-9a48-d7599d6c8fae"),
+   "Attack"           : ("Attack",           "023406a3-417c-473d-bc23-481290755a4a"),
+   "United Attack"    : ("United Attack",    "88036e2b-6a1f-40be-a941-988b27c405ba"),
+   "Counter-attack"   : ("Counter-attack",   "2fd7dc74-4149-469d-9bde-53e94b99b934"),
+   "Does Not Unfreeze": ("Does Not Unfreeze", "5231f83b-b78e-48b3-8bce-62031c022bf4"),
+   "No Freeze"        : ("No Freeze",        "fec1976b-9ce5-4b32-8c07-76eadc5607f6"),
+   "Backup"           : ("Backup",           "efd3208d-2ec3-44ca-be1d-858e91628da4")
 }
 TokensDict = {}
 

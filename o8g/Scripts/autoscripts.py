@@ -38,7 +38,7 @@ def activatePhaseStart():
       if card.controller == me)
    for card in myCards:
       if card.Type == CharType:
-         if not MarkersDict["Doesn't Unfreeze"] in card.markers:
+         if not MarkersDict["Does Not Unfreeze"] in card.markers:
             freeze(card, unfreeze = True, silent = True)
          removeMarker(card, 'Just Entered')
          clear(card, silent = True)

@@ -277,12 +277,12 @@ def freeze(card, x = 0, y = 0, unfreeze = None, silent = False):
 def doesNotUnfreeze(card, x = 0, y = 0):
    mute()
    msg = "not unfreeze"
-   if not MarkersDict["Doesn't Unfreeze"] in card.markers:
+   if not MarkersDict["Does Not Unfreeze"] in card.markers:
       card.highlight = DoesntUnfreezeColor
-      setMarker(card, "Doesn't Unfreeze")
+      setMarker(card, "Does Not Unfreeze")
    else:
       card.highlight = None
-      removeMarker(card, "Doesn't Unfreeze")
+      removeMarker(card, "Does Not Unfreeze")
       msg = "unfreeze as normal"
    
    notify("{0}'s {1} will {2} during {0}'s Activate phase.".format(card.controller, card, {2}))
