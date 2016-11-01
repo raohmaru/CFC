@@ -4,7 +4,7 @@
       name="Card Fighters' Clash"
       id="e3d56d9e-900d-49c6-b6ae-22cbb51be153"
       octgnVersion="3.1.228.0"
-      version="0.6.0.73"
+      version="0.6.1.82"
       markersize="20"
       tags="capcom snk fighter"
       description="A card game based in the SNK Playmore’s video game SNK vs. Capcom Card Fighters' Clash 2 Expand Edition.
@@ -27,6 +27,7 @@
 		<script src="Scripts/winforms.py" />
 		<script src="Scripts/extendedAPI.py" />
 		<script src="Scripts/actionLabels.py" />
+		<script src="Scripts/actionShow.py" />
 		<!-- <script src="Scripts/cardsRules.py" />
 		<script src="Scripts/rs/RuleScript.py" />
 		<script src="Scripts/rs/RuleScript_config.py" />
@@ -106,16 +107,17 @@
 	</card>
 	
 	<table name="Table" visibility="undefined" ordered="False" width="1250" height="750" background="Resources/Background/background.jpg" backgroundStyle="uniformToFill" board="Resources/Background/ring.png" boardPosition="-327,-342,655,684" >
-		<groupaction menu="Next phase" shortcut="Tab" execute="nextPhase" />
-		<groupactions menu="Phases...">
-			<groupaction menu="Go to Activate phase" shortcut="F1" execute="gotoActivate" />
-			<groupaction menu="Go to Draw phase" shortcut="F2" execute="gotoDraw" />
-			<groupaction menu="Go to Main phase" shortcut="F3" execute="gotoMain" />
-			<groupaction menu="Go to Attack phase" shortcut="F4" execute="gotoAttack" />
+		<groupaction menu="Next phase" shortcut="Tab" execute="nextPhase" showIf="acsh_gameStarted" />
+		<groupactions menu="Phases..." showIf="acsh_gameStarted">
+			<groupaction menu="Go to Activate phase"      shortcut="F1" execute="gotoActivate" />
+			<groupaction menu="Go to Draw phase"          shortcut="F2" execute="gotoDraw" />
+			<groupaction menu="Go to Main phase"          shortcut="F3" execute="gotoMain" />
+			<groupaction menu="Go to Attack phase"        shortcut="F4" execute="gotoAttack" />
 			<groupaction menu="Go to Counterattack phase" shortcut="F5" execute="gotoCounterattack" />
-			<groupaction menu="Go to End phase" shortcut="F6" execute="gotoEnd" />
-			<groupaction menu="Go to Cleanup phase" shortcut="F7" execute="gotoCleanup" />
+			<groupaction menu="Go to End phase"           shortcut="F6" execute="gotoEnd" />
+			<groupaction menu="Go to Cleanup phase"       shortcut="F7" execute="gotoCleanup" />
 		</groupactions>
+		<groupaction menu="Setup game" shortcut="Ctrl+Shift+S" execute="setup" showIf="acsh_gameNotStarted" />
 		<groupactions menu="SP...">
 			<groupactions menu="Gain SP...">
 				<groupaction menu="by 1" shortcut="Ctrl+1" execute="plusSP" />
@@ -150,73 +152,72 @@
 			<groupaction menu="Pick a random card (Mine)"  execute="randomPickMine" />
 			<groupaction menu="Pick a random card (Enemy)" execute="randomPickEnemy" />
 		</groupactions>
-		<groupaction menu="Setup game" shortcut="Ctrl+Shift+S" execute="setup" />
-		<groupaction menu="Restart game" execute="scoop" />
+		<groupaction menu="Restart game" execute="scoop" showIf="acsh_gameStarted" />
 		<groupactions menu="Settings...">
 			<groupaction menu="Switch Play automation ON/OFF" execute="switchPlayAutomation" />
 			<groupaction menu="Switch Phase Triggers automation ON/OFF" execute="switchPhaseAutomation" />
 			<groupaction menu="Switch Alert Messages ON/OFF" execute="switchWinForms" />
 			<groupaction menu="Switch Attack Damage automation ON/OFF" execute="switchAttackDamage" />
 		</groupactions>
-		<!-- <groupactions menu="Debug...">
+		<groupactions menu="Debug..." showIf="acsh_Debug">
 			<groupaction menu="Setup" shortcut="Ctrl+Alt+S" execute="setupDebug" />
 			<groupaction menu="Debug" execute="testSuite" />
 			<groupaction menu="Set debug verbosity" execute="setDebugVerbosity" />
-		</groupactions> -->
+		</groupactions>
 		
 		<cardaction menu="Use ability / Resolve" default="True" execute="activate" getName="aclb_Resolve" />
-		<cardaction menu="(Un)Freeze" shortcut="Ctrl+F" execute="freeze" getName="aclb_Freeze" />
-		<cardaction menu="Don't unfreeze on Activate phase" shortcut="Ctrl+Shift+F" execute="doesNotUnfreeze" />
-		<cardactions menu="Combat...">
+		<cardaction menu="(Un)Freeze" shortcut="Ctrl+F" execute="freeze" getName="aclb_Freeze" showIf="acsh_isChar" />
+		<cardaction menu="Don't unfreeze on Activate phase" shortcut="Ctrl+Shift+F" execute="doesNotUnfreeze" showIf="acsh_isChar" />
+		<cardactions menu="Combat..." showIf="acsh_isChar">
 			<cardaction menu="Attack" shortcut="Ctrl+A" execute="attack" getName="aclb_Attack" />
 			<cardaction menu="Attack without freezing" shortcut="Ctrl+Shift+A" execute="attackNoFreeze" getName="aclb_Attack" />
 			<cardaction menu="United Attack" shortcut="Ctrl+Alt+A" execute="attack" getName="aclb_Attack" />
 			<cardaction menu="Counter-attack" shortcut="Ctrl+B" execute="block" getName="aclb_Block" />
 		</cardactions>
 		<cardactions menu="Move...">
-			<cardaction menu="KO" shortcut="Del" execute="destroy" />
+			<cardaction menu="KO" shortcut="Del" execute="destroy" getName="aclb_Destroy" />
 			<cardaction menu="Remove" shortcut="Shift+Del" execute="remove" />
 			<cardaction menu="Return to Hand" shortcut="Ctrl+H" execute="toHand" />
 			<cardaction menu="Put into Deck (Top)" shortcut="Ctrl+D" execute="toDeckTop" />
 			<cardaction menu="Put into Deck (Bottom)" shortcut="Ctrl+Shift+D" execute="toDeckBottom" />
-			<cardaction menu="Change/Swap slot" execute="changeSlot" getName="aclb_ChangeSlot" />
+			<cardaction menu="Change/Swap slot" execute="changeSlot" getName="aclb_ChangeSlot" showIf="acsh_isChar" />
 		</cardactions>
-		<cardactions menu="Abilities...">
+		<cardactions menu="Abilities..." showIf="acsh_isChar">
 			<cardaction menu="Lose/Restore abilities" shortcut="Ctrl+X" execute="toggleAbility" getName="aclb_Ability" />
 			<cardaction menu="Copy ability" shortcut="Ctrl+C" execute="copyAbility" />
 			<cardaction menu="Swap abilities" shortcut="Ctrl+Shift+C" execute="swapAbilities" />
 		</cardactions>
 		<cardactions menu="BP / Markers...">
-			<cardactions menu="Raise BP...">
-				<cardaction menu="by 1" shortcut="Ctrl+1" batchExecute="plusBP" />
-				<cardaction menu="by 2" shortcut="Ctrl+2" batchExecute="plusBP2" />
-				<cardaction menu="by 3" shortcut="Ctrl+3" batchExecute="plusBP3" />
-				<cardaction menu="by 4" shortcut="Ctrl+4" batchExecute="plusBP4" />
-				<cardaction menu="by 5" shortcut="Ctrl+5" batchExecute="plusBP5" />
-				<cardaction menu="by 6" shortcut="Ctrl+6" batchExecute="plusBP6" />
-				<cardaction menu="by 7" shortcut="Ctrl+7" batchExecute="plusBP7" />
-				<cardaction menu="by 8" shortcut="Ctrl+8" batchExecute="plusBP8" />
-				<cardaction menu="by 9" shortcut="Ctrl+9" batchExecute="plusBP9" />
-				<cardaction menu="by X" shortcut="Ctrl+0" batchExecute="plusBPX" />
+			<cardactions menu="Raise BP..." showIf="acsh_isChar">
+				<cardaction menu="+1" shortcut="Ctrl+1" batchExecute="plusBP" />
+				<cardaction menu="+2" shortcut="Ctrl+2" batchExecute="plusBP2" />
+				<cardaction menu="+3" shortcut="Ctrl+3" batchExecute="plusBP3" />
+				<cardaction menu="+4" shortcut="Ctrl+4" batchExecute="plusBP4" />
+				<cardaction menu="+5" shortcut="Ctrl+5" batchExecute="plusBP5" />
+				<cardaction menu="+6" shortcut="Ctrl+6" batchExecute="plusBP6" />
+				<cardaction menu="+7" shortcut="Ctrl+7" batchExecute="plusBP7" />
+				<cardaction menu="+8" shortcut="Ctrl+8" batchExecute="plusBP8" />
+				<cardaction menu="+9" shortcut="Ctrl+9" batchExecute="plusBP9" />
+				<cardaction menu="+X" shortcut="Ctrl+0" batchExecute="plusBPX" />
 			</cardactions>
-			<cardactions menu="Lower BP...">
-				<cardaction menu="by 1" shortcut="Ctrl+Shift+1" batchExecute="minusBP" />
-				<cardaction menu="by 2" shortcut="Ctrl+Shift+2" batchExecute="minusBP2" />
-				<cardaction menu="by 3" shortcut="Ctrl+Shift+3" batchExecute="minusBP3" />
-				<cardaction menu="by 4" shortcut="Ctrl+Shift+4" batchExecute="minusBP4" />
-				<cardaction menu="by 5" shortcut="Ctrl+Shift+5" batchExecute="minusBP5" />
-				<cardaction menu="by 6" shortcut="Ctrl+Shift+6" batchExecute="minusBP6" />
-				<cardaction menu="by 7" shortcut="Ctrl+Shift+7" batchExecute="minusBP7" />
-				<cardaction menu="by 8" shortcut="Ctrl+Shift+8" batchExecute="minusBP8" />
-				<cardaction menu="by 9" shortcut="Ctrl+Shift+9" batchExecute="minusBP9" />
-				<cardaction menu="by X" shortcut="Ctrl+Shift+0" batchExecute="minusBPX" />
+			<cardactions menu="Lower BP..." showIf="acsh_isChar">
+				<cardaction menu="-1" shortcut="Ctrl+Shift+1" batchExecute="minusBP" />
+				<cardaction menu="-2" shortcut="Ctrl+Shift+2" batchExecute="minusBP2" />
+				<cardaction menu="-3" shortcut="Ctrl+Shift+3" batchExecute="minusBP3" />
+				<cardaction menu="-4" shortcut="Ctrl+Shift+4" batchExecute="minusBP4" />
+				<cardaction menu="-5" shortcut="Ctrl+Shift+5" batchExecute="minusBP5" />
+				<cardaction menu="-6" shortcut="Ctrl+Shift+6" batchExecute="minusBP6" />
+				<cardaction menu="-7" shortcut="Ctrl+Shift+7" batchExecute="minusBP7" />
+				<cardaction menu="-8" shortcut="Ctrl+Shift+8" batchExecute="minusBP8" />
+				<cardaction menu="-9" shortcut="Ctrl+Shift+9" batchExecute="minusBP9" />
+				<cardaction menu="-X" shortcut="Ctrl+Shift+0" batchExecute="minusBPX" />
 			</cardactions>
-			<cardaction menu="Change BP..." shortcut="Ctrl+Alt+0" batchExecute="changeBP" />
+			<cardaction menu="Change BP..." shortcut="Ctrl+Alt+0" batchExecute="changeBP" showIf="acsh_isChar" />
 			<cardaction menu="Add markers..." shortcut="Ctrl+M" batchExecute="addMarkerAction" />
 		</cardactions>
 		<cardaction menu="Transform" shortcut="Ctrl+Shift+T" batchExecute="transformCards" />
 		<cardaction menu="Realign card" shortcut="Ctrl+I" execute="alignCardAction" />
-		<cardaction menu="Show backups types" shortcut="Ctrl+Alt+B" execute="askCardBackups" />
+		<cardaction menu="Show backups types" shortcut="Ctrl+Alt+B" execute="askCardBackups" showIf="acsh_isChar" />
 		<cardaction menu="Clear" shortcut="Esc" execute="clear" />
 	</table>
 	
@@ -234,7 +235,7 @@
 				<groupaction menu="Discard pile" shortcut="Ctrl+Shift+Del" execute="discardAll" />
 			</groupactions>
 			<cardaction menu="Play card" default="True" shortcut="Ctrl+P" execute="play" />
-			<cardaction menu="Play as backup" shortcut="Ctrl+B" execute="backup" />
+			<cardaction menu="Play as backup" shortcut="Ctrl+B" execute="backup" showIf="acsh_isChar" />
 			<cardaction menu="Discard card" shortcut="Del" execute="discard" />
 			<cardactions menu="Move...">
 				<cardaction menu="Put into Arena face down" shortcut="Ctrl+F" execute="toTableFaceDown" />
@@ -242,7 +243,7 @@
 				<cardaction menu="Put into Deck (Bottom)" shortcut="Ctrl+Shift+D" execute="toDeckBottom" />
 			</cardactions>
 			<cardaction menu="Transform" shortcut="Ctrl+Shift+T" batchExecute="transformCards" />
-			<cardaction menu="Show backups types" shortcut="Ctrl+Alt+B" execute="askCardBackups" />
+			<cardaction menu="Show backups types" shortcut="Ctrl+Alt+B" execute="askCardBackups" showIf="acsh_isChar" />
 			<cardaction menu="Clear" shortcut="Esc" execute="clear" />
 		</hand>
 		<group name="Deck" visibility="none" width="90" height="126" icon="Resources/Groups/deck.png">

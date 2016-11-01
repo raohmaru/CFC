@@ -15,6 +15,10 @@
 # You should have received a copy of the GNU General Public License
 # along with this script.  If not, see <http://www.gnu.org/licenses/>.
 
+#---------------------------------------------------------------------------
+# Functions that alter the label name of an action from the menu
+#---------------------------------------------------------------------------
+
 def aclb_Freeze(args):
    card = args[0]
    if isFrozen(card):
@@ -62,6 +66,14 @@ def aclb_Ability(args):
       return "Restore abilities"
    else:
       return "Lose abilities"
+
+      
+def aclb_Destroy(args):
+   card = args[0]
+   if card.Type == CharType:
+      return "KO"
+   else:
+      return "Discard"
 
       
 def aclb_RevealTopDeck(args):

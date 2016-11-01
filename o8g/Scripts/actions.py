@@ -84,9 +84,9 @@ def setup(group=table, x=0, y=0, silent=False):
 # This function is usually the first one the player does
    debug(">>> setup()") #Debug
    mute()
-   if not silent:
-      if not confirm("Are you sure you want to setup for a new game?"):
-         return
+   # if not silent:
+      # if not confirm("Are you sure you want to setup for a new game?"):
+         # return
    chooseSide() # The classic place where the players choose their side
    # We ensure that player has loaded a deck
    if len(me.Deck) == 0:
