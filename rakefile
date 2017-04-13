@@ -11,7 +11,7 @@ CLOBBER.include ["o8g/*.o8g", "#{OCTGN_dir}/LocalFeed/Card*.nupkg", "o8g/Scripts
 task :default => [:build]
 
 
-desc "Builds the .o8g and .nupkg files from the game definition files"
+desc "Builds a .o8g and a .nupkg file from the game definition files"
 task :build => [:versionbump, :docs] do
   sh "#{OCTGN_dir}/OCTGN/o8build.exe -d=o8g"
 end
@@ -77,7 +77,7 @@ task :octgn do
 end
 
 
-desc "Converts Markdown documents in Documents/ folder into HTML"
+desc "Converts Markdown documents in Documents/ folder into HTML files"
 task :docs do
   puts "Converting Markdown files into HTML"
   # Initializes a Markdown parser

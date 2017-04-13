@@ -1,5 +1,4 @@
-Developing with OCTGN
-=====================
+# Developing with OCTGN
 
 Command line arguments:
 
