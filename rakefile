@@ -61,16 +61,6 @@ end
 
 desc "Runs OCTGN in dev mode, in the table view with the CFC game loaded"
 task :octgn do
-  puts "\nFixing bug with OCTGN asking for Wine..."
-  filename = OCTGN_dir + "/Config/settings.json"
-  file = File.open(filename, 'r')
-  settings = JSON.parse(file.read)
-  file.close
-  settings.delete('AskedIfUsingWine')
-  File.open(filename, 'w') { |f|
-    f.puts JSON.pretty_generate(settings)
-  }
-  
   # OCTGN window closes after the loading screen ends
   # system "#{OCTGN_dir}/OCTGN/OCTGN.exe /t /g=e3d56d9e-900d-49c6-b6ae-22cbb51be153 /x"
   puts "Run #{OCTGN_dir}/OCTGN/OCTGN.exe /t /g=e3d56d9e-900d-49c6-b6ae-22cbb51be153 /x"
