@@ -19,22 +19,39 @@
 # Functions to dynamically determines whether or not an action should appear or hide from the menu
 #---------------------------------------------------------------------------
 
-def acsh_Debug(args):
+def acsh_Debug(args, x = 0, y = 0):
    if me.name == Author:
       return True
    return False
 
       
-def acsh_isChar(args):
+def acsh_isChar(args, x = 0, y = 0):
    card = args[0]
    if card.Type == CharType:
       return True
    return False
 
       
-def acsh_gameStarted(args):
+def acsh_gameStarted(args, x = 0, y = 0):
    return turnNumber() != 0
 
       
-def acsh_gameNotStarted(args):
+def acsh_gameNotStarted(args, x = 0, y = 0):
    return turnNumber() == 0
+
+
+def acsh_isActivePlayer(args, x = 0, y = 0):
+   return me.isActive
+
+
+def acsh_isNotActivePlayer(args, x = 0, y = 0):
+   return not me.isActive
+
+      
+def acsh_isActivePlayerAndNotAttacking(args, x = 0, y = 0):
+   card = args[0]
+   if not me.isActive:
+      return False
+   if not MarkersDict['Attack'] in card.markers and not MarkersDict['United Attack'] in card.markers:
+      return True
+   return False

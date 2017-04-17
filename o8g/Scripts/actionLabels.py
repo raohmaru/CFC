@@ -19,7 +19,7 @@
 # Functions that alter the label name of an action from the menu
 #---------------------------------------------------------------------------
 
-def aclb_Freeze(args):
+def aclb_Freeze(args, x = 0, y = 0):
    card = args[0]
    if isFrozen(card):
       return "Unfreeze"
@@ -27,7 +27,7 @@ def aclb_Freeze(args):
       return "Freeze"
 
       
-def aclb_Resolve(args):
+def aclb_Resolve(args, x = 0, y = 0):
    card = args[0]
    if card.Type == CharType:
       return "Use ability"
@@ -35,7 +35,7 @@ def aclb_Resolve(args):
       return "Resolve"
 
       
-def aclb_Attack(args):
+def aclb_Attack(args, x = 0, y = 0):
    card = args[0]
    if MarkersDict['Attack'] in card.markers or MarkersDict['United Attack'] in card.markers:
       return "Remove from attack"
@@ -43,7 +43,7 @@ def aclb_Attack(args):
       return
 
       
-def aclb_Block(args):
+def aclb_Block(args, x = 0, y = 0):
    card = args[0]
    if MarkersDict['Counter-attack'] in card.markers:
       return "Don't counter-attack"
@@ -51,7 +51,7 @@ def aclb_Block(args):
       return
 
       
-def aclb_ChangeSlot(args):
+def aclb_ChangeSlot(args, x = 0, y = 0):
    card = args[0]
    targets = getTargetedCards(card, True, card.controller == me)
    if len(targets) > 0:
@@ -60,7 +60,7 @@ def aclb_ChangeSlot(args):
       return "Change slot"
 
       
-def aclb_Ability(args):
+def aclb_Ability(args, x = 0, y = 0):
    card = args[0]
    if card.alternate == 'noability':
       return "Restore abilities"
@@ -68,7 +68,7 @@ def aclb_Ability(args):
       return "Lose abilities"
 
       
-def aclb_Destroy(args):
+def aclb_Destroy(args, x = 0, y = 0):
    card = args[0]
    if card.Type == CharType:
       return "KO"
@@ -76,10 +76,7 @@ def aclb_Destroy(args):
       return "Discard"
 
       
-def aclb_RevealTopDeck(args):
-   # Doesn't work yet, args is an empty array
-   # group = args[0]
-   group = me.Deck
+def aclb_RevealTopDeck(group, x = 0, y = 0):
    if group[0].isFaceUp:
       return "Hide top card"
    else:
