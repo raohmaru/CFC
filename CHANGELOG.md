@@ -1,15 +1,19 @@
 # Card Fighters' Clash Changelog
 
+## 0.6.3
+Bug fixes.  
+New action shuffleIntoDeck().  
+Improved gameplay.
 ## 0.6.0
-Highlight compatible back-ups in the hand.
-Added game phases to show the Phase Toolbar.
+Highlight compatible back-ups in the hand.  
+Added game phases to show the Phase Toolbar.  
 More accurate label name for custom action in the contextual menu.
 ## 0.5.0
-Added decks from the video game.
+Added decks from the video game.  
 Adjusted the SP cost of character cards.
 ## 0.4.1
-Added GUID to cards of core set.
-Store transformed card in a global variable.
+Added GUID to cards of core set.  
+Store transformed card in a global variable.  
 Reviewed SP of some cards.
 ## 0.4.0
 Using Python 3.1.0.2 API.  
