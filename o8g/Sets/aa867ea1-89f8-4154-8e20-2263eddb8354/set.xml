@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8" standalone="yes"?>
-<set name="Core Set" id="aa867ea1-89f8-4154-8e20-2263eddb8354" version="1.2.1.0" gameId="e3d56d9e-900d-49c6-b6ae-22cbb51be153" gameVersion="0.6.0.0">
+<set name="Core Set" id="aa867ea1-89f8-4154-8e20-2263eddb8354" version="1.2.2.0" gameId="e3d56d9e-900d-49c6-b6ae-22cbb51be153" gameVersion="0.6.0.0">
 	<packaging>
 		<pack name="Booster" id="800ab974-9fee-45c6-8d15-3c995c732cdc">
 			<options>
@@ -232,7 +232,7 @@
 			<property name="Number"       value="C012" />
 			<property name="Illustrator"  value="Art by Long Vo &amp; Juan Martínez" />
 		</card>
-		<card name="Cody Travers" id="525d8365-c90e-491f-9811-1f23efbafccb">
+		<card name="Cody (Alpha)" id="525d8365-c90e-491f-9811-1f23efbafccb">
 			<property name="Publisher"    value="Capcom" />
 			<property name="Team"         value="Final Fight" />
 			<property name="Type"         value="Character" />
@@ -1582,7 +1582,7 @@
 			<property name="Number"       value="C087" />
 			<property name="Illustrator"  value="Art by Jonathan Kuo" />
 		</card>
-		<card name="Cammy (Zero)" id="de28f9bf-d995-4743-afcd-a28065beb39d">
+		<card name="Cammy (Alpha)" id="de28f9bf-d995-4743-afcd-a28065beb39d">
 			<property name="Publisher"    value="Capcom" />
 			<property name="Team"         value="Street Fighter" />
 			<property name="Type"         value="Character" />
@@ -1636,7 +1636,7 @@
 			<property name="Number"       value="C090" />
 			<property name="Illustrator"  value="Art by Jo Chen" />
 		</card>
-		<card name="Chun-Li (Zero)" id="7b9371dc-63a4-4dd8-91e9-5380aae0491f">
+		<card name="Chun-Li (Alpha)" id="7b9371dc-63a4-4dd8-91e9-5380aae0491f">
 			<property name="Publisher"    value="Capcom" />
 			<property name="Team"         value="Street Fighter" />
 			<property name="Type"         value="Character" />
@@ -2194,7 +2194,7 @@
 			<property name="Number"       value="C121" />
 			<property name="Illustrator"  value="Art by Jo Chen" />
 		</card>
-		<card name="Ryu (Zero)" id="03a6a70c-6f38-48b5-bcc0-4529ec0a18c2">
+		<card name="Ryu (Alpha)" id="03a6a70c-6f38-48b5-bcc0-4529ec0a18c2">
 			<property name="Publisher"    value="Capcom" />
 			<property name="Team"         value="Street Fighter" />
 			<property name="Type"         value="Character" />
@@ -4725,7 +4725,7 @@
 			<property name="Ability Name" value="LET&apos;S GAMBLE!" />
 			<property name="Rules"        value="Select a character, then flip a coin. If you win the flip, raise that character&apos;s BP 500 points. Otherwise, lower this character&apos;s BP 300 points." />
 			<property name="BP"           value="600" />
-			<property name="SP"           value="1" />
+			<property name="SP"           value="2" />
 			<property name="Backup 1"     value="Magician" />
 			<property name="Backup 2"     value="Magician" />
 			<property name="Backup 3"     value="Magician" />
@@ -5947,7 +5947,7 @@
 			<property name="Ability"      value="" />
 			<property name="Ability Type" value="" />
 			<property name="Ability Name" value="" />
-			<property name="Rules"        value="Discard a character card with an ability. All characters get a copy of that ability." />
+			<property name="Rules"        value="Look through the top of any deck until you reveal a character card with an ability. If you do, all characters get a copy of that ability. Put the cards revealed this way on the bottom of that deck in any order." />
 			<property name="BP"           value="" />
 			<property name="SP"           value="-4" />
 			<property name="Backup 1"     value="" />
