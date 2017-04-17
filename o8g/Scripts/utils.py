@@ -475,12 +475,13 @@ def dealDamage(dmg, target, source, isPiercing = False):
 
 def modSP(count = 1, silent = False):
 # A function to modify the players SP counter. Can also notify.
+   initialSP = me.SP
    if me.SP + count < 0:
       count = -me.SP  # SP can't be less than 0
    me.SP += count # Now increase the SP by the amount passed to us.
    if not silent and count != 0:
       action = "gains" if count >= 0 else "loses"
-      notify("{} {} {} SP. New total is {}.".format(me, action, count, me.SP))
+      notify("{} {} {} SP. New total is {} (before was {}).".format(me, action, count, me.SP, initialSP))
 
 
 def payCostSP(count = 1, silent = False, msg = 'play this card'):
@@ -489,6 +490,7 @@ def payCostSP(count = 1, silent = False, msg = 'play this card'):
    if count >= 0:
       modSP(count, silent)
    else:
+      initialSP = me.SP
       if me.SP + count < 0: # If we don't have enough SP, we assume card effects or mistake and notify the player that they need to do things manually.
          if not silent:
             if not confirm("You do not seem to have enough SP to {}.\nAre you sure you want to proceed? \
@@ -497,7 +499,7 @@ def payCostSP(count = 1, silent = False, msg = 'play this card'):
             notify("{} was supposed to pay {} SP but only has {}.".format(me, count, me.SP))
       me.SP += count
       if not silent:
-         notify("{} has spent {} SP. New total is {}.".format(me, count, me.SP))
+         notify("{} has spent {} SP. New total is {}  (before was {}).".format(me, count, me.SP, initialSP))
 
 
 #------------------------------------------------------------------------------
