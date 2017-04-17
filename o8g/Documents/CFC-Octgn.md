@@ -65,6 +65,7 @@ To activate a card action, move the cursor to a card and then right click to sho
 | <span class=kb>Ctrl</span>+<span class=kb>H</span> | Return card to hand |
 | <span class=kb>Ctrl</span>+<span class=kb>D</span> | Put on top of the deck |
 | <span class=kb>Ctrl</span>+<span class=kb>Shift</span>+<span class=kb>D</span> | Put on bottom of the deck |
+| <span class=kb>Ctrl</span>+<span class=kb>S</span> | Shuffle into Deck |
 | <span class=kb>Ctrl</span>+<span class=kb>X</span> | Lose/Restore abilities |
 | ![Target](imgs/target.png) <span class=kb>Ctrl</span>+<span class=kb>C</span> | Copy ability |
 | ![Target](imgs/target.png) <span class=kb>Ctrl</span>+<span class=kb>Shift</span>+<span class=kb>C</span> | Swap abilities |
@@ -83,6 +84,7 @@ To activate a card action, move the cursor to a card and then right click to sho
 | <span class=kb>Ctrl</span>+<span class=kb>Del</span> | Random discard |
 | <span class=kb>Ctrl</span>+<span class=kb>D</span> | Put hand on top of the deck |
 | <span class=kb>Ctrl</span>+<span class=kb>Shift</span>+<span class=kb>D</span> | Put hand on bottom of the deck |
+| <span class=kb>Ctrl</span>+<span class=kb>S</span> | Shuffle into Deck |
 | <span class=kb>Ctrl</span>+<span class=kb>Shift</span>+<span class=kb>Del</span> | Discard hand |
 
 #### Card Actions
@@ -94,6 +96,7 @@ To activate a card action, move the cursor to a card and then right click to sho
 | <span class=kb>Del</span> | Discard card |
 | <span class=kb>Ctrl</span>+<span class=kb>D</span> | Put card on top of the deck |
 | <span class=kb>Ctrl</span>+<span class=kb>Shift</span>+<span class=kb>D</span> | Put card on bottom of the deck |
+| <span class=kb>Ctrl</span>+<span class=kb>S</span> | Shuffle into Deck |
 | <span class=kb>Ctrl</span>+<span class=kb>F</span> | Put card into Arena face down |
 | ![Target](imgs/target.png) <span class=kb>Ctrl</span>+<span class=kb>Shift</span>+<span class=kb>T</span><br><span class=kb>Ctrl</span>+<span class=kb>Shift</span>+<span class=kb>T</span> | Transform |
 

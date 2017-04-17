@@ -74,7 +74,7 @@ By playing cards players can bring into the battle powerful fighters and effects
    **S** Very rare, unusual ability.
 7. **Text box**. This is where a card’s rules appears, which explains the effects it has in the game. Character cards have an ability symbol (<span class="ab ab-instant">▲</span>, <span class="ab ab-activated">■</span> or <span class="ab ab-auto">●</span>) and an ability name at the beginning of the text, printed in bold.  
    Below the rules text it can appear an italicized text (the flavour text) that adds some description of the CFC world. It has no effect on game play.
-8. **Backups**. The list and number of subtypes with whom a character can be backed up. Every icon represents a card subtype. Only Characters can have backups, up to three.
+8. **Back-ups**. The list and number of subtypes with whom a character can be backed up. Every icon represents a card subtype. Only Characters can have back-ups, up to three.
 9. **Information line**. Here is shown the illustration credit and the collector number within a set.
 10. **Expansion symbol**. This symbol indicates which set the card is from.
 
