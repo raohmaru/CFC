@@ -44,7 +44,7 @@ def gotoPhase(idx, oldIdx = 0):
          notify("(Now defending player {} may choose if block attackers)".format(players[1]))
    # elif idx == EndPhase:   
    elif idx == CleanupPhase:
-      whisper("This is the last phase of your turn")   
+      whisper("(This is the last phase of your turn)")
    triggerPhaseEvent(idx)
 
    
@@ -495,6 +495,14 @@ def toDeckBottomAll(group, x = 0, y = 0):
 def toOwnerDeck(cards):
    for card in cards:
       card.moveTo(card.owner.Deck)
+
+
+def shuffleIntoDeck(cards, x = 0, y = 0):
+   mute()   
+   for card in cards:
+      toDeckTop(card)
+   rnd(100, 10000) # Bug 105 workaround. This delays the next action until all animation is done.
+   shuffle(me.Deck)
 
 
 def discardAll(group, x = 0, y = 0):

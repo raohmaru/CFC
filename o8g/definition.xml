@@ -4,7 +4,7 @@
       name="Card Fighters' Clash"
       id="e3d56d9e-900d-49c6-b6ae-22cbb51be153"
       octgnVersion="3.1.228.0"
-      version="0.6.3.86"
+      version="0.6.3.90"
       markersize="20"
       tags="capcom snk fighter"
       description="A card game based in the SNK Playmore’s video game SNK vs. Capcom Card Fighters' Clash 2 Expand Edition.
@@ -180,6 +180,7 @@
 			<cardaction menu="Return to Hand" shortcut="Ctrl+H" execute="toHand" />
 			<cardaction menu="Put into Deck (Top)" shortcut="Ctrl+D" execute="toDeckTop" />
 			<cardaction menu="Put into Deck (Bottom)" shortcut="Ctrl+Shift+D" execute="toDeckBottom" />
+			<cardaction menu="Shuffle into Deck" shortcut="Ctrl+S" batchExecute="shuffleIntoDeck" />
 			<cardaction menu="Change/Swap slot" execute="changeSlot" getName="aclb_ChangeSlot" showIf="acsh_isChar" />
 		</cardactions>
 		<cardactions menu="Abilities..." showIf="acsh_isChar">
@@ -233,6 +234,7 @@
 				<groupaction menu="Deck (Top)" shortcut="Ctrl+D" execute="toDeckTopAll" />
 				<groupaction menu="Deck (Bottom)" shortcut="Ctrl+Shift+D" execute="toDeckBottomAll" />
 				<groupaction menu="Discard pile" shortcut="Ctrl+Shift+Del" execute="discardAll" />
+				<groupaction menu="Shuffle into Deck" shortcut="Ctrl+S" execute="shuffleIntoDeck" />
 			</groupactions>
 			<cardaction menu="Play card" default="True" shortcut="Ctrl+P" execute="play" />
 			<cardaction menu="Play as backup" shortcut="Ctrl+B" execute="backup" showIf="acsh_isChar" />
@@ -241,6 +243,7 @@
 				<cardaction menu="Put into Arena face down" shortcut="Ctrl+F" execute="toTableFaceDown" />
 				<cardaction menu="Put into Deck (Top)" shortcut="Ctrl+D" execute="toDeckTop" />
 				<cardaction menu="Put into Deck (Bottom)" shortcut="Ctrl+Shift+D" execute="toDeckBottom" />
+				<cardaction menu="Shuffle into Deck" shortcut="Ctrl+S" batchExecute="shuffleIntoDeck" />
 			</cardactions>
 			<cardaction menu="Transform" shortcut="Ctrl+Shift+T" batchExecute="transformCards" />
 			<cardaction menu="Show backups types" shortcut="Ctrl+Alt+B" execute="askCardBackups" showIf="acsh_isChar" />
