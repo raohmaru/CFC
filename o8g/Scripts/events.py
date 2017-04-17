@@ -92,18 +92,26 @@ def onCardsMoved(args):
 def onTurnPassed(args):
    # Reset some player variables at the start of each turn
    debug(">>> onTurnPassed({}, {})".format(args.player, turnNumber())) #Debug
+   global charsPlayed, backupsPlayed, cleanedUpRing
+   # That was my old turn
    if args.player == me:
-      global charsPlayed, backupsPlayed
       charsPlayed = 0  # Num of chars played this turn
       backupsPlayed = 0  # Num of chars backed-up this turn
       clearGlobalVar('UnitedAttack')
       clearGlobalVar('Blockers')
+      if not cleanedUpRing:
+         triggerPhaseEvent(CleanupPhase)  # Force cleanup
+   # I start my turn
    elif args.player is not None:
-      gotoCleanup(silent = True)
+      cleanedUpRing = False
    debug("<<< onTurnPassed()") #Debug
 
 
 def onPhasePassed(args):
    name, idx = currentPhase()
    debug(">>> onPhasePassed: {} => {}".format(args.id, idx))
-   gotoPhase(idx, args.id)
+   if me.isActive:
+      if idx == CleanupPhase:
+         global cleanedUpRing
+         cleanedUpRing = True
+      gotoPhase(idx, args.id)

@@ -31,10 +31,8 @@ def nextPhase(group = table, x = 0, y = 0):  # Function to take you to the next 
 
    
 def gotoPhase(idx, oldIdx = 0):
-   if idx == ActivatePhase:
-      if oldIdx != CleanupPhase:  # Force cleanup
-         triggerPhaseEvent(CleanupPhase)
-   elif idx == DrawPhase:
+   # if idx == ActivatePhase:
+   if idx == DrawPhase:
       if turnNumber() == 1:
          notify("(The player who goes first should skip his Draw phase during their first turn.)")
    # elif idx == MainPhase:  

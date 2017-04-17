@@ -171,6 +171,7 @@ charsPlayed    = 0  # Num of chars played this turn
 backupsPlayed  = 0  # Num of chars backed-up this turn
 debugVerbosity = -1 # -1..4 (At -1 means no debugging messages display)
 parsedCards    = {} # Dictionary holding all parsed cards
+cleanedUpRing  = False  # Tracks if the user has run the Clean-up phase
 
 automations = {
    'Play'     : True, # Automatically trigger game effetcs and card effects when playing cards
