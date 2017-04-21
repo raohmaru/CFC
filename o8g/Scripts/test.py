@@ -21,10 +21,39 @@
 #---------------------------------------------------------------------------
 
 from cardsRules import RulesDict
-from RuleScript_lexer import RulesLexer
+from rs.RuleScript_lexer import RulesLexer
 import pprint
 
 pp = pprint.PrettyPrinter(indent=4)
+   
+# Rules to test
+targets = [
+   "target = character",
+   "target = characters[attack]",
+   "target = character@hand",
+   "target = Captain[attack] @ oppRing",
+   "target = robot[-block]@myhand",
+   "target = character,action[bp>=800,frozen]@oppRing",
+   "target = ^character[fresh&powerless]",
+   "target = [fresh]",
+   "target = character@invalidZone",
+]
+actions = [
+   "action = destroy",
+   "action = draw(1)",
+   "action = destroy & draw(1)",
+   "action = discard(1) & draw(1)",
+   "action = destroy; draw(1)",
+   "action = {F}: destroy",
+   "action = {f}:destroy & draw(1)",
+   "action = {S(character@myRing)}: destroy",
+   "action = {D}: destroy =>(character[bp>=800]@oppRing)",
+   "action = {E(reaction@discard)}: may moveTo(hand)",
+   "action = {E(reaction@discard)}: may('Question?') moveTo(hand)",
+   "action = destroy ueot",
+   "action = {D(action)}: may('Question?') destroy =>(character) & freeze; draw(2) ueot",
+   "action = {F}:  =>(character) ueot",
+]
 
 if not 'debug' in globals():
    # Make debug accessible from any module
@@ -33,7 +62,18 @@ if not 'debug' in globals():
       print str
    __builtin__.debug = debug
 
-   
-rules = RulesDict['aa867ea1-89f8-4154-8e20-2263edd00002']
-parsed = RulesLexer.parse(rules)
-pp.pprint(parsed)
+def testTargets():
+   for rule in targets:
+      tokens = RulesLexer.tokenize(rule)
+      pp.pprint(tokens)
+      print ""
+
+def testActions():
+   for rule in actions:
+      tokens = RulesLexer.tokenize(rule)
+      pp.pprint(tokens)
+      print ""
+
+# rules = RulesDict['aa867ea1-89f8-4154-8e20-2263edd00002']
+testTargets()
+testActions()

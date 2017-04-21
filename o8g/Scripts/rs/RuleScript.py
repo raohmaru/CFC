@@ -16,51 +16,66 @@
 # along with this script.  If not, see <http://www.gnu.org/licenses/>.
 
 #---------------------------------------------------------------------------
-# RuleScript 0.0.2
+# RuleScript
 #---------------------------------------------------------------------------
 
 class Rules():
-   rule_id     = ''
-   card_id     = ''
-   parsed      = False
-   rules_dict  = None
+   """ A class to parse, hold and execute the rules of a card """
+   rule_id      = ''
+   card_id      = ''
+   parsed       = False
+   rules_tokens = None
 
    def __init__(self, rule, cid):
-      self.rule_id = rule
+      self.rule_id = rule.lower()
       self.card_id = cid
 
 
    def parse(self):
+      """ Parses the rules if they exists in RulesDict """
       if self.parsed:
          return      
       self.parsed = True
       
       # Get the rules
-      rules = RulesDict[self.rule_id.lower()]
-      if not rules:
+      if self.rule_id in RulesDict:
+         rules = RulesDict[self.rule_id]
+      else:
+         debug("Card has no rules yet")
          return
-      self.rules_dict = RulesLexer.parse(rules)
+      self.rules_tokens = RulesLexer.tokenize(rules)
       
 
    def activate(self):
       if not self.parsed:
          self.parse()
+      if not self.rules_tokens:
+         return True
    
       debug("Executing rules")
       target = None
-      if 'target' in self.rules_dict:
-         target = self.getTargets(self.rules_dict['target'])
-         if not target:
-            debug("Targeting canceled")
+      if 'target' in self.rules_tokens:
+         target = self.getTargets(self.rules_tokens['target'])
+         if target == False:
+            debug("Targeting cancelled")
             return False
       
-      if 'action' in self.rules_dict:
-         self.execAbilities(self.rules_dict['action'], target)
+      if 'action' in self.rules_tokens:
+         return self.execAction(self.rules_tokens['action'], target)
       
       return True
 
 
    def getTargets(self, target):
+      """
+      target = {
+         'filters': [
+            ['-', 'bp', ('>=', '800')]
+         ],
+         'types': ['characters'],
+         'zone': ['opp', 'ring']
+      }
+      """
       debug("Checking targets")
 
       types       = target['types']
@@ -70,7 +85,7 @@ class Rules():
       # If two or more targets, ask for a single target
       if len(types) > 1:
          # Check if there is any keyword in the target types
-         kw_types = set(AS_KW_TARGETS) & set(types)
+         kw_types = set(RS_KW_TARGETS) & set(types)
          if len(kw_types) > 0:
             t = askChoice("Select a target:", types)
             if t == 0:
@@ -78,35 +93,27 @@ class Rules():
             types = [types[t-1]]
             debug("-- type selected: %s" % types)
       
-      # Get the zone object
-      debug("-- Getting card from zone %s" % ''.join(zone))
+      # Get all the cards from the given zone
+      debug("-- Getting all cards from zone %s" % ''.join(zone))
       cards = self.getCardsFromZone(zone)
       debug("-- Retrieved %s cards" % len(cards))
-      
-      if len(cards) == 0:
-         warning(ErrStrings[ERR_NO_CARDS])
-         return False
       
       # Filter targets
       for type in types:
          # If kw is 'player' then must choose between himself or enemy
-         if type == AS_KW_TARGET_PLAYER:
-            t = askChoice("Select a player:", AS_KW_PLAYERS)
+         if type == RS_KW_TARGET_PLAYER:
+            t = askChoice("Select a player:", RS_KW_PLAYERS)
             if t == 0:
                return False
-            type = AS_KW_PLAYERS[t-1]
+            type = RS_KW_PLAYERS[t-1]
       
          targets = self.filterTargets(type, filters, zone, cards, targeted=True)
          
-         if targets:
-            # If an error was returned
-            if isinstance(targets, GameException):
-               warning(ErrStrings[targets.value])
-               return False
-            break
+         if targets == False:
+            return False
             
       # If zone is a Pile, ask for card
-      if zone[1] in AS_KW_ZONES_PILES:
+      if zone[1] in RS_KW_ZONES_PILES:
          card = askCard(targets, "Select a card from {}".format(zone[1]), "Select a card")
          if not card:
             return False
@@ -118,9 +125,9 @@ class Rules():
       
    def getObjFromPrefix(self, prefix):
    # Returns an object of the game from the given prefix
-      if prefix == AS_PREFIX_MY:
+      if prefix == RS_PREFIX_MY:
          return me
-      if prefix == AS_PREFIX_OPP:
+      if prefix == RS_PREFIX_OPP:
          return players[1] if len(players) > 1 else me
       return None
       
@@ -132,23 +139,23 @@ class Rules():
       player  = self.getObjFromPrefix(prefix) or me
       cards = []
       
-      if zone == AS_KW_ZONE_ARENA:
+      if zone == RS_KW_ZONE_ARENA:
          cards = [c for c in table]
       
-      elif zone == AS_KW_ZONE_RING:
+      elif zone == RS_KW_ZONE_RING:
          cards = [c for c in table
             if c.controller == player]
       
-      elif zone == AS_KW_ZONE_HAND:
+      elif zone == RS_KW_ZONE_HAND:
          cards = [c for c in player.hand]
       
-      elif zone == AS_KW_ZONE_DECK:
+      elif zone == RS_KW_ZONE_DECK:
          cards = [c for c in player.Deck]
       
-      elif zone == AS_KW_ZONE_DISCARD:
+      elif zone == RS_KW_ZONE_DISCARD:
          cards = [c for c in player.piles['Discard Pile']]
       
-      elif zone == AS_KW_ZONE_KILL:
+      elif zone == RS_KW_ZONE_KILL:
          cards = [c for c in player.piles['Removed Pile']]
             
       return cards
@@ -156,10 +163,11 @@ class Rules():
       
    def filterTargets(self, type, filters, zone, cards, targeted=False):
       debug("-- filter targets by type '%s' in zone %s" % (type, zone))
-      if type == AS_KW_TARGET_THIS:
+      targets = None
+      if type == RS_KW_TARGET_THIS:
          targets = [Card(self.card_id)]
       # If target is a player
-      elif type in AS_KW_TARGET_IS_PLAYER:
+      elif type in RS_KW_TARGET_IS_PLAYER:
          targets = self.filterPlayers(type, filters)
       else:
          # Filter cards with a target
@@ -175,11 +183,11 @@ class Rules():
       
    def filterPlayers(self, type, filters):
       if isinstance(type, basestring):
-         if type == AS_KW_TARGET_ME:
+         if type == RS_KW_TARGET_ME:
             arr = [me]
-         elif type == AS_KW_TARGET_OPP:
+         elif type == RS_KW_TARGET_OPP:
             arr = [players[1]] if len(players) > 1 else [me]
-         elif type == AS_KW_TARGET_PLAYERS:
+         elif type == RS_KW_TARGET_PLAYERS:
             arr = [me]
             if len(players) > 1:
                arr.append(players[1])
@@ -187,10 +195,11 @@ class Rules():
       debug("-- applying {} filters to player {}".format(len(filters), arr))
             
       # Apply filters      
-      arr = self.applyFiltersTo(arr, filters)
+      arr = RulesFilters.applyFiltersTo(arr, filters)
          
       if len(arr) == 0:
-         return GameException(ERR_NO_FILTERED_PLAYERS)
+         warning(MSG_ERR_NO_FILTERED_PLAYERS)
+         return False
       
       return arr
    
@@ -200,43 +209,53 @@ class Rules():
       
       cards_f1 = cards
       multiple = False
-
-      # Look for targeted cards
-      if targeted:
-         if zone[1] in AS_KW_TARGET_ZONES:
-            cards_f1 = [c for c in cards_f1
-               if c.targetedBy == me]
-            if len(cards_f1) == 0:
-               return GameException(ERR_NO_CARD_TARGETED)
-            debug("-- %s cards targeted" % len(filters))
-         else:
-            targeted = False
-      
-      # Check for type prefixes
-      typePrefix, type = RulesLexer.getPrefix(AS_PREFIX_TYPES, type)
-      if typePrefix:
-         debug("-- found prefix '%s' in '%s'" % (typePrefix, typePrefix+type))
-         # Targetting other cards?
-         if typePrefix == AS_PREFIX_OTHER:
-            # Current card can't be selected
-            if Card(self.card_id) in cards_f1:
-               return GameException(ERR_TARGET_OTHER)
             
       # Check for type suffixes
-      typeSuffix, type = RulesLexer.getSuffix(AS_SUFFIX_TYPES, type)
+      typeSuffix, type = RulesLexer.getSuffix(RS_SUFFIX_TYPES, type)
       if typeSuffix:
          debug("-- found suffix '%s' in '%s'" % (typeSuffix, type+typeSuffix))
          # Allow multiple selection?
-         if typeSuffix == AS_SUFFIX_PLURAL:
-            multiple = True        
+         if typeSuffix == RS_SUFFIX_PLURAL:
+            multiple = True
+            targeted = False      
+
+      # Look for targeted cards
+      if targeted:
+         if zone[1] in RS_KW_TARGET_ZONES:
+            cards_f1 = [c for c in cards_f1
+               if c.targetedBy == me]
+            if len(cards_f1) == 0:
+               warning(MSG_ERR_NO_CARD_TARGETED)
+               return False
+            debug("-- %s cards targeted" % len(filters))
+         else:
+            targeted = False      
+      
+      # At this point there are not cards to which apply the effect, but the ability
+      # is activated anyway
+      if len(cards_f1) == 0:
+         notify(MSG_ERR_NO_CARDS)
+         return cards_f1
+      
+      # Check for type prefixes
+      typePrefix, type = RulesLexer.getPrefix(RS_PREFIX_TYPES, type)
+      if typePrefix:
+         debug("-- found prefix '%s' in '%s'" % (typePrefix, typePrefix+type))
+         # Targeting other cards?
+         if typePrefix == RS_PREFIX_OTHER:
+            # Current card can't be selected
+            if Card(self.card_id) in cards_f1:
+               warning(MSG_ERR_TARGET_OTHER)
+               return False
          
       # Check if only 1 target has been selected
       if not multiple and targeted and len(cards_f1) > 1:
-         return GameException(ERR_MULTIPLE_TARGET)
+         warning(MSG_ERR_MULTIPLE_TARGET)
+         return False
             
-      if type != AS_KW_ALL:
+      if type != RS_KW_ALL:
          # Look for (super) type
-         if type in AS_KW_CARD_TYPES:
+         if type in RS_KW_CARD_TYPES:
             debug("-- checking if any card match type '%s'" % type)
             cards_f1 = [c for c in cards_f1
                if c.Type.lower() == type]
@@ -245,64 +264,90 @@ class Rules():
             debug("-- checking if any card match subtype '%s'" % type)
             cards_f1 = [c for c in cards_f1
                if c.Subtype.lower() == type]
-      
-      if len(cards_f1) == 0:
-         return GameException(ERR_NO_FILTERED_CARDS)
             
       # Apply filters
-      cards_f1 = self.applyFiltersTo(cards_f1, filters)
+      cards_f1 = RulesFilters.applyFiltersTo(cards_f1, filters)
          
       if len(cards_f1) == 0:
-         return GameException(ERR_NO_FILTERED_CARDS)
+         warning(MSG_ERR_NO_FILTERED_CARDS)
+         return False
       
       return cards_f1
-      
-    
-   def applyFiltersTo(self, arr, filters):
-      if len(filters) > 0:
-         for filter in filters:
-            # filter could be a list of chained filters
-            if isinstance(filter[0], list):
-               arr2 = arr
-               for f in filter:
-                  arr2 = self.applyFilter(f, arr2)
-            else:
-               arr2 = self.applyFilter(filter, arr)
-            # Break on any match
-            if len(arr2) > 0:
-               break
-         arr = arr2
-      
-      return arr
-   
-   
-   def applyFilter(self, filter, arr):
-      # filter = [prfx, cmd, [args]]
-      include = filter[0] != AS_PREFIX_NOT
-      cmd = filter[1]
-      
-      # Get the filter function
-      if   cmd in RulesFilters    : func = RulesFilters[cmd]
-      elif cmd in AS_KW_CARD_TYPES: func = filterType
-      else                        : func = filterSubtype
-   
-      debug("-- applying filter %s to %s objects" % (filter, len(arr)))
-      arr = [c for c in arr
-         if func(c, include, cmd, *filter[2])
-      ]      
-      debug("-- %s objects match the filter" % len(arr))
-         
-      return arr
 
       
-   def execAbilities(self, ability, target):
+   def execAction(self, action, target):
+      """
+      action = {
+         cost: [
+            'd',
+            {
+               'filters': [],
+               'types': ['action'],
+               'zone': ['', 'arena']
+            }
+         ],
+         effects = [
+            [
+               ['may', ["'question?'"]],
+               [
+                  ['destroy'],
+                  ['draw', ['2']]
+               ],
+               {
+                  'filters': [],
+                  'types': ['character'],
+                  'zone': ['',
+                  'arena']
+               },
+               'ueot'
+            ]
+         ]
+      }
+      """
+      debug("Executing actions")
+      if action['cost']:
+         if not self.payCost(*action['cost']):
+            notify(MSG_COST_NOT_PAYED.format(me))
+            return False
+            
+      card = Card(self.card_id)
+      for effect in action['effects']:
+         currTarget = target
+         newTarget = None
+         # Conditions
+         # if ability['effects'][0] == RS_KW_COND_MAY:
+            # if not confirm("May {}?".format(question)):
+               # break
+         
+         # Additional target
+         if effect[2]:
+            debug("-- Found additional target")
+            newTarget = self.getTargets(effect[2])
+            if newTarget == False:
+               notify(MSG_ERR_NO_CARDS)
+               return False
+            currTarget = newTarget
+         
+         # Commands
+         if len(effect[1]) > 0:
+            debug("-- Applying commands")
+            RulesCommands.applyAll(effect[1], currTarget, effect[3], card)
       return True
-      # if ability['effects'][0] == AS_KW_COND_MAY:
-         # if not confirm("May {}?".format(question)):
-            # break
+               
+   
+   def payCost(self, type, target=None):
+      debug("-- Cost to pay: {}, {}".format(type, target))
       
-class GameException(Exception):
-   def __init__(self, value):
-      self.value = value
-   def __str__(self):
-      return repr(self.value)
+      if type == RS_KW_COST_FREEZE:
+         freeze(Card(self.card_id), silent = True)
+         
+      elif type == RS_KW_COST_SACRIFICE:
+         return True
+         
+      elif type == RS_KW_COST_DISCARD:
+         return True
+         
+      elif type == RS_KW_COST_EXILE:
+         return True
+         
+      return True

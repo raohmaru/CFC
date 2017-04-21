@@ -21,141 +21,141 @@ import re
 # RULESCRIPT CONST LANGUAGE DEFINITION
 #---------------------------------------------------------------------------
 
-AS_VERSION = '0.0.2'
+RS_VERSION = '0.0.3'
 
 # Regular expressions
-AS_RGX_CMD_TARGET   = re.compile(r'^target\s*=\s*')
-AS_RGX_TARGET_TYPE  = re.compile(r'\||\[')
-AS_RGX_TARGET_RESTR = re.compile(r'\[(.+)\]')
-AS_RGX_TARGET_PARAM = re.compile(r'(\w+)\s*([=><]+)\s*(\w+)')
-AS_RGX_TARGET_ZONE  = re.compile(r'\|\s*([\w*]+).*$')
+RS_RGX_CMD_TARGET   = re.compile(r'^target\s*=\s*')
+RS_RGX_TARGET_TYPE  = re.compile(r'@|\[')
+RS_RGX_TARGET_RESTR = re.compile(r'\[(.+)\]')
+RS_RGX_TARGET_PARAM = re.compile(r'(\w+)\s*([=><]+)\s*(\w+)')
+RS_RGX_TARGET_ZONE  = re.compile(r'@\s*([\w*]+).*$')
 
-AS_RGX_CMD_ACTION   = re.compile(r'^action\s*=\s*')
-AS_RGX_EF_COST      = re.compile(r'\{\s*([^}]+)\s*\}\s*:\s*')
-AS_RGX_EF_TARGET    = re.compile(r'->\s*\((.+)\)')
-AS_RGX_EF_EFFECT    = re.compile(r'(?:(\w+)\((.*?)\))')
+RS_RGX_CMD_ACTION   = re.compile(r'^action\s*=\s*')
+RS_RGX_AC_COST      = re.compile(r'\{\s*([^}]+)\s*\}\s*:\s*')
+RS_RGX_AC_TARGET    = re.compile(r'=>\s*\((.+)\)')
+RS_RGX_AC_EFFECT    = re.compile(r'(\w+)\s*\((.*?)\)')
 
-AS_RGX_PARAM        = re.compile(r'\(([^)]*)\)')
+RS_RGX_PARAM        = re.compile(r'\(([^)]*)\)')
 
 # Comments
-AS_COMMENT_CHAR = '#'
+RS_COMMENT_CHAR = '#'
 
 # Operators
-AS_OP_OR    = ','
-AS_OP_AND   = '&'
-AS_OP_SEP   = ';'
-AS_OP_EQUAL = '='
-AS_OP_LTE   = '<='
-AS_OP_GTE   = '>='
+RS_OP_OR    = ','
+RS_OP_AND   = '&'
+RS_OP_SEP   = ';'
+RS_OP_EQUAL = '='
+RS_OP_LTE   = '<='
+RS_OP_GTE   = '>='
 
 # Prefixes
-AS_PREFIX_NOT   = '-'
-AS_PREFIX_MY    = 'my'
-AS_PREFIX_OPP   = 'opp'
-AS_PREFIX_OTHER = '^'
+RS_PREFIX_NOT   = '-'
+RS_PREFIX_MY    = 'my'
+RS_PREFIX_OPP   = 'opp'
+RS_PREFIX_OTHER = '^'
 
-AS_PREFIX_TYPES = [
-   AS_PREFIX_OTHER
+RS_PREFIX_TYPES = [
+   RS_PREFIX_OTHER
 ]
 
-AS_PREFIX_ZONES = [
-   AS_PREFIX_MY,
-   AS_PREFIX_OPP
+RS_PREFIX_ZONES = [
+   RS_PREFIX_MY,
+   RS_PREFIX_OPP
 ]
 
-AS_PREFIX_FILTERS = [
-   AS_PREFIX_NOT
+RS_PREFIX_FILTERS = [
+   RS_PREFIX_NOT
 ]
 
 # Sufixes
-AS_SUFFIX_PLURAL = 's'
+RS_SUFFIX_PLURAL = 's'
 
-AS_SUFFIX_TYPES = [
-   AS_SUFFIX_PLURAL
+RS_SUFFIX_TYPES = [
+   RS_SUFFIX_PLURAL
 ]
 
 # Keywords
-AS_KW_ALL = '*'
+RS_KW_ALL = '*'
 
 # Target keywords
-AS_KW_TARGET_PLAYER   = 'player'
-AS_KW_TARGET_PLAYERS  = 'players'
-AS_KW_TARGET_ME       = 'me'
-AS_KW_TARGET_OPP      = 'opp'
-AS_KW_TARGET_THIS     = 'this'
-AS_KW_TARGET_CHAR     = 'character'
-AS_KW_TARGET_ACTION   = 'action'
-AS_KW_TARGET_REACTION = 'reaction'
-AS_KW_TARGETS = [
-   AS_KW_TARGET_THIS,
-   AS_KW_TARGET_PLAYER,
-   AS_KW_TARGET_ME,
-   AS_KW_TARGET_OPP,
-   AS_KW_TARGET_CHAR,
-   AS_KW_TARGET_ACTION,
-   AS_KW_TARGET_REACTION,
-   AS_KW_ALL
+RS_KW_TARGET_PLAYER   = 'player'
+RS_KW_TARGET_PLAYERS  = 'players'
+RS_KW_TARGET_ME       = 'me'
+RS_KW_TARGET_OPP      = 'opp'
+RS_KW_TARGET_THIS     = 'this'
+RS_KW_TARGET_CHAR     = 'character'
+RS_KW_TARGET_ACTION   = 'action'
+RS_KW_TARGET_REACTION = 'reaction'
+RS_KW_TARGETS = [
+   RS_KW_TARGET_THIS,
+   RS_KW_TARGET_PLAYER,
+   RS_KW_TARGET_ME,
+   RS_KW_TARGET_OPP,
+   RS_KW_TARGET_CHAR,
+   RS_KW_TARGET_ACTION,
+   RS_KW_TARGET_REACTION,
+   RS_KW_ALL
 ]
-AS_KW_TARGET_IS_PLAYER = [
-   AS_KW_TARGET_PLAYER,
-   AS_KW_TARGET_PLAYERS,
-   AS_KW_TARGET_ME,
-   AS_KW_TARGET_OPP
+RS_KW_TARGET_IS_PLAYER = [
+   RS_KW_TARGET_PLAYER,
+   RS_KW_TARGET_PLAYERS,
+   RS_KW_TARGET_ME,
+   RS_KW_TARGET_OPP
 ]
-AS_KW_PLAYERS = [
-   AS_KW_TARGET_ME,
-   AS_KW_TARGET_OPP
+RS_KW_PLAYERS = [
+   RS_KW_TARGET_ME,
+   RS_KW_TARGET_OPP
 ]
-AS_KW_CARD_TYPES = [
-   AS_KW_TARGET_CHAR,
-   AS_KW_TARGET_ACTION,
-   AS_KW_TARGET_REACTION
+RS_KW_CARD_TYPES = [
+   RS_KW_TARGET_CHAR,
+   RS_KW_TARGET_ACTION,
+   RS_KW_TARGET_REACTION
 ]
 
 # Zone keywords
-AS_KW_ZONE_ARENA   = 'arena'
-AS_KW_ZONE_RING    = 'ring'
-AS_KW_ZONE_HAND    = 'hand'
-AS_KW_ZONE_DECK    = 'deck'
-AS_KW_ZONE_DISCARD = 'discard'
-AS_KW_ZONE_KILL    = 'kill'
-AS_KW_ZONES = [
-   AS_KW_ZONE_ARENA,
-   AS_KW_ZONE_RING,
-   AS_KW_ZONE_HAND,
-   AS_KW_ZONE_DECK,
-   AS_KW_ZONE_DISCARD,
-   AS_KW_ZONE_KILL
+RS_KW_ZONE_ARENA   = 'arena'
+RS_KW_ZONE_RING    = 'ring'
+RS_KW_ZONE_HAND    = 'hand'
+RS_KW_ZONE_DECK    = 'deck'
+RS_KW_ZONE_DISCARD = 'discard'
+RS_KW_ZONE_KILL    = 'kill'
+RS_KW_ZONES = [
+   RS_KW_ZONE_ARENA,
+   RS_KW_ZONE_RING,
+   RS_KW_ZONE_HAND,
+   RS_KW_ZONE_DECK,
+   RS_KW_ZONE_DISCARD,
+   RS_KW_ZONE_KILL
 ]
 
-AS_KW_TARGET_ZONES = [
-   AS_KW_ZONE_ARENA,
-   AS_KW_ZONE_RING
+RS_KW_TARGET_ZONES = [
+   RS_KW_ZONE_ARENA,
+   RS_KW_ZONE_RING
 ]
 
-AS_KW_ZONES_PILES = [
-   AS_KW_ZONE_HAND,
-   AS_KW_ZONE_DECK,
-   AS_KW_ZONE_DISCARD,
-   AS_KW_ZONE_KILL
+RS_KW_ZONES_PILES = [
+   RS_KW_ZONE_HAND,
+   RS_KW_ZONE_DECK,
+   RS_KW_ZONE_DISCARD,
+   RS_KW_ZONE_KILL
 ]
 
 # Cost keywords
-AS_KW_COST_FREEZE    = 'f'
-AS_KW_COST_SACRIFICE = 's'
-AS_KW_COST_DISCARD   = 'd'
-AS_KW_COST_EXILE     = 'e'
+RS_KW_COST_FREEZE    = 'f'
+RS_KW_COST_SACRIFICE = 's'
+RS_KW_COST_DISCARD   = 'd'
+RS_KW_COST_EXILE     = 'e'
 
 # Effect conditions
-AS_KW_COND_MAY = 'may'
-AS_KW_EFFECT_COND = [
-   AS_KW_COND_MAY
+RS_KW_COND_MAY = 'may'
+RS_KW_EFFECT_COND = [
+   RS_KW_COND_MAY
 ]
 
 # Effect restrictions
-AS_KW_RESTR_UEOT = 'ueot'
-AS_KW_RESTR_UYNT = 'uynt'
-AS_KW_EFFECT_RESTRS = [
-   AS_KW_RESTR_UEOT,
-   AS_KW_RESTR_UYNT
+RS_KW_RESTR_UEOT = 'ueot'
+RS_KW_RESTR_UYNT = 'uynt'
+RS_KW_EFFECT_RESTRS = [
+   RS_KW_RESTR_UEOT,
+   RS_KW_RESTR_UYNT
 ]

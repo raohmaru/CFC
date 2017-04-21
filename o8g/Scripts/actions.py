@@ -113,7 +113,7 @@ def scoop(group, x=0, y=0):
    toOwnerDeck(me.hand)
    toOwnerDeck(me.piles['Discard Pile'])
    toOwnerDeck(me.piles['Removed Pile'])
-   notify("{} resets the game.".format(me,))
+   notify("{} resets the game.".format(me))
 
 
 def flipCoin(group, x = 0, y = 0):
@@ -244,18 +244,18 @@ def activate(card, x = 0, y = 0):
       card.highlight = None
       notify("{} deactivates {}.".format(me, card))
       return
-   if automations['Play']:
-      if not activateAuto(card): return
-   if card.Type == CharType:
-      pcard = getParsedCard(card)
-      if pcard.ability:
-         if pcard.ability.type == ActivatedAbility:
-            freeze(card, silent = True)
+   ability = "effect"
+   pcard = getParsedCard(card)
+   if card.Type == CharType and pcard.hasEffect():
       ability = "ability {}".format(pcard.ability)
-   else:
-      ability = "effect"
+   notify("{} tries to activate {}'s {}.".format(me, card, ability))
+   if automations['Play']:
+      if not activateAuto(card):
+         return
+   elif card.Type == CharType and pcard.hasEffect() and pcard.ability.type == ActivatedAbility:
+      freeze(card, silent = True)
    card.highlight = ActivatedColor
-   notify("{} activates {}'s {}.".format(me, card, ability))
+   notify("{} has activated {}'s {}.".format(me, card, ability))
 
 
 def freeze(card, x = 0, y = 0, unfreeze = None, silent = False):
@@ -325,6 +325,7 @@ def askCardBackups(card, x = 0, y = 0):
 
 def toggleAbility(card, x = 0, y = 0):
    mute()
+   # Removes card from parsed list to parse it again with the new abilities
    parsedCards.pop(card._id, None)
    if card.Type != CharType or (card.alternate == '' and card.Rules == ''):
       return

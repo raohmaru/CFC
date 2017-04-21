@@ -15,15 +15,61 @@
 # You should have received a copy of the GNU General Public License
 # along with this script.  If not, see <http://www.gnu.org/licenses/>.
 
+#---------------------------------------------------------------------------
+# Filter class
+#---------------------------------------------------------------------------
+
+class RulesFilters():
+   """ Class to handle the filters that are applied to a set of objects """
+   filters = {}
+
+   @staticmethod
+   def registerFilter(name, filter):
+      RulesFilters.filters[name] = filter
+      
+   
+   @staticmethod   
+   def applyFiltersTo(arr, filters):
+      if len(filters) > 0:
+         for filter in filters:
+            # filter could be a list of chained filters
+            if isinstance(filter[0], list):
+               arr2 = arr
+               for f in filter:
+                  arr2 = RulesFilters.applyFilter(f, arr2)
+            else:
+               arr2 = RulesFilters.applyFilter(filter, arr)
+            # Break on any match
+            if len(arr2) > 0:
+               break
+         arr = arr2
+      
+      return arr
+   
+   
+   @staticmethod
+   def applyFilter(filter, arr):
+      # filter = [prfx, cmd, [args]]
+      include = filter[0] != RS_PREFIX_NOT
+      cmd = filter[1]
+      
+      # Get the filter function
+      if   cmd in RulesFilters.filters: func = RulesFilters.filters[cmd]
+      elif cmd in RS_KW_CARD_TYPES    : func = filterType
+      else                            : func = filterSubtype
+   
+      debug("-- applying filter %s to %s objects" % (filter, len(arr)))
+      arr = [c for c in arr
+         if func(c, include, cmd, *filter[2])
+      ]      
+      debug("-- %s objects match the filter" % len(arr))
+         
+      return arr
+      
 
 #---------------------------------------------------------------------------
 # Filter functions
 #---------------------------------------------------------------------------
-
-RulesFilters = {}
-def registerFilter(name, filter):
-   RulesFilters[name] = filter
-
 
 def filterBP(card, include, cmd, *args):
    debug(">>> filterBP({}, {}, {}, {})".format(card, include, cmd, args)) #Debug
@@ -48,7 +94,6 @@ def filterBP(card, include, cmd, *args):
    if not include:
       res = not res
    return res
-registerFilter('bp', filterBP)
    
    
 def filterSP(card, include, cmd, *args):
@@ -68,7 +113,6 @@ def filterSP(card, include, cmd, *args):
    if not include:
       res = not res
    return res
-registerFilter('sp', filterSP)
 
 
 def filterType(card, include, cmd, *args):
@@ -82,7 +126,6 @@ def filterType(card, include, cmd, *args):
       return type == cmd
    else:
       return type != cmd
-registerFilter('type', filterType)
 
 
 def filterSubtype(card, include, cmd, *args):
@@ -96,7 +139,6 @@ def filterSubtype(card, include, cmd, *args):
       return subtype == cmd
    else:
       return subtype != cmd
-registerFilter('subtype', filterSubtype)
 
 
 def filterBackedup(card, include, cmd, *args):
@@ -110,7 +152,6 @@ def filterBackedup(card, include, cmd, *args):
       return len(backups) > 0
    else:
       return len(backups) == 0
-registerFilter('backedup', filterBackedup)
     
     
 def filterBackup(card, include, cmd, *args):
@@ -124,13 +165,11 @@ def filterBackup(card, include, cmd, *args):
       return isBackup
    else:
       return not isBackup
-registerFilter('backup', filterBackup)
    
    
 def filterAttack(card, include, cmd, *args):
    debug(">>> filterAttack({}, {}, {}, {})".format(card, include, cmd, args)) #Debug
    return filterHasMarker(card, 'Attack', include)
-registerFilter('attack', filterAttack)
     
     
 def filterUnitedAttack(card, include, cmd, *args):
@@ -144,13 +183,11 @@ def filterUnitedAttack(card, include, cmd, *args):
       return attacking
    else:
       return not attacking
-registerFilter('uattack', filterUnitedAttack)
    
    
 def filterBlock(card, include, cmd, *args):
    debug(">>> filterBlock({}, {}, {}, {})".format(card, include, cmd, args)) #Debug
    return filterHasMarker(card, 'Counter-attack', include)
-registerFilter('block', filterBlock)
     
     
 def filterFrozen(card, include, cmd, *args):
@@ -164,13 +201,11 @@ def filterFrozen(card, include, cmd, *args):
       return frozen
    else:
       return not frozen
-registerFilter('frozen', filterFrozen)
    
    
 def filterJustEntered(card, include, cmd, *args):
    debug(">>> filterJustEntered({}, {}, {}, {})".format(card, include, cmd, args)) #Debug
    return filterHasMarker(card, 'Just Entered', include)
-registerFilter('fresh', filterJustEntered)
    
    
 def filterNoAbility(card, include, cmd, *args):
@@ -180,8 +215,21 @@ def filterNoAbility(card, include, cmd, *args):
       return False
 	  
    return not card.properties['Ability Type']
-registerFilter('powerless', filterNoAbility)
       
+
+RulesFilters.registerFilter('bp'       , filterBP)
+RulesFilters.registerFilter('sp'       , filterSP)
+RulesFilters.registerFilter('type'     , filterType)
+RulesFilters.registerFilter('subtype'  , filterSubtype)
+RulesFilters.registerFilter('backedup' , filterBackedup)
+RulesFilters.registerFilter('backup'   , filterBackup)
+RulesFilters.registerFilter('attack'   , filterAttack)
+RulesFilters.registerFilter('uattack'  , filterUnitedAttack)
+RulesFilters.registerFilter('block'    , filterBlock)
+RulesFilters.registerFilter('frozen'   , filterFrozen)
+RulesFilters.registerFilter('fresh'    , filterJustEntered)
+RulesFilters.registerFilter('powerless', filterNoAbility)
+
 
 #---------------------------------------------------------------------------
 # Helpers
@@ -205,11 +253,11 @@ def isFrozen(card):
 
 
 def compareValuesByOp(v1, v2, op):
-   if op == AS_OP_EQUAL:
+   if op == RS_OP_EQUAL:
       return v1 == v2
-   elif op == AS_OP_LTE:
+   elif op == RS_OP_LTE:
       return v1 <= v2
-   elif op == AS_OP_GTE:
+   elif op == RS_OP_GTE:
       return v1 >= v2
       
    return False

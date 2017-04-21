@@ -6,7 +6,7 @@ require 'redcarpet'
 
 OCTGN_dir = "D:/Documentos/OCTGN"
 start_time = Time.now
-CLOBBER.include ["o8g/*.o8g", "#{OCTGN_dir}/LocalFeed/Card*.nupkg", "o8g/Scripts/*.pyc"]
+CLOBBER.include ["o8g/*.o8g", "#{OCTGN_dir}/LocalFeed/Card*.nupkg", "o8g/Scripts/**/*.pyc"]
 
 task :default => [:build]
 

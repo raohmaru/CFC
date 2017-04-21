@@ -179,7 +179,7 @@ def playAuto(card, slotIdx=None):
          warning("Character card can't be played.\nThe selected slot is not empty (it's taken up by {}).\nIf you want to backup, please first target a character in your ring.".format(Card(myRing[slotIdx]).Name))
          return
       # Pay SP cost
-      if payCostSP(card.SP) == ERR_CANT_PAY_SP:
+      if not payCostSP(card.SP):
          return
       # Finally, the card is played
       placeCard(card, card.Type, PlayAction, slotIdx)
@@ -195,7 +195,7 @@ def playAuto(card, slotIdx=None):
          information("Action cards can only be played on your Main Phase.")
          return
       # Pay SP cost
-      if payCostSP(card.SP) == ERR_CANT_PAY_SP:
+      if not payCostSP(card.SP):
          return
       placeCard(card, card.Type, PlayAction)
    
@@ -206,7 +206,7 @@ def playAuto(card, slotIdx=None):
          information("Reaction cards can only be played in enemy's Counter-attack Phase.")
          return
       # Pay SP cost
-      if payCostSP(card.SP) == ERR_CANT_PAY_SP:
+      if not payCostSP(card.SP):
          return
       placeCard(card, card.Type, PlayAction)
    # Player plays an unknow card
@@ -469,7 +469,7 @@ def activateAuto(card):
       
       # Activate [] ability?
       if pcard.ability.type == ActivatedAbility:
-         if not confirm("Activate {}'s ability {} {}?".format(card.Name, pcard.ability.unitype, pcard.ability.name)):
+         if not confirm("Activate {}'s ability {} {}?".format(card.Name, pcard.ability.unicodeChar, pcard.ability.name)):
             return
       # Activate the ability
       return pcard.activateEffect()

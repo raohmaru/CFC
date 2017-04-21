@@ -460,13 +460,15 @@ def toggleMarker(card, mkname):
 
 def dealDamage(dmg, target, source, isPiercing = False):
    if isinstance(target, Card):
+      oldBP = getMarker(target, 'BP')
       dmg = min(dmg, getMarker(target, 'BP'))
       addMarker(target, 'BP', -dmg)
-      notify("{} deals {} damage to {} (new BP is {})".format(source, dmg, target, getMarker(target, 'BP')))
+      notify("{} deals {} damage to {}. New BP is {} (before was {}).".format(source, dmg, target, getMarker(target, 'BP'), oldBP))
    else:
+      oldHP = target.HP
       target.HP -= dmg
       piercing = "piercing " if isPiercing else ""
-      notify("{} deals {} {}damage to {} (new HP is {})".format(source, dmg, piercing, target, target.HP))
+      notify("{} deals {} {}damage to {}. New HP is {} (before was {}).".format(source, dmg, piercing, target, target.HP, oldHP))
       
 
 #---------------------------------------------------------------------------
@@ -495,12 +497,12 @@ def payCostSP(count = 1, silent = False, msg = 'play this card'):
          if not silent:
             if not confirm("You do not seem to have enough SP to {}.\nAre you sure you want to proceed? \
             \n\n(If you do, your SP will go to the negative. You will need to increase it manually as required.)".format(msg)):
-               return ERR_CANT_PAY_SP
+               return False
             notify("{} was supposed to pay {} SP but only has {}.".format(me, count, me.SP))
       me.SP += count
       if not silent:
          notify("{} has spent {} SP. New total is {}  (before was {}).".format(me, count, me.SP, initialSP))
-
+   return True
 
 #------------------------------------------------------------------------------
 # Card Attachments
@@ -596,10 +598,10 @@ def debug(msg, level = 1):
    if debugVerbosity < DebugLevel.Info:
       return
    msg = "{}".format(msg)
-   if not re.search(r'(<<<|>>>)', msg):
-      msg = DebugLevelPrefixes[level] + ' ' + msg
-   else:
+   if re.search(Regexps['Ability'], msg):
       level = DebugLevel.Debug
+   else:
+      msg = DebugLevelPrefixes[level] + ' ' + msg
    if debugVerbosity >= level:
       whisper(msg)
       
@@ -609,7 +611,7 @@ def setupDebug(group, x=0, y=0):
    debug(">>> setupDebug()") #Debug   
    mute()
    
-   if len(players) > 1 or not me.name == Author:
+   if not me.name == Author:
       whisper("This function is only for development purposes.")
       return      
    if turnNumber() == 0:
@@ -624,11 +626,12 @@ def setupDebug(group, x=0, y=0):
    me.SP = 50
    chooseSide()
    gotoMain()
+   rnd(100, 10000)  # Delay the next action until all animation is done
    cards = [
-      'aa867ea1-89f8-4154-8e20-2263edd00002',
-      'aa867ea1-89f8-4154-8e20-2263edd00014',
-      'aa867ea1-89f8-4154-8e20-2263edd00135',
-      'aa867ea1-89f8-4154-8e20-2263edd00240'
+      '48a07b48-7415-42e7-a3cd-6bae37c56489', # Ryu no Senshi
+      'b8a8653c-0286-4b05-a255-c436fd23132d', # Blodia
+      '0b2c9e8a-5f9b-4ab5-a9b3-414f1154ce24', # Jill
+      # 'aa867ea1-89f8-4154-8e20-2263edd00240'
    ]
    for i, id in enumerate(cards):
       debug("Creating card {} at slot {}".format(id, i))

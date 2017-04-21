@@ -47,14 +47,11 @@ class GameCard(object):
       return True
       
    def activateEffect(self):
-      # Temporary disable auto effects
-      return True
-      
-      # if not self.hasEffect():
-         # return
-      # if self.rules == None:
-         # self.rules = Rules(self.rule_id, self.card_id)
-      # return self.rules.activate()
+      if not self.hasEffect():
+         return
+      if self.rules == None:
+         self.rules = Rules(self.rule_id, self.card_id)
+      return self.rules.activate()
 
 
 class CharCard(GameCard):
@@ -83,7 +80,7 @@ class Ability:
    name    = ""
    
    @property
-   def unitype(self):
+   def unicodeChar(self):
       # Returns an unicode symbol for the type (for window forms)
       if self.type == InstantAbility:   return InstantUniChar
       if self.type == ActivatedAbility: return ActivatedUniChar

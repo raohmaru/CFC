@@ -20,7 +20,9 @@
 Case Insensitive
 
 ---------------------------------------------------
-target=type[filters]|zone
+target = type[filters] @ zone
+
+Only one target is allowed.
 
 type:
    Operators:
@@ -73,11 +75,17 @@ zone:
       opp
 
 ---------------------------------------------------
-action={cost}: [cond] effect [& effect] [->(target)] [restr]; ...
+action = [{cost}:] [cond] effect [& effect] [=>(target)] [restr]; ...
+
+Only one action is allowed.
+Several effects can be joined with ';'.
 
 cost:
    Keywords:
-      F, S(target), D(target), E(target)
+      F
+      S | S(target)
+      D | D(target)
+      E | E(target)
 
 cond:
    Keywords:
@@ -86,17 +94,19 @@ cond:
       
 effect:
    Values:
-      Valid effect followed by () with 0 or more parameters
+      (Valid effect followed by () with 0 or more parameters)
+      damage(#)
    Operators:
       & (and)
       
-->:
+=>:
    Parameters:
       A valid target
       
 restr:
    Keywords:
-      ueot, uynt
+      ueot
+      uynt
 
 ---------------------------------------------------
 """
@@ -104,31 +114,17 @@ restr:
 RulesDict = {}
 
 # Ryu no Senshi's DRAGON TRANSFORM
-RulesDict['aa867ea1-89f8-4154-8e20-2263edd00002'] = """
-target = character[-block]|oppRing
-action = {F(action|kill)}: may('Question?') freeze() & damage(1)->(characters[-backup]|oppRing) ueot; draw(1, me)
+RulesDict['48a07b48-7415-42e7-a3cd-6bae37c56489'] = """
+action = {F}: damage(1) =>(characters@oppRing)
 """
 
-# Jin Saotome's SAOTOME DYNAMITE
-RulesDict['aa867ea1-89f8-4154-8e20-2263edd00009'] = """
-target = character[block]
-target = character|oppRing
+# Blodia's ENERGY COST
+RulesDict['b8a8653c-0286-4b05-a255-c436fd23132d'] = """
+target = me
+action = damage(3)
 """
 
-# Damn D's WHISTLE
-RulesDict['aa867ea1-89f8-4154-8e20-2263edd00014'] = """
-target = ^character[-frozen]|arena
-target = character[bp<=5]|myDeck
-"""
-
-# Strider Hiryu's CYPHER
-RulesDict['aa867ea1-89f8-4154-8e20-2263edd00135'] = """
-target = character[fresh]
-target = character[backedup]
-"""
-
-# Kyo Kusanagi's 182 WAYS
-RulesDict['aa867ea1-89f8-4154-8e20-2263edd00240'] = """
-target = ^character[powerless]
-target = opp,character|oppRing
+# Jill's BERETTA
+RulesDict['0b2c9e8a-5f9b-4ab5-a9b3-414f1154ce24'] = """
+action = {F}: damage(1) =>(opp,character@oppRing)
 """

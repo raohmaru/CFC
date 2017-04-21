@@ -19,41 +19,48 @@
 # RuleScript Parser
 #---------------------------------------------------------------------------
 
-if not 'AS_VERSION' in globals():
+# http://www.jayconrod.com/posts/37/a-simple-interpreter-from-scratch-in-python-part-1
+
+if not 'RS_VERSION' in globals():
    from RuleScript_config import *
 
 class RulesLexer():
+   """ Analyzes the given string and split it into tokens that will be used by the parser """
 
    @staticmethod
-   def parse(rules):
+   def tokenize(rules):
+      """ Returns an array of tokens fromt the given string """
+      debug("Rules to parse: %s" % rules)
       rules = rules.strip().split('\n')
       rulesDict = {}
 
       for line in rules:
          line = line.strip().lower()
-         debug("Parsing line '%s'" % line)
+         debug("Parsing line: %s" % line)
 
          # Skip comment lines
-         if line[0] == AS_COMMENT_CHAR:
+         if line[0] == RS_COMMENT_CHAR:
             debug("Leading comment char found. Line skipped")
             continue
 
          # Remove comments at the end of the line
-         line = line.split(AS_COMMENT_CHAR)[0].rstrip()
+         line = line.split(RS_COMMENT_CHAR)[0].rstrip()
 
          # Check for target command
          if not 'target' in rulesDict:
-            match = AS_RGX_CMD_TARGET.match(line)
+            match = RS_RGX_CMD_TARGET.match(line)
             if match:
+               debug("Target found!")
                rulesDict['target'] = RulesLexer.parseTarget( line[len(match.group()):] )
          # else:
             # debug("Target already defined. Line skipped")
 
          # Check for action command
          if not 'action' in rulesDict:
-            match = AS_RGX_CMD_ACTION.match(line)
+            match = RS_RGX_CMD_ACTION.match(line)
             if match:
-               rulesDict['action'] = RulesLexer.parseAbility( line[len(match.group()):] )
+               debug("Action found!")
+               rulesDict['action'] = RulesLexer.parseAction( line[len(match.group()):] )
          # else:
             # debug("Action already defined. Line skipped")
             
@@ -63,30 +70,30 @@ class RulesLexer():
    @staticmethod
    def parseTarget(tgtStr):
       tgtStr = tgtStr.strip()
-      debug("Parsing target '%s'" % tgtStr)
+      debug("Parsing target: %s" % tgtStr)
 
       # Get the types
-      types = AS_RGX_TARGET_TYPE.split(tgtStr)
+      types = RS_RGX_TARGET_TYPE.split(tgtStr)
       if not types[0]:
          debug("ParseError: 'target' has no type parameter")
          return False
-      types = types[0].split(AS_OP_OR)
-      # AS_KW_ALL overrides the rest
-      if AS_KW_ALL in types:
-         types = [AS_KW_ALL]
+      types = types[0].split(RS_OP_OR)
+      # RS_KW_ALL overrides the rest
+      if RS_KW_ALL in types:
+         types = [RS_KW_ALL]
       else:
          types = map(str.strip, types)
       debug("-- types: %s" % types)
 
       # Get the filters
-      filters = AS_RGX_TARGET_RESTR.search(tgtStr)
+      filters = RS_RGX_TARGET_RESTR.search(tgtStr)
       filters_arr = []
       if filters:
-         filters = filters.group(1).split(AS_OP_OR)
+         filters = filters.group(1).split(RS_OP_OR)
          # Check filters
          for filter in filters:
             # AND filters
-            filter = filter.split(AS_OP_AND)
+            filter = filter.split(RS_OP_AND)
             arr = []
             for f in filter:
                arr.append(RulesLexer.getFilter(f))
@@ -95,19 +102,19 @@ class RulesLexer():
                filters_arr.append(arr if len(arr) > 1 else arr[0])
 
       # Get the zone
-      zone = AS_RGX_TARGET_ZONE.search(tgtStr)
+      zone = RS_RGX_TARGET_ZONE.search(tgtStr)
       zone_prefix = ''
       if zone:
          zone = zone.group(1)
       else:
-         zone = AS_KW_ZONE_ARENA
+         zone = RS_KW_ZONE_ARENA
       # Check for zone prefixes
-      if zone != AS_KW_ZONE_ARENA:
-         zone_prefix, zone = RulesLexer.getPrefix(AS_PREFIX_ZONES, zone)
+      if zone != RS_KW_ZONE_ARENA:
+         zone_prefix, zone = RulesLexer.getPrefix(RS_PREFIX_ZONES, zone)
       # Check valid zones
-      if zone not in AS_KW_ZONES:
-         debug("KeywordError: Invalid zone '%s'. Assuming '%s'" % (zone, AS_KW_ZONE_ARENA))
-         zone = AS_KW_ZONE_ARENA
+      if zone not in RS_KW_ZONES:
+         debug("KeywordError: Invalid zone '%s'. Assuming '%s'" % (zone, RS_KW_ZONE_ARENA))
+         zone = RS_KW_ZONE_ARENA
       debug("-- zone prefix: %s" % zone_prefix)
       debug("-- zone: %s" % zone)
       
@@ -119,13 +126,13 @@ class RulesLexer():
 
 
    @staticmethod
-   def parseAbility(abStr):
+   def parseAction(abStr):
       abStr = abStr.strip()
-      debug("Parsing ability '%s'" % abStr)
+      debug("Parsing action: %s" % abStr)
       
       # Get the cost
       cost = None
-      match = AS_RGX_EF_COST.match(abStr)
+      match = RS_RGX_AC_COST.match(abStr)
       if match:
          abStr = abStr[len(match.group()):]
          cost = match.group(1).replace(" ", "")
@@ -141,35 +148,41 @@ class RulesLexer():
             
       # Analyze the expression
       effects = []
-      expressions = abStr.split(AS_OP_SEP)
+      expressions = abStr.split(RS_OP_SEP)
       for expr in expressions:
          debug("-- Parsing effect '%s'" % expr)
-         arr = [None] * 4
+         effect = [None, None, None, None]
          # Look for up to 1 condition
-         kw, expr = RulesLexer.extractKeywordWithParams(expr, AS_KW_EFFECT_COND)
+         kw, expr = RulesLexer.extractKeywordWithParams(expr, RS_KW_EFFECT_COND)
          if kw:
-            arr[0] = kw
+            effect[0] = kw
             debug("---- found condition '%s'" % kw)
          # Look for up to 1 restriction
-         kw, expr = RulesLexer.extractKeyword(expr, AS_KW_EFFECT_RESTRS)
+         kw, expr = RulesLexer.extractKeyword(expr, RS_KW_EFFECT_RESTRS)
          if kw:
-            arr[3] = kw
+            effect[3] = kw[0]
             debug("---- found restriction '%s'" % kw)
          # Has target?
-         match = AS_RGX_EF_TARGET.search(expr)
+         match = RS_RGX_AC_TARGET.search(expr)
          if match:
             debug("---- found target '%s'" % match.group(1))
-            arr[2] = RulesLexer.parseTarget(match.group(1))
-            expr = re.sub(AS_RGX_EF_TARGET, '', expr).strip()
-         # Finnaly, get the effects
-         match = AS_RGX_EF_EFFECT.findall(expr)
-         if match:
-            arr[1] = []
-            for eff in match:
-               params = eff[1].replace(' ','').split(',') if eff[1] else None
-               arr[1].append([eff[0], params])
-               debug("---- found effect '%s'" % arr[1][-1])
-            effects.append(arr)
+            effect[2] = RulesLexer.parseTarget(match.group(1))
+            expr = re.sub(RS_RGX_AC_TARGET, '', expr).strip()
+         # Finally, get the commands
+         effect[1] = []
+         commands = expr.split(RS_OP_AND)
+         for cmd in commands:
+            cmd = cmd.strip()
+            if not cmd:
+               continue 
+            match = RS_RGX_AC_EFFECT.search(cmd)
+            if match:
+               params = match.group(2).replace(' ','').split(',')
+               effect[1].append([match.group(1), params])
+            else:
+               effect[1].append([cmd])
+            debug("---- found effect '%s'" % effect[1][-1])
+         effects.append(effect)
          
       return {
          'cost'   : cost,
@@ -184,10 +197,10 @@ class RulesLexer():
       args = ''
       
       # Look for prefixes
-      prfx, cmd = RulesLexer.getPrefix(AS_PREFIX_FILTERS, str)
+      prfx, cmd = RulesLexer.getPrefix(RS_PREFIX_FILTERS, str)
       
       # Look for parameters
-      params = AS_RGX_TARGET_PARAM.match(cmd)
+      params = RS_RGX_TARGET_PARAM.match(cmd)
       if params:
          cmd = params.group(1)
          args = params.group(2, 3)
@@ -233,7 +246,7 @@ class RulesLexer():
    # parameter within () for the given string
       kw, str = RulesLexer.extractKeyword(str, keywords)
       if str[0] == '(':
-         match = AS_RGX_PARAM.match(str)
+         match = RS_RGX_PARAM.match(str)
          if match:
             params = match.group(1).split(',')
             kw.append(params)
