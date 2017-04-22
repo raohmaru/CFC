@@ -4,7 +4,7 @@
       name="Card Fighters' Clash"
       id="e3d56d9e-900d-49c6-b6ae-22cbb51be153"
       octgnVersion="3.1.228.0"
-      version="0.7.0.103"
+      version="0.7.0.112"
       markersize="20"
       tags="capcom snk fighter"
       description="A card game based in the SNK Playmore’s video game SNK vs. Capcom Card Fighters' Clash 2 Expand Edition.
@@ -21,6 +21,7 @@
 		<script src="Scripts/config.py" />
 		<script src="Scripts/actions.py" />
 		<script src="Scripts/events.py" />
+		<script src="Scripts/eventsCustom.py" />
 		<script src="Scripts/autoscripts.py" />
 		<script src="Scripts/cardsAutoscripts.py" />
 		<script src="Scripts/utils.py" />
@@ -34,6 +35,7 @@
 		<script src="Scripts/rs/RuleScript_lexer.py" />
 		<script src="Scripts/rs/RuleScript_filters.py" />
 		<script src="Scripts/rs/RuleScript_commands.py" />
+		<script src="Scripts/rs/RuleScript_abilities.py" />
 	</scripts>
 	
 	<events>
@@ -86,6 +88,7 @@
 		<globalvariable name="UnitedAttack" value="[]" />
 		<globalvariable name="Blockers" value="{}" />
 		<globalvariable name="Transformed" value="{}" />
+		<globalvariable name="GameEvents" value="{}" />
 	</globalvariables>
 	
 	<card back="Resources/Card/back.jpg" front="Resources/Card/front.png" width="90" height="126" cornerRadius="3">

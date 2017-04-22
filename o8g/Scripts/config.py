@@ -131,6 +131,11 @@ DebugLevelPrefixes = [
    '[x]====>'
 ]
 
+# Game Events
+GameEvents = Struct(**{
+   'Blocked'    : 'blocked'
+})
+
 # Messages
 MSG_SEL_CHAR_RING           = "Please select a character in your ring.\n(Shift key + Left click on a character)."
 MSG_COST_NOT_PAYED          = "{} did not pay the activation cost of the ability"

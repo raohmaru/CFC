@@ -39,20 +39,25 @@ targets = [
    "target = character@invalidZone",
 ]
 actions = [
-   "action = destroy",
+   "action = destroy()",
    "action = draw(1)",
    "action = destroy & draw(1)",
    "action = discard(1) & draw(1)",
-   "action = destroy; draw(1)",
-   "action = {F}: destroy",
-   "action = {f}:destroy & draw(1)",
-   "action = {S(character@myRing)}: destroy",
-   "action = {D}: destroy =>(character[bp>=800]@oppRing)",
+   "action = destroy(); draw(1)",
+   "action = {F}: destroy()",
+   "action = {f}:destroy() & draw(1)",
+   "action = {S(character@myRing)}: destroy()",
+   "action = {D}: destroy() to(character[bp>=800]@oppRing)",
    "action = {E(reaction@discard)}: may moveTo(hand)",
    "action = {E(reaction@discard)}: may('Question?') moveTo(hand)",
-   "action = destroy ueot",
-   "action = {D(action)}: may('Question?') destroy =>(character) & freeze; draw(2) ueot",
-   "action = {F}:  =>(character) ueot",
+   "action = destroy() ueot",
+   "action = {D(action)}: may('Question?') destroy() to(character) & freeze; draw(2) ueot",
+   "action = {F}:  to(character) ueot",
+]
+abilities = [
+   "abilities = unblockable",
+   "abilities = unblockable, rider",
+   "abilities =      ",
 ]
 
 if not 'debug' in globals():
@@ -62,18 +67,14 @@ if not 'debug' in globals():
       print str
    __builtin__.debug = debug
 
-def testTargets():
-   for rule in targets:
-      tokens = RulesLexer.tokenize(rule)
-      pp.pprint(tokens)
-      print ""
-
-def testActions():
-   for rule in actions:
-      tokens = RulesLexer.tokenize(rule)
+def test(arr, title):
+   print "Testing {} ".format(title) + ("=" * 80) + "\n"
+   for item in arr:
+      tokens = RulesLexer.tokenize(item)
       pp.pprint(tokens)
       print ""
 
 # rules = RulesDict['aa867ea1-89f8-4154-8e20-2263edd00002']
-testTargets()
-testActions()
+# test(targets, 'targets')
+# test(actions, 'actions')
+test(abilities, 'abilities')

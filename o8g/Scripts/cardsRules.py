@@ -75,7 +75,7 @@ zone:
       opp
 
 ---------------------------------------------------
-action = [{cost}:] [cond] effect [& effect] [=>(target)] [restr]; ...
+action = [{cost}:] [cond] effect [& effect] [to(target)] [restr]; ...
 
 Only one action is allowed.
 Several effects can be joined with ';'.
@@ -94,8 +94,12 @@ cond:
       
 effect:
    Values:
-      (Valid effect followed by () with 0 or more parameters)
-      damage(#)
+      Effect command (followed by () with 0 or more parameters):
+         damage(#)
+      Ability:
+         Prefixes:
+            +
+            -
    Operators:
       & (and)
       
@@ -107,15 +111,43 @@ restr:
    Keywords:
       ueot
       uynt
+      
+---------------------------------------------------
+auto = [<event:expr>] [cond] effect [& effect] [to(target)] [restr]
+
+A card can have one or more `auto` keys
+
+event:
+   Keywords:
+      blocked
+
+cond:
+   Keywords:
+      may
+      may('Question')
+      
+---------------------------------------------------
+abilities = ability [, ability]
+
+ability:
+   Keywords:
+      unblockable
 
 ---------------------------------------------------
 """
 
 RulesDict = {}
 
+# Nina's WINGS
+RulesDict['55b0c9ff-4b3a-4b08-adc1-f1b5e03adef9'] = """
+abilities = unblockable
+auto = <myHandChanges> if myHand == 0 then +unblockable
+auto = <myHandChanges:0> +unblockable
+"""
+
 # Ryu no Senshi's DRAGON TRANSFORM
 RulesDict['48a07b48-7415-42e7-a3cd-6bae37c56489'] = """
-action = {F}: damage(1) =>(characters@oppRing)
+action = {F}: damage(1) to(characters@oppRing)
 """
 
 # Blodia's ENERGY COST
@@ -126,5 +158,5 @@ action = damage(3)
 
 # Jill's BERETTA
 RulesDict['0b2c9e8a-5f9b-4ab5-a9b3-414f1154ce24'] = """
-action = {F}: damage(1) =>(opp,character@oppRing)
+action = {F}: damage(1) to(opp,character@oppRing)
 """

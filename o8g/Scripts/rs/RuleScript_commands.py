@@ -40,6 +40,7 @@ class RulesCommands():
       params = cmd[1]
       if funcStr in RulesCommands.cmds:
          debug("-- applying cmd '%s' to targets %s (%s)" % (funcStr, targets, restr))
+         # func = RulesCommands.cmds[funcStr]
          func = eval(RulesCommands.cmds[funcStr])  # eval is a necessary evil...
          func(targets, restr, source, *params)
       else:

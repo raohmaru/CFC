@@ -20,10 +20,50 @@
 #---------------------------------------------------------------------------
 
 # http://www.jayconrod.com/posts/37/a-simple-interpreter-from-scratch-in-python-part-1
+   
+"""      
+target: {
+   'filters': [
+      ['-', 'bp', ('>=', '800')]
+   ],
+   'types': ['characters'],
+   'zone': ['opp', 'ring']
+},
+action: {
+   cost: [
+      'd',
+      {
+         'filters': [],
+         'types': ['action'],
+         'zone': ['', 'arena']
+      }
+   ],
+   effects: [
+      [
+         ['may', ["'question?'"]],
+         [
+            ['destroy'],
+            ['draw', ['2']]
+         ],
+         {
+            'filters': [],
+            'types': ['character'],
+            'zone': ['',
+            'arena']
+         },
+         'ueot'
+      ]
+   ],
+   abilities: [
+      'ability', 'ability'
+   ]
+}
+"""
 
+# Import needed for testing out of OCTGN
 if not 'RS_VERSION' in globals():
    from RuleScript_config import *
-
+   
 class RulesLexer():
    """ Analyzes the given string and split it into tokens that will be used by the parser """
 
@@ -47,22 +87,28 @@ class RulesLexer():
          line = line.split(RS_COMMENT_CHAR)[0].rstrip()
 
          # Check for target command
-         if not 'target' in rulesDict:
+         if not RS_KEY_TARGET in rulesDict:
             match = RS_RGX_CMD_TARGET.match(line)
             if match:
                debug("Target found!")
-               rulesDict['target'] = RulesLexer.parseTarget( line[len(match.group()):] )
+               rulesDict[RS_KEY_TARGET] = RulesLexer.parseTarget( line[len(match.group()):] )
          # else:
             # debug("Target already defined. Line skipped")
 
          # Check for action command
-         if not 'action' in rulesDict:
+         if not RS_KEY_ACTION in rulesDict:
             match = RS_RGX_CMD_ACTION.match(line)
             if match:
                debug("Action found!")
-               rulesDict['action'] = RulesLexer.parseAction( line[len(match.group()):] )
+               rulesDict[RS_KEY_ACTION] = RulesLexer.parseAction( line[len(match.group()):] )
          # else:
             # debug("Action already defined. Line skipped")
+            
+         if not RS_KEY_ABILITIES in rulesDict:
+            match = RS_RGX_CMD_ABILITY.match(line)
+            if match:
+               debug("Abilities found!")
+               rulesDict[RS_KEY_ABILITIES] = RulesLexer.parseAbility( line[len(match.group()):] )
             
       return rulesDict
 
@@ -126,15 +172,15 @@ class RulesLexer():
 
 
    @staticmethod
-   def parseAction(abStr):
-      abStr = abStr.strip()
-      debug("Parsing action: %s" % abStr)
+   def parseAction(acStr):
+      acStr = acStr.strip()
+      debug("Parsing action: %s" % acStr)
       
       # Get the cost
       cost = None
-      match = RS_RGX_AC_COST.match(abStr)
+      match = RS_RGX_AC_COST.match(acStr)
       if match:
-         abStr = abStr[len(match.group()):]
+         acStr = acStr[len(match.group()):]
          cost = match.group(1).replace(" ", "")
          debug("-- found cost: %s" % cost)
          # Check if cost has a target
@@ -148,7 +194,7 @@ class RulesLexer():
             
       # Analyze the expression
       effects = []
-      expressions = abStr.split(RS_OP_SEP)
+      expressions = acStr.split(RS_OP_SEP)
       for expr in expressions:
          debug("-- Parsing effect '%s'" % expr)
          effect = [None, None, None, None]
@@ -179,15 +225,24 @@ class RulesLexer():
             if match:
                params = match.group(2).replace(' ','').split(',')
                effect[1].append([match.group(1), params])
-            else:
-               effect[1].append([cmd])
-            debug("---- found effect '%s'" % effect[1][-1])
+               debug("---- found effect '%s'" % effect[1][-1])
+            # else:
+               # effect[1].append([cmd])
          effects.append(effect)
          
       return {
          'cost'   : cost,
          'effects': effects
       }
+
+
+   @staticmethod
+   def parseAbility(abStr):
+      debug("Parsing ability: %s" % abStr)
+      abilities = abStr.split(RS_OP_OR)
+      abilities = [ item.strip() for item in abilities ]
+      abilities = filter(None, abilities)
+      return abilities
       
    
    @staticmethod

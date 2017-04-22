@@ -212,7 +212,10 @@ def playAuto(card, slotIdx=None):
    # Player plays an unknow card
    else:
       placeCard(card, card.Type)
-      
+   
+   # Parse the to enable card autoscripts
+   parseCard(card)
+   
    return True
 
 
@@ -414,6 +417,10 @@ def blockAuto(card):
    # An attacker can only be blocked by exactly 1 char
    if target._id in blockers:
       warning("An attacking character can only be blocked by exactly one char")
+      return
+      
+   # Triggers a game event to check if block is possible
+   if not triggerGameEvent(GameEvents.Blocked, target._id):
       return
    
    setMarker(card, 'Counter-attack')
