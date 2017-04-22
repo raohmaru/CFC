@@ -130,7 +130,7 @@ def messageBox(msg, title, icon = None):
       form = MessageBoxForm(msg, title, icon)
       showWinForm(form)
    else: 
-      confirm(msg)
+      whisper(msg)
    
 
 def information(msg, title = 'Information'):
