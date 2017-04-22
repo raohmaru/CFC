@@ -21,15 +21,25 @@ import re
 # Card automation functions
 #---------------------------------------------------------------------------
 
-def getParsedCard(card):
-   debug(">>> getParsedCard()") #Debug
+def parseCard(card, ruleId=None):
+   debug(">>> parseCard({})".format(card)) #Debug
    if not card._id in parsedCards:
       if card.Type == CharType:
-         parsedCards[card._id] = CharCard(card)
+         parsedCards[card._id] = CharCard(card, ruleId)
       else:
-         parsedCards[card._id] = GameCard(card)
-   debug("Retrieved parsed card for ID {} ({})".format(card._id, card))
+         parsedCards[card._id] = GameCard(card, ruleId)
    return parsedCards.get(card._id)
+   
+
+def getParsedCard(card):
+   debug("Retrieved parsed card for ID {} ({})".format(card._id, card))
+   return parseCard(card)
+   
+
+def removeParsedCard(card):
+   debug("Removed parsed card for ID {} ({})".format(card._id, card))
+   parsedCards.pop(card._id, None)
+   removeGameEventListener(card._id)
 
 
 class GameCard(object):
@@ -38,10 +48,11 @@ class GameCard(object):
    rule_id = None
    rules   = None
    
-   def __init__(self, card):
+   def __init__(self, card, ruleId=None):
       debug(">>> GameCard()") #Debug
       self.card_id = card._id
-      self.rule_id = card.model
+      self.rule_id = ruleId if ruleId else card.model
+      self.rules = Rules(self.rule_id, self.card_id)
          
    def hasEffect(self):
       return True
@@ -49,8 +60,6 @@ class GameCard(object):
    def activateEffect(self):
       if not self.hasEffect():
          return
-      if self.rules == None:
-         self.rules = Rules(self.rule_id, self.card_id)
       return self.rules.activate()
 
 
@@ -58,8 +67,8 @@ class CharCard(GameCard):
    """ A class which stores the character card ability name and its parsed rule scripts """
    ability = None
    
-   def __init__(self, card):
-      super(self.__class__, self).__init__(card)
+   def __init__(self, card, ruleId=None):
+      super(self.__class__, self).__init__(card, ruleId)
       debug(">>> CharCard()") #Debug
    
       ability = Ability(card)

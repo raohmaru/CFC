@@ -20,6 +20,7 @@
 # Event handlers
 #---------------------------------------------------------------------------
 
+# Happens when the table first loads, and never again
 def onTableLoaded():
    checkTwoSidedTable()
 
@@ -56,16 +57,16 @@ def onCardsMoved(args):
    mute()
    cards = args.cards
    transfCards = getGlobalVar('Transformed')
-   for iter in range(len(cards)):
-      card      = args.cards[iter]
-      fromGroup = args.fromGroups[iter]
-      toGroup   = args.toGroups[iter]
-      index     = args.indexs[iter]
-      x         = args.xs[iter]
-      y         = args.ys[iter]
-      faceup    = args.faceups[iter]
-      highlight = args.highlights[iter]
-      markers   = eval(args.markers[iter])  # markers it's a string equivalent of the Marker object
+   for i in range(len(cards)):
+      card      = args.cards[i]
+      fromGroup = args.fromGroups[i]
+      toGroup   = args.toGroups[i]
+      index     = args.indexs[i]
+      x         = args.xs[i]
+      y         = args.ys[i]
+      faceup    = args.faceups[i]
+      highlight = args.highlights[i]
+      markers   = eval(args.markers[i])  # markers it's a string equivalent of the Marker object
       
       if card.controller != me:
          return
@@ -75,6 +76,7 @@ def onCardsMoved(args):
             freeSlot(card)
             if MarkersDict['Attack'] in markers or MarkersDict['United Attack'] in markers:
                rearrangeUAttack(card)
+         removeParsedCard(card)
       elif fromGroup == table and toGroup == table:
          if card.Type == CharType and not MarkersDict['Backup'] in card.markers:
             alignBackups(card, *card.position)

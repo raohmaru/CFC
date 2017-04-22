@@ -21,7 +21,12 @@ import re
 # RULESCRIPT CONST LANGUAGE DEFINITION
 #---------------------------------------------------------------------------
 
-RS_VERSION = '0.0.3'
+RS_VERSION = '0.1.0'
+
+# Available keys
+RS_KEY_TARGET    = 'target'
+RS_KEY_ACTION    = 'action'
+RS_KEY_ABILITIES = 'abilities'
 
 # Regular expressions
 RS_RGX_CMD_TARGET   = re.compile(r'^target\s*=\s*')
@@ -32,8 +37,10 @@ RS_RGX_TARGET_ZONE  = re.compile(r'@\s*([\w*]+).*$')
 
 RS_RGX_CMD_ACTION   = re.compile(r'^action\s*=\s*')
 RS_RGX_AC_COST      = re.compile(r'\{\s*([^}]+)\s*\}\s*:\s*')
-RS_RGX_AC_TARGET    = re.compile(r'=>\s*\((.+)\)')
+RS_RGX_AC_TARGET    = re.compile(r'to\s*\((.+)\)')
 RS_RGX_AC_EFFECT    = re.compile(r'(\w+)\s*\((.*?)\)')
+
+RS_RGX_CMD_ABILITY  = re.compile(r'^abilities\s*=\s*')
 
 RS_RGX_PARAM        = re.compile(r'\(([^)]*)\)')
 

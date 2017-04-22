@@ -80,6 +80,7 @@ def resetAll():
    clearGlobalVar('UnitedAttack')
    clearGlobalVar('Blockers')
    clearGlobalVar('Transformed')
+   clearGlobalVar('GameEvents')
    
    if len(players) > 1:
       debugVerbosity = DebugLevel.Off # Reset means normal game.
@@ -358,14 +359,8 @@ def copyAlternateRules(card, target):
    
    if not automations['ExtAPI']:
       return None
-   rules = None
-   ability = None
-   if isinstance(target, tuple):
-      rules = target[0]
-      ability = target[1]
-   else:
-      rules = target.Rules
-      ability = target.Ability
+   rules = target.Rules
+   ability = target.Ability
    if rules:
       debug("Found rule '{} {}'".format(ability, rules))
       return addAlternateRules(card, ability, rules)
@@ -585,6 +580,7 @@ def getAttachmets(card):
    debug("{} has {} cards attached".format(card, len(attachs)))
    return attachs
    
+
 def getAcceptedBackups(card):
    return (card.properties['Backup 1'], card.properties['Backup 2'], card.properties['Backup 3'])
 
@@ -617,9 +613,9 @@ def setupDebug(group, x=0, y=0):
    if turnNumber() == 0:
       warning("Start the game prior to setup the debug environment")
       return      
-   if len(me.Deck) == 0:
-      warning("Please load a deck first.")
-      return
+   # if len(me.Deck) == 0:
+      # warning("Please load a deck first.")
+      # return
    
    global charsPlayed, debugVerbosity
    debugVerbosity = DebugLevel.All
@@ -631,7 +627,7 @@ def setupDebug(group, x=0, y=0):
       '48a07b48-7415-42e7-a3cd-6bae37c56489', # Ryu no Senshi
       'b8a8653c-0286-4b05-a255-c436fd23132d', # Blodia
       '0b2c9e8a-5f9b-4ab5-a9b3-414f1154ce24', # Jill
-      # 'aa867ea1-89f8-4154-8e20-2263edd00240'
+      '55b0c9ff-4b3a-4b08-adc1-f1b5e03adef9'  # Nina
    ]
    for i, id in enumerate(cards):
       debug("Creating card {} at slot {}".format(id, i))
@@ -641,6 +637,7 @@ def setupDebug(group, x=0, y=0):
       if ability.type and ability.type != InstantAbility:
          card.markers[MarkersDict['Just Entered']] = 0
       charsPlayed = 0
+      rnd(1, 100)  # Delay the next action until all animation is done
    
    debug("<<< setupDebug()") #Debug
 

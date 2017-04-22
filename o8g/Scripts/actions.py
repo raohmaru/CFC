@@ -326,13 +326,14 @@ def askCardBackups(card, x = 0, y = 0):
 def toggleAbility(card, x = 0, y = 0):
    mute()
    # Removes card from parsed list to parse it again with the new abilities
-   parsedCards.pop(card._id, None)
    if card.Type != CharType or (card.alternate == '' and card.Rules == ''):
       return
+   removeParsedCard(card)
    if card.alternate == 'noability':
       card.alternate = ''
       if card.Rules != '':
          notify("{} restores {}'s abilities".format(me, card))
+         parseCard(card)
       else:
          notify("{} tried to restore {}'s abilities, but it doesn't have any core ability".format(me, card))
    else:
@@ -383,7 +384,8 @@ def copyAbility(card, x = 0, y = 0, target = None):
    if target:
       result = copyAlternateRules(card, target)
       if result:
-         parsedCards.pop(card._id, None)
+         removeParsedCard(card)
+         parseCard(card, target.model)
          # Updates proxy image for the other players
          for p in players:
             if p != me:
@@ -395,7 +397,7 @@ def copyAbility(card, x = 0, y = 0, target = None):
    else:
       warning("Please select a valid character card.")
    debug("<<< copyAbility()") #Debug
-         
+
          
 def swapAbilities(card, x = 0, y = 0):
    debug(">>> swapAbilities()") #Debug
@@ -408,7 +410,11 @@ def swapAbilities(card, x = 0, y = 0):
    if len(targets) > 0 and targets[0].Type == CharType and targets[0] != card and getSlotIdx(targets[0], targets[0].controller) > -1:
       target = targets[0]
       if card.Rules and target.Rules:
-         card_copy = (card.Rules, card.Ability)
+         card_copy = Struct(**{
+            'Rules'  : card.Rules,
+            'Ability': card.Ability,
+            'model'  : card.model
+         })
          copyAbility(card,   target = target)
          copyAbility(target, target = card_copy)
       else:
@@ -416,7 +422,7 @@ def swapAbilities(card, x = 0, y = 0):
       target.target(False)
    else:
       warning("Please select a valid character card in the ring.")
-      
+
 #---------------------------------------------------------------------------
 # Movement actions
 #---------------------------------------------------------------------------

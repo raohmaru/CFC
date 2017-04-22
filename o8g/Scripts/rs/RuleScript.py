@@ -23,59 +23,48 @@ class Rules():
    """ A class to parse, hold and execute the rules of a card """
    rule_id      = ''
    card_id      = ''
-   parsed       = False
    rules_tokens = None
 
    def __init__(self, rule, cid):
       self.rule_id = rule.lower()
       self.card_id = cid
+      self.parse()
 
 
    def parse(self):
       """ Parses the rules if they exists in RulesDict """
-      if self.parsed:
-         return      
-      self.parsed = True
-      
       # Get the rules
       if self.rule_id in RulesDict:
          rules = RulesDict[self.rule_id]
       else:
-         debug("Card has no rules yet")
          return
+      debug("Parsing rule id {}".format(self.rule_id))
       self.rules_tokens = RulesLexer.tokenize(rules)
+      
+      if RS_KEY_ABILITIES in self.rules_tokens:
+         RulesAbilities.add(self.rules_tokens[RS_KEY_ABILITIES], self.card_id)
       
 
    def activate(self):
-      if not self.parsed:
-         self.parse()
       if not self.rules_tokens:
+         whisper("The ability of %s has not been scripted yet".format(Card(self.card_id)))
          return True
    
       debug("Executing rules")
       target = None
-      if 'target' in self.rules_tokens:
-         target = self.getTargets(self.rules_tokens['target'])
+      if RS_KEY_TARGET in self.rules_tokens:
+         target = self.getTargets(self.rules_tokens[RS_KEY_TARGET])
          if target == False:
             debug("Targeting cancelled")
             return False
       
-      if 'action' in self.rules_tokens:
-         return self.execAction(self.rules_tokens['action'], target)
+      if RS_KEY_ACTION in self.rules_tokens:
+         return self.execAction(self.rules_tokens[RS_KEY_ACTION], target)
       
       return True
 
 
    def getTargets(self, target):
-      """
-      target = {
-         'filters': [
-            ['-', 'bp', ('>=', '800')]
-         ],
-         'types': ['characters'],
-         'zone': ['opp', 'ring']
-      }
-      """
       debug("Checking targets")
 
       types       = target['types']
@@ -276,34 +265,6 @@ class Rules():
 
       
    def execAction(self, action, target):
-      """
-      action = {
-         cost: [
-            'd',
-            {
-               'filters': [],
-               'types': ['action'],
-               'zone': ['', 'arena']
-            }
-         ],
-         effects = [
-            [
-               ['may', ["'question?'"]],
-               [
-                  ['destroy'],
-                  ['draw', ['2']]
-               ],
-               {
-                  'filters': [],
-                  'types': ['character'],
-                  'zone': ['',
-                  'arena']
-               },
-               'ueot'
-            ]
-         ]
-      }
-      """
       debug("Executing actions")
       if action['cost']:
          if not self.payCost(*action['cost']):
@@ -314,6 +275,7 @@ class Rules():
       for effect in action['effects']:
          currTarget = target
          newTarget = None
+         
          # Conditions
          # if ability['effects'][0] == RS_KW_COND_MAY:
             # if not confirm("May {}?".format(question)):
@@ -332,6 +294,7 @@ class Rules():
          if len(effect[1]) > 0:
             debug("-- Applying commands")
             RulesCommands.applyAll(effect[1], currTarget, effect[3], card)
+            
       return True
                
    
