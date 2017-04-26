@@ -41,7 +41,7 @@ type:
    Sufixes:
       s (plural) (valid on Type, Subtype, player or *)
 
-filters:
+filters: (optional)
    Operators:
       , (or)
       & (and)
@@ -62,7 +62,7 @@ filters:
    Prefixes:
       - (not)
 
-zone:
+zone: (optional)
    Keywords:
       arena (default)
       ring
@@ -103,7 +103,7 @@ effect:
    Operators:
       & (and)
       
-=>:
+to:
    Parameters:
       A valid target
       
@@ -113,36 +113,50 @@ restr:
       uynt
       
 ---------------------------------------------------
-auto = [<event:expr>] [cond] effect [& effect] [to(target)] [restr]
-
-A card can have one or more `auto` keys
-
-event:
-   Keywords:
-      blocked
-
-cond:
-   Keywords:
-      may
-      may('Question')
-      
----------------------------------------------------
 abilities = ability [, ability]
 
 ability:
    Keywords:
       unblockable
+      
+---------------------------------------------------
+auto = <event:expr> [cond] effect [& effect] [to(target)] [restr]
+
+Only one auto is allowed.
+
+event:
+   Keywords:
+      blocked
+   Prefixes:
+      my (default)
+      opp
+   expr:
+      A valid logical expression (@see Expressions)
+
+cond:
+   @see action:cond
+
+effect:
+   @see action:effect
+
+to:
+   @see action:to
+   default: this
+
+restr:
+   @see action:restr
 
 ---------------------------------------------------
+Expressions:
+   [=><]0-9
+
 """
 
 RulesDict = {}
 
 # Nina's WINGS
 RulesDict['55b0c9ff-4b3a-4b08-adc1-f1b5e03adef9'] = """
-abilities = unblockable
-auto = <myHandChanges> if myHand == 0 then +unblockable
-auto = <myHandChanges:0> +unblockable
+auto = ~myHandChanges:=0~ +unblockable
 """
 
 # Ryu no Senshi's DRAGON TRANSFORM

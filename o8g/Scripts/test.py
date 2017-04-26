@@ -59,6 +59,20 @@ abilities = [
    "abilities = unblockable, rider",
    "abilities =      ",
 ]
+# auto = [~event:expr>] [cond] effect [& effect] [to(target)] [restr]
+autos = [
+   # "auto = ~myHandChanges~ if myHand == 0 then +unblockable",
+   # "auto = destroy()",
+   "auto = ~myHandChanges~ destroy()",
+   # "auto = ~myHandChanges~ destroy() & draw(1)",
+   # "auto = ~myHandChanges~ may destroy()",
+   # "auto = ~myHandChanges~ destroy() to(character@myRing)",
+   # "auto = ~myHandChanges~ destroy() ueot",
+   "auto = ~handChanges:0~ +unblockable",
+   "auto = ~myHandChanges : >0~ -unblockable",
+   "auto = ~myHandChanges :>=0~ -unblockable",
+   "auto = ~myHandChanges:0~ may('Question?') destroy() & +unblockable to(character@myRing) uynt",
+]
 
 if not 'debug' in globals():
    # Make debug accessible from any module
@@ -77,4 +91,5 @@ def test(arr, title):
 # rules = RulesDict['aa867ea1-89f8-4154-8e20-2263edd00002']
 # test(targets, 'targets')
 # test(actions, 'actions')
-test(abilities, 'abilities')
+# test(abilities, 'abilities')
+test(autos, 'autos')

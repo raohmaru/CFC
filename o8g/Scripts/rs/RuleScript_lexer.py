@@ -38,12 +38,16 @@ action: {
          'zone': ['', 'arena']
       }
    ],
+   event: [
+      'my', 'handchanges', '=0'
+   ],
    effects: [
       [
          ['may', ["'question?'"]],
          [
             ['destroy'],
-            ['draw', ['2']]
+            ['draw', ['2']],
+            ('+', 'unblockable')
          ],
          {
             'filters': [],
@@ -88,27 +92,36 @@ class RulesLexer():
 
          # Check for target command
          if not RS_KEY_TARGET in rulesDict:
-            match = RS_RGX_CMD_TARGET.match(line)
+            match = RS_RGX_KEY_TARGET.match(line)
             if match:
-               debug("Target found!")
+               debug("Target key found!")
                rulesDict[RS_KEY_TARGET] = RulesLexer.parseTarget( line[len(match.group()):] )
          # else:
             # debug("Target already defined. Line skipped")
 
          # Check for action command
          if not RS_KEY_ACTION in rulesDict:
-            match = RS_RGX_CMD_ACTION.match(line)
+            match = RS_RGX_KEY_ACTION.match(line)
             if match:
-               debug("Action found!")
+               debug("Action key found!")
                rulesDict[RS_KEY_ACTION] = RulesLexer.parseAction( line[len(match.group()):] )
          # else:
             # debug("Action already defined. Line skipped")
             
          if not RS_KEY_ABILITIES in rulesDict:
-            match = RS_RGX_CMD_ABILITY.match(line)
+            match = RS_RGX_KEY_ABILITY.match(line)
             if match:
-               debug("Abilities found!")
+               debug("Abilities key found!")
                rulesDict[RS_KEY_ABILITIES] = RulesLexer.parseAbility( line[len(match.group()):] )
+
+         # Check for action command
+         if not RS_KEY_AUTO in rulesDict:
+            match = RS_RGX_KEY_AUTO.match(line)
+            if match:
+               debug("Auto key found!")
+               rulesDict[RS_KEY_AUTO] = RulesLexer.parseAction( line[len(match.group()):] )
+         # else:
+            # debug("Action already defined. Line skipped")
             
       return rulesDict
 
@@ -191,6 +204,25 @@ class RulesLexer():
             cost[1] = cost[1][:-1]
             debug("-- cost target: %s" % cost[1])
             cost[1] = RulesLexer.parseTarget(cost[1])
+      
+      # Get the event trigger
+      event = None
+      match = RS_RGX_AC_EVENT.match(acStr)
+      if match:
+         acStr = acStr[len(match.group()):]   
+         # Look for prefixes
+         prfx, eventName = RulesLexer.getPrefix(RS_PREFIX_EVENTS, match.group(1))
+         if prfx == RS_PREFIX_MY:
+            prfx = ''
+         event = [prfx, eventName, None]
+         # Event expression
+         if match.group(2):
+            expr = match.group(2)[1:].replace(" ", "")
+            if RulesLexer.isValidExpr(expr):
+               event[2] = expr
+            else:
+               debug("-- expr was ignored: %s" % expr)
+         debug("-- found event: %s" % event)
             
       # Analyze the expression
       effects = []
@@ -199,12 +231,12 @@ class RulesLexer():
          debug("-- Parsing effect '%s'" % expr)
          effect = [None, None, None, None]
          # Look for up to 1 condition
-         kw, expr = RulesLexer.extractKeywordWithParams(expr, RS_KW_EFFECT_COND)
+         kw, expr = RulesLexer.extractKeywordWithParams(expr, RS_KW_CMD_COND)
          if kw:
             effect[0] = kw
             debug("---- found condition '%s'" % kw)
          # Look for up to 1 restriction
-         kw, expr = RulesLexer.extractKeyword(expr, RS_KW_EFFECT_RESTRS)
+         kw, expr = RulesLexer.extractKeyword(expr, RS_KW_CMD_RESTRS)
          if kw:
             effect[3] = kw[0]
             debug("---- found restriction '%s'" % kw)
@@ -226,12 +258,15 @@ class RulesLexer():
                params = match.group(2).replace(' ','').split(',')
                effect[1].append([match.group(1), params])
                debug("---- found effect '%s'" % effect[1][-1])
-            # else:
-               # effect[1].append([cmd])
+            else:
+               cmd = RulesLexer.getPrefix(RS_PREFIX_BONUS, cmd)
+               filter(None, cmd)
+               effect[1].append(cmd)
          effects.append(effect)
          
       return {
          'cost'   : cost,
+         'event'  : event,
          'effects': effects
       }
 
@@ -295,6 +330,7 @@ class RulesLexer():
             str = str.replace(k, "")
       return (kw, str.strip())
       
+      
    @staticmethod
    def extractKeywordWithParams(str, keywords):
    # Extract any keyword that match from the keywords list, and any additional
@@ -307,3 +343,9 @@ class RulesLexer():
             kw.append(params)
             str = str[len(match.group()):]
       return (kw, str)
+      
+      
+   @staticmethod
+   def isValidExpr(expr):
+   # Checks if the expression is valid and is well-formed
+      return bool(RS_RGX_EXPRESSION.match(expr))

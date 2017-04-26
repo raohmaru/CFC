@@ -100,8 +100,9 @@ AutoUniChar      = u'\u25CF'
 
 # A dictionary which holds the regex used in other scripts
 Regexps = dict(
-   Ability = re.compile(r'(.)\s+([^\r]+)'),
-   Debug   = re.compile(r'(<<<|>>>)'),
+   Ability      = re.compile(r'(.)\s+([^\r]+)'),
+   Debug        = re.compile(r'(<<<|>>>)'),
+   DoubleEquals = re.compile(r'=(?=\d)'),
 )
 
 # Rules
@@ -133,7 +134,8 @@ DebugLevelPrefixes = [
 
 # Game Events
 GameEvents = Struct(**{
-   'Blocked'    : 'blocked'
+   'Blocked'    : 'blocked',
+   'HandChanges': 'handchanges'
 })
 
 # Messages

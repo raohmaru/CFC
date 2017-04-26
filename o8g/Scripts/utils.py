@@ -150,6 +150,24 @@ def sanitizeStr(str):
    return str
 
 
+def evalExpression(expr, actual):
+   if is_number(expr):
+      debug("Evaluating expr  %s == %s" % (actual, expr))
+      return actual == int(expr)
+   else:
+      expr = Regexps['DoubleEquals'].sub('==', expr)
+      debug("Evaluating expr  %s %s" % (actual, expr))
+      return eval("actual " + expr)
+   
+   
+def is_number(s):
+    try:
+        float(s)
+        return True
+    except ValueError:
+        return False
+
+
 #---------------------------------------------------------------------------
 # Card functions
 #---------------------------------------------------------------------------

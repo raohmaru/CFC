@@ -405,7 +405,7 @@ def blockAuto(card):
             debug("Removed blocker {}".format(blockers)) #Debug
             setGlobalVar('Blockers', blockers)
             break
-      notify('{} cancels the counter-attack with {}'.format(me, card))  
+      notify('{} cancels the counter-attack with {}'.format(me, card))
       return
    # Check if an attacking enemy char has been selected
    enemyRing = getGlobalVar('Ring', players[1])

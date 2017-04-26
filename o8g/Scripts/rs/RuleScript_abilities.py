@@ -24,20 +24,35 @@ class RulesAbilities():
    items = {}
 
    @staticmethod
-   def register(name, func):
-      RulesAbilities.items[name] = func
+   def register(name, func, events):
+      RulesAbilities.items[name] = {
+         'func': func,
+         'events': events
+      }
       
    
    @staticmethod   
-   def add(abilites, card_id):
+   def addAll(abilites, card_id):
       for ability in abilites:
-         if ability in RulesAbilities.items:
-            debug("-- adding ability '%s' from %s" % (ability, Card(card_id)))
-            # func = RulesAbilities.items[ability]
-            func = eval(RulesAbilities.items[ability])  # eval is a necessary evil...
-            func(card_id)
-         else:
-            debug("-- ability not found: {}".format(ability))
+         RulesAbilities.add(ability, card_id)
+   
+   @staticmethod   
+   def add(ability, card_id):
+      if ability in RulesAbilities.items:
+         debug("-- adding ability '{}' from {}".format(ability, Card(card_id)))
+         # func = RulesAbilities.items[ability]['func']
+         func = eval(RulesAbilities.items[ability]['func'])  # eval is a necessary evil...
+         func(card_id)
+      else:
+         debug("-- ability not found: {}".format(ability))
+      
+   
+   @staticmethod   
+   def remove(ability, card_id):
+      debug("-- removing ability '{}' from {}".format(ability, Card(card_id)))
+      if ability in RulesAbilities.items:
+         for event in RulesAbilities.items[ability]['events']:      
+            removeGameEventListener(card_id, event)
       
 
 #---------------------------------------------------------------------------
@@ -48,14 +63,14 @@ def ablUnblockable(card_id):
    debug(">>> ablUnblockable({})".format(card_id)) #Debug
    addGameEventListener(GameEvents.Blocked, 'ablUnblockable_listener', card_id, card_id)
    
-def ablUnblockable_listener(card1_id, card2_id):
+def ablUnblockable_listener(target_id, source_id):
    """ Checks if the original card with the ability is equal to the second card the system wants to check """
-   debug(">>> ablUnblockable_listener({}, {})".format(card1_id, card2_id)) #Debug      
-   if card1_id == card2_id:
-      card = Card(card1_id)
+   debug(">>> ablUnblockable_listener({}, {})".format(target_id, source_id)) #Debug      
+   if target_id == source_id:
+      card = Card(target_id)
       warning("{} cannot be counter-attacked due to {}'s {} ability.".format(card.Name, card.Name, card.properties['Ability Name']))  
       return True
    return False
 
 
-RulesAbilities.register('unblockable', 'ablUnblockable')
+RulesAbilities.register('unblockable', 'ablUnblockable', [GameEvents.Blocked])

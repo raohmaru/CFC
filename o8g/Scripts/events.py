@@ -57,6 +57,7 @@ def onCardsMoved(args):
    mute()
    cards = args.cards
    transfCards = getGlobalVar('Transformed')
+   handChanged = False
    for i in range(len(cards)):
       card      = args.cards[i]
       fromGroup = args.fromGroups[i]
@@ -88,7 +89,12 @@ def onCardsMoved(args):
             whisper("Transformed card {} is restored into {}".format(card, newCard))
             del transfCards[card._id]
             card.delete()
+      if not handChanged and (fromGroup == me.hand and toGroup != me.hand or fromGroup != me.hand and toGroup == me.hand):
+         handChanged = True
+         
    setGlobalVar('Transformed', transfCards)
+   if handChanged:      
+      triggerGameEvent(GameEvents.HandChanges, len(me.hand))
 
    
 def onTurnPassed(args):

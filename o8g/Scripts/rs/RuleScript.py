@@ -41,9 +41,15 @@ class Rules():
       debug("Parsing rule id {}".format(self.rule_id))
       self.rules_tokens = RulesLexer.tokenize(rules)
       
+      # Add any abilities to the game, to trigger when needed
       if RS_KEY_ABILITIES in self.rules_tokens:
-         RulesAbilities.add(self.rules_tokens[RS_KEY_ABILITIES], self.card_id)
+         RulesAbilities.addAll(self.rules_tokens[RS_KEY_ABILITIES], self.card_id)
       
+      # Register an event for the 'auto' key
+      if RS_KEY_AUTO in self.rules_tokens:
+         auto = self.rules_tokens[RS_KEY_AUTO]
+         event = auto['event'][0] + auto['event'][1]
+         addGameEventListener(event, self.card_id, self.card_id)
 
    def activate(self):
       if not self.rules_tokens:
@@ -264,7 +270,7 @@ class Rules():
       return cards_f1
 
       
-   def execAction(self, action, target):
+   def execAction(self, action, target, inverse=False):
       debug("Executing actions")
       if action['cost']:
          if not self.payCost(*action['cost']):
@@ -293,9 +299,22 @@ class Rules():
          # Commands
          if len(effect[1]) > 0:
             debug("-- Applying commands")
-            RulesCommands.applyAll(effect[1], currTarget, effect[3], card)
+            RulesCommands.applyAll(effect[1], currTarget, effect[3], card, inverse)
             
       return True
+
+      
+   def execAuto(self, auto=None, eventName=None, *args):
+      if not auto:
+         if not self.rules_tokens[RS_KEY_AUTO]:
+            return
+         auto = self.rules_tokens[RS_KEY_AUTO]
+      debug("Executing auto on event {} ({})".format(eventName, args))
+      
+      if eventName:
+         eventChecked = RulesEvents.check(eventName, auto['event'], *args)
+         if eventChecked != None:
+            self.execAction(auto, [Card(self.card_id)], not eventChecked)
                
    
    def payCost(self, type, target=None):

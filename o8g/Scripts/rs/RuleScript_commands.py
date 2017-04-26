@@ -29,20 +29,30 @@ class RulesCommands():
       
    
    @staticmethod   
-   def applyAll(cmds, targets, restr, source):
+   def applyAll(cmds, targets, restr, source, inverse=False):
       for cmd in cmds:
-         RulesCommands.applyCmd(cmd, targets, restr, source)
+         RulesCommands.applyCmd(cmd, targets, restr, source, inverse)
    
    
    @staticmethod
-   def applyCmd(cmd, targets, restr, source):
+   def applyCmd(cmd, targets, restr, source, inverse=False):
+      debug(">>> applyCmd({}, {}, {}, {}, {})".format(cmd, targets, restr, source, inverse)) #Debug    
       funcStr = cmd[0]
       params = cmd[1]
-      if funcStr in RulesCommands.cmds:
+      # Executing command functions
+      if funcStr in RulesCommands.cmds and not inverse:
          debug("-- applying cmd '%s' to targets %s (%s)" % (funcStr, targets, restr))
          # func = RulesCommands.cmds[funcStr]
          func = eval(RulesCommands.cmds[funcStr])  # eval is a necessary evil...
          func(targets, restr, source, *params)
+      # Abilities or bonus manipulation
+      elif funcStr in RS_PREFIX_BONUS:
+         for target in targets:
+            if funcStr == RS_PREFIX_PLUS:
+               if inverse:
+                  RulesAbilities.remove(params, target._id)
+               else:
+                  RulesAbilities.add(params, target._id)
       else:
          debug("-- cmd not found: %s".format(cmd[0]))
       

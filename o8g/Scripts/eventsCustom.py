@@ -33,13 +33,14 @@ def addGameEventListener(eventName, callback, source_id, *args):
    debug("Added listener to game event '{}' -> {}({})".format(eventName, callback, args))
 
 
-def removeGameEventListener(card_id):
+def removeGameEventListener(card_id, eventName=None):
    ge = getGlobalVar('GameEvents')
-   for eventName in ge:
-      for i, listener in enumerate(ge[eventName]):
-         if listener['id'] == card_id:
-            del ge[eventName][i]
-            debug("Removed listener {}".format(listener))            
+   for e in ge:
+      if not eventName or e == eventName:
+         for i, listener in enumerate(ge[e]):
+            if listener['id'] == card_id:
+               del ge[e][i]
+               debug("Removed listener for event {} {}".format(e, listener))            
    setGlobalVar('GameEvents', ge)
 
 
@@ -48,13 +49,21 @@ def triggerGameEvent(eventName, *args):
    ge = getGlobalVar('GameEvents')
    if eventName in ge:
       for listener in ge[eventName]:
-         try:
-            func = eval(listener['callback'])  # eval is a necessary evil...
-         except:
-            debug("Callback function {} is not defined".format(listener['callback']))
-            continue
          params = args + listener['args']
-         if func(*params):
-            return False
+         # Callback could be the ID of a card...
+         if isinstance(listener['callback'], int):
+            card = Card(listener['callback'])
+            if card.controller == me:
+               pcard = getParsedCard(card)
+               pcard.rules.execAuto(None, eventName, *args)
+         # ... or the name of a global function
+         else:
+            try:
+               func = eval(listener['callback'])  # eval is a necessary evil...
+            except:
+               debug("Callback function {} is not defined".format(listener['callback']))
+               continue
+            if func(*params):
+               return False
    return True
    

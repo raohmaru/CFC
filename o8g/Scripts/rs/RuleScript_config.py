@@ -27,22 +27,26 @@ RS_VERSION = '0.1.0'
 RS_KEY_TARGET    = 'target'
 RS_KEY_ACTION    = 'action'
 RS_KEY_ABILITIES = 'abilities'
+RS_KEY_AUTO      = 'auto'
 
 # Regular expressions
-RS_RGX_CMD_TARGET   = re.compile(r'^target\s*=\s*')
+RS_RGX_KEY_TARGET   = re.compile(r'^target\s*=\s*')
 RS_RGX_TARGET_TYPE  = re.compile(r'@|\[')
 RS_RGX_TARGET_RESTR = re.compile(r'\[(.+)\]')
 RS_RGX_TARGET_PARAM = re.compile(r'(\w+)\s*([=><]+)\s*(\w+)')
 RS_RGX_TARGET_ZONE  = re.compile(r'@\s*([\w*]+).*$')
 
-RS_RGX_CMD_ACTION   = re.compile(r'^action\s*=\s*')
+RS_RGX_KEY_ACTION   = re.compile(r'^action\s*=\s*')
 RS_RGX_AC_COST      = re.compile(r'\{\s*([^}]+)\s*\}\s*:\s*')
+RS_RGX_AC_EVENT     = re.compile(r'~\s*(\w+)\s*(:\s*[^:~]+)?~')
 RS_RGX_AC_TARGET    = re.compile(r'to\s*\((.+)\)')
 RS_RGX_AC_EFFECT    = re.compile(r'(\w+)\s*\((.*?)\)')
 
-RS_RGX_CMD_ABILITY  = re.compile(r'^abilities\s*=\s*')
+RS_RGX_KEY_ABILITY  = re.compile(r'^abilities\s*=\s*')
+RS_RGX_KEY_AUTO     = re.compile(r'^auto\s*=\s*')
 
 RS_RGX_PARAM        = re.compile(r'\(([^)]*)\)')
+RS_RGX_EXPRESSION   = re.compile(r'^[0-9<>=]+$')
 
 # Comments
 RS_COMMENT_CHAR = '#'
@@ -56,6 +60,7 @@ RS_OP_LTE   = '<='
 RS_OP_GTE   = '>='
 
 # Prefixes
+RS_PREFIX_PLUS  = '+'
 RS_PREFIX_NOT   = '-'
 RS_PREFIX_MY    = 'my'
 RS_PREFIX_OPP   = 'opp'
@@ -70,7 +75,17 @@ RS_PREFIX_ZONES = [
    RS_PREFIX_OPP
 ]
 
+RS_PREFIX_EVENTS = [
+   RS_PREFIX_MY,
+   RS_PREFIX_OPP
+]
+
 RS_PREFIX_FILTERS = [
+   RS_PREFIX_NOT
+]
+
+RS_PREFIX_BONUS = [
+   RS_PREFIX_PLUS,
    RS_PREFIX_NOT
 ]
 
@@ -155,14 +170,14 @@ RS_KW_COST_EXILE     = 'e'
 
 # Effect conditions
 RS_KW_COND_MAY = 'may'
-RS_KW_EFFECT_COND = [
+RS_KW_CMD_COND = [
    RS_KW_COND_MAY
 ]
 
 # Effect restrictions
 RS_KW_RESTR_UEOT = 'ueot'
 RS_KW_RESTR_UYNT = 'uynt'
-RS_KW_EFFECT_RESTRS = [
+RS_KW_CMD_RESTRS = [
    RS_KW_RESTR_UEOT,
    RS_KW_RESTR_UYNT
 ]
