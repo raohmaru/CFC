@@ -240,6 +240,11 @@ def getSlotIdx(card, player = me):
          return i
    debug("Card isn't in a slot")
    return -1
+   
+
+def charIsInRing(card, player = me):
+   ring = getGlobalVar('Ring', player)
+   return card._id in ring
 
    
 def putAtSlot(card, idx, player = me, move = False):

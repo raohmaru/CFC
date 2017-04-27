@@ -402,12 +402,12 @@ def copyAbility(card, x = 0, y = 0, target = None):
 def swapAbilities(card, x = 0, y = 0):
    debug(">>> swapAbilities()") #Debug
    mute()
-   if card.Type != CharType or getSlotIdx(card, card.controller) == -1:
+   if card.Type != CharType or not charIsInRing(card, card.controller):
       whisper("Abilities can only be swapped between character cards in the ring.")
       return
    target = None
    targets =  [c for c in table   if c.targetedBy == me]
-   if len(targets) > 0 and targets[0].Type == CharType and targets[0] != card and getSlotIdx(targets[0], targets[0].controller) > -1:
+   if len(targets) > 0 and targets[0].Type == CharType and targets[0] != card and charIsInRing(targets[0], targets[0].controller):
       target = targets[0]
       if card.Rules and target.Rules:
          card_copy = Struct(**{

@@ -385,8 +385,7 @@ def blockAuto(card):
       information("You can only counter-attack with character cards.")
       return
    # ... in player's ring
-   slotIdx = getSlotIdx(card)
-   if slotIdx == -1:
+   if not charIsInRing(card):
       warning("Please counter-attack with a character in your ring.")
       return
    # Frozen char?
