@@ -47,7 +47,9 @@ class RulesEvents():
 # Events functions
 #---------------------------------------------------------------------------
 
-def eventHandChanges(expr, actual):
+def eventHandChanges(expr, actual=None):
+   if actual == None:
+      actual = len(me.hand)
    debug(">>> eventHandChanges({}, {})".format(expr, actual)) #Debug
    return evalExpression(expr, actual)
 

@@ -120,7 +120,7 @@ ability:
       unblockable
       
 ---------------------------------------------------
-auto = <event:expr> [cond] effect [& effect] [to(target)] [restr]
+auto = ~event:expr~ [cond] effect [& effect] [to(target)] [restr]
 
 Only one auto is allowed.
 
@@ -162,6 +162,11 @@ auto = ~myHandChanges:=0~ +unblockable
 # Ryu no Senshi's DRAGON TRANSFORM
 RulesDict['48a07b48-7415-42e7-a3cd-6bae37c56489'] = """
 action = {F}: damage(1) to(characters@oppRing)
+"""
+
+# Cap. Commando's CAPTAIN CORRIDOR
+RulesDict['8ce9a56f-8c0c-49e7-879c-12179c63f288'] = """
+action = {F}: damage(4) to(characters[frozen])
 """
 
 # Blodia's ENERGY COST

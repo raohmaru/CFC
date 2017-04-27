@@ -114,7 +114,7 @@ class RulesLexer():
                debug("Abilities key found!")
                rulesDict[RS_KEY_ABILITIES] = RulesLexer.parseAbility( line[len(match.group()):] )
 
-         # Check for action command
+         # Check for auto command
          if not RS_KEY_AUTO in rulesDict:
             match = RS_RGX_KEY_AUTO.match(line)
             if match:
@@ -123,6 +123,7 @@ class RulesLexer():
          # else:
             # debug("Action already defined. Line skipped")
             
+      debug(rulesDict)
       return rulesDict
 
 

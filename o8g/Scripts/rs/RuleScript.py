@@ -40,7 +40,9 @@ class Rules():
          return
       debug("Parsing rule id {}".format(self.rule_id))
       self.rules_tokens = RulesLexer.tokenize(rules)
-      
+
+         
+   def initAuto(self):
       # Add any abilities to the game, to trigger when needed
       if RS_KEY_ABILITIES in self.rules_tokens:
          RulesAbilities.addAll(self.rules_tokens[RS_KEY_ABILITIES], self.card_id)
@@ -50,7 +52,10 @@ class Rules():
          auto = self.rules_tokens[RS_KEY_AUTO]
          event = auto['event'][0] + auto['event'][1]
          addGameEventListener(event, self.card_id, self.card_id)
-
+         if auto['event'][1] in GameEventsCheckOnAdded:
+            self.execAuto(auto, event)
+         
+      
    def activate(self):
       if not self.rules_tokens:
          whisper("The ability of %s has not been scripted yet".format(Card(self.card_id)))
@@ -135,11 +140,16 @@ class Rules():
       cards = []
       
       if zone == RS_KW_ZONE_ARENA:
-         cards = [c for c in table]
+         rings = getGlobalVar('Ring', me)
+         if len(players) > 1:
+            rings += getGlobalVar('Ring', players[1])
+         cards = [c for c in table
+            if c._id in rings]
       
       elif zone == RS_KW_ZONE_RING:
+         ring = getGlobalVar('Ring', player)
          cards = [c for c in table
-            if c.controller == player]
+            if c._id in ring]
       
       elif zone == RS_KW_ZONE_HAND:
          cards = [c for c in player.hand]

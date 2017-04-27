@@ -137,6 +137,7 @@ GameEvents = Struct(**{
    'Blocked'    : 'blocked',
    'HandChanges': 'handchanges'
 })
+GameEventsCheckOnAdded = [GameEvents.HandChanges]
 
 # Messages
 MSG_SEL_CHAR_RING           = "Please select a character in your ring.\n(Shift key + Left click on a character)."

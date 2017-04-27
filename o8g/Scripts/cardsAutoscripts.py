@@ -21,19 +21,21 @@ import re
 # Card automation functions
 #---------------------------------------------------------------------------
 
-def parseCard(card, ruleId=None):
+def parseCard(card, ruleId=None, initAuto=True):
    debug(">>> parseCard({})".format(card)) #Debug
    if not card._id in parsedCards:
       if card.Type == CharType:
          parsedCards[card._id] = CharCard(card, ruleId)
       else:
          parsedCards[card._id] = GameCard(card, ruleId)
+      if initAuto:
+         parsedCards[card._id].initAuto()
    return parsedCards.get(card._id)
    
 
 def getParsedCard(card):
    debug("Retrieved parsed card for ID {} ({})".format(card._id, card))
-   return parseCard(card)
+   return parseCard(card, initAuto=False)
    
 
 def removeParsedCard(card):
@@ -53,6 +55,10 @@ class GameCard(object):
       self.card_id = card._id
       self.rule_id = ruleId if ruleId else card.model
       self.rules = Rules(self.rule_id, self.card_id)
+      
+   def initAuto(self):
+      if self.hasEffect():
+         self.rules.initAuto()
          
    def hasEffect(self):
       return True
@@ -90,7 +96,7 @@ class Ability:
    
    @property
    def unicodeChar(self):
-      # Returns an unicode symbol for the type (for window forms)
+      # Returns a unicode symbol for the type (for window forms)
       if self.type == InstantAbility:   return InstantUniChar
       if self.type == ActivatedAbility: return ActivatedUniChar
       if self.type == AutoAbility:      return AutoUniChar
