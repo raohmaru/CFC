@@ -28,7 +28,7 @@ class RulesCommands():
       RulesCommands.cmds[name] = cmd
       
    
-   @staticmethod   
+   @staticmethod
    def applyAll(cmds, targets, restr, source, inverse=False):
       for cmd in cmds:
          RulesCommands.applyCmd(cmd, targets, restr, source, inverse)
@@ -45,14 +45,14 @@ class RulesCommands():
          # func = RulesCommands.cmds[funcStr]
          func = eval(RulesCommands.cmds[funcStr])  # eval is a necessary evil...
          func(targets, restr, source, *params)
-      # Abilities or bonus manipulation
+      # Abilities/bonus manipulation
       elif funcStr in RS_PREFIX_BONUS:
          for target in targets:
             if funcStr == RS_PREFIX_PLUS:
                if inverse:
                   RulesAbilities.remove(params, target._id)
                else:
-                  RulesAbilities.add(params, target._id)
+                  RulesAbilities.add(params, target._id, source._id, restr)
       else:
          debug("-- cmd not found: %s".format(cmd[0]))
       
@@ -61,8 +61,8 @@ class RulesCommands():
 # Commands functions
 #---------------------------------------------------------------------------
 
-def cmdDamage(targets, restr, source, *args):
-   debug(">>> cmdDamage({}, {}, {})".format(targets, restr, args)) #Debug      
+def cmd_damage(targets, restr, source, *args):
+   debug(">>> cmd_damage({}, {}, {})".format(targets, restr, args)) #Debug      
    # Get additional parameters
    try:
       dmg = int(args[0])
@@ -72,4 +72,4 @@ def cmdDamage(targets, restr, source, *args):
       dealDamage(dmg, target, source)
 
 
-RulesCommands.register('damage', 'cmdDamage')
+RulesCommands.register('damage', 'cmd_damage')

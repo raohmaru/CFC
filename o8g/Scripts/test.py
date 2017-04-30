@@ -39,20 +39,21 @@ targets = [
    "target = character@invalidZone",
 ]
 actions = [
-   "action = destroy()",
-   "action = draw(1)",
-   "action = destroy & draw(1)",
-   "action = discard(1) & draw(1)",
-   "action = destroy(); draw(1)",
-   "action = {F}: destroy()",
-   "action = {f}:destroy() & draw(1)",
-   "action = {S(character@myRing)}: destroy()",
+   # "action = destroy()",
+   # "action = draw(1)",
+   # "action = destroy & draw(1)",
+   # "action = discard(1) & draw(1)",
+   # "action = destroy(); draw(1)",
+   # "action = {F}: destroy()",
+   # "action = {f}:destroy() & draw(1)",
+   # "action = {S(character@myRing)}: destroy()",
    "action = {D}: destroy() to(character[bp>=800]@oppRing)",
-   "action = {E(reaction@discard)}: may moveTo(hand)",
-   "action = {E(reaction@discard)}: may('Question?') moveTo(hand)",
-   "action = destroy() ueot",
-   "action = {D(action)}: may('Question?') destroy() to(character) & freeze; draw(2) ueot",
-   "action = {F}:  to(character) ueot",
+   # "action = {E(reaction@discard)}: may moveTo(hand)",
+   # "action = {E(reaction@discard)}: may('Question?') moveTo(hand)",
+   # "action = destroy() ueot",
+   # "action = {D(action)}: may('Question?') destroy() to(character) & freeze; draw(2) ueot",
+   # "action = {F}:  to(character) ueot",
+   "action = {D(2)}: +cantblock to(character@oppRing) ueot",
 ]
 abilities = [
    "abilities = unblockable",
@@ -88,6 +89,6 @@ def test(arr, title):
 
 # rules = RulesDict['aa867ea1-89f8-4154-8e20-2263edd00002']
 # test(targets, 'targets')
-# test(actions, 'actions')
+test(actions, 'actions')
 # test(abilities, 'abilities')
-test(autos, 'autos')
+# test(autos, 'autos')

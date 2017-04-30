@@ -20,14 +20,16 @@
 # Custom event handlers
 #---------------------------------------------------------------------------
 
-def addGameEventListener(eventName, callback, source_id, *args):
+def addGameEventListener(eventName, callback, card_id, restr=None, *args):
    ge = getGlobalVar('GameEvents')
    if not eventName in ge:
       ge[eventName] = []
    ge[eventName].append({
-      'id'      : source_id,
-      'callback': callback,
-      'args'    : args
+      'controller': me._id,
+      'id'        : card_id,
+      'callback'  : callback,
+      'restr'     : restr,
+      'args'      : args
    })
    setGlobalVar('GameEvents', ge)
    debug("Added listener to game event '{}' -> {}({})".format(eventName, callback, args))
@@ -67,3 +69,13 @@ def triggerGameEvent(eventName, *args):
                return False
    return True
    
+   
+def cleanupGameEvents(restr):
+   debug(">>> cleanupGameEvents({})".format(restr)) #Debug
+   ge = getGlobalVar('GameEvents')
+   for e in ge:
+      for i, listener in enumerate(ge[e]):
+         if listener['restr'] == restr and listener['controller'] == me._id:
+            del ge[e][i]
+            debug("Removed listener for event {} {}".format(e, listener))   
+   setGlobalVar('GameEvents', ge)

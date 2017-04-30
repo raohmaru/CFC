@@ -108,6 +108,9 @@ def endPhaseStart():
          # Unblocked attacker
          elif len(players) > 1:
             dealDamage(dmg + pdmg, players[1], card)
+   # Trigger event and remove "until end of turn" events
+   triggerGameEvent(GameEvents.EndPhase)
+   cleanupGameEvents(RS_KW_RESTR_UEOT)
    
    
 def cleanupPhaseStart():
@@ -391,6 +394,9 @@ def blockAuto(card):
    # Frozen char?
    if isFrozen(card):
       warning("Frozen characters can't counter-attack.")
+      return      
+   # Triggers a game event to check if character can counter-attack
+   if not triggerGameEvent(GameEvents.BeforeBlock, target._id):
       return
    # Cancels the character's counter-attack if it's already blocking
    blockers = getGlobalVar('Blockers')

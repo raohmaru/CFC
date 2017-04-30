@@ -52,7 +52,7 @@ class Rules():
          auto = self.rules_tokens[RS_KEY_AUTO]
          event = auto['event'][0] + auto['event'][1]
          addGameEventListener(event, self.card_id, self.card_id)
-         if auto['event'][1] in GameEventsCheckOnAdded:
+         if auto['event'][1] in GameEventsExecOnAdded:
             self.execAuto(auto, event)
          
       
@@ -134,8 +134,11 @@ class Rules():
    
    def getCardsFromZone(self, zone):
    # Get all the cards from the given zone
-      prefix  = zone[0]
-      zone    = zone[1]
+      if isinstance(zone, basestring):         
+         prefix  = ''
+      else:
+         prefix  = zone[0]
+         zone    = zone[1]
       player  = self.getObjFromPrefix(prefix) or me
       cards = []
       
@@ -310,6 +313,9 @@ class Rules():
          if len(effect[1]) > 0:
             debug("-- Applying commands")
             RulesCommands.applyAll(effect[1], currTarget, effect[3], card, inverse)
+            for obj in currTarget:
+               if isCard(obj):
+                  obj.target(False)
             
       return True
 
@@ -337,7 +343,29 @@ class Rules():
          return True
          
       elif type == RS_KW_COST_DISCARD:
-         return True
+         cards = []
+         if len(me.hand) == 0:
+            warning(MSG_ERR_NO_CARDS_HAND)
+            return False
+         # Target can be a number of cards to discard or null...
+         if not target or is_number(target['types']):
+            max = 1
+            if target:
+               max = int(target['types'])
+            cards = self.getCardsFromZone(RS_KW_ZONE_HAND)
+            cards = showCardDlg(cards, "Select {} card{} from you hand to discard".format(max, getPlural(max)), max)
+            if cards == None:
+               return False
+         # ... or a valid target
+         else:
+            # The only zone allowed is player's hand
+            target['zone'] = ['', RS_KW_ZONE_HAND]
+            cards = self.getTargets(target)
+            if cards == False or len(cards) == 0:
+               warning(MSG_ERR_NO_CARDS_HAND)
+               return False         
+         for card in cards:
+            discard(card)
          
       elif type == RS_KW_COST_EXILE:
          return True

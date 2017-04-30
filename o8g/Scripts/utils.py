@@ -30,13 +30,7 @@ def num(s):
    except ValueError:
       return 0
 
-
-def delayedWhisper(text):
-# Because whispers for some reason execute before notifys
-   rnd(1,10)
-   whisper(text)
-
-
+      
 def checkTwoSidedTable():
    debug(">>> checkTwoSidedTable()") #Debug
    mute()
@@ -137,19 +131,6 @@ def clearGlobalVar(name, player = None):
    setGlobalVar(name, gvar, player)
    
 
-def fromWhereStr(src):
-   return "from the ring" if src == table else "from its " + src.name
-
-   
-def sanitizeStr(str):
-# Strips the string, replaces spaces with dashes and removes characters not in
-# a-z, 0-9
-   valid_chars = '-abcdefghijklmnopqrstuvwxyz0123456789'
-   str = str.strip().lower().replace(" ", "-")
-   str = ''.join(c for c in str if c in valid_chars)
-   return str
-
-
 def evalExpression(expr, actual):
    if is_number(expr):
       debug("Evaluating expr  %s == %s" % (actual, expr))
@@ -167,6 +148,38 @@ def is_number(s):
     except ValueError:
         return False
 
+
+def showCardDlg(list, title, max=1, text="Select a card:", min=1):
+   dlg = cardDlg(list)
+   dlg.title = title
+   dlg.text = text
+   dlg.min = min
+   dlg.max = max
+   return dlg.show()
+            
+            
+#---------------------------------------------------------------------------
+# String functions
+#---------------------------------------------------------------------------
+
+def fromWhereStr(src):
+   return "from the ring" if src == table else "from its " + src.name
+
+   
+def sanitizeStr(str):
+# Strips the string, replaces spaces with dashes and removes characters not in
+# a-z, 0-9
+   valid_chars = '-abcdefghijklmnopqrstuvwxyz0123456789'
+   str = str.strip().lower().replace(" ", "-")
+   str = ''.join(c for c in str if c in valid_chars)
+   return str
+   
+
+def getPlural(num):
+   if num == 1:
+      return ''
+   return 's'
+   
 
 #---------------------------------------------------------------------------
 # Card functions
@@ -522,6 +535,7 @@ def payCostSP(count = 1, silent = False, msg = 'play this card'):
          notify("{} has spent {} SP. New total is {}  (before was {}).".format(me, count, me.SP, initialSP))
    return True
 
+
 #------------------------------------------------------------------------------
 # Card Attachments
 #------------------------------------------------------------------------------
@@ -647,10 +661,8 @@ def setupDebug(group, x=0, y=0):
    gotoMain()
    rnd(100, 10000)  # Delay the next action until all animation is done
    cards = [
-      '48a07b48-7415-42e7-a3cd-6bae37c56489', # Ryu no Senshi
-      'b8a8653c-0286-4b05-a255-c436fd23132d', # Blodia
-      '0b2c9e8a-5f9b-4ab5-a9b3-414f1154ce24', # Jill
-      '55b0c9ff-4b3a-4b08-adc1-f1b5e03adef9'  # Nina
+      '8ce9a56f-8c0c-49e7-879c-12179c63f288', # Cap. Commando
+      '9c6b99fa-ff60-4d70-aee8-7e1eae6f29b7', # Mack Knife
    ]
    for i, id in enumerate(cards):
       debug("Creating card {} at slot {}".format(id, i))

@@ -799,11 +799,7 @@ def prophecy(group = me.Deck, x = 0, y = 0):
    cards = [c for c in group[:count]]
    cardsPos = []
    while len(cards) > 0:
-      dlg = cardDlg(cards)
-      dlg.title = "Select a card to put on top or bottom of the deck"
-      dlg.text = "Select a Card"
-      dlg.max = 1
-      card = dlg.show()      
+      card = showCardDlg(cards, "Select a card to put on top or bottom of the deck")
       if card == None:
          return
       card = card[0]

@@ -135,14 +135,20 @@ DebugLevelPrefixes = [
 # Game Events
 GameEvents = Struct(**{
    'Blocked'    : 'blocked',
-   'HandChanges': 'handchanges'
+   'BeforeBlock': 'beforeblock',
+   'HandChanges': 'handchanges',
+   'EndPhase'   : 'endphase'
 })
-GameEventsCheckOnAdded = [GameEvents.HandChanges]
+# When a listener to these events is added, trigger it automatically
+GameEventsExecOnAdded = [GameEvents.HandChanges]
 
 # Messages
 MSG_SEL_CHAR_RING           = "Please select a character in your ring.\n(Shift key + Left click on a character)."
 MSG_COST_NOT_PAYED          = "{} did not pay the activation cost of the ability"
+MSG_CANT_BLOCK              = "{} cannot block due to {}'s {} ability."
+MSG_UNBLOCKABLE             = "{} cannot be counter-attacked due to {}'s {} ability."
 MSG_ERR_NO_CARDS            = "There are no targets available, hence the ability has no effect."
+MSG_ERR_NO_CARDS_HAND       = "You don't have enough cards in your hand to pay the cost of the ability."
 MSG_ERR_NO_FILTERED_CARDS   = "Selected cards don't match the requirements of this card's effect."
 MSG_ERR_NO_FILTERED_PLAYERS = "No player match the requirements of this card's effect."
 MSG_ERR_NO_CARD_TARGETED    = "Please select a card before activating the ability."
@@ -180,5 +186,5 @@ automations = {
 }
 
 # Default values used in dialogs that can be overriden by the user to remember his last input
-defProphecyCount = 1
+defProphecyCount = 3
 defTrashCount    = 1
