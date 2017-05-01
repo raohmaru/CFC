@@ -172,7 +172,7 @@ action = {F}: damage(1) to(characters@oppRing)
 
 # Cap. Commando's CAPTAIN CORRIDOR
 RulesDict['8ce9a56f-8c0c-49e7-879c-12179c63f288'] = """
-action = {F}: damage(4) to(characters[frozen])
+action = {F}: damage(4) to(characters[frozen]); damage(4) to(this)
 """
 
 # Mack Knife's GRAVE KEEPER

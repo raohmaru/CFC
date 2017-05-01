@@ -233,8 +233,11 @@ class Rules():
             cards_f1 = [c for c in cards_f1
                if c.targetedBy == me]
             if len(cards_f1) == 0:
-               warning(MSG_ERR_NO_CARD_TARGETED)
-               return False
+               # Last chance to select a card
+               cards_f1 = showCardDlg(cards, "Select a card from the {} to which apply the effect".format(zone[1]))
+               if cards_f1 == None:
+                  # warning(MSG_ERR_NO_CARD_TARGETED)
+                  return False
             debug("-- %s cards targeted" % len(filters))
          else:
             targeted = False      
@@ -252,9 +255,10 @@ class Rules():
          # Targeting other cards?
          if typePrefix == RS_PREFIX_OTHER:
             # Current card can't be selected
-            if Card(self.card_id) in cards_f1:
-               warning(MSG_ERR_TARGET_OTHER)
-               return False
+            card = Card(self.card_id)
+            if card in cards_f1:
+               whisper(MSG_ERR_TARGET_OTHER.format(card))
+               # return False
          
       # Check if only 1 target has been selected
       if not multiple and targeted and len(cards_f1) > 1:
@@ -276,7 +280,7 @@ class Rules():
       # Apply filters
       cards_f1 = RulesFilters.applyFiltersTo(cards_f1, filters)
          
-      if len(cards_f1) == 0:
+      if not multiple and len(cards_f1) == 0:
          warning(MSG_ERR_NO_FILTERED_CARDS)
          return False
       
@@ -285,12 +289,9 @@ class Rules():
       
    def execAction(self, action, target, inverse=False):
       debug("Executing actions")
-      if action['cost']:
-         if not self.payCost(*action['cost']):
-            notify(MSG_COST_NOT_PAYED.format(me))
-            return False
             
-      card = Card(self.card_id)
+      # First we get valid targets or we cancel
+      targets = []
       for effect in action['effects']:
          currTarget = target
          newTarget = None
@@ -308,12 +309,21 @@ class Rules():
                notify(MSG_ERR_NO_CARDS)
                return False
             currTarget = newTarget
-         
-         # Commands
+         targets.append(currTarget)
+            
+      # Then the player must pay the cost, or we cancel
+      if action['cost']:
+         if not self.payCost(*action['cost']):
+            notify(MSG_COST_NOT_PAYED.format(me))
+            return False
+            
+      # Finally apply the effects
+      card = Card(self.card_id)
+      for i, effect in enumerate(action['effects']):
          if len(effect[1]) > 0:
             debug("-- Applying commands")
-            RulesCommands.applyAll(effect[1], currTarget, effect[3], card, inverse)
-            for obj in currTarget:
+            RulesCommands.applyAll(effect[1], targets[i], effect[3], card, inverse)
+            for obj in targets[i]:
                if isCard(obj):
                   obj.target(False)
             

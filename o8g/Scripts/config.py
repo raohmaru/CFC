@@ -153,6 +153,7 @@ MSG_ERR_NO_FILTERED_CARDS   = "Selected cards don't match the requirements of th
 MSG_ERR_NO_FILTERED_PLAYERS = "No player match the requirements of this card's effect."
 MSG_ERR_NO_CARD_TARGETED    = "Please select a card before activating the ability."
 MSG_ERR_TARGET_OTHER        = "Please select a card other than the card you're activating its effect."
+MSG_ERR_TARGET_OTHER        = "{}'s ability cannot select itself, therefore it has been removed from selection."
 MSG_ERR_MULTIPLE_TARGET     = "Please select only one card."
 
 # Misc
