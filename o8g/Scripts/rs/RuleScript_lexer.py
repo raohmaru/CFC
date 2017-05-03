@@ -31,12 +31,14 @@ target: {
 },
 action: {
    cost: [
-      'd',
-      {
-         'filters': [],
-         'types': ['action'],
-         'zone': ['', 'arena']
-      }
+      [
+         'd',
+         {
+            'filters': [],
+            'types': ['action'],
+            'zone': ['', 'arena']
+         }
+      ]
    ],
    event: [
       'my', 'handchanges', '=0'
@@ -194,17 +196,21 @@ class RulesLexer():
       cost = None
       match = RS_RGX_AC_COST.match(acStr)
       if match:
+         cost = []
          acStr = acStr[len(match.group()):]
-         cost = match.group(1).replace(" ", "")
-         debug("-- found cost: %s" % cost)
-         # Check if cost has a target
-         parts = cost.split('(')
-         if len(parts) > 1:
-            cost = parts[:2]
-            # Remove last ")" character
-            cost[1] = cost[1][:-1]
-            debug("-- cost target: %s" % cost[1])
-            cost[1] = RulesLexer.parseTarget(cost[1])
+         # Remove whitespaces, 1st ({) and last (}) character and split 
+         costs = match.group(1).replace(" ", "")[1:-1].split('}{')
+         for c in costs:
+            debug("-- found cost: %s" % c)
+            # Check if cost has a target
+            parts = c.split('(')
+            if len(parts) > 1:
+               c = parts[:2]
+               # Remove last ")" character
+               c[1] = c[1][:-1]
+               debug("-- cost target: %s" % c[1])
+               c[1] = RulesLexer.parseTarget(c[1])
+            cost.append(c)
       
       # Get the event trigger
       event = None

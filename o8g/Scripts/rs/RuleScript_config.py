@@ -37,7 +37,7 @@ RS_RGX_TARGET_PARAM = re.compile(r'(\w+)\s*([=><]+)\s*(\w+)')
 RS_RGX_TARGET_ZONE  = re.compile(r'@\s*([\w*]+).*$')
 
 RS_RGX_KEY_ACTION   = re.compile(r'^action\s*=\s*')
-RS_RGX_AC_COST      = re.compile(r'\{\s*([^}]+)\s*\}\s*:\s*')
+RS_RGX_AC_COST      = re.compile(r'(\{.+\}\s*)\s*:\s*')
 RS_RGX_AC_EVENT     = re.compile(r'~\s*(\w+)\s*(:\s*[^:~]+)?~')
 RS_RGX_AC_TARGET    = re.compile(r'to\s*\((.+)\)')
 RS_RGX_AC_EFFECT    = re.compile(r'(\w+)\s*\((.*?)\)')
