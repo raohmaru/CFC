@@ -132,7 +132,7 @@ def clearGlobalVar(name, player = None):
    
 
 def evalExpression(expr, actual):
-   if is_number(expr):
+   if isNumber(expr):
       debug("Evaluating expr  %s == %s" % (actual, expr))
       return actual == int(expr)
    else:
@@ -141,14 +141,6 @@ def evalExpression(expr, actual):
       return eval("actual " + expr)
    
    
-def is_number(s):
-    try:
-        float(s)
-        return True
-    except ValueError:
-        return False
-
-
 def showCardDlg(list, title, max=1, text="Select a card:", min=1):
    dlg = cardDlg(list)
    dlg.title = title
@@ -157,7 +149,20 @@ def showCardDlg(list, title, max=1, text="Select a card:", min=1):
    dlg.max = max
    return dlg.show()
             
-            
+
+def swapPiles(pile1, pile2):
+# This function swaps the cards of two piles.
+   mute()
+   savedPile1 = [card for card in pile1]
+   for card in pile2:
+      card.moveTo(pile1)
+   rnd(100, 10000)  # Delay the next action until all animation is done
+   for card in savedPile1:
+      card.moveTo(pile2)   
+   if len(players) > 1: rnd(10, 1000) # Wait a bit more, as in multiplayer games, things are slower.
+   notify("{} swaps its {} with its {}.".format(me, pile1.name, pile2.name))
+
+   
 #---------------------------------------------------------------------------
 # String functions
 #---------------------------------------------------------------------------
@@ -622,6 +627,57 @@ def getAcceptedBackups(card):
    return (card.properties['Backup 1'], card.properties['Backup 2'], card.properties['Backup 3'])
 
 
+#---------------------------------------------------------------------------
+# Helpers
+#---------------------------------------------------------------------------
+
+def isNumber(s):
+    try:
+        float(s)
+        return True
+    except ValueError:
+        return False
+        
+
+def isPlayer(obj):
+   return isinstance(obj, Player)
+
+
+def isCard(obj):
+   return isinstance(obj, Card)
+
+
+def isAttached(card):
+   backups = getGlobalVar('Backups')
+   return bool(backups.get(card._id))
+   
+   
+def isFrozen(card):
+   return card.orientation & Rot90 == Rot90
+
+
+def compareValuesByOp(v1, v2, op):
+   if op == RS_OP_EQUAL:
+      return v1 == v2
+   elif op == RS_OP_LTE:
+      return v1 <= v2
+   elif op == RS_OP_GTE:
+      return v1 >= v2
+      
+   return False
+
+
+def filterHasMarker(card, marker, include):
+   if not isCard(card):
+      return False
+      
+   res = MarkersDict[marker] in card.markers
+   if include:
+      return res
+   else:
+      return not res
+      
+      
 #------------------------------------------------------------------------------
 # Debugging
 #------------------------------------------------------------------------------
@@ -663,6 +719,8 @@ def setupDebug(group, x=0, y=0):
    cards = [
       '8ce9a56f-8c0c-49e7-879c-12179c63f288', # Cap. Commando
       '9c6b99fa-ff60-4d70-aee8-7e1eae6f29b7', # Mack Knife
+      '9da88c0d-7915-43e2-a555-23ffbcf11226', # Shinjin Akuma
+      'b8a8653c-0286-4b05-a255-c436fd23132d', # Blodia
    ]
    for i, id in enumerate(cards):
       debug("Creating card {} at slot {}".format(id, i))
