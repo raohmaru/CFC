@@ -43,6 +43,9 @@ class Rules():
 
          
    def initAuto(self):
+      if not self.rules_tokens:
+         return
+      
       # Add any abilities to the game, to trigger when needed
       if RS_KEY_ABILITIES in self.rules_tokens:
          RulesAbilities.addAll(self.rules_tokens[RS_KEY_ABILITIES], self.card_id)
@@ -95,7 +98,7 @@ class Rules():
       
       # Get all the cards from the given zone
       debug("-- Getting all cards from zone %s" % ''.join(zone))
-      cards = self.getCardsFromZone(zone)
+      cards = RulesUtils.getCardsFromZone(zone)
       debug("-- Retrieved %s cards" % len(cards))
       
       # Filter targets
@@ -105,68 +108,19 @@ class Rules():
             t = askChoice("Select a player:", RS_KW_PLAYERS)
             if t == 0:
                return False
-            type = RS_KW_PLAYERS[t-1]
-      
-         targets = self.filterTargets(type, filters, zone, cards, targeted=True)
-         
+            type = RS_KW_PLAYERS[t-1]      
+         targets = self.filterTargets(type, filters, zone, cards, targeted=True)         
          if targets == False:
             return False
             
       # If zone is a Pile, ask for card
       if zone[1] in RS_KW_ZONES_PILES:
-         card = askCard(targets, "Select a card from {}".format(zone[1]), "Select a card")
-         if not card:
+         targets = showCardDlg(targets, "Select a card from the {} to which apply the effect".format(zone[1]))
+         if not targets:
             return False
          debug("{} has selected from {} the card {}".format(me, zone, card))
-         targets = [card]
       
       return targets
-      
-      
-   def getObjFromPrefix(self, prefix):
-   # Returns an object of the game from the given prefix
-      if prefix == RS_PREFIX_MY:
-         return me
-      if prefix == RS_PREFIX_OPP:
-         return players[1] if len(players) > 1 else me
-      return None
-      
-   
-   def getCardsFromZone(self, zone):
-   # Get all the cards from the given zone
-      if isinstance(zone, basestring):         
-         prefix  = ''
-      else:
-         prefix  = zone[0]
-         zone    = zone[1]
-      player  = self.getObjFromPrefix(prefix) or me
-      cards = []
-      
-      if zone == RS_KW_ZONE_ARENA:
-         rings = getGlobalVar('Ring', me)
-         if len(players) > 1:
-            rings += getGlobalVar('Ring', players[1])
-         cards = [c for c in table
-            if c._id in rings]
-      
-      elif zone == RS_KW_ZONE_RING:
-         ring = getGlobalVar('Ring', player)
-         cards = [c for c in table
-            if c._id in ring]
-      
-      elif zone == RS_KW_ZONE_HAND:
-         cards = [c for c in player.hand]
-      
-      elif zone == RS_KW_ZONE_DECK:
-         cards = [c for c in player.Deck]
-      
-      elif zone == RS_KW_ZONE_DISCARD:
-         cards = [c for c in player.piles['Discard Pile']]
-      
-      elif zone == RS_KW_ZONE_KILL:
-         cards = [c for c in player.piles['Removed Pile']]
-            
-      return cards
       
       
    def filterTargets(self, type, filters, zone, cards, targeted=False):
@@ -313,7 +267,7 @@ class Rules():
             
       # Then the player must pay the cost, or we cancel
       if action['cost']:
-         if not self.payCost(*action['cost']):
+         if not self.payCost(action['cost']):
             notify(MSG_COST_NOT_PAYED.format(me))
             return False
             
@@ -323,9 +277,11 @@ class Rules():
          if len(effect[1]) > 0:
             debug("-- Applying commands")
             RulesCommands.applyAll(effect[1], targets[i], effect[3], card, inverse)
-            for obj in targets[i]:
-               if isCard(obj):
-                  obj.target(False)
+            if targets[i]:
+               for obj in targets[i]:
+                  if isCard(obj):
+                     obj.target(False)
+            rnd(1, 100) # Wait between effects until all animation is done
             
       return True
 
@@ -343,41 +299,44 @@ class Rules():
             self.execAction(auto, [Card(self.card_id)], not eventChecked)
                
    
-   def payCost(self, type, target=None):
-      debug("-- Cost to pay: {}, {}".format(type, target))
-      
-      if type == RS_KW_COST_FREEZE:
-         freeze(Card(self.card_id), silent = True)
-         
-      elif type == RS_KW_COST_SACRIFICE:
-         return True
-         
-      elif type == RS_KW_COST_DISCARD:
-         cards = []
-         if len(me.hand) == 0:
-            warning(MSG_ERR_NO_CARDS_HAND)
-            return False
-         # Target can be a number of cards to discard or null...
-         if not target or is_number(target['types']):
-            max = 1
-            if target:
-               max = int(target['types'])
-            cards = self.getCardsFromZone(RS_KW_ZONE_HAND)
-            cards = showCardDlg(cards, "Select {} card{} from you hand to discard".format(max, getPlural(max)), max)
-            if cards == None:
-               return False
-         # ... or a valid target
+   def payCost(self, costs):
+      for cost in costs:
+         target = None
+         if isinstance(cost, basestring):
+            type = cost
          else:
-            # The only zone allowed is player's hand
-            target['zone'] = ['', RS_KW_ZONE_HAND]
-            cards = self.getTargets(target)
-            if cards == False or len(cards) == 0:
+            type, target = cost
+         debug("-- Cost to pay: {}, {}".format(type, target))
+         if type == RS_KW_COST_FREEZE:
+            freeze(Card(self.card_id), silent = True)
+            
+         elif type == RS_KW_COST_DISCARD:
+            cards = []
+            if len(me.hand) == 0:
                warning(MSG_ERR_NO_CARDS_HAND)
-               return False         
-         for card in cards:
-            discard(card)
-         
-      elif type == RS_KW_COST_EXILE:
-         return True
+               return False
+            # Target can be a number of cards to discard or null...
+            if not target or isNumber(target['types']):
+               max = 1
+               if target:
+                  max = int(target['types'])
+               cards = RulesUtils.getCardsFromZone(RS_KW_ZONE_HAND)
+               cards = showCardDlg(cards, "Select {} card{} from you hand to discard".format(max, getPlural(max)), max)
+               if cards == None:
+                  return False
+            # ... or a valid target
+            else:
+               # The only zone allowed is player's hand
+               target['zone'] = ['', RS_KW_ZONE_HAND]
+               cards = self.getTargets(target)
+               if cards == False or len(cards) == 0:
+                  warning(MSG_ERR_NO_CARDS_HAND)
+                  return False         
+            for card in cards:
+               discard(card)
+            
+         # elif type == RS_KW_COST_SACRIFICE:
+            
+         # elif type == RS_KW_COST_EXILE:
          
       return True

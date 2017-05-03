@@ -395,8 +395,8 @@ def blockAuto(card):
    if isFrozen(card):
       warning("Frozen characters can't counter-attack.")
       return      
-   # Triggers a game event to check if character can counter-attack
-   if not triggerGameEvent(GameEvents.BeforeBlock, target._id):
+   # Triggers a game event to check if the character can counter-attack
+   if not triggerGameEvent(GameEvents.BeforeBlock, card._id):
       return
    # Cancels the character's counter-attack if it's already blocking
    blockers = getGlobalVar('Blockers')

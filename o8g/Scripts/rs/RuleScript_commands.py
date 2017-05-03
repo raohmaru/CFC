@@ -54,7 +54,7 @@ class RulesCommands():
                else:
                   RulesAbilities.add(params, target._id, source._id, restr)
       else:
-         debug("-- cmd not found: %s".format(cmd[0]))
+         debug("-- cmd not found: {}".format(cmd[0]))
       
 
 #---------------------------------------------------------------------------
@@ -71,5 +71,21 @@ def cmd_damage(targets, restr, source, *args):
    for target in targets:
       dealDamage(dmg, target, source)
 
+      
+def cmd_swapPiles(targets, restr, source, pile1, pile2):
+   debug(">>> cmd_swapPiles({}, {}, {})".format(source, pile1, pile2)) #Debug
+   pile1 = RulesUtils.getZoneByName(pile1)
+   pile2 = RulesUtils.getZoneByName(pile2)
+   swapPiles(pile1, pile2)
 
-RulesCommands.register('damage', 'cmd_damage')
+      
+def cmd_shuffle(targets, restr, source, pile):
+   if not pile:
+      pile = me.Deck
+   debug(">>> cmd_shuffle({})".format(pile)) #Debug
+   shuffle(pile)
+
+
+RulesCommands.register('damage',    'cmd_damage')
+RulesCommands.register('swappiles', 'cmd_swapPiles')
+RulesCommands.register('shuffle',   'cmd_shuffle')

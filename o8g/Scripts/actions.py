@@ -878,14 +878,4 @@ def revealTopDeck(group, x = 0, y = 0):
 
 
 def swapWithDeck(group = me.piles['Discard Pile']):
-# This function swap the deck with the discard pile.
-   mute()
-   Deck = me.Deck
-   savedDeck = [card for card in Deck]
-   for card in group:
-      card.moveTo(Deck)
-   rnd(100, 10000)  # Delay the next action until all animation is done
-   for card in savedDeck:
-      card.moveTo(group)   
-   if len(players) > 1: rnd(10, 100) # Wait a bit more, as in multiplayer games, things are slower.
-   notify("{} swaps its {} with its Deck.".format(me, group.name)) # And inform everyone.
+   swapPiles(me.Deck, group)
