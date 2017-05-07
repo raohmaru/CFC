@@ -22,7 +22,7 @@ Case Insensitive
 ---------------------------------------------------
 target = type[filters] @ zone
 
-Only one target is allowed.
+Only one target key is allowed.
 
 type:
    Operators:
@@ -77,7 +77,7 @@ zone: (optional)
 ---------------------------------------------------
 action = [{cost}:] [cond] effect [& effect] [to(target)] [restr]; ...
 
-Only one action is allowed.
+Only one action key is allowed.
 Several effects can be joined with ';'.
 
 cost:
@@ -99,6 +99,7 @@ effect:
          swapPiles(pile1, pile2)
          shuffle(pile=me.Deck)
          shuffle(pile=me.Deck)
+         destroy()
       Ability:
          Keywords:
             @see abilities
@@ -120,6 +121,8 @@ restr:
 ---------------------------------------------------
 abilities = ability [, ability]
 
+Only one abilities key is allowed.
+
 ability:
    Keywords:
       unblockable
@@ -128,7 +131,7 @@ ability:
 ---------------------------------------------------
 auto = ~event:expr~ [cond] effect [& effect] [to(target)] [restr]
 
-Only one auto is allowed.
+Only one auto key is allowed.
 
 event:
    Keywords:
@@ -194,7 +197,9 @@ action = damage(3) to(me)
 """
 
 # Jin Saotome's SAOTOME DYNAMITE
-# RulesDict['af43872e-e47d-4fe0-9b55-aedd8a0d0fc7'] = ""
+RulesDict['af43872e-e47d-4fe0-9b55-aedd8a0d0fc7'] = """
+action = {S}: destroy() to(character@oppRing)
+"""
 
 # Zero Akuma's GIGA CRUSH
 # RulesDict['fd1a3f1c-7df1-443e-97b1-f093d66e74c9'] = ""

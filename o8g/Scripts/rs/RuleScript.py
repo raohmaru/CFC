@@ -78,7 +78,7 @@ class Rules():
       return True
 
 
-   def getTargets(self, target):
+   def getTargets(self, target, msg=None):
       debug("Checking targets")
 
       types       = target['types']
@@ -109,21 +109,14 @@ class Rules():
             if t == 0:
                return False
             type = RS_KW_PLAYERS[t-1]      
-         targets = self.filterTargets(type, filters, zone, cards, targeted=True)         
+         targets = self.filterTargets(type, filters, zone, cards, targeted=True, msg=msg)         
          if targets == False:
             return False
-            
-      # If zone is a Pile, ask for card
-      if zone[1] in RS_KW_ZONES_PILES:
-         targets = showCardDlg(targets, "Select a card from the {} to which apply the effect".format(zone[1]))
-         if not targets:
-            return False
-         debug("{} has selected from {} the card {}".format(me, zone, card))
       
       return targets
       
       
-   def filterTargets(self, type, filters, zone, cards, targeted=False):
+   def filterTargets(self, type, filters, zone, cards, targeted=False, msg=None):
       debug("-- filter targets by type '%s' in zone %s" % (type, zone))
       targets = None
       if type == RS_KW_TARGET_THIS:
@@ -133,7 +126,7 @@ class Rules():
          targets = self.filterPlayers(type, filters)
       else:
          # Filter cards with a target
-         targets = self.filterCards(type, filters, zone, cards, targeted)
+         targets = self.filterCards(type, filters, zone, cards, targeted, msg)
          
       if isinstance(targets, list):
          debug("-- %s targets retrieved" % len(targets))
@@ -166,7 +159,7 @@ class Rules():
       return arr
    
    
-   def filterCards(self, type, filters, zone, cards, targeted=False):
+   def filterCards(self, type, filters, zone, cards, targeted=False, msg=None):
       debug("-- applying %s filters to %s cards" % (len(filters), len(cards)))
       
       cards_f1 = cards
@@ -179,28 +172,7 @@ class Rules():
          # Allow multiple selection?
          if typeSuffix == RS_SUFFIX_PLURAL:
             multiple = True
-            targeted = False      
-
-      # Look for targeted cards
-      if targeted:
-         if zone[1] in RS_KW_TARGET_ZONES:
-            cards_f1 = [c for c in cards_f1
-               if c.targetedBy == me]
-            if len(cards_f1) == 0:
-               # Last chance to select a card
-               cards_f1 = showCardDlg(cards, "Select a card from the {} to which apply the effect".format(zone[1]))
-               if cards_f1 == None:
-                  # warning(MSG_ERR_NO_CARD_TARGETED)
-                  return False
-            debug("-- %s cards targeted" % len(filters))
-         else:
-            targeted = False      
-      
-      # At this point there are not cards to which apply the effect, but the ability
-      # is activated anyway
-      if len(cards_f1) == 0:
-         notify(MSG_ERR_NO_CARDS)
-         return cards_f1
+            targeted = False
       
       # Check for type prefixes
       typePrefix, type = RulesLexer.getPrefix(RS_PREFIX_TYPES, type)
@@ -212,12 +184,8 @@ class Rules():
             card = Card(self.card_id)
             if card in cards_f1:
                whisper(MSG_ERR_TARGET_OTHER.format(card))
+               cards_f1.remove(card)
                # return False
-         
-      # Check if only 1 target has been selected
-      if not multiple and targeted and len(cards_f1) > 1:
-         warning(MSG_ERR_MULTIPLE_TARGET)
-         return False
             
       if type != RS_KW_ALL:
          # Look for (super) type
@@ -225,18 +193,52 @@ class Rules():
             debug("-- checking if any card match type '%s'" % type)
             cards_f1 = [c for c in cards_f1
                if c.Type.lower() == type]
+            debug(cards_f1)
          # Look for subtype
          else:
             debug("-- checking if any card match subtype '%s'" % type)
             cards_f1 = [c for c in cards_f1
                if c.Subtype.lower() == type]
+            debug(cards_f1)
+
+      # Look for targeted cards
+      if targeted:
+         if zone[1] in RS_KW_TARGET_ZONES:
+            cards_f2 = [c for c in cards_f1
+               if c.targetedBy == me]
+            if len(cards_f2) == 0:
+               # Last chance to select a card
+               if not msg:
+                  msg = MSG_SEL_CARD
+               cards_f1 = showCardDlg(cards_f1, msg.format(zone[1]))
+               if cards_f1 == None:
+                  # warning(MSG_ERR_NO_CARD_TARGETED)
+                  return False
+            debug("-- %s cards targeted" % len(cards_f1))
+         else:
+            targeted = False
+         
+      # Check if only 1 target has been selected
+      if not multiple and targeted and len(cards_f1) > 1:
+         warning(MSG_ERR_MULTIPLE_TARGET)
+         return False
             
       # Apply filters
       cards_f1 = RulesFilters.applyFiltersTo(cards_f1, filters)
          
-      if not multiple and len(cards_f1) == 0:
-         warning(MSG_ERR_NO_FILTERED_CARDS)
-         return False
+      if not multiple:
+         if len(cards_f1) == 0:
+            warning(MSG_ERR_NO_FILTERED_CARDS)
+            return False
+         # Check if only 1 target has been selected
+         if targeted and len(cards_f1) > 1:
+            warning(MSG_ERR_MULTIPLE_TARGET)
+            return False
+      
+      # At this point there are not cards to which apply the effect, but the ability
+      # is activated anyway
+      if len(cards_f1) == 0:
+         notify(MSG_ERR_NO_CARDS)
       
       return cards_f1
 
@@ -316,26 +318,36 @@ class Rules():
                warning(MSG_ERR_NO_CARDS_HAND)
                return False
             # Target can be a number of cards to discard or null...
-            if not target or isNumber(target['types']):
+            if not target or isNumber(target['types'][0]):
                max = 1
                if target:
-                  max = int(target['types'])
+                  max = int(target['types'][0])
                cards = RulesUtils.getCardsFromZone(RS_KW_ZONE_HAND)
-               cards = showCardDlg(cards, "Select {} card{} from you hand to discard".format(max, getPlural(max)), max)
+               cards = showCardDlg(cards, "Select {} card{} from you hand to discard".format(max, getPlural(max)), max, min=max)
                if cards == None:
                   return False
             # ... or a valid target
             else:
                # The only zone allowed is player's hand
                target['zone'] = ['', RS_KW_ZONE_HAND]
-               cards = self.getTargets(target)
+               cards = self.getTargets(target, MSG_SEL_CARD_DISCARD)
                if cards == False or len(cards) == 0:
-                  warning(MSG_ERR_NO_CARDS_HAND)
-                  return False         
+                  whisper(MSG_ERR_NO_CARDS_HAND)
+                  return False
             for card in cards:
                discard(card)
             
-         # elif type == RS_KW_COST_SACRIFICE:
+         elif type == RS_KW_COST_SACRIFICE:
+            if target:
+               # The only zone allowed is player's ring
+               target['zone'] = ['', RS_KW_ZONE_RING]
+               cards = self.getTargets(target, MSG_SEL_CARD_SACRIFICE)
+               if cards == False or len(cards) == 0:
+                  return False
+               for card in cards:
+                  destroy(card)
+            else:
+               destroy(Card(self.card_id))
             
          # elif type == RS_KW_COST_EXILE:
          

@@ -79,13 +79,16 @@ def cmd_swapPiles(targets, restr, source, pile1, pile2):
    swapPiles(pile1, pile2)
 
       
-def cmd_shuffle(targets, restr, source, pile):
-   if not pile:
-      pile = me.Deck
-   debug(">>> cmd_shuffle({})".format(pile)) #Debug
-   shuffle(pile)
+def cmd_destroy(targets, restr, source, *args):
+   debug(">>> cmd_destroy({})".format(targets)) #Debug
+   for target in targets:
+      if target.controller == me:
+         destroy(target)
+      else:
+         remoteCall(target.controller, "destroy", [target, 0, 0, me])
 
 
 RulesCommands.register('damage',    'cmd_damage')
 RulesCommands.register('swappiles', 'cmd_swapPiles')
 RulesCommands.register('shuffle',   'cmd_shuffle')
+RulesCommands.register('destroy',   'cmd_destroy')

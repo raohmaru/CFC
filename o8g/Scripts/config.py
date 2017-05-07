@@ -144,6 +144,9 @@ GameEventsExecOnAdded = [GameEvents.HandChanges]
 
 # Messages
 MSG_SEL_CHAR_RING           = "Please select a character in your ring.\n(Shift key + Left click on a character)."
+MSG_SEL_CARD                = "Select a card from the {} to which apply the effect"
+MSG_SEL_CARD_DISCARD        = "Select a card from your {} to discard"
+MSG_SEL_CARD_SACRIFICE      = "Select a card from your {} to KO"
 MSG_COST_NOT_PAYED          = "{} did not pay the activation cost of the ability"
 MSG_CANT_BLOCK              = "{} cannot block due to {}'s {} ability."
 MSG_UNBLOCKABLE             = "{} cannot be counter-attacked due to {}'s {} ability."
@@ -152,7 +155,6 @@ MSG_ERR_NO_CARDS_HAND       = "You don't have enough cards in your hand to pay t
 MSG_ERR_NO_FILTERED_CARDS   = "Selected cards don't match the requirements of this card's effect."
 MSG_ERR_NO_FILTERED_PLAYERS = "No player match the requirements of this card's effect."
 MSG_ERR_NO_CARD_TARGETED    = "Please select a card before activating the ability."
-MSG_ERR_TARGET_OTHER        = "Please select a card other than the card you're activating its effect."
 MSG_ERR_TARGET_OTHER        = "{}'s ability cannot select itself, therefore it has been removed from selection."
 MSG_ERR_MULTIPLE_TARGET     = "Please select only one card."
 
@@ -174,7 +176,10 @@ playerAxis     = None  # Variable to keep track on which axis the player is
 handSize       = HandSize
 charsPlayed    = 0  # Number of chars played this turn
 backupsPlayed  = 0  # Number of chars backed-up this turn
-debugVerbosity = -1 # -1..4 (At -1 means no debugging messages display)
+debugVerbosity = DebugLevel.Off # -1..4 (At -1 means no debugging messages display)
+# If I am alone debugging I want to know everything
+if me.name == Author and if len(players) == 1:
+   debugVerbosity = DebugLevel.All
 parsedCards    = {} # Dictionary holding all parsed cards
 cleanedUpRing  = False  # Tracks if the user has run the Clean-up phase
 

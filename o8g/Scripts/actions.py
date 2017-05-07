@@ -427,14 +427,14 @@ def swapAbilities(card, x = 0, y = 0):
 # Movement actions
 #---------------------------------------------------------------------------
    
-def destroy(card, x = 0, y = 0):
+def destroy(card, x = 0, y = 0, controller=me):
    mute()
    fromText = fromWhereStr(card.group)
    action = "discards"
    card.moveTo(me.piles['Discard Pile'])
    if card.Type == CharType:
       action = "KOs"
-   notify("{} {} {} {}.".format(me, action, card, fromText))
+   notify("{} {} {} {}.".format(controller, action, card, fromText))
    
 
 def remove(card, x = 0, y = 0):

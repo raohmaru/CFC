@@ -53,9 +53,9 @@ actions = [
    # "action = {E(reaction@discard)}: may moveTo(hand)",
    # "action = {E(reaction@discard)}: may('Question?') moveTo(hand)",
    # "action = destroy() ueot",
-   # "action = {D(action)}: may('Question?') destroy() to(character) & freeze; draw(2) ueot",
+   "action = {D(action)}: may('Question?') destroy() to(character) & freeze; draw(2) ueot",
    # "action = {F}:  to(character) ueot",
-   # "action = {D(2)}: +cantblock to(character@oppRing) ueot",
+   "action = {D(2)}: +cantblock to(character@oppRing) ueot",
 ]
 abilities = [
    "abilities = unblockable",
