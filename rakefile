@@ -52,6 +52,10 @@ task :deploy => [:clobber, :build] do
   puts "Time elapsed: #{(end_time - start_time)*1000} milliseconds"
 end
 
+desc "Copies python files to the game's script folder under OCTGN's games database folder"
+task :copy => [:test] do
+  cp_r "o8g/Scripts/.", "#{OCTGN_dir}/GameDatabase/e3d56d9e-900d-49c6-b6ae-22cbb51be153/Scripts/"
+end
 
 desc "Verifies the files as a valid game definition"
 task :test do
