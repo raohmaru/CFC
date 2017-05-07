@@ -632,11 +632,11 @@ def getAcceptedBackups(card):
 #---------------------------------------------------------------------------
 
 def isNumber(s):
-    try:
-        float(s)
-        return True
-    except ValueError:
-        return False
+   try:
+      float(s)
+      return True
+   except ValueError:
+      return False
         
 
 def isPlayer(obj):
@@ -687,10 +687,7 @@ def debug(msg, level = 1):
    if debugVerbosity < DebugLevel.Info:
       return
    msg = "{}".format(msg)
-   if re.search(Regexps['Ability'], msg):
-      level = DebugLevel.Debug
-   else:
-      msg = DebugLevelPrefixes[level] + ' ' + msg
+   msg = DebugLevelPrefixes[level] + ' ' + msg
    if debugVerbosity >= level:
       whisper(msg)
       
@@ -717,10 +714,10 @@ def setupDebug(group, x=0, y=0):
    gotoMain()
    rnd(100, 10000)  # Delay the next action until all animation is done
    cards = [
-      '8ce9a56f-8c0c-49e7-879c-12179c63f288', # Cap. Commando
+      'af43872e-e47d-4fe0-9b55-aedd8a0d0fc7', # Jin Saotome
       '9c6b99fa-ff60-4d70-aee8-7e1eae6f29b7', # Mack Knife
-      '9da88c0d-7915-43e2-a555-23ffbcf11226', # Shinjin Akuma
-      'b8a8653c-0286-4b05-a255-c436fd23132d', # Blodia
+      # '9da88c0d-7915-43e2-a555-23ffbcf11226', # Shinjin Akuma
+      # 'b8a8653c-0286-4b05-a255-c436fd23132d', # Blodia
    ]
    for i, id in enumerate(cards):
       debug("Creating card {} at slot {}".format(id, i))
