@@ -98,8 +98,10 @@ effect:
          damage(#)
          swapPiles(pile1, pile2)
          shuffle(pile=me.Deck)
-         shuffle(pile=me.Deck)
          destroy()
+         reveal(pile=me.hand)
+         discard(target cards)
+         rnddiscard([#])
       Ability:
          Keywords:
             @see abilities
@@ -202,7 +204,9 @@ action = {S}: destroy() to(character@oppRing)
 """
 
 # Zero Akuma's GIGA CRUSH
-# RulesDict['fd1a3f1c-7df1-443e-97b1-f093d66e74c9'] = ""
+RulesDict['fd1a3f1c-7df1-443e-97b1-f093d66e74c9'] = """
+action = reveal(hand) & discard(actions) & discard(reactions)
+"""
 
 # Regina's RADIO TRANSMITTER
 # RulesDict['0a8f39ff-6b21-4805-bafb-27c3f38d1986'] = ""

@@ -133,12 +133,14 @@ def clearGlobalVar(name, player = None):
 
 def evalExpression(expr, actual):
    if isNumber(expr):
-      debug("Evaluating expr  %s == %s" % (actual, expr))
-      return actual == int(expr)
+      res = actual == int(expr)
+      debug("Evaluating expr  %s == %s ({})" % (actual, expr, res))
+      return res
    else:
       expr = Regexps['DoubleEquals'].sub('==', expr)
-      debug("Evaluating expr  %s %s" % (actual, expr))
-      return eval("actual " + expr)
+      res = eval("actual " + expr)
+      debug("Evaluating expr  %s %s (%s)" % (actual, expr, res))
+      return res
    
    
 def showCardDlg(list, title, max=1, text="Select a card:", min=1):
@@ -149,6 +151,13 @@ def showCardDlg(list, title, max=1, text="Select a card:", min=1):
    dlg.max = max
    return dlg.show()
             
+
+def getOpp():
+   return players[1] if len(players) > 1 else me
+
+#---------------------------------------------------------------------------
+# Pile functions
+#---------------------------------------------------------------------------
 
 def swapPiles(pile1, pile2):
 # This function swaps the cards of two piles.
@@ -162,6 +171,17 @@ def swapPiles(pile1, pile2):
    if len(players) > 1: rnd(10, 1000) # Wait a bit more, as in multiplayer games, things are slower.
    notify("{} swaps its {} with its {}.".format(me, pile1.name, pile2.name))
 
+
+def reveal(group, done=None):
+   debug(">>> reveal()") #Debug
+   cards = [card for card in group]
+   notify("{} shows his {}".format(group.controller, group.name))
+   # Done is the name of a function in the other player domain that must be executed after this
+   # function is fulfilled
+   if done:
+      remoteCall(getOpp(), done, [])
+   showCardDlg(cards, "Cards in {}'s {}".format(group.controller, group.name), 0, "", 0)
+   
    
 #---------------------------------------------------------------------------
 # String functions
@@ -714,10 +734,10 @@ def setupDebug(group, x=0, y=0):
    gotoMain()
    rnd(100, 10000)  # Delay the next action until all animation is done
    cards = [
-      'af43872e-e47d-4fe0-9b55-aedd8a0d0fc7', # Jin Saotome
-      '9c6b99fa-ff60-4d70-aee8-7e1eae6f29b7', # Mack Knife
-      # '9da88c0d-7915-43e2-a555-23ffbcf11226', # Shinjin Akuma
-      # 'b8a8653c-0286-4b05-a255-c436fd23132d', # Blodia
+      'fd1a3f1c-7df1-443e-97b1-f093d66e74c9', # Shinjin Akuma
+      '0a8f39ff-6b21-4805-bafb-27c3f38d1986', # Regina
+      '525d8365-c90e-491f-9811-1f23efbafccb', # Cody (Alpha)
+      '55b0c9ff-4b3a-4b08-adc1-f1b5e03adef9', # Nina
    ]
    for i, id in enumerate(cards):
       debug("Creating card {} at slot {}".format(id, i))

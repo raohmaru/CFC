@@ -35,8 +35,8 @@ class RulesEvents():
       if eventName != eventData[1] or prfx != eventData[0]:
          return None
       if eventName in RulesEvents.items:
-         # func = RulesEvents.items[ability]
-         func = eval(RulesEvents.items[eventName])  # eval is a necessary evil...
+         func = RulesEvents.items[eventName]
+         # func = eval(RulesEvents.items[eventName])  # eval is a necessary evil...
          return func(eventData[2], *args)
       else:
          debug("-- event not found: {}".format(eventName))
@@ -54,4 +54,4 @@ def eventHandChanges(expr, actual=None):
    return evalExpression(expr, actual)
 
 
-RulesEvents.register(GameEvents.HandChanges, 'eventHandChanges')
+RulesEvents.register(GameEvents.HandChanges, eventHandChanges)

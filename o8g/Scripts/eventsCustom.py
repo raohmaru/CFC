@@ -37,13 +37,16 @@ def addGameEventListener(eventName, callback, card_id, restr=None, *args):
 
 def removeGameEventListener(card_id, eventName=None):
    ge = getGlobalVar('GameEvents')
+   removed = False
    for e in ge:
       if not eventName or e == eventName:
          for i, listener in enumerate(ge[e]):
             if listener['id'] == card_id:
                del ge[e][i]
+               removed = True
                debug("Removed listener for event {} {}".format(e, listener))            
    setGlobalVar('GameEvents', ge)
+   return removed
 
 
 def triggerGameEvent(eventName, *args):

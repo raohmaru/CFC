@@ -21,18 +21,33 @@
 
 class RulesCommands():
    """ Class to handle the filters that are applied to a set of objects """
-   cmds = {}
+   items = {}
+   cmds = []
+   cmdsArgs = []
 
    @staticmethod
    def register(name, cmd):
-      RulesCommands.cmds[name] = cmd
+      RulesCommands.items[name] = cmd
       
    
    @staticmethod
    def applyAll(cmds, targets, restr, source, inverse=False):
-      for cmd in cmds:
-         RulesCommands.applyCmd(cmd, targets, restr, source, inverse)
+      RulesCommands.cmds = list(cmds)  # Clone array
+      RulesCommands.cmdsArgs = [targets, restr, source, inverse]
+      RulesCommands.applyNext()
+      # for cmd in cmds:
+         # RulesCommands.applyCmd(cmd, targets, restr, source, inverse)
    
+   
+   @staticmethod
+   def applyNext():
+   # Ensures that a command is applied only when the precedent command is done
+      if len(RulesCommands.cmds) > 0:
+         cmd = RulesCommands.cmds.pop(0)
+         RulesCommands.applyCmd(cmd, *RulesCommands.cmdsArgs)
+      else:
+         RulesCommands.cmdsArgs = []
+         
    
    @staticmethod
    def applyCmd(cmd, targets, restr, source, inverse=False):
@@ -40,10 +55,10 @@ class RulesCommands():
       funcStr = cmd[0]
       params = cmd[1]
       # Executing command functions
-      if funcStr in RulesCommands.cmds and not inverse:
+      if funcStr in RulesCommands.items and not inverse:
          debug("-- applying cmd '%s' to targets %s (%s)" % (funcStr, targets, restr))
-         # func = RulesCommands.cmds[funcStr]
-         func = eval(RulesCommands.cmds[funcStr])  # eval is a necessary evil...
+         func = RulesCommands.items[funcStr]
+         # func = eval(RulesCommands.items[funcStr])  # eval is a necessary evil...
          func(targets, restr, source, *params)
       # Abilities/bonus manipulation
       elif funcStr in RS_PREFIX_BONUS:
@@ -61,15 +76,12 @@ class RulesCommands():
 # Commands functions
 #---------------------------------------------------------------------------
 
-def cmd_damage(targets, restr, source, *args):
-   debug(">>> cmd_damage({}, {}, {})".format(targets, restr, args)) #Debug      
-   # Get additional parameters
-   try:
-      dmg = int(args[0])
-   except:
-      return False
+def cmd_damage(targets, restr, source, dmg):
+   debug(">>> cmd_damage({}, {}, {})".format(targets, restr, dmg)) #Debug      
+   dmg = int(dmg)
    for target in targets:
       dealDamage(dmg, target, source)
+   RulesCommands.applyNext()
 
       
 def cmd_swapPiles(targets, restr, source, pile1, pile2):
@@ -77,8 +89,17 @@ def cmd_swapPiles(targets, restr, source, pile1, pile2):
    pile1 = RulesUtils.getZoneByName(pile1)
    pile2 = RulesUtils.getZoneByName(pile2)
    swapPiles(pile1, pile2)
+   RulesCommands.applyNext()
 
-      
+   
+def cmd_shuffle(targets, restr, source, pile):
+   if not pile:
+      pile = me.Deck
+   debug(">>> cmd_shuffle({})".format(pile)) #Debug
+   shuffle(pile)
+   RulesCommands.applyNext()
+
+   
 def cmd_destroy(targets, restr, source, *args):
    debug(">>> cmd_destroy({})".format(targets)) #Debug
    for target in targets:
@@ -86,9 +107,64 @@ def cmd_destroy(targets, restr, source, *args):
          destroy(target)
       else:
          remoteCall(target.controller, "destroy", [target, 0, 0, me])
+   RulesCommands.applyNext()
+
+      
+def cmd_reveal(targets, restr, source, pileName=None):
+   debug(">>> cmd_reveal({})".format(pileName)) #Debug
+   if not pileName:
+      pileName = RS_KW_ZONE_HAND
+   if pileName in RS_KW_ZONES_PILES:
+      pile = RulesUtils.getZoneByName(pileName)
+      if pile.controller == me:
+         # Once the other player is done, apply next command
+         remoteCall(getOpp(), "reveal", [pile, "RulesCommands.applyNext"])
+         return
+      else:
+         reveal(pile)
+   else:
+      debug("{} is not a valid pile".format(pileName))
+   RulesCommands.applyNext()
+
+      
+def cmd_discard(targets, restr, source, whichCards):
+   debug(">>> cmd_discard({})".format(whichCards)) #Debug
+   cardsTokens = RulesLexer.parseTarget(whichCards)
+   if not targets == 0:
+      targets = [me]
+   for player in targets:
+      cardsTokens['zone'] = ['', RS_KW_ZONE_HAND]
+      if player != me:
+         cardsTokens['zone'][0] = RS_KW_TARGET_OPP
+      cards = RulesUtils.getTargets(cardsTokens)
+      for card in cards:
+         if player == me:
+            discard(card)
+         else:
+            remoteCall(player, "discard", [card])
+   RulesCommands.applyNext()
+
+      
+def cmd_randomDiscard(targets, restr, source, numCards=1):
+   debug(">>> cmd_discard({})".format(whichCards)) #Debug
+   if isNumber(numCards):
+      numCards = int(numCards)
+   if not targets == 0:
+      targets = [me]
+   for player in targets:
+      if numCards > 0:
+         for i in range(0, numCards):
+            if player == me:
+               randomDiscard()
+            else:
+               remoteCall(player, "randomDiscard", [])
+   RulesCommands.applyNext()
 
 
-RulesCommands.register('damage',    'cmd_damage')
-RulesCommands.register('swappiles', 'cmd_swapPiles')
-RulesCommands.register('shuffle',   'cmd_shuffle')
-RulesCommands.register('destroy',   'cmd_destroy')
+RulesCommands.register('damage',     cmd_damage)
+RulesCommands.register('swappiles',  cmd_swapPiles)
+RulesCommands.register('shuffle',    cmd_shuffle)
+RulesCommands.register('destroy',    cmd_destroy)
+RulesCommands.register('reveal',     cmd_reveal)
+RulesCommands.register('discard',    cmd_discard)
+RulesCommands.register('rnddiscard', cmd_randomDiscard)

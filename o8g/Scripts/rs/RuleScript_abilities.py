@@ -40,8 +40,8 @@ class RulesAbilities():
    def add(ability, card_id, source_id=None, restr=None):
       if ability in RulesAbilities.items:
          debug("-- adding ability '{}' from {}".format(ability, Card(card_id)))
-         # func = RulesAbilities.items[ability]['func']
-         func = eval(RulesAbilities.items[ability]['func'])  # eval is a necessary evil...
+         func = RulesAbilities.items[ability]['func']
+         # func = eval(RulesAbilities.items[ability]['func'])  # eval is a necessary evil...
          func(card_id, source_id, restr)
       else:
          debug("-- ability not found: {}".format(ability))
@@ -53,8 +53,8 @@ class RulesAbilities():
       debug("-- removing ability '{}' from {}".format(ability, card))
       if ability in RulesAbilities.items:
          for event in RulesAbilities.items[ability]['events']:      
-            removeGameEventListener(card_id, event)
-            notify("{} has lost the ability {}".format(card, ability))
+            if removeGameEventListener(card_id, event):
+               notify("{} has lost the ability {}".format(card, ability))
       
 
 #---------------------------------------------------------------------------
@@ -86,5 +86,5 @@ def abl_genericListener(target_id, card_id, source_id=None, msg=None):
    return False
 
 
-RulesAbilities.register('unblockable', 'abl_unblockable', [GameEvents.Blocked])
-RulesAbilities.register('cantblock',   'abl_cantBlock',   [GameEvents.BeforeBlock])
+RulesAbilities.register('unblockable', abl_unblockable, [GameEvents.Blocked])
+RulesAbilities.register('cantblock',   abl_cantBlock,   [GameEvents.BeforeBlock])

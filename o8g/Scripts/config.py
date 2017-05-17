@@ -178,7 +178,7 @@ charsPlayed    = 0  # Number of chars played this turn
 backupsPlayed  = 0  # Number of chars backed-up this turn
 debugVerbosity = DebugLevel.Off # -1..4 (At -1 means no debugging messages display)
 # If I am alone debugging I want to know everything
-if me.name == Author and if len(players) == 1:
+if me.name == Author and len(players) == 1:
    debugVerbosity = DebugLevel.All
 parsedCards    = {} # Dictionary holding all parsed cards
 cleanedUpRing  = False  # Tracks if the user has run the Clean-up phase

@@ -17,6 +17,8 @@ Useful when debugging your game along with the built-in functionality to reload 
 - `rake octgn` Runs OCTGN in dev mode, in the table view with the CFC plugin loaded.
 - `rake docs` Converts Markdown documents in Documents/ folder into HTML files.
 
+Use [bundler](http://bundler.io/) to install the dependencies.
+
 
 ## License
 Released under the GNU General Public License version 3.

@@ -697,7 +697,7 @@ def discard(card, x = 0, y = 0):
    notify("{} has discarded {} from its {}.".format(me, card, group.name))
 
 
-def randomDiscard(group, x = 0, y = 0):
+def randomDiscard(group = me.hand, x = 0, y = 0):
     mute()
     card = group.random()
     if card == None:
