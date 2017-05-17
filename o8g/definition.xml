@@ -4,7 +4,7 @@
       name="Card Fighters' Clash"
       id="e3d56d9e-900d-49c6-b6ae-22cbb51be153"
       octgnVersion="3.1.228.0"
-      version="0.7.0.125"
+      version="0.7.0.128"
       markersize="20"
       tags="capcom snk fighter"
       description="A card game based in the SNK Playmore’s video game SNK vs. Capcom Card Fighters' Clash 2 Expand Edition.
@@ -287,9 +287,9 @@
 			<groupaction menu="Swap with Deck" shortcut="Ctrl+Alt+S" execute="swapWithDeck" />
 			<groupaction menu="Pick a random card" shortcut="Ctrl+Alt+R" execute="randomPick" />
 			<groupactions menu="Move all cards to...">
-				<groupaction menu="Hand" shortcut="Ctrl+H" execute="toHandAll" />
-				<groupaction menu="Deck (Top)" shortcut="Ctrl+D" execute="toDeckTopAll" />
-				<groupaction menu="Deck (Bottom)" shortcut="Ctrl+Shift+D" execute="toDeckBottomAll" />
+				<groupaction menu="Hand" shortcut="Ctrl+Shift+H" execute="toHandAll" />
+				<groupaction menu="Deck (Top)" shortcut="Ctrl+Shift+D" execute="toDeckTopAll" />
+				<groupaction menu="Deck (Bottom)" shortcut="Ctrl+Alt+Shift+D" execute="toDeckBottomAll" />
 			</groupactions>
 			<cardaction menu="Return card to Hand" shortcut="Ctrl+H" default="True" execute="toHand" />
 			<cardaction menu="Put into Deck (Top)" shortcut="Ctrl+D" execute="toDeckTop" />
@@ -299,9 +299,9 @@
 		<group name="Removed Pile" visibility="all" width="90" height="126" icon="Resources/Groups/removed.png" collapsed="True">
 			<groupaction menu="Shuffle" shortcut="Ctrl+S" execute="shuffle" />
 			<groupactions menu="Move All Cards To...">
-				<groupaction menu="Hand" shortcut="Ctrl+H" execute="toHandAll" />
-				<groupaction menu="Deck (Top)" shortcut="Ctrl+D" execute="toDeckTopAll" />
-				<groupaction menu="Deck (Bottom)" shortcut="Ctrl+Shift+D" execute="toDeckBottomAll" />
+				<groupaction menu="Hand" shortcut="Ctrl+Shift+H" execute="toHandAll" />
+				<groupaction menu="Deck (Top)" shortcut="Ctrl+Shift+D" execute="toDeckTopAll" />
+				<groupaction menu="Deck (Bottom)" shortcut="Ctrl+Alt+Shift+D" execute="toDeckBottomAll" />
 				<groupaction menu="Discard pile" shortcut="Ctrl+Shift+Del" execute="discardAll" />
 			</groupactions>
 			<cardaction menu="Return card to Hand" shortcut="Ctrl+H" default="True" execute="toHand" />
