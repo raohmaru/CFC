@@ -4,7 +4,7 @@
       name="Card Fighters' Clash"
       id="e3d56d9e-900d-49c6-b6ae-22cbb51be153"
       octgnVersion="3.1.228.0"
-      version="0.7.0.128"
+      version="0.7.0.130"
       markersize="20"
       tags="capcom snk fighter"
       description="A card game based in the SNK Playmore’s video game SNK vs. Capcom Card Fighters' Clash 2 Expand Edition.
@@ -158,7 +158,7 @@
 			<groupaction menu="Pick a random card (Mine)"  execute="randomPickMine" />
 			<groupaction menu="Pick a random card (Enemy)" execute="randomPickEnemy" />
 		</groupactions>
-		<groupaction menu="Restart game" execute="scoop" showIf="acsh_gameStarted" />
+		<groupaction menu="Restart game" shortcut="Ctrl+Alt+Shift+R" execute="scoop" showIf="acsh_gameStarted" />
 		<groupactions menu="Settings...">
 			<groupaction menu="Switch Play automation ON/OFF" execute="switchPlayAutomation" />
 			<groupaction menu="Switch Phase Triggers automation ON/OFF" execute="switchPhaseAutomation" />
