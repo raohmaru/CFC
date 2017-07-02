@@ -52,6 +52,11 @@ def eventHandChanges(expr, actual=None):
       actual = len(me.hand)
    debug(">>> eventHandChanges({}, {})".format(expr, actual)) #Debug
    return evalExpression(expr, actual)
+   
+
+def eventGenericHandler(expr, *args):
+   return True
 
 
 RulesEvents.register(GameEvents.HandChanges, eventHandChanges)
+RulesEvents.register(GameEvents.EndPhase,    eventGenericHandler)

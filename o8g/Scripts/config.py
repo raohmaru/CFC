@@ -166,6 +166,7 @@ Yaxis        = 'y'
 PlayAction   = 'play'
 BackupAction = 'backup'
 Author       = 'raohmaru'
+BPMultiplier = 100  # Model.BP = markers.BP * 100
 
 #---------------------------------------------------------------------------
 # Global variables (for the current user)

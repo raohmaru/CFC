@@ -73,6 +73,7 @@ zone: (optional)
    Prefixes:
       my (default)
       opp
+      ctrl
 
 ---------------------------------------------------
 action = [{cost}:] [cond] effect [& effect] [to(target)] [restr]; ...
@@ -102,6 +103,7 @@ effect:
          reveal(pile=me.hand)
          discard(target cards)
          rnddiscard([#])
+         moveTo(zone)
       Ability:
          Keywords:
             @see abilities
@@ -209,7 +211,9 @@ action = reveal(hand) & discard(actions) & discard(reactions)
 """
 
 # Regina's RADIO TRANSMITTER
-# RulesDict['0a8f39ff-6b21-4805-bafb-27c3f38d1986'] = ""
+RulesDict['0a8f39ff-6b21-4805-bafb-27c3f38d1986'] = """
+auto = ~myEndPhase~ moveTo(ctrlHand) to(characters[bp>=800])
+"""
 
 # Cody (Alpha)'s BAD STONE
 # RulesDict['525d8365-c90e-491f-9811-1f23efbafccb'] = ""

@@ -160,6 +160,19 @@ def cmd_randomDiscard(targets, restr, source, numCards=1):
                remoteCall(player, "randomDiscard", [])
    RulesCommands.applyNext()
 
+   
+def cmd_moveTo(targets, restr, source, zone):
+   debug(">>> cmd_moveTo({}, {})".format(targets, zone)) #Debug
+   zonePrefix, zoneName = RulesLexer.getPrefix(RS_PREFIX_ZONES, zone, RS_PREFIX_CTRL)
+   for target in targets:
+      if zoneName == RS_KW_ZONE_HAND:
+         if zonePrefix == RS_PREFIX_MY or (zonePrefix == RS_PREFIX_CTRL and target.controller == me):
+            toHand(target)
+         else:
+            remoteCall(target.controller, "toHand", [target])
+      rnd(1, 100) # Wait until all animation is done
+   RulesCommands.applyNext()
+
 
 RulesCommands.register('damage',     cmd_damage)
 RulesCommands.register('swappiles',  cmd_swapPiles)
@@ -168,3 +181,4 @@ RulesCommands.register('destroy',    cmd_destroy)
 RulesCommands.register('reveal',     cmd_reveal)
 RulesCommands.register('discard',    cmd_discard)
 RulesCommands.register('rnddiscard', cmd_randomDiscard)
+RulesCommands.register('moveto',     cmd_moveTo)

@@ -73,6 +73,7 @@ autos = [
    "auto = ~myHandChanges : >0~ -unblockable",
    "auto = ~myHandChanges :>=0~ -unblockable",
    "auto = ~myHandChanges:0~ may('Question?') destroy() & +unblockable to(character@myRing) uynt",
+   "auto = ~myEndPhase~ moveTo(ctrlHand) to(characters[bp>=800])"
 ]
 
 if not 'debug' in globals():
@@ -91,6 +92,6 @@ def test(arr, title):
 
 # rules = RulesDict['aa867ea1-89f8-4154-8e20-2263edd00002']
 # test(targets, 'targets')
-test(actions, 'actions')
+# test(actions, 'actions')
 # test(abilities, 'abilities')
-# test(autos, 'autos')
+test(autos, 'autos')

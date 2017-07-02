@@ -734,10 +734,10 @@ def setupDebug(group, x=0, y=0):
    gotoMain()
    rnd(100, 10000)  # Delay the next action until all animation is done
    cards = [
-      'fd1a3f1c-7df1-443e-97b1-f093d66e74c9', # Shinjin Akuma
+      'fd1a3f1c-7df1-443e-97b1-f093d66e74c9', # Zero Akuma
       '0a8f39ff-6b21-4805-bafb-27c3f38d1986', # Regina
       '525d8365-c90e-491f-9811-1f23efbafccb', # Cody (Alpha)
-      '55b0c9ff-4b3a-4b08-adc1-f1b5e03adef9', # Nina
+      'af43872e-e47d-4fe0-9b55-aedd8a0d0fc7', # Jin Saotome
    ]
    for i, id in enumerate(cards):
       debug("Creating card {} at slot {}".format(id, i))

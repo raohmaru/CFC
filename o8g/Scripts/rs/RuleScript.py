@@ -133,7 +133,9 @@ class Rules():
       if eventName:
          eventChecked = RulesEvents.check(eventName, auto['event'], *args)
          if eventChecked != None:
-            self.execAction(auto, [Card(self.card_id)], not eventChecked)
+            thisCard = Card(self.card_id)
+            notify("Activating {}'s auto ability {}.".format(thisCard, getParsedCard(thisCard).ability))
+            self.execAction(auto, [thisCard], not eventChecked)
                
    
    def payCost(self, costs):

@@ -108,8 +108,9 @@ def endPhaseStart():
          # Unblocked attacker
          elif len(players) > 1:
             dealDamage(dmg + pdmg, players[1], card)
-   # Trigger event and remove "until end of turn" events
+   # Trigger event
    triggerGameEvent(GameEvents.EndPhase)
+   # Remove "until end of turn" events
    cleanupGameEvents(RS_KW_RESTR_UEOT)
    
    

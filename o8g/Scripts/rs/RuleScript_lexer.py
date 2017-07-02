@@ -54,8 +54,7 @@ action: {
          {
             'filters': [],
             'types': ['character'],
-            'zone': ['',
-            'arena']
+            'zone': ['', 'arena']
          },
          'ueot'
       ]
@@ -306,13 +305,13 @@ class RulesLexer():
       
    
    @staticmethod
-   def getPrefix(prefixes, str):
+   def getPrefix(prefixes, str, defPrefix = ''):
    # Get the prefix for a given string
       for p in prefixes:
          if str[:len(p)] == p:
             cmd = str[len(p):].strip()
             return (p, cmd)
-      return ('', str)
+      return (defPrefix, str)
       
       
    @staticmethod
