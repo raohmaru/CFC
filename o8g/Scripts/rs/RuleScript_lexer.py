@@ -40,12 +40,9 @@ action: {
          }
       ]
    ],
-   event: [
-      'my', 'handchanges', '=0'
-   ],
    effects: [
       [
-         ['may', ["'question?'"]],
+         ['may', 'question?'],
          [
             ['destroy'],
             ['draw', ['2']],
@@ -61,6 +58,12 @@ action: {
    ],
    abilities: [
       'ability', 'ability'
+   ]
+},
+auto: {
+   [@see action],
+   event: [
+      'my', 'handchanges'
    ]
 }
 """
@@ -220,14 +223,7 @@ class RulesLexer():
          prfx, eventName = RulesLexer.getPrefix(RS_PREFIX_EVENTS, match.group(1))
          if prfx == RS_PREFIX_MY:
             prfx = ''
-         event = [prfx, eventName, None]
-         # Event expression
-         if match.group(2):
-            expr = match.group(2)[1:].replace(" ", "")
-            if RulesLexer.isValidExpr(expr):
-               event[2] = expr
-            else:
-               debug("-- expr was ignored: %s" % expr)
+         event = [prfx, eventName]
          debug("-- found event: %s" % event)
             
       # Analyze the expression
@@ -237,14 +233,17 @@ class RulesLexer():
          debug("-- Parsing effect '%s'" % expr)
          effect = [None, None, None, None]
          # Look for up to 1 condition
-         kw, expr = RulesLexer.extractKeywordWithParams(expr, RS_KW_CMD_COND)
-         if kw:
-            effect[0] = kw
-            debug("---- found condition '%s'" % kw)
+         match = RS_RGX_COND.search(expr)
+         if match:
+            kw, params = RulesLexer.extractKeyword(match.group(1), RS_KW_CMD_COND)
+            if kw:
+               effect[0] = [kw, params]
+               debug("---- found condition '%s'" % effect[0])
+            expr = re.sub(RS_RGX_COND, '', expr).strip()
          # Look for up to 1 restriction
          kw, expr = RulesLexer.extractKeyword(expr, RS_KW_CMD_RESTRS)
          if kw:
-            effect[3] = kw[0]
+            effect[3] = kw
             debug("---- found restriction '%s'" % kw)
          # Has target?
          match = RS_RGX_AC_TARGET.search(expr)
@@ -326,32 +325,11 @@ class RulesLexer():
       
    @staticmethod
    def extractKeyword(str, keywords):
-   # Extract any keyword that match from the keywords list for the given string
-      kw = []
-      matches = [k for k in keywords if k+' ' in str or ' '+k in str or k+'(' in str]
-      if len(matches) > 0:
-         kw = [matches[0]]
-         # Remove keywords from the string
-         for k in matches:
-            str = str.replace(k, "")
-      return (kw, str.strip())
+   # Extract any one keyword that match from the keywords list for the given string
+      strArr = str.split(" ")
+      for kw in keywords:
+         if kw in strArr:
+            str = str.replace(kw, "", 1)
+            return (kw, str.strip())
+      return ('', str)
       
-      
-   @staticmethod
-   def extractKeywordWithParams(str, keywords):
-   # Extract any keyword that match from the keywords list, and any additional
-   # parameter within () for the given string
-      kw, str = RulesLexer.extractKeyword(str, keywords)
-      if str[0] == '(':
-         match = RS_RGX_PARAM.match(str)
-         if match:
-            params = match.group(1).split(',')
-            kw.append(params)
-            str = str[len(match.group()):]
-      return (kw, str)
-      
-      
-   @staticmethod
-   def isValidExpr(expr):
-   # Checks if the expression is valid and is well-formed
-      return bool(RS_RGX_EXPRESSION.match(expr))

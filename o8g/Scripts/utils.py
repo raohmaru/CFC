@@ -131,16 +131,17 @@ def clearGlobalVar(name, player = None):
    setGlobalVar(name, gvar, player)
    
 
-def evalExpression(expr, actual):
-   if isNumber(expr):
-      res = actual == int(expr)
-      debug("Evaluating expr  %s == %s ({})" % (actual, expr, res))
+def evalExpression(expr):
+   # Adding some variables only availabe in this scope
+   myhandsize = len(me.hand)
+
+   try:
+      res = eval(expr)
+      debug("Evaluating expr  %s == True (%s)" % (expr, res))
       return res
-   else:
-      expr = Regexps['DoubleEquals'].sub('==', expr)
-      res = eval("actual " + expr)
-      debug("Evaluating expr  %s %s (%s)" % (actual, expr, res))
-      return res
+   except:
+      debug("%s  is not a valid Python expression" % (expr))
+      return False
    
    
 def showCardDlg(list, title, max=1, text="Select a card:", min=1):
@@ -703,12 +704,11 @@ def filterHasMarker(card, marker, include):
 #------------------------------------------------------------------------------
 
 def debug(msg, level = 1):
-   global debugVerbosity
    if debugVerbosity < DebugLevel.Info:
       return
-   msg = "{}".format(msg)
-   msg = DebugLevelPrefixes[level] + ' ' + msg
    if debugVerbosity >= level:
+      msg = "{}".format(msg)
+      msg = DebugLevelPrefixes[level] + ' ' + msg
       whisper(msg)
       
 
@@ -734,7 +734,7 @@ def setupDebug(group, x=0, y=0):
    gotoMain()
    rnd(100, 10000)  # Delay the next action until all animation is done
    cards = [
-      'fd1a3f1c-7df1-443e-97b1-f093d66e74c9', # Zero Akuma
+      '55b0c9ff-4b3a-4b08-adc1-f1b5e03adef9', # Nina
       '0a8f39ff-6b21-4805-bafb-27c3f38d1986', # Regina
       '525d8365-c90e-491f-9811-1f23efbafccb', # Cody (Alpha)
       'af43872e-e47d-4fe0-9b55-aedd8a0d0fc7', # Jin Saotome

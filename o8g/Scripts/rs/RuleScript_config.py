@@ -38,7 +38,7 @@ RS_RGX_TARGET_ZONE  = re.compile(r'@\s*([\w*]+).*$')
 
 RS_RGX_KEY_ACTION   = re.compile(r'^action\s*=\s*')
 RS_RGX_AC_COST      = re.compile(r'(\{.+\}\s*)\s*:\s*')
-RS_RGX_AC_EVENT     = re.compile(r'~\s*(\w+)\s*(:\s*[^:~]+)?~')
+RS_RGX_AC_EVENT     = re.compile(r'~\s*(\w+)\s*?~')
 RS_RGX_AC_TARGET    = re.compile(r'\bto\s*\((.+)\)')
 RS_RGX_AC_EFFECT    = re.compile(r'(\w+)\s*\((.*?)\)')
 
@@ -46,7 +46,7 @@ RS_RGX_KEY_ABILITY  = re.compile(r'^abilities\s*=\s*')
 RS_RGX_KEY_AUTO     = re.compile(r'^auto\s*=\s*')
 
 RS_RGX_PARAM        = re.compile(r'\(([^)]*)\)')
-RS_RGX_EXPRESSION   = re.compile(r'^[0-9<>=]+$')
+RS_RGX_COND         = re.compile(r'\[\[([^\]]+)\]\]\s')
 
 # Comments
 RS_COMMENT_CHAR = '#'
@@ -173,8 +173,10 @@ RS_KW_COST_EXILE     = 'e'
 
 # Effect conditions
 RS_KW_COND_MAY = 'may'
+RS_KW_COND_IF = 'if'
 RS_KW_CMD_COND = [
-   RS_KW_COND_MAY
+   RS_KW_COND_MAY,
+   RS_KW_COND_IF
 ]
 
 # Effect restrictions

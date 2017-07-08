@@ -21,21 +21,21 @@ import re
 # Card automation functions
 #---------------------------------------------------------------------------
 
-def parseCard(card, ruleId=None, initAuto=True):
+def parseCard(card, ruleId=None, init=True):
    debug(">>> parseCard({})".format(card)) #Debug
    if not card._id in parsedCards:
       if card.Type == CharType:
          parsedCards[card._id] = CharCard(card, ruleId)
       else:
          parsedCards[card._id] = GameCard(card, ruleId)
-      if initAuto:
-         parsedCards[card._id].initAuto()
+      if init:
+         parsedCards[card._id].init()
    return parsedCards.get(card._id)
    
 
 def getParsedCard(card):
    debug("Retrieved parsed card for ID {} ({})".format(card._id, card))
-   return parseCard(card, initAuto=False)
+   return parseCard(card, init=False)
    
 
 def removeParsedCard(card):
@@ -56,9 +56,9 @@ class GameCard(object):
       self.rule_id = ruleId if ruleId else card.model
       self.rules = Rules(self.rule_id, self.card_id)
       
-   def initAuto(self):
+   def init(self):
       if self.hasEffect():
-         self.rules.initAuto()
+         self.rules.init()
          
    def hasEffect(self):
       return True
@@ -103,7 +103,7 @@ class Ability:
       return ""
    
    def __init__(self, obj):
-      if isinstance(obj, basestring):      
+      if isinstance(obj, basestring):
          ability = Regexps['Ability'].match(obj)
          if ability:
             self.ability = ability.group(0)

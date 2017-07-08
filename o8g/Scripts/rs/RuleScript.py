@@ -42,7 +42,7 @@ class Rules():
       self.rules_tokens = RulesLexer.tokenize(rules)
 
          
-   def initAuto(self):
+   def init(self):
       if not self.rules_tokens:
          return
       
@@ -53,11 +53,30 @@ class Rules():
       # Register an event for the 'auto' key
       if RS_KEY_AUTO in self.rules_tokens:
          auto = self.rules_tokens[RS_KEY_AUTO]
-         event = auto['event'][0] + auto['event'][1]
-         addGameEventListener(event, self.card_id, self.card_id)
-         if auto['event'][1] in GameEventsExecOnAdded:
-            self.execAuto(auto, event)
+         if auto['event']:
+            self.addEvent(auto['event'])
+         self.addEventsFromIfCond()
          
+         
+   def addEvent(self, event):
+      eventName = event[0] + event[1]
+      addGameEventListener(eventName, self.card_id, self.card_id)
+      if event[1] in GameEventsExecOnAdded:
+         self.execAuto(self.rules_tokens[RS_KEY_AUTO], eventName)
+         
+         
+   def addEventsFromIfCond(self):
+      """ If an if conditions is found, adds events according to the variables that are used """
+      auto = self.rules_tokens[RS_KEY_AUTO]
+      for effect in auto['effects']:         
+         # Conditions
+         if effect[0]:
+            cond = effect[0]
+            if cond[0] == RS_KW_COND_IF:
+               leftCond = Regexps['LeftCond'].match(cond[1])
+               if leftCond and leftCond.group() in GameEventsFromVars:
+                  self.addEvent(RulesLexer.getPrefix(RS_PREFIX_EVENTS, GameEventsFromVars[leftCond.group()]))
+   
       
    def activate(self):
       if not self.rules_tokens:
@@ -78,10 +97,11 @@ class Rules():
       return True
 
       
-   def execAction(self, action, target, inverse=False):
-      debug("Executing actions: {}, {}, {}".format(action, target, inverse))
+   def execAction(self, action, target, isAuto=False):
+      debug("Executing actions: {}, {}, isAuto={}".format(action, target, isAuto))
             
       thisCard = Card(self.card_id)
+      inverse = False
       # First we get valid targets or we cancel
       targets = []
       for effect in action['effects']:
@@ -89,9 +109,24 @@ class Rules():
          newTarget = None
          
          # Conditions
-         # if ability['effects'][0] == RS_KW_COND_MAY:
-            # if not confirm("May {}?".format(question)):
-               # break
+         if effect[0]:
+            cond = effect[0]
+            if cond[0] == RS_KW_COND_MAY:
+               question = MSG_MAY_DEF
+               if len(cond) > 1:
+                  question = cond[1].strip('"\'').capitalize()
+               debug("-- Found MAY condition: {}".format(question))
+               if not confirm(question):
+                  debug("--- {} cancelled".format(me))
+                  return False
+            elif cond[0] == RS_KW_COND_IF:            
+               debug("-- Found IF condition: {}".format(cond[1]))
+               res = evalExpression(cond[1])
+               if not res:
+                  debug("-- Condition not matching")
+                  if not isAuto:
+                     return False
+                  inverse = True
          
          # Additional target
          if effect[2]:
@@ -127,15 +162,13 @@ class Rules():
       if not auto:
          if not self.rules_tokens[RS_KEY_AUTO]:
             return
-         auto = self.rules_tokens[RS_KEY_AUTO]
+         auto = self.rules_tokens[RS_KEY_AUTO] 
       debug("Executing auto on event {} ({})".format(eventName, args))
       
       if eventName:
-         eventChecked = RulesEvents.check(eventName, auto['event'], *args)
-         if eventChecked != None:
-            thisCard = Card(self.card_id)
-            notify("Activating {}'s auto ability {}.".format(thisCard, getParsedCard(thisCard).ability))
-            self.execAction(auto, [thisCard], not eventChecked)
+         thisCard = Card(self.card_id)
+         notify("Activating {}'s auto ability {}.".format(thisCard, getParsedCard(thisCard).ability))
+         self.execAction(auto, [thisCard], True)
                
    
    def payCost(self, costs):

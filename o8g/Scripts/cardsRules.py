@@ -92,6 +92,7 @@ cond:
    Keywords:
       may
       may('Question')
+      if(expr) (@see Expressions)
       
 effect:
    Values:
@@ -133,7 +134,7 @@ ability:
       cantblock
       
 ---------------------------------------------------
-auto = ~event:expr~ [cond] effect [& effect] [to(target)] [restr]
+auto = ~event~ [cond] effect [& effect] [to(target)] [restr]
 
 Only one auto key is allowed.
 
@@ -146,8 +147,6 @@ event:
    Prefixes:
       my (default)
       opp
-   expr:
-      A valid logical expression (@see Expressions)
 
 cond:
    @see action:cond
@@ -164,7 +163,10 @@ restr:
 
 ---------------------------------------------------
 Expressions:
-   [=><]0-9
+
+A valid Python expression.
+Available variables:
+   All global variables
 
 """
 
@@ -172,7 +174,7 @@ RulesDict = {}
 
 # Nina's WINGS
 RulesDict['55b0c9ff-4b3a-4b08-adc1-f1b5e03adef9'] = """
-auto = ~myHandChanges:=0~ +unblockable
+auto = [[if myHandSize==0]] +unblockable
 """
 
 # Ryu no Senshi's DRAGON TRANSFORM

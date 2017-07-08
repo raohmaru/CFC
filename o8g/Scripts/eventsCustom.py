@@ -44,7 +44,7 @@ def removeGameEventListener(card_id, eventName=None):
             if listener['id'] == card_id:
                del ge[e][i]
                removed = True
-               debug("Removed listener for event {} {}".format(e, listener))            
+               debug("Removed listener for event {} {}".format(e, listener))
    setGlobalVar('GameEvents', ge)
    return removed
 

@@ -100,9 +100,8 @@ AutoUniChar      = u'\u25CF'
 
 # A dictionary which holds the regex used in other scripts
 Regexps = dict(
-   Ability      = re.compile(r'(.)\s+([^\r]+)'),
-   Debug        = re.compile(r'(<<<|>>>)'),
-   DoubleEquals = re.compile(r'=(?=\d)'),
+   Ability  = re.compile(r'(.)\s+([^\r]+)'),
+   LeftCond = re.compile(r'^[\w.]+')
 )
 
 # Rules
@@ -141,6 +140,10 @@ GameEvents = Struct(**{
 })
 # When a listener to these events is added, trigger it automatically
 GameEventsExecOnAdded = [GameEvents.HandChanges]
+# Maps varaibles to events
+GameEventsFromVars = {
+   'myhandsize': GameEvents.HandChanges
+}
 
 # Messages
 MSG_SEL_CHAR_RING           = "Please select a character in your ring.\n(Shift key + Left click on a character)."
@@ -157,6 +160,7 @@ MSG_ERR_NO_FILTERED_PLAYERS = "No player match the requirements of this card's e
 MSG_ERR_NO_CARD_TARGETED    = "Please select a card before activating the ability."
 MSG_ERR_TARGET_OTHER        = "{}'s ability cannot select itself, therefore it has been removed from selection."
 MSG_ERR_MULTIPLE_TARGET     = "Please select only one card."
+MSG_MAY_DEF                 = "Do you want to apply the effect of the card?"
 
 # Misc
 CardWidth    = 90
