@@ -39,7 +39,7 @@ class RulesAbilities():
    @staticmethod   
    def add(ability, card_id, source_id=None, restr=None):
       if ability in RulesAbilities.items:
-         debug("-- adding ability '{}' from {}".format(ability, Card(card_id)))
+         debug("-- adding ability '{}' to {}".format(ability, Card(card_id)))
          func = RulesAbilities.items[ability]['func']
          # func = eval(RulesAbilities.items[ability]['func'])  # eval is a necessary evil...
          func(card_id, source_id, restr)
@@ -54,7 +54,7 @@ class RulesAbilities():
       if ability in RulesAbilities.items:
          for event in RulesAbilities.items[ability]['events']:      
             if removeGameEventListener(card_id, event):
-               notify("{} has lost the ability {}".format(card, ability))
+               notify("{} has lost the {} ability".format(card, ability))
       
 
 #---------------------------------------------------------------------------
@@ -63,12 +63,13 @@ class RulesAbilities():
 
 def abl_unblockable(card_id, source_id=None, restr=None):
    debug(">>> abl_unblockable({}, {})".format(card_id, source_id)) #Debug
-   addGameEventListener(GameEvents.Blocked, 'abl_genericListener', card_id, restr, card_id, source_id, MSG_UNBLOCKABLE)
-   notify("{} is unblockable".format(Card(card_id)))
+   if addGameEventListener(GameEvents.Blocked, 'abl_genericListener', card_id, source_id, restr, card_id, source_id, MSG_UNBLOCKABLE):
+      notify("{} is unblockable".format(Card(card_id)))
+
 
 def abl_cantBlock(card_id, source_id=None, restr=None):
    debug(">>> abl_cantBlock({}, {})".format(card_id, source_id)) #Debug
-   addGameEventListener(GameEvents.BeforeBlock, 'abl_genericListener', card_id, restr, card_id, source_id, MSG_CANT_BLOCK)
+   addGameEventListener(GameEvents.BeforeBlock, 'abl_genericListener', card_id, source_id, restr, card_id, source_id, MSG_CANT_BLOCK)
    notify("{} cannot counter-attack".format(Card(card_id)))
 
 

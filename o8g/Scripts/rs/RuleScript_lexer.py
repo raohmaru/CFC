@@ -63,7 +63,7 @@ action: {
 auto: {
    [@see action],
    event: [
-      'my', 'handchanges'
+      ['my', 'handchanges']
    ]
 }
 """
@@ -218,13 +218,16 @@ class RulesLexer():
       event = None
       match = RS_RGX_AC_EVENT.match(acStr)
       if match:
-         acStr = acStr[len(match.group()):]   
-         # Look for prefixes
-         prfx, eventName = RulesLexer.getPrefix(RS_PREFIX_EVENTS, match.group(1))
-         if prfx == RS_PREFIX_MY:
-            prfx = ''
-         event = [prfx, eventName]
-         debug("-- found event: %s" % event)
+         acStr = acStr[len(match.group()):]
+         event = []
+         events = match.group(1).split(',')
+         for e in events:
+            # Look for prefixes
+            prfx, eventName = RulesLexer.getPrefix(RS_PREFIX_EVENTS, e.strip())
+            if prfx == RS_PREFIX_MY:
+               prfx = ''
+            event.append([prfx, eventName])
+            debug("-- found event: %s" % event)
             
       # Analyze the expression
       effects = []

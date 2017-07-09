@@ -84,7 +84,7 @@ def filterBP(card, include, cmd, *args):
       return False
    value = num(value)
 
-   if getMarker(card, 'BP') > 0:
+   if getMarker(card, 'BP') >= 0:
       bp = getMarker(card, 'BP')
    else:
       bp = num(card.BP)
@@ -94,6 +94,7 @@ def filterBP(card, include, cmd, *args):
    res = compareValuesByOp(bp, value, op)
    if not include:
       res = not res
+   debug("--- {} {} {} -> {}".format(bp, op, value, res))
    return res
    
    
@@ -113,6 +114,7 @@ def filterSP(card, include, cmd, *args):
    res = compareValuesByOp(sp, value, op)
    if not include:
       res = not res
+   debug("--- {} {} {} -> {}".format(sp, op, value, res))
    return res
 
 

@@ -215,13 +215,13 @@ class RulesUtils():
             debug("-- checking if any card match type '%s'" % type)
             cards_f1 = [c for c in cards_f1
                if c.Type.lower() == type]
-            debug(cards_f1)
+            debug( ("{}, " * len(cards_f1)).format(*cards_f1) )
          # Look for subtype
          else:
             debug("-- checking if any card match subtype '%s'" % type)
             cards_f1 = [c for c in cards_f1
                if c.Subtype.lower() == type]
-            debug(cards_f1)
+            debug( ("{}, " * len(cards_f1)).format(*cards_f1) )
 
       # Look for targeted cards
       if targeted:

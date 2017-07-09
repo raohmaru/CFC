@@ -74,9 +74,10 @@ autos = [
    "auto = ~myHandChanges~ destroy() ueot",
    "auto = ~handChanges~ +unblockable",
    "auto = ~myHandChanges~ -unblockable",
-   "auto = ~myHandChanges~ -unblockable",
+   "auto = ~myHandChanges,oppBlockPhase~ -unblockable",
    "auto = [[may 'Question?']] destroy() & +unblockable to(character@myRing) uynt",
-   "auto = ~myEndPhase~ moveTo(ctrlHand) to(characters[bp>=800])"
+   "auto = ~myEndPhase~ moveTo(ctrlHand) to(characters[bp>=800])",
+   "auto = ~anyBlockPhase~ +unblockable to(characters[bp<=300 & attack & -uattack]) ueot"
 ]
 
 if not 'debug' in globals():

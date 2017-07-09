@@ -61,6 +61,8 @@ def blockPhaseStart():
          uatype = "Double" if chars == 1 else "Triple"
          payCostSP(-chars*UAttackCost, msg = "do a {} United Attack".format(uatype))
          notify("{} has paid the cost of the {} United Attack".format(me, uatype))
+   # Trigger event
+   triggerGameEvent(GameEvents.BlockPhase)
    
    
 def endPhaseStart():
@@ -383,7 +385,7 @@ def blockAuto(card):
    # Check if the card can be legally played
    if me.isActive or currentPhase()[1] != BlockPhase:
       information("You can only counter-attack in enemy's Counter-attack Phase.")
-      return      
+      return
    # Only for character cards...
    if card.Type != CharType:
       information("You can only counter-attack with character cards.")

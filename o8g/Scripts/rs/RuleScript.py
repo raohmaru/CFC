@@ -24,6 +24,7 @@ class Rules():
    rule_id      = ''
    card_id      = ''
    rules_tokens = None
+   prevTargets  = None
 
    def __init__(self, rule, cid):
       self.rule_id = rule.lower()
@@ -54,7 +55,8 @@ class Rules():
       if RS_KEY_AUTO in self.rules_tokens:
          auto = self.rules_tokens[RS_KEY_AUTO]
          if auto['event']:
-            self.addEvent(auto['event'])
+            for event in auto['event']:
+               self.addEvent(event)
          self.addEventsFromIfCond()
          
          
@@ -144,12 +146,22 @@ class Rules():
             notify(MSG_COST_NOT_PAYED.format(me))
             return False
             
+      # For auto with events that adds abilities, if no matching then remove abilities
+      if isAuto and action['event']:
+         if not [t for t in targets if bool(t)] and self.prevTargets:
+            targets = self.prevTargets
+            self.prevTargets = None
+            inverse = True
+         else:
+            self.prevTargets = targets
+            
       # Finally apply the effects
       for i, effect in enumerate(action['effects']):
          if len(effect[1]) > 0:
             debug("-- Applying commands")
             RulesCommands.applyAll(effect[1], targets[i], effect[3], thisCard, inverse)
-            if targets[i]:
+            # Clear visual target
+            if targets[i] and not isAuto:
                for obj in targets[i]:
                   if isCard(obj):
                      obj.target(False)

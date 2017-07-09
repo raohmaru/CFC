@@ -133,10 +133,11 @@ DebugLevelPrefixes = [
 
 # Game Events
 GameEvents = Struct(**{
+   'BlockPhase' : 'blockphase',
+   'EndPhase'   : 'endphase',
    'Blocked'    : 'blocked',
    'BeforeBlock': 'beforeblock',
-   'HandChanges': 'handchanges',
-   'EndPhase'   : 'endphase'
+   'HandChanges': 'handchanges'
 })
 # When a listener to these events is added, trigger it automatically
 GameEventsExecOnAdded = [GameEvents.HandChanges]

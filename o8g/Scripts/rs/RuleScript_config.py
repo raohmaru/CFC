@@ -38,7 +38,7 @@ RS_RGX_TARGET_ZONE  = re.compile(r'@\s*([\w*]+).*$')
 
 RS_RGX_KEY_ACTION   = re.compile(r'^action\s*=\s*')
 RS_RGX_AC_COST      = re.compile(r'(\{.+\}\s*)\s*:\s*')
-RS_RGX_AC_EVENT     = re.compile(r'~\s*(\w+)\s*?~')
+RS_RGX_AC_EVENT     = re.compile(r'~\s*([\w,]+)\s*?~')
 RS_RGX_AC_TARGET    = re.compile(r'\bto\s*\((.+)\)')
 RS_RGX_AC_EFFECT    = re.compile(r'(\w+)\s*\((.*?)\)')
 
@@ -65,6 +65,7 @@ RS_PREFIX_NOT   = '-'
 RS_PREFIX_MY    = 'my'
 RS_PREFIX_OPP   = 'opp'
 RS_PREFIX_CTRL  = 'ctrl'
+RS_PREFIX_ANY   = 'any'
 RS_PREFIX_OTHER = '^'
 
 RS_PREFIX_TYPES = [
@@ -79,7 +80,8 @@ RS_PREFIX_ZONES = [
 
 RS_PREFIX_EVENTS = [
    RS_PREFIX_MY,
-   RS_PREFIX_OPP
+   RS_PREFIX_OPP,
+   RS_PREFIX_ANY
 ]
 
 RS_PREFIX_FILTERS = [

@@ -76,19 +76,19 @@ zone: (optional)
       ctrl
 
 ---------------------------------------------------
-action = [{cost}:] [cond] effect [& effect] [to(target)] [restr]; ...
+action = {cost}: [[cond]] effect [& effect] to(target) restr; ...
 
 Only one action key is allowed.
 Several effects can be joined with ';'.
 
-cost:
+cost: (optional)
    Keywords:
       F
       S | S(target)
       D | D(#|target)
       E | E(target)
 
-cond:
+cond: (optional)
    Keywords:
       may
       may('Question')
@@ -114,11 +114,11 @@ effect:
    Operators:
       & (and)
       
-to:
+to: (optional)
    Parameters:
       A valid target
       
-restr:
+restr: (optional)
    Keywords:
       ueot
       uynt
@@ -134,19 +134,21 @@ ability:
       cantblock
       
 ---------------------------------------------------
-auto = ~event~ [cond] effect [& effect] [to(target)] [restr]
+auto = ~event[,event]~ [[cond]] effect [& effect] to(target) restr
 
 Only one auto key is allowed.
 
 event:
    Keywords:
+      blockphase
+      endphase
       blocked
       beforeblock
       handchanges
-      endphase
    Prefixes:
       my (default)
       opp
+      any
 
 cond:
    @see action:cond
@@ -167,7 +169,7 @@ Expressions:
 A valid Python expression.
 Available variables:
    All global variables
-
+   myhandsize
 """
 
 RulesDict = {}
@@ -218,7 +220,9 @@ auto = ~myEndPhase~ moveTo(ctrlHand) to(characters[bp>=800])
 """
 
 # Cody (Alpha)'s BAD STONE
-# RulesDict['525d8365-c90e-491f-9811-1f23efbafccb'] = ""
+RulesDict['525d8365-c90e-491f-9811-1f23efbafccb'] = """
+auto = ~anyBlockPhase,anyBeforeBlock~ +unblockable to(characters[bp<=300 & attack & -uattack]) ueot
+"""
 
 # Damn D's WHISTLE
 # RulesDict['66d424bb-e5da-4f61-b063-61efd1fc61a6'] = ""
