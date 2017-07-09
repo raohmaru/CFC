@@ -104,7 +104,7 @@ There is no limitation in the number of Action cards a player may play.
 #### Reaction
 ![Reaction card](imgs/Snared.jpg)
 
-Reaction cards are like Action cards but that can be only played during an enemy's Attack phase, and only if that enemy is attacking you. After it has been played the card is put into the discard pile.
+Reaction cards are like Action cards but that can be only played during an enemy's Counterattack phase, and only if that enemy is attacking you. After it has been played the card is put into the discard pile.
 
 Reaction cards have a cost, a number of SP (usually negative) a player must spend to play that card.
 
@@ -227,6 +227,10 @@ You can do any of the following actions in any order:
 You can attack with any number of your unfrozen characters to a single enemy.
 
 #### 5. Counterattack phase
+If active player attacks with one or more characters, the Counterattack phase is activated.
+
+Enemy can play Reaction cards.
+ 
 Enemy decides which, if any, of his unfrozen characters will counterattack the attacking characters. Then damage (if any) is dealt to characters and/or defending player.
 
 #### 6. End phase

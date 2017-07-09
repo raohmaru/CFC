@@ -39,7 +39,7 @@ def gotoPhase(idx, oldIdx = 0):
    # elif idx == AttackPhase:
    elif idx == BlockPhase: 
       if len(players) > 1:
-         notify("(Now defending player {} may choose if block attackers)".format(players[1]))
+         notify("(Now defending player {} can play Reaction cards and then may choose if block attackers)".format(players[1]))
    # elif idx == EndPhase:   
    elif idx == CleanupPhase:
       whisper("(This is the last phase of your turn)")
