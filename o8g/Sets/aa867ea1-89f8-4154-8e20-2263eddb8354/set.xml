@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8" standalone="yes"?>
-<set name="Core Set" id="aa867ea1-89f8-4154-8e20-2263eddb8354" version="1.2.2.0" gameId="e3d56d9e-900d-49c6-b6ae-22cbb51be153" gameVersion="0.7.0.0">
+<set name="Core Set" id="aa867ea1-89f8-4154-8e20-2263eddb8354" version="1.2.3.0" gameId="e3d56d9e-900d-49c6-b6ae-22cbb51be153" gameVersion="0.7.0.0">
 	<packaging>
 		<pack name="Booster" id="800ab974-9fee-45c6-8d15-3c995c732cdc">
 			<options>
@@ -855,7 +855,7 @@
 			<property name="Ability Name" value="BERETTA" />
 			<property name="Rules"        value="Deals 100 damage points to an enemy or an enemy character." />
 			<property name="BP"           value="400" />
-			<property name="SP"           value="2" />
+			<property name="SP"           value="3" />
 			<property name="Backup 1"     value="Agent" />
 			<property name="Backup 2"     value="Agent" />
 			<property name="Backup 3"     value="Agent" />
@@ -3193,7 +3193,7 @@
 			<property name="Ability"      value="&#163; YUUGOU POWER" />
 			<property name="Ability Type" value="&#163;" />
 			<property name="Ability Name" value="YUUGOU POWER" />
-			<property name="Rules"        value="Select a character. Look through the top of any deck until you reveal a character card with an ability. If you do, selected character gets a copy of that ability. Put the cards revealed this way on the bottom of that deck in any order." />
+			<property name="Rules"        value="Select a character. Look through the top of any deck until you reveal a character card with an ability. If you do, selected character gets a copy of that ability. Put the cards revealed this way on the bottom of that deck in a random order." />
 			<property name="BP"           value="900" />
 			<property name="SP"           value="0" />
 			<property name="Backup 1"     value="Boss" />
@@ -4561,7 +4561,7 @@
 			<property name="Ability"      value="&#164; FOOTWORK" />
 			<property name="Ability Type" value="&#164;" />
 			<property name="Ability Name" value="FOOTWORK" />
-			<property name="Rules"        value="Reaction cards cost 2 SP less to play.&#xD;&#xA;This ability cannot reduce the cost reaction cards to less than 1 SP." />
+			<property name="Rules"        value="Reaction cards cost 2 SP less to play.&#xD;&#xA;This ability cannot reduce the cost of reaction cards to less than 1 SP." />
 			<property name="BP"           value="700" />
 			<property name="SP"           value="1" />
 			<property name="Backup 1"     value="Mercenary" />
@@ -5065,7 +5065,7 @@
 			<property name="Ability"      value="&#163; ENEMY CHASER" />
 			<property name="Ability Type" value="&#163;" />
 			<property name="Ability Name" value="ENEMY CHASER" />
-			<property name="Rules"        value="Discard your hand. Deals 100 damage points to an enemy character for each card discarded this way." />
+			<property name="Rules"        value="Discard your hand. Deals 100 damage points to each other character for each card discarded this way." />
 			<property name="BP"           value="400" />
 			<property name="SP"           value="3" />
 			<property name="Backup 1"     value="Soldier" />
@@ -5947,7 +5947,7 @@
 			<property name="Ability"      value="" />
 			<property name="Ability Type" value="" />
 			<property name="Ability Name" value="" />
-			<property name="Rules"        value="Look through the top of any deck until you reveal a character card with an ability. If you do, all characters get a copy of that ability. Put the cards revealed this way on the bottom of that deck in any order." />
+			<property name="Rules"        value="Look through the top of any deck until you reveal a character card with an ability. If you do, all characters get a copy of that ability. Put the cards revealed this way on the bottom of that deck in a random order." />
 			<property name="BP"           value="" />
 			<property name="SP"           value="-4" />
 			<property name="Backup 1"     value="" />
@@ -6703,7 +6703,7 @@
 			<property name="Ability"      value="" />
 			<property name="Ability Type" value="" />
 			<property name="Ability Name" value="" />
-			<property name="Rules"        value="Select a character. Look through the top of any deck until you reveal a character card. If you do, selected character becomes that card. (It loses his back-ups.) Put the cards revealed this way on the bottom of that deck in any order." />
+			<property name="Rules"        value="Select a character. Look through the top of any deck until you reveal a character card. If you do, selected character becomes that card. (It loses his back-ups.) Put the cards revealed this way on the bottom of that deck in a random order." />
 			<property name="BP"           value="" />
 			<property name="SP"           value="-4" />
 			<property name="Backup 1"     value="" />
@@ -7135,7 +7135,7 @@
 			<property name="Ability"      value="" />
 			<property name="Ability Type" value="" />
 			<property name="Ability Name" value="" />
-			<property name="Rules"        value="Remove any number of character cards in your discard pile. Gain 1 SP for each card removed this way." />
+			<property name="Rules"        value="Put the top ten cards of your deck into your discard pile. Gain 1 SP for each character card among them." />
 			<property name="BP"           value="" />
 			<property name="SP"           value="0" />
 			<property name="Backup 1"     value="" />
