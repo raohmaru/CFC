@@ -148,7 +148,8 @@ GameEventsFromVars = {
 
 # Messages
 MSG_SEL_CHAR_RING           = "Please select a character in your ring.\n(Shift key + Left click on a character)."
-MSG_SEL_CARD                = "Select a card from the {} to which apply the effect"
+MSG_SEL_CARD                = "Select a card from the {}"
+MSG_SEL_CARD_EFFECT         = "Select a card from the {} to which apply the effect"
 MSG_SEL_CARD_DISCARD        = "Select a card from your {} to discard"
 MSG_SEL_CARD_SACRIFICE      = "Select a card from your {} to KO"
 MSG_COST_NOT_PAYED          = "{} did not pay the activation cost of the ability"

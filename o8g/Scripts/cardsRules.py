@@ -103,12 +103,12 @@ effect:
          destroy()
          reveal(pile=me.hand)
          discard(target cards)
-         rnddiscard([#])
+         rndDiscard([#])
          moveTo(zone)
       Ability:
          Keywords:
             @see abilities
-         Prefixes:
+         Prefixes (mandatory):
             +
             -
    Operators:
@@ -117,6 +117,8 @@ effect:
 to: (optional)
    Parameters:
       A valid target
+   Synonims:
+      target
       
 restr: (optional)
    Keywords:
@@ -216,7 +218,7 @@ action = reveal(hand) & discard(actions) & discard(reactions)
 
 # Regina's RADIO TRANSMITTER
 RulesDict['0a8f39ff-6b21-4805-bafb-27c3f38d1986'] = """
-auto = ~myEndPhase~ moveTo(ctrlHand) to(characters[bp>=800])
+auto = ~myEndPhase~ moveTo(ctrlHand) target(characters[bp>=800])
 """
 
 # Cody (Alpha)'s BAD STONE
@@ -225,7 +227,9 @@ auto = ~anyBlockPhase,anyBeforeBlock~ +unblockable to(characters[bp<=300 & attac
 """
 
 # Damn D's WHISTLE
-# RulesDict['66d424bb-e5da-4f61-b063-61efd1fc61a6'] = ""
+RulesDict['66d424bb-e5da-4f61-b063-61efd1fc61a6'] = """
+action = {F}: moveTo(hand) target(character[bp<=500]@deck)
+"""
 
 # Guy's HAYA-GAKE
 # RulesDict['2c1d8c60-0858-4524-adc1-e7596a4d08e0'] = ""

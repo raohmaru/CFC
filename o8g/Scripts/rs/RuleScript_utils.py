@@ -100,9 +100,9 @@ class RulesUtils():
    def getTargets(target, source=None, msg=None):
       debug("Checking targets")
 
-      types       = target['types']
-      zone        = target['zone']
-      filters     = target['filters']
+      types   = target['types']
+      zone    = target['zone']
+      filters = target['filters']
       
       # If two or more targets, ask for a single target
       if len(types) > 1:
@@ -231,7 +231,7 @@ class RulesUtils():
             if len(cards_f2) == 0:
                # Last chance to select a card
                if not msg:
-                  msg = MSG_SEL_CARD
+                  msg = MSG_SEL_CARD_EFFECT
                cards_f1 = showCardDlg(cards_f1, msg.format(zone[1]))
                if cards_f1 == None:
                   # warning(MSG_ERR_NO_CARD_TARGETED)
@@ -252,10 +252,18 @@ class RulesUtils():
          if len(cards_f1) == 0:
             warning(MSG_ERR_NO_FILTERED_CARDS)
             return False
-         # Check if only 1 target has been selected
-         if targeted and len(cards_f1) > 1:
-            warning(MSG_ERR_MULTIPLE_TARGET)
-            return False
+         # Check if more than 1 target has been selected
+         elif len(cards_f1) > 1:
+            if targeted:
+               warning(MSG_ERR_MULTIPLE_TARGET)
+               return False
+            elif zone[1] in RS_KW_ZONES_PILES:
+               if not msg:
+                  msg = MSG_SEL_CARD
+               cards_f1 = showCardDlg(cards_f1, msg.format(zone[1]))
+               if cards_f1 == None:
+                  # warning(MSG_ERR_NO_CARD_TARGETED)
+                  return False
       
       # At this point there are not cards to which apply the effect, but the ability
       # is activated anyway

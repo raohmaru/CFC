@@ -59,6 +59,7 @@ actions = [
    "action = [[may]] destroy()",
    "action = [[if me.hand == 0]] destroy() uynt",
    "action = [[if]] destroy() uynt",
+   "action = moveTo(ctrlHand) target(characters[bp>=800])",
 ]
 abilities = [
    "abilities = unblockable",
@@ -96,6 +97,6 @@ def test(arr, title):
 
 # rules = RulesDict['aa867ea1-89f8-4154-8e20-2263edd00002']
 # test(targets, 'targets')
-# test(actions, 'actions')
+test(actions, 'actions')
 # test(abilities, 'abilities')
-test(autos, 'autos')
+# test(autos, 'autos')

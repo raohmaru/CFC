@@ -29,7 +29,7 @@ def aclb_Freeze(args, x = 0, y = 0):
       
 def aclb_Resolve(args, x = 0, y = 0):
    card = args[0]
-   if card.Type == CharType:
+   if isCharacter(card):
       return "Use ability"
    else:
       return "Resolve"
@@ -70,7 +70,7 @@ def aclb_Ability(args, x = 0, y = 0):
       
 def aclb_Destroy(args, x = 0, y = 0):
    card = args[0]
-   if card.Type == CharType:
+   if isCharacter(card):
       return "KO"
    else:
       return "Discard"

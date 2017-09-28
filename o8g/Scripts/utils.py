@@ -668,6 +668,18 @@ def isCard(obj):
    return isinstance(obj, Card)
 
 
+def isCharacter(card):
+   return card.Type == CharType
+
+
+def isAction(card):
+   return card.Type == ActionType
+
+
+def isReaction(card):
+   return card.Type == ReactionType
+
+
 def isAttached(card):
    backups = getGlobalVar('Backups')
    return bool(backups.get(card._id))
@@ -734,10 +746,10 @@ def setupDebug(group, x=0, y=0):
    gotoMain()
    rnd(100, 10000)  # Delay the next action until all animation is done
    cards = [
-      '55b0c9ff-4b3a-4b08-adc1-f1b5e03adef9', # Nina
-      '0a8f39ff-6b21-4805-bafb-27c3f38d1986', # Regina
-      '525d8365-c90e-491f-9811-1f23efbafccb', # Cody (Alpha)
-      'af43872e-e47d-4fe0-9b55-aedd8a0d0fc7', # Jin Saotome
+      '66d424bb-e5da-4f61-b063-61efd1fc61a6', # Damn D
+      # '0a8f39ff-6b21-4805-bafb-27c3f38d1986', # Regina
+      # '525d8365-c90e-491f-9811-1f23efbafccb', # Cody (Alpha)
+      # 'af43872e-e47d-4fe0-9b55-aedd8a0d0fc7', # Jin Saotome
    ]
    for i, id in enumerate(cards):
       debug("Creating card {} at slot {}".format(id, i))

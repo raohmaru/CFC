@@ -74,7 +74,7 @@ class RulesFilters():
 def filterBP(card, include, cmd, *args):
    debug(">>> filterBP({}, {}, {}, {})".format(card, include, cmd, args)) #Debug
    
-   if not isCard(card):
+   if not isCard(card) or not isCharacter(card):
       return False
       
    # Get additional parameters
@@ -84,11 +84,11 @@ def filterBP(card, include, cmd, *args):
       return False
    value = num(value)
 
-   if getMarker(card, 'BP') >= 0:
+   if getMarker(card, 'BP') > 0:
       bp = getMarker(card, 'BP')
+      bp *= BPMultiplier
    else:
       bp = num(card.BP)
-   bp *= BPMultiplier
       
    # Compare values
    res = compareValuesByOp(bp, value, op)

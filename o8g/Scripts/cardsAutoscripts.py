@@ -24,7 +24,7 @@ import re
 def parseCard(card, ruleId=None, init=True):
    debug(">>> parseCard({})".format(card)) #Debug
    if not card._id in parsedCards:
-      if card.Type == CharType:
+      if isCharacter(card):
          parsedCards[card._id] = CharCard(card, ruleId)
       else:
          parsedCards[card._id] = GameCard(card, ruleId)

@@ -37,13 +37,13 @@ def activatePhaseStart():
    myCards = (card for card in table
       if card.controller == me)
    for card in myCards:
-      if card.Type == CharType:
+      if isCharacter(card):
          if not MarkersDict["Does Not Unfreeze"] in card.markers:
             freeze(card, unfreeze = True, silent = True)
          removeMarker(card, 'Just Entered')
          clear(card, silent = True)
       # Discard any Action or Reaction card left in the table (just in case player forgot to remove them)
-      elif card.Type == ActionType or card.Type == ReactionType:
+      elif isAction(card) or isReaction(card):
          discard(card)
          
             
@@ -69,7 +69,7 @@ def endPhaseStart():
    myCards = (card for card in table
       if card.controller == me)
    for card in myCards:
-      if card.Type == CharType:
+      if isCharacter(card):
          if (MarkersDict['Attack'] in card.markers or MarkersDict['United Attack'] in card.markers) and not MarkersDict['No Freeze'] in card.markers:
             freeze(card, unfreeze = False, silent = True)
    # Calculates and applies attack damage
@@ -78,7 +78,7 @@ def endPhaseStart():
       uattack = getGlobalVar('UnitedAttack')
       atkCards = (card for card in table
          if card.controller == me
-         and card.Type == CharType
+         and isCharacter(card)
          and MarkersDict['Attack'] in card.markers)
       for card in atkCards:
          dmg = getMarker(card, 'BP')
@@ -120,7 +120,7 @@ def cleanupPhaseStart():
    # KOs characters with 0 BP
    if automations['AttackDmg']:
       charCards = (card for card in table
-         if card.Type == CharType and not isAttached(card))
+         if isCharacter(card) and not isAttached(card))
       for card in charCards:
          if getMarker(card, 'BP') == 0:
             notify("{}'s {} BP is 0.".format(card.controller, card))
@@ -129,7 +129,7 @@ def cleanupPhaseStart():
    myCards = (card for card in table
       if card.controller == me)
    for card in myCards:
-      if card.Type == CharType:
+      if isCharacter(card):
          # Remove script makers
          removeMarker(card, 'Attack')
          removeMarker(card, 'United Attack')
@@ -140,7 +140,7 @@ def cleanupPhaseStart():
          if card.highlight == ActivatedColor:
             card.highlight = None
       # Discard any Action or Reaction card left in the table (just in case player forgot to remove them)
-      elif card.Type == ActionType or card.Type == ReactionType:
+      elif isAction(card) or isReaction(card):
          discard(card)
    clearAll()
 
@@ -155,7 +155,7 @@ def playAuto(card, slotIdx=None):
    phaseIdx = currentPhase()[1]
    
    # Player plays a Character card
-   if card.Type == CharType:
+   if isCharacter(card):
       # If a char has been selected, backup that char instead
       targets = getTargetedCards(card)
       if len(targets) > 0:
@@ -195,7 +195,7 @@ def playAuto(card, slotIdx=None):
       charsPlayed += 1
    
    # Player plays an Action card
-   elif card.Type == ActionType:
+   elif isAction(card):
       # Check if the card can be legally played
       if not me.isActive or phaseIdx != MainPhase:
          information("Action cards can only be played on your Main Phase.")
@@ -206,7 +206,7 @@ def playAuto(card, slotIdx=None):
       placeCard(card, card.Type, PlayAction)
    
    # Player plays a Reaction card
-   elif card.Type == ReactionType:
+   elif isReaction(card):
       # Check if the card can be legally played
       if me.isActive or phaseIdx != BlockPhase:
          information("Reaction cards can only be played in enemy's Counter-attack Phase.")
@@ -234,7 +234,7 @@ def backupAuto(card):
       information("Characters can only be backed-up on your Main Phase.")
       return
    # Only for character cards
-   if card.Type != CharType:
+   if not isCharacter(card):
       warning("You can only backup with Character cards.")
       return
    # Check if a valid char has been selected
@@ -289,7 +289,7 @@ def attackAuto(card):
       information("You can only attack in your Attack Phase.")
       return
    # Only for character cards...
-   if card.Type != CharType:
+   if not isCharacter(card):
       information("You can only attack with Character cards.")
       return
    # ... in player's ring
@@ -387,7 +387,7 @@ def blockAuto(card):
       information("You can only counter-attack in enemy's Counter-attack Phase.")
       return
    # Only for character cards...
-   if card.Type != CharType:
+   if not isCharacter(card):
       information("You can only counter-attack with character cards.")
       return
    # ... in player's ring
@@ -449,7 +449,7 @@ def activateAuto(card):
       whisper("{}'s ability or effect has already been activated".format(card))
       return   
    # Character ability
-   if card.Type == CharType:
+   if isCharacter(card):
       pcard = getParsedCard(card)
       if not pcard.hasEffect():
          whisper("{} has no ability".format(card))

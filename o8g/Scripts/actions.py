@@ -168,7 +168,7 @@ def clearAll(group = table, x = 0, y = 0, allPlayers = False):
 def alignCards(group, x = 0, y = 0):
    myCards = (card for card in table
       if card.controller == me
-      and (card.Type == CharType))
+      and (isCharacter(card)))
    for card in myCards:
       alignCard(card)
 
@@ -246,13 +246,13 @@ def activate(card, x = 0, y = 0):
       return
    ability = "effect"
    pcard = getParsedCard(card)
-   if card.Type == CharType and pcard.hasEffect():
+   if isCharacter(card) and pcard.hasEffect():
       ability = "ability {}".format(pcard.ability)
    notify("{} tries to activate {}'s {}.".format(me, card, ability))
    if automations['Play']:
       if not activateAuto(card):
          return
-   elif card.Type == CharType and pcard.hasEffect() and pcard.ability.type == ActivatedAbility:
+   elif isCharacter(card) and pcard.hasEffect() and pcard.ability.type == ActivatedAbility:
       freeze(card, silent = True)
    card.highlight = ActivatedColor
    notify("{} has activated {}'s {}.".format(me, card, ability))
@@ -295,7 +295,7 @@ def clear(card, x = 0, y = 0, silent = False):
 
 
 def alignCardAction(card, x = 0, y = 0):
-   if card.Type == CharType:
+   if isCharacter(card):
       slotIdx = getSlotIdx(card)
       if slotIdx != -1:
          alignCard(card, slotIdx=slotIdx)
@@ -307,10 +307,10 @@ def alignCardAction(card, x = 0, y = 0):
 
 
 def askCardBackups(card, x = 0, y = 0):
-   if card.Type == CharType:
+   if isCharacter(card):
       acceptedBackups = getAcceptedBackups(card)
       for c in me.hand:
-         if c.Type == CharType:
+         if isCharacter(c):
             if c != card and c.Subtype in acceptedBackups:
                c.highlight = InfoColor
             elif c.highlight == InfoColor:
@@ -326,7 +326,7 @@ def askCardBackups(card, x = 0, y = 0):
 def toggleAbility(card, x = 0, y = 0):
    mute()
    # Removes card from parsed list to parse it again with the new abilities
-   if card.Type != CharType or (card.alternate == '' and card.Rules == ''):
+   if not isCharacter(card) or (card.alternate == '' and card.Rules == ''):
       return
    removeParsedCard(card)
    if card.alternate == 'noability':
@@ -366,14 +366,14 @@ def transformCards(cards, x = 0, y = 0):
 def copyAbility(card, x = 0, y = 0, target = None):
    debug(">>> copyAbility()") #Debug
    mute()
-   if card.Type != CharType:
+   if not isCharacter(card):
       whisper("Abilities can only be copied to character cards.")
       return
    if target == None:
       targets =  [c for c in table   if c.targetedBy == me]
       targets += [c for c in me.hand if c.targetedBy == me]
       targets += [c for c in me.piles['Discard Pile'] if c.targetedBy == me]
-      if len(targets) > 0 and targets[0].Type == CharType and targets[0] != card:
+      if len(targets) > 0 and isCharacter(targets[0]) and targets[0] != card:
          target = targets[0]
       else:
          model, quantity = askCard({"Type":CharType}, "and", "Choose a character with an ability")
@@ -402,12 +402,12 @@ def copyAbility(card, x = 0, y = 0, target = None):
 def swapAbilities(card, x = 0, y = 0):
    debug(">>> swapAbilities()") #Debug
    mute()
-   if card.Type != CharType or not charIsInRing(card, card.controller):
+   if not isCharacter(card) or not charIsInRing(card, card.controller):
       whisper("Abilities can only be swapped between character cards in the ring.")
       return
    target = None
    targets =  [c for c in table   if c.targetedBy == me]
-   if len(targets) > 0 and targets[0].Type == CharType and targets[0] != card and charIsInRing(targets[0], targets[0].controller):
+   if len(targets) > 0 and isCharacter(targets[0]) and targets[0] != card and charIsInRing(targets[0], targets[0].controller):
       target = targets[0]
       if card.Rules and target.Rules:
          card_copy = Struct(**{
@@ -432,7 +432,7 @@ def destroy(card, x = 0, y = 0, controller=me):
    fromText = fromWhereStr(card.group)
    action = "discards"
    card.moveTo(me.piles['Discard Pile'])
-   if card.Type == CharType:
+   if isCharacter(card):
       action = "KOs"
    notify("{} {} {} {}.".format(controller, action, card, fromText))
    

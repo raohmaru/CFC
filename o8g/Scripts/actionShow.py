@@ -27,7 +27,7 @@ def acsh_Debug(args, x = 0, y = 0):
       
 def acsh_isChar(args, x = 0, y = 0):
    card = args[0]
-   if card.Type == CharType:
+   if isCharacter(card):
       return True
    return False
 

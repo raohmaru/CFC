@@ -72,14 +72,14 @@ def onCardsMoved(args):
       if card.controller != me:
          return
       if fromGroup == table and toGroup != table:
-         if card.Type == CharType:
+         if isCharacter(card):
             clearAttachLinks(card)
             freeSlot(card)
             if MarkersDict['Attack'] in markers or MarkersDict['United Attack'] in markers:
                rearrangeUAttack(card)
          removeParsedCard(card)
       elif fromGroup == table and toGroup == table:
-         if card.Type == CharType and not MarkersDict['Backup'] in card.markers:
+         if isCharacter(card) and not MarkersDict['Backup'] in card.markers:
             alignBackups(card, *card.position)
       # Restore transformed card if it goes to a pile
       if toGroup._name in me.piles:
