@@ -42,7 +42,7 @@ Action cards and Reaction cards go to the Discard Pile as well, after their effe
 Any player may look at a Discards Pile, but the order of the cards can't be changed.
 
 ### Removed Pile
-Some effects (like Fellowship) send cards to the Removed Pile. Cards in this pile are considered out of the game to any effect.
+Some effects ~~(like Fellowship)~~ send cards to the Removed Pile. Cards in this pile are considered out of the game to any effect.
 
 Removed cards are kept face up and may be examined by any player at any time.
 
