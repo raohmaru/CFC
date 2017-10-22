@@ -91,8 +91,8 @@ cost: (optional)
 cond: (optional)
    Keywords:
       may
-      may('Question')
-      if(expr) (@see Expressions)
+      may 'Question'
+      if expr (@see Expressions)
       
 effect:
    Values:
@@ -147,6 +147,7 @@ event:
       blocked
       beforeblock
       handchanges
+      ringchanges
    Prefixes:
       my (default)
       opp
@@ -171,7 +172,8 @@ Expressions:
 A valid Python expression.
 Available variables:
    All global variables
-   myhandsize
+   myHandSize
+   oppRingSize
 """
 
 RulesDict = {}
@@ -232,7 +234,9 @@ action = {F}: moveTo(hand) target(character[bp<=500]@deck)
 """
 
 # Guy's HAYA-GAKE
-# RulesDict['2c1d8c60-0858-4524-adc1-e7596a4d08e0'] = ""
+RulesDict['2c1d8c60-0858-4524-adc1-e7596a4d08e0'] = """
+auto = ~oppBlockPhase,oppRingChanges~ [[if oppRingSize<2]] +unblockable to(this[attack & -uattack]) ueot
+"""
 
 # Haggar's SPINNING LARIAT
 # RulesDict['be2728eb-0a2d-4f27-8cc5-3208d103b888'] = ""

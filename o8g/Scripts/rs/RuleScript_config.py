@@ -175,7 +175,7 @@ RS_KW_COST_EXILE     = 'e'
 
 # Effect conditions
 RS_KW_COND_MAY = 'may'
-RS_KW_COND_IF = 'if'
+RS_KW_COND_IF  = 'if'
 RS_KW_CMD_COND = [
    RS_KW_COND_MAY,
    RS_KW_COND_IF

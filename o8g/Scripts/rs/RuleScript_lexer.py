@@ -226,8 +226,8 @@ class RulesLexer():
             prfx, eventName = RulesLexer.getPrefix(RS_PREFIX_EVENTS, e.strip())
             if prfx == RS_PREFIX_MY:
                prfx = ''
+            debug("-- found event: %s + %s" % (prfx, eventName))
             event.append([prfx, eventName])
-            debug("-- found event: %s" % event)
             
       # Analyze the expression
       effects = []

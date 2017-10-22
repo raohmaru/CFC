@@ -58,6 +58,7 @@ def onCardsMoved(args):
    cards = args.cards
    transfCards = getGlobalVar('Transformed')
    handChanged = False
+   ringChanged = False
    for i in range(len(cards)):
       card      = args.cards[i]
       fromGroup = args.fromGroups[i]
@@ -74,13 +75,18 @@ def onCardsMoved(args):
       if fromGroup == table and toGroup != table:
          if isCharacter(card):
             clearAttachLinks(card)
-            freeSlot(card)
+            if charIsInRing(card):
+               freeSlot(card)
+               ringChanged = True
             if MarkersDict['Attack'] in markers or MarkersDict['United Attack'] in markers:
                rearrangeUAttack(card)
          removeParsedCard(card)
       elif fromGroup == table and toGroup == table:
          if isCharacter(card) and not MarkersDict['Backup'] in card.markers:
             alignBackups(card, *card.position)
+      elif fromGroup != table and toGroup == table:
+         if charIsInRing(card):
+            ringChanged = True
       # Restore transformed card if it goes to a pile
       if toGroup._name in me.piles:
          if card._id in transfCards:
@@ -93,8 +99,11 @@ def onCardsMoved(args):
          handChanged = True
          
    setGlobalVar('Transformed', transfCards)
-   if handChanged:      
+   # Trigger events
+   if handChanged:
       triggerGameEvent(GameEvents.HandChanges, len(me.hand))
+   if ringChanged:
+      triggerGameEvent(GameEvents.RingChanges, getRingSize())
 
    
 def onTurnPassed(args):

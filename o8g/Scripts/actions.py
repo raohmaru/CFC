@@ -94,7 +94,7 @@ def setup(group=table, x=0, y=0, silent=False):
    me.Deck.shuffle()
    refill() # We fill the player's play hand to their hand size
    notify("Setup for player {} completed.".format(me))
-   # Start the turn of the first player to setup
+   # Start the turn of the first player to do the setup
    if automations['Play']:
       me.setActive()
 

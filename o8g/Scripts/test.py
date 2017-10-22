@@ -70,7 +70,7 @@ autos = [
    "auto = destroy()",
    "auto = ~myHandChanges~ destroy()",
    "auto = ~HandChanges~ destroy() & draw(1)",
-   "auto = ~oppHandChanges~ [[may]] destroy()",
+   "auto = ~oppHandChanges~ [[if oppRing<2]] destroy()",
    "auto = ~ myHandChanges ~ destroy() to(character@myRing)",
    "auto = ~myHandChanges~ destroy() ueot",
    "auto = ~handChanges~ +unblockable",
@@ -97,6 +97,6 @@ def test(arr, title):
 
 # rules = RulesDict['aa867ea1-89f8-4154-8e20-2263edd00002']
 # test(targets, 'targets')
-test(actions, 'actions')
+# test(actions, 'actions')
 # test(abilities, 'abilities')
-# test(autos, 'autos')
+test(autos, 'autos')

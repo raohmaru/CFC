@@ -105,6 +105,7 @@ def rollDie(num):
 
 
 def getGlobalVar(name, player = None):
+# Reads a game global variable or a player global variable
    if player:
       return eval(player.getGlobalVariable(name))
    else:
@@ -112,6 +113,7 @@ def getGlobalVar(name, player = None):
 
 
 def setGlobalVar(name, value, player = None):
+# Writes a game global variable or a player global variable
    if player:
       player.setGlobalVariable(name, str(value))
    else:
@@ -132,8 +134,9 @@ def clearGlobalVar(name, player = None):
    
 
 def evalExpression(expr):
-   # Adding some variables only availabe in this scope
+   # Adding some variables only available in this scope
    myhandsize = len(me.hand)
+   oppringsize = getRingSize(players[1]) if len(players) > 1 else 0
 
    try:
       res = eval(expr)
@@ -155,6 +158,7 @@ def showCardDlg(list, title, max=1, text="Select a card:", min=1):
 
 def getOpp():
    return players[1] if len(players) > 1 else me
+
 
 #---------------------------------------------------------------------------
 # Pile functions
@@ -183,6 +187,9 @@ def reveal(group, done=None):
       remoteCall(getOpp(), done, [])
    showCardDlg(cards, "Cards in {}'s {}".format(group.controller, group.name), 0, "", 0)
    
+
+def getRingSize(player = me):
+   return NumSlots - getGlobalVar('Ring', player).count(None)
    
 #---------------------------------------------------------------------------
 # String functions
@@ -745,13 +752,13 @@ def setupDebug(group, x=0, y=0):
    chooseSide()
    gotoMain()
    rnd(100, 10000)  # Delay the next action until all animation is done
-   cards = [
-      '66d424bb-e5da-4f61-b063-61efd1fc61a6', # Damn D
-      # '0a8f39ff-6b21-4805-bafb-27c3f38d1986', # Regina
-      # '525d8365-c90e-491f-9811-1f23efbafccb', # Cody (Alpha)
-      # 'af43872e-e47d-4fe0-9b55-aedd8a0d0fc7', # Jin Saotome
+   tableCards = [
+      # '66d424bb-e5da-4f61-b063-61efd1fc61a6', # Damn D
+      '2c1d8c60-0858-4524-adc1-e7596a4d08e0', # Guy
+      '55b0c9ff-4b3a-4b08-adc1-f1b5e03adef9', # Nina
+      # 'af43872e-e47d-4fe0-9b55-aedd8a0d0fc7' # Jin Saotome
    ]
-   for i, id in enumerate(cards):
+   for i, id in enumerate(tableCards):
       debug("Creating card {} at slot {}".format(id, i))
       card = table.create(id, 0, 0, quantity=1, persist=True)
       playAuto(card, i)
@@ -759,6 +766,15 @@ def setupDebug(group, x=0, y=0):
       if ability.type and ability.type != InstantAbility:
          card.markers[MarkersDict['Just Entered']] = 0
       charsPlayed = 0
+      rnd(1, 100)  # Delay the next action until all animation is done
+      
+   handCards = [
+      # '2c1d8c60-0858-4524-adc1-e7596a4d08e0' # Guy
+   ]
+   for id in handCards:
+      debug("Adding card {} to hand".format(id))
+      card = table.create(id, 0, 0, quantity=1, persist=True)
+      card.moveTo(me.hand)
       rnd(1, 100)  # Delay the next action until all animation is done
    
    debug("<<< setupDebug()") #Debug

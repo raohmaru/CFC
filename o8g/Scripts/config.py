@@ -137,13 +137,16 @@ GameEvents = Struct(**{
    'EndPhase'   : 'endphase',
    'Blocked'    : 'blocked',
    'BeforeBlock': 'beforeblock',
-   'HandChanges': 'handchanges'
+   'HandChanges': 'handchanges',
+   'RingChanges': 'ringchanges'
 })
 # When a listener to these events is added, trigger it automatically
-GameEventsExecOnAdded = [GameEvents.HandChanges]
-# Maps varaibles to events
+GameEventsExecOnAdded = [
+   GameEvents.HandChanges
+]
+# Maps variables to events
 GameEventsFromVars = {
-   'myhandsize': GameEvents.HandChanges
+   'handsize': GameEvents.HandChanges
 }
 
 # Messages
@@ -155,6 +158,8 @@ MSG_SEL_CARD_SACRIFICE      = "Select a card from your {} to KO"
 MSG_COST_NOT_PAYED          = "{} did not pay the activation cost of the ability"
 MSG_CANT_BLOCK              = "{} cannot block due to {}'s {} ability."
 MSG_UNBLOCKABLE             = "{} cannot be counter-attacked due to {}'s {} ability."
+MSG_AB_NO_EFFECT            = "{}'s ability {} has no effect."
+MSG_AB_AUTO_ACTIVATION      = "Activated {}'s auto ability {}."
 MSG_ERR_NO_CARDS            = "There are no targets available, hence the ability has no effect."
 MSG_ERR_NO_CARDS_HAND       = "You don't have enough cards in your hand to pay the cost of the ability."
 MSG_ERR_NO_FILTERED_CARDS   = "Selected cards don't match the requirements of this card's effect."
@@ -172,7 +177,7 @@ Yaxis        = 'y'
 PlayAction   = 'play'
 BackupAction = 'backup'
 Author       = 'raohmaru'
-BPMultiplier = 100  # Model.BP = markers.BP * 100
+BPMultiplier = 100  # Model.BP = markers.BP * BPMultiplier
 
 #---------------------------------------------------------------------------
 # Global variables (for the current user)
@@ -198,6 +203,6 @@ automations = {
    'ExtAPI'   : True  # Make use of the extended API to access the C# API
 }
 
-# Default values used in dialogs that can be overriden by the user to remember his last input
+# Default values used in dialogs that can be overridden by the user to remember his last input
 defProphecyCount = 3
 defTrashCount    = 1

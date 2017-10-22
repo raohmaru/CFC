@@ -76,8 +76,10 @@ class Rules():
             cond = effect[0]
             if cond[0] == RS_KW_COND_IF:
                leftCond = Regexps['LeftCond'].match(cond[1])
-               if leftCond and leftCond.group() in GameEventsFromVars:
-                  self.addEvent(RulesLexer.getPrefix(RS_PREFIX_EVENTS, GameEventsFromVars[leftCond.group()]))
+               if leftCond:
+                  event = RulesLexer.getPrefix(RS_PREFIX_EVENTS, leftCond.group())
+                  if event[1] in GameEventsFromVars:
+                     self.addEvent((event[0], GameEventsFromVars[event[1]]))
    
       
    def activate(self):
@@ -135,7 +137,8 @@ class Rules():
             debug("-- Found additional target")
             newTarget = RulesUtils.getTargets(effect[2], source=thisCard)
             if newTarget == False:
-               notify(MSG_ERR_NO_CARDS)
+               if not isAuto:
+                  whisper(MSG_ERR_NO_CARDS)
                return False
             currTarget = newTarget
          targets.append(currTarget)
@@ -167,6 +170,12 @@ class Rules():
                      obj.target(False)
             rnd(1, 100) # Wait between effects until all animation is done
             
+      if not targets:
+         notify(MSG_AB_NO_EFFECT.format(thisCard, getParsedCard(thisCard).ability))
+         
+      if isAuto and not inverse:
+         notify(MSG_AB_AUTO_ACTIVATION.format(thisCard, getParsedCard(thisCard).ability))
+      
       return True
 
       
@@ -179,7 +188,6 @@ class Rules():
       
       if eventName:
          thisCard = Card(self.card_id)
-         notify("Activating {}'s auto ability {}.".format(thisCard, getParsedCard(thisCard).ability))
          self.execAction(auto, [thisCard], True)
                
    

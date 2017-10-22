@@ -128,7 +128,7 @@ class RulesUtils():
             if t == 0:
                return False
             type = RS_KW_PLAYERS[t-1]      
-         targets = RulesUtils.filterTargets(type, filters, zone, cards, source=None, targeted=True, msg=msg)         
+         targets = RulesUtils.filterTargets(type, filters, zone, cards, source, targeted=True, msg=msg)         
          if targets == False:
             return False
       
@@ -140,7 +140,9 @@ class RulesUtils():
       debug("-- filter targets by type '%s' in zone %s" % (type, zone))
       targets = None
       if type == RS_KW_TARGET_THIS and source:
-         targets = [source]
+         targets = RulesFilters.applyFiltersTo([source], filters)
+         if len(targets) == 0:
+            targets = False
       # If target is a player
       elif type in RS_KW_TARGET_IS_PLAYER:
          targets = RulesUtils.filterPlayers(type, filters)
@@ -150,9 +152,12 @@ class RulesUtils():
          
       if isinstance(targets, list):
          debug("-- %s targets retrieved" % len(targets))
-         if len(targets) < 10:
-            for t in targets:
+         for i, t in enumerate(targets):
+            if i < 10:
                debug(" '- target: {}".format(t))
+            else:
+               debug(" '- ...")
+               break
       return targets
       
       
@@ -268,7 +273,7 @@ class RulesUtils():
       # At this point there are not cards to which apply the effect, but the ability
       # is activated anyway
       if len(cards_f1) == 0:
-         notify(MSG_ERR_NO_CARDS)
+         whisper(MSG_ERR_NO_CARDS)
       
       return cards_f1
       

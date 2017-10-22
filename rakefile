@@ -55,6 +55,7 @@ end
 desc "Copies python files to the game's script folder under OCTGN's games database folder"
 task :copy => [:test] do
   cp_r "o8g/Scripts/.", "#{OCTGN_dir}/GameDatabase/e3d56d9e-900d-49c6-b6ae-22cbb51be153/Scripts/"
+  puts "\nTask completed at " + Time.now.strftime("%d-%m-%Y %H:%M")
 end
 
 desc "Verifies the files as a valid game definition"
@@ -77,7 +78,7 @@ task :docs do
   # Initializes a Markdown parser
   renderer = Redcarpet::Render::HTML.new({:with_toc_data=>true, :hard_wrap=>true, :tables => true})
   # Initializes a Markdown HTML renderer
-  markdown = Redcarpet::Markdown.new(renderer, {:autolink=>true, :underline=>true, :tables => true})
+  markdown = Redcarpet::Markdown.new(renderer, {:autolink=>true, :underline=>true, :tables => true, :strikethrough => true})
   toc_md = Redcarpet::Markdown.new(Redcarpet::Render::HTML_TOC.new)
   Dir.glob("o8g/Documents/*.md") do |md_file|
 	puts "   " + md_file
