@@ -241,6 +241,8 @@ class RulesUtils():
                if cards_f1 == None:
                   # warning(MSG_ERR_NO_CARD_TARGETED)
                   return False
+            else:
+               cards_f1 = cards_f2
             debug("-- %s cards targeted" % len(cards_f1))
          else:
             targeted = False
