@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8" standalone="yes"?>
-<set name="Core Set" id="aa867ea1-89f8-4154-8e20-2263eddb8354" version="1.2.3.0" gameId="e3d56d9e-900d-49c6-b6ae-22cbb51be153" gameVersion="0.7.0.0">
+<set name="Core Set" id="aa867ea1-89f8-4154-8e20-2263eddb8354" version="1.2.4.0" gameId="e3d56d9e-900d-49c6-b6ae-22cbb51be153" gameVersion="0.7.0.0">
 	<packaging>
 		<pack name="Booster" id="800ab974-9fee-45c6-8d15-3c995c732cdc">
 			<options>
@@ -1555,7 +1555,7 @@
 			<property name="Ability"      value="&#162; ELECTRIC DISCHARGE" />
 			<property name="Ability Type" value="&#162;" />
 			<property name="Ability Name" value="ELECTRIC DISCHARGE" />
-			<property name="Rules"        value="Each player puts the top five cards of his deck into his discard pile." />
+			<property name="Rules"        value="Each player trashes five cards." />
 			<property name="BP"           value="400" />
 			<property name="SP"           value="3" />
 			<property name="Backup 1"     value="Karateka" />
@@ -2077,7 +2077,7 @@
 			<property name="Ability"      value="&#164; MYSTERIOUS ORIGIN" />
 			<property name="Ability Type" value="&#164;" />
 			<property name="Ability Name" value="MYSTERIOUS ORIGIN" />
-			<property name="Rules"        value="At the end of your turn, each player put the top two cards of his deck into his discard pile." />
+			<property name="Rules"        value="At the end of your turn, each player trashes two cards." />
 			<property name="BP"           value="500" />
 			<property name="SP"           value="2" />
 			<property name="Backup 1"     value="Assassin" />
@@ -3571,7 +3571,7 @@
 			<property name="Ability"      value="&#163; SCREW UPPER" />
 			<property name="Ability Type" value="&#163;" />
 			<property name="Ability Name" value="SCREW UPPER" />
-			<property name="Rules"        value="Put the top two cards of an enemy&apos;s deck into his discard pile." />
+			<property name="Rules"        value="Trash two cards from an enemy&apos;s deck." />
 			<property name="BP"           value="700" />
 			<property name="SP"           value="0" />
 			<property name="Backup 1"     value="Fighter" />
@@ -6487,7 +6487,7 @@
 			<property name="Ability"      value="" />
 			<property name="Ability Type" value="" />
 			<property name="Ability Name" value="" />
-			<property name="Rules"        value="Put the top three cards of an enemy&apos;s deck into his discard pile." />
+			<property name="Rules"        value="Trash three cards from an enemy&apos;s deck." />
 			<property name="BP"           value="" />
 			<property name="SP"           value="-4" />
 			<property name="Backup 1"     value="" />
@@ -7135,7 +7135,7 @@
 			<property name="Ability"      value="" />
 			<property name="Ability Type" value="" />
 			<property name="Ability Name" value="" />
-			<property name="Rules"        value="Put the top ten cards of your deck into your discard pile. Gain 1 SP for each character card among them." />
+			<property name="Rules"        value="Trash ten cards. Gain 1 SP for each character card among them." />
 			<property name="BP"           value="" />
 			<property name="SP"           value="0" />
 			<property name="Backup 1"     value="" />
