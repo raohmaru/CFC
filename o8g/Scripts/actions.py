@@ -254,7 +254,8 @@ def activate(card, x = 0, y = 0):
          return
    elif isCharacter(card) and pcard.hasEffect() and pcard.ability.type == ActivatedAbility:
       freeze(card, silent = True)
-   card.highlight = ActivatedColor
+   if card.group == table:
+      card.highlight = ActivatedColor
    notify("{} has activated {}'s {}.".format(me, card, ability))
 
 

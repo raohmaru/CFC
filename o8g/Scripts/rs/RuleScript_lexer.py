@@ -55,11 +55,11 @@ action: {
          },
          'ueot'
       ]
-   ],
-   abilities: [
-      'ability', 'ability'
    ]
 },
+abilities: [
+   'ability', 'ability'
+],
 auto: {
    [@see action],
    event: [
@@ -112,6 +112,7 @@ class RulesLexer():
          # else:
             # debug("Action already defined. Line skipped")
             
+         # Check for abilities command
          if not RS_KEY_ABILITIES in rulesDict:
             match = RS_RGX_KEY_ABILITY.match(line)
             if match:

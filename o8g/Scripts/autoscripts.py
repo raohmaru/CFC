@@ -484,7 +484,7 @@ def activateAuto(card):
       
       # Activate [] ability?
       if pcard.ability.type == ActivatedAbility:
-         if not confirm("Activate {}'s ability {} {}?".format(card.Name, pcard.ability.unicodeChar, pcard.ability.name)):
+         if not confirm("Activate {}'s ability {} {}?\n\n\n{}".format(card.Name, pcard.ability.unicodeChar, pcard.ability.name, pcard.ability.rules)):
             return
       # Activate the ability
       return pcard.activateEffect()

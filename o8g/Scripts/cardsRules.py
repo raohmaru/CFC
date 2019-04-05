@@ -99,7 +99,7 @@ effect:
       Effect command (followed by () with 0 or more parameters):
          damage(#)
          swapPiles(pile1, pile2)
-         shuffle(pile=me.Deck)
+         shuffle([myDeck])
          destroy()
          reveal(pile=me.hand)
          discard(target cards)
@@ -117,7 +117,7 @@ effect:
 to: (optional)
    Parameters:
       A valid target
-   Synonims:
+   Alias:
       target
       
 restr: (optional)
@@ -230,7 +230,7 @@ auto = ~anyBlockPhase,anyBeforeBlock~ +unblockable to(characters[bp<=300 & attac
 
 # Damn D's WHISTLE
 RulesDict['66d424bb-e5da-4f61-b063-61efd1fc61a6'] = """
-action = {F}: moveTo(hand) target(character[bp<=500]@deck)
+action = {F}: moveTo(hand) target(character[bp<=500]@deck) & shuffle()
 """
 
 # Guy's HAYA-GAKE
@@ -239,7 +239,9 @@ auto = ~oppBlockPhase,oppRingChanges~ [[if oppRingSize<2]] +unblockable to(this[
 """
 
 # Haggar's SPINNING LARIAT
-# RulesDict['be2728eb-0a2d-4f27-8cc5-3208d103b888'] = ""
+RulesDict['be2728eb-0a2d-4f27-8cc5-3208d103b888'] = """
+action = {F}: moveTo(ctrlDeck) target(characters[-backup]) & shuffle(myDeck) & shuffle(oppDeck)
+"""
 
 # Maki's FIGHTING SPIRIT
 # RulesDict['a9478fcd-e1e2-403b-b1e4-5076b342fd50'] = ""

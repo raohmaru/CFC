@@ -277,7 +277,7 @@ __Steal SP__
 When you steal SP from an enemy, that enemy loses an amount of SP and you gain that same amount.
 
 __Trash__
-To put cards from the top of your deck into your discard pile.
+To put cards from the top of a player's deck into his or her discard pile.
 
 __Unfreeze__
 When a character leaves the "freeze" state. See *Freeze*.

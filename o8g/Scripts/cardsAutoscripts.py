@@ -102,17 +102,19 @@ class Ability:
       if self.type == AutoAbility:      return AutoUniChar
       return ""
    
-   def __init__(self, obj):
+   def __init__(self, obj, rules = None):
       if isinstance(obj, basestring):
          ability = Regexps['Ability'].match(obj)
          if ability:
             self.ability = ability.group(0)
             self.type    = ability.group(1)
             self.name    = ability.group(2)
+            self.rules   = rules
       elif obj.Ability:
          self.ability = obj.Ability
          self.type    = obj.properties['Ability Type']
          self.name    = obj.properties['Ability Name']
+         self.rules   = obj.properties['Rules']
          
    def __str__(self):
       return self.ability

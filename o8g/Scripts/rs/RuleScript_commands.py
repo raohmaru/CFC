@@ -28,8 +28,8 @@ class RulesCommands():
    @staticmethod
    def register(name, cmd):
       RulesCommands.items[name] = cmd
-      
-   
+
+
    @staticmethod
    def applyAll(cmds, targets, restr, source, inverse=False):
       RulesCommands.cmds = list(cmds)  # Clone array
@@ -37,21 +37,22 @@ class RulesCommands():
       RulesCommands.applyNext()
       # for cmd in cmds:
          # RulesCommands.applyCmd(cmd, targets, restr, source, inverse)
-   
-   
+
+
    @staticmethod
    def applyNext():
    # Ensures that a command is applied only when the precedent command is done
       if len(RulesCommands.cmds) > 0:
          cmd = RulesCommands.cmds.pop(0)
+         debug(">>> applyNext({})".format(cmd)) #Debug    
          RulesCommands.applyCmd(cmd, *RulesCommands.cmdsArgs)
       else:
          RulesCommands.cmdsArgs = []
-         
-   
+
+
    @staticmethod
    def applyCmd(cmd, targets, restr, source, inverse=False):
-      debug(">>> applyCmd({}, {}, {}, {}, {})".format(cmd, targets, restr, source, inverse)) #Debug    
+      debug(">>> applyCmd({}, {}, {}, {}, {})".format(cmd, targets, restr, source, inverse)) #Debug
       funcStr = cmd[0]
       params = cmd[1]
       # Executing command functions
@@ -70,20 +71,20 @@ class RulesCommands():
                   RulesAbilities.add(params, target._id, source._id, restr)
       else:
          debug("-- cmd not found: {}".format(cmd[0]))
-      
+
 
 #---------------------------------------------------------------------------
 # Commands functions
 #---------------------------------------------------------------------------
 
 def cmd_damage(targets, restr, source, dmg):
-   debug(">>> cmd_damage({}, {}, {})".format(targets, restr, dmg)) #Debug      
+   debug(">>> cmd_damage({}, {}, {})".format(targets, restr, dmg)) #Debug
    dmg = int(dmg)
    for target in targets:
       dealDamage(dmg, target, source)
    RulesCommands.applyNext()
 
-      
+
 def cmd_swapPiles(targets, restr, source, pile1, pile2):
    debug(">>> cmd_swapPiles({}, {}, {})".format(source, pile1, pile2)) #Debug
    pile1 = RulesUtils.getZoneByName(pile1)
@@ -91,15 +92,22 @@ def cmd_swapPiles(targets, restr, source, pile1, pile2):
    swapPiles(pile1, pile2)
    RulesCommands.applyNext()
 
-   
-def cmd_shuffle(targets, restr, source, pile):
-   if not pile:
-      pile = me.Deck
-   debug(">>> cmd_shuffle({})".format(pile)) #Debug
-   shuffle(pile)
+
+def cmd_shuffle(targets, restr, source, pileName=None):
+   debug(">>> cmd_shuffle({})".format(pileName)) #Debug
+   if not pileName:
+      pileName = RS_KW_ZONE_HAND
+   prefix, name = RulesLexer.getPrefix(RS_PREFIX_ZONES, pileName)
+   if name == RS_KW_ZONE_DECK:
+      pile = RulesUtils.getZoneByName(pileName)
+      if pile.controller == me:
+         shuffle(pile)
+      else:
+         remoteCall(pile.controller, "shuffle", [pile])
+   rnd(1, 100) # Wait until all animation is done
    RulesCommands.applyNext()
 
-   
+
 def cmd_destroy(targets, restr, source, *args):
    debug(">>> cmd_destroy({})".format(targets)) #Debug
    for target in targets:
@@ -109,7 +117,7 @@ def cmd_destroy(targets, restr, source, *args):
          remoteCall(target.controller, "destroy", [target, 0, 0, me])
    RulesCommands.applyNext()
 
-      
+
 def cmd_reveal(targets, restr, source, pileName=None):
    debug(">>> cmd_reveal({})".format(pileName)) #Debug
    if not pileName:
@@ -126,7 +134,7 @@ def cmd_reveal(targets, restr, source, pileName=None):
       debug("{} is not a valid pile".format(pileName))
    RulesCommands.applyNext()
 
-      
+
 def cmd_discard(targets, restr, source, whichCards):
    debug(">>> cmd_discard({})".format(whichCards)) #Debug
    cardsTokens = RulesLexer.parseTarget(whichCards)
@@ -144,9 +152,9 @@ def cmd_discard(targets, restr, source, whichCards):
             remoteCall(player, "discard", [card])
    RulesCommands.applyNext()
 
-      
+
 def cmd_randomDiscard(targets, restr, source, numCards=1):
-   debug(">>> cmd_discard({})".format(whichCards)) #Debug
+   debug(">>> cmd_randomDiscard({})".format(whichCards)) #Debug
    if isNumber(numCards):
       numCards = int(numCards)
    if not targets == 0:
@@ -160,17 +168,18 @@ def cmd_randomDiscard(targets, restr, source, numCards=1):
                remoteCall(player, "randomDiscard", [])
    RulesCommands.applyNext()
 
-   
+
 def cmd_moveTo(targets, restr, source, zone):
    debug(">>> cmd_moveTo({}, {})".format(targets, zone)) #Debug
    zonePrefix, zoneName = RulesLexer.getPrefix(RS_PREFIX_ZONES, zone, RS_PREFIX_CTRL)
-   for target in targets:
-      if zoneName == RS_KW_ZONE_HAND:
+   if zoneName in RS_KW_ZONES_PILES:
+      pile = RulesUtils.getZoneByName(zone)
+      for target in targets:
          if zonePrefix == RS_PREFIX_MY or (zonePrefix == RS_PREFIX_CTRL and target.controller == me):
-            toHand(target)
+            moveToGroup(pile, target)
          else:
-            remoteCall(target.controller, "toHand", [target])
-      rnd(1, 100) # Wait until all animation is done
+            remoteCall(target.controller, "moveToGroup", [pile, target])
+         rnd(1, 100) # Wait until all animation is done
    RulesCommands.applyNext()
 
 

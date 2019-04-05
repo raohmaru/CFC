@@ -84,7 +84,7 @@ class Rules():
       
    def activate(self):
       if not self.rules_tokens:
-         whisper("The ability of {} has not been scripted yet".format(Card(self.card_id)))
+         whisper("{}'s ability has not been scripted yet".format(Card(self.card_id)))
          return True
    
       debug("Executing rules")

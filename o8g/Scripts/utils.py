@@ -190,7 +190,15 @@ def reveal(group, done=None):
 
 def getRingSize(player = me):
    return NumSlots - getGlobalVar('Ring', player).count(None)
+
+
+def moveToGroup(group, card):
+   mute()
+   fromText = fromWhereStr(card.group)
+   card.moveTo(group)
+   notify("{} puts {} {} into its {}.".format(me, card.Name, fromText, group.name))
    
+
 #---------------------------------------------------------------------------
 # String functions
 #---------------------------------------------------------------------------
@@ -441,7 +449,7 @@ def addAlternateRules(card, ability, rules, altname=None):
    
    if not automations['ExtAPI']:
       return None
-   ability = Ability(ability)
+   ability = Ability(ability, rules)
    if not altname:
       altname = sanitizeStr(ability.name)
    cardData = _extapi.getCardDataById(card._id)
@@ -738,13 +746,13 @@ def setupDebug(group, x=0, y=0):
    
    if not me.name == Author:
       whisper("This function is only for development purposes.")
-      return      
+      return
+	  
+   resetGame()
+   rnd(1, 100)  # Delay the next action until all animation is done
+   
    if turnNumber() == 0:
-      warning("Start the game prior to setup the debug environment")
-      return      
-   # if len(me.Deck) == 0:
-      # warning("Please load a deck first.")
-      # return
+	  nextTurn(me, True)
    
    global charsPlayed, debugVerbosity
    debugVerbosity = DebugLevel.All
@@ -753,10 +761,10 @@ def setupDebug(group, x=0, y=0):
    gotoMain()
    rnd(100, 10000)  # Delay the next action until all animation is done
    tableCards = [
-      # '66d424bb-e5da-4f61-b063-61efd1fc61a6', # Damn D
-      '2c1d8c60-0858-4524-adc1-e7596a4d08e0', # Guy
-      '55b0c9ff-4b3a-4b08-adc1-f1b5e03adef9', # Nina
-      # 'af43872e-e47d-4fe0-9b55-aedd8a0d0fc7' # Jin Saotome
+      'be2728eb-0a2d-4f27-8cc5-3208d103b888' # Haggar
+      ,'2c1d8c60-0858-4524-adc1-e7596a4d08e0' # Guy
+      ,'55b0c9ff-4b3a-4b08-adc1-f1b5e03adef9' # Nina
+      ,'66d424bb-e5da-4f61-b063-61efd1fc61a6' # Damn D
    ]
    for i, id in enumerate(tableCards):
       debug("Creating card {} at slot {}".format(id, i))
@@ -769,7 +777,11 @@ def setupDebug(group, x=0, y=0):
       rnd(1, 100)  # Delay the next action until all animation is done
       
    handCards = [
-      # '2c1d8c60-0858-4524-adc1-e7596a4d08e0' # Guy
+      '2c1d8c60-0858-4524-adc1-e7596a4d08e0' # Guy
+      ,'2c1d8c60-0858-4524-adc1-e7596a4d08e0' # Guy
+      ,'fd1a3f1c-7df1-443e-97b1-f093d66e74c9' # Zero Akuma
+      ,'e2597326-5639-435f-ae33-3303b181527c'
+      ,'1722e9d6-30e1-4355-9aa3-9b80b765754a'
    ]
    for id in handCards:
       debug("Adding card {} to hand".format(id))
