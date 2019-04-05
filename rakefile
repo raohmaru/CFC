@@ -4,16 +4,17 @@ require 'json'
 require 'redcarpet'
 
 
-OCTGN_dir = "D:/Documentos/OCTGN"
+OCTGN_dir = "C:/Games/OCTGN/Octgn"
+OCTGN_data_dir = "C:/Users/Raohmaru/Documents/OCTGN"
 start_time = Time.now
-CLOBBER.include ["o8g/*.o8g", "#{OCTGN_dir}/LocalFeed/Card*.nupkg", "o8g/Scripts/**/*.pyc"]
+CLOBBER.include ["o8g/*.o8g", "#{OCTGN_data_dir}/LocalFeed/Card*.nupkg", "o8g/Scripts/**/*.pyc"]
 
 task :default => [:build]
 
 
 desc "Builds a .o8g and a .nupkg file from the game definition files"
 task :build => [:versionbump, :docs] do
-  sh "#{OCTGN_dir}/OCTGN/o8build.exe -d=o8g"
+  sh "#{OCTGN_dir}/o8build.exe -d=o8g"
 end
 
 
@@ -44,7 +45,7 @@ end
 
 desc "Builds and moves the NUPKG file to the OCTGN LocalFeed dir"
 task :deploy => [:clobber, :build] do
-  mv Dir.glob("o8g/*.nupkg"), "#{OCTGN_dir}/LocalFeed/"
+  mv Dir.glob("o8g/*.nupkg"), "#{OCTGN_data_dir}/LocalFeed/"
   # Rake::Task["octgn"].execute
   
   end_time = Time.now
@@ -54,21 +55,21 @@ end
 
 desc "Copies python files to the game's script folder under OCTGN's games database folder"
 task :copy => [:test] do
-  cp_r "o8g/Scripts/.", "#{OCTGN_dir}/GameDatabase/e3d56d9e-900d-49c6-b6ae-22cbb51be153/Scripts/"
+  cp_r "o8g/Scripts/.", "#{OCTGN_data_dir}/GameDatabase/e3d56d9e-900d-49c6-b6ae-22cbb51be153/Scripts/"
   puts "\nTask completed at " + Time.now.strftime("%d-%m-%Y %H:%M")
 end
 
 desc "Verifies the files as a valid game definition"
 task :test do
-  sh "#{OCTGN_dir}/OCTGN/o8build.exe -v -d=o8g"
+  sh "#{OCTGN_dir}/o8build.exe -v -d=o8g"
 end
 
 
 desc "Runs OCTGN in dev mode, in the table view with the CFC game loaded"
 task :octgn do
   # OCTGN window closes after the loading screen ends
-  # system "#{OCTGN_dir}/OCTGN/OCTGN.exe /t /g=e3d56d9e-900d-49c6-b6ae-22cbb51be153 /x"
-  puts "Run #{OCTGN_dir}/OCTGN/OCTGN.exe /t /g=e3d56d9e-900d-49c6-b6ae-22cbb51be153 /x"
+  # system "#{OCTGN_dir}/OCTGN.exe /t /g=e3d56d9e-900d-49c6-b6ae-22cbb51be153 /x"
+  puts "Run #{OCTGN_dir}/OCTGN.exe /t /g=e3d56d9e-900d-49c6-b6ae-22cbb51be153 /x"
 end
 
 
