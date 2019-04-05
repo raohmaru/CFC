@@ -15,6 +15,9 @@
 		<block type="overlay" id="sp_box2" src="Proxy/Overlays/sp_box.png">
 			<location x="381" y="38" />
 		</block>
+		<block type="overlay" id="image_mask" src="Proxy/Overlays/image_mask.png">
+			<location x="24" y="398" />
+		</block>
 		<!-- Publisher -->
 		<!-- <block type="overlay" id="pub_capcom" src="Proxy/Logos/Capcom.png">
 			<location x="366" y="330" />
@@ -838,6 +841,7 @@
 			</artoverlay>
 			<link block="bp_box" />
 			<link block="sp_box" />
+			<link block="image_mask" />
 			<!-- Publisher -->
 			<!-- <conditional>
 				<switch property="Publisher">
@@ -1593,9 +1597,9 @@
 			<link block="sp">
 				<property name="SP" />
 			</link>
-			<link block="team">
+			<!-- <link block="team">
 				<property name="Team" />
-			</link>
+			</link> -->
 			<link block="type">
 				<property name="Type" />
 			</link>
@@ -1635,6 +1639,7 @@
 				<size width="466" height="416" />
 			</artoverlay>
 			<link block="sp_box2" />
+			<link block="image_mask" />
 			<!-- Rarity -->
 			<conditional>
 				<switch property="Rarity">
@@ -1694,6 +1699,7 @@
 				<size width="466" height="416" />
 			</artoverlay>
 			<link block="sp_box2" />
+			<link block="image_mask" />
 			<!-- Rarity -->
 			<conditional>
 				<switch property="Rarity">
