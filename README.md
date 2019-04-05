@@ -25,6 +25,9 @@ Useful when debugging your game along with the built-in functionality to reload 
 
 Use [bundler](http://bundler.io/) to install the dependencies.
 
-
 ## License
 Released under the GNU General Public License version 3.
+
+------
+
+This project neither the author(s) are not affiliated with SNK Playmore or Capcom. All trademarks, trade names, services marks and logos belong to their respective companies. 

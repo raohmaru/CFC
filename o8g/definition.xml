@@ -3,8 +3,8 @@
       xmlns:xsd="http://www.w3.org/2001/XMLSchema"
       name="Card Fighters' Clash"
       id="e3d56d9e-900d-49c6-b6ae-22cbb51be153"
-      octgnVersion="3.1.228.0"
-      version="0.7.0.150"
+      octgnVersion="3.3.132.0"
+      version="0.7.0.161"
       markersize="20"
       tags="capcom snk fighter"
       description="A card game based in the SNK Playmore’s video game SNK vs. Capcom Card Fighters' Clash 2 Expand Edition.
@@ -111,7 +111,10 @@
 		<property name="Illustrator" type="String" ignoreText="True" />
 	</card>
 	
-	<table name="Table" visibility="undefined" ordered="False" width="1250" height="750" background="Resources/Background/background.jpg" backgroundStyle="uniformToFill" board="Resources/Background/ring.png" boardPosition="-327,-342,655,684" >
+	<gameboards src="Resources/Background/ring.png" x="-327" y="-342" width="655" height="684">
+	</gameboards>
+	
+	<table name="Table" visibility="undefined" ordered="False" width="1250" height="750" background="Resources/Background/background.jpg" backgroundStyle="uniformToFill">
 		<groupaction menu="Next phase" shortcut="Tab" execute="nextPhase" showIf="acsh_gameStarted" />
 		<groupactions menu="Phases..." showIf="acsh_gameStarted">
 			<groupaction menu="Go to Activate phase"      shortcut="F1" execute="gotoActivate" />
@@ -233,7 +236,7 @@
 		
 		<globalvariable name="Ring" value="[None,None,None,None]" />
 
-		<hand name="Hand" visibility="me" width="90" height="126" icon="Resources/Groups/hand.png">
+		<hand name="Hand" visibility="me" icon="Resources/Groups/hand.png">
 			<groupaction menu="Random discard" shortcut="Ctrl+Del" execute="randomDiscard" />
 			<groupactions menu="Move all cards to...">
 				<groupaction menu="Deck (Top)" shortcut="Ctrl+D" execute="toDeckTopAll" />
@@ -254,7 +257,7 @@
 			<cardaction menu="Show backups types" shortcut="Ctrl+Alt+B" execute="askCardBackups" showIf="acsh_isChar" />
 			<cardaction menu="Clear" shortcut="Esc" execute="clear" />
 		</hand>
-		<group name="Deck" visibility="none" width="90" height="126" icon="Resources/Groups/deck.png">
+		<group name="Deck" visibility="none" icon="Resources/Groups/deck.png">
 			<groupaction menu="Draw" shortcut="Ctrl+D" default="True" execute="draw" />
 			<groupaction menu="Draw X cards" shortcut="Ctrl+Shift+D" execute="drawMany" />
 			<groupactions menu="Random draw...">
@@ -275,7 +278,7 @@
 			<cardaction menu="Put into Deck (Top)" shortcut="Ctrl+D" execute="toDeckTop" />
 			<cardaction menu="Put into Deck (Bottom)" shortcut="Ctrl+Shift+D" execute="toDeckBottom" />
 		</group>
-		<group name="Discard Pile" visibility="all" width="90" height="126" icon="Resources/Groups/discards.png">
+		<group name="Discard Pile" visibility="all" icon="Resources/Groups/discards.png">
 			<groupaction menu="Shuffle" shortcut="Ctrl+S" execute="shuffle" />
 			<groupactions menu="Shuffle into Deck...">
 				<groupaction menu="All cards" shortcut="Ctrl+Shift+S" execute="reshuffle" />
@@ -295,7 +298,7 @@
 			<cardaction menu="Put into Deck (Bottom)" shortcut="Ctrl+Shift+D" execute="toDeckBottom" />
 			<cardaction menu="Put into Removed Pile" shortcut="Shift+Del" execute="remove" />
 		</group>
-		<group name="Removed Pile" visibility="all" width="90" height="126" icon="Resources/Groups/removed.png" collapsed="True">
+		<group name="Removed Pile" visibility="all" icon="Resources/Groups/removed.png" collapsed="True">
 			<groupaction menu="Shuffle" shortcut="Ctrl+S" execute="shuffle" />
 			<groupactions menu="Move All Cards To...">
 				<groupaction menu="Hand" shortcut="Ctrl+Shift+H" execute="toHandAll" />
