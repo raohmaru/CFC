@@ -105,7 +105,7 @@ class Rules():
       debug("Executing actions: {}, {}, isAuto={}".format(action, target, isAuto))
             
       thisCard = Card(self.card_id)
-      inverse = False
+      revert = False
       # First we get valid targets or we cancel
       targets = []
       for effect in action['effects']:
@@ -130,7 +130,7 @@ class Rules():
                   debug("-- Condition not matching")
                   if not isAuto:
                      return False
-                  inverse = True
+                  revert = True
          
          # Additional target
          if effect[2]:
@@ -154,7 +154,7 @@ class Rules():
          if not [t for t in targets if bool(t)] and self.prevTargets:
             targets = self.prevTargets
             self.prevTargets = None
-            inverse = True
+            revert = True
          else:
             self.prevTargets = targets
             
@@ -162,7 +162,7 @@ class Rules():
       for i, effect in enumerate(action['effects']):
          if len(effect[1]) > 0:
             debug("-- Applying commands")
-            RulesCommands.applyAll(effect[1], targets[i], effect[3], thisCard, inverse)
+            RulesCommands.applyAll(effect[1], targets[i], effect[3], thisCard, revert)
             # Clear visual target
             if targets[i] and not isAuto:
                for obj in targets[i]:
@@ -173,7 +173,7 @@ class Rules():
       if not targets:
          notify(MSG_AB_NO_EFFECT.format(thisCard, getParsedCard(thisCard).ability))
          
-      if isAuto and not inverse:
+      if isAuto and not revert:
          notify(MSG_AB_AUTO_ACTIVATION.format(thisCard, getParsedCard(thisCard).ability))
       
       return True
@@ -183,12 +183,16 @@ class Rules():
       if not auto:
          if not self.rules_tokens[RS_KEY_AUTO]:
             return
-         auto = self.rules_tokens[RS_KEY_AUTO] 
+         auto = self.rules_tokens[RS_KEY_AUTO]
+      
       debug("Executing auto on event {} ({})".format(eventName, args))
       
       if eventName:
          thisCard = Card(self.card_id)
-         self.execAction(auto, [thisCard], True)
+         if not MarkersDict['United Attack'] in thisCard.markers:
+            self.execAction(auto, [thisCard], True)
+         else:
+            notify(MSG_AB_AUTO_UATTACK.format(thisCard, thisCard.Ability))
                
    
    def payCost(self, costs):

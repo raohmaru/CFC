@@ -763,7 +763,7 @@ def setupDebug(group, x=0, y=0):
    tableCards = [
       'be2728eb-0a2d-4f27-8cc5-3208d103b888' # Haggar
       ,'2c1d8c60-0858-4524-adc1-e7596a4d08e0' # Guy
-      ,'55b0c9ff-4b3a-4b08-adc1-f1b5e03adef9' # Nina
+      ,'0a8f39ff-6b21-4805-bafb-27c3f38d1986' # Regina
       ,'66d424bb-e5da-4f61-b063-61efd1fc61a6' # Damn D
    ]
    for i, id in enumerate(tableCards):

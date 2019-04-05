@@ -31,12 +31,12 @@ class RulesCommands():
 
 
    @staticmethod
-   def applyAll(cmds, targets, restr, source, inverse=False):
+   def applyAll(cmds, targets, restr, source, revert=False):
       RulesCommands.cmds = list(cmds)  # Clone array
-      RulesCommands.cmdsArgs = [targets, restr, source, inverse]
+      RulesCommands.cmdsArgs = [targets, restr, source, revert]
       RulesCommands.applyNext()
       # for cmd in cmds:
-         # RulesCommands.applyCmd(cmd, targets, restr, source, inverse)
+         # RulesCommands.applyCmd(cmd, targets, restr, source, revert)
 
 
    @staticmethod
@@ -51,12 +51,12 @@ class RulesCommands():
 
 
    @staticmethod
-   def applyCmd(cmd, targets, restr, source, inverse=False):
-      debug(">>> applyCmd({}, {}, {}, {}, {})".format(cmd, targets, restr, source, inverse)) #Debug
+   def applyCmd(cmd, targets, restr, source, revert=False):
+      debug(">>> applyCmd({}, {}, {}, {}, {})".format(cmd, targets, restr, source, revert)) #Debug
       funcStr = cmd[0]
       params = cmd[1]
       # Executing command functions
-      if funcStr in RulesCommands.items and not inverse:
+      if funcStr in RulesCommands.items and not revert:
          debug("-- applying cmd '%s' to targets %s (%s)" % (funcStr, targets, restr))
          func = RulesCommands.items[funcStr]
          # func = eval(RulesCommands.items[funcStr])  # eval is a necessary evil...
@@ -65,7 +65,7 @@ class RulesCommands():
       elif funcStr in RS_PREFIX_BONUS:
          for target in targets:
             if funcStr == RS_PREFIX_PLUS:
-               if inverse:
+               if revert:
                   RulesAbilities.remove(params, target._id)
                else:
                   RulesAbilities.add(params, target._id, source._id, restr)

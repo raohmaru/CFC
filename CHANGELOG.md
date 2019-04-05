@@ -1,5 +1,7 @@
 # Card Fighters' Clash Changelog
 
+## 0.7.1
+Scripted abilities: Haggar.
 ## 0.7.0
 Enabled card automations.
 ## 0.6.3
