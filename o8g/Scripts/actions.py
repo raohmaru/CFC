@@ -266,8 +266,12 @@ def activate(card, x = 0, y = 0):
       ability = "ability {}".format(pcard.ability)
    notify("{} tries to activate {}'s {}.".format(me, card, ability))
    if automations['Play']:
-      if not activateAuto(card):
-         return
+      res = activateAuto(card)
+      if not res or res != True:
+         if res == ERR_NO_EFFECT:
+            notify("{}'s {} has no effect.".format(card, ability))
+         if pcard.ability.type == ActivatedAbility or res != ERR_NO_EFFECT:
+            return
    elif isCharacter(card) and pcard.hasEffect() and pcard.ability.type == ActivatedAbility:
       freeze(card, silent = True)
    if card.group == table:

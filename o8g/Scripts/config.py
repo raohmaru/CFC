@@ -170,6 +170,8 @@ MSG_ERR_TARGET_OTHER        = "{}'s ability cannot select itself, therefore it h
 MSG_ERR_MULTIPLE_TARGET     = "Please select only one card."
 MSG_MAY_DEF                 = "Do you want to apply the effect of the card?"
 
+ERR_NO_EFFECT = 'err001'
+
 # Misc
 CardWidth    = 90
 CardHeight   = 126

@@ -129,7 +129,7 @@ class Rules():
                if not res:
                   debug("-- Condition not matching")
                   if not isAuto:
-                     return False
+                     return ERR_NO_EFFECT
                   revert = True
          
          # Additional target

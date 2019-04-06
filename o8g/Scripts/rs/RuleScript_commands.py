@@ -183,6 +183,26 @@ def cmd_moveTo(targets, restr, source, zone):
    RulesCommands.applyNext()
 
 
+def cmd_bp(targets, restr, source, qty):
+   mod = False
+   if qty[0] == 'x':
+      mod = qty[0]
+      amount = num(qty[1:])
+   else:
+      amount = num(qty)
+   debug(">>> cmd_bp({}, {}, {}, {})".format(targets, qty, mod, amount)) #Debug
+   for target in targets:
+      if isCharacter(target):
+         newQty = amount
+         if mod == 'x':
+            newQty = getMarker(target, 'BP') * (amount - 1)
+         if target.controller == me:
+            modBP(target, newQty)
+         else:
+            remoteCall(target.controller, "modBP", [target, newQty])
+   RulesCommands.applyNext()
+
+
 RulesCommands.register('damage',     cmd_damage)
 RulesCommands.register('swappiles',  cmd_swapPiles)
 RulesCommands.register('shuffle',    cmd_shuffle)
@@ -191,3 +211,4 @@ RulesCommands.register('reveal',     cmd_reveal)
 RulesCommands.register('discard',    cmd_discard)
 RulesCommands.register('rnddiscard', cmd_randomDiscard)
 RulesCommands.register('moveto',     cmd_moveTo)
+RulesCommands.register('bp',         cmd_bp)

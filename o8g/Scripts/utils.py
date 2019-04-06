@@ -137,6 +137,7 @@ def evalExpression(expr):
    # Adding some variables only available in this scope
    myhandsize = len(me.hand)
    oppringsize = getRingSize(players[1]) if len(players) > 1 else 0
+   alone = getRingSize() == 1
 
    try:
       res = eval(expr)
@@ -546,6 +547,12 @@ def dealDamage(dmg, target, source, isPiercing = False):
       piercing = "piercing " if isPiercing else ""
       notify("{} deals {} {}damage to {}. New HP is {} (before was {}).".format(source, dmg, piercing, target, target.HP, oldHP))
       
+      
+def modBP(card, qty):
+   if qty >= 0:
+      plusBP([card], count = qty)
+   else:
+      minusBP([card], count = -qty)
 
 #---------------------------------------------------------------------------
 # Counter Manipulation
@@ -756,10 +763,10 @@ def debugScenario():
    gotoMain()
    rnd(100, 10000)  # Delay the next action until all animation is done
    tableCards = [
-      'be2728eb-0a2d-4f27-8cc5-3208d103b888' # Haggar
-      ,'2c1d8c60-0858-4524-adc1-e7596a4d08e0' # Guy
-      ,'0a8f39ff-6b21-4805-bafb-27c3f38d1986' # Regina
-      ,'66d424bb-e5da-4f61-b063-61efd1fc61a6' # Damn D
+      'a9478fcd-e1e2-403b-b1e4-5076b342fd50' # Maki
+      # ,'be2728eb-0a2d-4f27-8cc5-3208d103b888' # Haggar
+      # ,'0a8f39ff-6b21-4805-bafb-27c3f38d1986' # Regina
+      # ,'66d424bb-e5da-4f61-b063-61efd1fc61a6' # Damn D
    ]
    for i, id in enumerate(tableCards):
       debug("Creating card {} at slot {}".format(id, i))

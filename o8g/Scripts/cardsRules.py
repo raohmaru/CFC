@@ -105,6 +105,7 @@ effect:
          discard(target cards)
          rndDiscard([#])
          moveTo(zone)
+         bp(#|x#)
       Ability:
          Keywords:
             @see abilities
@@ -174,6 +175,7 @@ Available variables:
    All global variables
    myHandSize
    oppRingSize
+   alone
 """
 
 RulesDict = {}
@@ -244,7 +246,9 @@ action = {F}: moveTo(ctrlDeck) target(characters[-backup]) & shuffle(myDeck) & s
 """
 
 # Maki's FIGHTING SPIRIT
-# RulesDict['a9478fcd-e1e2-403b-b1e4-5076b342fd50'] = ""
+RulesDict['a9478fcd-e1e2-403b-b1e4-5076b342fd50'] = """
+action = [[if alone]] bp(x2) to(this)
+"""
 
 # Lucifer's SACRIFICE
 # RulesDict['39b7d042-d2c5-4ff3-aad5-231bd3ccc9e7'] = ""
