@@ -25,6 +25,7 @@ def nextPhase(group = table, x = 0, y = 0):  # Function to take you to the next 
    idx = currentPhase()[1]
    if idx >= len(Phases) - 1:
       idx = ActivatePhase
+      nextTurn(getNextActivePlayer())
    else:
       idx += 1
    setPhase(idx)

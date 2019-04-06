@@ -158,6 +158,10 @@ def showCardDlg(list, title, max=1, text="Select a card:", min=1):
 
 def getOpp():
    return players[1] if len(players) > 1 else me
+            
+
+def getNextActivePlayer():
+   return players[1] if len(players) > 1 and me.isActive > 1 else me
 
 
 #---------------------------------------------------------------------------
