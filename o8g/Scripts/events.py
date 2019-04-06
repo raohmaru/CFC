@@ -27,6 +27,8 @@ def onTableLoaded():
 
 def onGameStarted():
    resetAll()
+   if debugging:
+      debugScenario()
 
 
 def onDeckLoaded(args):

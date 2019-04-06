@@ -193,6 +193,21 @@ def switchAttackDamage(group, x = 0, y = 0):
 # Table card actions
 #---------------------------------------------------------------------------
 
+def defaultAction(card, x = 0, y = 0):
+   phaseIdx = currentPhase()[1]
+   if (
+         (me.isActive and phaseIdx == MainPhase and (isCharacter(card) or isAction(card)))
+         or (not me.isActive and phaseIdx == BlockPhase and isReaction(card))
+      ):
+      activate(card, x, y)
+      
+   if me.isActive and phaseIdx == AttackPhase and isCharacter(card):
+      attack(card, x, y)
+      
+   if not me.isActive and phaseIdx == BlockPhase and isCharacter(card):
+      block(card, x, y)
+
+
 def attack(card, x = 0, y = 0):
    mute()
    if automations['Play']:
@@ -663,7 +678,8 @@ def play(card):  # This is the function to play cards from your hand.
    debug(">>> playing card {}".format(card)) #Debug
    
    mute()
-   chooseSide()  # Just in case...
+   if not playerSide:
+      chooseSide()  # Just in case...
    slot = ""
    if automations['Play']:
       if not playAuto(card): return
@@ -880,3 +896,49 @@ def revealTopDeck(group, x = 0, y = 0):
 
 def swapWithDeck(group = me.piles['Discard Pile']):
    swapPiles(me.Deck, group)
+
+
+#---------------------------------------------------------------------------
+# Debug actions
+#---------------------------------------------------------------------------
+
+def setupDebug(group, x=0, y=0):
+   mute()
+   
+   if not me.name == Author:
+      whisper("This function is only for development purposes.")
+      return
+	
+   global debugging
+   debugging = True
+   resetGame()
+   
+   
+def testSuite(group, x=0, y=0):
+   mute()
+   whisper("### Checking Debug Validity")
+   if len(players) > 1 or not me.name == Author:
+      whisper("This function is only for development purposes.")
+      return
+   whisper("### Checking Players")
+   if debugVerbosity < DebugLevel.Info:
+      debugVerbosity = DebugLevel.All
+      whisper("Reset debug verbosity to: {}".format(debugVerbosity))
+   whisper("### Setting Table Side")
+   chooseSide()
+
+
+def setDebugVerbosity(group, x=0, y=0):
+   global debugVerbosity
+   mute()
+   if not me.name == Author:
+      whisper("This function is only for development purposes.")
+      return
+   levels = [None] * len(DebugLevel.__dict__)
+   for attr, value in DebugLevel.__dict__.iteritems():
+      levels[value+1] = attr
+   choice = askChoice("Set debug verbosity to:", levels)
+   if choice == 0:
+      return
+   debugVerbosity = choice - 2
+   whisper("Debug verbosity is now: {} ({})".format(levels[choice-1], debugVerbosity))

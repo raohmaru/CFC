@@ -27,9 +27,16 @@ def aclb_Freeze(args, x = 0, y = 0):
       return "Freeze"
 
       
-def aclb_Resolve(args, x = 0, y = 0):
+def aclb_Default(args, x = 0, y = 0):
    card = args[0]
+   phaseIdx = currentPhase()[1]
    if isCharacter(card):
+      if me.isActive and phaseIdx == AttackPhase:
+         return "Attack"
+         
+      if not me.isActive and phaseIdx == BlockPhase:
+         return "Counter-attack"
+      
       return "Use ability"
    else:
       return "Resolve"

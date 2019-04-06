@@ -737,22 +737,13 @@ def debug(msg, level = 1):
       msg = "{}".format(msg)
       msg = DebugLevelPrefixes[level] + ' ' + msg
       whisper(msg)
-      
+   
 
-def setupDebug(group, x=0, y=0):
-   # setup(group)
-   debug(">>> setupDebug()") #Debug   
-   mute()
+def debugScenario():
+   debug(">>> debugScenario()") #Debug   
    
-   if not me.name == Author:
-      whisper("This function is only for development purposes.")
-      return
-	  
-   resetGame()
-   rnd(1, 100)  # Delay the next action until all animation is done
-   
-   if turnNumber() == 0:
-	  nextTurn(me, True)
+   if turnNumber() == 0: 
+	   nextTurn(me, True)
    
    global charsPlayed, debugVerbosity
    debugVerbosity = DebugLevel.All
@@ -789,38 +780,7 @@ def setupDebug(group, x=0, y=0):
       card.moveTo(me.hand)
       rnd(1, 100)  # Delay the next action until all animation is done
    
-   debug("<<< setupDebug()") #Debug
-
-
-def testSuite(group, x=0, y=0):
-   global debugVerbosity
-   mute()
-   whisper("### Checking Debug Validity")
-   if len(players) > 1 or not me.name == Author:
-      whisper("This function is only for development purposes.")
-      return
-   whisper("### Checking Players")
-   if debugVerbosity < DebugLevel.Info:
-      debugVerbosity = DebugLevel.All
-      whisper("Reset debug verbosity to: {}".format(debugVerbosity))
-   whisper("### Setting Table Side")
-   chooseSide()
-
-
-def setDebugVerbosity(group, x=0, y=0):
-   global debugVerbosity
-   mute()
-   if not me.name == Author:
-      whisper("This function is only for development purposes.")
-      return
-   levels = [None] * len(DebugLevel.__dict__)
-   for attr, value in DebugLevel.__dict__.iteritems():
-      levels[value+1] = attr
-   choice = askChoice("Set debug verbosity to:", levels)
-   if choice == 0:
-      return
-   debugVerbosity = choice - 2
-   whisper("Debug verbosity is now: {} ({})".format(levels[choice-1], debugVerbosity))
+   debug("<<< debugScenario()") #Debug
 
 
 def debugBackups():

@@ -190,6 +190,7 @@ handSize       = HandSize
 charsPlayed    = 0  # Number of chars played this turn
 backupsPlayed  = 0  # Number of chars backed-up this turn
 debugVerbosity = DebugLevel.Off # -1..4 (At -1 means no debugging messages display)
+debugging      = False
 # If I am alone debugging I want to know everything
 if me.name == Author and len(players) == 1:
    debugVerbosity = DebugLevel.All
