@@ -88,3 +88,32 @@ def aclb_RevealTopDeck(group, x = 0, y = 0):
       return "Hide top card"
    else:
       return "Reveal top card"
+      return "Discard"
+
+      
+def aclb_PlayAutomation(group, x = 0, y = 0):
+   if automations['Play']:
+      return "Play automation is ON"
+   else:
+      return "Play automation is OFF"
+
+      
+def aclb_PhaseAutomation(group, x = 0, y = 0):
+   if automations['Phase']:
+      return "Phase Triggers automation is ON"
+   else:
+      return "Phase Triggers automation is OFF"
+
+      
+def aclb_WinForms(group, x = 0, y = 0):
+   if automations['WinForms']:
+      return "Alert Messages is ON"
+   else:
+      return "Alert Messages is OFF"
+
+      
+def aclb_AttackDamage(group, x = 0, y = 0):
+   if automations['AttackDmg']:
+      return "Attack Damage automation is ON"
+   else:
+      return "Attack Damage automation is OFF"

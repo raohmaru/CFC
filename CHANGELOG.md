@@ -2,6 +2,7 @@
 
 ## 0.7.1
 Scripted abilities: Haggar.
+Minor improvements to game play.
 ## 0.7.0
 Enabled card automations.
 ## 0.6.3
