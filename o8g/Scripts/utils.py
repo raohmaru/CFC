@@ -764,9 +764,9 @@ def debugScenario():
    rnd(100, 10000)  # Delay the next action until all animation is done
    tableCards = [
       'a9478fcd-e1e2-403b-b1e4-5076b342fd50' # Maki
-      # ,'be2728eb-0a2d-4f27-8cc5-3208d103b888' # Haggar
-      # ,'0a8f39ff-6b21-4805-bafb-27c3f38d1986' # Regina
-      # ,'66d424bb-e5da-4f61-b063-61efd1fc61a6' # Damn D
+      ,'39b7d042-d2c5-4ff3-aad5-231bd3ccc9e7' # Lucifer
+      ,'be2728eb-0a2d-4f27-8cc5-3208d103b888' # Haggar
+      ,'66d424bb-e5da-4f61-b063-61efd1fc61a6' # Damn D
    ]
    for i, id in enumerate(tableCards):
       debug("Creating card {} at slot {}".format(id, i))

@@ -352,11 +352,11 @@ def toggleAbility(card, x = 0, y = 0):
    removeParsedCard(card)
    if card.alternate == 'noability':
       card.alternate = ''
+      parseCard(card)
       if card.Rules != '':
          notify("{} restores {}'s abilities".format(me, card))
-         parseCard(card)
       else:
-         notify("{} tried to restore {}'s abilities, but it doesn't have any core ability".format(me, card))
+         notify("{} tried to restore {}'s abilities, but it doesn't have any original ability".format(me, card))
    else:
       # Updates proxy image of other players
       for p in players:

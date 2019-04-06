@@ -72,11 +72,13 @@ class GameCard(object):
 class CharCard(GameCard):
    """ A class which stores the character card ability name and its parsed rule scripts """
    ability = None
+   _BP = 0
    
    def __init__(self, card, ruleId=None):
       super(self.__class__, self).__init__(card, ruleId)
       debug(">>> CharCard()") #Debug
    
+      self._BP = getMarker(card, 'BP')
       ability = Ability(card)
       if ability.name:
          debug("Found ability {}".format(ability))
@@ -86,7 +88,14 @@ class CharCard(GameCard):
          
    def hasEffect(self):
       return self.ability != None
+
+   @property
+   def BP(self):
+      return self._BP
       
+   @BP.setter
+   def BP(self, value):
+      self._BP = value
 
 class Ability:
    """ A class that represents an ability """   

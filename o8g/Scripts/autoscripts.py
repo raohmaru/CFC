@@ -219,7 +219,8 @@ def playAuto(card, slotIdx=None):
    else:
       placeCard(card, card.Type)
    
-   # Parse the to enable card autoscripts
+   # Parse the card to enable card autoscripts
+   removeParsedCard(card)
    parseCard(card)
    
    return True

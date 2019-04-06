@@ -1,7 +1,7 @@
 # Card Fighters' Clash Changelog
 
 ## 0.7.1
-Scripted abilities: Haggar.
+Scripted abilities: Haggar, Maki and Lucifer.
 Minor improvements to game play.
 ## 0.7.0
 Enabled card automations.

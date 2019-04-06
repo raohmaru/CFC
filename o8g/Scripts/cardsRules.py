@@ -80,6 +80,7 @@ action = {cost}: [[cond]] effect [& effect] to(target) restr; ...
 
 Only one action key is allowed.
 Several effects can be joined with ';'.
+Only one to() key is allowed. It must be declared in the first clause.
 
 cost: (optional)
    Keywords:
@@ -97,7 +98,7 @@ cond: (optional)
 effect:
    Values:
       Effect command (followed by () with 0 or more parameters):
-         damage(#)
+         damage(#|tgt.BP [, target])
          swapPiles(pile1, pile2)
          shuffle([myDeck])
          destroy()
@@ -212,7 +213,7 @@ action = damage(3) to(me)
 
 # Jin Saotome's SAOTOME DYNAMITE
 RulesDict['af43872e-e47d-4fe0-9b55-aedd8a0d0fc7'] = """
-action = {S}: destroy() to(character@oppRing)
+action = {S}: destroy() target(character@oppRing)
 """
 
 # Zero Akuma's GIGA CRUSH
@@ -251,7 +252,9 @@ action = [[if alone]] bp(x2) to(this)
 """
 
 # Lucifer's SACRIFICE
-# RulesDict['39b7d042-d2c5-4ff3-aad5-231bd3ccc9e7'] = ""
+RulesDict['39b7d042-d2c5-4ff3-aad5-231bd3ccc9e7'] = """
+action = {F}: destroy() target(^character@myRing) & damage(tgt.BP, character)
+"""
 
 # Mech Zangief's ANTISOCIAL
 # RulesDict['365cddf9-f741-4a3e-bf07-de4b3eecc6d2'] = ""

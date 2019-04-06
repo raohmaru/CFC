@@ -82,7 +82,7 @@ def onCardsMoved(args):
                ringChanged = True
             if MarkersDict['Attack'] in markers or MarkersDict['United Attack'] in markers:
                rearrangeUAttack(card)
-         removeParsedCard(card)
+         # removeParsedCard(card)
       elif fromGroup == table and toGroup == table:
          if isCharacter(card) and not MarkersDict['Backup'] in card.markers:
             alignBackups(card, *card.position)
@@ -134,3 +134,13 @@ def onPhasePassed(args):
          global cleanedUpRing
          cleanedUpRing = True
       gotoPhase(idx, args.id)
+
+
+def onMarkerChanged(args):
+   debug(">>> onMarkerChanged: {}, {}, {}, {}".format(args.card, args.marker, args.id, args.value))
+   if args.marker == 'BP':
+      qty = getMarker(args.card, 'BP')
+      if qty == 0:
+         qty = args.value
+      getParsedCard(args.card).BP = qty
+      
