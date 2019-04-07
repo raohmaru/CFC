@@ -138,11 +138,21 @@ def evalExpression(expr):
    myhandsize = len(me.hand)
    oppringsize = getRingSize(players[1]) if len(players) > 1 else 0
    alone = getRingSize() == 1
+   myring = [Card(id) for id in getGlobalVar('Ring', me)
+      if id is not None]
+      
+   if expr[:3] == 'all':
+      expr = expr.replace('all', '')
+      expr = re.sub(Regexps['BP'], 'getParsedCard(c).BP', expr)
+      parts = expr.split(":")
+      expr = parts[1] + ' for c in' + parts[0]
+      # https://docs.python.org/2.7/library/functions.html
+      expr = 'all([' + expr + '])'
 
    try:
       res = eval(expr)
-      debug("Evaluating expr  %s == True (%s)" % (expr, res))
-      return res
+      debug("Evaluating expr  %s == True  (%s)" % (expr, res))
+      return bool(res)
    except:
       debug("%s  is not a valid Python expression" % (expr))
       return False
@@ -763,9 +773,9 @@ def debugScenario():
    gotoMain()
    rnd(100, 10000)  # Delay the next action until all animation is done
    tableCards = [
-      'a9478fcd-e1e2-403b-b1e4-5076b342fd50' # Maki
+      'ee979882-67cc-4549-881c-8e158df495ce' # Ruby Heart
+      # ,'a9478fcd-e1e2-403b-b1e4-5076b342fd50' # Maki
       ,'39b7d042-d2c5-4ff3-aad5-231bd3ccc9e7' # Lucifer
-      ,'be2728eb-0a2d-4f27-8cc5-3208d103b888' # Haggar
       # ,'66d424bb-e5da-4f61-b063-61efd1fc61a6' # Damn D
    ]
    for i, id in enumerate(tableCards):
@@ -779,7 +789,7 @@ def debugScenario():
       rnd(1, 100)  # Delay the next action until all animation is done
       
    handCards = [
-      '2c1d8c60-0858-4524-adc1-e7596a4d08e0' # Guy
+      'b8325eaa-1687-4d18-b1e7-6bf335e447c2' # Son Son
       ,'365cddf9-f741-4a3e-bf07-de4b3eecc6d2' # Mech Zangief
    ]
    for id in handCards:

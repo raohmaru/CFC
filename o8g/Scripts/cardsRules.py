@@ -106,6 +106,7 @@ effect:
          rndDiscard([#])
          moveTo(zone)
          bp(#|x#)
+         playExtraChar()
       Ability:
          Keywords:
             @see abilities
@@ -176,6 +177,10 @@ Available variables:
    myHandSize
    oppRingSize
    alone
+   myring
+   
+Available functions:
+   all {list}: expr # (context = list item)
 """
 
 RulesDict = {}
@@ -261,7 +266,9 @@ action = destroy() target(^character@myRing)
 """
 
 # Ruby Heart's TAG ALONG
-# RulesDict['ee979882-67cc-4549-881c-8e158df495ce'] = ""
+RulesDict['ee979882-67cc-4549-881c-8e158df495ce'] = """
+action = [[if all myring: bp <= 3]] playExtraChar()
+"""
 
 # Son Son's BUNSHIN
 # RulesDict['b8325eaa-1687-4d18-b1e7-6bf335e447c2'] = ""

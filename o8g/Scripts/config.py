@@ -101,7 +101,8 @@ AutoUniChar      = u'\u25CF'
 # A dictionary which holds the regex used in other scripts
 Regexps = dict(
    Ability  = re.compile(r'(.)\s+([^\r]+)'),
-   LeftCond = re.compile(r'^[\w.]+')
+   LeftCond = re.compile(r'^[\w.]+'),
+   BP       = re.compile(r'\bbp\b')
 )
 
 # Rules

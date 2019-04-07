@@ -61,7 +61,8 @@ actions = [
    # "action = [[if]] destroy() uynt",
    # "action = moveTo(ctrlHand) target(characters[bp>=800])",
    # "action = {F}: moveTo(ctrlDeck) target(characters[-backup]) & shuffle(myDeck) & shuffle(oppDeck)",
-   "action = {F}: destroy() target(^character@myRing) & damage(5, character)",
+   # "action = {F}: destroy() target(^character@myRing) & damage(5, character)",
+   "action = [[if  all myring: bp <= 3]] playExtraChar()",
 ]
 abilities = [
    "abilities = unblockable",

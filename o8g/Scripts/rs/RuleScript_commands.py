@@ -210,12 +210,22 @@ def cmd_bp(targets, restr, source, qty):
    RulesCommands.applyNext()
 
 
-RulesCommands.register('damage',     cmd_damage)
-RulesCommands.register('swappiles',  cmd_swapPiles)
-RulesCommands.register('shuffle',    cmd_shuffle)
-RulesCommands.register('destroy',    cmd_destroy)
-RulesCommands.register('reveal',     cmd_reveal)
-RulesCommands.register('discard',    cmd_discard)
-RulesCommands.register('rnddiscard', cmd_randomDiscard)
-RulesCommands.register('moveto',     cmd_moveTo)
-RulesCommands.register('bp',         cmd_bp)
+def cmd_playExtraChar(targets, restr, source, *args):
+   global charsPlayed
+   debug(">>> cmd_playExtraChar() {} -> {}".format(charsPlayed, charsPlayed-1))
+   charsPlayed -= 1
+   if charsPlayed < 0:
+      charsPlayed = 0
+   RulesCommands.applyNext()
+
+
+RulesCommands.register('damage',        cmd_damage)
+RulesCommands.register('swappiles',     cmd_swapPiles)
+RulesCommands.register('shuffle',       cmd_shuffle)
+RulesCommands.register('destroy',       cmd_destroy)
+RulesCommands.register('reveal',        cmd_reveal)
+RulesCommands.register('discard',       cmd_discard)
+RulesCommands.register('rnddiscard',    cmd_randomDiscard)
+RulesCommands.register('moveto',        cmd_moveTo)
+RulesCommands.register('bp',            cmd_bp)
+RulesCommands.register('playextrachar', cmd_playExtraChar)

@@ -30,23 +30,23 @@ def nextPhase(group = table, x = 0, y = 0):  # Function to take you to the next 
       idx += 1
    setPhase(idx)
 
-   
+
 def gotoPhase(idx, oldIdx = 0):
    # if idx == ActivatePhase:
    if idx == DrawPhase:
       if turnNumber() == 1:
          notify("(The player who goes first should skip his Draw phase during their first turn.)")
-   # elif idx == MainPhase:  
+   # elif idx == MainPhase:
    # elif idx == AttackPhase:
-   elif idx == BlockPhase: 
+   elif idx == BlockPhase:
       if len(players) > 1:
          notify("(Now defending player {} can play Reaction cards and then may choose if block attackers)".format(players[1]))
-   # elif idx == EndPhase:   
+   # elif idx == EndPhase:
    elif idx == CleanupPhase:
       whisper("(This is the last phase of your turn)")
    triggerPhaseEvent(idx)
 
-   
+
 def gotoActivate(group = table, x = 0, y = 0):
    setPhase(ActivatePhase)
 
@@ -99,16 +99,16 @@ def setup(group=table, x=0, y=0, silent=False):
    if automations['Play']:
       me.setActive()
 
-   
+
 def scoop(group, x=0, y=0):
 # Reset the game
    debug(">>> reset()") #Debug
    mute()
    if not confirm("Are you sure you want to reset the game?"):
-      return      
-   resetAll()   
+      return
+   resetAll()
    myCards = (card for card in table
-      if card.controller == me)        
+      if card.controller == me)
    toOwnerDeck(myCards)
    toOwnerDeck(me.Deck)
    toOwnerDeck(me.hand)
@@ -148,17 +148,17 @@ def randomPick(group, x = 0, y = 0, fromPlayer = None):
       notify("{} randomly selects {}'s {} on the ring.".format(me, card.controller, card))
    else:
       notify("{} randomly selects {} from their {}.".format(me, card, group.name))
-      
+
 
 def randomPickMine(group, x = 0, y = 0):
    randomPick(group, x, y, me)
-      
+
 
 def randomPickEnemy(group, x = 0, y = 0):
    if len(players) > 1:
       randomPick(group, x, y, players[1])
 
-      
+
 def clearAll(group = table, x = 0, y = 0, allPlayers = False):
    notify("{} clears all targets and highlights.".format(me))
    for card in table:
@@ -201,10 +201,10 @@ def defaultAction(card, x = 0, y = 0):
          or (not me.isActive and phaseIdx == BlockPhase and isReaction(card))
       ):
       activate(card, x, y)
-      
+
    if me.isActive and phaseIdx == AttackPhase and isCharacter(card):
       attack(card, x, y)
-      
+
    if not me.isActive and phaseIdx == BlockPhase and isCharacter(card):
       block(card, x, y)
 
@@ -303,7 +303,7 @@ def doesNotUnfreeze(card, x = 0, y = 0):
       card.highlight = None
       removeMarker(card, "Does Not Unfreeze")
       msg = "unfreeze as normal"
-   
+
    notify("{0}'s {1} will {2} during {0}'s Activate phase.".format(card.controller, card, {2}))
 
 
@@ -342,7 +342,7 @@ def askCardBackups(card, x = 0, y = 0):
       whisper(msg)
    else:
       information("Only character cards can be backed-up.")
-      
+
 
 def toggleAbility(card, x = 0, y = 0):
    mute()
@@ -362,7 +362,7 @@ def toggleAbility(card, x = 0, y = 0):
       for p in players:
          remoteCall(p, "addAlternateRules", [card, '', '', 'noability'])
       notify("{} removes {}'s abilities".format(me, card))
-   
+
 
 def transformCards(cards, x = 0, y = 0):
    mute()
@@ -382,7 +382,7 @@ def transformCards(cards, x = 0, y = 0):
          transformCard(card, cardModel)
       for target in targets:
          target.target(False)
-      
+
 
 def copyAbility(card, x = 0, y = 0, target = None):
    debug(">>> copyAbility()") #Debug
@@ -419,7 +419,7 @@ def copyAbility(card, x = 0, y = 0, target = None):
       warning("Please select a valid character card.")
    debug("<<< copyAbility()") #Debug
 
-         
+
 def swapAbilities(card, x = 0, y = 0):
    debug(">>> swapAbilities()") #Debug
    mute()
@@ -447,7 +447,7 @@ def swapAbilities(card, x = 0, y = 0):
 #---------------------------------------------------------------------------
 # Movement actions
 #---------------------------------------------------------------------------
-   
+
 def destroy(card, x = 0, y = 0, controller=me):
    mute()
    fromText = fromWhereStr(card.group)
@@ -456,7 +456,7 @@ def destroy(card, x = 0, y = 0, controller=me):
    if isCharacter(card):
       action = "KOs"
    notify("{} {} {} {}.".format(controller, action, card, fromText))
-   
+
 
 def remove(card, x = 0, y = 0):
    mute()
@@ -517,14 +517,14 @@ def toDeckBottomAll(group, x = 0, y = 0):
    if len(players) > 1: rnd(1, 100) # Wait a bit more, as in multiplayer games, things are slower.
    notify("{} moves all cards from their {} to the bottom of its Deck.".format(me, group.name))
 
-   
+
 def toOwnerDeck(cards):
    for card in cards:
       card.moveTo(card.owner.Deck)
 
 
 def shuffleIntoDeck(cards, x = 0, y = 0):
-   mute()   
+   mute()
    for card in cards:
       toDeckTop(card)
    rnd(100, 10000) # Bug 105 workaround. This delays the next action until all animation is done.
@@ -539,7 +539,7 @@ def discardAll(group, x = 0, y = 0):
    if len(players) > 1: rnd(1, 100) # Wait a bit more, as in multiplayer games, things are slower.
    notify("{} moves all cards from their {} to its Discard Pile.".format(me, group.name))
 
-   
+
 def toTableFaceDown(card, x = 0, y = 0):
    debug(">>> toTableFaceDown {}".format(card)) #Debug
    mute()
@@ -547,7 +547,7 @@ def toTableFaceDown(card, x = 0, y = 0):
    placeCard(card, card.Type, faceDown=True)
    notify("{} puts a card face down in the Arena {}.".format(me, fromText))
 
-   
+
 def changeSlot(card, x = 0, y = 0):
    debug(">>> changeSlot {}".format(card)) #Debug
    mute()
@@ -574,7 +574,7 @@ def changeSlot(card, x = 0, y = 0):
          putAtSlot(card, slotIdx, card.controller, True)
          alignCard(card)
          notify("{} moved {} to slot {}.".format(me, card, slotIdx+1))
-      
+
 
 #---------------------------------------------------------------------------
 # Marker actions
@@ -600,7 +600,7 @@ def minusBP(cards, x = 0, y = 0, silent = False, count = 1):
       addMarker(card, 'BP', -c)
       if not silent:
          notify("{} lowers {}'s BP by {} (new BP is {}).".format(me, card, count, getMarker(card, 'BP')))
-      
+
 def plusBP2(cards, x = 0, y = 0): plusBP(cards, count = 2)
 def plusBP3(cards, x = 0, y = 0): plusBP(cards, count = 3)
 def plusBP4(cards, x = 0, y = 0): plusBP(cards, count = 4)
@@ -614,7 +614,7 @@ def plusBPX(cards, x = 0, y = 0):
    n = askInteger("Raise BP by...", 1)
    if n == None: return
    plusBP(cards, count = n)
-   
+
 def minusBP2(cards, x = 0, y = 0): minusBP(cards, count = 2)
 def minusBP3(cards, x = 0, y = 0): minusBP(cards, count = 3)
 def minusBP4(cards, x = 0, y = 0): minusBP(cards, count = 4)
@@ -658,7 +658,7 @@ def plusSPX(group, x = 0, y = 0):
    n = askInteger("Gain SP by...", 1)
    if n == None: return
    modSP(n)
-   
+
 def minusSP (group, x = 0, y = 0): modSP(-1)
 def minusSP2(group, x = 0, y = 0): modSP(-2)
 def minusSP3(group, x = 0, y = 0): modSP(-3)
@@ -673,7 +673,7 @@ def minusSPX(group, x = 0, y = 0):
    n = askInteger("Lose SP by...", 1)
    if n == None: return
    modSP(-n)
-   
+
 
 #---------------------------------------------------------------------------
 # Hand actions
@@ -681,7 +681,7 @@ def minusSPX(group, x = 0, y = 0):
 
 def play(card):  # This is the function to play cards from your hand.
    debug(">>> playing card {}".format(card)) #Debug
-   
+
    mute()
    if not playerSide:
       chooseSide()  # Just in case...
@@ -692,13 +692,13 @@ def play(card):  # This is the function to play cards from your hand.
    else:
       placeCard(card, card.Type)
    notify("{} plays {} from its {}{}.".format(me, card, card.group.name, slot))
-   
+
    debug("<<< playing card end") #Debug
 
 
 def backup(card, x = 0, y = 0):  # Play a card as backup attached to a character in the player's ring
    debug(">>> backup with card {}".format(card)) #Debug
-   
+
    mute()
    group = card.group
    if automations['Play']:
@@ -708,7 +708,7 @@ def backup(card, x = 0, y = 0):  # Play a card as backup attached to a character
    else:
       placeCard(card, card.Type)
       notify("{} backups with {} from its {}.".format(me, card, group.name))
-   
+
    debug("<<< backup()") #Debug
 
 
@@ -777,16 +777,16 @@ def randomDraw(group = me.Deck, type = None):
    cardname = revealDrawnCard(card, type)
    card.moveTo(me.hand)
    notify("{} draws {} at random {}.".format(me, cardname, fromWhereStr(group)))
-   
-   
+
+
 def randomDrawCHA(group = me.Deck):
    randomDraw(group, CharType)
-   
-   
+
+
 def randomDrawAC(group = me.Deck):
    randomDraw(group, ActionType)
-   
-   
+
+
 def randomDrawRE(group = me.Deck):
    randomDraw(group, ReactionType)
 
@@ -835,10 +835,10 @@ def prophecy(group = me.Deck, x = 0, y = 0):
       card = item[0]
       choice = item[1]
       cardname = card.Name if card.isFaceUp else "a card"
-      if choice == 1:         
+      if choice == 1:
          card.moveTo(me.Deck)
          notify("{} puts {} {} on the top of its Deck.".format(me, cardname, fromText))
-      else:      
+      else:
          card.moveToBottom(me.Deck)
          notify("{} puts {} {} on the bottom of its Deck.".format(me, cardname, fromText))
 
@@ -863,7 +863,7 @@ def reshuffle(group = me.piles['Discard Pile']):
                # see https://octgn.16bugs.com/projects/3602/bugs/102681
    Deck.shuffle() # Then use the built-in shuffle action
    notify("{} reshuffled its {} into its Deck.".format(me, group.name)) # And inform everyone.
-   
+
 
 def reshuffleCards(group, cardType):
 # Reshuffles all the cards of the given type into the player's deck
@@ -874,7 +874,7 @@ def reshuffleCards(group, cardType):
    update()  # Trying this method to delay next actions until networked tasks are complete
    Deck.shuffle()
    notify("{} shuffles all {} cards from his {} into its Deck.".format(me, cardType, group.name)) # And inform everyone.
-   
+
 
 def reshuffleCHA(group = me.piles['Discard Pile']):
    mute()
@@ -887,7 +887,7 @@ def reshuffleAC(group = me.piles['Discard Pile']):
 def reshuffleRE(group = me.piles['Discard Pile']):
    mute()
    reshuffleCards(group, ReactionType)
-   
+
 
 def revealTopDeck(group, x = 0, y = 0):
    mute()
@@ -909,16 +909,16 @@ def swapWithDeck(group = me.piles['Discard Pile']):
 
 def setupDebug(group, x=0, y=0):
    mute()
-   
+
    if not me.name == Author:
       whisper("This function is only for development purposes.")
       return
-	
+
    global debugging
    debugging = True
    resetGame()
-   
-   
+
+
 def testSuite(group, x=0, y=0):
    mute()
    whisper("### Checking Debug Validity")
