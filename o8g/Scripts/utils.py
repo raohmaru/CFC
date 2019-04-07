@@ -766,7 +766,7 @@ def debugScenario():
       'a9478fcd-e1e2-403b-b1e4-5076b342fd50' # Maki
       ,'39b7d042-d2c5-4ff3-aad5-231bd3ccc9e7' # Lucifer
       ,'be2728eb-0a2d-4f27-8cc5-3208d103b888' # Haggar
-      ,'66d424bb-e5da-4f61-b063-61efd1fc61a6' # Damn D
+      # ,'66d424bb-e5da-4f61-b063-61efd1fc61a6' # Damn D
    ]
    for i, id in enumerate(tableCards):
       debug("Creating card {} at slot {}".format(id, i))
@@ -780,10 +780,7 @@ def debugScenario():
       
    handCards = [
       '2c1d8c60-0858-4524-adc1-e7596a4d08e0' # Guy
-      ,'2c1d8c60-0858-4524-adc1-e7596a4d08e0' # Guy
-      ,'fd1a3f1c-7df1-443e-97b1-f093d66e74c9' # Zero Akuma
-      ,'e2597326-5639-435f-ae33-3303b181527c'
-      ,'1722e9d6-30e1-4355-9aa3-9b80b765754a'
+      ,'365cddf9-f741-4a3e-bf07-de4b3eecc6d2' # Mech Zangief
    ]
    for id in handCards:
       debug("Adding card {} to hand".format(id))

@@ -80,7 +80,6 @@ action = {cost}: [[cond]] effect [& effect] to(target) restr; ...
 
 Only one action key is allowed.
 Several effects can be joined with ';'.
-Only one to() key is allowed. It must be declared in the first clause.
 
 cost: (optional)
    Keywords:
@@ -257,7 +256,9 @@ action = {F}: destroy() target(^character@myRing) & damage(tgt.BP, character)
 """
 
 # Mech Zangief's ANTISOCIAL
-# RulesDict['365cddf9-f741-4a3e-bf07-de4b3eecc6d2'] = ""
+RulesDict['365cddf9-f741-4a3e-bf07-de4b3eecc6d2'] = """
+action = destroy() target(^character@myRing)
+"""
 
 # Ruby Heart's TAG ALONG
 # RulesDict['ee979882-67cc-4549-881c-8e158df495ce'] = ""

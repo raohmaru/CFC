@@ -138,7 +138,7 @@ class Rules():
             newTarget = RulesUtils.getTargets(effect[2], source=thisCard)
             if newTarget == False:
                if not isAuto:
-                  whisper(MSG_ERR_NO_CARDS)
+                  notify(MSG_ERR_NO_CARDS)
                return False
             currTarget = newTarget
          targets.append(currTarget)

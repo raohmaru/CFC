@@ -236,8 +236,8 @@ class RulesUtils():
             if len(cards_f2) == 0:
                # Last chance to select a card
                if not msg:
-                  msg = MSG_SEL_CARD_EFFECT
-               cards_f1 = showCardDlg(cards_f1, msg.format(zone[1]))
+                  msg = MSG_SEL_CARD_EFFECT_OF if source else MSG_SEL_CARD_EFFECT
+               cards_f1 = showCardDlg(cards_f1, msg.format(zone[1], source.Name))
                if cards_f1 == None:
                   # warning(MSG_ERR_NO_CARD_TARGETED)
                   return False
@@ -275,7 +275,7 @@ class RulesUtils():
       # At this point there are not cards to which apply the effect, but the ability
       # is activated anyway
       if len(cards_f1) == 0:
-         whisper(MSG_ERR_NO_CARDS)
+         notify(MSG_ERR_NO_CARDS)
       
       return cards_f1
       
