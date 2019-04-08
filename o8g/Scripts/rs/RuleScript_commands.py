@@ -233,6 +233,12 @@ def cmd_draw(targets, restr, source, qty):
    RulesCommands.applyNext()
 
 
+def cmd_steal(targets, restr, source, *args):
+   debug(">>> cmd_steal({}, {})".format(targets, source)) #Debug
+   stealAbility(source, target = targets[0])
+   RulesCommands.applyNext()
+
+
 RulesCommands.register('damage',        cmd_damage)
 RulesCommands.register('swappiles',     cmd_swapPiles)
 RulesCommands.register('shuffle',       cmd_shuffle)
@@ -244,3 +250,4 @@ RulesCommands.register('moveto',        cmd_moveTo)
 RulesCommands.register('bp',            cmd_bp)
 RulesCommands.register('playextrachar', cmd_playExtraChar)
 RulesCommands.register('draw',          cmd_draw)
+RulesCommands.register('steal',         cmd_steal)

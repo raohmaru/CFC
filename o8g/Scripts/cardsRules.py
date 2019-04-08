@@ -108,6 +108,7 @@ effect:
          bp(#|x#)
          playExtraChar()
          draw(#|expression)
+         steal()
       Ability:
          Keywords:
             @see abilities
@@ -278,7 +279,9 @@ action = [[if myHandSize < oppHandSize]] draw(oppHandSize - myHandSize) target(m
 """
 
 # Mega Man's ENEMY'S ABILITY
-# RulesDict['7717e285-f824-4bfa-bd76-c0039c97190e'] = ""
+RulesDict['7717e285-f824-4bfa-bd76-c0039c97190e'] = """
+action = {F}: steal() target(^character)
+"""
 
 # Mega Man X's PARTS CHANGE
 # RulesDict['e367c942-342e-4434-a2d1-dd7188b2d15a'] = ""

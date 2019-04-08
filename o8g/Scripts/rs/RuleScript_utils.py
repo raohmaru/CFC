@@ -70,16 +70,10 @@ class RulesUtils():
       cards = []
       
       if zone == RS_KW_ZONE_ARENA:
-         rings = getGlobalVar('Ring', me)
-         if len(players) > 1:
-            rings += getGlobalVar('Ring', players[1])
-         cards = [c for c in table
-            if c._id in rings]
+         cards = getRing()
       
       elif zone == RS_KW_ZONE_RING:
-         ring = getGlobalVar('Ring', player)
-         cards = [c for c in table
-            if c._id in ring]
+         cards = getRing(player)
       
       elif zone == RS_KW_ZONE_HAND:
          cards = [c for c in player.hand]

@@ -131,12 +131,12 @@ def randomPick(group, x = 0, y = 0, fromPlayer = None):
    card = None
    player = fromPlayer if fromPlayer != None else me
    if group == table:
-      ring = getGlobalVar('Ring', player)
-      if fromPlayer == None and len(players) > 1:
-         ring += getGlobalVar('Ring', players[1])
-      ring = filter(None, ring)
+      if fromPlayer:
+         ring = getRing(player)
+      else:
+         ring = getRing()
       if(len(ring)) > 0:
-         card = Card(ring[rnd(0, len(ring)-1)])
+         card = ring[rnd(0, len(ring)-1)]
    else:
       card = group.random()
    if card == None:
@@ -151,12 +151,12 @@ def randomPick(group, x = 0, y = 0, fromPlayer = None):
 
 
 def randomPickMine(group, x = 0, y = 0):
-   randomPick(group, x, y, me)
+   randomPick(group, fromPlayer = me)
 
 
 def randomPickEnemy(group, x = 0, y = 0):
    if len(players) > 1:
-      randomPick(group, x, y, players[1])
+      randomPick(group, fromPlayer = players[1])
 
 
 def clearAll(group = table, x = 0, y = 0, allPlayers = False):
@@ -397,9 +397,17 @@ def copyAbility(card, x = 0, y = 0, target = None):
       if len(targets) > 0 and isCharacter(targets[0]) and targets[0] != card:
          target = targets[0]
       else:
-         model, quantity = askCard({"Type":CharType}, "and", "Choose a character with an ability")
-         if quantity > 0:
-            target = model
+         choice = askChoice("From where do you want to copy an ability?", ['Arena', 'My discard pile'])
+         if choice == 0:
+            return
+         if choice == 1:
+            cards = getRing(me)
+         elif choice == 2:
+            cards = [c for c in me.piles['Discard Pile'] if isCharacter(c)]
+         cards = [c for c in cards if c.Rules != "" and c != card]
+         choosenCards = showCardDlg(cards, "Choose a character with an ability")
+         if choosenCards:
+            target = choosenCards[0]
          else:
             return
    if target:
@@ -413,6 +421,7 @@ def copyAbility(card, x = 0, y = 0, target = None):
                remoteCall(p, "copyAlternateRules", [card, target])
          update()  # Trying this method to delay next actions until networked tasks are complete
          notify("{} copies ability {} to {}.".format(me, getParsedCard(card).ability.name, card))
+         return target
       else:
          warning("Target character card doesn't have an ability to copy.")
    else:
@@ -427,7 +436,12 @@ def swapAbilities(card, x = 0, y = 0):
       whisper("Abilities can only be swapped between character cards in the ring.")
       return
    target = None
-   targets =  [c for c in table   if c.targetedBy == me]
+   targets =  [c for c in table if c.targetedBy == me]
+   if len(targets) == 0:
+      cards = [c for c in getRing() if c.Rules != "" and c != card]
+      targets = showCardDlg(cards, "Choose a character with an ability")
+      if targets == None:
+         return
    if len(targets) > 0 and isCharacter(targets[0]) and targets[0] != card and charIsInRing(targets[0], targets[0].controller):
       target = targets[0]
       if card.Rules and target.Rules:
@@ -443,7 +457,14 @@ def swapAbilities(card, x = 0, y = 0):
       target.target(False)
    else:
       warning("Please select a valid character card in the ring.")
+      
+      
+def stealAbility(card, x = 0, y = 0, target = None):
+   target = copyAbility(card, target = target)
+   toggleAbility(target)
+   notify("{} has stolen ability {} from {} to {}.".format(me, getParsedCard(target).ability.name, target, card))
 
+   
 #---------------------------------------------------------------------------
 # Movement actions
 #---------------------------------------------------------------------------
