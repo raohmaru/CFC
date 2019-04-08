@@ -224,6 +224,8 @@ def cmd_draw(targets, restr, source, qty):
       amount = num(qty)
    else:
       amount = num(evalExpression(qty, True))
+   if not targets:
+      targets = [me]
    debug(">>> cmd_draw({}, {}, {})".format(targets, qty, amount)) #Debug
    for target in targets:
       if target == me:

@@ -146,7 +146,7 @@ class Rules():
       # Then the player must pay the cost, or we cancel
       if action['cost']:
          if not self.payCost(action['cost']):
-            notify(MSG_COST_NOT_PAYED.format(me))
+            notify(MSG_COST_NOT_PAYED.format(me, thisCard, ('effect', 'ability')[isCharacter(thisCard)]))
             return False
             
       # For auto with events that adds abilities, if no matching then remove abilities
@@ -225,7 +225,7 @@ class Rules():
             else:
                # The only zone allowed is player's hand
                target['zone'] = ['', RS_KW_ZONE_HAND]
-               cards = RulesUtils.getTargets(target, MSG_SEL_CARD_DISCARD, source=thisCard)
+               cards = RulesUtils.getTargets(target, thisCard, MSG_SEL_CARD_DISCARD)
                if cards == False or len(cards) == 0:
                   whisper(MSG_ERR_NO_CARDS_HAND)
                   return False
@@ -236,7 +236,7 @@ class Rules():
             if target:
                # The only zone allowed is player's ring
                target['zone'] = ['', RS_KW_ZONE_RING]
-               cards = RulesUtils.getTargets(target, MSG_SEL_CARD_SACRIFICE, source=thisCard)
+               cards = RulesUtils.getTargets(target, source, MSG_SEL_CARD_SACRIFICE)
                if cards == False or len(cards) == 0:
                   return False
                for card in cards:

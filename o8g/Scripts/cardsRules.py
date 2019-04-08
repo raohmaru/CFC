@@ -80,6 +80,7 @@ action = {cost}: [[cond]] effect [& effect] to(target) restr; ...
 
 Only one action key is allowed.
 Several effects can be joined with ';'.
+If target is omitted, effect will target current player or current card if it's an ability
 
 cost: (optional)
    Keywords:
@@ -284,7 +285,9 @@ action = {F}: steal() target(^character)
 """
 
 # Mega Man X's PARTS CHANGE
-# RulesDict['e367c942-342e-4434-a2d1-dd7188b2d15a'] = ""
+RulesDict['e367c942-342e-4434-a2d1-dd7188b2d15a'] = """
+action = {D(action)}{F}: draw(2)
+"""
 
 # Rock's BOUKEN
 # RulesDict['aaf18dab-973f-4126-a47a-78798ec5058b'] = ""

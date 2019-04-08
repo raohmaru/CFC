@@ -228,6 +228,8 @@ class RulesUtils():
             cards_f2 = [c for c in cards_f1
                if c.targetedBy == me]
             if len(cards_f2) == 0:
+               if len(cards_f1) == 0:
+                  return False
                # Last chance to select a card
                if not msg:
                   msg = MSG_SEL_CARD_EFFECT_OF if source else MSG_SEL_CARD_EFFECT
@@ -259,6 +261,8 @@ class RulesUtils():
                warning(MSG_ERR_MULTIPLE_TARGET)
                return False
             elif zone[1] in RS_KW_ZONES_PILES:
+               if len(cards_f1) == 0:
+                  return False
                if not msg:
                   msg = MSG_SEL_CARD
                cards_f1 = showCardDlg(cards_f1, msg.format(zone[1]))

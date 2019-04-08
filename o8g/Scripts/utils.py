@@ -789,8 +789,8 @@ def debugScenario():
    rnd(100, 10000)  # Delay the next action until all animation is done
    tableCards = [
       '7717e285-f824-4bfa-bd76-c0039c97190e' # Mega Man
-      ,'39b7d042-d2c5-4ff3-aad5-231bd3ccc9e7' # Lucifer
-      ,'0a8f39ff-6b21-4805-bafb-27c3f38d1986' # Regina
+      ,'e367c942-342e-4434-a2d1-dd7188b2d15a' # Mega Man X
+      ,'55b0c9ff-4b3a-4b08-adc1-f1b5e03adef9' # Regina
       ,'b8325eaa-1687-4d18-b1e7-6bf335e447c2' # Son Son
    ]
    for i, id in enumerate(tableCards):
@@ -805,6 +805,9 @@ def debugScenario():
       
    handCards = [
       '365cddf9-f741-4a3e-bf07-de4b3eecc6d2' # Mech Zangief
+      ,'85d84ab1-dede-4fc7-b80d-00778f73c905'
+      ,'ac01bbbe-583e-46ae-b26c-3c25eb8f0779'
+      ,'556b3359-e642-419a-ab5c-67f70de1bb4f'
    ]
    for id in handCards:
       debug("Adding card {} to hand".format(id))
