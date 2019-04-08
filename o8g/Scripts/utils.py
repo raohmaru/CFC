@@ -133,9 +133,11 @@ def clearGlobalVar(name, player = None):
    setGlobalVar(name, gvar, player)
    
 
-def evalExpression(expr):
-   # Adding some variables only available in this scope
+def evalExpression(expr, retValue = False):
+   # Adding some variables only available in this scope.
+   # Must be in lower case.
    myhandsize = len(me.hand)
+   opphandsize = len(players[1].hand) if len(players) > 1 else 0
    oppringsize = getRingSize(players[1]) if len(players) > 1 else 0
    alone = getRingSize() == 1
    myring = [Card(id) for id in getGlobalVar('Ring', me)
@@ -151,8 +153,12 @@ def evalExpression(expr):
 
    try:
       res = eval(expr)
-      debug("Evaluating expr  %s == True  (%s)" % (expr, res))
-      return bool(res)
+      if retValue:
+         debug("Evaluating expr  %s  (%s)" % (expr, res))
+         return res
+      else:
+         debug("Evaluating expr  %s == True  (%s)" % (expr, res))
+         return bool(res)
    except:
       debug("%s  is not a valid Python expression" % (expr))
       return False

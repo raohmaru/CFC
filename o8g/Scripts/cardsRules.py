@@ -107,6 +107,7 @@ effect:
          moveTo(zone)
          bp(#|x#)
          playExtraChar()
+         draw(#|expression)
       Ability:
          Keywords:
             @see abilities
@@ -175,6 +176,7 @@ A valid Python expression.
 Available variables:
    All global variables
    myHandSize
+   oppHandSize
    oppRingSize
    alone
    myring
@@ -271,7 +273,9 @@ action = [[if all myring: bp <= 3]] playExtraChar()
 """
 
 # Son Son's BUNSHIN
-# RulesDict['b8325eaa-1687-4d18-b1e7-6bf335e447c2'] = ""
+RulesDict['b8325eaa-1687-4d18-b1e7-6bf335e447c2'] = """
+action = [[if myHandSize < oppHandSize]] draw(oppHandSize - myHandSize) target(me)
+"""
 
 # Mega Man's ENEMY'S ABILITY
 # RulesDict['7717e285-f824-4bfa-bd76-c0039c97190e'] = ""

@@ -219,6 +219,20 @@ def cmd_playExtraChar(targets, restr, source, *args):
    RulesCommands.applyNext()
 
 
+def cmd_draw(targets, restr, source, qty):
+   if isNumber(qty):
+      amount = num(qty)
+   else:
+      amount = num(evalExpression(qty, True))
+   debug(">>> cmd_draw({}, {}, {})".format(targets, qty, amount)) #Debug
+   for target in targets:
+      if target == me:
+         drawMany(me.Deck, amount)
+      else:
+         remoteCall(target, "drawMany", [target.Deck, amount])
+   RulesCommands.applyNext()
+
+
 RulesCommands.register('damage',        cmd_damage)
 RulesCommands.register('swappiles',     cmd_swapPiles)
 RulesCommands.register('shuffle',       cmd_shuffle)
@@ -229,3 +243,4 @@ RulesCommands.register('rnddiscard',    cmd_randomDiscard)
 RulesCommands.register('moveto',        cmd_moveTo)
 RulesCommands.register('bp',            cmd_bp)
 RulesCommands.register('playextrachar', cmd_playExtraChar)
+RulesCommands.register('draw',          cmd_draw)

@@ -741,7 +741,7 @@ def refill(group = me.hand):  # Refill the player's hand to its hand size.
 def draw(group = me.Deck):  # Draws one card from the deck into the player's hand.
    mute()
    if len(group) == 0:
-      whisper("Can't draw from an empty {}.".format(group.name))
+      whisper("Can't draw cards from an empty {}.".format(group.name))
       return
    group.top().moveTo(me.hand)
    notify("{} draws a card.".format(me))
@@ -749,6 +749,9 @@ def draw(group = me.Deck):  # Draws one card from the deck into the player's han
 
 def drawMany(group, count = None, silent = False):  # This function draws a variable number cards into the player's hand.
    mute()
+   if len(group) == 0:
+      whisper("Can't draw cards from an empty {}.".format(group.name))
+      return
    if count == None:
       count = askInteger("How many cards do you want to draw?", handSize) # Ask the player how many cards they want.
    if count == None:
