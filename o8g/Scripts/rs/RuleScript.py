@@ -106,7 +106,14 @@ class Rules():
             
       thisCard = Card(self.card_id)
       revert = False
-      # First we get valid targets or we cancel
+            
+      # First the player must pay the cost, or we cancel
+      if action['cost']:
+         if not self.payCost(action['cost']):
+            notify(MSG_COST_NOT_PAYED.format(me, thisCard, ('effect', 'ability')[isCharacter(thisCard)]))
+            return False
+            
+      # Then we get valid targets or we cancel
       targets = []
       for effect in action['effects']:
          currTarget = target
@@ -142,12 +149,6 @@ class Rules():
                return False
             currTarget = newTarget
          targets.append(currTarget)
-            
-      # Then the player must pay the cost, or we cancel
-      if action['cost']:
-         if not self.payCost(action['cost']):
-            notify(MSG_COST_NOT_PAYED.format(me, thisCard, ('effect', 'ability')[isCharacter(thisCard)]))
-            return False
             
       # For auto with events that adds abilities, if no matching then remove abilities
       if isAuto and action['event']:

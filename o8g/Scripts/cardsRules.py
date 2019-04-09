@@ -302,7 +302,9 @@ action = {F}: moveTo(oppDeck) target(*@hand); moveTo(hand) target(*<-1>@oppDeck)
 """
 
 # Rock Man's ROCK BUSTER
-# RulesDict['1c986de3-bec5-430b-a661-ebbe9b20c20f'] = ""
+RulesDict['1c986de3-bec5-430b-a661-ebbe9b20c20f'] = """
+action = {S}: damage(3) target(characters)
+"""
 
 # Roll's OPERATE
 # RulesDict['91cb59bd-1e5a-472d-a410-8fa0e1698eb5'] = ""

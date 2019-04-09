@@ -35,8 +35,6 @@ class RulesCommands():
       RulesCommands.cmds = list(cmds)  # Clone array
       RulesCommands.cmdsArgs = [targets, restr, source, revert]
       RulesCommands.applyNext()
-      # for cmd in cmds:
-         # RulesCommands.applyCmd(cmd, targets, restr, source, revert)
 
 
    @staticmethod

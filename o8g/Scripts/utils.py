@@ -239,8 +239,10 @@ def moveToGroup(group, card, source = None):
 #---------------------------------------------------------------------------
 
 def fromWhereStr(src):
-   owner = " its " if src.controller == me else " opponent's "
-   return "from the ring" if src == table else "from" + owner + src.name
+   if src == table:
+      return "from the ring"
+   else:
+      return "from {} {}".format("its" if src.controller == me else "opponent's", src.name)
 
    
 def sanitizeStr(str):
@@ -806,10 +808,10 @@ def debugScenario():
    gotoMain()
    rnd(100, 10000)  # Delay the next action until all animation is done
    tableCards = [
-      '7717e285-f824-4bfa-bd76-c0039c97190e' # Mega Man
+      '39b7d042-d2c5-4ff3-aad5-231bd3ccc9e7' # Lucifer
       ,'e367c942-342e-4434-a2d1-dd7188b2d15a' # Mega Man X
       ,'aaf18dab-973f-4126-a47a-78798ec5058b' # Rock
-      ,'b8325eaa-1687-4d18-b1e7-6bf335e447c2' # Son Son
+      ,'1c986de3-bec5-430b-a661-ebbe9b20c20f' # Rock Man
    ]
    for i, id in enumerate(tableCards):
       debug("Creating card {} at slot {}".format(id, i))
