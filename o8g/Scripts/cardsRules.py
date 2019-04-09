@@ -102,7 +102,7 @@ cond: (optional)
 effect:
    Values:
       Effect command (followed by () with 0 or more parameters):
-         damage(#|tgt.BP [, target])
+         damage(#|tgt.BP|prevTgt.BP)
          swapPiles(pile1, pile2)
          shuffle([myDeck])
          destroy()
@@ -268,7 +268,7 @@ action = [[if alone]] bp(x2) to(this)
 
 # Lucifer's SACRIFICE
 RulesDict['39b7d042-d2c5-4ff3-aad5-231bd3ccc9e7'] = """
-action = {F}: destroy() target(^character@myRing) & damage(tgt.BP, character)
+action = {F}: destroy() target(^character@myRing); damage(prevTgt.BP) to(character)
 """
 
 # Mech Zangief's ANTISOCIAL
@@ -303,7 +303,7 @@ action = {F}: moveTo(oppDeck) target(*@hand); moveTo(hand) target(*<-1>@oppDeck)
 
 # Rock Man's ROCK BUSTER
 RulesDict['1c986de3-bec5-430b-a661-ebbe9b20c20f'] = """
-action = {S}: damage(3) target(characters)
+action = {S}: damage(3) to(characters)
 """
 
 # Roll's OPERATE

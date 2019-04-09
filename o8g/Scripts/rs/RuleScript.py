@@ -170,6 +170,7 @@ class Rules():
                   if isCard(obj):
                      obj.target(False)
             rnd(10, 1000) # Wait between effects until all animation is done
+      RulesCommands.clear()
             
       if not targets:
          notify(MSG_AB_NO_EFFECT.format(thisCard, getParsedCard(thisCard).ability))

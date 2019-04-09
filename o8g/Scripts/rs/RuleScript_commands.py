@@ -24,6 +24,7 @@ class RulesCommands():
    items = {}
    cmds = []
    cmdsArgs = []
+   prevTargets = None
 
    @staticmethod
    def register(name, cmd):
@@ -42,10 +43,10 @@ class RulesCommands():
    # Ensures that a command is applied only when the precedent command is done
       if len(RulesCommands.cmds) > 0:
          cmd = RulesCommands.cmds.pop(0)
-         debug(">>> applyNext({})".format(cmd)) #Debug    
+         debug(">>> applyNext({})".format(cmd)) #Debug
          RulesCommands.applyCmd(cmd, *RulesCommands.cmdsArgs)
       else:
-         RulesCommands.cmdsArgs = []
+         RulesCommands.prevTargets = RulesCommands.cmdsArgs[0]
 
 
    @staticmethod
@@ -71,22 +72,27 @@ class RulesCommands():
          debug("-- cmd not found: {}".format(cmd[0]))
 
 
+   @staticmethod
+   def clear():
+      RulesCommands.prevTargets = None
+      RulesCommands.cmdsArgs = []
+
+
 #---------------------------------------------------------------------------
 # Commands functions
 #---------------------------------------------------------------------------
 
-def cmd_damage(targets, restr, source, dmg, newTargets = None):
-   debug(">>> cmd_damage({}, {}, {}, {})".format(targets, restr, dmg, newTargets)) #Debug
-   if dmg == 'tgt.bp':
-      dmg = getParsedCard(targets[0]).BP
-   else:
+def cmd_damage(targets, restr, source, dmg):
+   debug(">>> cmd_damage({}, {}, {})".format(targets, restr, dmg)) #Debug
+   if isNumber(dmg):
       dmg = int(dmg)
-   currTargets = targets
-   if newTargets:
-      currTargets = RulesUtils.getTargets(RulesLexer.parseTarget(newTargets), source=source)
-   if currTargets:
-      for target in currTargets:
-         dealDamage(dmg, target, source)
+   else:
+      if dmg == 'tgt.bp':
+         dmg = getParsedCard(targets[0]).BP
+      elif dmg == 'prevtgt.bp':
+         dmg = getParsedCard(RulesCommands.prevTargets[0]).BP
+   for target in targets:
+      dealDamage(dmg, target, source)
    RulesCommands.applyNext()
 
 
