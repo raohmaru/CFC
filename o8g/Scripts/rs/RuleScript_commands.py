@@ -182,8 +182,16 @@ def cmd_moveTo(targets, restr, source, zone):
    if zoneName in RS_KW_ZONES_PILES:
       pile = RulesUtils.getZoneByName(zone)
       for target in targets:
-         if zonePrefix == RS_PREFIX_MY or (zonePrefix == RS_PREFIX_CTRL and target.controller == me):
+         debug("{}'s {} -> {}'s {}".format(target.controller, target, pile.controller, pile.name))
+         if target.controller == me and pile.controller == me:
             moveToGroup(pile, target)
+         elif target.controller == me and pile.controller != me:
+            group = target.group
+            target.moveToTable(0, 0, True)
+            target.controller = pile.controller
+            remoteCall(target.controller, "moveToGroup", [pile, target, group])
+         elif target.controller != me and pile.controller == me:
+            remoteCall(target.controller, "passControlTo", [me, [target], ["moveToGroup", [pile, target, target.group]]])
          else:
             remoteCall(target.controller, "moveToGroup", [pile, target])
          rnd(1, 100) # Wait until all animation is done

@@ -4,7 +4,7 @@
       name="Card Fighters' Clash"
       id="e3d56d9e-900d-49c6-b6ae-22cbb51be153"
       octgnVersion="3.3.132.0"
-      version="0.7.1.173"
+      version="0.7.1.192"
       markersize="20"
       tags="capcom snk fighter"
       description="A card game based in the SNK Playmore’s video game SNK vs. Capcom Card Fighters' Clash 2 Expand Edition.
@@ -196,6 +196,7 @@
 			<cardaction menu="Lose/Restore abilities" shortcut="Ctrl+X" execute="toggleAbility" getName="aclb_Ability" />
 			<cardaction menu="Copy ability" shortcut="Ctrl+C" execute="copyAbility" />
 			<cardaction menu="Swap abilities" shortcut="Ctrl+Shift+C" execute="swapAbilities" />
+			<cardaction menu="Steal ability" execute="stealAbility" />
 		</cardactions>
 		<cardactions menu="BP / Markers...">
 			<cardactions menu="Raise BP..." showIf="acsh_isChar">

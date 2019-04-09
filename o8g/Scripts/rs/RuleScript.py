@@ -168,7 +168,7 @@ class Rules():
                for obj in targets[i]:
                   if isCard(obj):
                      obj.target(False)
-            rnd(1, 100) # Wait between effects until all animation is done
+            rnd(10, 1000) # Wait between effects until all animation is done
             
       if not targets:
          notify(MSG_AB_NO_EFFECT.format(thisCard, getParsedCard(thisCard).ability))

@@ -177,7 +177,7 @@ def getOpp():
             
 
 def getNextActivePlayer():
-   return players[1] if len(players) > 1 and me.isActive > 1 else me
+   return players[1] if len(players) > 1 and me.isActive else me
 
 
 #---------------------------------------------------------------------------
@@ -218,15 +218,20 @@ def getRing(player = None):
    return [c for c in table
       if c._id in ring]
 
+
 def getRingSize(player = me):
    return NumSlots - getGlobalVar('Ring', player).count(None)
 
 
-def moveToGroup(group, card):
-   mute()
-   fromText = fromWhereStr(card.group)
+def moveToGroup(group, card, source = None):
+   if not source:
+      source = card.group
+   fromText = fromWhereStr(source)
+   if source.name == 'Hand':
+      card.isFaceUp = False
+   name = card.Name if card.isFaceUp else 'a card'
    card.moveTo(group)
-   notify("{} puts {} {} into its {}.".format(me, card.Name, fromText, group.name))
+   notify("{} puts {} {} into {}'s {}.".format(me, name, fromText, group.controller, group.name))
    
 
 #---------------------------------------------------------------------------
@@ -234,7 +239,8 @@ def moveToGroup(group, card):
 #---------------------------------------------------------------------------
 
 def fromWhereStr(src):
-   return "from the ring" if src == table else "from its " + src.name
+   owner = " its " if src.controller == me else " opponent's "
+   return "from the ring" if src == table else "from" + owner + src.name
 
    
 def sanitizeStr(str):
@@ -515,6 +521,17 @@ def askForSlot(player = me, showEmptySlots = True):
       return -1
    return int(slots[slotIdx-1]) - 1
 
+   
+def passControlTo(player, cards, cb = None):
+   for card in cards:
+      if card.group != table:
+         card.moveToTable(0, 0, True)
+      card.controller = player
+   if cb is not None:
+      update()
+      remoteCall(player, cb[0], cb[1])
+   
+
 
 #---------------------------------------------------------------------------
 # Markers functions
@@ -578,6 +595,7 @@ def modBP(card, qty):
       plusBP([card], count = qty)
    else:
       minusBP([card], count = -qty)
+
 
 #---------------------------------------------------------------------------
 # Counter Manipulation
@@ -790,7 +808,7 @@ def debugScenario():
    tableCards = [
       '7717e285-f824-4bfa-bd76-c0039c97190e' # Mega Man
       ,'e367c942-342e-4434-a2d1-dd7188b2d15a' # Mega Man X
-      ,'55b0c9ff-4b3a-4b08-adc1-f1b5e03adef9' # Regina
+      ,'aaf18dab-973f-4126-a47a-78798ec5058b' # Rock
       ,'b8325eaa-1687-4d18-b1e7-6bf335e447c2' # Son Son
    ]
    for i, id in enumerate(tableCards):

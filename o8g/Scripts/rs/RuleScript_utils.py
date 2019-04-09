@@ -97,6 +97,7 @@ class RulesUtils():
       types   = target['types']
       zone    = target['zone']
       filters = target['filters']
+      pick    = target['pick']
       
       # If two or more targets, ask for a single target
       if len(types) > 1:
@@ -122,15 +123,24 @@ class RulesUtils():
             if t == 0:
                return False
             type = RS_KW_PLAYERS[t-1]      
-         targets = RulesUtils.filterTargets(type, filters, zone, cards, source, targeted=True, msg=msg)         
+         targets = RulesUtils.filterTargets(type, filters, zone, cards, source, targeted=True, msg=msg, pick=pick)         
          if targets == False:
             return False
+            
+      # Force to pick cards
+      if pick:
+         if pick > 0:
+            targets = targets[:pick]
+            debug("-- Picked {} card(s)".format(pick))
+         else:
+            targets = targets[pick:]
+            debug("-- Picked {} card(s) from the bottom of {}".format(-pick, ''.join(zone)))
       
       return targets
       
       
    @staticmethod
-   def filterTargets(type, filters, zone, cards, source=None, targeted=False, msg=None):
+   def filterTargets(type, filters, zone, cards, source=None, targeted=False, msg=None, pick=False):
       debug("-- filter targets by type '%s' in zone %s" % (type, zone))
       targets = None
       if type == RS_KW_TARGET_THIS and source:
@@ -142,16 +152,17 @@ class RulesUtils():
          targets = RulesUtils.filterPlayers(type, filters)
       else:
          # Filter cards with a target
-         targets = RulesUtils.filterCards(type, filters, zone, cards, source, targeted, msg)
+         targets = RulesUtils.filterCards(type, filters, zone, cards, source, targeted, msg, pick)
          
       if isinstance(targets, list):
-         debug("-- %s targets retrieved" % len(targets))
-         for i, t in enumerate(targets):
-            if i < 10:
-               debug(" '- target: {}".format(t))
-            else:
-               debug(" '- ...")
-               break
+         debug("-- {} target(s) retrieved:".format(len(targets)))
+         if debugVerbosity >= DebugLevel.Debug:
+            for i, t in enumerate(targets):
+               if i < 10:
+                  debug("        {}".format(t))
+               else:
+                  debug("        ...")
+                  break
       return targets
       
       
@@ -180,7 +191,7 @@ class RulesUtils():
    
    
    @staticmethod
-   def filterCards(type, filters, zone, cards, source=None, targeted=False, msg=None):
+   def filterCards(type, filters, zone, cards, source=None, targeted=False, msg=None, pick=False):
       debug("-- applying %s filters to %s cards" % (len(filters), len(cards)))
       
       cards_f1 = cards
@@ -208,7 +219,7 @@ class RulesUtils():
                cards_f1.remove(card)
                # return False
             
-      if type != RS_KW_ALL:
+      if type != RS_KW_ANY:
          # Look for (super) type
          if type in RS_KW_CARD_TYPES:
             debug("-- checking if any card match type '%s'" % type)
@@ -243,7 +254,7 @@ class RulesUtils():
          else:
             targeted = False
          
-      # Check if only 1 target has been selected
+      # Check if more than 1 target has been selected
       if not multiple and targeted and len(cards_f1) > 1:
          warning(MSG_ERR_MULTIPLE_TARGET)
          return False
@@ -251,7 +262,7 @@ class RulesUtils():
       # Apply filters
       cards_f1 = RulesFilters.applyFiltersTo(cards_f1, filters)
          
-      if not multiple:
+      if not multiple and not pick:
          if len(cards_f1) == 0:
             warning(MSG_ERR_NO_FILTERED_CARDS)
             return False

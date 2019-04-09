@@ -20,7 +20,7 @@
 Case Insensitive
 
 ---------------------------------------------------
-target = type[filters] @ zone
+target = type <pick> [filters] @ zone
 
 Only one target key is allowed.
 
@@ -40,6 +40,11 @@ type:
       ^ (other)
    Sufixes:
       s (plural) (valid on Type, Subtype, player or *)
+      
+pick:
+   Values:
+      Positive number (top of pile)
+      Negative number (bottom of pile)
 
 filters: (optional)
    Operators:
@@ -80,7 +85,6 @@ action = {cost}: [[cond]] effect [& effect] to(target) restr; ...
 
 Only one action key is allowed.
 Several effects can be joined with ';'.
-If target is omitted, effect will target current player or current card if it's an ability
 
 cost: (optional)
    Keywords:
@@ -119,7 +123,10 @@ effect:
    Operators:
       & (and)
       
-to: (optional)
+   Variables:
+      tgt (current target)
+      
+to: (optional) (if omitted, target = current player, or current card for abilities)
    Parameters:
       A valid target
    Alias:
@@ -290,7 +297,9 @@ action = {D(action)}{F}: draw(2)
 """
 
 # Rock's BOUKEN
-# RulesDict['aaf18dab-973f-4126-a47a-78798ec5058b'] = ""
+RulesDict['aaf18dab-973f-4126-a47a-78798ec5058b'] = """
+action = {F}: moveTo(oppDeck) target(*@hand); moveTo(hand) target(*<-1>@oppDeck)
+"""
 
 # Rock Man's ROCK BUSTER
 # RulesDict['1c986de3-bec5-430b-a661-ebbe9b20c20f'] = ""

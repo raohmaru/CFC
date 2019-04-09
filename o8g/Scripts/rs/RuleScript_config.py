@@ -35,6 +35,7 @@ RS_RGX_TARGET_TYPE  = re.compile(r'@|\[')
 RS_RGX_TARGET_RESTR = re.compile(r'\[(.+)\]')
 RS_RGX_TARGET_PARAM = re.compile(r'(\w+)\s*([=><]+)\s*(\w+)')
 RS_RGX_TARGET_ZONE  = re.compile(r'@\s*([\w*]+).*$')
+RS_RGX_TARGET_PICK  = re.compile(r'<\s*((?:\+|\-)?\s*[0-9]+)\s*>')
 
 RS_RGX_KEY_ACTION   = re.compile(r'^action\s*=\s*')
 RS_RGX_AC_COST      = re.compile(r'(\{.+\}\s*)\s*:\s*')
@@ -101,7 +102,7 @@ RS_SUFFIX_TYPES = [
 ]
 
 # Keywords
-RS_KW_ALL = '*'
+RS_KW_ANY = '*'
 
 # Target keywords
 RS_KW_TARGET_PLAYER   = 'player'
@@ -120,7 +121,7 @@ RS_KW_TARGETS = [
    RS_KW_TARGET_CHAR,
    RS_KW_TARGET_ACTION,
    RS_KW_TARGET_REACTION,
-   RS_KW_ALL
+   RS_KW_ANY
 ]
 RS_KW_TARGET_IS_PLAYER = [
    RS_KW_TARGET_PLAYER,

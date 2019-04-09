@@ -53,7 +53,7 @@ actions = [
    # "action = {E(reaction@discard)}: [[may]] moveTo(hand)",
    # "action = {E(reaction@discard)}: [[may 'Question?']] moveTo(hand)",
    # "action = destroy() ueot",
-   # "action = {D(action)}: [[if me.HP < 10]] destroy() to(character) & freeze; draw(2) ueot",
+   "action = {D(action)}: [[if me.HP < 10]] destroy() to(character) & freeze; draw(2) ueot",
    # "action = {F}:  to(character) ueot",
    # "action = {D(2)}: +cantblock to(character@oppRing) ueot",
    # "action = [[may]] destroy()",
@@ -63,6 +63,7 @@ actions = [
    # "action = {F}: moveTo(ctrlDeck) target(characters[-backup]) & shuffle(myDeck) & shuffle(oppDeck)",
    # "action = {F}: destroy() target(^character@myRing) & damage(5, character)",
    "action = [[if  all myring: bp <= 3]] playExtraChar()",
+   "action = {F}: moveTo(@oppDeck) target(*@hand); moveTo(hand) target(*<-1>@oppDeck)"
 ]
 abilities = [
    "abilities = unblockable",

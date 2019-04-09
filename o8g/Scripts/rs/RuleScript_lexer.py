@@ -27,7 +27,8 @@ target: {
       ['-', 'bp', ('>=', '800')]
    ],
    'types': ['characters'],
-   'zone': ['opp', 'ring']
+   'zone': ['opp', 'ring'],
+   'pick': -1
 },
 action: {
    cost: [
@@ -136,6 +137,13 @@ class RulesLexer():
    def parseTarget(tgtStr):
       tgtStr = tgtStr.strip()
       debug("Parsing target: %s" % tgtStr)
+      
+      # Get the cards to pick
+      pick_match = RS_RGX_TARGET_PICK.search(tgtStr)
+      pick = None
+      if pick_match:
+         pick = int(pick_match.group(1))
+         tgtStr = tgtStr.replace(pick_match.group(0), '', 1)
 
       # Get the types
       types = RS_RGX_TARGET_TYPE.split(tgtStr)
@@ -143,9 +151,9 @@ class RulesLexer():
          debug("ParseError: 'target' has no type parameter")
          return False
       types = types[0].split(RS_OP_OR)
-      # RS_KW_ALL overrides the rest
-      if RS_KW_ALL in types:
-         types = [RS_KW_ALL]
+      # RS_KW_ANY overrides the rest
+      if RS_KW_ANY in types:
+         types = [RS_KW_ANY]
       else:
          types = map(str.strip, types)
       debug("-- types: %s" % types)
@@ -184,6 +192,7 @@ class RulesLexer():
       debug("-- zone: %s" % zone)
       
       return {
+         'pick'   : pick,
          'types'  : types,
          'filters': filters_arr,
          'zone'   : [zone_prefix, zone]
