@@ -26,6 +26,7 @@ def triggerPhaseEvent(phase): # Function which triggers effects at the start or 
    
    if   phase == ActivatePhase: activatePhaseStart()
    elif phase == DrawPhase:     drawPhaseStart()
+   elif phase == AttackPhase:   attackPhaseStart()
    elif phase == BlockPhase:    blockPhaseStart()
    elif phase == EndPhase:      endPhaseStart()
    elif phase == CleanupPhase:  cleanupPhaseStart()
@@ -53,6 +54,10 @@ def drawPhaseStart():
          notify("{} has no cards in their deck and therefore can't draw.\n{} wins the game!".format(me,players[1]))
 
          
+def attackPhaseStart():
+   clearKOedChars()
+
+
 def blockPhaseStart():
    if automations['Play']:
       uattack = getGlobalVar('UnitedAttack')
@@ -66,12 +71,16 @@ def blockPhaseStart():
    
    
 def endPhaseStart():
+   clearKOedChars()
+   
    myCards = (card for card in table
       if card.controller == me)
+   # Freeze attacking characters
    for card in myCards:
       if isCharacter(card):
          if (MarkersDict['Attack'] in card.markers or MarkersDict['United Attack'] in card.markers) and not MarkersDict['No Freeze'] in card.markers:
             freeze(card, unfreeze = False, silent = True)
+   
    # Calculates and applies attack damage
    if automations['AttackDmg']:
       blockers = getGlobalVar('Blockers')
@@ -117,14 +126,8 @@ def endPhaseStart():
    
    
 def cleanupPhaseStart():
-   # KOs characters with 0 BP
-   if automations['AttackDmg']:
-      charCards = (card for card in table
-         if isCharacter(card) and not isAttached(card))
-      for card in charCards:
-         if getMarker(card, 'BP') == 0:
-            notify("{}'s {} BP is 0.".format(card.controller, card))
-            remoteCall(card.controller, "destroy", [card])
+   clearKOedChars()
+   
    # Clean my ring
    myCards = (card for card in table
       if card.controller == me)
@@ -143,7 +146,18 @@ def cleanupPhaseStart():
       elif isAction(card) or isReaction(card):
          discard(card)
    clearAll()
-
+   
+ 
+def clearKOedChars():
+   # KOs characters with 0 BP
+   if automations['AttackDmg']:
+      charCards = (card for card in table
+         if isCharacter(card) and not isAttached(card))
+      for card in charCards:
+         if getMarker(card, 'BP') == 0:
+            notify("{}'s {} BP is 0. It will be KOed from the ring".format(card.controller, card))
+            remoteCall(card.controller, "destroy", [card])
+   
 
 #------------------------------------------------------------------------------
 # Play automations
