@@ -180,24 +180,25 @@ def cmd_randomDiscard(targets, restr, source, numCards=1):
    RulesCommands.applyNext()
 
 
-def cmd_moveTo(targets, restr, source, zone):
+def cmd_moveTo(targets, restr, source, zone, pos = None):
    debug(">>> cmd_moveTo({}, {})".format(targets, zone)) #Debug
    zonePrefix, zoneName = RulesLexer.getPrefix(RS_PREFIX_ZONES, zone, RS_PREFIX_CTRL)
    if zoneName in RS_KW_ZONES_PILES:
       pile = RulesUtils.getZoneByName(zone)
+      pos = num(pos)
       for target in targets:
          debug("{}'s {} -> {}'s {}".format(target.controller, target, pile.controller, pile.name))
          if target.controller == me and pile.controller == me:
-            moveToGroup(pile, target)
+            moveToGroup(pile, target, pos = pos)
          elif target.controller == me and pile.controller != me:
             group = target.group
             target.moveToTable(0, 0, True)
             target.controller = pile.controller
-            remoteCall(target.controller, "moveToGroup", [pile, target, group])
+            remoteCall(target.controller, "moveToGroup", [pile, target, group, pos])
          elif target.controller != me and pile.controller == me:
-            remoteCall(target.controller, "passControlTo", [me, [target], ["moveToGroup", [pile, target, target.group]]])
+            remoteCall(target.controller, "passControlTo", [me, [target], ["moveToGroup", [pile, target, target.group, pos]]])
          else:
-            remoteCall(target.controller, "moveToGroup", [pile, target])
+            remoteCall(target.controller, "moveToGroup", [pile, target, None, pos])
          rnd(1, 100) # Wait until all animation is done
    RulesCommands.applyNext()
 

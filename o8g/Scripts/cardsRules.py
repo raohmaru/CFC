@@ -109,7 +109,7 @@ effect:
          reveal(pile=me.hand)
          discard(target cards)
          rndDiscard([#])
-         moveTo(zone)
+         moveTo(zone, pos)
          bp(#|x#)
          playExtraChar()
          draw(#|expression)
@@ -307,7 +307,9 @@ action = {S}: damage(3) to(characters)
 """
 
 # Roll's OPERATE
-# RulesDict['91cb59bd-1e5a-472d-a410-8fa0e1698eb5'] = ""
+RulesDict['91cb59bd-1e5a-472d-a410-8fa0e1698eb5'] = """
+action = {F}: moveTo(myDeck, -1) target(character@myRing)
+"""
 
 # Roll Caskett's RECYCLED PARTS
 # RulesDict['81ec2067-daec-4678-b5fd-9ab13e410551'] = ""

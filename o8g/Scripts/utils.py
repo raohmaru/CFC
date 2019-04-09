@@ -223,15 +223,22 @@ def getRingSize(player = me):
    return NumSlots - getGlobalVar('Ring', player).count(None)
 
 
-def moveToGroup(group, card, source = None):
+def moveToGroup(group, card, source = None, pos = None):
    if not source:
       source = card.group
    fromText = fromWhereStr(source)
+   posText = "to the top of"
+   if pos is not None:
+      if pos < 0:
+         posText = "to the bottom of"
+      elif pos > 0:
+         posText = str(pos) + "to position {} from the top of"
    if source.name == 'Hand':
       card.isFaceUp = False
+      posText = "into"
    name = card.Name if card.isFaceUp else 'a card'
-   card.moveTo(group)
-   notify("{} puts {} {} into {}'s {}.".format(me, name, fromText, group.controller, group.name))
+   card.moveTo(group, pos)
+   notify("{} moved {} {} {} {}'s {}.".format(me, name, fromText, posText, group.controller, group.name))
    
 
 #---------------------------------------------------------------------------
@@ -808,7 +815,7 @@ def debugScenario():
    gotoMain()
    rnd(100, 10000)  # Delay the next action until all animation is done
    tableCards = [
-      '39b7d042-d2c5-4ff3-aad5-231bd3ccc9e7' # Lucifer
+      '91cb59bd-1e5a-472d-a410-8fa0e1698eb5' # Roll
       ,'e367c942-342e-4434-a2d1-dd7188b2d15a' # Mega Man X
       ,'aaf18dab-973f-4126-a47a-78798ec5058b' # Rock
       ,'1c986de3-bec5-430b-a661-ebbe9b20c20f' # Rock Man
