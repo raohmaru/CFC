@@ -201,6 +201,7 @@ if me.name == Author and len(players) == 1:
    debugVerbosity = DebugLevel.All
 parsedCards    = {} # Dictionary holding all parsed cards
 cleanedUpRing  = False  # Tracks if the user has run the Clean-up phase
+commander      = None  # RulesCommands instance
 
 automations = {
    'Play'     : True, # Automatically trigger game effects and card effects when playing cards

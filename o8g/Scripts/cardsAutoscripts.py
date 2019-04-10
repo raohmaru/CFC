@@ -51,7 +51,6 @@ class GameCard(object):
    rules   = None
    
    def __init__(self, card, ruleId=None):
-      debug(">>> GameCard()") #Debug
       self.card_id = card._id
       self.rule_id = ruleId if ruleId else card.model
       self.rules = Rules(self.rule_id, self.card_id)
@@ -76,9 +75,10 @@ class CharCard(GameCard):
    
    def __init__(self, card, ruleId=None):
       super(self.__class__, self).__init__(card, ruleId)
-      debug(">>> CharCard()") #Debug
    
       self._BP = getMarker(card, 'BP')
+      if self._BP == 0 and card.group != table:
+         self._BP = int(card.BP) / BPMultiplier
       ability = Ability(card)
       if ability.name:
          debug("Found ability {}".format(ability))

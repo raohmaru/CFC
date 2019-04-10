@@ -84,7 +84,8 @@ zone: (optional)
 action = {cost}: [[cond]] effect [& effect] to(target) restr; ...
 
 Only one action key is allowed.
-Several effects can be joined with ';'.
+Several actions can be joined with ';'.
+Effects in the same action are executed synchronously; actions are async
 
 cost: (optional)
    Keywords:
@@ -106,7 +107,7 @@ effect:
          swapPiles(pile1, pile2)
          shuffle([myDeck])
          destroy()
-         reveal(pile=me.hand)
+         reveal([pile=myHand])
          discard(target cards)
          rndDiscard([#])
          moveTo(zone, pos)
@@ -114,6 +115,8 @@ effect:
          playExtraChar()
          draw([#|expression])
          steal()
+         each(group: expr {effect})   # context = group item
+         group.each(expr {effect})    # context = group item
       Ability:
          Keywords:
             @see abilities
@@ -150,7 +153,7 @@ ability:
       cantblock
       
 ---------------------------------------------------
-auto = ~event[,event]~ [[cond]] effect [& effect] to(target) restr
+auto = ~event[,event]~ [[cond]] effect [& effect] to(target) restr; ...
 
 Only one auto key is allowed.
 
@@ -195,7 +198,7 @@ Available variables:
    myring
    
 Available functions:
-   all {list}: expr # (context = list item)
+   all group: expr   # context = group item
 """
 
 RulesDict = {}
@@ -267,7 +270,7 @@ action = {F}: moveTo(ctrlDeck) target(characters[-backup]) & shuffle(myDeck) & s
 
 # Maki's FIGHTING SPIRIT
 RulesDict['a9478fcd-e1e2-403b-b1e4-5076b342fd50'] = """
-action = [[if alone]] bp(x2) to(this)
+action = [[if alone]] bp(x2) target(this)
 """
 
 # Lucifer's SACRIFICE
@@ -282,7 +285,7 @@ action = destroy() target(^character@myRing)
 
 # Ruby Heart's TAG ALONG
 RulesDict['ee979882-67cc-4549-881c-8e158df495ce'] = """
-action = [[if all myring: bp <= 3]] playExtraChar()
+action = [[if all myRing: bp <= 3]] playExtraChar()
 """
 
 # Son Son's BUNSHIN
@@ -331,7 +334,10 @@ auto = ~myDrawPhase~ draw() target(me)
 """
 
 # Samanosuke's DEMON GAUNTLET
-# RulesDict['a68dc591-6976-4341-b8b9-1a7dc1c71775'] = ""
+RulesDict['a68dc591-6976-4341-b8b9-1a7dc1c71775'] = """
+action = reveal(hand) & each(myHand: bp <= 3 { bp(+2) }) target(this)
+action = reveal(hand) & myHand.each(bp <= 3 { bp(+2) }) target(this)
+"""
 
 # Ayame's BUTTERFLY ILLUSION
 # RulesDict['33796f5f-c699-42e8-a084-fd28663f08ae'] = ""

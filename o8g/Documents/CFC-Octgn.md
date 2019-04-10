@@ -17,7 +17,7 @@ CFC is a turn-based game. To move to the next phase you can press <span class=kb
 
 To play a card from your hand you can double click on it, then the game will take care of the rest (if Play automation is on). Or you can drag it manually onto the table.
 
-To activate an ability or effect of a card on the table, double click on it. There is no automation yet for the card's effects, so you need to apply them manually.
+To activate an ability or effect of a card on the table, double click on it. Some cards have automated effects that the plugin will apply automatically; for the rest of cards you will need to apply them manually.
 
 You can attack in the Attack phase by pressing <span class=kb>Ctrl</span>+<span class=kb>A</span> over a character card, or <span class=kb>Ctrl</span>+<span class=kb>Alt</span>+<span class=kb>A</span> to join an attacker and do a United Attack.
 

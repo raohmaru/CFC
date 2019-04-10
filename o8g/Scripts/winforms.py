@@ -129,7 +129,9 @@ def messageBox(msg, title, icon = None):
       Application.EnableVisualStyles()
       form = MessageBoxForm(msg, title, icon)
       showWinForm(form)
-   else: 
+   else:
+      if icon == SystemIcons.Warning:
+         notifyBar("#FF0000", msg.replace("\n", " "))
       whisper(msg)
    
 

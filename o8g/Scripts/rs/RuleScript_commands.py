@@ -22,44 +22,50 @@
 class RulesCommands():
    """ Class to handle the filters that are applied to a set of objects """
    items = {}
-   cmds = []
-   cmdsArgs = []
-   prevTargets = None
+
+   def __init__(self):
+      self.cmds = []
+      self.cmdsArgs = []
+      self.prevTargets = None
 
    @staticmethod
    def register(name, cmd):
       RulesCommands.items[name] = cmd
 
 
-   @staticmethod
-   def applyAll(cmds, targets, restr, source, revert=False):
-      RulesCommands.cmds = list(cmds)  # Clone array
-      RulesCommands.cmdsArgs = [targets, restr, source, revert]
-      RulesCommands.applyNext()
+   def applyAll(self, cmds, targets, restr, source, revert=False):
+      self.cmds = list(cmds)  # Clone array
+      self.cmdsArgs = [targets, restr, source, revert]
+      self.applyNext()
 
 
-   @staticmethod
-   def applyNext():
+   def applyNext(self):
    # Ensures that a command is applied only when the precedent command is done
-      if len(RulesCommands.cmds) > 0:
-         cmd = RulesCommands.cmds.pop(0)
-         debug(">>> applyNext({})".format(cmd)) #Debug
-         RulesCommands.applyCmd(cmd, *RulesCommands.cmdsArgs)
+      if len(self.cmds) > 0:
+         cmd = self.cmds.pop(0)
+         debug(">>> applyNext({}, {})".format(cmd, self.cmdsArgs)) #Debug
+         self.applyCmd(cmd, *self.cmdsArgs)
       else:
-         RulesCommands.prevTargets = RulesCommands.cmdsArgs[0]
+         self.prevTargets = self.cmdsArgs[0]
+         self.cmdsArgs = []
 
 
-   @staticmethod
-   def applyCmd(cmd, targets, restr, source, revert=False):
+   def applyCmd(self, cmd, targets, restr, source, revert=False):
       debug(">>> applyCmd({}, {}, {}, {}, {})".format(cmd, targets, restr, source, revert)) #Debug
       funcStr = cmd[0]
       params = cmd[1]
+      
+      # Methods of objects
+      if '.' in funcStr:
+         funcArr = funcStr.split('.')
+         params += [funcArr[0]]
+         funcStr = '.' + funcArr[1]
+      
       # Executing command functions
       if funcStr in RulesCommands.items and not revert:
          debug("-- applying cmd '%s' to targets %s (%s)" % (funcStr, targets, restr))
          func = RulesCommands.items[funcStr]
-         # func = eval(RulesCommands.items[funcStr])  # eval is a necessary evil...
-         func(targets, restr, source, *params)
+         func(self, targets, source, *params)
       # Abilities/bonus manipulation
       elif funcStr in RS_PREFIX_BONUS:
          for target in targets:
@@ -72,39 +78,42 @@ class RulesCommands():
          debug("-- cmd not found: {}".format(cmd[0]))
 
 
-   @staticmethod
-   def clear():
-      RulesCommands.prevTargets = None
-      RulesCommands.cmdsArgs = []
+   def destroy(self):
+      debug(">>> RulesCommands.destroy()")
+      self.cmds = None
+      self.prevTargets = None
 
 
+def nextCommand():
+   commander.applyNext()
+      
 #---------------------------------------------------------------------------
 # Commands functions
 #---------------------------------------------------------------------------
 
-def cmd_damage(targets, restr, source, dmg):
-   debug(">>> cmd_damage({}, {}, {})".format(targets, restr, dmg)) #Debug
+def cmd_damage(rc, targets, source, dmg):
+   debug(">>> cmd_damage({}, {})".format(targets, dmg)) #Debug
    if isNumber(dmg):
       dmg = int(dmg)
    else:
       if dmg == 'tgt.bp':
          dmg = getParsedCard(targets[0]).BP
       elif dmg == 'prevtgt.bp':
-         dmg = getParsedCard(RulesCommands.prevTargets[0]).BP
+         dmg = getParsedCard(self.prevTargets[0]).BP
    for target in targets:
       dealDamage(dmg, target, source)
-   RulesCommands.applyNext()
+   rc.applyNext()
 
 
-def cmd_swapPiles(targets, restr, source, pile1, pile2):
+def cmd_swapPiles(rc, targets, source, pile1, pile2):
    debug(">>> cmd_swapPiles({}, {}, {})".format(source, pile1, pile2)) #Debug
    pile1 = RulesUtils.getZoneByName(pile1)
    pile2 = RulesUtils.getZoneByName(pile2)
    swapPiles(pile1, pile2)
-   RulesCommands.applyNext()
+   rc.applyNext()
 
 
-def cmd_shuffle(targets, restr, source, pileName=None):
+def cmd_shuffle(rc, targets, source, pileName=None):
    debug(">>> cmd_shuffle({})".format(pileName)) #Debug
    if not pileName:
       pileName = RS_KW_ZONE_HAND
@@ -116,20 +125,20 @@ def cmd_shuffle(targets, restr, source, pileName=None):
       else:
          remoteCall(pile.controller, "shuffle", [pile])
    rnd(1, 100) # Wait until all animation is done
-   RulesCommands.applyNext()
+   rc.applyNext()
 
 
-def cmd_destroy(targets, restr, source, *args):
+def cmd_destroy(rc, targets, source, *args):
    debug(">>> cmd_destroy({})".format(targets)) #Debug
    for target in targets:
       if target.controller == me:
          destroy(target)
       else:
          remoteCall(target.controller, "destroy", [target, 0, 0, me])
-   RulesCommands.applyNext()
+   rc.applyNext()
 
 
-def cmd_reveal(targets, restr, source, pileName=None):
+def cmd_reveal(rc, targets, source, pileName=None):
    debug(">>> cmd_reveal({})".format(pileName)) #Debug
    if not pileName:
       pileName = RS_KW_ZONE_HAND
@@ -137,16 +146,16 @@ def cmd_reveal(targets, restr, source, pileName=None):
       pile = RulesUtils.getZoneByName(pileName)
       if pile.controller == me:
          # Once the other player is done, apply next command
-         remoteCall(getOpp(), "reveal", [pile, "RulesCommands.applyNext"])
+         remoteCall(getOpp(), "reveal", [pile, "nextCommand"])
          return
       else:
          reveal(pile)
    else:
       debug("{} is not a valid pile".format(pileName))
-   RulesCommands.applyNext()
+   rc.applyNext()
 
 
-def cmd_discard(targets, restr, source, whichCards):
+def cmd_discard(rc, targets, source, whichCards):
    debug(">>> cmd_discard({})".format(whichCards)) #Debug
    cardsTokens = RulesLexer.parseTarget(whichCards)
    if not targets == 0:
@@ -161,10 +170,10 @@ def cmd_discard(targets, restr, source, whichCards):
             discard(card)
          else:
             remoteCall(player, "discard", [card])
-   RulesCommands.applyNext()
+   rc.applyNext()
 
 
-def cmd_randomDiscard(targets, restr, source, numCards=1):
+def cmd_randomDiscard(rc, targets, source, numCards=1):
    debug(">>> cmd_randomDiscard({})".format(whichCards)) #Debug
    if isNumber(numCards):
       numCards = int(numCards)
@@ -177,10 +186,10 @@ def cmd_randomDiscard(targets, restr, source, numCards=1):
                randomDiscard()
             else:
                remoteCall(player, "randomDiscard", [])
-   RulesCommands.applyNext()
+   rc.applyNext()
 
 
-def cmd_moveTo(targets, restr, source, zone, pos = None):
+def cmd_moveTo(rc, targets, source, zone, pos = None):
    debug(">>> cmd_moveTo({}, {})".format(targets, zone)) #Debug
    zonePrefix, zoneName = RulesLexer.getPrefix(RS_PREFIX_ZONES, zone, RS_PREFIX_CTRL)
    if zoneName in RS_KW_ZONES_PILES:
@@ -200,10 +209,10 @@ def cmd_moveTo(targets, restr, source, zone, pos = None):
          else:
             remoteCall(target.controller, "moveToGroup", [pile, target, None, pos])
          rnd(1, 100) # Wait until all animation is done
-   RulesCommands.applyNext()
+   rc.applyNext()
 
 
-def cmd_bp(targets, restr, source, qty):
+def cmd_bp(rc, targets, source, qty):
    mod = False
    if qty[0] == 'x':
       mod = qty[0]
@@ -220,19 +229,19 @@ def cmd_bp(targets, restr, source, qty):
             modBP(target, newQty)
          else:
             remoteCall(target.controller, "modBP", [target, newQty])
-   RulesCommands.applyNext()
+   rc.applyNext()
 
 
-def cmd_playExtraChar(targets, restr, source, *args):
+def cmd_playExtraChar(rc, targets, source, *args):
    global charsPlayed
    debug(">>> cmd_playExtraChar() {} -> {}".format(charsPlayed, charsPlayed-1))
    charsPlayed -= 1
    if charsPlayed < 0:
       charsPlayed = 0
-   RulesCommands.applyNext()
+   rc.applyNext()
 
 
-def cmd_draw(targets, restr, source, qty):
+def cmd_draw(rc, targets, source, qty):
    if qty == '':
       qty = 1
    if isNumber(qty):
@@ -247,13 +256,33 @@ def cmd_draw(targets, restr, source, qty):
          drawMany(me.Deck, amount)
       else:
          remoteCall(target, "drawMany", [target.Deck, amount])
-   RulesCommands.applyNext()
+   rc.applyNext()
 
 
-def cmd_steal(targets, restr, source, *args):
+def cmd_steal(rc, targets, source, *args):
    debug(">>> cmd_steal({}, {})".format(targets, source)) #Debug
    stealAbility(source, target = targets[0])
-   RulesCommands.applyNext()
+   rc.applyNext()
+
+
+def cmd_each(rc, targets, source, args, obj = None):
+   cond, func = args.split('{')
+   func = RulesLexer.parseAction(func.rstrip('}'))
+   func = func['effects'][0][1]
+   if obj:
+      cond = obj + ':' + cond
+   debug(">>> cmd_each({}, {}, {})".format(targets, cond, func)) #Debug
+   
+   res = evalExpression(cond, True)
+   if len(res) > 0:
+      subrc = RulesCommands()
+      for v in res:
+         if v:
+            subrc.applyAll(func, targets, None, source)
+            rnd(1, 100) # Wait between effects until all animation is done
+      subrc.destroy()
+   
+   rc.applyNext()
 
 
 RulesCommands.register('damage',        cmd_damage)
@@ -268,3 +297,5 @@ RulesCommands.register('bp',            cmd_bp)
 RulesCommands.register('playextrachar', cmd_playExtraChar)
 RulesCommands.register('draw',          cmd_draw)
 RulesCommands.register('steal',         cmd_steal)
+RulesCommands.register('.each',         cmd_each)
+RulesCommands.register('each',          cmd_each)

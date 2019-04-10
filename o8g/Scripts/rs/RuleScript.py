@@ -21,14 +21,12 @@
 
 class Rules():
    """ A class to parse, hold and execute the rules of a card """
-   rule_id      = ''
-   card_id      = ''
-   rules_tokens = None
-   prevTargets  = None
 
    def __init__(self, rule, cid):
       self.rule_id = rule.lower()
       self.card_id = cid
+      self.rules_tokens = None
+      self.prevTargets  = None
       self.parse()
 
 
@@ -106,6 +104,10 @@ class Rules():
             
       thisCard = Card(self.card_id)
       revert = False
+      
+      global commander
+      if commander is None:
+         commander = RulesCommands()
             
       # First the player must pay the cost, or we cancel
       if action['cost']:
@@ -163,14 +165,13 @@ class Rules():
       for i, effect in enumerate(action['effects']):
          if len(effect[1]) > 0:
             debug("-- Applying commands")
-            RulesCommands.applyAll(effect[1], targets[i], effect[3], thisCard, revert)
+            commander.applyAll(effect[1], targets[i], effect[3], thisCard, revert)
             # Clear visual target
             if targets[i] and not isAuto:
                for obj in targets[i]:
                   if isCard(obj):
                      obj.target(False)
             rnd(10, 1000) # Wait between effects until all animation is done
-      RulesCommands.clear()
             
       if not targets:
          notify(MSG_AB_NO_EFFECT.format(thisCard, getParsedCard(thisCard).ability))

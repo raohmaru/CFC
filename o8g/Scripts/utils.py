@@ -76,10 +76,12 @@ def resetAll():
    clearGlobalVar('Transformed')
    clearGlobalVar('GameEvents')
    
-   if len(players) > 1:
+   if me.name == Author:
+      if debugVerbosity == DebugLevel.Off:
+         debugVerbosity = DebugLevel.All
+   else:
       debugVerbosity = DebugLevel.Off # Reset means normal game.
-   elif debugVerbosity == DebugLevel.Off:
-      debugVerbosity = DebugLevel.All
+   
    debug("<<< resetAll()") #Debug
 
 
@@ -133,30 +135,37 @@ def clearGlobalVar(name, player = None):
    setGlobalVar(name, gvar, player)
    
 
+def replaceVars(str):
+   return re.sub(Regexps['BP'], 'getParsedCard(c).BP', str)
+   
+   
 def evalExpression(expr, retValue = False):
    # Adding some variables only available in this scope.
    # Must be in lower case.
-   myhandsize = len(me.hand)
+   myhand = me.hand
+   myhandsize = len(myhand)
    opphandsize = len(players[1].hand) if len(players) > 1 else 0
    oppringsize = getRingSize(players[1]) if len(players) > 1 else 0
    alone = getRingSize() == 1
    myring = getRing(me)
       
+   if ':' in expr:
+      expr = replaceVars(expr)
+      parts = expr.split(":")
+      expr = "[{} for c in {}]".format(parts[1], parts[0])
+   
    if expr[:3] == 'all':
       expr = expr.replace('all', '')
-      expr = re.sub(Regexps['BP'], 'getParsedCard(c).BP', expr)
-      parts = expr.split(":")
-      expr = parts[1] + ' for c in' + parts[0]
       # https://docs.python.org/2.7/library/functions.html
-      expr = 'all([' + expr + '])'
-
+      expr = 'all(' + expr + ')'
+   
    try:
       res = eval(expr)
       if retValue:
-         debug("Evaluating expr  %s  (%s)" % (expr, res))
+         debug("Evaluated expr  %s  (%s)" % (expr, res))
          return res
       else:
-         debug("Evaluating expr  %s == True  (%s)" % (expr, res))
+         debug("Evaluated expr  %s == True  (%s)" % (expr, res))
          return bool(res)
    except:
       debug("%s  is not a valid Python expression" % (expr))
@@ -279,6 +288,8 @@ def fixCardY(y):
    offsetY = 0
    if me.isInverted:
       offsetY = CardHeight
+   if not playerSide:
+      chooseSide()
    return (y + offsetY) * playerSide
    
    
@@ -816,8 +827,8 @@ def debugScenario():
    gotoMain()
    rnd(100, 10000)  # Delay the next action until all animation is done
    tableCards = [
-      '8e8e0107-db05-4cb3-a912-af2b2dea92d9' # Tron Bonne
-      ,'e367c942-342e-4434-a2d1-dd7188b2d15a' # Mega Man X
+      'a68dc591-6976-4341-b8b9-1a7dc1c71775' # Samanosuke
+      # ,'e367c942-342e-4434-a2d1-dd7188b2d15a' # Mega Man X
       # ,'47804cd4-2cc5-4aba-a4f8-393da73a5758' # Roll-chan
       # ,'1c986de3-bec5-430b-a661-ebbe9b20c20f' # Rock Man
    ]
@@ -832,10 +843,13 @@ def debugScenario():
       rnd(1, 100)  # Delay the next action until all animation is done
       
    handCards = [
-      # '365cddf9-f741-4a3e-bf07-de4b3eecc6d2' # Mech Zangief
-      '85d84ab1-dede-4fc7-b80d-00778f73c905' # Action
-      ,'ac01bbbe-583e-46ae-b26c-3c25eb8f0779' # Action
-      # ,'556b3359-e642-419a-ab5c-67f70de1bb4f' # Reaction
+      'd14694b4-484c-4b45-962e-8cbb636d8a9a'
+      ,'8ce9a56f-8c0c-49e7-879c-12179c63f288'
+      ,'61ef9ecd-980b-46b8-83fc-12399ce044f1'
+      ,'0a8f39ff-6b21-4805-bafb-27c3f38d1986'
+      ,'525d8365-c90e-491f-9811-1f23efbafccb'
+      ,'bdeceb7c-9d94-4c98-824b-90d5317d8cda'
+      ,'e94aaa00-2449-46a4-9ff4-273e6dac272a'
    ]
    for id in handCards:
       debug("Adding card {} to hand".format(id))
@@ -844,15 +858,15 @@ def debugScenario():
       rnd(1, 100)  # Delay the next action until all animation is done
    
    deckCards = [
-      '365cddf9-f741-4a3e-bf07-de4b3eecc6d2' # Mech Zangief
-      ,'85d84ab1-dede-4fc7-b80d-00778f73c905' # Action
-      ,'ac01bbbe-583e-46ae-b26c-3c25eb8f0779' # Action
-      ,'556b3359-e642-419a-ab5c-67f70de1bb4f' # Reaction
-      ,'91e441cc-0f1f-4b01-a2b0-94678d6f0b56' # Reaction
-      ,'85d84ab1-dede-4fc7-b80d-00778f73c905' # Action
-      ,'ac01bbbe-583e-46ae-b26c-3c25eb8f0779' # Action
-      ,'556b3359-e642-419a-ab5c-67f70de1bb4f' # Reaction
-      ,'91e441cc-0f1f-4b01-a2b0-94678d6f0b56' # Reaction
+      # '365cddf9-f741-4a3e-bf07-de4b3eecc6d2' # Mech Zangief
+      # ,'85d84ab1-dede-4fc7-b80d-00778f73c905' # Action
+      # ,'ac01bbbe-583e-46ae-b26c-3c25eb8f0779' # Action
+      # ,'556b3359-e642-419a-ab5c-67f70de1bb4f' # Reaction
+      # ,'91e441cc-0f1f-4b01-a2b0-94678d6f0b56' # Reaction
+      # ,'85d84ab1-dede-4fc7-b80d-00778f73c905' # Action
+      # ,'ac01bbbe-583e-46ae-b26c-3c25eb8f0779' # Action
+      # ,'556b3359-e642-419a-ab5c-67f70de1bb4f' # Reaction
+      # ,'91e441cc-0f1f-4b01-a2b0-94678d6f0b56' # Reaction
    ]
    for id in deckCards:
       debug("Adding card {} to Deck".format(id))

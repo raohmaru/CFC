@@ -41,7 +41,7 @@ RS_RGX_KEY_ACTION   = re.compile(r'^action\s*=\s*')
 RS_RGX_AC_COST      = re.compile(r'(\{.+\}\s*)\s*:\s*')
 RS_RGX_AC_EVENT     = re.compile(r'~\s*([\w,]+)\s*?~')
 RS_RGX_AC_TARGET    = re.compile(r'\b(?:to|target)\s*\(([^)]+)\)')
-RS_RGX_AC_EFFECT    = re.compile(r'(\w+)\s*\((.*?)\)')
+RS_RGX_AC_EFFECT    = re.compile(r'([\w.]+)\s*\((.*?)\)$')
 
 RS_RGX_KEY_ABILITY  = re.compile(r'^abilities\s*=\s*')
 RS_RGX_KEY_AUTO     = re.compile(r'^auto\s*=\s*')
