@@ -781,7 +781,7 @@ def drawMany(group, count = None, silent = False):  # This function draws a vari
       if len(group) > 0:  # If the deck is not empty...
          group.top().moveTo(me.hand)  # ...then move them one by one into their play hand.
    if not silent:
-      notify("{} draws {} cards.".format(me, count))
+      notify("{} draws {} card(s).".format(me, i))
 
 
 def randomDraw(group = me.Deck, type = None):
@@ -971,3 +971,10 @@ def setDebugVerbosity(group, x=0, y=0):
       return
    debugVerbosity = choice - 2
    whisper("Debug verbosity is now: {} ({})".format(levels[choice-1], debugVerbosity))
+
+
+def createCard(group, x=0, y=0):
+   id, quantity = askCard(title = 'Choose a card to add to the game')
+   if quantity > 0:
+      card = table.create(id, 0, 0, quantity=quantity, persist=True)
+      notify("{} has created the card {}".format(me, card))

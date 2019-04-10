@@ -235,6 +235,7 @@ def moveToGroup(group, card, source = None, pos = None):
          posText = str(pos) + "to position {} from the top of"
    if source.name == 'Hand':
       card.isFaceUp = False
+   if group.name == 'Hand':
       posText = "into"
    name = card.Name if card.isFaceUp else 'a card'
    card.moveTo(group, pos)
@@ -816,9 +817,9 @@ def debugScenario():
    rnd(100, 10000)  # Delay the next action until all animation is done
    tableCards = [
       '91cb59bd-1e5a-472d-a410-8fa0e1698eb5' # Roll
-      ,'e367c942-342e-4434-a2d1-dd7188b2d15a' # Mega Man X
-      ,'aaf18dab-973f-4126-a47a-78798ec5058b' # Rock
-      ,'1c986de3-bec5-430b-a661-ebbe9b20c20f' # Rock Man
+      ,'81ec2067-daec-4678-b5fd-9ab13e410551' # Roll Caskett
+      # ,'aaf18dab-973f-4126-a47a-78798ec5058b' # Rock
+      # ,'1c986de3-bec5-430b-a661-ebbe9b20c20f' # Rock Man
    ]
    for i, id in enumerate(tableCards):
       debug("Creating card {} at slot {}".format(id, i))
@@ -831,10 +832,10 @@ def debugScenario():
       rnd(1, 100)  # Delay the next action until all animation is done
       
    handCards = [
-      '365cddf9-f741-4a3e-bf07-de4b3eecc6d2' # Mech Zangief
-      ,'85d84ab1-dede-4fc7-b80d-00778f73c905'
-      ,'ac01bbbe-583e-46ae-b26c-3c25eb8f0779'
-      ,'556b3359-e642-419a-ab5c-67f70de1bb4f'
+      # '365cddf9-f741-4a3e-bf07-de4b3eecc6d2' # Mech Zangief
+      # ,'85d84ab1-dede-4fc7-b80d-00778f73c905' # Action
+      # ,'ac01bbbe-583e-46ae-b26c-3c25eb8f0779' # Action
+      # ,'556b3359-e642-419a-ab5c-67f70de1bb4f' # Reaction
    ]
    for id in handCards:
       debug("Adding card {} to hand".format(id))
@@ -842,6 +843,19 @@ def debugScenario():
       card.moveTo(me.hand)
       rnd(1, 100)  # Delay the next action until all animation is done
    
+   discardCards = [
+      '365cddf9-f741-4a3e-bf07-de4b3eecc6d2' # Mech Zangief
+      ,'85d84ab1-dede-4fc7-b80d-00778f73c905' # Action
+      ,'ac01bbbe-583e-46ae-b26c-3c25eb8f0779' # Action
+      ,'556b3359-e642-419a-ab5c-67f70de1bb4f' # Reaction
+      ,'91e441cc-0f1f-4b01-a2b0-94678d6f0b56' # Reaction
+   ]
+   for id in discardCards:
+      debug("Adding card {} to Discard pile".format(id))
+      card = table.create(id, 0, 0, quantity=1, persist=True)
+      card.moveTo(me.piles['Discard Pile'])
+      rnd(1, 100)  # Delay the next action until all animation is done
+      
    debug("<<< debugScenario()") #Debug
 
 

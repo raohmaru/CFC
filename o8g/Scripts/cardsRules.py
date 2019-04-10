@@ -73,7 +73,7 @@ zone: (optional)
       ring
       hand
       deck
-      discard
+      discards
       kill
    Prefixes:
       my (default)
@@ -218,7 +218,7 @@ action = {D}{F}: +cantblock to(character@oppRing) ueot
 
 # Shinjin Akuma's MASTERED DESTINY
 RulesDict['9da88c0d-7915-43e2-a555-23ffbcf11226'] = """
-action = swapPiles(deck,discard) & shuffle()
+action = swapPiles(deck,discards) & shuffle()
 """
 
 # Blodia's ENERGY COST
@@ -312,7 +312,9 @@ action = {F}: moveTo(myDeck, -1) target(character@myRing)
 """
 
 # Roll Caskett's RECYCLED PARTS
-# RulesDict['81ec2067-daec-4678-b5fd-9ab13e410551'] = ""
+RulesDict['81ec2067-daec-4678-b5fd-9ab13e410551'] = """
+action = moveTo(hand) target(reaction@discards)
+"""
 
 # Roll-chan's ROLL BUSTER
 # RulesDict['47804cd4-2cc5-4aba-a4f8-393da73a5758'] = ""

@@ -47,7 +47,7 @@ class RulesUtils():
       elif name == RS_KW_ZONE_DECK:
          zone = player.Deck
       
-      elif name == RS_KW_ZONE_DISCARD:
+      elif name == RS_KW_ZONE_DISCARDS:
          zone = player.piles['Discard Pile']
       
       elif name == RS_KW_ZONE_KILL:
@@ -81,7 +81,7 @@ class RulesUtils():
       elif zone == RS_KW_ZONE_DECK:
          cards = [c for c in player.Deck]
       
-      elif zone == RS_KW_ZONE_DISCARD:
+      elif zone == RS_KW_ZONE_DISCARDS:
          cards = [c for c in player.piles['Discard Pile']]
       
       elif zone == RS_KW_ZONE_KILL:
@@ -184,7 +184,7 @@ class RulesUtils():
       arr = RulesFilters.applyFiltersTo(arr, filters)
          
       if len(arr) == 0:
-         warning(MSG_ERR_NO_FILTERED_PLAYERS)
+         whisper(MSG_ERR_NO_FILTERED_PLAYERS)
          return False
       
       return arr
@@ -264,7 +264,7 @@ class RulesUtils():
          
       if not multiple and not pick:
          if len(cards_f1) == 0:
-            warning(MSG_ERR_NO_FILTERED_CARDS)
+            whisper(MSG_ERR_NO_FILTERED_CARDS)
             return False
          # Check if more than 1 target has been selected
          elif len(cards_f1) > 1:

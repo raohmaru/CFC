@@ -140,18 +140,18 @@ RS_KW_CARD_TYPES = [
 ]
 
 # Zone keywords
-RS_KW_ZONE_ARENA   = 'arena'
-RS_KW_ZONE_RING    = 'ring'
-RS_KW_ZONE_HAND    = 'hand'
-RS_KW_ZONE_DECK    = 'deck'
-RS_KW_ZONE_DISCARD = 'discard'
-RS_KW_ZONE_KILL    = 'kill'
+RS_KW_ZONE_ARENA    = 'arena'
+RS_KW_ZONE_RING     = 'ring'
+RS_KW_ZONE_HAND     = 'hand'
+RS_KW_ZONE_DECK     = 'deck'
+RS_KW_ZONE_DISCARDS = 'discards'
+RS_KW_ZONE_KILL     = 'kill'
 RS_KW_ZONES = [
    RS_KW_ZONE_ARENA,
    RS_KW_ZONE_RING,
    RS_KW_ZONE_HAND,
    RS_KW_ZONE_DECK,
-   RS_KW_ZONE_DISCARD,
+   RS_KW_ZONE_DISCARDS,
    RS_KW_ZONE_KILL
 ]
 
@@ -164,7 +164,7 @@ RS_KW_TARGET_ZONES = [
 RS_KW_ZONES_PILES = [
    RS_KW_ZONE_HAND,
    RS_KW_ZONE_DECK,
-   RS_KW_ZONE_DISCARD,
+   RS_KW_ZONE_DISCARDS,
    RS_KW_ZONE_KILL
 ]
 
