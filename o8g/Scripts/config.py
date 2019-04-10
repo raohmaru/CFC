@@ -134,6 +134,7 @@ DebugLevelPrefixes = [
 
 # Game Events
 GameEvents = Struct(**{
+   'DrawPhase'  : 'drawphase',
    'BlockPhase' : 'blockphase',
    'EndPhase'   : 'endphase',
    'Blocked'    : 'blocked',
@@ -161,7 +162,7 @@ MSG_COST_NOT_PAYED          = "{} did not pay the activation cost of {}'s {}"
 MSG_CANT_BLOCK              = "{} cannot block due to {}'s {} ability."
 MSG_UNBLOCKABLE             = "{} cannot be counter-attacked due to {}'s {} ability."
 MSG_AB_NO_EFFECT            = "{}'s ability {} has no effect."
-MSG_AB_AUTO_ACTIVATION      = "Activated {}'s auto ability {}."
+MSG_AB_AUTO_ACTIVATION      = "{} has activated {}'s auto ability {}."
 MSG_AB_AUTO_UATTACK         = "Cannot activate {}'s auto ability {} because it joined an United Attack."
 MSG_ERR_NO_CARDS            = "There are no targets available, hence the ability has no effect."
 MSG_ERR_NO_CARDS_HAND       = "You don't have enough cards in your hand to pay the cost of the ability."

@@ -1,8 +1,8 @@
 # Card Fighters' Clash Changelog
 
 ## 0.7.1
-Scripted abilities: Haggar, Maki, Lucifer, Ruby Heart, Son Son, Mega Man, Mega Man X, Rock, Rock Man, Roll, Roll Caskett.
-Minor improvements to game play.
+Scripted abilities: Haggar, Maki, Lucifer, Ruby Heart, Son Son, Mega Man, Mega Man X, Rock, Rock Man, Roll, Roll Caskett, Tron Bonne.
+Minor improvements to the game play.
 ## 0.7.0
 Enabled card automations.
 ## 0.6.3

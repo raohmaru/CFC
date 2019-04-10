@@ -196,17 +196,15 @@ def switchAttackDamage(group, x = 0, y = 0):
 
 def defaultAction(card, x = 0, y = 0):
    phaseIdx = currentPhase()[1]
-   if (
-         (me.isActive and phaseIdx == MainPhase and (isCharacter(card) or isAction(card)))
+   if me.isActive and phaseIdx == AttackPhase and isCharacter(card):
+      attack(card, x, y)
+   elif not me.isActive and phaseIdx == BlockPhase and isCharacter(card):
+      block(card, x, y)
+   elif (
+         (me.isActive and (isCharacter(card) or isAction(card)))
          or (not me.isActive and phaseIdx == BlockPhase and isReaction(card))
       ):
       activate(card, x, y)
-
-   if me.isActive and phaseIdx == AttackPhase and isCharacter(card):
-      attack(card, x, y)
-
-   if not me.isActive and phaseIdx == BlockPhase and isCharacter(card):
-      block(card, x, y)
 
 
 def attack(card, x = 0, y = 0):
@@ -781,7 +779,7 @@ def drawMany(group, count = None, silent = False):  # This function draws a vari
       if len(group) > 0:  # If the deck is not empty...
          group.top().moveTo(me.hand)  # ...then move them one by one into their play hand.
    if not silent:
-      notify("{} draws {} card(s).".format(me, i))
+      notify("{} draws {} card(s).".format(me, i+1))
 
 
 def randomDraw(group = me.Deck, type = None):

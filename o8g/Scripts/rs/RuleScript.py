@@ -176,7 +176,7 @@ class Rules():
          notify(MSG_AB_NO_EFFECT.format(thisCard, getParsedCard(thisCard).ability))
          
       if isAuto and not revert:
-         notify(MSG_AB_AUTO_ACTIVATION.format(thisCard, getParsedCard(thisCard).ability))
+         notify(MSG_AB_AUTO_ACTIVATION.format(thisCard.controller, thisCard, getParsedCard(thisCard).ability))
       
       return True
 
@@ -191,6 +191,7 @@ class Rules():
       
       if eventName:
          thisCard = Card(self.card_id)
+         notify("{} tries to activate {}'s auto ability.".format(thisCard.controller, thisCard))
          if not MarkersDict['United Attack'] in thisCard.markers:
             self.execAction(auto, [thisCard], True)
          else:

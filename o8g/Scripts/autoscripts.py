@@ -52,6 +52,8 @@ def drawPhaseStart():
    if automations['Play']:
       if len(me.Deck) == 0 and len(players) > 1:
          notify("{} has no cards in their deck and therefore can't draw.\n{} wins the game!".format(me,players[1]))
+   # Trigger event
+   triggerGameEvent(GameEvents.DrawPhase)
 
          
 def attackPhaseStart():

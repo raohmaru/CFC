@@ -233,6 +233,8 @@ def cmd_playExtraChar(targets, restr, source, *args):
 
 
 def cmd_draw(targets, restr, source, qty):
+   if qty == '':
+      qty = 1
    if isNumber(qty):
       amount = num(qty)
    else:

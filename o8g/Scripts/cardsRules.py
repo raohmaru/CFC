@@ -112,7 +112,7 @@ effect:
          moveTo(zone, pos)
          bp(#|x#)
          playExtraChar()
-         draw(#|expression)
+         draw([#|expression])
          steal()
       Ability:
          Keywords:
@@ -126,11 +126,13 @@ effect:
    Variables:
       tgt (current target)
       
-to: (optional) (if omitted, target = current player, or current card for abilities)
+to: (optional)
    Parameters:
       A valid target
    Alias:
       target
+   Default:
+      current player
       
 restr: (optional)
    Keywords:
@@ -154,6 +156,7 @@ Only one auto key is allowed.
 
 event:
    Keywords:
+      drawphase
       blockphase
       endphase
       blocked
@@ -173,7 +176,8 @@ effect:
 
 to:
    @see action:to
-   default: this
+   Default
+      this
 
 restr:
    @see action:restr
@@ -322,7 +326,9 @@ action = {F}: damage(2) to(characters)
 """
 
 # Tron Bonne's HELP FROM KOBUN
-# RulesDict['8e8e0107-db05-4cb3-a912-af2b2dea92d9'] = ""
+RulesDict['8e8e0107-db05-4cb3-a912-af2b2dea92d9'] = """
+auto = ~myDrawPhase~ draw() target(me)
+"""
 
 # Samanosuke's DEMON GAUNTLET
 # RulesDict['a68dc591-6976-4341-b8b9-1a7dc1c71775'] = ""
