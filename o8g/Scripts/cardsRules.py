@@ -317,7 +317,9 @@ action = moveTo(hand) target(reaction@discards)
 """
 
 # Roll-chan's ROLL BUSTER
-# RulesDict['47804cd4-2cc5-4aba-a4f8-393da73a5758'] = ""
+RulesDict['47804cd4-2cc5-4aba-a4f8-393da73a5758'] = """
+action = {F}: damage(2) to(characters)
+"""
 
 # Tron Bonne's HELP FROM KOBUN
 # RulesDict['8e8e0107-db05-4cb3-a912-af2b2dea92d9'] = ""

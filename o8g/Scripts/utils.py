@@ -818,7 +818,7 @@ def debugScenario():
    tableCards = [
       '91cb59bd-1e5a-472d-a410-8fa0e1698eb5' # Roll
       ,'81ec2067-daec-4678-b5fd-9ab13e410551' # Roll Caskett
-      # ,'aaf18dab-973f-4126-a47a-78798ec5058b' # Rock
+      ,'47804cd4-2cc5-4aba-a4f8-393da73a5758' # Roll-chan
       # ,'1c986de3-bec5-430b-a661-ebbe9b20c20f' # Rock Man
    ]
    for i, id in enumerate(tableCards):
@@ -844,11 +844,11 @@ def debugScenario():
       rnd(1, 100)  # Delay the next action until all animation is done
    
    discardCards = [
-      '365cddf9-f741-4a3e-bf07-de4b3eecc6d2' # Mech Zangief
-      ,'85d84ab1-dede-4fc7-b80d-00778f73c905' # Action
-      ,'ac01bbbe-583e-46ae-b26c-3c25eb8f0779' # Action
-      ,'556b3359-e642-419a-ab5c-67f70de1bb4f' # Reaction
-      ,'91e441cc-0f1f-4b01-a2b0-94678d6f0b56' # Reaction
+      # '365cddf9-f741-4a3e-bf07-de4b3eecc6d2' # Mech Zangief
+      # ,'85d84ab1-dede-4fc7-b80d-00778f73c905' # Action
+      # ,'ac01bbbe-583e-46ae-b26c-3c25eb8f0779' # Action
+      # ,'556b3359-e642-419a-ab5c-67f70de1bb4f' # Reaction
+      # ,'91e441cc-0f1f-4b01-a2b0-94678d6f0b56' # Reaction
    ]
    for id in discardCards:
       debug("Adding card {} to Discard pile".format(id))
