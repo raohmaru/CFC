@@ -192,7 +192,7 @@ class Rules():
       
       if eventName:
          thisCard = Card(self.card_id)
-         notify("{} tries to activate {}'s auto ability.".format(thisCard.controller, thisCard))
+         notify("Event \"{}\" triggered. Now trying to activate {}'s auto ability from {}'s ring.".format(eventName, thisCard, thisCard.controller))
          if not MarkersDict['United Attack'] in thisCard.markers:
             self.execAction(auto, [thisCard], True)
          else:

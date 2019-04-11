@@ -46,6 +46,8 @@ def activatePhaseStart():
       # Discard any Action or Reaction card left in the table (just in case player forgot to remove them)
       elif isAction(card) or isReaction(card):
          discard(card)
+   # Trigger event
+   triggerGameEvent(GameEvents.ActivatePhase)
          
             
 def drawPhaseStart():

@@ -159,6 +159,7 @@ Only one auto key is allowed.
 
 event:
    Keywords:
+      activatephase
       drawphase
       blockphase
       endphase
@@ -180,7 +181,7 @@ effect:
 to:
    @see action:to
    Default
-      this
+      this card
 
 restr:
    @see action:restr
@@ -340,7 +341,9 @@ action = reveal(hand) & myHand.each(bp <= 3 { bp(+2) }) target(this)
 """
 
 # Ayame's BUTTERFLY ILLUSION
-# RulesDict['33796f5f-c699-42e8-a084-fd28663f08ae'] = ""
+RulesDict['33796f5f-c699-42e8-a084-fd28663f08ae'] = """
+auto = ~activatePhase~ moveTo(hand)
+"""
 
 # Falcon's POWER STONE
 # RulesDict['6f733db6-883b-41f5-a657-4e19784d183c'] = ""

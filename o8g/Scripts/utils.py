@@ -828,7 +828,7 @@ def debugScenario():
    rnd(100, 10000)  # Delay the next action until all animation is done
    tableCards = [
       'a68dc591-6976-4341-b8b9-1a7dc1c71775' # Samanosuke
-      # ,'e367c942-342e-4434-a2d1-dd7188b2d15a' # Mega Man X
+      ,'33796f5f-c699-42e8-a084-fd28663f08ae' # Ayame
       # ,'47804cd4-2cc5-4aba-a4f8-393da73a5758' # Roll-chan
       # ,'1c986de3-bec5-430b-a661-ebbe9b20c20f' # Rock Man
    ]
@@ -843,13 +843,13 @@ def debugScenario():
       rnd(1, 100)  # Delay the next action until all animation is done
       
    handCards = [
-      'd14694b4-484c-4b45-962e-8cbb636d8a9a'
-      ,'8ce9a56f-8c0c-49e7-879c-12179c63f288'
-      ,'61ef9ecd-980b-46b8-83fc-12399ce044f1'
-      ,'0a8f39ff-6b21-4805-bafb-27c3f38d1986'
-      ,'525d8365-c90e-491f-9811-1f23efbafccb'
-      ,'bdeceb7c-9d94-4c98-824b-90d5317d8cda'
-      ,'e94aaa00-2449-46a4-9ff4-273e6dac272a'
+      # 'd14694b4-484c-4b45-962e-8cbb636d8a9a'
+      # ,'8ce9a56f-8c0c-49e7-879c-12179c63f288'
+      # ,'61ef9ecd-980b-46b8-83fc-12399ce044f1'
+      # ,'0a8f39ff-6b21-4805-bafb-27c3f38d1986'
+      # ,'525d8365-c90e-491f-9811-1f23efbafccb'
+      # ,'bdeceb7c-9d94-4c98-824b-90d5317d8cda'
+      # ,'e94aaa00-2449-46a4-9ff4-273e6dac272a'
    ]
    for id in handCards:
       debug("Adding card {} to hand".format(id))

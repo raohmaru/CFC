@@ -134,13 +134,14 @@ DebugLevelPrefixes = [
 
 # Game Events
 GameEvents = Struct(**{
-   'DrawPhase'  : 'drawphase',
-   'BlockPhase' : 'blockphase',
-   'EndPhase'   : 'endphase',
-   'Blocked'    : 'blocked',
-   'BeforeBlock': 'beforeblock',
-   'HandChanges': 'handchanges',
-   'RingChanges': 'ringchanges'
+   'ActivatePhase': 'activatephase',
+   'DrawPhase'    : 'drawphase',
+   'BlockPhase'   : 'blockphase',
+   'EndPhase'     : 'endphase',
+   'Blocked'      : 'blocked',
+   'BeforeBlock'  : 'beforeblock',
+   'HandChanges'  : 'handchanges',
+   'RingChanges'  : 'ringchanges'
 })
 # When a listener to these events is added, trigger it automatically
 GameEventsExecOnAdded = [
