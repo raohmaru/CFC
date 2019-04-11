@@ -21,6 +21,9 @@
 class Struct:
    def __init__(self, **entries): 
       self.__dict__.update(entries)
+   # Called when the attribute does not exist
+   def __getattr__(self, name):
+      return None
 
 #---------------------------------------------------------------------------
 # Constants
@@ -154,9 +157,8 @@ GameEventsFromVars = {
 
 # Messages
 MSG_SEL_CHAR_RING           = "Please select a character in your ring.\n(Shift key + Left click on a character)."
-MSG_SEL_CARD                = "Select a card from the {}"
-MSG_SEL_CARD_EFFECT         = "Select a card from the {} to which apply the effect"
-MSG_SEL_CARD_EFFECT_OF      = MSG_SEL_CARD_EFFECT + " of {}"
+MSG_SEL_CARD                = "Select {} card(s) from your {}"
+MSG_SEL_CARD_EFFECT         = MSG_SEL_CARD + " ({}'s effect)"
 MSG_SEL_CARD_DISCARD        = "Select a card from your {} to discard"
 MSG_SEL_CARD_SACRIFICE      = "Select a card from your {} to KO"
 MSG_COST_NOT_PAYED          = "{} did not pay the activation cost of {}'s {}"
@@ -165,13 +167,13 @@ MSG_UNBLOCKABLE             = "{} cannot be counter-attacked due to {}'s {} abil
 MSG_AB_NO_EFFECT            = "{}'s ability {} has no effect."
 MSG_AB_AUTO_ACTIVATION      = "{} has activated {}'s auto ability {}."
 MSG_AB_AUTO_UATTACK         = "Cannot activate {}'s auto ability {} because it joined an United Attack."
+MSG_DISCARD_RANDOM          = "{} randomly discards {} from its {}."
 MSG_ERR_NO_CARDS            = "There are no targets available, hence the ability has no effect."
 MSG_ERR_NO_CARDS_HAND       = "You don't have enough cards in your hand to pay the cost of the ability."
 MSG_ERR_NO_FILTERED_CARDS   = "Selected cards don't match the requirements of this card's effect."
 MSG_ERR_NO_FILTERED_PLAYERS = "No player match the requirements of this card's effect."
 MSG_ERR_NO_CARD_TARGETED    = "Please select a card before activating the ability."
 MSG_ERR_TARGET_OTHER        = "{}'s ability cannot select itself, therefore it has been removed from selection."
-MSG_ERR_MULTIPLE_TARGET     = "Please select only one card."
 MSG_MAY_DEF                 = "Do you want to apply the effect of the card?"
 
 ERR_NO_EFFECT = 'err001'

@@ -138,6 +138,13 @@ class RulesLexer():
       tgtStr = tgtStr.strip()
       debug("Parsing target: %s" % tgtStr)
       
+      # Get the quantity of cards to get
+      qty_match = RS_RGX_TARGET_QTY.search(tgtStr)
+      qty = None
+      if qty_match:
+         qty = qty_match.group(1)
+         tgtStr = tgtStr.replace(qty_match.group(0), '', 1)
+      
       # Get the cards to pick
       pick_match = RS_RGX_TARGET_PICK.search(tgtStr)
       pick = None
@@ -148,8 +155,8 @@ class RulesLexer():
       # Get the types
       types = RS_RGX_TARGET_TYPE.split(tgtStr)
       if not types[0]:
-         debug("ParseError: 'target' has no type parameter")
-         return False
+         debug("ParseInfo: 'target' has no type parameter. Defult target is {}".format(RS_KW_ANY))
+         types[0] = RS_KW_ANY
       types = types[0].split(RS_OP_OR)
       # RS_KW_ANY overrides the rest
       if RS_KW_ANY in types:
@@ -192,6 +199,7 @@ class RulesLexer():
       debug("-- zone: %s" % zone)
       
       return {
+         'qty'    : qty,
          'pick'   : pick,
          'types'  : types,
          'filters': filters_arr,

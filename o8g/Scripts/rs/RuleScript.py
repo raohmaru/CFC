@@ -27,7 +27,7 @@ class Rules():
       self.card_id = cid
       self.rules_tokens = None
       self.prevTargets  = None
-      self.parse()
+      self.parsed = False
 
 
    def parse(self):
@@ -39,9 +39,13 @@ class Rules():
          return
       debug("Parsing rule id {}".format(self.rule_id))
       self.rules_tokens = RulesLexer.tokenize(rules)
+      self.parsed = True
 
          
    def init(self):
+      if not self.parsed:
+         self.parse()
+   
       if not self.rules_tokens:
          return
       
@@ -213,6 +217,7 @@ class Rules():
             
          elif type == RS_KW_COST_DISCARD:
             cards = []
+            isRandom = False
             if len(me.hand) == 0:
                warning(MSG_ERR_NO_CARDS_HAND)
                return False
@@ -233,8 +238,11 @@ class Rules():
                if cards == False or len(cards) == 0:
                   whisper(MSG_ERR_NO_CARDS_HAND)
                   return False
+               # It's a random discard
+               if target['qty'] is not None and target['qty'][:1] == 'r':
+                  isRandom = True
             for card in cards:
-               discard(card)
+               discard(card, isRandom = isRandom)
             
          elif type == RS_KW_COST_SACRIFICE:
             if target:

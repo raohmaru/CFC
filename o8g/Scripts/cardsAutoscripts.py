@@ -22,6 +22,7 @@ import re
 #---------------------------------------------------------------------------
 
 def parseCard(card, ruleId=None, init=True):
+   """ Wrapper for a Card object. Should only be called for cards added to the table or when its effect changes. """
    debug(">>> parseCard({})".format(card)) #Debug
    if not card._id in parsedCards:
       if isCharacter(card):

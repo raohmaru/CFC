@@ -20,9 +20,18 @@
 Case Insensitive
 
 ---------------------------------------------------
-target = type <pick> [filters] @ zone
+target = <qty> type <pick> [filters] @ zone
 
 Only one target key is allowed.
+
+qty:
+   Values:
+      integer
+   Syntax:
+      min
+      [min],max
+   Keywords:
+      r[#]
 
 type:
    Operators:
@@ -40,6 +49,8 @@ type:
       ^ (other)
    Sufixes:
       s (plural) (valid on Type, Subtype, player or *)
+   Default:
+      *
       
 pick:
    Values:
@@ -216,7 +227,7 @@ action = {F}: damage(1) to(characters@oppRing)
 
 # Cap. Commando's CAPTAIN CORRIDOR
 RulesDict['8ce9a56f-8c0c-49e7-879c-12179c63f288'] = """
-action = {F}: damage(4) to(characters[frozen]); damage(4) to(this)
+action = {F}: damage(4) to(characters[frozen])
 """
 
 # Mack Knife's GRAVE KEEPER
@@ -246,17 +257,17 @@ action = reveal(hand) & discard(actions) & discard(reactions)
 
 # Regina's RADIO TRANSMITTER
 RulesDict['0a8f39ff-6b21-4805-bafb-27c3f38d1986'] = """
-auto = ~myEndPhase~ moveTo(ctrlHand) target(characters[bp>=800])
+auto = ~myEndPhase~ moveTo(ctrlHand) target(characters[bp>=8])
 """
 
 # Cody (Alpha)'s BAD STONE
 RulesDict['525d8365-c90e-491f-9811-1f23efbafccb'] = """
-auto = ~anyBlockPhase,anyBeforeBlock~ +unblockable to(characters[bp<=300 & attack & -uattack]) ueot
+auto = ~anyBlockPhase,anyBeforeBlock~ +unblockable to(characters[bp<=3 & attack & -uattack]) ueot
 """
 
 # Damn D's WHISTLE
 RulesDict['66d424bb-e5da-4f61-b063-61efd1fc61a6'] = """
-action = {F}: moveTo(hand) target(character[bp<=500]@deck) & shuffle()
+action = {F}: moveTo(hand) target(character[bp<=5]@deck) & shuffle()
 """
 
 # Guy's HAYA-GAKE
@@ -346,7 +357,9 @@ auto = ~activatePhase~ moveTo(hand)
 """
 
 # Falcon's POWER STONE
-# RulesDict['6f733db6-883b-41f5-a657-4e19784d183c'] = ""
+RulesDict['6f733db6-883b-41f5-a657-4e19784d183c'] = """
+action = {D(<r>)}{F}: bp(3) target(character)
+"""
 
 # Ryoma's BUSHIDO
 # RulesDict['3d5fb82c-2ad5-44e3-83e1-ef00f370c604'] = ""

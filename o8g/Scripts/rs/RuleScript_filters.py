@@ -86,7 +86,6 @@ def filterBP(card, include, cmd, *args):
 
    if getMarker(card, 'BP') > 0:
       bp = getMarker(card, 'BP')
-      bp *= BPMultiplier
    else:
       bp = num(card.BP)
       

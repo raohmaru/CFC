@@ -731,11 +731,14 @@ def backup(card, x = 0, y = 0):  # Play a card as backup attached to a character
    debug("<<< backup()") #Debug
 
 
-def discard(card, x = 0, y = 0):
+def discard(card, x = 0, y = 0, isRandom = False):
    mute()
    group = card.group
    card.moveTo(me.piles['Discard Pile'])
-   notify("{} has discarded {} from its {}.".format(me, card, group.name))
+   msg = "{} has discarded {} from its {}."
+   if isRandom:
+      msg = MSG_DISCARD_RANDOM
+   notify(msg.format(me, card, group.name))
 
 
 def randomDiscard(group = me.hand, x = 0, y = 0):
@@ -744,7 +747,7 @@ def randomDiscard(group = me.hand, x = 0, y = 0):
     if card == None:
         return
     card.moveTo(me.piles['Discard Pile'])
-    notify("{} randomly discards {} from its {}.".format(me, card, group.name))
+    notify(MSG_DISCARD_RANDOM.format(me, card, group.name))
 
 
 def refill(group = me.hand):  # Refill the player's hand to its hand size.
