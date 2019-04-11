@@ -83,6 +83,7 @@ def onCardsMoved(args):
             if MarkersDict['Attack'] in markers or MarkersDict['United Attack'] in markers:
                rearrangeUAttack(card)
          # removeParsedCard(card)
+         removeGameEventListener(card._id)
       elif fromGroup == table and toGroup == table:
          if isCharacter(card) and not MarkersDict['Backup'] in card.markers:
             alignBackups(card, *card.position)
