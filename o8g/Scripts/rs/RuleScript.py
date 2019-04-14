@@ -164,11 +164,18 @@ class Rules():
             if currTarget:
                targets += currTarget
                
-            # For auto with events that adds abilities, if no matching targets then remove abilities
+            # For auto with events that adds abilities, if the ability were already granted, check if any char has lost
+            # it (it is not in in targets), then remove abilities of those chars
             if isAuto and action['event']:
-               if not [t for t in targets if bool(t)]:
-                  targets = getTargetofSourceEvent(self.card_id)
+               abTargets = getTargetofSourceEvent(self.card_id)
+               newTargets = []
+               for t in abTargets:
+                  if not t in targets:
+                     newTargets.append(t)
+               if len(newTargets) > 0:
+                  targets = newTargets
                   revert = True
+                  debug("-- Following targets will lose an ability: {}".format(targets))
                   
             debug("-- Applying commands")
             commander.applyAll(effect[1], targets, effect[3], thisCard, revert)
