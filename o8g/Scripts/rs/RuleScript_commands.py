@@ -116,7 +116,7 @@ def cmd_swapPiles(rc, targets, source, pile1, pile2):
 def cmd_shuffle(rc, targets, source, pileName=None):
    debug(">>> cmd_shuffle({})".format(pileName)) #Debug
    if not pileName:
-      pileName = RS_KW_ZONE_HAND
+      pileName = RS_KW_ZONE_DECK
    prefix, name = RulesLexer.getPrefix(RS_PREFIX_ZONES, pileName)
    if name == RS_KW_ZONE_DECK:
       pile = RulesUtils.getZoneByName(pileName)
@@ -141,8 +141,13 @@ def cmd_destroy(rc, targets, source, *args):
 def cmd_reveal(rc, targets, source, pileName=None):
    debug(">>> cmd_reveal({})".format(pileName)) #Debug
    if not pileName:
-      pileName = RS_KW_ZONE_HAND
-   if pileName in RS_KW_ZONES_PILES:
+      for card in targets:
+         isFaceUp = card.isFaceUp
+         card.isFaceUp = True
+         notify("{} reveals {} {}.".format(me, card, fromWhereStr(card.group)))
+         if isFaceUp == False:
+            card.isFaceUp = False
+   elif pileName in RS_KW_ZONES_PILES:
       pile = RulesUtils.getZoneByName(pileName)
       if pile.controller == me:
          # Once the other player is done, apply next command
@@ -190,25 +195,29 @@ def cmd_randomDiscard(rc, targets, source, numCards=1):
    rc.applyNext()
 
 
-def cmd_moveTo(rc, targets, source, zone, pos = None):
+def cmd_moveTo(rc, targets, source, zone, pos = None, reveal = False):
    debug(">>> cmd_moveTo({}, {})".format(targets, zone)) #Debug
    zonePrefix, zoneName = RulesLexer.getPrefix(RS_PREFIX_ZONES, zone, RS_PREFIX_CTRL)
    if zoneName in RS_KW_ZONES_PILES:
       pile = RulesUtils.getZoneByName(zone)
+      if pos == 'true':
+         reveal = True
+         pos = None
       pos = num(pos)
+      reveal = bool(reveal)
       for target in targets:
          debug("{}'s {} -> {}'s {}".format(target.controller, target, pile.controller, pile.name))
          if target.controller == me and pile.controller == me:
-            moveToGroup(pile, target, pos = pos)
+            moveToGroup(pile, target, pos = pos, reveal = reveal)
          elif target.controller == me and pile.controller != me:
             group = target.group
             target.moveToTable(0, 0, True)
             target.controller = pile.controller
-            remoteCall(target.controller, "moveToGroup", [pile, target, group, pos])
+            remoteCall(target.controller, "moveToGroup", [pile, target, group, pos, reveal])
          elif target.controller != me and pile.controller == me:
-            remoteCall(target.controller, "passControlTo", [me, [target], ["moveToGroup", [pile, target, target.group, pos]]])
+            remoteCall(target.controller, "passControlTo", [me, [target], ["moveToGroup", [pile, target, target.group, pos, reveal]]])
          else:
-            remoteCall(target.controller, "moveToGroup", [pile, target, None, pos])
+            remoteCall(target.controller, "moveToGroup", [pile, target, None, pos, reveal])
          rnd(1, 100) # Wait until all animation is done
    rc.applyNext()
 

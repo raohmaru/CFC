@@ -161,6 +161,8 @@ class RulesLexer():
       # RS_KW_ANY overrides the rest
       if RS_KW_ANY in types:
          types = [RS_KW_ANY]
+      elif RS_KW_ALL in types:
+         types = [RS_KW_ANY + RS_SUFFIX_PLURAL]
       else:
          types = map(str.strip, types)
       debug("-- types: %s" % types)

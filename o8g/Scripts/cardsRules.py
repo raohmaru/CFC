@@ -118,16 +118,16 @@ effect:
          swapPiles(pile1, pile2)
          shuffle([myDeck])
          destroy()
-         reveal([pile=myHand])
-         discard(target)  # zone = myHand
+         reveal([cards|pile])    # default: target
+         discard(target)         # zone: myHand
          rndDiscard([#])
-         moveTo(zone, pos)
+         moveTo(zone [, pos|reveal] [, reveal])   # reveal = false
          bp(#|x#)
          playExtraChar()
          draw([#|expression])
          steal()
-         each(group: expr {effect})   # context = group item
-         group.each(expr {effect})    # context = group item
+         each(group: expr {effect})   # effect context: group item
+         group.each(expr {effect})    # effect context: group item
       Ability:
          Keywords:
             @see abilities
@@ -267,7 +267,8 @@ auto = ~anyBlockPhase,anyBeforeBlock~ +unblockable to(characters[bp<=3 & attack 
 
 # Damn D's WHISTLE
 RulesDict['66d424bb-e5da-4f61-b063-61efd1fc61a6'] = """
-action = {F}: moveTo(hand) target(character[bp<=5]@deck) & shuffle()
+target = character[bp<=5]@deck
+action = {F}: reveal() & moveTo(hand, true) & shuffle()
 """
 
 # Guy's HAYA-GAKE
@@ -363,11 +364,14 @@ action = {D(<r>)}{F}: bp(3) target(character)
 
 # Ryoma's BUSHIDO
 RulesDict['3d5fb82c-2ad5-44e3-83e1-ef00f370c604'] = """
-action = discard(*s); moveTo(hand) target(<,2>*@myDiscards)
+action = discard(all); moveTo(hand) target(<,2>*@myDiscards)
 """
 
 # Omokane Saki's STAND-BY
-# RulesDict['c6ee2630-7f1a-4ac1-95f3-be8db970e855'] = ""
+RulesDict['c6ee2630-7f1a-4ac1-95f3-be8db970e855'] = """
+target = character@deck
+action = {F}: reveal() & shuffle() & moveTo(deck, true)
+"""
 
 # Chris Redfield's DISORDER
 # RulesDict['38d6c7a8-7463-4aa6-88c4-13f725ada0be'] = ""

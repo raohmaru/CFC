@@ -104,6 +104,7 @@ RS_SUFFIX_TYPES = [
 
 # Keywords
 RS_KW_ANY = '*'
+RS_KW_ALL = 'all'
 
 # Target keywords
 RS_KW_TARGET_PLAYER   = 'player'
