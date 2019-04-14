@@ -99,7 +99,7 @@ def cmd_damage(rc, targets, source, dmg):
       if dmg == 'tgt.bp':
          dmg = getParsedCard(targets[0]).BP
       elif dmg == 'prevtgt.bp':
-         dmg = getParsedCard(self.prevTargets[0]).BP
+         dmg = getParsedCard(rc.prevTargets[0]).BP
    for target in targets:
       dealDamage(dmg, target, source)
    rc.applyNext()
@@ -165,11 +165,12 @@ def cmd_discard(rc, targets, source, whichCards):
       if player != me:
          cardsTokens['zone'][0] = RS_KW_TARGET_OPP
       cards = RulesUtils.getTargets(cardsTokens)
-      for card in cards:
-         if player == me:
-            discard(card)
-         else:
-            remoteCall(player, "discard", [card])
+      if cards:
+         for card in cards:
+            if player == me:
+               discard(card)
+            else:
+               remoteCall(player, "discard", [card])
    rc.applyNext()
 
 

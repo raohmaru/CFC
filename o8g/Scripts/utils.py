@@ -827,10 +827,10 @@ def debugScenario():
    gotoMain()
    rnd(100, 10000)  # Delay the next action until all animation is done
    tableCards = [
-      'a68dc591-6976-4341-b8b9-1a7dc1c71775' # Samanosuke
-      ,'33796f5f-c699-42e8-a084-fd28663f08ae' # Ayame
+      # '55b0c9ff-4b3a-4b08-adc1-f1b5e03adef9' # Nina
+      '525d8365-c90e-491f-9811-1f23efbafccb' # Lucifer
       ,'6f733db6-883b-41f5-a657-4e19784d183c' # Falcon
-      # ,'1c986de3-bec5-430b-a661-ebbe9b20c20f' # Rock Man
+      ,'3d5fb82c-2ad5-44e3-83e1-ef00f370c604' # Ryoma
    ]
    for i, id in enumerate(tableCards):
       debug("Creating card {} at slot {}".format(id, i))

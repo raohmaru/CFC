@@ -63,14 +63,14 @@ class RulesAbilities():
 
 def abl_unblockable(card_id, source_id=None, restr=None):
    debug(">>> abl_unblockable({}, {})".format(card_id, source_id)) #Debug
-   if addGameEventListener(GameEvents.Blocked, 'abl_genericListener', card_id, source_id, restr, card_id, source_id, MSG_UNBLOCKABLE):
-      notify("{} is unblockable".format(Card(card_id)))
+   if addGameEventListener(GameEvents.Blocked, 'abl_genericListener', card_id, source_id, restr, card_id, source_id, [MSG_UNBLOCKABLE, MSG_BLOCKABLE]):
+      notify("{} is unblockable {}".format(Card(card_id), restr))
 
 
 def abl_cantBlock(card_id, source_id=None, restr=None):
    debug(">>> abl_cantBlock({}, {})".format(card_id, source_id)) #Debug
-   addGameEventListener(GameEvents.BeforeBlock, 'abl_genericListener', card_id, source_id, restr, card_id, source_id, MSG_CANT_BLOCK)
-   notify("{} cannot counter-attack".format(Card(card_id)))
+   addGameEventListener(GameEvents.BeforeBlock, 'abl_genericListener', card_id, source_id, restr, card_id, source_id, [MSG_CANT_BLOCK, MSG_CAN_BLOCK])
+   notify("{} cannot counter-attack {}".format(Card(card_id), restr))
 
 
 def abl_genericListener(target_id, card_id, source_id=None, msg=None):
@@ -82,7 +82,7 @@ def abl_genericListener(target_id, card_id, source_id=None, msg=None):
       if source_id is not None:
          source = Card(source_id)
       if msg is not None:
-         warning(msg.format(card.Name, source.Name, source.properties['Ability Name']))
+         warning(msg[0].format(card.Name, source.Name, source.properties['Ability Name']))
       return True
    return False
 

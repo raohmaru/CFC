@@ -168,8 +168,8 @@ The total BP of the characters in a United Attack is considered when dealing dam
 
 If a United Attack is countered, enemy character deals damage to each attacking character, in ordered sequence, until it is KO'ed or all participants in the United Attack are KO'ed.
 
-### Counterattack
-A counterattack happens when defending player counters an attack with an unfrozen character in his ring.
+### Counterattack (Block)
+A counterattack happens when defending player counters (blocks) an attack with an unfrozen character in his ring.
 
 A character can only counterattack one attack. An attack can only be countered by one single character.
 

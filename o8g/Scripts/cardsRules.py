@@ -119,7 +119,7 @@ effect:
          shuffle([myDeck])
          destroy()
          reveal([pile=myHand])
-         discard(target cards)
+         discard(target)  # zone = myHand
          rndDiscard([#])
          moveTo(zone, pos)
          bp(#|x#)
@@ -362,7 +362,9 @@ action = {D(<r>)}{F}: bp(3) target(character)
 """
 
 # Ryoma's BUSHIDO
-# RulesDict['3d5fb82c-2ad5-44e3-83e1-ef00f370c604'] = ""
+RulesDict['3d5fb82c-2ad5-44e3-83e1-ef00f370c604'] = """
+action = discard(*s); moveTo(hand) target(<,2>*@myDiscards)
+"""
 
 # Omokane Saki's STAND-BY
 # RulesDict['c6ee2630-7f1a-4ac1-95f3-be8db970e855'] = ""

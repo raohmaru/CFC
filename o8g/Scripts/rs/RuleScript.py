@@ -26,7 +26,6 @@ class Rules():
       self.rule_id = rule.lower()
       self.card_id = cid
       self.rules_tokens = None
-      self.prevTargets  = None
       self.parsed = False
 
 
@@ -85,6 +84,10 @@ class Rules():
    
       
    def activate(self):
+      # Just in case
+      if not self.parsed:
+         self.init()
+         
       if not self.rules_tokens:
          whisper("{}'s ability has not been scripted yet".format(Card(self.card_id)))
          return True
@@ -107,72 +110,71 @@ class Rules():
       debug("Executing actions: {}, {}, isAuto={}".format(action, target, isAuto))
             
       thisCard = Card(self.card_id)
-      revert = False
       
       global commander
       if commander is None:
          commander = RulesCommands()
             
-      # First the player must pay the cost, or we cancel
+      # The player must pay the cost, or we cancel
       if action['cost']:
          if not self.payCost(action['cost']):
             notify(MSG_COST_NOT_PAYED.format(me, thisCard, ('effect', 'ability')[isCharacter(thisCard)]))
             return False
             
-      # Then we get valid targets or we cancel
-      targets = []
-      for effect in action['effects']:
-         currTarget = target
-         newTarget = None
-         
-         # Conditions
-         if effect[0]:
-            cond = effect[0]
-            if cond[0] == RS_KW_COND_MAY:
-               question = MSG_MAY_DEF
-               if len(cond) > 1:
-                  question = cond[1].strip('"\'').capitalize()
-               debug("-- Found MAY condition: {}".format(question))
-               if not confirm(question):
-                  debug("--- {} cancelled".format(me))
-                  return False
-            elif cond[0] == RS_KW_COND_IF:            
-               debug("-- Found IF condition: {}".format(cond[1]))
-               res = evalExpression(cond[1])
-               if not res:
-                  debug("-- Condition not matching")
-                  if not isAuto:
-                     return ERR_NO_EFFECT
-                  revert = True
-         
-         # Additional target
-         if effect[2]:
-            debug("-- Found additional target")
-            newTarget = RulesUtils.getTargets(effect[2], source=thisCard)
-            if newTarget == False:
-               if not isAuto:
-                  notify(MSG_ERR_NO_CARDS)
-               return False
-            currTarget = newTarget
-         targets.append(currTarget)
-            
-      # For auto with events that adds abilities, if no matching then remove abilities
-      if isAuto and action['event']:
-         if not [t for t in targets if bool(t)] and self.prevTargets:
-            targets = self.prevTargets
-            self.prevTargets = None
-            revert = True
-         else:
-            self.prevTargets = targets
-            
-      # Finally apply the effects
+      # Apply the effects
       for i, effect in enumerate(action['effects']):
+         revert = False
+      
          if len(effect[1]) > 0:
+            debug("Executing effect: {}".format(effect))
+            targets = []
+            currTarget = target
+            newTarget = None
+            
+            # Conditions
+            if effect[0]:
+               cond = effect[0]
+               if cond[0] == RS_KW_COND_MAY:
+                  question = MSG_MAY_DEF
+                  if len(cond) > 1:
+                     question = cond[1].strip('"\'').capitalize()
+                  debug("-- Found MAY condition: {}".format(question))
+                  if not confirm(question):
+                     debug("--- {} cancelled".format(me))
+                     return False
+               elif cond[0] == RS_KW_COND_IF:            
+                  debug("-- Found IF condition: {}".format(cond[1]))
+                  res = evalExpression(cond[1])
+                  if not res:
+                     debug("-- Condition not matching")
+                     if not isAuto:
+                        return ERR_NO_EFFECT
+                     revert = True
+            
+            # Additional target
+            if effect[2]:
+               debug("-- Found additional target")
+               newTarget = RulesUtils.getTargets(effect[2], source=thisCard)
+               if newTarget == False:
+                  if not isAuto:
+                     notify(MSG_ERR_NO_CARDS)
+                  return False
+               currTarget = newTarget
+            
+            if currTarget:
+               targets += currTarget
+               
+            # For auto with events that adds abilities, if no matching targets then remove abilities
+            if isAuto and action['event']:
+               if not [t for t in targets if bool(t)]:
+                  targets = getTargetofSourceEvent(self.card_id)
+                  revert = True
+                  
             debug("-- Applying commands")
-            commander.applyAll(effect[1], targets[i], effect[3], thisCard, revert)
+            commander.applyAll(effect[1], targets, effect[3], thisCard, revert)
             # Clear visual target
-            if targets[i] and not isAuto:
-               for obj in targets[i]:
+            if targets and not isAuto:
+               for obj in targets:
                   if isCard(obj):
                      obj.target(False)
             rnd(10, 1000) # Wait between effects until all animation is done

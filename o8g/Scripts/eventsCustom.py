@@ -99,6 +99,21 @@ def cleanupGameEvents(restr):
    for e in ge:
       for i, listener in enumerate(ge[e]):
          if listener['restr'] == restr and listener['controller'] == me._id:
+            # Removed message
+            if listener['args'][2] and len(listener['args'][2]) > 1:
+               notify(listener['args'][2][1].format(Card(listener['id'])))
             del ge[e][i]
             debug("Removed listener for event {} -> {}".format(e, listener))   
    setGlobalVar('GameEvents', ge)
+
+   
+def getTargetofSourceEvent(source):
+   targets = []
+   ge = getGlobalVar('GameEvents')
+   for e in ge:
+      for listener in ge[e]:
+         if listener['source'] == source:
+            targets.append(Card(listener['id']))
+   debug(">>> getTargetofSourceEvent({}) -> {}".format(source, targets)) #Debug
+   return targets
+   

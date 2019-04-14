@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8" standalone="yes"?>
-<set name="Core Set" id="aa867ea1-89f8-4154-8e20-2263eddb8354" version="1.2.5.0" gameId="e3d56d9e-900d-49c6-b6ae-22cbb51be153" gameVersion="0.7.1">
+<set name="Core Set" id="aa867ea1-89f8-4154-8e20-2263eddb8354" version="1.2.5.0" gameId="e3d56d9e-900d-49c6-b6ae-22cbb51be153" gameVersion="0.7.2">
 	<packaging>
 		<pack name="Booster" id="800ab974-9fee-45c6-8d15-3c995c732cdc">
 			<options>
@@ -763,7 +763,7 @@
 			<property name="Ability"      value="&#162; BUSHIDO" />
 			<property name="Ability Type" value="&#162;" />
 			<property name="Ability Name" value="BUSHIDO" />
-			<property name="Rules"        value="Discard your hand. Select two cards from your discard pile and put them into your hand." />
+			<property name="Rules"        value="Discard your hand. Select up to two cards from your discard pile and put them into your hand." />
 			<property name="BP"           value="300" />
 			<property name="SP"           value="4" />
 			<property name="Backup 1"     value="Psychic" />

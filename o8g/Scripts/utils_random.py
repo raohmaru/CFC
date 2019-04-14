@@ -15,13 +15,17 @@
 # You should have received a copy of the GNU General Public License
 # along with this script.  If not, see <http://www.gnu.org/licenses/>.
 
+import clr
+clr.AddReference("System")
+from System import Random
+
 #---------------------------------------------------------------------------
 # Random functions
 #---------------------------------------------------------------------------
 
 from math import log as _log, ceil as _ceil
 
-class Random(System.Random):
+class RRRandom(Random):
    def random(self):
       """Get the next random number in the range [0.0, 1.0)."""
       # https://docs.microsoft.com/en-us/dotnet/api/system.random.sample
@@ -78,4 +82,4 @@ class Random(System.Random):
 
 #---------------------------------------------------------------------------
 
-random = Random()
+random = RRRandom()
