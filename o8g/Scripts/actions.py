@@ -711,6 +711,7 @@ def play(card):  # This is the function to play cards from your hand.
    else:
       placeCard(card, card.Type)
    notify("{} plays {} from its {}{}.".format(me, card, card.group.name, slot))
+   notify("({} has played {} character{} this turn.)".format(me, charsPlayed, getPlural(charsPlayed)))
 
    debug("<<< playing card end") #Debug
 

@@ -96,7 +96,7 @@ action = {cost}: [[cond]] effect [& effect] to(target) restr; ...
 
 Only one action key is allowed.
 Several actions can be joined with ';'.
-Effects in the same action are executed synchronously; actions are async
+Effects in the same action are executed synchronously; actions are async.
 
 cost: (optional)
    Keywords:
@@ -374,10 +374,14 @@ action = {F}: reveal() & shuffle() & moveTo(deck, true)
 """
 
 # Chris Redfield's DISORDER
-# RulesDict['38d6c7a8-7463-4aa6-88c4-13f725ada0be'] = ""
+RulesDict['38d6c7a8-7463-4aa6-88c4-13f725ada0be'] = """
+action = [[if oppRingSize >= 3]] damage(2) to(characters@oppRing)
+"""
 
 # Claire's DECOY
-# RulesDict['a25d74b5-8774-4729-8ac2-b820878241b9'] = ""
+RulesDict['a25d74b5-8774-4729-8ac2-b820878241b9'] = """
+action = {S}: moveTo(hand) target(<r>character@myDeck)
+"""
 
 # Jill's BERETTA
 RulesDict['0b2c9e8a-5f9b-4ab5-a9b3-414f1154ce24'] = """
