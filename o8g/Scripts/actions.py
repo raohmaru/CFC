@@ -374,7 +374,7 @@ def transformCards(cards, x = 0, y = 0):
       cardModel = targets[0].model
    else:
       cardtype = cards[0].Type
-      card, quantity = askCard({"Type":cardtype}, "and", "Choose a card")
+      card, quantity = askCard({"Type":cardtype}, "and", "Target character will be transformed into choosen card.")
       if quantity > 0:
          cardModel = card
    if cardModel:

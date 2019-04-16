@@ -299,6 +299,15 @@ def cmd_each(rc, targets, source, args, obj = None):
    
    rc.applyNext()
 
+   
+def cmd_transfrom(rc, targets, source, cardName):
+   debug(">>> cmd_transfrom({}, {})".format(targets, cardName)) #Debug
+   models = queryCard({"Name":cardName}, True)
+   if len(models):
+      for target in targets:
+         transformCard(target, models[0])
+         rnd(1,100) # Small wait (bug workaround) to make sure all animations are done.
+   rc.applyNext()
 
 RulesCommands.register('damage',        cmd_damage)
 RulesCommands.register('swappiles',     cmd_swapPiles)
@@ -314,3 +323,4 @@ RulesCommands.register('draw',          cmd_draw)
 RulesCommands.register('steal',         cmd_steal)
 RulesCommands.register('.each',         cmd_each)
 RulesCommands.register('each',          cmd_each)
+RulesCommands.register('transform',     cmd_transfrom)

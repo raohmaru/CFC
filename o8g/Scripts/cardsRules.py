@@ -128,6 +128,7 @@ effect:
          steal()
          each(group: expr {effect})   # effect context: group item
          group.each(expr {effect})    # effect context: group item
+         transform(card name)
       Ability:
          Keywords:
             @see abilities
@@ -152,6 +153,9 @@ restr: (optional)
    Keywords:
       ueot
       uynt
+   Prefixes:
+      my (default)
+      opp
       
 ---------------------------------------------------
 abilities = ability [, ability]
@@ -162,6 +166,7 @@ ability:
    Keywords:
       unblockable
       cantblock
+      cantplayac
       
 ---------------------------------------------------
 auto = ~event[,event]~ [[cond]] effect [& effect] to(target) restr; ...
@@ -178,6 +183,7 @@ event:
       beforeblock
       handchanges
       ringchanges
+      beforeplayac
    Prefixes:
       my (default)
       opp
@@ -399,7 +405,9 @@ action = {F}: +cantplayac to(opp) oppueot
 """
 
 # Zombie's RESIDENT EVIL
-# RulesDict['80d411e3-c3df-486f-927f-1592d9db65de'] = ""
+RulesDict['80d411e3-c3df-486f-927f-1592d9db65de'] = """
+action = {S}: transform(Zombie) target(character)
+"""
 
 # Akira's BROTHER SEARCH
 # RulesDict['1cd7580b-d396-496c-afac-bcd6da9c1f83'] = ""
