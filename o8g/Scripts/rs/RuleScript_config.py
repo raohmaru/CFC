@@ -95,6 +95,11 @@ RS_PREFIX_BONUS = [
    RS_PREFIX_NOT
 ]
 
+RS_PREFIX_RESTR = [
+   RS_PREFIX_MY,
+   RS_PREFIX_OPP
+]
+
 # Sufixes
 RS_SUFFIX_PLURAL = 's'
 
@@ -195,3 +200,8 @@ RS_KW_CMD_RESTRS = [
    RS_KW_RESTR_UEOT,
    RS_KW_RESTR_UYNT
 ]
+
+RS_KW_RESTR_LABELS = {
+   RS_KW_RESTR_UEOT: 'until end of {}turn',
+   RS_KW_RESTR_UYNT: 'until your next turn'
+}

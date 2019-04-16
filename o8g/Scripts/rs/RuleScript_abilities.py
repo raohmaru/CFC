@@ -36,16 +36,18 @@ class RulesAbilities():
       for ability in abilites:
          RulesAbilities.add(ability, card_id)
    
+   
    @staticmethod   
-   def add(ability, card_id, source_id=None, restr=None):
-      if ability in RulesAbilities.items:
-         debug("-- adding ability '{}' to {}".format(ability, Card(card_id)))
-         func = RulesAbilities.items[ability]['func']
-         # func = eval(RulesAbilities.items[ability]['func'])  # eval is a necessary evil...
-         func(card_id, source_id, restr)
+   def add(abilityName, target_id, source_id=None, restr=None):
+      if abilityName in RulesAbilities.items:
+         ability = RulesAbilities.items[abilityName]
+         obj = getPlayerOrCard(target_id)
+         debug("-- adding ability '{}' to {}".format(abilityName, obj))
+         func = ability['func']
+         func(target_id, source_id, restr, ability['events'])
       else:
-         debug("-- ability not found: {}".format(ability))
-      
+         debug("-- ability not found: {}".format(abilityName))
+   
    
    @staticmethod   
    def remove(ability, card_id):
@@ -56,36 +58,72 @@ class RulesAbilities():
             if removeGameEventListener(card_id, event):
                notify("{} has lost the {} ability".format(card, ability))
       
+      
+#---------------------------------------------------------------------------
+# Related functions
+#---------------------------------------------------------------------------
+               
+def getPlayerOrCard(id):
+   if id in [p._id for p in players]:
+      return Player(id)
+   else:
+      return Card(id)
+      
+      
+def getObjName(obj):
+   if isinstance(obj, (int, long)):
+      obj = getPlayerOrCard(obj)
+   if hasattr(obj, 'Name'):
+      return obj.Name
+   else:
+      return obj.name
+      
+      
+def getTextualRestr(restr):
+   if restr[1] in RS_KW_RESTR_LABELS:
+      player = ''
+      if restr[0]:
+         player = 'his  '
+      return RS_KW_RESTR_LABELS[restr[1]].format(player)
+   return restr(1)
+      
 
 #---------------------------------------------------------------------------
 # Abilities functions
 #---------------------------------------------------------------------------
 
-def abl_unblockable(card_id, source_id=None, restr=None):
+def abl_unblockable(card_id, source_id=None, restr=None, events=[]):
    debug(">>> abl_unblockable({}, {})".format(card_id, source_id)) #Debug
-   if addGameEventListener(GameEvents.Blocked, 'abl_genericListener', card_id, source_id, restr, card_id, source_id, [MSG_UNBLOCKABLE, MSG_BLOCKABLE]):
-      notify("{} is unblockable {}".format(Card(card_id), restr))
+   if addGameEventListener(events[0], 'abl_genericListener', card_id, source_id, restr, [card_id, source_id, [MSG_UNBLOCKABLE, MSG_BLOCKABLE]]):
+      notify("{} is unblockable {}".format(Card(card_id), getTextualRestr(restr)))
 
 
-def abl_cantBlock(card_id, source_id=None, restr=None):
+def abl_cantBlock(card_id, source_id=None, restr=None, events=[]):
    debug(">>> abl_cantBlock({}, {})".format(card_id, source_id)) #Debug
-   addGameEventListener(GameEvents.BeforeBlock, 'abl_genericListener', card_id, source_id, restr, card_id, source_id, [MSG_CANT_BLOCK, MSG_CAN_BLOCK])
-   notify("{} cannot counter-attack {}".format(Card(card_id), restr))
+   if addGameEventListener(events[0], 'abl_genericListener', card_id, source_id, restr, [card_id, source_id, [MSG_CANT_BLOCK, MSG_CAN_BLOCK]]):
+      notify("{} cannot counter-attack {}".format(Card(card_id), getTextualRestr(restr)))
 
 
-def abl_genericListener(target_id, card_id, source_id=None, msg=None):
+def abl_cantPlayAC(player_id, source_id=None, restr=None, events=[]):
+   debug(">>> abl_cantPlayAC({}, {})".format(player_id, source_id)) #Debug
+   if addGameEventListener(events[0], 'abl_genericListener', player_id, source_id, restr, [player_id, source_id, [MSG_CANT_PLAY_AC, MSG_CAN_PLAY_AC]]):
+      notify("{} cannot play action cards {}".format(Player(player_id), getTextualRestr(restr)))
+
+
+def abl_genericListener(target_id, obj_id, source_id=None, msg=None):
    """ Checks if the original card with the ability is equal to the second card the system wants to check """
-   debug(">>> abl_genericListener({}, {}, {})".format(target_id, card_id, source_id)) #Debug      
-   if target_id == card_id:
-      card = Card(target_id)
-      source = card
+   debug(">>> abl_genericListener({}, {}, {})".format(target_id, obj_id, source_id)) #Debug      
+   if target_id == obj_id:
+      obj = getPlayerOrCard(target_id)
+      source = obj
       if source_id is not None:
          source = Card(source_id)
       if msg is not None:
-         warning(msg[0].format(card.Name, source.Name, source.properties['Ability Name']))
+         warning(msg[0].format(getObjName(obj), source.Name, source.properties['Ability Name']))
       return True
    return False
 
 
 RulesAbilities.register('unblockable', abl_unblockable, [GameEvents.Blocked])
 RulesAbilities.register('cantblock',   abl_cantBlock,   [GameEvents.BeforeBlock])
+RulesAbilities.register('cantplayac',  abl_cantPlayAC,  [GameEvents.BeforePlayAC])

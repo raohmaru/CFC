@@ -45,7 +45,7 @@ targets = [
    "target = <,4>*<-2>@myDeck",
 ]
 actions = [
-   "action = destroy()",
+   # "action = destroy()",
    # "action = draw(1)",
    # "action = destroy & draw(1)",
    # "action = discard(1) & draw(1)",
@@ -58,8 +58,9 @@ actions = [
    # "action = {D}: destroy() to(character[bp>=800]@oppRing)",
    # "action = {E(reaction@discard)}: [[may]] moveTo(hand)",
    # "action = {E(reaction@discard)}: [[may 'Question?']] moveTo(hand)",
-   # "action = destroy() ueot",
-   # "action = {D(action)}: [[if me.HP < 10]] destroy() to(character) & freeze; draw(2) ueot",
+   "action = destroy() ueot",
+   "action = destroy() oppueot",
+   "action = {D(action)}: [[if me.HP < 10]] destroy() to(character) & freeze; draw(2) ueot",
    # "action = {F}:  to(character) ueot",
    # "action = {D(2)}: +cantblock to(character@oppRing) ueot",
    # "action = [[may]] destroy()",
@@ -69,8 +70,8 @@ actions = [
    # "action = {F}: moveTo(ctrlDeck) target(characters[-backup]) & shuffle(myDeck) & shuffle(oppDeck)",
    # "action = {F}: destroy() target(^character@myRing) & damage(5, character)",
    # "action = [[if  all myring: bp <= 3]] playExtraChar()",
-   "action = {F}: moveTo(@oppDeck) target(*@hand); moveTo(hand) target(*<-1>@oppDeck)",
-   "action = {F}: reveal(hand) & myHand.each(bp <= 3 { bp(+2) }) target(this)"
+   # "action = {F}: moveTo(@oppDeck) target(*@hand); moveTo(hand) target(*<-1>@oppDeck)",
+   # "action = {F}: reveal(hand) & myHand.each(bp <= 3 { bp(+2) }) target(this)"
 ]
 abilities = [
    "abilities = unblockable",
@@ -109,5 +110,5 @@ def test(arr, title):
 # rules = RulesDict['aa867ea1-89f8-4154-8e20-2263edd00002']
 # test(targets, 'targets')
 test(actions, 'actions')
-test(abilities, 'abilities')
-test(autos, 'autos')
+# test(abilities, 'abilities')
+# test(autos, 'autos')

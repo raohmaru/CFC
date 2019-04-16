@@ -54,7 +54,7 @@ action: {
             'types': ['character'],
             'zone': ['', 'arena']
          },
-         'ueot'
+         ['opp', 'ueot']
       ]
    ]
 },
@@ -264,10 +264,10 @@ class RulesLexer():
                debug("---- found condition '%s'" % effect[0])
             expr = re.sub(RS_RGX_COND, '', expr).strip()
          # Look for up to 1 restriction
-         kw, expr = RulesLexer.extractKeyword(expr, RS_KW_CMD_RESTRS)
+         kw, expr = RulesLexer.extractKeyword(expr, RS_KW_CMD_RESTRS, RS_PREFIX_RESTR)
          if kw:
             effect[3] = kw
-            debug("---- found restriction '%s'" % kw)
+            debug("---- found restriction %s" % (kw,))
          # Has target?
          match = RS_RGX_AC_TARGET.search(expr)
          if match:
@@ -347,12 +347,17 @@ class RulesLexer():
       
       
    @staticmethod
-   def extractKeyword(str, keywords):
+   def extractKeyword(str, keywords, prefixes = None):
    # Extract any one keyword that match from the keywords list for the given string
       strArr = str.split(" ")
-      for kw in keywords:
-         if kw in strArr:
-            str = str.replace(kw, "", 1)
+      for i, kw in enumerate(strArr):
+         prefix = ''
+         if prefixes:
+            prefix, kw = RulesLexer.getPrefix(prefixes, kw)
+         if kw in keywords:
+            str = str.replace(prefix + kw, "", 1)
+            if prefixes:
+               kw = (prefix, kw)
             return (kw, str.strip())
       return ('', str)
       

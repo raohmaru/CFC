@@ -4,7 +4,7 @@
       name="Card Fighters' Clash"
       id="e3d56d9e-900d-49c6-b6ae-22cbb51be153"
       octgnVersion="3.3.132.0"
-      version="0.7.2.225"
+      version="0.7.2.235"
       markersize="20"
       tags="capcom snk fighter"
       description="A card game based in the SNK Playmore’s video game SNK vs. Capcom Card Fighters' Clash 2 Expand Edition.
@@ -230,7 +230,7 @@
 		</cardactions>
 		<cardaction menu="Transform" shortcut="Ctrl+Shift+T" batchExecute="transformCards" />
 		<cardaction menu="Realign card" shortcut="Ctrl+I" execute="alignCardAction" />
-		<cardaction menu="Show backups types" shortcut="Ctrl+Alt+B" execute="askCardBackups" showIf="acsh_isChar" />
+		<cardaction menu="Show available backups" shortcut="Ctrl+Alt+B" execute="askCardBackups" showIf="acsh_isChar" />
 		<cardaction menu="Clear" shortcut="Esc" execute="clear" />
 	</table>
 	

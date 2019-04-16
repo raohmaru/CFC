@@ -144,7 +144,8 @@ GameEvents = Struct(**{
    'Blocked'      : 'blocked',
    'BeforeBlock'  : 'beforeblock',
    'HandChanges'  : 'handchanges',
-   'RingChanges'  : 'ringchanges'
+   'RingChanges'  : 'ringchanges',
+   'BeforePlayAC' : 'beforeplayac'
 })
 # When a listener to these events is added, trigger it automatically
 GameEventsExecOnAdded = [
@@ -166,6 +167,8 @@ MSG_CANT_BLOCK              = "{} cannot block due to {}'s {} ability."
 MSG_CAN_BLOCK               = "{} can block again."
 MSG_UNBLOCKABLE             = "{} cannot be blocked due to {}'s {} ability."
 MSG_BLOCKABLE               = "{} can be blocked as normal."
+MSG_CANT_PLAY_AC            = "{} cannot play action cards due to {}'s {} ability."
+MSG_CAN_PLAY_AC             = "{} can play action cards again."
 MSG_AB_NO_EFFECT            = "{}'s ability {} has no effect."
 MSG_AB_AUTO_ACTIVATION      = "{} has activated {}'s auto ability {}."
 MSG_AB_AUTO_UATTACK         = "Cannot activate {}'s auto ability {} because it joined an United Attack."

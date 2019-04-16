@@ -82,10 +82,15 @@ class RulesCommands():
       debug(">>> RulesCommands.destroy()")
       self.cmds = None
       self.prevTargets = None
-
+      
+      
+#---------------------------------------------------------------------------
+# Related functions
+#---------------------------------------------------------------------------
 
 def nextCommand():
    commander.applyNext()
+      
       
 #---------------------------------------------------------------------------
 # Commands functions

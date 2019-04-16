@@ -389,10 +389,14 @@ action = {F}: damage(1) to(opp,character@oppRing)
 """
 
 # Jill Valentine's HANDGUN
-# RulesDict['163c9ec0-61d2-45ae-842b-15aba8cc61f8'] = ""
+RulesDict['163c9ec0-61d2-45ae-842b-15aba8cc61f8'] = """
+action = {D(reaction)}{F}: damage(3) to(opp,character@oppRing)
+"""
 
 # Leon's CONFINEMENT
-# RulesDict['d5e70014-8a56-4d9b-8b06-0192bac3f0b8'] = ""
+RulesDict['d5e70014-8a56-4d9b-8b06-0192bac3f0b8'] = """
+action = {F}: +cantplayac to(opp) oppueot
+"""
 
 # Zombie's RESIDENT EVIL
 # RulesDict['80d411e3-c3df-486f-927f-1592d9db65de'] = ""

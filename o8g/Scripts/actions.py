@@ -328,13 +328,15 @@ def alignCardAction(card, x = 0, y = 0):
 def askCardBackups(card, x = 0, y = 0):
    if isCharacter(card):
       acceptedBackups = getAcceptedBackups(card)
+      charsBackup = []
       for c in me.hand:
          if isCharacter(c):
             if c != card and c.Subtype in acceptedBackups:
                c.highlight = InfoColor
+               charsBackup.append(c)
             elif c.highlight == InfoColor:
                c.highlight = None
-      whisper("Highlighting compatible back-ups cards in your hand")
+      whisper("Highlighting compatible back-ups cards in your hand: " + ("{}, " * len(charsBackup)).format(*charsBackup).rstrip(','))
       msg = "{} can be backed-up with the following character types:\n- {}".format(card.Name, '\n- '.join(filter(None, acceptedBackups)))
       information(msg)
       whisper(msg)

@@ -20,14 +20,14 @@
 # Custom event handlers
 #---------------------------------------------------------------------------
 
-def addGameEventListener(event, callback, card_id, source_id=None, restr=None, *args):
+def addGameEventListener(event, callback, obj_id, source_id=None, restr=None, args=[]):
    ge = getGlobalVar('GameEvents')
    prfx, eventName = RulesLexer.getPrefix(RS_PREFIX_EVENTS, event)
    if not eventName in ge:
       ge[eventName] = []
    listener = {
       'controller': me._id,
-      'id'        : card_id,
+      'id'        : obj_id,
       'source'    : source_id,
       'callback'  : callback,
       'restr'     : restr,
@@ -35,7 +35,7 @@ def addGameEventListener(event, callback, card_id, source_id=None, restr=None, *
       'args'      : args
    }
    for e in ge[eventName]:
-      if e['id'] == card_id and e['callback'] == callback and e['restr'] == restr and e['scope'] == prfx:
+      if e['id'] == obj_id and e['callback'] == callback and e['restr'] == restr and e['scope'] == prfx:
          return False
    ge[eventName].append(listener)
    setGlobalVar('GameEvents', ge)
@@ -43,14 +43,14 @@ def addGameEventListener(event, callback, card_id, source_id=None, restr=None, *
    return True
 
 
-def removeGameEventListener(card_id, eventName=None):
-   debug(">>> removeGameEventListener({}, {})".format(card_id, eventName))
+def removeGameEventListener(obj_id, eventName=None):
+   debug(">>> removeGameEventListener({}, {})".format(obj_id, eventName))
    ge = getGlobalVar('GameEvents')
    removed = False
    for e in ge:
       if not eventName or e == eventName:
          for i, listener in reversed(list(enumerate(ge[e]))):
-            if listener['id'] == card_id or listener['source'] == card_id:
+            if listener['id'] == obj_id or listener['source'] == obj_id:
                del ge[e][i]
                removed = True
                debug("Removed listener for event {} {}".format(e, listener))
@@ -64,9 +64,9 @@ def triggerGameEvent(eventName, *args):
    if eventName in ge:
       for listener in ge[eventName]:
          debug("-- Found listener {}".format(listener))
-         params = args + listener['args']
+         params = list(args) + listener['args']
          # Callback could be the ID of a card...
-         if isinstance(listener['callback'], int):
+         if isinstance(listener['callback'], (int, long)):
             card = Card(listener['callback'])
             if card.controller == me:
                pcard = getParsedCard(card)
@@ -98,12 +98,19 @@ def cleanupGameEvents(restr):
    ge = getGlobalVar('GameEvents')
    for e in ge:
       for i, listener in enumerate(ge[e]):
-         if listener['restr'] == restr and listener['controller'] == me._id:
-            # Removed message
-            if listener['args'][2] and len(listener['args'][2]) > 1:
-               notify(listener['args'][2][1].format(Card(listener['id'])))
-            del ge[e][i]
-            debug("Removed listener for event {} -> {}".format(e, listener))   
+         evRestrTarget, evRestr = listener['restr']
+         if evRestr == restr:
+            # Remove event added by me that affects me, or added by the opp that affects to me
+            if (
+               (listener['controller'] == me._id and evRestrTarget != RS_PREFIX_OPP) or
+               (listener['controller'] != me._id and evRestrTarget == RS_PREFIX_OPP) or
+               len(players) == 1  # for debuggin purposes
+            ):
+               # Removed message
+               if listener['args'][2] and len(listener['args'][2]) > 1:
+                  notify(listener['args'][2][1].format(getObjName(listener['id'])))
+               del ge[e][i]
+               debug("Removed listener for event {} -> {}".format(e, listener))   
    setGlobalVar('GameEvents', ge)
 
    

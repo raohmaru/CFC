@@ -131,6 +131,7 @@ class RulesUtils():
          # Check if there is any keyword in the target types
          kw_types = set(RS_KW_TARGETS) & set(types)
          if len(kw_types) > 0:
+            debug("-- found %s types, player must choose one. (%s)" % (len(kw_types), list(kw_types)))
             t = askChoice("Select a target:", types)
             if t == 0:
                return False
