@@ -129,6 +129,7 @@ effect:
          each(group: expr {effect})   # effect context: group item
          group.each(expr {effect})    # effect context: group item
          transform(card name)
+         restTo(zone)
       Ability:
          Keywords:
             @see abilities
@@ -410,7 +411,10 @@ action = {S}: transform(Zombie) target(character)
 """
 
 # Akira's BROTHER SEARCH
-# RulesDict['1cd7580b-d396-496c-afac-bcd6da9c1f83'] = ""
+RulesDict['1cd7580b-d396-496c-afac-bcd6da9c1f83'] = """
+target = action<1>@deck
+action = restTo(discards) & reveal() & moveTo(hand, true)
+"""
 
 # Batsu's BOILING BLOOD
 # RulesDict['4bd333d6-f063-424e-8cf9-3512f96f23b4'] = ""

@@ -208,7 +208,8 @@ def cmd_moveTo(rc, targets, source, zone, pos = None, reveal = False):
       if pos == 'true':
          reveal = True
          pos = None
-      pos = num(pos)
+      if pos is not None:
+         pos = num(pos)
       reveal = bool(reveal)
       for target in targets:
          debug("{}'s {} -> {}'s {}".format(target.controller, target, pile.controller, pile.name))
@@ -309,6 +310,22 @@ def cmd_transfrom(rc, targets, source, cardName):
          rnd(1,100) # Small wait (bug workaround) to make sure all animations are done.
    rc.applyNext()
 
+   
+def cmd_restTo(rc, targets, source, zone):
+   pile = me.deck
+   index = len(pile)
+   targetZone = RulesUtils.getZoneByName(zone)
+   if len(targets) > 0:
+      pile = targets[0].group
+      index = targets[0].index
+   debug(">>> cmd_restTo({}, {})".format(zone, index)) #Debug
+   notify("{} looks through the top of his {}".format(me, pile.name))
+   for i in range(0, index):
+      moveToGroup(targetZone, pile[0], pile, reveal = True)
+      rnd(1, 100) # Wait between effects until all animation is done
+   rc.applyNext()
+
+   
 RulesCommands.register('damage',        cmd_damage)
 RulesCommands.register('swappiles',     cmd_swapPiles)
 RulesCommands.register('shuffle',       cmd_shuffle)
@@ -324,3 +341,4 @@ RulesCommands.register('steal',         cmd_steal)
 RulesCommands.register('.each',         cmd_each)
 RulesCommands.register('each',          cmd_each)
 RulesCommands.register('transform',     cmd_transfrom)
+RulesCommands.register('restto',        cmd_restTo)

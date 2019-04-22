@@ -156,16 +156,18 @@ class RulesUtils():
                type = RS_KW_PLAYERS[t-1]
          targets = RulesUtils.filterTargets(type, filters, zone, cards, source, msg, pick, qty)
          if targets == False:
-            return False
+            if not pick:
+               return False
+            targets = []
 
       # Force to pick cards
       if pick:
          if pick > 0:
             targets = targets[:pick]
-            debug("-- Picked {} card(s)".format(pick))
+            debug("-- Picked {} card(s)".format(len(targets)))
          else:
             targets = targets[pick:]
-            debug("-- Picked {} card(s) from the bottom of {}".format(-pick, ''.join(zone)))
+            debug("-- Picked {} card(s) from the bottom of {}".format(len(targets), ''.join(zone)))
 
       # Pick random cards
       if qty is not None and qty.random:
