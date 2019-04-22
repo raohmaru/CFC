@@ -6,17 +6,17 @@
 		<block type="overlay" id="blank" src="Proxy/blank.png">
 			<location x="0" y="0" />
 		</block>
+		<block type="overlay" id="image_mask" src="Proxy/Overlays/image_mask.png">
+			<location x="25" y="25" />
+		</block>
 		<block type="overlay" id="bp_box" src="Proxy/Overlays/bp_box.png">
-			<location x="321" y="38" />
+			<location x="321" y="35" />
 		</block>
 		<block type="overlay" id="sp_box" src="Proxy/Overlays/sp_box.png">
-			<location x="381" y="89" />
+			<location x="382" y="87" />
 		</block>
 		<block type="overlay" id="sp_box2" src="Proxy/Overlays/sp_box.png">
-			<location x="381" y="38" />
-		</block>
-		<block type="overlay" id="image_mask" src="Proxy/Overlays/image_mask.png">
-			<location x="24" y="398" />
+			<location x="382" y="35" />
 		</block>
 		<!-- Publisher -->
 		<!-- <block type="overlay" id="pub_capcom" src="Proxy/Logos/Capcom.png">
@@ -121,151 +121,151 @@
 		</block> -->
 		<!-- Subtype -->
 		<block type="overlay" id="subtype_agent" src="Proxy/Subtypes/Agent.png">
-			<location x="311" y="448" />
+			<location x="321" y="448" />
 		</block>
 		<block type="overlay" id="subtype_aikido" src="Proxy/Subtypes/Aikido.png">
-			<location x="311" y="448" />
+			<location x="321" y="448" />
 		</block>
 		<block type="overlay" id="subtype_alien" src="Proxy/Subtypes/Alien.png">
-			<location x="311" y="448" />
+			<location x="321" y="448" />
 		</block>
 		<block type="overlay" id="subtype_android" src="Proxy/Subtypes/Android.png">
-			<location x="311" y="448" />
+			<location x="321" y="448" />
 		</block>
 		<block type="overlay" id="subtype_artist" src="Proxy/Subtypes/Artist.png">
-			<location x="311" y="448" />
+			<location x="321" y="448" />
 		</block>
 		<block type="overlay" id="subtype_assassin" src="Proxy/Subtypes/Assassin.png">
-			<location x="311" y="448" />
+			<location x="321" y="448" />
 		</block>
 		<block type="overlay" id="subtype_avatar" src="Proxy/Subtypes/Avatar.png">
-			<location x="311" y="448" />
+			<location x="321" y="448" />
 		</block>
 		<block type="overlay" id="subtype_beast" src="Proxy/Subtypes/Beast.png">
-			<location x="311" y="448" />
+			<location x="321" y="448" />
 		</block>
 		<block type="overlay" id="subtype_boss" src="Proxy/Subtypes/Boss.png">
-			<location x="311" y="448" />
+			<location x="321" y="448" />
 		</block>
 		<block type="overlay" id="subtype_boxer" src="Proxy/Subtypes/Boxer.png">
-			<location x="311" y="448" />
+			<location x="321" y="448" />
 		</block>
 		<block type="overlay" id="subtype_brute" src="Proxy/Subtypes/Brute.png">
-			<location x="311" y="448" />
+			<location x="321" y="448" />
 		</block>
 		<block type="overlay" id="subtype_capoeira" src="Proxy/Subtypes/Capoeira.png">
-			<location x="311" y="448" />
+			<location x="321" y="448" />
 		</block>
 		<block type="overlay" id="subtype_captain" src="Proxy/Subtypes/Captain.png">
-			<location x="311" y="448" />
+			<location x="321" y="448" />
 		</block>
 		<block type="overlay" id="subtype_cursed" src="Proxy/Subtypes/Cursed.png">
-			<location x="311" y="448" />
+			<location x="321" y="448" />
 		</block>
 		<block type="overlay" id="subtype_cyborg" src="Proxy/Subtypes/Cyborg.png">
-			<location x="311" y="448" />
+			<location x="321" y="448" />
 		</block>
 		<block type="overlay" id="subtype_deity" src="Proxy/Subtypes/Deity.png">
-			<location x="311" y="448" />
+			<location x="321" y="448" />
 		</block>
 		<block type="overlay" id="subtype_demon" src="Proxy/Subtypes/Demon.png">
-			<location x="311" y="448" />
+			<location x="321" y="448" />
 		</block>
 		<block type="overlay" id="subtype_detective" src="Proxy/Subtypes/Detective.png">
-			<location x="311" y="448" />
+			<location x="321" y="448" />
 		</block>
 		<block type="overlay" id="subtype_experiment" src="Proxy/Subtypes/Experiment.png">
-			<location x="311" y="448" />
+			<location x="321" y="448" />
 		</block>
 		<block type="overlay" id="subtype_fighter" src="Proxy/Subtypes/Fighter.png">
-			<location x="311" y="448" />
+			<location x="321" y="448" />
 		</block>
 		<block type="overlay" id="subtype_gangster" src="Proxy/Subtypes/Gangster.png">
-			<location x="311" y="448" />
+			<location x="321" y="448" />
 		</block>
 		<block type="overlay" id="subtype_guardian" src="Proxy/Subtypes/Guardian.png">
-			<location x="311" y="448" />
+			<location x="321" y="448" />
 		</block>
 		<block type="overlay" id="subtype_gymnast" src="Proxy/Subtypes/Gymnast.png">
-			<location x="311" y="448" />
+			<location x="321" y="448" />
 		</block>
 		<block type="overlay" id="subtype_hunter" src="Proxy/Subtypes/Hunter.png">
-			<location x="311" y="448" />
+			<location x="321" y="448" />
 		</block>
 		<block type="overlay" id="subtype_karateka" src="Proxy/Subtypes/Karateka.png">
-			<location x="311" y="448" />
+			<location x="321" y="448" />
 		</block>
 		<block type="overlay" id="subtype_kickboxer" src="Proxy/Subtypes/Kickboxer.png">
-			<location x="311" y="448" />
+			<location x="321" y="448" />
 		</block>
 		<block type="overlay" id="subtype_kobudo" src="Proxy/Subtypes/Kobudo.png">
-			<location x="311" y="448" />
+			<location x="321" y="448" />
 		</block>
 		<block type="overlay" id="subtype_kung-fu" src="Proxy/Subtypes/Kung-fu.png">
-			<location x="311" y="448" />
+			<location x="321" y="448" />
 		</block>
 		<block type="overlay" id="subtype_magician" src="Proxy/Subtypes/Magician.png">
-			<location x="311" y="448" />
+			<location x="321" y="448" />
 		</block>
 		<block type="overlay" id="subtype_mentor" src="Proxy/Subtypes/Mentor.png">
-			<location x="311" y="448" />
+			<location x="321" y="448" />
 		</block>
 		<block type="overlay" id="subtype_mercenary" src="Proxy/Subtypes/Mercenary.png">
-			<location x="311" y="448" />
+			<location x="321" y="448" />
 		</block>
 		<block type="overlay" id="subtype_monk" src="Proxy/Subtypes/Monk.png">
-			<location x="311" y="448" />
+			<location x="321" y="448" />
 		</block>
 		<block type="overlay" id="subtype_monster" src="Proxy/Subtypes/Monster.png">
-			<location x="311" y="448" />
+			<location x="321" y="448" />
 		</block>
 		<block type="overlay" id="subtype_ninja" src="Proxy/Subtypes/Ninja.png">
-			<location x="311" y="448" />
+			<location x="321" y="448" />
 		</block>
 		<block type="overlay" id="subtype_pilot" src="Proxy/Subtypes/Pilot.png">
-			<location x="311" y="448" />
+			<location x="321" y="448" />
 		</block>
 		<block type="overlay" id="subtype_priest" src="Proxy/Subtypes/Priest.png">
-			<location x="311" y="448" />
+			<location x="321" y="448" />
 		</block>
 		<block type="overlay" id="subtype_psychic" src="Proxy/Subtypes/Psychic.png">
-			<location x="311" y="448" />
+			<location x="321" y="448" />
 		</block>
 		<block type="overlay" id="subtype_robot" src="Proxy/Subtypes/Robot.png">
-			<location x="311" y="448" />
+			<location x="321" y="448" />
 		</block>
 		<block type="overlay" id="subtype_samurai" src="Proxy/Subtypes/Samurai.png">
-			<location x="311" y="448" />
+			<location x="321" y="448" />
 		</block>
 		<block type="overlay" id="subtype_soldier" src="Proxy/Subtypes/Soldier.png">
-			<location x="311" y="448" />
+			<location x="321" y="448" />
 		</block>
 		<block type="overlay" id="subtype_spirit" src="Proxy/Subtypes/Spirit.png">
-			<location x="311" y="448" />
+			<location x="321" y="448" />
 		</block>
 		<block type="overlay" id="subtype_student" src="Proxy/Subtypes/Student.png">
-			<location x="311" y="448" />
+			<location x="321" y="448" />
 		</block>
 		<block type="overlay" id="subtype_sumotori" src="Proxy/Subtypes/Sumotori.png">
-			<location x="311" y="448" />
+			<location x="321" y="448" />
 		</block>
 		<block type="overlay" id="subtype_swordsman" src="Proxy/Subtypes/Swordsman.png">
-			<location x="311" y="448" />
+			<location x="321" y="448" />
 		</block>
 		<block type="overlay" id="subtype_taekwondo" src="Proxy/Subtypes/Taekwondo.png">
-			<location x="311" y="448" />
+			<location x="321" y="448" />
 		</block>
 		<block type="overlay" id="subtype_vampire" src="Proxy/Subtypes/Vampire.png">
-			<location x="311" y="448" />
+			<location x="321" y="448" />
 		</block>
 		<block type="overlay" id="subtype_warrior" src="Proxy/Subtypes/Warrior.png">
-			<location x="311" y="448" />
+			<location x="321" y="448" />
 		</block>
 		<block type="overlay" id="subtype_wrestler" src="Proxy/Subtypes/Wrestler.png">
-			<location x="311" y="448" />
+			<location x="321" y="448" />
 		</block>
 		<block type="overlay" id="subtype_zombie" src="Proxy/Subtypes/Zombie.png">
-			<location x="311" y="448" />
+			<location x="321" y="448" />
 		</block>
 		<!-- Rarity -->
 		<block type="overlay" id="rarity_s" src="Proxy/Overlays/rarity_s.png">
@@ -739,19 +739,19 @@
 		</block>
 		<!-- Text blocks -->
 		<block type="text" id="bp">
-			<location x="340" y="47" />
+			<location x="340" y="44" />
 			<text color="#fdeaea" size="29" font="Resources/Fonts/m04b_CFC.ttf" />
 			<border color="#691e1e" size="6" />
 			<wordwrap width="124" height="32" align="far" shrinktofit="True" />
 		</block>
 		<block type="text" id="sp">
-			<location x="398" y="98" />
+			<location x="398" y="96" />
 			<text color="#e7ecfa" size="23" font="Resources/Fonts/m04b_CFC.ttf" />
 			<border color="#102267" size="6" />
 			<wordwrap width="65" height="25" align="far" shrinktofit="True" />
 		</block>
 		<block type="text" id="sp2">
-			<location x="398" y="47" />
+			<location x="398" y="44" />
 			<text color="#e7ecfa" size="23" font="Resources/Fonts/m04b_CFC.ttf" />
 			<border color="#102267" size="6" />
 			<wordwrap width="65" height="25" align="far" shrinktofit="True" />
@@ -768,42 +768,42 @@
 			<wordwrap width="295" height="52" shrinktofit="True" />
 		</block>
 		<block type="text" id="type">
-			<location x="350" y="446" />
-			<text color="#cecece" size="24" font="Resources/Fonts/ArchivoNarrow-Bold.ttf" />
+			<location x="358" y="446" />
+			<text color="#ffffff" size="24" font="Resources/Fonts/ArchivoNarrow-Bold.ttf" />
 			<wordwrap width="92" height="26" shrinktofit="True" />
 		</block>
 		<block type="text" id="subtype">
-			<location x="352" y="469" />
+			<location x="360" y="469" />
 			<text color="#ffffff" size="18" font="Resources/Fonts/ArchivoNarrow-Bold.ttf" />
 			<wordwrap width="92" height="21" shrinktofit="True" />
 		</block>
 		<block type="text" id="ability_type">
-			<location x="95" y="507" />
+			<location x="95" y="505" />
 			<text color="#dd0000" size="22" font="Resources/Fonts/ArchivoNarrow-Regular_CFC.ttf" />
 			<wordwrap width="25" height="25" />
 		</block>		
 		<block type="text" id="ability_name">
-			<location x="122" y="506" />
+			<location x="122" y="504" />
 			<text color="#000000" size="22" font="Resources/Fonts/ArchivoNarrow-Bold.ttf" />
 			<wordwrap width="363" height="26" />
 		</block>		
 		<block type="text" id="rules_char">
-			<location x="95" y="533" />
+			<location x="95" y="531" />
 			<text color="#000000" size="22" font="Resources/Fonts/ArchivoNarrow-Regular_CFC.ttf" />
-			<wordwrap width="380" height="130" />
+			<wordwrap width="380" height="145" shrinktofit="True" />
 		</block>
 		<block type="text" id="rules">
-			<location x="95" y="507" />
+			<location x="95" y="505" />
 			<text color="#000000" size="22" font="Resources/Fonts/ArchivoNarrow-Regular_CFC.ttf" />
-			<wordwrap width="380" height="155" />
+			<wordwrap width="380" height="160" shrinktofit="True" />
 		</block>
 		<block type="text" id="illustrator">
-			<location x="80" y="674" />
+			<location x="90" y="673" />
 			<text color="#ffffff" size="15" font="Resources/Fonts/SourceSansPro-Regular_CFC.ttf" />
 			<wordwrap width="215" height="21" shrinktofit="True" />
 		</block>
 		<block type="text" id="number">
-			<location x="435" y="674" />
+			<location x="435" y="673" />
 			<text color="#ffffff" size="15" font="Resources/Fonts/SourceSansPro-Regular_CFC.ttf" />
 			<wordwrap width="50" height="15" align="far" />
 		</block>
@@ -839,9 +839,9 @@
 				<location x="25" y="25" />
 				<size width="466" height="416" />
 			</artoverlay>
+			<link block="image_mask" />
 			<link block="bp_box" />
 			<link block="sp_box" />
-			<link block="image_mask" />
 			<!-- Publisher -->
 			<!-- <conditional>
 				<switch property="Publisher">
@@ -1638,8 +1638,8 @@
 				<location x="25" y="25" />
 				<size width="466" height="416" />
 			</artoverlay>
-			<link block="sp_box2" />
 			<link block="image_mask" />
+			<link block="sp_box2" />
 			<!-- Rarity -->
 			<conditional>
 				<switch property="Rarity">
@@ -1698,8 +1698,8 @@
 				<location x="25" y="25" />
 				<size width="466" height="416" />
 			</artoverlay>
-			<link block="sp_box2" />
 			<link block="image_mask" />
+			<link block="sp_box2" />
 			<!-- Rarity -->
 			<conditional>
 				<switch property="Rarity">
