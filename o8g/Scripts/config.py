@@ -98,7 +98,7 @@ ActivatedAbility = u'\xa3'
 AutoAbility      = u'\xa4'
 
 InstantUniChar   = u'\u25B2'
-ActivatedUniChar = u'\u25A0'
+ActivatedUniChar = u'\u2588'
 AutoUniChar      = u'\u25CF'
 
 # A dictionary which holds the regex used in other scripts
@@ -117,6 +117,10 @@ MaxCharsUAttack = 2
 UAttackCost     = 5
 MaxCardCopies   = 3
 HandSize        = 5
+
+GameRules = {
+   'ab_act_fresh': False  # Cannot activate [] abilities of fresh characters
+}
 
 # Debug
 DebugLevel = Struct(**{
@@ -145,7 +149,8 @@ GameEvents = Struct(**{
    'BeforeBlock'  : 'beforeblock',
    'HandChanges'  : 'handchanges',
    'RingChanges'  : 'ringchanges',
-   'BeforePlayAC' : 'beforeplayac'
+   'BeforePlayAC' : 'beforeplayac',
+   'CharRemoved'  : 'charremoved'
 })
 # When a listener to these events is added, trigger it automatically
 GameEventsExecOnAdded = [
@@ -180,6 +185,12 @@ MSG_ERR_NO_FILTERED_PLAYERS = "No player match the requirements of this card's e
 MSG_ERR_NO_CARD_TARGETED    = "Please select a card before activating the ability."
 MSG_ERR_TARGET_OTHER        = "{}'s ability cannot select itself, therefore it has been removed from selection."
 MSG_MAY_DEF                 = "Do you want to apply the effect of the card?"
+MSG_RULES = {
+   'ab_act_fresh': (
+      'Characters cannot use {} abilities the turn they enter the ring.'.format(ActivatedUniChar),  # Disabled
+      'Characters can use {} abilities the turn they enter the ring.'.format(ActivatedUniChar)  # Enabled
+   )
+}
 
 ERR_NO_EFFECT = 'err001'
 

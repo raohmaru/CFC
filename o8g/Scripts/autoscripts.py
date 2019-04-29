@@ -490,7 +490,7 @@ def activateAuto(card):
       # [] abilities
       if pcard.ability.type == ActivatedAbility:
          # Just entered?
-         if MarkersDict['Just Entered'] in card.markers:
+         if not GameRules['ab_act_fresh'] and MarkersDict['Just Entered'] in card.markers:
             if not confirm("Can't activate {} abilities of characters that just entered the ring.\nProceed anyway?".format(ActivatedUniChar)):
                return
          # Frozen or attacking?

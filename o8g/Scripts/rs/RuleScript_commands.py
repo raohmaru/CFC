@@ -91,7 +91,17 @@ class RulesCommands():
 def nextCommand():
    commander.applyNext()
       
-      
+
+def toggleRule(event_card_id=None, rule=None, source_id=None):
+   debug(">>> toggleRule({})".format(rule)) #Debug
+   if rule in GameRules:
+      if (event_card_id is None and source_id is None) or (event_card_id == source_id):
+         GameRules[rule] = not GameRules[rule]
+         debug("Rule {} has been {}".format(rule, 'enabled' if GameRules[rule] else 'disabled'))
+         if rule in MSG_RULES:
+            notify(MSG_RULES[rule][GameRules[rule]])
+
+            
 #---------------------------------------------------------------------------
 # Commands functions
 #---------------------------------------------------------------------------
@@ -324,6 +334,14 @@ def cmd_restTo(rc, targets, source, zone):
       moveToGroup(targetZone, pile[0], pile, reveal = True)
       rnd(1, 100) # Wait between effects until all animation is done
    rc.applyNext()
+   
+  
+def cmd_disableRule(rc, targets, source, rule):
+   debug(">>> cmd_disableRule({})".format(rule)) #Debug
+   if rule in GameRules:
+      toggleRule(rule=rule)
+      addGameEventListener(GameEvents.CharRemoved, 'toggleRule', source._id, args=[rule, source._id])
+   rc.applyNext()
 
    
 RulesCommands.register('damage',        cmd_damage)
@@ -342,3 +360,4 @@ RulesCommands.register('.each',         cmd_each)
 RulesCommands.register('each',          cmd_each)
 RulesCommands.register('transform',     cmd_transfrom)
 RulesCommands.register('restto',        cmd_restTo)
+RulesCommands.register('disablerule',   cmd_disableRule)

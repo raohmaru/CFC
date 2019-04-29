@@ -255,6 +255,9 @@ See *Steal Ability*.
 __Freeze__
 A character in a "freeze" state (or *frozen*) can't attack, counterattack or activate <span class="ab ab-activated">■</span> abilities.
 
+__Fresh__
+A character that has just entered the ring in your turn.
+
 __KO__
 Whenever a character's BP lowers to zero, that character is KO'ed and it is into the discard pile.
 

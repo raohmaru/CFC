@@ -27,6 +27,7 @@ class Rules():
       self.card_id = cid
       self.rules_tokens = None
       self.parsed = False
+      self.has_events = False
 
 
    def parse(self):
@@ -52,13 +53,16 @@ class Rules():
       if RS_KEY_ABILITIES in self.rules_tokens:
          RulesAbilities.addAll(self.rules_tokens[RS_KEY_ABILITIES], self.card_id)
       
-      # Register an event for the 'auto' key
+      # Register events for the 'auto' key
       if RS_KEY_AUTO in self.rules_tokens:
          auto = self.rules_tokens[RS_KEY_AUTO]
          if auto['event']:
             for event in auto['event']:
                self.addEvent(event)
          self.addEventsFromIfCond()
+         # If it does not have events, then it has commands that must be executed
+         if not self.has_events:
+            self.execAction(auto, [Card(self.card_id)], True)
          
          
    def addEvent(self, event):
@@ -66,6 +70,7 @@ class Rules():
       addGameEventListener(eventName, self.card_id, self.card_id)
       if event[1] in GameEventsExecOnAdded:
          self.execAuto(self.rules_tokens[RS_KEY_AUTO], eventName)
+      self.has_events = True
          
          
    def addEventsFromIfCond(self):

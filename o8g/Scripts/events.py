@@ -80,6 +80,7 @@ def onCardsMoved(args):
             if charIsInRing(card):
                freeSlot(card)
                ringChanged = True
+               triggerGameEvent(GameEvents.CharRemoved, card._id)
             if MarkersDict['Attack'] in markers or MarkersDict['United Attack'] in markers:
                rearrangeUAttack(card)
          # removeParsedCard(card)

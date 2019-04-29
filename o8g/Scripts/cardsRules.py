@@ -130,6 +130,7 @@ effect:
          group.each(expr {effect})    # effect context: group item
          transform(card name)
          restTo(zone)
+         disableRule(rule)
       Ability:
          Keywords:
             @see abilities
@@ -417,7 +418,9 @@ action = restTo(discards) & reveal() & moveTo(hand, true)
 """
 
 # Batsu's BOILING BLOOD
-# RulesDict['4bd333d6-f063-424e-8cf9-3512f96f23b4'] = ""
+RulesDict['4bd333d6-f063-424e-8cf9-3512f96f23b4'] = """
+auto = disableRule(AB_ACT_FRESH)
+"""
 
 # Daigo's FINISH IT!
 # RulesDict['e6e46f83-d089-4762-8d8e-2a3252cfc9db'] = ""

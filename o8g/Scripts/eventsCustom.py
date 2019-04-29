@@ -98,6 +98,8 @@ def cleanupGameEvents(restr):
    ge = getGlobalVar('GameEvents')
    for e in ge:
       for i, listener in enumerate(ge[e]):
+         if listener['restr'] is None:
+            continue
          evRestrTarget, evRestr = listener['restr']
          if evRestr == restr:
             # Remove event added by me that affects me, or added by the opp that affects to me
