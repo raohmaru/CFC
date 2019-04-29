@@ -142,10 +142,11 @@ def replaceVars(str):
 def evalExpression(expr, retValue = False):
    # Adding some variables only available in this scope.
    # Must be in lower case.
+   opp = getOpp()
    myhand = me.hand
    myhandsize = len(myhand)
-   opphandsize = len(players[1].hand) if len(players) > 1 else 0
-   oppringsize = getRingSize(players[1]) if len(players) > 1 else 0
+   opphandsize = len(opp.hand)
+   oppringsize = getRingSize(opp)
    alone = getRingSize() == 1
    myring = getRing(me)
       
@@ -834,7 +835,7 @@ def debugScenario():
    tableCards = [
       '1cd7580b-d396-496c-afac-bcd6da9c1f83' # Akira
       ,'4bd333d6-f063-424e-8cf9-3512f96f23b4' # Batsu
-      # ,'a25d74b5-8774-4729-8ac2-b820878241b9' # Claire
+      ,'e6e46f83-d089-4762-8d8e-2a3252cfc9db' # Daigo
       # ,'163c9ec0-61d2-45ae-842b-15aba8cc61f8' # Jill Valentine
    ]
    for i, id in enumerate(tableCards):

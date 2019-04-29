@@ -149,7 +149,7 @@ to: (optional)
    Alias:
       target
    Default:
-      current player
+      current player or this card (depend on context)
       
 restr: (optional)
    Keywords:
@@ -423,7 +423,9 @@ auto = disableRule(AB_ACT_FRESH)
 """
 
 # Daigo's FINISH IT!
-# RulesDict['e6e46f83-d089-4762-8d8e-2a3252cfc9db'] = ""
+RulesDict['e6e46f83-d089-4762-8d8e-2a3252cfc9db'] = """
+action = [[if oppRingSize >= 3]] bp(x2)
+"""
 
 # Edge's MANIPULATION
 # RulesDict['e9c8e4ca-7d41-43c5-b427-f7e47125052e'] = ""

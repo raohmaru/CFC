@@ -246,6 +246,8 @@ def cmd_bp(rc, targets, source, qty):
    else:
       amount = num(qty)
    debug(">>> cmd_bp({}, {}, {}, {})".format(targets, qty, mod, amount)) #Debug
+   if len(targets) == 0:
+      targets = [source]
    for target in targets:
       if isCharacter(target):
          newQty = amount
