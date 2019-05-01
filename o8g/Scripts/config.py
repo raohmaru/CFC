@@ -23,7 +23,19 @@ class Struct:
       self.__dict__.update(entries)
    # Called when the attribute does not exist
    def __getattr__(self, name):
+      # debug(name)
       return None
+   # Because of the previous method, all of the following are needed or errors will raise
+   def __repr__(self):
+      return str(self.__dict__)
+   def __str__(self):
+      return str(self.__dict__)
+   def __format__(self, format_spec):
+      return format(str(self), format_spec)
+   def __eq__(self, other):
+      return self.__dict__ == other
+   def __nonzero__(self):
+      return True
 
 #---------------------------------------------------------------------------
 # Constants
@@ -163,7 +175,7 @@ GameEventsFromVars = {
 
 # Messages
 MSG_SEL_CHAR_RING           = "Please select a character in your ring.\n(Shift key + Left click on a character)."
-MSG_SEL_CARD                = "Select {} card(s) from your {}"
+MSG_SEL_CARD                = "Select {} card(s) from {} {}"
 MSG_SEL_CARD_EFFECT         = MSG_SEL_CARD + " ({}'s effect)"
 MSG_SEL_CARD_DISCARD        = "Select a card from your {} to discard"
 MSG_SEL_CARD_SACRIFICE      = "Select a card from your {} to KO"

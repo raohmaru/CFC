@@ -74,6 +74,7 @@ filters: (optional)
       block
       frozen
       fresh
+      powerful
       powerless
    Prefixes:
       - (not)
@@ -82,6 +83,7 @@ zone: (optional)
    Keywords:
       arena (default)
       ring
+      infront
       hand
       deck
       discards
@@ -124,8 +126,9 @@ effect:
          moveTo(zone [, pos|reveal] [, reveal])   # reveal = false
          bp(#|x#)
          playExtraChar()
-         draw([#|expression])
+         draw([#|expression])   # Default: 1
          steal()
+         loseAbility()
          each(group: expr {effect})   # effect context: group item
          group.each(expr {effect})    # effect context: group item
          transform(card name)
@@ -433,10 +436,14 @@ action = steal() target(@infront)
 """
 
 # Hinata's GO FOR IT!
-# RulesDict['514717b1-432b-4da7-aa84-a751b996416f'] = ""
+RulesDict['514717b1-432b-4da7-aa84-a751b996416f'] = """
+action = bp(3) target(character)
+"""
 
 # Hyo's PULL THE PLUG
-# RulesDict['fb3d3a49-a1de-4887-9ea4-ec761426471e'] = ""
+RulesDict['fb3d3a49-a1de-4887-9ea4-ec761426471e'] = """
+action = {F}: loseAbility() target(character[powerful]@ring) & draw()
+"""
 
 # Kurow's MADNESS
 # RulesDict['d38dc1f6-4586-44f2-bacc-adb649f4d38f'] = ""

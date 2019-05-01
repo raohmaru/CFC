@@ -1,7 +1,7 @@
 # Card Fighters' Clash Changelog
 
 ## 0.7.2
-Scripted abilities: Samanosuke, Falcon, Ryoma, Omokane Saki, Chris Redfield, Claire, Jill Valentine, Leon, Zombie.
+Scripted abilities: Samanosuke, Falcon, Ryoma, Omokane Saki, Chris Redfield, Claire, Jill Valentine, Leon, Zombie, Akira, Batsu, Daigo, Edge, Hinata, Hyo
 Updated rules: God Rugal, Curse, Shadow.
 Improved card design.
 ## 0.7.1

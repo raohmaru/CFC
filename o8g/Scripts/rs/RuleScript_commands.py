@@ -280,6 +280,8 @@ def cmd_draw(rc, targets, source, qty):
       targets = [me]
    debug(">>> cmd_draw({}, {}, {})".format(targets, qty, amount)) #Debug
    for target in targets:
+      if isCard(target):
+         target = me
       if target == me:
          drawMany(me.Deck, amount)
       else:
@@ -290,6 +292,14 @@ def cmd_draw(rc, targets, source, qty):
 def cmd_steal(rc, targets, source, *args):
    debug(">>> cmd_steal({}, {})".format(targets, source)) #Debug
    stealAbility(source, target = targets[0])
+   rc.applyNext()
+
+
+def cmd_loseAbility(rc, targets, source, *args):
+   debug(">>> cmd_loseAbility({})".format(targets)) #Debug
+   for target in targets:
+      toggleAbility(target, remove=True)
+      rnd(1, 100) # Wait until all animation is done
    rc.applyNext()
 
 
@@ -358,6 +368,7 @@ RulesCommands.register('bp',            cmd_bp)
 RulesCommands.register('playextrachar', cmd_playExtraChar)
 RulesCommands.register('draw',          cmd_draw)
 RulesCommands.register('steal',         cmd_steal)
+RulesCommands.register('loseability',   cmd_loseAbility)
 RulesCommands.register('.each',         cmd_each)
 RulesCommands.register('each',          cmd_each)
 RulesCommands.register('transform',     cmd_transfrom)

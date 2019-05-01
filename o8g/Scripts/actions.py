@@ -268,7 +268,7 @@ def activate(card, x = 0, y = 0):
       if not res or res != True:
          if res == ERR_NO_EFFECT:
             notify("{}'s {} has no effect.".format(card, ability))
-         if pcard.ability.type == ActivatedAbility or res != ERR_NO_EFFECT:
+         if (pcard.ability is not None and pcard.ability.type == ActivatedAbility) or res != ERR_NO_EFFECT:
             return
    elif isCharacter(card) and pcard.hasEffect() and pcard.ability.type == ActivatedAbility:
       freeze(card, silent = True)
@@ -344,13 +344,13 @@ def askCardBackups(card, x = 0, y = 0):
       information("Only character cards can be backed-up.")
 
 
-def toggleAbility(card, x = 0, y = 0):
+def toggleAbility(card, x = 0, y = 0, remove = False):
    mute()
    # Removes card from parsed list to parse it again with the new abilities
    if not isCharacter(card) or (card.alternate == '' and card.Rules == ''):
       return
    removeParsedCard(card)
-   if card.alternate == 'noability':
+   if card.alternate == 'noability' and not remove:
       card.alternate = ''
       parseCard(card)
       if card.Rules != '':
@@ -358,11 +358,14 @@ def toggleAbility(card, x = 0, y = 0):
       else:
          notify("{} tried to restore {}'s abilities, but it doesn't have any original ability".format(me, card))
    else:
-      # Updates proxy image of other players
-      for p in players:
-         remoteCall(p, "addAlternateRules", [card, '', '', 'noability'])
-         update()
-      notify("{} removes {}'s abilities".format(me, card))
+      if 'noability' in card.alternates:
+         card.alternate = 'noability'
+      else:
+         # Updates proxy image of all players
+         for p in players:
+            remoteCall(p, "addAlternateRules", [card, '', '', 'noability'])
+            update()
+      notify("{} remove(s) {}'s abilities".format(me, card))
 
 
 def transformCards(cards, x = 0, y = 0):
@@ -386,7 +389,7 @@ def transformCards(cards, x = 0, y = 0):
 
 
 def copyAbility(card, x = 0, y = 0, target = None):
-   debug(">>> copyAbility()") #Debug
+   debug(">>> copyAbility({}, {})".format(card, target)) #Debug
    mute()
    if not isCharacter(card):
       whisper("Abilities can only be copied to character cards.")
@@ -436,7 +439,6 @@ def swapAbilities(card, x = 0, y = 0):
    if not isCharacter(card) or not charIsInRing(card, card.controller):
       whisper("Abilities can only be swapped between character cards in the ring.")
       return
-   target = None
    targets =  [c for c in table if c.targetedBy == me]
    if len(targets) == 0:
       cards = [c for c in getRing() if c.Rules != "" and c != card]
@@ -462,8 +464,9 @@ def swapAbilities(card, x = 0, y = 0):
       
 def stealAbility(card, x = 0, y = 0, target = None):
    target = copyAbility(card, target = target)
-   toggleAbility(target)
-   notify("{} has stolen ability {} from {} to {}.".format(me, getParsedCard(target).ability.name, target, card))
+   if target:
+      toggleAbility(target)
+      notify("{} has stolen ability {} from {} to {}.".format(me, getParsedCard(target).ability.name, target, card))
 
    
 #---------------------------------------------------------------------------

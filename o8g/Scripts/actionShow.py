@@ -55,3 +55,8 @@ def acsh_isActivePlayerAndNotAttacking(args, x = 0, y = 0):
    if not MarkersDict['Attack'] in card.markers and not MarkersDict['United Attack'] in card.markers:
       return True
    return False
+
+      
+def acsh_hasAbility(args, x = 0, y = 0):
+   card = args[0]
+   return bool(card.properties['Ability Type'])

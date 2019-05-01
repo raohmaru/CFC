@@ -210,6 +210,14 @@ def filterJustEntered(card, include, cmd, *args):
    return filterHasMarker(card, 'Just Entered', include)
    
    
+def filterHasAbility(card, include, cmd, *args):
+   debug(">>> filterHasAbility({}, {}, {}, {})".format(card, include, cmd, args)) #Debug
+
+   if not isCard(card):
+      return False
+	  
+   return bool(card.properties['Ability Type'])
+   
 def filterNoAbility(card, include, cmd, *args):
    debug(">>> filterNoAbility({}, {}, {}, {})".format(card, include, cmd, args)) #Debug
 
@@ -230,4 +238,5 @@ RulesFilters.registerFilter('uattack'  , filterUnitedAttack)
 RulesFilters.registerFilter('block'    , filterBlock)
 RulesFilters.registerFilter('frozen'   , filterFrozen)
 RulesFilters.registerFilter('fresh'    , filterJustEntered)
+RulesFilters.registerFilter('powerful' , filterHasAbility)
 RulesFilters.registerFilter('powerless', filterNoAbility)

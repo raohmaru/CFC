@@ -318,9 +318,10 @@ class RulesUtils():
                qtyMsg = "up to {}".format(maxQty)
             else:
                qtyMsg = "from {} to {}".format(minQty, maxQty)
+         article = "the" if zone[1] == RS_KW_ZONE_ARENA else "your"
          # Last chance to select a card
          if len(cards_f1) > 1 or minQty == 0:
-            cards_f1 = showCardDlg(cards_f1, msg.format(qtyMsg, zone[1], sourceName), min=minQty, max=maxQty)
+            cards_f1 = showCardDlg(cards_f1, msg.format(qtyMsg, article, zone[1], sourceName), min=minQty, max=maxQty)
          if cards_f1 == None:
             return False
 
