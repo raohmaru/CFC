@@ -428,7 +428,9 @@ action = [[if oppRingSize >= 3]] bp(x2)
 """
 
 # Edge's MANIPULATION
-# RulesDict['e9c8e4ca-7d41-43c5-b427-f7e47125052e'] = ""
+RulesDict['e9c8e4ca-7d41-43c5-b427-f7e47125052e'] = """
+action = steal() target(@infront)
+"""
 
 # Hinata's GO FOR IT!
 # RulesDict['514717b1-432b-4da7-aa84-a751b996416f'] = ""

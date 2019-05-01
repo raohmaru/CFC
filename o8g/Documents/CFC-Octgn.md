@@ -11,19 +11,29 @@ Once the game is started you will need to load your deck. Unless you have turned
 - Draw 5 cards
 
 ## Playing the Game
-The best way to learn how to play CFC is by playing the videogame [SNK vs. Capcom Card Fighters' Clash 2 Expand Edition](http://neogeo.freeplaytech.com/svc-2/). If you don't have a Neo Geo Pocket Color, or you aren't one of the lucky owners of a Card Fighters' Clash 2 cartridge, you can try [CFC2 English patch](http://cfc2english.blogspot.com.es/).
+The best way to learn how to play CFC is by playing the videogame [SNK vs. Capcom Card Fighters' Clash 2 Expand Edition](http://neogeo.freeplaytech.com/svc-2/). If you don't have a Neo Geo Pocket Color, or you aren't one of the lucky owners of a Card Fighters' Clash 2 cartridge, you can try the [CFC2 English patch](http://cfc2english.blogspot.com.es/).
 
-CFC is a turn-based game. To move to the next phase you can press <span class=kb>Tab</span> key or functions keys <span class=kb>F1</span> to <span class=kb>F7</span>. Once you're in the Cleanup phase, pass the turn to your opponent by clicking in the green triangle after its name.
+### Turns
+CFC is a turn-based game. Each player takes turns alternatively.
 
-To play a card from your hand you can double click on it, then the game will take care of the rest (if Play automation is on). Or you can drag it manually onto the table.
+Each turn is divided in seven phases. To move to the next phase you can press <span class=kb>Tab</span> key or functions keys <span class=kb>F1</span> to <span class=kb>F7</span>.
 
-To activate an ability or effect of a card on the table, double click on it. Some cards have automated effects that the plugin will apply automatically; for the rest of cards you will need to apply them manually.
+Once you are in the last phase of your turn (the Cleanup phase), moving to the next phase will pass automatically the turn to your opponent.
 
-You can attack in the Attack phase by pressing <span class=kb>Ctrl</span>+<span class=kb>A</span> over a character card, or <span class=kb>Ctrl</span>+<span class=kb>Alt</span>+<span class=kb>A</span> to join an attacker and do a United Attack.
+Please note that if automations are on, it's important to go through all phases, due to some automated tasks are performed on every phase to easy the gameplay.
 
-Defending player can counter an attacking character in the Counterattack phase by targeting that character, and pressing <span class=kb>Ctrl</span>+<span class=kb>B</span> while hovering one of his characters.
+### Playing Cards
+To play a card from your hand you can double click on it, then the game will take care of the rest (if Play automation is on).
 
-If automations are on, it's important to go through all phases, due to some automated tasks are performed on every phase to easy the gameplay.
+### Activating Abilities
+To activate an ability or effect of a card on the table, double click on it. Cards have automated effects that the plugin will apply automatically (still work in progress); if they don't, you will need to apply them manually.
+
+Automatic <span class="ab ab-auto">●</span> abilities are applied automatically after playing the card or triggered after a phase change or certains events.
+
+### Attacking
+You can attack in the Attack phase by double click on a card, or by pressing <span class=kb>Ctrl</span>+<span class=kb>A</span> over a character card, or <span class=kb>Ctrl</span>+<span class=kb>Alt</span>+<span class=kb>A</span> to join an attacker and do a United Attack.
+
+Defending player can counter an attacking character in the Counterattack phase by targeting the attacking character (<span class=kb>Shift</span>+<span class=kb>Left click</span>), and then double click on a defending character card or press <span class=kb>Ctrl</span>+<span class=kb>B</span> while hovering ta defending character card.
 
 ## The Actions & Keyboard Shortcuts
 To play and go through OCTGN, you can use the mouse to interact with the game objects (table, cards, hand, deck), and the contextual menu (right click) and/or the keyboard to activate actions such as drawing cards, moving between phases or flip a coin. When an action is activated some automations take place to assist you and play faster.

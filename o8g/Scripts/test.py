@@ -31,6 +31,7 @@ targets = [
    "target = character",
    "target = characters[attack]",
    "target = character@hand",
+   "target = @oppRing",
    "target = Captain[attack] @ oppRing",
    "target = robot[-block]@myhand",
    "target = character,action[bp>=800,frozen]@oppRing",
@@ -108,7 +109,7 @@ def test(arr, title):
       print ""
 
 # rules = RulesDict['aa867ea1-89f8-4154-8e20-2263edd00002']
-# test(targets, 'targets')
-test(actions, 'actions')
+test(targets, 'targets')
+# test(actions, 'actions')
 # test(abilities, 'abilities')
 # test(autos, 'autos')

@@ -38,7 +38,7 @@ class RulesUtils():
       player = RulesUtils.getObjFromPrefix(prefix) or me
       zone = None
 
-      if name == RS_KW_ZONE_ARENA or name == RS_KW_ZONE_RING:
+      if name == RS_KW_ZONE_ARENA or name == RS_KW_ZONE_RING or name == RS_KW_ZONE_INFRONT:
          zone =  table
 
       elif name == RS_KW_ZONE_HAND:
@@ -59,7 +59,7 @@ class RulesUtils():
 
 
    @staticmethod
-   def getCardsFromZone(zone):
+   def getCardsFromZone(zone, source=None):
    # Get all the cards from the given zone
       if isinstance(zone, basestring):
          prefix  = ''
@@ -73,7 +73,12 @@ class RulesUtils():
          cards = getRing()
 
       elif zone == RS_KW_ZONE_RING:
-         cards = getRing(player)
+         cards = getRing(getOpp())
+
+      elif zone == RS_KW_ZONE_INFRONT:
+         idx = getSlotIdx(source)
+         if idx > -1:
+            cards = [getCardAtSlot(idx, getOpp())]
 
       elif zone == RS_KW_ZONE_HAND:
          cards = [c for c in player.hand]
@@ -140,7 +145,7 @@ class RulesUtils():
 
       # Get all the cards from the given zone
       debug("-- Getting all cards from zone %s" % ''.join(zone))
-      cards = RulesUtils.getCardsFromZone(zone)
+      cards = RulesUtils.getCardsFromZone(zone, source)
       debug("-- Retrieved %s cards" % len(cards))
 
       # Filter targets
@@ -314,7 +319,8 @@ class RulesUtils():
             else:
                qtyMsg = "from {} to {}".format(minQty, maxQty)
          # Last chance to select a card
-         cards_f1 = showCardDlg(cards_f1, msg.format(qtyMsg, zone[1], sourceName), min=minQty, max=maxQty)
+         if len(cards_f1) > 1 or minQty == 0:
+            cards_f1 = showCardDlg(cards_f1, msg.format(qtyMsg, zone[1], sourceName), min=minQty, max=maxQty)
          if cards_f1 == None:
             return False
 

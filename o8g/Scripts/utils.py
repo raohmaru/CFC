@@ -358,6 +358,17 @@ def getSlotIdx(card, player = me):
    debug("Card isn't in a slot")
    return -1
    
+   
+def getCardAtSlot(idx, player = me):
+   debug(">>> getCardAtSlot({}, {})".format(idx, player)) #Debug
+   
+   ring = getGlobalVar('Ring', player)
+   if player != me:
+      ring.reverse()
+   card = Card(ring[idx]) if ring[idx] else None
+   debug("Card at slot {} is: {}".format(idx, card))
+   return card
+   
 
 def charIsInRing(card, player = me):
    ring = getGlobalVar('Ring', player)
@@ -836,7 +847,7 @@ def debugScenario():
       '1cd7580b-d396-496c-afac-bcd6da9c1f83' # Akira
       ,'4bd333d6-f063-424e-8cf9-3512f96f23b4' # Batsu
       ,'e6e46f83-d089-4762-8d8e-2a3252cfc9db' # Daigo
-      # ,'163c9ec0-61d2-45ae-842b-15aba8cc61f8' # Jill Valentine
+      ,'e9c8e4ca-7d41-43c5-b427-f7e47125052e' # Edge
    ]
    for i, id in enumerate(tableCards):
       debug("Creating card {} at slot {}".format(id, i))
@@ -849,8 +860,8 @@ def debugScenario():
       rnd(1, 100)  # Delay the next action until all animation is done
       
    handCards = [
-      'a25d74b5-8774-4729-8ac2-b820878241b9' # []
-      ,'163c9ec0-61d2-45ae-842b-15aba8cc61f8' # []
+      # 'a25d74b5-8774-4729-8ac2-b820878241b9' # []
+      # ,'163c9ec0-61d2-45ae-842b-15aba8cc61f8' # []
       # '365cddf9-f741-4a3e-bf07-de4b3eecc6d2' # Char
       # ,'d14694b4-484c-4b45-962e-8cbb636d8a9a' # Char
       # ,'8ce9a56f-8c0c-49e7-879c-12179c63f288' # Char
