@@ -51,9 +51,11 @@ def removeGameEventListener(obj_id, eventName=None):
       if not eventName or e == eventName:
          for i, listener in reversed(list(enumerate(ge[e]))):
             if listener['id'] == obj_id or listener['source'] == obj_id:
-               del ge[e][i]
-               removed = True
-               debug("Removed listener for event {} {}".format(e, listener))
+               # Events with restrictions will eventually be removed in due time
+               if listener['restr'] is None:
+                  del ge[e][i]
+                  removed = True
+                  debug("Removed listener for event {} {}".format(e, listener))
    setGlobalVar('GameEvents', ge)
    return removed
 

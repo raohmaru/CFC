@@ -24,10 +24,12 @@ class RulesAbilities():
    items = {}
 
    @staticmethod
-   def register(name, func, events):
+   def register(name, events, checkFunc=None):
+      msg = MSG_ABILITIES[name] if name in MSG_ABILITIES else None
       RulesAbilities.items[name] = {
-         'func': func,
-         'events': events
+         'events': events,
+         'msg': msg,
+         'checkFunc' : checkFunc
       }
       
    
@@ -43,8 +45,7 @@ class RulesAbilities():
          ability = RulesAbilities.items[abilityName]
          obj = getPlayerOrCard(target_id)
          debug("-- adding ability '{}' to {}".format(abilityName, obj))
-         func = ability['func']
-         func(target_id, source_id, restr, ability['events'])
+         abl_add(target_id, source_id, restr, ability['events'], ability['msg'], ability['checkFunc'])
       else:
          debug("-- ability not found: {}".format(abilityName))
    
@@ -86,7 +87,16 @@ def getTextualRestr(restr):
          player = 'his  '
       return RS_KW_RESTR_LABELS[restr[1]].format(player)
    return restr(1)
-      
+   
+   
+def notifyAbilityEnabled(target_id, source_id=None, msg=None, restr=None, isWarning=False):
+   obj = getPlayerOrCard(target_id)
+   source = obj
+   if source_id is not None:
+      source = Card(source_id)
+   if msg is not None:
+      func = warning if isWarning else notify
+      func(msg[0].format(getObjName(obj), source.Name, source.properties['Ability Name'], restr))
 
 #---------------------------------------------------------------------------
 # Abilities functions
@@ -110,20 +120,37 @@ def abl_cantPlayAC(player_id, source_id=None, restr=None, events=[]):
       notify("{} cannot play action cards {}".format(Player(player_id), getTextualRestr(restr)))
 
 
-def abl_genericListener(target_id, obj_id, source_id=None, msg=None):
+def abl_cantPlayRE(player_id, source_id=None, restr=None, events=[]):
+   debug(">>> abl_cantPlayRE({}, {})".format(player_id, source_id)) #Debug
+   if addGameEventListener(events[0], 'abl_genericListener', player_id, source_id, restr, [player_id, source_id, [MSG_CANT_PLAY_RE, MSG_CAN_PLAY_RE]]):
+      notify("{} cannot play reaction cards {}".format(Player(player_id), getTextualRestr(restr)))
+      
+      
+def abl_unlimitedBackup(obj_id):
+   return True
+
+
+def abl_add(obj_id, source_id=None, restr=None, events=[], msg=None, checkFunc=None):
+   debug(">>> abl_add({}, {}, {})".format(obj_id, source_id, events)) #Debug
+   if addGameEventListener(events[0], 'abl_genericListener', obj_id, source_id, restr, [obj_id, source_id, msg, checkFunc]):
+      notifyAbilityEnabled(obj_id, source_id, msg, getTextualRestr(restr))
+
+
+def abl_genericListener(target_id, obj_id, source_id=None, msg=None, checkFunc=None):
    """ Checks if the original card with the ability is equal to the second card the system wants to check """
    debug(">>> abl_genericListener({}, {}, {})".format(target_id, obj_id, source_id)) #Debug      
    if target_id == obj_id:
-      obj = getPlayerOrCard(target_id)
-      source = obj
-      if source_id is not None:
-         source = Card(source_id)
-      if msg is not None:
-         warning(msg[0].format(getObjName(obj), source.Name, source.properties['Ability Name']))
-      return True
+      checkFunc = eval(checkFunc)
+      if checkFunc is None:
+         notifyAbilityEnabled(target_id, source_id, msg, isWarning=True)
+         return True
+      else:
+         return checkFunc(target_id)
    return False
 
 
-RulesAbilities.register('unblockable', abl_unblockable, [GameEvents.Blocked])
-RulesAbilities.register('cantblock',   abl_cantBlock,   [GameEvents.BeforeBlock])
-RulesAbilities.register('cantplayac',  abl_cantPlayAC,  [GameEvents.BeforePlayAC])
+RulesAbilities.register('unblockable',     [GameEvents.Block])
+RulesAbilities.register('cantblock',       [GameEvents.BeforeBlock])
+RulesAbilities.register('cantplayac',      [GameEvents.BeforePlayAC])
+RulesAbilities.register('cantplayre',      [GameEvents.BeforePlayRE])
+RulesAbilities.register('unlimitedbackup', [GameEvents.BackupLimit], 'abl_unlimitedBackup')

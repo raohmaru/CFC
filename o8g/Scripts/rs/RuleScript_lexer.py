@@ -105,11 +105,16 @@ class RulesLexer():
             # debug("Target already defined. Line skipped")
 
          # Check for action command
-         if not RS_KEY_ACTION in rulesDict:
-            match = RS_RGX_KEY_ACTION.match(line)
-            if match:
-               debug("Action key found!")
-               rulesDict[RS_KEY_ACTION] = RulesLexer.parseAction( line[len(match.group()):] )
+         match = RS_RGX_KEY_ACTION.match(line)
+         if match:
+            debug("Action key found!")
+            action = RulesLexer.parseAction( line[len(match.group()):] )
+            if RS_KEY_ACTION in rulesDict:
+               if not isinstance(rulesDict[RS_KEY_ACTION], list):
+                  rulesDict[RS_KEY_ACTION] = [rulesDict[RS_KEY_ACTION]]
+               rulesDict[RS_KEY_ACTION].append(action)
+            else:
+               rulesDict[RS_KEY_ACTION] = action
          # else:
             # debug("Action already defined. Line skipped")
             

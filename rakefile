@@ -4,7 +4,7 @@ require 'json'
 require 'redcarpet'
 
 
-OCTGN_dir = "C:/Games/OCTGN/Octgn"
+OCTGN_dir = "C:/Games/OCTGN"
 OCTGN_data_dir = "C:/Users/Raohmaru/Documents/OCTGN"
 start_time = Time.now
 CLOBBER.include ["o8g/*.o8g", "#{OCTGN_data_dir}/LocalFeed/Card*.nupkg", "o8g/Scripts/**/*.pyc"]

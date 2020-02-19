@@ -573,19 +573,23 @@ def toTableFaceDown(card, x = 0, y = 0):
    notify("{} puts a card face down in the Arena {}.".format(me, fromText))
 
 
-def changeSlot(card, x = 0, y = 0):
+def changeSlot(card, x = 0, y = 0, targets = None):
    debug(">>> changeSlot {}".format(card)) #Debug
    mute()
    cardSlot = getSlotIdx(card, card.controller)
    if cardSlot == -1:
       warning(MSG_SEL_CHAR_RING)
       return
-   targets = getTargetedCards(card, True, card.controller == me)
+   if not targets:
+      targets = getTargetedCards(card, True, card.controller == me)
    if len(targets) > 0:
       target = targets[0]
       targetSlot = getSlotIdx(target, target.controller)
       if targetSlot == -1:
          warning(MSG_SEL_CHAR_RING)
+         return
+      if target.controller != target.controller:
+         whisper("You can only swap exactly two characters in the same ring.")
          return
       putAtSlot(card, targetSlot, card.controller)
       putAtSlot(target, cardSlot, target.controller)
@@ -711,13 +715,17 @@ def play(card):  # This is the function to play cards from your hand.
    if not playerSide:
       chooseSide()  # Just in case...
    slot = ""
+   group = card.group
    if automations['Play']:
       if not playAuto(card): return
       slot = " in slot {}".format(getSlotIdx(card)+1)
    else:
       placeCard(card, card.Type)
-   notify("{} plays {} from its {}{}.".format(me, card, card.group.name, slot))
-   notify("({} has played {} character{} this turn.)".format(me, charsPlayed, getPlural(charsPlayed)))
+   if isCharacter(card):
+      notify("{} plays {} from its {}{}.".format(me, card, group.name, slot))
+      notify("({} has played {} character{} this turn.)".format(me, charsPlayed, getPlural(charsPlayed)))
+   else:
+      notify("{} plays {} from its {}.".format(me, card, group.name))
 
    debug("<<< playing card end") #Debug
 

@@ -38,8 +38,8 @@ class RulesUtils():
       player = RulesUtils.getObjFromPrefix(prefix) or me
       zone = None
 
-      if name == RS_KW_ZONE_ARENA or name == RS_KW_ZONE_RING or name == RS_KW_ZONE_INFRONT:
-         zone =  table
+      if name in [RS_KW_ZONE_ARENA, RS_KW_ZONE_RING, RS_KW_ZONE_INFRONT]:
+         zone = table
 
       elif name == RS_KW_ZONE_HAND:
          zone = player.hand
@@ -69,11 +69,11 @@ class RulesUtils():
       player  = RulesUtils.getObjFromPrefix(prefix) or me
       cards = []
 
-      if zone == RS_KW_ZONE_ARENA:
+      if zone == RS_KW_ZONE_ARENA or prefix == RS_PREFIX_SAME:
          cards = getRing()
 
       elif zone == RS_KW_ZONE_RING:
-         cards = getRing(getOpp())
+         cards = getRing(player)
 
       elif zone == RS_KW_ZONE_INFRONT:
          idx = getSlotIdx(source)
@@ -318,10 +318,21 @@ class RulesUtils():
                qtyMsg = "up to {}".format(maxQty)
             else:
                qtyMsg = "from {} to {}".format(minQty, maxQty)
-         article = "the" if zone[1] == RS_KW_ZONE_ARENA else "your"
+               
          # Last chance to select a card
          if len(cards_f1) > 1 or minQty == 0:
-            cards_f1 = showCardDlg(cards_f1, msg.format(qtyMsg, article, zone[1], sourceName), min=minQty, max=maxQty)
+            article = "the" if zone[1] == RS_KW_ZONE_ARENA else "your"
+            # Choose a ring if we need cards from the same ring
+            if zone[0] == RS_PREFIX_SAME and len(players) > 1:
+               ctrl = selectRing()
+               if not ctrl:
+                  return False
+               cards_f1 = [c for c in cards_f1 if c.controller == ctrl]
+               if ctrl != me:
+                  article = "enemy's"
+            # Select in any zone
+            title = msg.format(qtyMsg, article, zone[1], sourceName)
+            cards_f1 = showCardDlg(cards_f1, title, min=minQty, max=maxQty)
          if cards_f1 == None:
             return False
 

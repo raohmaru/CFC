@@ -157,12 +157,15 @@ GameEvents = Struct(**{
    'DrawPhase'    : 'drawphase',
    'BlockPhase'   : 'blockphase',
    'EndPhase'     : 'endphase',
-   'Blocked'      : 'blocked',
+   'CleanupPhase' : 'cleanupphase',
+   'Block'        : 'block',
    'BeforeBlock'  : 'beforeblock',
    'HandChanges'  : 'handchanges',
    'RingChanges'  : 'ringchanges',
    'BeforePlayAC' : 'beforeplayac',
-   'CharRemoved'  : 'charremoved'
+   'BeforePlayRE' : 'beforeplayre',
+   'CharRemoved'  : 'charremoved',
+   'BackupLimit'  : 'backuplimit'
 })
 # When a listener to these events is added, trigger it automatically
 GameEventsExecOnAdded = [
@@ -180,12 +183,6 @@ MSG_SEL_CARD_EFFECT         = MSG_SEL_CARD + " ({}'s effect)"
 MSG_SEL_CARD_DISCARD        = "Select a card from your {} to discard"
 MSG_SEL_CARD_SACRIFICE      = "Select a card from your {} to KO"
 MSG_COST_NOT_PAYED          = "{} did not pay the activation cost of {}'s {}"
-MSG_CANT_BLOCK              = "{} cannot block due to {}'s {} ability."
-MSG_CAN_BLOCK               = "{} can block again."
-MSG_UNBLOCKABLE             = "{} cannot be blocked due to {}'s {} ability."
-MSG_BLOCKABLE               = "{} can be blocked as normal."
-MSG_CANT_PLAY_AC            = "{} cannot play action cards due to {}'s {} ability."
-MSG_CAN_PLAY_AC             = "{} can play action cards again."
 MSG_AB_NO_EFFECT            = "{}'s ability {} (may) have had no effect."
 MSG_AB_AUTO_ACTIVATION      = "{} has activated {}'s auto ability {}."
 MSG_AB_AUTO_UATTACK         = "Cannot activate {}'s auto ability {} because it joined an United Attack."
@@ -197,14 +194,39 @@ MSG_ERR_NO_FILTERED_PLAYERS = "No player match the requirements of this card's e
 MSG_ERR_NO_CARD_TARGETED    = "Please select a card before activating the ability."
 MSG_ERR_TARGET_OTHER        = "{}'s ability cannot select itself, therefore it has been removed from selection."
 MSG_MAY_DEF                 = "Do you want to apply the effect of the card?"
+MSG_ABILITIES = {
+   'cantblock': [
+      "{} cannot block due to {}'s {} ability{}.",
+      "{} can block again."
+   ],
+   'unblockable': [
+      "{} cannot be blocked due to {}'s {} ability{}.",
+      "{} can be blocked as normal."
+   ],
+   'cantplayac': [
+      "{} cannot play action cards due to {}'s {} ability{}.",
+      "{} can play action cards again."
+   ],
+   'cantplayre': [
+      "{} cannot play reaction cards due to {}'s {} ability{}.",
+      "{} can play reaction cards again."
+   ],
+   'unlimitedbackup': [
+      "{0} can receive any number of back-ups {3}."
+   ]
+}
 MSG_RULES = {
    'ab_act_fresh': (
       'Characters cannot use {} abilities the turn they enter the ring.'.format(ActivatedUniChar),  # Disabled
       'Characters can use {} abilities the turn they enter the ring.'.format(ActivatedUniChar)  # Enabled
-   )
+   ),
+   'card_cost': '{} cards now cost {} SP {} to play.'
 }
-
 ERR_NO_EFFECT = 'err001'
+CMD_LABELS = {
+   'swapchars' : 'Swap the positions of two characters in the same ring',
+   'movetoslot': 'Move a character to an empty slot in the same ring'
+}
 
 # Misc
 CardWidth    = 90

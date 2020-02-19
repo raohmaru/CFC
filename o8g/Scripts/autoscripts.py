@@ -19,7 +19,8 @@
 # Start/End of Turn/Phase triggers
 #------------------------------------------------------------------------------
 
-def triggerPhaseEvent(phase): # Function which triggers effects at the start or end of the phase
+def triggerPhaseEvent(phase):
+   # Function which triggers effects at the start or end of the phase
    debug(">>> triggerPhaseEvent({})".format(phase)) #Debug
    mute()
    if not automations['Phase']: return
@@ -130,6 +131,9 @@ def endPhaseStart():
 
 
 def cleanupPhaseStart():
+   # Trigger event
+   triggerGameEvent(GameEvents.CleanupPhase)
+   
    clearKOedChars()
 
    # Clean my ring
@@ -203,7 +207,7 @@ def playAuto(card, slotIdx=None):
          warning("Character card can't be played.\nThe selected slot is not empty (it's taken up by {}).\nIf you want to backup, please first target a character in your ring.".format(Card(myRing[slotIdx]).Name))
          return
       # Pay SP cost
-      if not payCostSP(card.SP):
+      if not payCostSP(card.SP, cardType = CharType):
          return
       # Finally, the card is played
       placeCard(card, card.Type, PlayAction, slotIdx)
@@ -222,7 +226,7 @@ def playAuto(card, slotIdx=None):
          information("Action cards can only be played on your Main Phase.")
          return
       # Pay SP cost
-      if not payCostSP(card.SP):
+      if not payCostSP(card.SP, cardType = ActionType):
          return
       placeCard(card, card.Type, PlayAction)
 
@@ -232,8 +236,11 @@ def playAuto(card, slotIdx=None):
       if me.isActive or phaseIdx != BlockPhase:
          information("Reaction cards can only be played in enemy's Counter-attack Phase.")
          return
+      # Triggers a game event to check if the player can play reaction cards
+      if not triggerGameEvent(GameEvents.BeforePlayRE, me._id):
+         return
       # Pay SP cost
-      if not payCostSP(card.SP):
+      if not payCostSP(card.SP, cardType = ReactionType):
          return
       placeCard(card, card.Type, PlayAction)
    # Player plays an unknow card
@@ -268,8 +275,9 @@ def backupAuto(card):
    target = targets[0]
    # Backup limit
    if backupsPlayed >= BackupsPerTurn:
-      if not confirm("Can't backup more than {} character per turn.\nProceed anyway?".format(CharsPerTurn)):
-         return
+      if triggerGameEvent(GameEvents.BackupLimit, target._id):
+         if not confirm("Can't backup more than {} character per turn.\nProceed anyway?".format(CharsPerTurn)):
+            return
    # Target just entered the ring?
    if MarkersDict['Just Entered'] in target.markers:
       if not confirm("Characters that just entered the ring this turn can't be backed-up.\nProceed anyway?"):
@@ -450,7 +458,7 @@ def blockAuto(card):
       return
 
    # Triggers a game event to check if block is possible
-   if not triggerGameEvent(GameEvents.Blocked, target._id):
+   if not triggerGameEvent(GameEvents.Block, target._id):
       return
 
    setMarker(card, 'Counter-attack')

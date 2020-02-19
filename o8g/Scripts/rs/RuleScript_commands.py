@@ -101,6 +101,17 @@ def toggleRule(event_card_id=None, rule=None, source_id=None):
          if rule in MSG_RULES:
             notify(MSG_RULES[rule][GameRules[rule]])
 
+
+def alterCost(event_card_id, cardType, mod):
+   debug(">>> alterCost({}, {})".format(cardType, mod)) #Debug
+   CardCost = getGlobalVar('CardCost')
+   if not cardType in CardCost:
+       CardCost[cardType] = 0
+   CardCost[cardType] += mod
+   setGlobalVar('CardCost', CardCost)
+   debug("{}'s cost has been modified by {} (now costs {})".format(cardType, mod, CardCost[cardType]))
+   notify(MSG_RULES['card_cost'].format(cardType.title(), abs(CardCost[cardType]), 'less' if CardCost[cardType] >= 0 else 'more'))
+
             
 #---------------------------------------------------------------------------
 # Commands functions
@@ -246,8 +257,6 @@ def cmd_bp(rc, targets, source, qty):
    else:
       amount = num(qty)
    debug(">>> cmd_bp({}, {}, {}, {})".format(targets, qty, mod, amount)) #Debug
-   if len(targets) == 0:
-      targets = [source]
    for target in targets:
       if isCharacter(target):
          newQty = amount
@@ -333,14 +342,14 @@ def cmd_transfrom(rc, targets, source, cardName):
    rc.applyNext()
 
    
-def cmd_restTo(rc, targets, source, zone):
+def cmd_moveRestTo(rc, targets, source, zone):
    pile = me.deck
    index = len(pile)
    targetZone = RulesUtils.getZoneByName(zone)
    if len(targets) > 0:
       pile = targets[0].group
       index = targets[0].index
-   debug(">>> cmd_restTo({}, {})".format(zone, index)) #Debug
+   debug(">>> cmd_moveRestTo({}, {})".format(zone, index)) #Debug
    notify("{} looks through the top of his {}".format(me, pile.name))
    for i in range(0, index):
       moveToGroup(targetZone, pile[0], pile, reveal = True)
@@ -355,7 +364,52 @@ def cmd_disableRule(rc, targets, source, rule):
       addGameEventListener(GameEvents.CharRemoved, 'toggleRule', source._id, args=[rule, source._id])
    rc.applyNext()
 
+
+def cmd_freeze(rc, targets, source, *args):
+   debug(">>> cmd_freeze({})".format(targets)) #Debug
+   for target in targets:
+      if target.controller == me:
+         freeze(target, unfreeze = False)
+      else:
+         remoteCall(target.controller, "unfreeze", [target, 0, 0, False])
+   rc.applyNext()
+
+
+def cmd_unfreeze(rc, targets, source, *args):
+   debug(">>> cmd_unfreeze({})".format(targets)) #Debug
+   for target in targets:
+      if target.controller == me:
+         freeze(target, unfreeze = True)
+      else:
+         remoteCall(target.controller, "unfreeze", [target, 0, 0, True])
+   rc.applyNext()
+
+
+def cmd_alterCost(rc, targets, source, cardType, mod):
+   debug(">>> cmd_alterCost({}, {})".format(cardType, mod)) #Debug
+   alterCost(source._id, cardType, num(mod))
+   addGameEventListener(GameEvents.CharRemoved, 'alterCost', source._id, args=[cardType, -num(mod)])
+   rc.applyNext()
+
+
+def cmd_swapChars(rc, targets, source, *args):
+   debug(">>> cmd_swapChars({})".format(targets)) #Debug
+   if targets[0].controller == me:
+      changeSlot(targets[0], targets = [targets[1]])
+   else:
+      remoteCall(targets[0].controller, "changeSlot", [targets[0], 0, 0, [targets[1]]])
+   rc.applyNext()
+
+
+def cmd_moveToSlot(rc, targets, source, *args):
+   debug(">>> cmd_moveToSlot({})".format(targets)) #Debug
+   if targets[0].controller == me:
+      changeSlot(targets[0])
+   else:
+      remoteCall(targets[0].controller, "changeSlot", [targets[0]])
+   rc.applyNext()
    
+
 RulesCommands.register('damage',        cmd_damage)
 RulesCommands.register('swappiles',     cmd_swapPiles)
 RulesCommands.register('shuffle',       cmd_shuffle)
@@ -372,5 +426,10 @@ RulesCommands.register('loseability',   cmd_loseAbility)
 RulesCommands.register('.each',         cmd_each)
 RulesCommands.register('each',          cmd_each)
 RulesCommands.register('transform',     cmd_transfrom)
-RulesCommands.register('restto',        cmd_restTo)
+RulesCommands.register('moverestto',    cmd_moveRestTo)
 RulesCommands.register('disablerule',   cmd_disableRule)
+RulesCommands.register('freeze',        cmd_freeze)
+RulesCommands.register('unfreeze',      cmd_unfreeze)
+RulesCommands.register('altercost',     cmd_alterCost)
+RulesCommands.register('swapchars',     cmd_swapChars)
+RulesCommands.register('movetoslot',    cmd_moveToSlot)

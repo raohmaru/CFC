@@ -92,11 +92,12 @@ zone: (optional)
       my (default)
       opp
       ctrl
+      same (only applies to ring)
 
 ---------------------------------------------------
 action = {cost}: [[cond]] effect [& effect] to(target) restr; ...
 
-Only one action key is allowed.
+Multiple action keys are allowed. If there are two or more, a dialog will be show to choose the action.
 Several actions can be joined with ';'.
 Effects in the same action are executed synchronously; actions are async.
 
@@ -132,8 +133,13 @@ effect:
          each(group: expr {effect})   # effect context: group item
          group.each(expr {effect})    # effect context: group item
          transform(card name)
-         restTo(zone)
+         moveRestTo(zone)
          disableRule(rule)
+         freeze()
+         unfreeze()
+         alterCost(cardtype, #)
+         swapChars()
+         moveToSlot()
       Ability:
          Keywords:
             @see abilities
@@ -172,6 +178,7 @@ ability:
       unblockable
       cantblock
       cantplayac
+      cantplayre
       
 ---------------------------------------------------
 auto = ~event[,event]~ [[cond]] effect [& effect] to(target) restr; ...
@@ -184,7 +191,8 @@ event:
       drawphase
       blockphase
       endphase
-      blocked
+      cleanupphase
+      block
       beforeblock
       handchanges
       ringchanges
@@ -360,7 +368,7 @@ auto = ~myDrawPhase~ draw() target(me)
 # Samanosuke's DEMON GAUNTLET
 RulesDict['a68dc591-6976-4341-b8b9-1a7dc1c71775'] = """
 action = reveal(hand) & each(myHand: bp <= 3 { bp(+2) }) target(this)
-action = reveal(hand) & myHand.each(bp <= 3 { bp(+2) }) target(this)
+# action = reveal(hand) & myHand.each(bp <= 3 { bp(+2) }) target(this)
 """
 
 # Ayame's BUTTERFLY ILLUSION
@@ -417,7 +425,7 @@ action = {S}: transform(Zombie) target(character)
 # Akira's BROTHER SEARCH
 RulesDict['1cd7580b-d396-496c-afac-bcd6da9c1f83'] = """
 target = action<1>@deck
-action = restTo(discards) & reveal() & moveTo(hand, true)
+action = moveRestTo(discards) & reveal() & moveTo(hand, true)
 """
 
 # Batsu's BOILING BLOOD
@@ -427,7 +435,7 @@ auto = disableRule(AB_ACT_FRESH)
 
 # Daigo's FINISH IT!
 RulesDict['e6e46f83-d089-4762-8d8e-2a3252cfc9db'] = """
-action = [[if oppRingSize >= 3]] bp(x2)
+action = [[if oppRingSize >= 3]] bp(x2) target(this)
 """
 
 # Edge's MANIPULATION
@@ -446,31 +454,51 @@ action = {F}: loseAbility() target(character[powerful]@ring) & draw()
 """
 
 # Kurow's MADNESS
-# RulesDict['d38dc1f6-4586-44f2-bacc-adb649f4d38f'] = ""
+RulesDict['d38dc1f6-4586-44f2-bacc-adb649f4d38f'] = """
+auto = ~activatephase~ destroy()
+"""
 
 # Kyoko's MASSAGE
-# RulesDict['09dfc071-ce3a-448f-86fe-502bd5d1392b'] = ""
+RulesDict['09dfc071-ce3a-448f-86fe-502bd5d1392b'] = """
+action = unfreeze() target(characters[frozen]@ring)
+"""
 
 # Kyosuke's COOL
-# RulesDict['7abee6d7-1831-4090-b882-eee2fd3aa246'] = ""
+RulesDict['7abee6d7-1831-4090-b882-eee2fd3aa246'] = """
+auto = alterCost(action, +2)
+"""
 
 # Momo's DADAKKO
-# RulesDict['9d92f2f0-7395-4f1e-bc32-99ec9c82c686'] = ""
+RulesDict['9d92f2f0-7395-4f1e-bc32-99ec9c82c686'] = """
+action = +cantplayre to(opp) ueot
+"""
 
 # Natsu's ENCOURAGEMENT
-# RulesDict['7e0c215c-72f6-4967-83a5-27491376280f'] = ""
+RulesDict['7e0c215c-72f6-4967-83a5-27491376280f'] = """
+auto = ~activatephase~ bp(+2) to(characters[backedup])
+"""
 
 # Raizou's MEDDLER
-# RulesDict['c553b9d0-946a-4c61-bc9b-a4b074c49045'] = ""
+RulesDict['c553b9d0-946a-4c61-bc9b-a4b074c49045'] = """
+auto = alterCost(reaction, -3)
+"""
 
 # Roberto's GOAL KEEPER
-# RulesDict['6b1e210a-4846-419c-87f8-875aae812c6e'] = ""
+RulesDict['6b1e210a-4846-419c-87f8-875aae812c6e'] = """
+action = swapChars() target(<2>character@sameRing)
+action = moveToSlot() target(character@sameRing)
+"""
 
 # Roy's BLESSED TWICE
-# RulesDict['770a55b0-f68d-46ce-bb52-23ec3372b92a'] = ""
+RulesDict['770a55b0-f68d-46ce-bb52-23ec3372b92a'] = """
+target = character
+action = +unlimitedbackup ueot
+"""
 
 # Shoma's RI-RI-RI!
-# RulesDict['a7b36a01-dbb4-4442-aaf8-e415611581a9'] = ""
+RulesDict['a7b36a01-dbb4-4442-aaf8-e415611581a9'] = """
+auto = ~anyCleanupPhase~ moveTo(hand) target(this[block,blocked])
+"""
 
 # Tiffany's GROOVY KNUCKLES
 # RulesDict['40ef0410-798f-4d60-865b-9af14ed4e355'] = ""

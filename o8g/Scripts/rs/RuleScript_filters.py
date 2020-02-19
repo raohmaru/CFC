@@ -190,6 +190,11 @@ def filterUnitedAttack(card, include, cmd, *args):
 def filterBlock(card, include, cmd, *args):
    debug(">>> filterBlock({}, {}, {}, {})".format(card, include, cmd, args)) #Debug
    return filterHasMarker(card, 'Counter-attack', include)
+   
+   
+def filterBlocked(card, include, cmd, *args):
+   debug(">>> filterBlocked({}, {}, {}, {})".format(card, include, cmd, args)) #Debug
+   return filterHasMarker(card, 'Attack', include) and card._id in getGlobalVar('Blockers')
     
     
 def filterFrozen(card, include, cmd, *args):
@@ -236,6 +241,7 @@ RulesFilters.registerFilter('backup'   , filterBackup)
 RulesFilters.registerFilter('attack'   , filterAttack)
 RulesFilters.registerFilter('uattack'  , filterUnitedAttack)
 RulesFilters.registerFilter('block'    , filterBlock)
+RulesFilters.registerFilter('blocked'  , filterBlocked)
 RulesFilters.registerFilter('frozen'   , filterFrozen)
 RulesFilters.registerFilter('fresh'    , filterJustEntered)
 RulesFilters.registerFilter('powerful' , filterHasAbility)

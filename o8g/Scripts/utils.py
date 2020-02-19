@@ -75,6 +75,7 @@ def resetAll():
    clearGlobalVar('Blockers')
    clearGlobalVar('Transformed')
    clearGlobalVar('GameEvents')
+   clearGlobalVar('CardCost')
    
    if me.name == Author:
       if debugVerbosity == DebugLevel.Off:
@@ -173,12 +174,15 @@ def evalExpression(expr, retValue = False):
       return False
    
    
-def showCardDlg(list, title, max=1, text="Select a card:", min=1):
-   dlg = cardDlg(list)
+def showCardDlg(list, title, max=1, text="Select a card:", min=1, bottomList=None, label=None, bottomLabel=None):
+   debug("showCardDlg({}, {}, {}, {}, {}, {}, {}, {})".format(list, title, max, text, min, bottomList, label, bottomLabel))
+   dlg = cardDlg(list, bottomList)
    dlg.title = title
    dlg.text = text
    dlg.min = min
    dlg.max = max
+   dlg.label = label
+   dlg.bottomLabel = bottomLabel
    return dlg.show()
             
 
@@ -256,6 +260,15 @@ def moveToGroup(group, card, source = None, pos = None, reveal = False):
    targetCtrl = 'its' if me == group.controller else "{}'s".format(group.controller)
    notify("{} moved {} {} {} {} {}.".format(me, name, fromText, posText, targetCtrl, group.name))
    
+
+def selectRing():
+   if len(players) == 1:
+      return me
+   t = askChoice("Select a ring", ['My ring', 'Enemy ring'])
+   if t == 0:
+      return False
+   return players[t-1]
+
 
 #---------------------------------------------------------------------------
 # String functions
@@ -650,17 +663,31 @@ def modSP(count = 1, silent = False):
       notify("{} {} {} SP. New total is {} (before was {}).".format(me, action, count, me.SP, initialSP))
 
 
-def payCostSP(count = 1, silent = False, msg = 'play this card'):
+def payCostSP(count = 1, silent = False, msg = 'play this card', cardType = None):
 # Pay an SP cost. However we also check if the cost can actually be paid.
    count = num(count)
+   
+   # Cost modifiers
+   if cardType:
+     cardType = cardType.lower()
+     CardCost = getGlobalVar('CardCost')
+     if cardType in CardCost and CardCost[cardType] != 0:
+        cost = count + CardCost[cardType]
+        # If initial cost was less than 0, then it cannot be less than -1 (Kyosuke rule)
+        if cost >= 0:
+           cost = max(count, -1)
+        if count != cost:
+           count = cost
+           notify("The cost of the card has been modified by an ability.")
+   
    if count >= 0:
       modSP(count, silent)
    else:
       initialSP = me.SP
       if me.SP + count < 0: # If we don't have enough SP, we assume card effects or mistake and notify the player that they need to do things manually.
          if not silent:
-            if not confirm("You do not seem to have enough SP to {}.\nAre you sure you want to proceed? \
-            \n\n(If you do, your SP will go to the negative. You will need to increase it manually as required.)".format(msg)):
+            if not confirm("You do not seem to have enough SP to {}.\nAre you sure you want to proceed?\nCost is {} SP. \
+            \n\n(If you do, your SP will go to the negative. You will need to increase it manually as required.)".format(msg, count)):
                return False
             notify("{} was supposed to pay {} SP but only has {}.".format(me, count, me.SP))
       me.SP += count
@@ -816,117 +843,3 @@ def filterHasMarker(card, marker, include):
       return res
    else:
       return not res
-      
-      
-#------------------------------------------------------------------------------
-# Debugging
-#------------------------------------------------------------------------------
-
-def debug(msg, level = 1):
-   if debugVerbosity < DebugLevel.Info:
-      return
-   if debugVerbosity >= level:
-      msg = "{}".format(msg)
-      msg = DebugLevelPrefixes[level] + ' ' + msg
-      whisper(msg)
-   
-
-def debugScenario():
-   debug(">>> debugScenario()") #Debug   
-   
-   if turnNumber() == 0: 
-	   nextTurn(me, True)
-   
-   global charsPlayed, debugVerbosity
-   debugVerbosity = DebugLevel.All
-   me.SP = 50
-   chooseSide()
-   gotoMain()
-   rnd(100, 10000)  # Delay the next action until all animation is done
-   tableCards = [
-      '514717b1-432b-4da7-aa84-a751b996416f' # Hinata
-      ,'fb3d3a49-a1de-4887-9ea4-ec761426471e' # Hyo
-      ,'e6e46f83-d089-4762-8d8e-2a3252cfc9db' # Daigo
-      ,'e9c8e4ca-7d41-43c5-b427-f7e47125052e' # Edge
-   ]
-   for i, id in enumerate(tableCards):
-      debug("Creating card {} at slot {}".format(id, i))
-      card = table.create(id, 0, 0, quantity=1, persist=True)
-      playAuto(card, i)
-      ability = Ability(card)
-      if ability.type and ability.type != InstantAbility:
-         card.markers[MarkersDict['Just Entered']] = 0
-      charsPlayed = 0
-      rnd(1, 100)  # Delay the next action until all animation is done
-      
-   handCards = [
-      # 'a25d74b5-8774-4729-8ac2-b820878241b9' # []
-      # ,'163c9ec0-61d2-45ae-842b-15aba8cc61f8' # []
-      # ,'365cddf9-f741-4a3e-bf07-de4b3eecc6d2' # Char
-      # ,'d14694b4-484c-4b45-962e-8cbb636d8a9a' # Char
-      # ,'8ce9a56f-8c0c-49e7-879c-12179c63f288' # Char
-      # ,'61ef9ecd-980b-46b8-83fc-12399ce044f1' # Char
-      # ,'0a8f39ff-6b21-4805-bafb-27c3f38d1986' # Char
-      # ,'525d8365-c90e-491f-9811-1f23efbafccb' # Char
-      # ,'bdeceb7c-9d94-4c98-824b-90d5317d8cda' # Char
-      # ,'e94aaa00-2449-46a4-9ff4-273e6dac272a' # Char
-      # '85d84ab1-dede-4fc7-b80d-00778f73c905' # Action
-      # ,'ac01bbbe-583e-46ae-b26c-3c25eb8f0779' # Action
-      # ,'556b3359-e642-419a-ab5c-67f70de1bb4f' # Reaction
-      # ,'91e441cc-0f1f-4b01-a2b0-94678d6f0b56' # Reaction
-   ]
-   for id in handCards:
-      debug("Adding card {} to hand".format(id))
-      card = table.create(id, 0, 0, quantity=1, persist=True)
-      card.moveTo(me.hand)
-      # rnd(1, 100)  # Delay the next action until all animation is done
-   
-   deckCards = [
-      '365cddf9-f741-4a3e-bf07-de4b3eecc6d2' # Char
-      ,'d14694b4-484c-4b45-962e-8cbb636d8a9a' # Char
-      ,'8ce9a56f-8c0c-49e7-879c-12179c63f288' # Char
-      ,'61ef9ecd-980b-46b8-83fc-12399ce044f1' # Char
-      # ,'0a8f39ff-6b21-4805-bafb-27c3f38d1986' # Char
-      # ,'525d8365-c90e-491f-9811-1f23efbafccb' # Char
-      # ,'bdeceb7c-9d94-4c98-824b-90d5317d8cda' # Char
-      # ,'e94aaa00-2449-46a4-9ff4-273e6dac272a' # Char
-      # ,'85d84ab1-dede-4fc7-b80d-00778f73c905' # Action
-      # ,'ac01bbbe-583e-46ae-b26c-3c25eb8f0779' # Action
-      # ,'556b3359-e642-419a-ab5c-67f70de1bb4f' # Reaction
-      # ,'91e441cc-0f1f-4b01-a2b0-94678d6f0b56' # Reaction
-   ]
-   for id in deckCards:
-      debug("Adding card {} to Deck".format(id))
-      card = table.create(id, 0, 0, quantity=1, persist=True)
-      card.moveTo(me.deck)
-      # rnd(1, 100)  # Delay the next action until all animation is done
-   
-   discardCards = [
-      # '365cddf9-f741-4a3e-bf07-de4b3eecc6d2' # Char
-      # ,'d14694b4-484c-4b45-962e-8cbb636d8a9a' # Char
-      # ,'8ce9a56f-8c0c-49e7-879c-12179c63f288' # Char
-      # ,'61ef9ecd-980b-46b8-83fc-12399ce044f1' # Char
-      # ,'0a8f39ff-6b21-4805-bafb-27c3f38d1986' # Char
-      # ,'525d8365-c90e-491f-9811-1f23efbafccb' # Char
-      # ,'bdeceb7c-9d94-4c98-824b-90d5317d8cda' # Char
-      # ,'e94aaa00-2449-46a4-9ff4-273e6dac272a' # Char
-      # ,'85d84ab1-dede-4fc7-b80d-00778f73c905' # Action
-      # ,'ac01bbbe-583e-46ae-b26c-3c25eb8f0779' # Action
-      # ,'556b3359-e642-419a-ab5c-67f70de1bb4f' # Reaction
-      # ,'91e441cc-0f1f-4b01-a2b0-94678d6f0b56' # Reaction
-   ]
-   for id in discardCards:
-      debug("Adding card {} to Discard pile".format(id))
-      card = table.create(id, 0, 0, quantity=1, persist=True)
-      card.moveTo(me.piles['Discard Pile'])
-      # rnd(1, 100)  # Delay the next action until all animation is done
-      
-   debug("<<< debugScenario()") #Debug
-
-
-def debugBackups():
-   backups = getGlobalVar('Backups')
-   debug("BACKUPS ({})".format(len(backups)))
-   for id in backups:
-      debug("   {} backups {}".format(Card(id), Card(backups[id])))
-   

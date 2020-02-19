@@ -113,6 +113,20 @@ class Rules():
       
    def execAction(self, action, target, isAuto=False):
       debug("Executing actions: {}, {}, isAuto={}".format(action, target, isAuto))
+      
+      if isinstance(action, list):
+         debug("Several actions found, player must choose one")
+         actionLabels = []
+         for a in action:
+            label = a['effects'][0][1][0][0]
+            if label in CMD_LABELS:
+               label = CMD_LABELS[label]
+            actionLabels.append(label)
+         t = askChoice("Select an effect", actionLabels)
+         if t == 0:
+            return False
+         debug("Action chosen: {}".format(action[t-1]))
+         action = action[t-1]
             
       thisCard = Card(self.card_id)
       
