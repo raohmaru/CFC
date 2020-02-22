@@ -205,8 +205,8 @@ class Rules():
                      obj.target(False)
             rnd(10, 1000) # Wait between effects until all animation is done
             
-      if not targets:
-         notify(MSG_AB_NO_EFFECT.format(thisCard, getParsedCard(thisCard).ability))
+      # if not targets:
+         # notify(MSG_AB_NO_EFFECT.format(thisCard, getParsedCard(thisCard).ability))
          
       if isAuto and not revert:
          notify(MSG_AB_AUTO_ACTIVATION.format(thisCard.controller, thisCard, getParsedCard(thisCard).ability))

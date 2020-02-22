@@ -36,13 +36,13 @@ def debugScenario():
    
    global charsPlayed, debugVerbosity
    debugVerbosity = DebugLevel.All
-   me.SP = 50
+   # me.SP = 50
    chooseSide()
    gotoMain()
    rnd(100, 10000)  # Delay the next action until all animation is done
    tableCards = [
-      'a7b36a01-dbb4-4442-aaf8-e415611581a9' # Shoma
-      ,'7e0c215c-72f6-4967-83a5-27491376280f' # Natsu
+      # 'c3bb69f7-4b77-469f-a9ff-79cca1e52574' # Guy
+      # ,'7e0c215c-72f6-4967-83a5-27491376280f' # Natsu
       # ,'7e0c215c-72f6-4967-83a5-27491376280f' # Natsu
       # ,'e9c8e4ca-7d41-43c5-b427-f7e47125052e' # Edge
    ]
@@ -57,17 +57,19 @@ def debugScenario():
       rnd(1, 100)  # Delay the next action until all animation is done
       
    handCards = [
-      'a7b36a01-dbb4-4442-aaf8-e415611581a9' # Shoma
-      # ,'770a55b0-f68d-46ce-bb52-23ec3372b92a' # Roy
-      # ,'770a55b0-f68d-46ce-bb52-23ec3372b92a' # Char
-      # ,'8ce9a56f-8c0c-49e7-879c-12179c63f288' # Char
-      # ,'61ef9ecd-980b-46b8-83fc-12399ce044f1' # Char
-      # ,'0a8f39ff-6b21-4805-bafb-27c3f38d1986' # Char
+      '55b0c9ff-4b3a-4b08-adc1-f1b5e03adef9' # Nina
+      ,'40ef0410-798f-4d60-865b-9af14ed4e355' # Tiffany
+      ,'a68dc591-6976-4341-b8b9-1a7dc1c71775' # Samanosuke
+      ,'a68dc591-6976-4341-b8b9-1a7dc1c71775' # Samanosuke
+      ,'f232c282-6a03-436f-aae2-53f6988c6603' # Hayato
+      # ,'ee979882-67cc-4549-881c-8e158df495ce' # Char
+      # ,'38d6c7a8-7463-4aa6-88c4-13f725ada0be' # Char
+      # ,'e6e46f83-d089-4762-8d8e-2a3252cfc9db' # Char
       # ,'525d8365-c90e-491f-9811-1f23efbafccb' # Char
       # ,'bdeceb7c-9d94-4c98-824b-90d5317d8cda' # Char
       # ,'e94aaa00-2449-46a4-9ff4-273e6dac272a' # Char
-      # ,'85d84ab1-dede-4fc7-b80d-00778f73c905' # Action
-      # ,'ac01bbbe-583e-46ae-b26c-3c25eb8f0779' # Action
+      ,'85d84ab1-dede-4fc7-b80d-00778f73c905' # Action
+      ,'ac01bbbe-583e-46ae-b26c-3c25eb8f0779' # Action
       # ,'5e2211a0-e52e-4b7b-b03d-f6ecb3660bb0' # Action 0 SP
       # ,'83c33aa8-5981-4352-8107-cbb7e05547ec' # Action -1 SP
       # ,'b95b2104-d184-43cc-bb04-b3eb096c6fca' # Action -2 SP
@@ -82,10 +84,10 @@ def debugScenario():
       # rnd(1, 100)  # Delay the next action until all animation is done
    
    deckCards = [
-      # '365cddf9-f741-4a3e-bf07-de4b3eecc6d2' # Char
-      # ,'d14694b4-484c-4b45-962e-8cbb636d8a9a' # Char
-      # ,'8ce9a56f-8c0c-49e7-879c-12179c63f288' # Char
-      # ,'61ef9ecd-980b-46b8-83fc-12399ce044f1' # Char
+      '365cddf9-f741-4a3e-bf07-de4b3eecc6d2' # Char
+      ,'d14694b4-484c-4b45-962e-8cbb636d8a9a' # Char
+      ,'8ce9a56f-8c0c-49e7-879c-12179c63f288' # Char
+      ,'61ef9ecd-980b-46b8-83fc-12399ce044f1' # Char
       # ,'0a8f39ff-6b21-4805-bafb-27c3f38d1986' # Char
       # ,'525d8365-c90e-491f-9811-1f23efbafccb' # Char
       # ,'bdeceb7c-9d94-4c98-824b-90d5317d8cda' # Char

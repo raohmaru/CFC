@@ -137,26 +137,32 @@ def clearGlobalVar(name, player = None):
    
 
 def replaceVars(str):
-   return re.sub(Regexps['BP'], 'getParsedCard(c).BP', str)
+   debug("replaceVars({})".format(str))
+   str = re.sub(Regexps['BP'], 'hasattr(getParsedCard(c), "BP") and getParsedCard(c).BP', str)
+   str = re.sub(Regexps['Action'], 'isAction(c)', str)
+   str = re.sub(Regexps['HandSize'], r'len(\1.hand)', str)
+   str = re.sub(Regexps['Ring'], r'getRingSize(\1)', str)
+   str = re.sub(Regexps['Chars'], r'getRing(\1)', str)
+   str = str.replace('.sp', '.SP')
+   str = str.replace('opp', 'getOpp()')
+   str = str.replace('alone', 'getRingSize() == 1')
+   debug("-- {}".format(str))
+   return str
    
    
 def evalExpression(expr, retValue = False):
-   # Adding some variables only available in this scope.
-   # Must be in lower case.
-   opp = getOpp()
-   myhand = me.hand
-   myhandsize = len(myhand)
-   opphandsize = len(opp.hand)
-   oppringsize = getRingSize(opp)
-   alone = getRingSize() == 1
-   myring = getRing(me)
-      
-   if ':' in expr:
-      expr = replaceVars(expr)
-      parts = expr.split(":")
-      expr = "[{} for c in {}]".format(parts[1], parts[0])
+   expr = replaceVars(expr)
+   forexpr = "[{} for c in {}]"
    
-   if expr[:3] == 'all':
+   if ':' in expr:
+      parts = expr.split(":")
+      expr = forexpr.format(parts[1], parts[0])
+   
+   elif re.search(Regexps['In'], expr):
+      parts = expr.split("in")
+      expr = forexpr.format(parts[0], parts[1])
+   
+   if re.search(Regexps['All'], expr):
       expr = expr.replace('all', '')
       # https://docs.python.org/2.7/library/functions.html
       expr = 'all(' + expr + ')'
@@ -167,7 +173,7 @@ def evalExpression(expr, retValue = False):
          debug("Evaluated expr  %s  (%s)" % (expr, res))
          return res
       else:
-         debug("Evaluated expr  %s == True  (%s)" % (expr, res))
+         debug("Evaluated expr  %s  ?  (%s)" % (expr, res))
          return bool(res)
    except:
       debug("%s  is not a valid Python expression" % (expr))

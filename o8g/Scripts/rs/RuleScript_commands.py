@@ -45,21 +45,17 @@ class RulesCommands():
          cmd = self.cmds.pop(0)
          debug(">>> applyNext({}, {})".format(cmd, self.cmdsArgs)) #Debug
          self.applyCmd(cmd, *self.cmdsArgs)
-      else:
+      elif len(self.cmdsArgs) > 1:
          self.prevTargets = self.cmdsArgs[0]
          self.cmdsArgs = []
+      else:
+         self.prevTargets = None
 
 
    def applyCmd(self, cmd, targets, restr, source, revert=False):
       debug(">>> applyCmd({}, {}, {}, {}, {})".format(cmd, targets, restr, source, revert)) #Debug
       funcStr = cmd[0]
       params = cmd[1]
-      
-      # Methods of objects
-      if '.' in funcStr:
-         funcArr = funcStr.split('.')
-         params += [funcArr[0]]
-         funcStr = '.' + funcArr[1]
       
       # Executing command functions
       if funcStr in RulesCommands.items and not revert:
@@ -186,10 +182,10 @@ def cmd_reveal(rc, targets, source, pileName=None):
    rc.applyNext()
 
 
-def cmd_discard(rc, targets, source, whichCards):
-   debug(">>> cmd_discard({})".format(whichCards)) #Debug
+def cmd_discard(rc, targets, source, whichCards=''):
+   debug(">>> cmd_discard({}, {})".format(targets, whichCards)) #Debug
    cardsTokens = RulesLexer.parseTarget(whichCards)
-   if not targets == 0:
+   if not targets:
       targets = [me]
    for player in targets:
       cardsTokens['zone'] = ['', RS_KW_ZONE_HAND]
@@ -206,13 +202,13 @@ def cmd_discard(rc, targets, source, whichCards):
 
 
 def cmd_randomDiscard(rc, targets, source, numCards=1):
-   debug(">>> cmd_randomDiscard({})".format(whichCards)) #Debug
-   if isNumber(numCards):
+   debug(">>> cmd_randomDiscard({}, {})".format(targets, numCards)) #Debug
+   if not isNumber(numCards):
       numCards = int(numCards)
-   if not targets == 0:
+   if not targets:
       targets = [me]
-   for player in targets:
-      if numCards > 0:
+   if numCards > 0:
+      for player in targets:
          for i in range(0, numCards):
             if player == me:
                randomDiscard()
@@ -272,9 +268,8 @@ def cmd_bp(rc, targets, source, qty):
 def cmd_playExtraChar(rc, targets, source, *args):
    global charsPlayed
    debug(">>> cmd_playExtraChar() {} -> {}".format(charsPlayed, charsPlayed-1))
-   charsPlayed -= 1
-   if charsPlayed < 0:
-      charsPlayed = 0
+   charsPlayed = 0
+   notify("{} can play an additional character this turn.".format(me))
    rc.applyNext()
 
 
@@ -312,12 +307,10 @@ def cmd_loseAbility(rc, targets, source, *args):
    rc.applyNext()
 
 
-def cmd_each(rc, targets, source, args, obj = None):
-   cond, func = args.split('{')
-   func = RulesLexer.parseAction(func.rstrip('}'))
+def cmd_each(rc, targets, source, args):
+   cond, func = args.split('=>')
+   func = RulesLexer.parseAction(func)
    func = func['effects'][0][1]
-   if obj:
-      cond = obj + ':' + cond
    debug(">>> cmd_each({}, {}, {})".format(targets, cond, func)) #Debug
    
    res = evalExpression(cond, True)
@@ -408,6 +401,20 @@ def cmd_moveToSlot(rc, targets, source, *args):
    else:
       remoteCall(targets[0].controller, "changeSlot", [targets[0]])
    rc.applyNext()
+
+
+def cmd_sp(rc, targets, source, qty):
+   qty = int(qty)
+   if not targets:
+      targets = [me]
+   debug(">>> cmd_sp({}, {})".format(targets, qty)) #Debug
+   if qty > 0:
+      for player in targets:
+         if player == me:
+            modSP(qty)
+         else:
+            remoteCall(player, "modSP", [qty])
+   rc.applyNext()
    
 
 RulesCommands.register('damage',        cmd_damage)
@@ -423,7 +430,6 @@ RulesCommands.register('playextrachar', cmd_playExtraChar)
 RulesCommands.register('draw',          cmd_draw)
 RulesCommands.register('steal',         cmd_steal)
 RulesCommands.register('loseability',   cmd_loseAbility)
-RulesCommands.register('.each',         cmd_each)
 RulesCommands.register('each',          cmd_each)
 RulesCommands.register('transform',     cmd_transfrom)
 RulesCommands.register('moverestto',    cmd_moveRestTo)
@@ -433,3 +439,4 @@ RulesCommands.register('unfreeze',      cmd_unfreeze)
 RulesCommands.register('altercost',     cmd_alterCost)
 RulesCommands.register('swapchars',     cmd_swapChars)
 RulesCommands.register('movetoslot',    cmd_moveToSlot)
+RulesCommands.register('sp',            cmd_sp)

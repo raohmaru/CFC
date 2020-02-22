@@ -64,16 +64,17 @@ actions = [
    # "action = {D(action)}: [[if me.HP < 10]] destroy() to(character) & freeze; draw(2) ueot",
    # "action = {F}:  to(character) ueot",
    # "action = {D(2)}: +cantblock to(character@oppRing) ueot",
-   # "action = [[may]] destroy()",
-   # "action = [[if me.hand == 0]] destroy() uynt",
-   # "action = [[if]] destroy() uynt",
+   "action = [[may Destroy all humans?]] destroy()",
+   "action = [[if me.hand == 0]] destroy() uynt",
    # "action = moveTo(ctrlHand) target(characters[bp>=800])",
    # "action = {F}: moveTo(ctrlDeck) target(characters[-backup]) & shuffle(myDeck) & shuffle(oppDeck)",
    # "action = {F}: destroy() target(^character@myRing) & damage(5, character)",
    # "action = [[if  all myring: bp <= 3]] playExtraChar()",
    # "action = {F}: moveTo(@oppDeck) target(*@hand); moveTo(hand) target(*<-1>@oppDeck)",
    # "action = {F}: reveal(hand) & myHand.each(bp <= 3 { bp(+2) }) target(this)"
-   "action = swapChars() target(<2>character)\naction = moveToSlot() target(character)"
+   # "action = swapChars() target(<2>character)\naction = moveToSlot() target(character)",
+   # "action = rndDiscard()",
+   "action = reveal(hand) & each(action in me.hand => bp(+2)) target(this) & discard(actions)"
 ]
 abilities = [
    "abilities = unblockable",
@@ -93,6 +94,9 @@ autos = [
    # "auto = [[may 'Question?']] destroy() & +unblockable to(character@myRing) uynt",
    # "auto = ~myEndPhase~ moveTo(ctrlHand) to(characters[bp>=800])",
    # "auto = ~anyBlockPhase~ +unblockable to(characters[bp<=300 & attack & -uattack]) ueot"
+]
+evals = [
+   "action in me.hand => bp(+2)"
 ]
 
 if not 'debug' in globals():

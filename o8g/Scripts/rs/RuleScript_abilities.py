@@ -81,11 +81,14 @@ def getObjName(obj):
       
       
 def getTextualRestr(restr):
+   debug(">>> getTextualRestr({})".format(restr)) #Debug
+   if not restr:
+      return ''
    if restr[1] in RS_KW_RESTR_LABELS:
       player = ''
       if restr[0]:
          player = 'his  '
-      return RS_KW_RESTR_LABELS[restr[1]].format(player)
+      return ' ' + RS_KW_RESTR_LABELS[restr[1]].format(player)
    return restr(1)
    
    
@@ -96,7 +99,10 @@ def notifyAbilityEnabled(target_id, source_id=None, msg=None, restr=None, isWarn
       source = Card(source_id)
    if msg is not None:
       func = warning if isWarning else notify
-      func(msg[0].format(getObjName(obj), source.Name, source.properties['Ability Name'], restr))
+      name = obj
+      if isPlayer(obj) or isWarning:
+         name = getObjName(obj)
+      func(msg[0].format(name, source.Name, source.properties['Ability Name'], restr))
 
 #---------------------------------------------------------------------------
 # Abilities functions
@@ -138,13 +144,13 @@ def abl_add(obj_id, source_id=None, restr=None, events=[], msg=None, checkFunc=N
 
 def abl_genericListener(target_id, obj_id, source_id=None, msg=None, checkFunc=None):
    """ Checks if the original card with the ability is equal to the second card the system wants to check """
-   debug(">>> abl_genericListener({}, {}, {})".format(target_id, obj_id, source_id)) #Debug      
+   debug(">>> abl_genericListener({}, {}, {}, {}, {})".format(target_id, obj_id, source_id, msg, checkFunc)) #Debug      
    if target_id == obj_id:
-      checkFunc = eval(checkFunc)
       if checkFunc is None:
          notifyAbilityEnabled(target_id, source_id, msg, isWarning=True)
          return True
       else:
+         checkFunc = eval(checkFunc)
          return checkFunc(target_id)
    return False
 

@@ -65,7 +65,9 @@ RS_OP_GTE   = '>='
 RS_PREFIX_PLUS  = '+'
 RS_PREFIX_NOT   = '-'
 RS_PREFIX_MY    = 'my'
+RS_PREFIX_ME    = 'me.'
 RS_PREFIX_OPP   = 'opp'
+RS_PREFIX_OPPE  = 'opp.'
 RS_PREFIX_CTRL  = 'ctrl'
 RS_PREFIX_ANY   = 'any'
 RS_PREFIX_OTHER = '^'
@@ -84,7 +86,9 @@ RS_PREFIX_ZONES = [
 
 RS_PREFIX_EVENTS = [
    RS_PREFIX_MY,
+   RS_PREFIX_ME,
    RS_PREFIX_OPP,
+   RS_PREFIX_OPPE,
    RS_PREFIX_ANY
 ]
 

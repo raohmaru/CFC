@@ -22,6 +22,7 @@ Case Insensitive
 ---------------------------------------------------
 target = <qty> type <pick> [filters] @ zone
 
+Defines a target used for all effects.
 Only one target key is allowed.
 
 qty:
@@ -44,7 +45,8 @@ type:
       me
       opp
       this
-      *
+      * (any one card)
+      all
    Prefixes:
       ^ (other)
    Sufixes:
@@ -122,16 +124,17 @@ effect:
          shuffle([myDeck])
          destroy()
          reveal([cards|pile])    # default: target
-         discard(target)         # zone: myHand
+         discard([target])       # zone: myHand
          rndDiscard([#])
          moveTo(zone [, pos|reveal] [, reveal])   # reveal = false
          bp(#|x#)
+         sp(#)
          playExtraChar()
          draw([#|expression])   # Default: 1
          steal()
          loseAbility()
-         each(group: expr {effect})   # effect context: group item
-         group.each(expr {effect})    # effect context: group item
+         each(group: expr => effect)   # effect context: group item
+         each(expr in group => effect)   # effect context: group item
          transform(card name)
          moveRestTo(zone)
          disableRule(rule)
@@ -221,12 +224,15 @@ Expressions:
 
 A valid Python expression.
 Available variables:
-   All global variables
-   myHandSize
-   oppHandSize
-   oppRingSize
+   all global variables
+   (me|opp)
+      .sp
+      .hand
+      .hand.size
+      .ring
+      .chars
    alone
-   myring
+   bp
    
 Available functions:
    all group: expr   # context = group item
@@ -236,7 +242,7 @@ RulesDict = {}
 
 # Nina's WINGS
 RulesDict['55b0c9ff-4b3a-4b08-adc1-f1b5e03adef9'] = """
-auto = [[if myHandSize==0]] +unblockable
+auto = [[if me.hand.size == 0]] +unblockable
 """
 
 # Ryu no Senshi's DRAGON TRANSFORM
@@ -292,7 +298,7 @@ action = {F}: reveal() & moveTo(hand, true) & shuffle()
 
 # Guy's HAYA-GAKE
 RulesDict['2c1d8c60-0858-4524-adc1-e7596a4d08e0'] = """
-auto = ~oppBlockPhase,oppRingChanges~ [[if oppRingSize<2]] +unblockable to(this[attack & -uattack]) ueot
+auto = ~oppBlockPhase,oppRingChanges~ [[if opp.ring < 2]] +unblockable to(this[attack & -uattack]) ueot
 """
 
 # Haggar's SPINNING LARIAT
@@ -317,12 +323,12 @@ action = destroy() target(^character@myRing)
 
 # Ruby Heart's TAG ALONG
 RulesDict['ee979882-67cc-4549-881c-8e158df495ce'] = """
-action = [[if all myRing: bp <= 3]] playExtraChar()
+action = [[if all me.chars: bp <= 3]] playExtraChar()
 """
 
 # Son Son's BUNSHIN
 RulesDict['b8325eaa-1687-4d18-b1e7-6bf335e447c2'] = """
-action = [[if myHandSize < oppHandSize]] draw(oppHandSize - myHandSize) target(me)
+action = [[if me.hand.size < opp.hand.size]] draw(opp.hand.size - me.hand.size) target(me)
 """
 
 # Mega Man's ENEMY'S ABILITY
@@ -367,8 +373,7 @@ auto = ~myDrawPhase~ draw() target(me)
 
 # Samanosuke's DEMON GAUNTLET
 RulesDict['a68dc591-6976-4341-b8b9-1a7dc1c71775'] = """
-action = reveal(hand) & each(myHand: bp <= 3 { bp(+2) }) target(this)
-# action = reveal(hand) & myHand.each(bp <= 3 { bp(+2) }) target(this)
+action = reveal(hand) & each(me.hand: bp <= 3 => bp(+2)) target(this)
 """
 
 # Ayame's BUTTERFLY ILLUSION
@@ -394,7 +399,7 @@ action = {F}: reveal() & shuffle() & moveTo(deck, true)
 
 # Chris Redfield's DISORDER
 RulesDict['38d6c7a8-7463-4aa6-88c4-13f725ada0be'] = """
-action = [[if oppRingSize >= 3]] damage(2) to(characters@oppRing)
+action = [[if opp.ring >= 3]] damage(2) to(characters@oppRing)
 """
 
 # Claire's DECOY
@@ -435,7 +440,7 @@ auto = disableRule(AB_ACT_FRESH)
 
 # Daigo's FINISH IT!
 RulesDict['e6e46f83-d089-4762-8d8e-2a3252cfc9db'] = """
-action = [[if oppRingSize >= 3]] bp(x2) target(this)
+action = [[if opp.ring >= 3]] bp(x2) target(this)
 """
 
 # Edge's MANIPULATION
@@ -501,16 +506,25 @@ auto = ~anyCleanupPhase~ moveTo(hand) target(this[block,blocked])
 """
 
 # Tiffany's GROOVY KNUCKLES
-# RulesDict['40ef0410-798f-4d60-865b-9af14ed4e355'] = ""
+RulesDict['40ef0410-798f-4d60-865b-9af14ed4e355'] = """
+target = opp
+action = rndDiscard()
+"""
 
 # Zaki's SUKEBAN
-# RulesDict['faa72b01-cf50-4cff-8b70-13245a7fa5df'] = ""
+RulesDict['faa72b01-cf50-4cff-8b70-13245a7fa5df'] = """
+action = [[if me.sp == 0]] sp(11)
+"""
 
 # Bilstein's PLASMA POWER
-# RulesDict['c3bb69f7-4b77-469f-a9ff-79cca1e52574'] = ""
+RulesDict['c3bb69f7-4b77-469f-a9ff-79cca1e52574'] = """
+action = {F}: draw(2) & discard()
+"""
 
 # Hayato's ASHURA
-# RulesDict['f232c282-6a03-436f-aae2-53f6988c6603'] = ""
+RulesDict['f232c282-6a03-436f-aae2-53f6988c6603'] = """
+action = reveal(hand); each(action in me.hand => bp(+2)) target(this); discard(actions)
+"""
 
 # June's PLASMA RING
 # RulesDict['f67a1f9b-29c7-4ccc-bb17-b80a1c25b67a'] = ""
