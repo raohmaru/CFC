@@ -1449,7 +1449,7 @@
 			<property name="Ability Name" value="BACK OFF!" />
 			<property name="Rules"        value="Return a character in your ring to your hand." />
 			<property name="BP"           value="600" />
-			<property name="SP"           value="1" />
+			<property name="SP"           value="2" />
 			<property name="Backup 1"     value="Student" />
 			<property name="Backup 2"     value="Kickboxer" />
 			<property name="Backup 3"     value="Swordsman" />
@@ -3933,7 +3933,7 @@
 			<property name="Ability Name" value="GET BACK!" />
 			<property name="Rules"        value="Return a character in your ring to your hand." />
 			<property name="BP"           value="600" />
-			<property name="SP"           value="1" />
+			<property name="SP"           value="2" />
 			<property name="Backup 1"     value="Fighter" />
 			<property name="Backup 2"     value="Aikido" />
 			<property name="Backup 3"     value="Brute" />
@@ -5103,7 +5103,7 @@
 			<property name="Ability Name" value="GIVE YOURSELF" />
 			<property name="Rules"        value="KO all other characters in your ring. Gain 5 SP points for each character KOed this way." />
 			<property name="BP"           value="600" />
-			<property name="SP"           value="2" />
+			<property name="SP"           value="1" />
 			<property name="Backup 1"     value="Demon" />
 			<property name="Backup 2"     value="Deity" />
 			<property name="Backup 3"     value="" />
