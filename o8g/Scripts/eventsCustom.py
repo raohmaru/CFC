@@ -60,26 +60,35 @@ def removeGameEventListener(obj_id, eventName=None):
    return removed
 
 
-def triggerGameEvent(eventName, *args):
-   debug(">>> triggerGameEvent({}, {})".format(eventName, args)) #Debug
+def triggerGameEvent(event, *args):
+   debug(">>> triggerGameEvent({}, {})".format(event, args)) #Debug
+   eventName = event
+   if isinstance(event, list):
+      eventName = event[0]
+      event = ''.join(str(x) for x in event)
    ge = getGlobalVar('GameEvents')
-   if eventName in ge:
-      for listener in ge[eventName]:
+   if event in ge:
+      for listener in ge[event]:
          debug("-- Found listener {}".format(listener))
          params = list(args) + listener['args']
          # Callback could be the ID of a card...
          if isinstance(listener['callback'], (int, long)):
             card = Card(listener['callback'])
+            # Don't trigger auto ability for chars in a UA
+            if eventName in GameEventsDisabledUA and inUAttack(card):
+               notify("{}'s ability cannot be activated because it joined an United Attack".format(card))
+               continue
+            # Call callback
             if card.controller == me:
                pcard = getParsedCard(card)
-               pcard.rules.execAuto(None, eventName, *params)
-            elif listener['scope'] in [RS_PREFIX_OPP,RS_PREFIX_ANY]:
-               remoteCall(card.controller, "remoteGameEvent", [listener['callback'], eventName]+list(params))
+               pcard.rules.execAuto(None, event, *params)
+            elif listener['scope'] in RS_PREFIX_SCOPE:
+               remoteCall(card.controller, "remoteGameEvent", [listener['callback'], event]+list(params))
                update()
          # ... or the name of a global function
          else:
             try:
-               func = eval(listener['callback'])  # eval is a necessary evil...
+               func = eval(listener['callback']) # eval is a necessary evil...
             except:
                debug("Callback function {} is not defined".format(listener['callback']))
                continue

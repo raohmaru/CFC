@@ -847,7 +847,7 @@ def compareValuesByOp(v1, v2, op):
    return False
 
 
-def filterHasMarker(card, marker, include):
+def hasMarker(card, marker, include=True):
    if not isCard(card):
       return False
       
@@ -856,3 +856,10 @@ def filterHasMarker(card, marker, include):
       return res
    else:
       return not res
+
+
+def inUAttack(card):
+   uattack = getGlobalVar('UnitedAttack')
+   if len(uattack) > 0 and card._id in uattack:
+      return True
+   return False

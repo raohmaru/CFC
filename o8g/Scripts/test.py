@@ -88,12 +88,13 @@ autos = [
    # "auto = ~oppHandChanges~ [[if oppRing<2]] destroy()",
    # "auto = ~ myHandChanges ~ destroy() to(character@myRing)",
    # "auto = ~myHandChanges~ destroy() ueot",
-   "auto = ~handChanges~ +unblockable",
-   "auto = ~myHandChanges~ -unblockable",
+   # "auto = ~handChanges~ +unblockable",
+   # "auto = ~myHandChanges~ -unblockable",
    # "auto = ~myHandChanges,oppBlockPhase~ -unblockable",
    # "auto = [[may 'Question?']] destroy() & +unblockable to(character@myRing) uynt",
    # "auto = ~myEndPhase~ moveTo(ctrlHand) to(characters[bp>=800])",
-   # "auto = ~anyBlockPhase~ +unblockable to(characters[bp<=300 & attack & -uattack]) ueot"
+   # "auto = ~anyBlockPhase~ +unblockable to(characters[bp<=300 & attack & -uattack]) ueot",
+   "auto = ~oppCombatDamaged fromThis~ +cantplayac to(opp) oppueot"
 ]
 evals = [
    "action in me.hand => bp(+2)"
@@ -115,6 +116,6 @@ def test(arr, title):
 
 # rules = RulesDict['aa867ea1-89f8-4154-8e20-2263edd00002']
 # test(targets, 'targets')
-test(actions, 'actions')
+# test(actions, 'actions')
 # test(abilities, 'abilities')
-# test(autos, 'autos')
+test(autos, 'autos')

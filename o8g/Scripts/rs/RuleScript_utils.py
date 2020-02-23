@@ -31,6 +31,13 @@ class RulesUtils():
          return getOpp()
       return None
 
+   @staticmethod
+   def getObjIdFromSuffix(suffix, rs):
+   # Returns an object ID of the game from the given suffix
+      if suffix == RS_SUFFIX_FROM_THIS:
+         return str(rs.card_id)
+      return ''
+
 
    @staticmethod
    def getZoneByName(name):

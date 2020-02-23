@@ -64,7 +64,7 @@ abilities: [
 auto: {
    [@see action],
    event: [
-      ['my', 'handchanges']
+      ['my', 'handchanges', 'fromthis']
    ]
 }
 """
@@ -247,12 +247,15 @@ class RulesLexer():
          event = []
          events = match.group(1).split(',')
          for e in events:
+            e = e.strip().replace(' ', '')
             # Look for prefixes
             prfx, eventName = RulesLexer.getPrefix(RS_PREFIX_EVENTS, e.strip())
             if prfx == RS_PREFIX_MY:
                prfx = ''
-            debug("-- found event: %s + %s" % (prfx, eventName))
-            event.append([prfx, eventName])
+            # Look for suffixes
+            sffx, eventName = RulesLexer.getSuffix(RS_SUFFIX_EVENTS, eventName)
+            debug("-- found event: %s + %s + %s" % (prfx, eventName, sffx))
+            event.append([prfx, eventName, sffx])
             
       # Analyze the expression
       effects = []

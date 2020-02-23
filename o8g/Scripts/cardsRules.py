@@ -200,10 +200,14 @@ event:
       handchanges
       ringchanges
       beforeplayac
+      beforeplayre
+      combatdamaged
    Prefixes:
       my (default)
       opp
       any
+   Suffixes:
+      fromThis
 
 cond:
    @see action:cond
@@ -542,10 +546,15 @@ action = destroy() target(@infront)
 """
 
 # Alex's SONIC HEADBUTT
-# RulesDict['c7c73d2e-1728-4c1b-ba7e-dcd989e61d98'] = ""
+RulesDict['c7c73d2e-1728-4c1b-ba7e-dcd989e61d98'] = """
+auto = ~oppCombatDamaged fromThis~ +cantplayac to(opp) oppueot
+"""
 
 # Blanka's ELECTRIC DISCHARGE
-# RulesDict['70df22cd-ebe5-461e-a017-26879f2cb71f'] = ""
+RulesDict['70df22cd-ebe5-461e-a017-26879f2cb71f'] = """
+target = players
+action = trash(5)
+"""
 
 # Cammy (Alpha)'s SPY
 # RulesDict['de28f9bf-d995-4743-afcd-a28065beb39d'] = ""
@@ -743,7 +752,9 @@ action = destroy() target(@infront)
 # RulesDict['6814ab83-c21d-4df9-8d07-e977ee27f131'] = ""
 
 # Duck King's DUCK DANCE
-# RulesDict['510c1217-5b95-467e-ae49-93fd5e726797'] = ""
+RulesDict['510c1217-5b95-467e-ae49-93fd5e726797'] = """
+action = bp(3) target(character)
+"""
 
 # Gato's LOBOTOMY
 # RulesDict['f3557575-c61e-42fd-9442-9413cea64bdf'] = ""
@@ -809,7 +820,9 @@ action = destroy() target(@infront)
 # RulesDict['8b6c2617-7c58-459c-b09f-63c86556d17e'] = ""
 
 # Rosa's GET BACK!
-# RulesDict['51ad9363-8ba8-447b-bed5-b6e0e5f85ce8'] = ""
+RulesDict['51ad9363-8ba8-447b-bed5-b6e0e5f85ce8'] = """
+action = moveTo(hand) target(character@myRing)
+"""
 
 # Athena Asamiya's PSYCHO CHARGE
 # RulesDict['08b229e2-6af7-478a-bda5-774dd66af9f9'] = ""

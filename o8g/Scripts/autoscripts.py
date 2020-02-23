@@ -83,7 +83,7 @@ def endPhaseStart():
    # Freeze attacking characters
    for card in myCards:
       if isCharacter(card):
-         if (MarkersDict['Attack'] in card.markers or MarkersDict['United Attack'] in card.markers) and not MarkersDict['No Freeze'] in card.markers:
+         if (hasMarker(card, 'Attack') or hasMarker(card, 'United Attack')) and not hasMarker(card, 'No Freeze'):
             freeze(card, unfreeze = False, silent = True)
 
    # Calculates and applies attack damage
@@ -93,7 +93,7 @@ def endPhaseStart():
       atkCards = (card for card in table
          if card.controller == me
          and isCharacter(card)
-         and MarkersDict['Attack'] in card.markers)
+         and hasMarker(card, 'Attack'))
       for card in atkCards:
          dmg = getMarker(card, 'BP')
          pdmg = 0  # Piercing damage
@@ -124,6 +124,7 @@ def endPhaseStart():
          # Unblocked attacker
          elif len(players) > 1:
             dealDamage(dmg + pdmg, players[1], card)
+            triggerGameEvent([GameEvents.CombatDamaged, card._id])
    # Trigger event
    triggerGameEvent(GameEvents.EndPhase)
    # Remove "until end of turn" events
@@ -328,7 +329,7 @@ def attackAuto(card):
       warning("Please attack with a character in your ring.")
       return
    # Cancels the character's attack if it's already attacking
-   if MarkersDict['Attack'] in card.markers or MarkersDict['United Attack'] in card.markers:
+   if hasMarker(card, 'Attack') or hasMarker(card, 'United Attack'):
       removeMarker(card, 'Attack')
       removeMarker(card, 'United Attack')
       removeMarker(card, 'No Freeze')
@@ -338,7 +339,7 @@ def attackAuto(card):
       rearrangeUAttack(card)
       return
    # Char just entered the ring?
-   if MarkersDict['Just Entered'] in card.markers:
+   if hasMarker(card, 'Just Entered'):
       if not confirm("Characters that just entered the ring can't attack this turn.\nProceed anyway?"):
          return
    # Frozen char?
@@ -492,17 +493,17 @@ def activateAuto(card):
       # /\ abilities
       if pcard.ability.type == InstantAbility:
          # Activate only once
-         if not MarkersDict['Just Entered'] in card.markers:
+         if not hasMarker(card, 'Just Entered'):
             warning("{} abilities can only be activated once when character just enters the ring.".format(InstantUniChar))
             return
       # [] abilities
       if pcard.ability.type == TriggerAbility:
          # Just entered?
-         if not getRule('ab_trigger_fresh') and MarkersDict['Just Entered'] in card.markers:
+         if not getRule('ab_trigger_fresh') and hasMarker(card, 'Just Entered'):
             if not confirm("Can't activate {} abilities of characters that just entered the ring.\nProceed anyway?".format(TriggerUniChar)):
                return
          # Frozen or attacking?
-         if isFrozen(card) or MarkersDict['Attack'] in card.markers:
+         if isFrozen(card) or hasMarker(card, 'Attack'):
             warning("Can't activate {} abilities of frozen or attacking characters.".format(TriggerUniChar))
             return           
          # Triggers a game event to check if [] abilites can be activated
@@ -512,7 +513,7 @@ def activateAuto(card):
       # () abilities
       if pcard.ability.type == AutoAbility:
          # Nor in a United Attack
-         if MarkersDict['United Attack'] in card.markers:
+         if hasMarker(card, 'United Attack'):
             warning("Can't activate {} abilities of characters which joined a United Attack.".format(AutoUniChar))
             return
 

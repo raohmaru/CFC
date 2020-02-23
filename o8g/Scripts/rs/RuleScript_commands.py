@@ -425,6 +425,19 @@ def cmd_moveToSlot(rc, targets, source, *args):
    else:
       remoteCall(targets[0].controller, "changeSlot", [targets[0]])
    rc.applyNext()
+
+
+def cmd_trash(rc, targets, source, numCards=1):
+   debug(">>> cmd_trash({}, {})".format(targets, numCards)) #Debug
+   numCards = int(numCards)
+   if not targets:
+      targets = [me]
+   for player in targets:
+      if player == me:
+         trash(count=numCards)
+      else:
+         remoteCall(player, "trash", [None, 0, 0, False, numCards])
+   rc.applyNext()
    
 
 RulesCommands.register('damage',        cmd_damage)
@@ -450,3 +463,4 @@ RulesCommands.register('unfreeze',      cmd_unfreeze)
 RulesCommands.register('altercost',     cmd_alterCost)
 RulesCommands.register('swapchars',     cmd_swapChars)
 RulesCommands.register('movetoslot',    cmd_moveToSlot)
+RulesCommands.register('trash',         cmd_trash)

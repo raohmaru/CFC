@@ -831,13 +831,14 @@ def randomDrawRE(group = me.Deck):
    randomDraw(group, ReactionType)
 
 
-def trash(group = me.Deck, x = 0, y = 0, silent = False):
+def trash(group, x = 0, y = 0, silent = False, count = None):
 # Draws one or more cards from the deck into the discard pile
    mute()
-   if len(group) == 0:
-      return
+   if group is None:
+      group = me.Deck
    global defTrashCount
-   count = askInteger("How many cards do you want to trash?", defTrashCount)
+   if count == None:
+      count = askInteger("How many cards do you want to trash?", defTrashCount)
    if count == None:
       return
    defTrashCount = count
@@ -846,7 +847,7 @@ def trash(group = me.Deck, x = 0, y = 0, silent = False):
       card.moveTo(discards)
    if len(players) > 1: rnd(1, 100)  # Wait a bit more, as in multiplayer games, things are slower.
    if not silent:
-      notify("{} trash top {} cards {}.".format(me, count, fromWhereStr(group)))
+      notify("{} trashes top {} cards {}.".format(me, count, fromWhereStr(group)))
 
 
 def prophecy(group = me.Deck, x = 0, y = 0):

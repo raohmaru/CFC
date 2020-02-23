@@ -1,13 +1,15 @@
 # Card Fighters' Clash Changelog
 
 ## 0.7.3
-Scripted abilities: Kurow, Kyoko, Kyosuke, Momo, Natsu, Raizou, Roberto, Roy, Shoma.
+Scripted abilities: Kurow, Kyoko, Kyosuke, Momo, Natsu, Raizou, Roberto, Roy, Shoma, Tiffany, Zaki, Bilstein, Hayato, June, Rain, Akuma, Alex, Blanka, Duck King, Rosa.  
+Updated SP: Rain, Rosa and Amakusa.  
+Improved rarity icons.
 ## 0.7.2
-Scripted abilities: Samanosuke, Falcon, Ryoma, Omokane Saki, Chris Redfield, Claire, Jill Valentine, Leon, Zombie, Akira, Batsu, Daigo, Edge, Hinata, Hyo.
-Updated rules: God Rugal, Curse, Shadow.
+Scripted abilities: Samanosuke, Falcon, Ryoma, Omokane Saki, Chris Redfield, Claire, Jill Valentine, Leon, Zombie, Akira, Batsu, Daigo, Edge, Hinata, Hyo.  
+Updated rules: God Rugal, Curse, Shadow.  
 Improved card design.
 ## 0.7.1
-Scripted abilities: Haggar, Maki, Lucifer, Ruby Heart, Son Son, Mega Man, Mega Man X, Rock, Rock Man, Roll, Roll Caskett, Roll-chan, Tron Bonne.
+Scripted abilities: Haggar, Maki, Lucifer, Ruby Heart, Son Son, Mega Man, Mega Man X, Rock, Rock Man, Roll, Roll Caskett, Roll-chan, Tron Bonne.  
 Minor improvements to the game play.
 ## 0.7.0
 Enabled card automations.

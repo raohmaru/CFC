@@ -152,7 +152,7 @@ task :docs do
     line-height: 0;
     color: #990000;
   }
-  .ab-activated {
+  .ab-trigger {
     font-size: 170%;
   }
   .ab-auto {

@@ -160,19 +160,20 @@ DebugLevelPrefixes = [
 
 # Game Events
 GameEvents = Struct(**{
-   'ActivatePhase' : 'activatephase',
-   'DrawPhase'     : 'drawphase',
-   'BlockPhase'    : 'blockphase',
-   'EndPhase'      : 'endphase',
-   'CleanupPhase'  : 'cleanupphase',
-   'Block'         : 'block',
-   'BeforeBlock'   : 'beforeblock',
-   'HandChanges'   : 'handchanges',
-   'RingChanges'   : 'ringchanges',
-   'BeforePlayAC'  : 'beforeplayac',
-   'BeforePlayRE'  : 'beforeplayre',
-   'CharRemoved'   : 'charremoved',
-   'BackupLimit'   : 'backuplimit'
+   'ActivatePhase': 'activatephase',
+   'DrawPhase'    : 'drawphase',
+   'BlockPhase'   : 'blockphase',
+   'EndPhase'     : 'endphase',
+   'CleanupPhase' : 'cleanupphase',
+   'Block'        : 'block',
+   'BeforeBlock'  : 'beforeblock',
+   'HandChanges'  : 'handchanges',
+   'RingChanges'  : 'ringchanges',
+   'BeforePlayAC' : 'beforeplayac',
+   'BeforePlayRE' : 'beforeplayre',
+   'CharRemoved'  : 'charremoved',
+   'BackupLimit'  : 'backuplimit',
+   'CombatDamaged': 'combatdamaged'
 })
 # When a listener to these events is added, trigger it automatically
 GameEventsExecOnAdded = [
@@ -183,6 +184,13 @@ GameEventsFromVars = {
    'hand.size': GameEvents.HandChanges,
    'trigger'  : GameEvents.TriggerAbility
 }
+
+# Events that should not trigger for chars in a UA
+GameEventsDisabledUA = [
+   GameEvents.EndPhase,
+   GameEvents.CleanupPhase,
+   GameEvents.CombatDamaged
+]
 
 # Messages
 MSG_SEL_CHAR_RING           = "Please select a character in your ring.\n(Shift key + Left click on a character)."

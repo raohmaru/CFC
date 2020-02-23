@@ -40,7 +40,7 @@ RS_RGX_TARGET_QTY   = re.compile(r'^<\s*((?:r\d*)|(?:,?[0-9]+){1,2})\s*>')
 
 RS_RGX_KEY_ACTION   = re.compile(r'^action\s*=\s*')
 RS_RGX_AC_COST      = re.compile(r'(\{.+\}\s*)\s*:\s*')
-RS_RGX_AC_EVENT     = re.compile(r'~\s*([\w,]+)\s*?~')
+RS_RGX_AC_EVENT     = re.compile(r'~\s*([\w, ]+)\s*?~')
 RS_RGX_AC_TARGET    = re.compile(r'\b(?:to|target)\s*\(([^)]+)\)')
 RS_RGX_AC_EFFECT    = re.compile(r'([\w.]+)\s*\((.*?)\)$')
 
@@ -106,11 +106,21 @@ RS_PREFIX_RESTR = [
    RS_PREFIX_OPP
 ]
 
+RS_PREFIX_SCOPE = [
+   RS_PREFIX_OPP,
+   RS_PREFIX_ANY
+]
+
 # Sufixes
 RS_SUFFIX_PLURAL = 's'
+RS_SUFFIX_FROM_THIS = 'fromthis'
 
 RS_SUFFIX_TYPES = [
    RS_SUFFIX_PLURAL
+]
+
+RS_SUFFIX_EVENTS = [
+   RS_SUFFIX_FROM_THIS
 ]
 
 # Keywords
