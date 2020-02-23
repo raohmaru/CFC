@@ -532,10 +532,14 @@ auto = disableRule(ab_trigger_act)
 """
 
 # Rain's BACK OFF!
-# RulesDict['cb1440e1-42f7-47e5-92d5-2246d399bd64'] = ""
+RulesDict['cb1440e1-42f7-47e5-92d5-2246d399bd64'] = """
+action = moveTo(hand) target(character@myRing)
+"""
 
 # Akuma's SHUN-GOKU-SATSU
-# RulesDict['bc5e5159-fe3c-4324-97bb-2b56b920a6a3'] = ""
+RulesDict['bc5e5159-fe3c-4324-97bb-2b56b920a6a3'] = """
+action = destroy() target(@infront)
+"""
 
 # Alex's SONIC HEADBUTT
 # RulesDict['c7c73d2e-1728-4c1b-ba7e-dcd989e61d98'] = ""

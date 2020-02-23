@@ -41,8 +41,8 @@ def debugScenario():
    gotoMain()
    rnd(100, 10000)  # Delay the next action until all animation is done
    tableCards = [
-      # 'c3bb69f7-4b77-469f-a9ff-79cca1e52574' # Bilstein
-      # ,'7e0c215c-72f6-4967-83a5-27491376280f' # Natsu
+      'cb1440e1-42f7-47e5-92d5-2246d399bd64' # Rain
+      ,'bc5e5159-fe3c-4324-97bb-2b56b920a6a3' # Akuma
       # ,'7e0c215c-72f6-4967-83a5-27491376280f' # Natsu
       # ,'e9c8e4ca-7d41-43c5-b427-f7e47125052e' # Edge
    ]
@@ -57,8 +57,7 @@ def debugScenario():
       rnd(1, 100)  # Delay the next action until all animation is done
       
    handCards = [
-      '55b0c9ff-4b3a-4b08-adc1-f1b5e03adef9' # Nina
-      ,'4bd333d6-f063-424e-8cf9-3512f96f23b4' # Batsu
+      '4bd333d6-f063-424e-8cf9-3512f96f23b4' # Batsu
       ,'f67a1f9b-29c7-4ccc-bb17-b80a1c25b67a' # June
       ,'c3bb69f7-4b77-469f-a9ff-79cca1e52574' # Bilstein
       # ,'a68dc591-6976-4341-b8b9-1a7dc1c71775' # Samanosuke
@@ -85,18 +84,18 @@ def debugScenario():
       # rnd(1, 100)  # Delay the next action until all animation is done
    
    deckCards = [
-      '365cddf9-f741-4a3e-bf07-de4b3eecc6d2' # Char
-      ,'d14694b4-484c-4b45-962e-8cbb636d8a9a' # Char
-      ,'8ce9a56f-8c0c-49e7-879c-12179c63f288' # Char
-      ,'61ef9ecd-980b-46b8-83fc-12399ce044f1' # Char
-      ,'0a8f39ff-6b21-4805-bafb-27c3f38d1986' # Char
-      ,'525d8365-c90e-491f-9811-1f23efbafccb' # Char
-      ,'bdeceb7c-9d94-4c98-824b-90d5317d8cda' # Char
-      ,'e94aaa00-2449-46a4-9ff4-273e6dac272a' # Char
-      ,'85d84ab1-dede-4fc7-b80d-00778f73c905' # Action
-      ,'ac01bbbe-583e-46ae-b26c-3c25eb8f0779' # Action
-      ,'556b3359-e642-419a-ab5c-67f70de1bb4f' # Reaction
-      ,'91e441cc-0f1f-4b01-a2b0-94678d6f0b56' # Reaction
+      # '365cddf9-f741-4a3e-bf07-de4b3eecc6d2' # Char
+      # ,'d14694b4-484c-4b45-962e-8cbb636d8a9a' # Char
+      # ,'8ce9a56f-8c0c-49e7-879c-12179c63f288' # Char
+      # ,'61ef9ecd-980b-46b8-83fc-12399ce044f1' # Char
+      # ,'0a8f39ff-6b21-4805-bafb-27c3f38d1986' # Char
+      # ,'525d8365-c90e-491f-9811-1f23efbafccb' # Char
+      # ,'bdeceb7c-9d94-4c98-824b-90d5317d8cda' # Char
+      # ,'e94aaa00-2449-46a4-9ff4-273e6dac272a' # Char
+      # ,'85d84ab1-dede-4fc7-b80d-00778f73c905' # Action
+      # ,'ac01bbbe-583e-46ae-b26c-3c25eb8f0779' # Action
+      # ,'556b3359-e642-419a-ab5c-67f70de1bb4f' # Reaction
+      # ,'91e441cc-0f1f-4b01-a2b0-94678d6f0b56' # Reaction
    ]
    for id in deckCards:
       debug("Adding card {} to Deck".format(id))
