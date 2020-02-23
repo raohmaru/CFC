@@ -123,18 +123,18 @@ effect:
          swapPiles(pile1, pile2)
          shuffle([myDeck])
          destroy()
-         reveal([cards|pile])    # default: target
-         discard([target])       # zone: myHand
+         reveal([cards|pile])  # default: target
+         discard([target])     # zone: myHand
          rndDiscard([#])
          moveTo(zone [, pos|reveal] [, reveal])   # reveal = false
          bp(#|x#)
          sp(#)
          playExtraChar()
-         draw([#|expression])   # Default: 1
+         draw([#|expression])  # Default: 1
          steal()
          loseAbility()
-         each(group: expr => effect)   # effect context: group item
-         each(expr in group => effect)   # effect context: group item
+         each(group: expr => effect)    # effect context: group item
+         each(expr in group => effect)  # effect context: group item
          transform(card name)
          moveRestTo(zone)
          disableRule(rule)
@@ -143,6 +143,7 @@ effect:
          alterCost(cardtype, #)
          swapChars()
          moveToSlot()
+         trash([#])  # Default: 1
       Ability:
          Keywords:
             @see abilities
