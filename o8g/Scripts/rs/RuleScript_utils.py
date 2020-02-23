@@ -23,12 +23,14 @@ class RulesUtils():
    """ Class to handle the custom events that happens during the game """
 
    @staticmethod
-   def getObjFromPrefix(prefix):
+   def getObjFromPrefix(prefix, target=None):
    # Returns an object of the game from the given prefix
       if prefix == RS_PREFIX_MY:
          return me
       if prefix == RS_PREFIX_OPP:
          return getOpp()
+      if prefix == RS_PREFIX_CTRL and target:
+         return target.controller
       return None
 
    @staticmethod
@@ -40,9 +42,9 @@ class RulesUtils():
 
 
    @staticmethod
-   def getZoneByName(name):
+   def getZoneByName(name, target=None):
       prefix, name = RulesLexer.getPrefix(RS_PREFIX_ZONES, name)
-      player = RulesUtils.getObjFromPrefix(prefix) or me
+      player = RulesUtils.getObjFromPrefix(prefix, target) or me
       zone = None
 
       if name in [RS_KW_ZONE_ARENA, RS_KW_ZONE_RING, RS_KW_ZONE_INFRONT]:
@@ -149,6 +151,14 @@ class RulesUtils():
                return False
             types = [types[t-1]]
             debug("-- type selected: %s" % types)
+            
+      # Ask for a zone if there are multiple choices
+      if zone[0] == RS_PREFIX_ANY:
+         pile = askChoice("Choose a {}:".format(zone[1]), ["My {}".format(zone[1]), "Enemy's {}".format(zone[1])])
+         if pile == 0:
+            return False
+         zone = list(zone)  # Make a copy of the list
+         zone[0] = [RS_PREFIX_MY, RS_PREFIX_OPP][pile-1]      
 
       # Get all the cards from the given zone
       debug("-- Getting all cards from zone %s" % ''.join(zone))
@@ -337,9 +347,16 @@ class RulesUtils():
                cards_f1 = [c for c in cards_f1 if c.controller == ctrl]
                if ctrl != me:
                   article = "enemy's"
+            # Info message
+            owner = 'his'
+            if zone[0] == RS_PREFIX_OPP:
+               owner = "{}'s".format(getOpp())
+            notify(MSG_PLAYER_LOOKS.format(me, owner, zone[1]))
             # Select in any zone
             title = msg.format(qtyMsg, article, zone[1], sourceName)
             cards_f1 = showCardDlg(cards_f1, title, min=minQty, max=maxQty)
+            if cards_f1:
+               notify(MSG_PLAYER_SELECTS.format(me, len(cards_f1)))
          if cards_f1 == None:
             return False
 

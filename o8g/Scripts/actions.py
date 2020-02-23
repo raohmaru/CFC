@@ -850,38 +850,39 @@ def trash(group, x = 0, y = 0, silent = False, count = None):
       notify("{} trashes top {} cards {}.".format(me, count, fromWhereStr(group)))
 
 
-def prophecy(group = me.Deck, x = 0, y = 0):
+def prophecy(group = me.Deck, x = 0, y = 0, count = None):
    mute()
    if len(group) == 0:
       return
    global defProphecyCount
-   count = askInteger("How many cards do you want to see?", defProphecyCount)
-   if count == None:
-      return
+   if not count:
+      count = askInteger("How many cards do you want to see?", defProphecyCount)
+      if count == None:
+         return
    defProphecyCount = count
    cards = [c for c in group[:count]]
    cardsPos = []
+   deckPos = 0
+   owner = 'his' if group.controller == me else "{}'s".format(group.controller)
+   notify(MSG_PLAYER_LOOKS.format(me, owner, group.name))
    while len(cards) > 0:
-      card = showCardDlg(cards, "Select a card to put on top or bottom of the deck")
+      card = showCardDlg(cards, "Select a card to put on {} of the deck".format(["top or bottom", "top", "bottom"][deckPos]))
       if card == None:
          return
       card = card[0]
-      choice = askChoice("Put {} on top or bottom of the deck?".format(card.Name), ['Top', 'Bottom'])
-      if choice == 0:
-         return
+      if not deckPos:
+         deckPos = askChoice("Where to put the card(s)?", ['Top of deck', 'Bottom of deck'])
+         if deckPos == 0:
+            return
       cards.remove(card)
-      cardsPos.append((card, choice))
-   fromText = fromWhereStr(group)
+      cardsPos.append((card, deckPos))
    for item in cardsPos:
       card = item[0]
-      choice = item[1]
-      cardname = card.Name if card.isFaceUp else "a card"
-      if choice == 1:
-         card.moveTo(me.Deck)
-         notify("{} puts {} {} on the top of its Deck.".format(me, cardname, fromText))
+      pos = (item[1] - 1) * -1
+      if group.controller == me:
+         moveToGroup(group, card, pos = pos)
       else:
-         card.moveToBottom(me.Deck)
-         notify("{} puts {} {} on the bottom of its Deck.".format(me, cardname, fromText))
+         remoteCall(group.controller, "moveToGroup", [group, card, group, pos, False, me])
 
 
 def shuffle(group):

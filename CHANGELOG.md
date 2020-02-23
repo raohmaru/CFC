@@ -1,5 +1,7 @@
 # Card Fighters' Clash Changelog
 
+## 0.7.4
+Scripted abilities: Cammy (Alpha), Dhalsim, E. Honda, Eiji, Mischief.
 ## 0.7.3
 Scripted abilities: Kurow, Kyoko, Kyosuke, Momo, Natsu, Raizou, Roberto, Roy, Shoma, Tiffany, Zaki, Bilstein, Hayato, June, Rain, Akuma, Alex, Blanka, Duck King, Rosa.  
 Updated SP: Rain, Rosa and Amakusa.  

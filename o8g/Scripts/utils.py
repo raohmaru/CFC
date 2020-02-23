@@ -250,17 +250,17 @@ def getRingSize(player = me):
    return NumSlots - getGlobalVar('Ring', player).count(None)
 
 
-def moveToGroup(group, card, source = None, pos = None, reveal = False):
-   if not source:
-      source = card.group
-   fromText = fromWhereStr(source)
+def moveToGroup(group, card, sourceGroup = None, pos = None, reveal = False, sourcePlayer = me):
+   if not sourceGroup:
+      sourceGroup = card.group
+   fromText = fromWhereStr(sourceGroup, sourcePlayer)
    posText = "to the top of"
    if pos is not None:
       if pos < 0:
          posText = "to the bottom of"
       elif pos > 0:
          posText = str(pos) + "to position {} from the top of"
-   if source.name == 'Hand':
+   if sourceGroup.name == 'Hand':
       card.isFaceUp = False
    if group.name == 'Hand':
       posText = "into"
@@ -270,8 +270,8 @@ def moveToGroup(group, card, source = None, pos = None, reveal = False):
    elif reveal:
       name = card.Name
    card.moveTo(group, pos)
-   targetCtrl = 'its' if me == group.controller else "{}'s".format(group.controller)
-   notify("{} moved {} {} {} {} {}.".format(me, name, fromText, posText, targetCtrl, group.name))
+   targetCtrl = 'its' if me == sourcePlayer else "{}'s".format(me)
+   notify("{} moved {} {} {} {} {}.".format(sourcePlayer, name, fromText, posText, targetCtrl, group.name))
    
 
 def selectRing():
@@ -287,11 +287,17 @@ def selectRing():
 # String functions
 #---------------------------------------------------------------------------
 
-def fromWhereStr(src):
+def fromWhereStr(src, srcPlayer = me):
    if src == table:
       return "from the ring"
    else:
-      return "from {} {}".format("its" if src.controller == me else "opponent's", src.name)
+      ctrl = 'its'
+      if srcPlayer != me:
+         ctrl = "{}'s".format(me)
+      elif src.controller != me:
+         ctrl = "opponent's"
+         
+      return "from {} {}".format(ctrl, src.name)
 
    
 def sanitizeStr(str):

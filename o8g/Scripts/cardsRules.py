@@ -95,6 +95,7 @@ zone: (optional)
       opp
       ctrl
       same (only applies to ring)
+      any
 
 ---------------------------------------------------
 action = {cost}: [[cond]] effect [& effect] to(target) restr; ...
@@ -123,10 +124,10 @@ effect:
          swapPiles(pile1, pile2)
          shuffle([myDeck])
          destroy()
-         reveal([cards|pile])  # default: target
+         reveal([pile])  # default: target
          discard([target])     # zone: myHand
          rndDiscard([#])
-         moveTo(zone [, pos|reveal] [, reveal])   # reveal = false
+         moveTo(zone [, pos] [, reveal=false])  # pos = unsigned int or '?'
          bp(#|x#)
          sp(#)
          playExtraChar()
@@ -143,7 +144,8 @@ effect:
          alterCost(cardtype, #)
          swapChars()
          moveToSlot()
-         trash([#])  # Default: 1
+         trash([#])     # Default: 1
+         prophecy([#])  # Default: 1
       Ability:
          Keywords:
             @see abilities
@@ -558,7 +560,9 @@ action = trash(5)
 """
 
 # Cammy (Alpha)'s SPY
-# RulesDict['de28f9bf-d995-4743-afcd-a28065beb39d'] = ""
+RulesDict['de28f9bf-d995-4743-afcd-a28065beb39d'] = """
+action = moveTo(oppDeck, ?) target(*@oppHand)
+"""
 
 # Chun-Li's S.B. KICK
 # RulesDict['a124cd33-4427-4584-8216-885bbb97baa8'] = ""
@@ -570,7 +574,10 @@ action = trash(5)
 # RulesDict['9d7ec580-fdc3-4222-92ec-10fd33741a2b'] = ""
 
 # Dhalsim's ENLIGHTENMENT
-# RulesDict['9c383f6b-2813-407f-be87-f9746fbb6d18'] = ""
+RulesDict['9c383f6b-2813-407f-be87-f9746fbb6d18'] = """
+target = *s@anyDeck
+action = prophecy(1)
+"""
 
 # E. Honda's KAMIZU
 # RulesDict['3036ebcc-7b49-42a5-89f3-118399f34d47'] = ""
@@ -705,7 +712,9 @@ action = trash(5)
 # RulesDict['559c6131-7a72-47c7-9669-6a6c23a48cb7'] = ""
 
 # Eiji's PROPHECY
-# RulesDict['62067a74-53f9-4bb0-872c-f77e735fc826'] = ""
+RulesDict['62067a74-53f9-4bb0-872c-f77e735fc826'] = """
+action = prophecy(3)
+"""
 
 # Kasumi's OVERLAP CRUNCH
 # RulesDict['fc2e9e7c-98dc-4d46-b3ad-0f3ede2fd166'] = ""
@@ -1141,7 +1150,10 @@ action = moveTo(hand) target(character@myRing)
 # RulesDict['5d3bc1c3-692b-4d7c-9781-68fcdc0bd96e'] = ""
 
 # Mischief
-# RulesDict['7a394ff3-727d-48d9-91a9-b9cba90510b6'] = ""
+RulesDict['7a394ff3-727d-48d9-91a9-b9cba90510b6'] = """
+target = *s@anyDeck
+action = prophecy(3)
+"""
 
 # Morph
 # RulesDict['51a47b27-abf3-4219-a241-c72bd23b178b'] = ""

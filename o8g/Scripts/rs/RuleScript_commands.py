@@ -231,15 +231,18 @@ def cmd_randomDiscard(rc, targets, source, numCards=1):
 def cmd_moveTo(rc, targets, source, zone, pos = None, reveal = False):
    debug(">>> cmd_moveTo({}, {})".format(targets, zone)) #Debug
    zonePrefix, zoneName = RulesLexer.getPrefix(RS_PREFIX_ZONES, zone, RS_PREFIX_CTRL)
-   if zoneName in RS_KW_ZONES_PILES:
-      pile = RulesUtils.getZoneByName(zone)
+   if zoneName in RS_KW_ZONES_PILES:      
       if pos == 'true':
          reveal = True
          pos = None
       if pos is not None:
+         if pos == '?':
+            choice = askChoice("Where to put the card(s)?", ['Top of pile', 'Bottom of pile'])
+            pos = (max(choice, 1) - 1) * -1
          pos = num(pos)
       reveal = bool(reveal)
       for target in targets:
+         pile = RulesUtils.getZoneByName(zone, target)
          debug("{}'s {} -> {}'s {}".format(target.controller, target, pile.controller, pile.name))
          if target.controller == me and pile.controller == me:
             moveToGroup(pile, target, pos = pos, reveal = reveal)
@@ -247,11 +250,11 @@ def cmd_moveTo(rc, targets, source, zone, pos = None, reveal = False):
             group = target.group
             target.moveToTable(0, 0, True)
             target.controller = pile.controller
-            remoteCall(target.controller, "moveToGroup", [pile, target, group, pos, reveal])
+            remoteCall(target.controller, "moveToGroup", [pile, target, group, pos, reveal, me])
          elif target.controller != me and pile.controller == me:
-            remoteCall(target.controller, "passControlTo", [me, [target], ["moveToGroup", [pile, target, target.group, pos, reveal]]])
+            remoteCall(target.controller, "passControlTo", [me, [target], ["moveToGroup", [pile, target, target.group, pos, reveal, me]]])
          else:
-            remoteCall(target.controller, "moveToGroup", [pile, target, None, pos, reveal])
+            remoteCall(target.controller, "moveToGroup", [pile, target, None, pos, reveal, me])
          rnd(1, 100) # Wait until all animation is done
    rc.applyNext()
 
@@ -438,6 +441,15 @@ def cmd_trash(rc, targets, source, numCards=1):
       else:
          remoteCall(player, "trash", [None, 0, 0, False, numCards])
    rc.applyNext()
+
+
+def cmd_prophecy(rc, targets, source, numCards=1):
+   pile = me.Deck
+   if targets:
+      pile = targets[0].group
+   debug(">>> cmd_prophecy({}, {})".format(numCards, pile)) #Debug
+   prophecy(group = pile, count = int(numCards))
+   rc.applyNext()
    
 
 RulesCommands.register('damage',        cmd_damage)
@@ -464,3 +476,4 @@ RulesCommands.register('altercost',     cmd_alterCost)
 RulesCommands.register('swapchars',     cmd_swapChars)
 RulesCommands.register('movetoslot',    cmd_moveToSlot)
 RulesCommands.register('trash',         cmd_trash)
+RulesCommands.register('prophecy',      cmd_prophecy)
