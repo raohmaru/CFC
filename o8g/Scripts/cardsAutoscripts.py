@@ -108,7 +108,7 @@ class Ability:
    def unicodeChar(self):
       # Returns a unicode symbol for the type (for window forms)
       if self.type == InstantAbility:   return InstantUniChar
-      if self.type == ActivatedAbility: return ActivatedUniChar
+      if self.type == TriggerAbility: return TriggerUniChar
       if self.type == AutoAbility:      return AutoUniChar
       return ""
    

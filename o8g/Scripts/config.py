@@ -105,12 +105,12 @@ ActionType   = 'Action'
 ReactionType = 'Reaction'
 
 # Card abilities
-InstantAbility   = u'\xa2'
-ActivatedAbility = u'\xa3'
-AutoAbility      = u'\xa4'
+InstantAbility = u'\xa2'
+TriggerAbility = u'\xa3'
+AutoAbility    = u'\xa4'
 
 InstantUniChar   = u'\u25B2'
-ActivatedUniChar = u'\u2588'
+TriggerUniChar = u'\u2588'
 AutoUniChar      = u'\u25CF'
 
 # A dictionary which holds the regex used in other scripts
@@ -136,8 +136,9 @@ UAttackCost     = 5
 MaxCardCopies   = 3
 HandSize        = 5
 
-GameRules = {
-   'ab_act_fresh': False  # Cannot activate [] abilities of fresh characters
+GameRulesDefaults = {
+   'ab_trigger_fresh': False, # Activate [] abilities of fresh characters
+   'ab_trigger_act'  : True # Activate [] abilities
 }
 
 # Debug
@@ -159,19 +160,19 @@ DebugLevelPrefixes = [
 
 # Game Events
 GameEvents = Struct(**{
-   'ActivatePhase': 'activatephase',
-   'DrawPhase'    : 'drawphase',
-   'BlockPhase'   : 'blockphase',
-   'EndPhase'     : 'endphase',
-   'CleanupPhase' : 'cleanupphase',
-   'Block'        : 'block',
-   'BeforeBlock'  : 'beforeblock',
-   'HandChanges'  : 'handchanges',
-   'RingChanges'  : 'ringchanges',
-   'BeforePlayAC' : 'beforeplayac',
-   'BeforePlayRE' : 'beforeplayre',
-   'CharRemoved'  : 'charremoved',
-   'BackupLimit'  : 'backuplimit'
+   'ActivatePhase' : 'activatephase',
+   'DrawPhase'     : 'drawphase',
+   'BlockPhase'    : 'blockphase',
+   'EndPhase'      : 'endphase',
+   'CleanupPhase'  : 'cleanupphase',
+   'Block'         : 'block',
+   'BeforeBlock'   : 'beforeblock',
+   'HandChanges'   : 'handchanges',
+   'RingChanges'   : 'ringchanges',
+   'BeforePlayAC'  : 'beforeplayac',
+   'BeforePlayRE'  : 'beforeplayre',
+   'CharRemoved'   : 'charremoved',
+   'BackupLimit'   : 'backuplimit'
 })
 # When a listener to these events is added, trigger it automatically
 GameEventsExecOnAdded = [
@@ -179,7 +180,8 @@ GameEventsExecOnAdded = [
 ]
 # Maps variables to events
 GameEventsFromVars = {
-   'hand': GameEvents.HandChanges
+   'hand.size': GameEvents.HandChanges,
+   'trigger'  : GameEvents.TriggerAbility
 }
 
 # Messages
@@ -222,9 +224,13 @@ MSG_ABILITIES = {
    ]
 }
 MSG_RULES = {
-   'ab_act_fresh': (
-      'Characters cannot use {} abilities the turn they enter the ring.'.format(ActivatedUniChar),  # Disabled
-      'Characters can use {} abilities the turn they enter the ring.'.format(ActivatedUniChar)  # Enabled
+   'ab_trigger_fresh': (
+      'Characters cannot use {} abilities the turn they enter the ring.'.format(TriggerUniChar),  # Disabled
+      'Characters can use {} abilities the turn they enter the ring.'.format(TriggerUniChar)  # Enabled
+   ),
+   'ab_trigger_act': (
+      TriggerUniChar + " abilites cannot be activated.",
+      TriggerUniChar + " abilites can be activated again."
    ),
    'card_cost': '{} cards now cost {} SP {} to play.'
 }

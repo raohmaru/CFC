@@ -75,7 +75,7 @@ def triggerGameEvent(eventName, *args):
                pcard.rules.execAuto(None, eventName, *params)
             elif listener['scope'] in [RS_PREFIX_OPP,RS_PREFIX_ANY]:
                remoteCall(card.controller, "remoteGameEvent", [listener['callback'], eventName]+list(params))
-               update()               
+               update()
          # ... or the name of a global function
          else:
             try:

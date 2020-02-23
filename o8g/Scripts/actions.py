@@ -268,9 +268,9 @@ def activate(card, x = 0, y = 0):
       if not res or res != True:
          if res == ERR_NO_EFFECT:
             notify("{}'s {} has no effect.".format(card, ability))
-         if (pcard.ability is not None and pcard.ability.type == ActivatedAbility) or res != ERR_NO_EFFECT:
+         if (pcard.ability is not None and pcard.ability.type == TriggerAbility) or res != ERR_NO_EFFECT:
             return
-   elif isCharacter(card) and pcard.hasEffect() and pcard.ability.type == ActivatedAbility:
+   elif isCharacter(card) and pcard.hasEffect() and pcard.ability.type == TriggerAbility:
       freeze(card, silent = True)
    if card.group == table:
       card.highlight = ActivatedColor

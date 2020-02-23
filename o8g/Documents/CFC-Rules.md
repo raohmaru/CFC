@@ -72,7 +72,7 @@ By playing cards players can bring into the battle powerful fighters and effects
    **B** Uncommon.  
    **A** Rare; very powerful, balanced, and/or great ability.  
    **S** Very rare, unusual ability.
-7. **Text box**. This is where a card’s rules appears, which explains the effects it has in the game. Character cards have an ability symbol (<span class="ab ab-instant">▲</span>, <span class="ab ab-activated">■</span> or <span class="ab ab-auto">●</span>) and an ability name at the beginning of the text, printed in bold.  
+7. **Text box**. This is where a card’s rules appears, which explains the effects it has in the game. Character cards have an ability symbol (<span class="ab ab-instant">▲</span>, <span class="ab ab-trigger">■</span> or <span class="ab ab-auto">●</span>) and an ability name at the beginning of the text, printed in bold.  
    Below the rules text it can appear an italicized text (the flavour text) that adds some description of the CFC world. It has no effect on game play.
 8. **Back-ups**. The list and number of subtypes with whom a character can be backed up. Every icon represents a card subtype. Only Characters can have back-ups, up to three.
 9. **Information line**. Here is shown the illustration credit and the collector number within a set.
@@ -86,7 +86,7 @@ A card has one type, that tells when it can be played and what happens to the ca
 
 Characters are cards that represent a character in a video game, and they are placed into an empty slot of your ring. They can attack and deal damage to an enemy, or they can protect and battle against attacking characters.
 
-Some characters have abilities, represented by an ability symbol (<span class="ab ab-instant">▲</span>, <span class="ab ab-activated">■</span> or <span class="ab ab-auto">●</span>) followed by the ability name in bold.
+Some characters have abilities, represented by an ability symbol (<span class="ab ab-instant">▲</span>, <span class="ab ab-trigger">■</span> or <span class="ab ab-auto">●</span>) followed by the ability name in bold.
 
 Character cards have a SP value that is used when played. If it is 0 or more, you gain that amount of SP. If the SP is a negative, then you must pay that cost to play the card.
 
@@ -112,17 +112,17 @@ There is no limitation in the number of Reaction cards a player may play.
 
 
 ## The Abilities
-Some characters may have an special effect (called *Ability*), which is represented by an ability type (symbols <span class="ab ab-instant">▲</span>, <span class="ab ab-activated">■</span> or <span class="ab ab-auto">●</span>) followed with the ability name at the beginning of the rule text.
+Some characters may have an special effect (called *Ability*), which is represented by an ability type (symbols <span class="ab ab-instant">▲</span>, <span class="ab ab-trigger">■</span> or <span class="ab ab-auto">●</span>) followed with the ability name at the beginning of the rule text.
 
 Every type of ability tells in which moment of the game the ability can be activated. Once activated its effect applies immediately.
 
 ### <span class="ab ab-instant">▲</span> Ability
 A <span class="ab ab-instant">▲</span> ability is activated when that character enters the ring.
 
-### <span class="ab ab-activated">■</span> Ability
-A <span class="ab ab-activated">■</span> ability can be activated only in your Main phase. When it is activated the character enters the freeze state.
+### <span class="ab ab-trigger">■</span> Ability
+A <span class="ab ab-trigger">■</span> ability can be activated only in your Main phase. When it is activated the character enters the freeze state.
 
-Frozen characters and characters that just entered the ring cannot activate a <span class="ab ab-activated">■</span> ability in that turn.
+Frozen characters and characters that just entered the ring cannot activate a <span class="ab ab-trigger">■</span> ability in that turn.
 
 ### <span class="ab ab-auto">●</span> Ability
 A <span class="ab ab-auto">●</span> ability is always active as long as that character is on the ring.
@@ -220,7 +220,7 @@ You can do any of the following actions in any order:
 
 - Play up to one Character card in an empty slot of your ring.
 - Back-up up to one character in your ring.
-- Activate a <span class="ab ab-activated">■</span> ability.
+- Activate a <span class="ab ab-trigger">■</span> ability.
 - Play any number of Action cards.
 
 #### 4. Attack phase
@@ -253,7 +253,7 @@ __Give Ability__
 See *Steal Ability*.
 
 __Freeze__
-A character in a "freeze" state (or *frozen*) can't attack, counterattack or activate <span class="ab ab-activated">■</span> abilities.
+A character in a "freeze" state (or *frozen*) can't attack, counterattack or activate <span class="ab ab-trigger">■</span> abilities.
 
 __Fresh__
 A character that has just entered the ring in your turn.

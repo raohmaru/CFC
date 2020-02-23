@@ -102,52 +102,30 @@ def notifyAbilityEnabled(target_id, source_id=None, msg=None, restr=None, isWarn
       name = obj
       if isPlayer(obj) or isWarning:
          name = getObjName(obj)
-      func(msg[0].format(name, source.Name, source.properties['Ability Name'], restr))
+      func(msg.format(name, source.Name, source.properties['Ability Name'], restr))
 
 #---------------------------------------------------------------------------
 # Abilities functions
 #---------------------------------------------------------------------------
 
-def abl_unblockable(card_id, source_id=None, restr=None, events=[]):
-   debug(">>> abl_unblockable({}, {})".format(card_id, source_id)) #Debug
-   if addGameEventListener(events[0], 'abl_genericListener', card_id, source_id, restr, [card_id, source_id, [MSG_UNBLOCKABLE, MSG_BLOCKABLE]]):
-      notify("{} is unblockable {}".format(Card(card_id), getTextualRestr(restr)))
-
-
-def abl_cantBlock(card_id, source_id=None, restr=None, events=[]):
-   debug(">>> abl_cantBlock({}, {})".format(card_id, source_id)) #Debug
-   if addGameEventListener(events[0], 'abl_genericListener', card_id, source_id, restr, [card_id, source_id, [MSG_CANT_BLOCK, MSG_CAN_BLOCK]]):
-      notify("{} cannot counter-attack {}".format(Card(card_id), getTextualRestr(restr)))
-
-
-def abl_cantPlayAC(player_id, source_id=None, restr=None, events=[]):
-   debug(">>> abl_cantPlayAC({}, {})".format(player_id, source_id)) #Debug
-   if addGameEventListener(events[0], 'abl_genericListener', player_id, source_id, restr, [player_id, source_id, [MSG_CANT_PLAY_AC, MSG_CAN_PLAY_AC]]):
-      notify("{} cannot play action cards {}".format(Player(player_id), getTextualRestr(restr)))
-
-
-def abl_cantPlayRE(player_id, source_id=None, restr=None, events=[]):
-   debug(">>> abl_cantPlayRE({}, {})".format(player_id, source_id)) #Debug
-   if addGameEventListener(events[0], 'abl_genericListener', player_id, source_id, restr, [player_id, source_id, [MSG_CANT_PLAY_RE, MSG_CAN_PLAY_RE]]):
-      notify("{} cannot play reaction cards {}".format(Player(player_id), getTextualRestr(restr)))
-      
-      
-def abl_unlimitedBackup(obj_id):
+def callback_true(obj_id):
    return True
 
 
 def abl_add(obj_id, source_id=None, restr=None, events=[], msg=None, checkFunc=None):
-   debug(">>> abl_add({}, {}, {})".format(obj_id, source_id, events)) #Debug
+   debug(">>> abl_add({}, {}, {}, {}, {}, {})".format(obj_id, source_id, restr, events, msg, checkFunc)) #Debug
    if addGameEventListener(events[0], 'abl_genericListener', obj_id, source_id, restr, [obj_id, source_id, msg, checkFunc]):
-      notifyAbilityEnabled(obj_id, source_id, msg, getTextualRestr(restr))
+      if msg:
+         notifyAbilityEnabled(obj_id, source_id, msg[0], getTextualRestr(restr))
 
 
 def abl_genericListener(target_id, obj_id, source_id=None, msg=None, checkFunc=None):
    """ Checks if the original card with the ability is equal to the second card the system wants to check """
-   debug(">>> abl_genericListener({}, {}, {}, {}, {})".format(target_id, obj_id, source_id, msg, checkFunc)) #Debug      
+   debug(">>> abl_genericListener({}, {}, {}, {}, {})".format(target_id, obj_id, source_id, msg, checkFunc))
+ #Debug      
    if target_id == obj_id:
       if checkFunc is None:
-         notifyAbilityEnabled(target_id, source_id, msg, isWarning=True)
+         notifyAbilityEnabled(target_id, source_id, msg[0], isWarning=True)
          return True
       else:
          checkFunc = eval(checkFunc)
@@ -159,4 +137,4 @@ RulesAbilities.register('unblockable',     [GameEvents.Block])
 RulesAbilities.register('cantblock',       [GameEvents.BeforeBlock])
 RulesAbilities.register('cantplayac',      [GameEvents.BeforePlayAC])
 RulesAbilities.register('cantplayre',      [GameEvents.BeforePlayRE])
-RulesAbilities.register('unlimitedbackup', [GameEvents.BackupLimit], 'abl_unlimitedBackup')
+RulesAbilities.register('unlimitedbackup', [GameEvents.BackupLimit], 'callback_true')

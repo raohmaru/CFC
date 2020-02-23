@@ -486,8 +486,8 @@ def activateAuto(card):
          return
       debug("Trying to activate {}'s ability {} {}".format(card.Name, pcard.ability.type, pcard.ability.name))
       # Activate [] and /\ only in player's Main Phase
-      if pcard.ability.type in [InstantAbility, ActivatedAbility] and (not me.isActive or currentPhase()[1] != MainPhase):
-         information("You can only activate {} or {} abilities in your Main Phase.".format(ActivatedUniChar, InstantUniChar))
+      if pcard.ability.type in [InstantAbility, TriggerAbility] and (not me.isActive or currentPhase()[1] != MainPhase):
+         information("You can only activate {} or {} abilities in your Main Phase.".format(TriggerUniChar, InstantUniChar))
          return
       # /\ abilities
       if pcard.ability.type == InstantAbility:
@@ -496,14 +496,18 @@ def activateAuto(card):
             warning("{} abilities can only be activated once when character just enters the ring.".format(InstantUniChar))
             return
       # [] abilities
-      if pcard.ability.type == ActivatedAbility:
+      if pcard.ability.type == TriggerAbility:
          # Just entered?
-         if not GameRules['ab_act_fresh'] and MarkersDict['Just Entered'] in card.markers:
-            if not confirm("Can't activate {} abilities of characters that just entered the ring.\nProceed anyway?".format(ActivatedUniChar)):
+         if not getRule('ab_trigger_fresh') and MarkersDict['Just Entered'] in card.markers:
+            if not confirm("Can't activate {} abilities of characters that just entered the ring.\nProceed anyway?".format(TriggerUniChar)):
                return
          # Frozen or attacking?
          if isFrozen(card) or MarkersDict['Attack'] in card.markers:
-            warning("Can't activate {} abilities of frozen or attacking characters.".format(ActivatedUniChar))
+            warning("Can't activate {} abilities of frozen or attacking characters.".format(TriggerUniChar))
+            return           
+         # Triggers a game event to check if [] abilites can be activated
+         if not getRule('ab_trigger_act'):
+            warning("{} abilities cannot be activated.".format(TriggerUniChar))
             return
       # () abilities
       if pcard.ability.type == AutoAbility:
@@ -513,7 +517,7 @@ def activateAuto(card):
             return
 
       # Activate [] ability?
-      if pcard.ability.type == ActivatedAbility:
+      if pcard.ability.type == TriggerAbility:
          if not confirm("Activate {}'s ability {} {}?\n\n\n{}".format(card.Name, pcard.ability.unicodeChar, pcard.ability.name, pcard.ability.rules)):
             return
       # Activate the ability

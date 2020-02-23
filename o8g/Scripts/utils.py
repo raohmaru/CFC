@@ -200,6 +200,13 @@ def getNextActivePlayer():
    return players[1] if len(players) > 1 and me.isActive else me
 
 
+def getRule(rule):
+   rules = getGlobalVar('Rules')
+   if rule in rules:
+      return rules[rule]
+   else:
+      return GameRulesDefaults[rule]
+
 #---------------------------------------------------------------------------
 # Pile functions
 #---------------------------------------------------------------------------

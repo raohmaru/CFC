@@ -88,14 +88,25 @@ def nextCommand():
    commander.applyNext()
       
 
-def toggleRule(event_card_id=None, rule=None, source_id=None):
-   debug(">>> toggleRule({})".format(rule)) #Debug
-   if rule in GameRules:
-      if (event_card_id is None and source_id is None) or (event_card_id == source_id):
-         GameRules[rule] = not GameRules[rule]
-         debug("Rule {} has been {}".format(rule, 'enabled' if GameRules[rule] else 'disabled'))
-         if rule in MSG_RULES:
-            notify(MSG_RULES[rule][GameRules[rule]])
+def disableRule(rule=None):
+   debug(">>> disableRule({})".format(rule)) #Debug
+   rules = getGlobalVar('Rules')
+   rules[rule] = not GameRulesDefaults[rule]
+   setGlobalVar('Rules', rules)
+   debug("Rule {} has been disabled".format(rule))
+   if rule in MSG_RULES:
+      notify(MSG_RULES[rule][rules[rule]])
+
+
+def enableRule(event_card_id=None, rule=None, source_id=None):
+   debug(">>> enableRule({})".format(rule)) #Debug
+   if event_card_id == source_id:
+      rules = getGlobalVar('Rules')
+      rules[rule] = GameRulesDefaults[rule]
+      setGlobalVar('Rules', rules)
+      debug("Rule {} has been enabled".format(rule))
+      if rule in MSG_RULES:
+         notify(MSG_RULES[rule][rules[rule]])
 
 
 def alterCost(event_card_id, cardType, mod):
@@ -265,6 +276,20 @@ def cmd_bp(rc, targets, source, qty):
    rc.applyNext()
 
 
+def cmd_sp(rc, targets, source, qty):
+   qty = int(qty)
+   if not targets:
+      targets = [me]
+   debug(">>> cmd_sp({}, {})".format(targets, qty)) #Debug
+   if qty > 0:
+      for player in targets:
+         if player == me:
+            modSP(qty)
+         else:
+            remoteCall(player, "modSP", [qty])
+   rc.applyNext()
+
+
 def cmd_playExtraChar(rc, targets, source, *args):
    global charsPlayed
    debug(">>> cmd_playExtraChar() {} -> {}".format(charsPlayed, charsPlayed-1))
@@ -352,9 +377,8 @@ def cmd_moveRestTo(rc, targets, source, zone):
   
 def cmd_disableRule(rc, targets, source, rule):
    debug(">>> cmd_disableRule({})".format(rule)) #Debug
-   if rule in GameRules:
-      toggleRule(rule=rule)
-      addGameEventListener(GameEvents.CharRemoved, 'toggleRule', source._id, args=[rule, source._id])
+   disableRule(rule)
+   addGameEventListener(GameEvents.CharRemoved, 'enableRule', source._id, args=[rule, source._id])
    rc.applyNext()
 
 
@@ -401,20 +425,6 @@ def cmd_moveToSlot(rc, targets, source, *args):
    else:
       remoteCall(targets[0].controller, "changeSlot", [targets[0]])
    rc.applyNext()
-
-
-def cmd_sp(rc, targets, source, qty):
-   qty = int(qty)
-   if not targets:
-      targets = [me]
-   debug(">>> cmd_sp({}, {})".format(targets, qty)) #Debug
-   if qty > 0:
-      for player in targets:
-         if player == me:
-            modSP(qty)
-         else:
-            remoteCall(player, "modSP", [qty])
-   rc.applyNext()
    
 
 RulesCommands.register('damage',        cmd_damage)
@@ -426,6 +436,7 @@ RulesCommands.register('discard',       cmd_discard)
 RulesCommands.register('rnddiscard',    cmd_randomDiscard)
 RulesCommands.register('moveto',        cmd_moveTo)
 RulesCommands.register('bp',            cmd_bp)
+RulesCommands.register('sp',            cmd_sp)
 RulesCommands.register('playextrachar', cmd_playExtraChar)
 RulesCommands.register('draw',          cmd_draw)
 RulesCommands.register('steal',         cmd_steal)
@@ -439,4 +450,3 @@ RulesCommands.register('unfreeze',      cmd_unfreeze)
 RulesCommands.register('altercost',     cmd_alterCost)
 RulesCommands.register('swapchars',     cmd_swapChars)
 RulesCommands.register('movetoslot',    cmd_moveToSlot)
-RulesCommands.register('sp',            cmd_sp)

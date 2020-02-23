@@ -435,7 +435,7 @@ action = moveRestTo(discards) & reveal() & moveTo(hand, true)
 
 # Batsu's BOILING BLOOD
 RulesDict['4bd333d6-f063-424e-8cf9-3512f96f23b4'] = """
-auto = disableRule(AB_ACT_FRESH)
+auto = disableRule(ab_trigger_fresh)
 """
 
 # Daigo's FINISH IT!
@@ -527,7 +527,9 @@ action = reveal(hand); each(action in me.hand => bp(+2)) target(this); discard(a
 """
 
 # June's PLASMA RING
-# RulesDict['f67a1f9b-29c7-4ccc-bb17-b80a1c25b67a'] = ""
+RulesDict['f67a1f9b-29c7-4ccc-bb17-b80a1c25b67a'] = """
+auto = disableRule(ab_trigger_act)
+"""
 
 # Rain's BACK OFF!
 # RulesDict['cb1440e1-42f7-47e5-92d5-2246d399bd64'] = ""
