@@ -41,10 +41,10 @@ def debugScenario():
    gotoMain()
    rnd(100, 10000)  # Delay the next action until all animation is done
    tableCards = [
-      '3036ebcc-7b49-42a5-89f3-118399f34d47' # Cammy (Alpha)
-      ,'9c383f6b-2813-407f-be87-f9746fbb6d18' # Dhalsim
-      ,'62067a74-53f9-4bb0-872c-f77e735fc826' # Eiji
-      # ,'a7b36a01-dbb4-4442-aaf8-e415611581a9' # Shoma
+       'ae301f49-6e9d-4ca3-aba8-54bb5142e46d' # Grant
+      ,'57de9ee8-5791-4696-96a1-057bf866ed9f' # Kagami
+      ,'de04d64c-9d97-490f-a8c3-7469416bfc85' # Shiki (Slash)
+      # ,'e3c021d7-8ba2-471e-b74e-b5129da32f62' # Rimoruru (Slash)
    ]
    for i, id in enumerate(tableCards):
       debug("Creating card {} at slot {}".format(id, i))
@@ -57,11 +57,10 @@ def debugScenario():
       rnd(1, 100)  # Delay the next action until all animation is done
       
    handCards = [
-      '7a394ff3-727d-48d9-91a9-b9cba90510b6' # Mischief
-      # ,'f67a1f9b-29c7-4ccc-bb17-b80a1c25b67a' # June
-      # ,'c3bb69f7-4b77-469f-a9ff-79cca1e52574' # Bilstein
-      # ,'a68dc591-6976-4341-b8b9-1a7dc1c71775' # Samanosuke
-      # ,'f232c282-6a03-436f-aae2-53f6988c6603' # Hayato
+      '50afc361-3dd7-4847-ae4c-d9ed84f1d991' # Raw shield
+      ,'826a8255-ed98-4c13-bb8c-96502837df52' # Bamboo shoots
+      # ,'bc59a360-18f6-4c79-8305-77d0975d4106' # Banquet
+      # ,'a68dc591-6976-4341-b8b9-1a7dc1c71775' # Hayato
       # ,'ee979882-67cc-4549-881c-8e158df495ce' # Char
       # ,'38d6c7a8-7463-4aa6-88c4-13f725ada0be' # Char
       # ,'e6e46f83-d089-4762-8d8e-2a3252cfc9db' # Char
@@ -84,7 +83,7 @@ def debugScenario():
       # rnd(1, 100)  # Delay the next action until all animation is done
    
    deckCards = [
-      '365cddf9-f741-4a3e-bf07-de4b3eecc6d2' # Char
+      # '365cddf9-f741-4a3e-bf07-de4b3eecc6d2' # Char
       # ,'d14694b4-484c-4b45-962e-8cbb636d8a9a' # Char
       # ,'8ce9a56f-8c0c-49e7-879c-12179c63f288' # Char
       # ,'61ef9ecd-980b-46b8-83fc-12399ce044f1' # Char
@@ -92,9 +91,9 @@ def debugScenario():
       # ,'525d8365-c90e-491f-9811-1f23efbafccb' # Char
       # ,'bdeceb7c-9d94-4c98-824b-90d5317d8cda' # Char
       # ,'e94aaa00-2449-46a4-9ff4-273e6dac272a' # Char
-      ,'85d84ab1-dede-4fc7-b80d-00778f73c905' # Action
+      # ,'85d84ab1-dede-4fc7-b80d-00778f73c905' # Action
       # ,'ac01bbbe-583e-46ae-b26c-3c25eb8f0779' # Action
-      ,'556b3359-e642-419a-ab5c-67f70de1bb4f' # Reaction
+      # ,'556b3359-e642-419a-ab5c-67f70de1bb4f' # Reaction
       # ,'91e441cc-0f1f-4b01-a2b0-94678d6f0b56' # Reaction
    ]
    for id in deckCards:

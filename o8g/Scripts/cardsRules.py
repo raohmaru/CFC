@@ -120,7 +120,7 @@ cond: (optional)
 effect:
    Values:
       Effect command (followed by () with 0 or more parameters):
-         damage(#|tgt.BP|prevTgt.BP)
+         damage(#|expr)
          swapPiles(pile1, pile2)
          shuffle([myDeck])
          destroy()
@@ -128,8 +128,9 @@ effect:
          discard([target])     # zone: myHand
          rndDiscard([#])
          moveTo(zone [, pos] [, reveal=false])  # pos = unsigned int or '?'
-         bp(#|x#)
-         sp(#)
+         bp(#|x#|=#)
+         sp(#|=#)
+         hp(#|expr)
          playExtraChar()
          draw([#|expression])  # Default: 1
          steal()
@@ -238,6 +239,9 @@ Available variables:
       .hand.size
       .ring
       .chars
+   tgt
+   prevTgt
+   this
    alone
    bp
    
@@ -380,7 +384,7 @@ auto = ~myDrawPhase~ draw() target(me)
 
 # Samanosuke's DEMON GAUNTLET
 RulesDict['a68dc591-6976-4341-b8b9-1a7dc1c71775'] = """
-action = reveal(hand) & each(me.hand: bp <= 3 => bp(+2)) target(this)
+action = reveal(hand) & each(me.hand: card.bp <= 3 => bp(+2)) target(this)
 """
 
 # Ayame's BUTTERFLY ILLUSION
@@ -520,7 +524,7 @@ action = rndDiscard()
 
 # Zaki's SUKEBAN
 RulesDict['faa72b01-cf50-4cff-8b70-13245a7fa5df'] = """
-action = [[if me.sp == 0]] sp(11)
+action = [[if me.sp == 0]] sp(+11)
 """
 
 # Bilstein's PLASMA POWER
@@ -565,13 +569,19 @@ action = moveTo(oppDeck, ?) target(*@oppHand)
 """
 
 # Chun-Li's S.B. KICK
-# RulesDict['a124cd33-4427-4584-8216-885bbb97baa8'] = ""
+RulesDict['a124cd33-4427-4584-8216-885bbb97baa8'] = """
+action = sp(=0); bp(=1) target(^characters)
+"""
 
 # Chun-Li (Alpha)'s GOMEN-NE!
-# RulesDict['7b9371dc-63a4-4dd8-91e9-5380aae0491f'] = ""
+RulesDict['7b9371dc-63a4-4dd8-91e9-5380aae0491f'] = """
+action = moveTo(oppDiscards) target(<2>*<3>@oppDeck)
+"""
 
 # Dan's WHAT GIVES?
-# RulesDict['9d7ec580-fdc3-4222-92ec-10fd33741a2b'] = ""
+RulesDict['9d7ec580-fdc3-4222-92ec-10fd33741a2b'] = """
+action = sp(-6) to(opp)
+"""
 
 # Dhalsim's ENLIGHTENMENT
 RulesDict['9c383f6b-2813-407f-be87-f9746fbb6d18'] = """
@@ -580,10 +590,15 @@ action = prophecy(1)
 """
 
 # E. Honda's KAMIZU
-# RulesDict['3036ebcc-7b49-42a5-89f3-118399f34d47'] = ""
+RulesDict['3036ebcc-7b49-42a5-89f3-118399f34d47'] = """
+target = players
+action = draw(2)
+"""
 
 # Elena's HEALING
-# RulesDict['c023c0dd-677d-488a-83a6-2e9419bcb868'] = ""
+RulesDict['c023c0dd-677d-488a-83a6-2e9419bcb868'] = """
+action = {D}{F}: hp(+2)
+"""
 
 # Evil Ryu's EVIL ENERGY
 # RulesDict['759b3fef-e5c0-406e-b186-a94b211e8735'] = ""
@@ -691,7 +706,9 @@ action = prophecy(1)
 # RulesDict['60b0d429-c2bf-482d-84f1-10c78f424cc6'] = ""
 
 # Morrigan's LIFE SUCKER
-# RulesDict['4e34756e-34e4-45e5-a6ab-698604c6fb99'] = ""
+RulesDict['4e34756e-34e4-45e5-a6ab-698604c6fb99'] = """
+auto = ~oppCombatDamaged fromThis~ hp(this.bp)
+"""
 
 # Morrigan Aensland's GOODNIGHT KISS
 # RulesDict['73e4c201-f462-4106-9e03-3b63ecd04aab'] = ""
@@ -776,7 +793,9 @@ action = bp(3) target(character)
 # RulesDict['526c4102-b6da-4880-91dc-1b9b007d4cc5'] = ""
 
 # Grant's UNBREKABLE BOND
-# RulesDict['ae301f49-6e9d-4ca3-aba8-54bb5142e46d'] = ""
+RulesDict['ae301f49-6e9d-4ca3-aba8-54bb5142e46d'] = """
+action = {S}: hp(this.bp)
+"""
 
 # Griffon Mask's DAA!
 # RulesDict['d5038a1d-55a1-4d85-a43e-52eb2b8d7b09'] = ""
@@ -865,7 +884,9 @@ action = moveTo(hand) target(character@myRing)
 # RulesDict['78fc2eb4-f142-471b-83c0-1b615b67bb89'] = ""
 
 # Kensou's MEAT MUFFIN!
-# RulesDict['a099049d-37ff-4c72-8691-a1bba86e506a'] = ""
+RulesDict['a099049d-37ff-4c72-8691-a1bba86e506a'] = """
+action = hp(+2)
+"""
 
 # Krizalid's DATA SHOCK
 # RulesDict['2ba9556c-59b0-4154-8325-f9793a8eacb5'] = ""
@@ -928,7 +949,9 @@ action = moveTo(hand) target(character@myRing)
 # RulesDict['da18d80a-ffa3-4df4-a3a7-7779bb5ad577'] = ""
 
 # Kagami's PHOENIX
-# RulesDict['57de9ee8-5791-4696-96a1-057bf866ed9f'] = ""
+RulesDict['57de9ee8-5791-4696-96a1-057bf866ed9f'] = """
+action = {S}: each(card in me.hand => hp(+1))
+"""
 
 # Kojiroh's SHUNJIN
 # RulesDict['f3ddafb5-e6b5-4d07-b883-23cfe6ea6782'] = ""
@@ -1006,7 +1029,9 @@ action = moveTo(hand) target(character@myRing)
 # RulesDict['f3f105e5-a0b1-4b4b-9f88-5932182d3ace'] = ""
 
 # Nakoruru (Slash)'s NATURE'S BALM
-# RulesDict['d231ed6e-8f7c-417e-8826-64f9297b395f'] = ""
+RulesDict['d231ed6e-8f7c-417e-8826-64f9297b395f'] = """
+action = hp(+5)
+"""
 
 # Nicotine's EXORCISM CARD
 # RulesDict['37ccd6b2-dadc-48e2-91fa-da6c823293e9'] = ""
@@ -1018,7 +1043,9 @@ action = moveTo(hand) target(character@myRing)
 # RulesDict['537aa0e6-9231-423a-8aaa-3b9722cef6ec'] = ""
 
 # Rimoruru (Slash)'s WIND WHISPER
-# RulesDict['e3c021d7-8ba2-471e-b74e-b5129da32f62'] = ""
+RulesDict['e3c021d7-8ba2-471e-b74e-b5129da32f62'] = """
+auto = ~myEndPhase~ hp(+1)
+"""
 
 # Seishiro's INEMURI
 # RulesDict['0f9e815a-d71a-4eba-9264-6e65c05fe8d7'] = ""
@@ -1030,7 +1057,9 @@ action = moveTo(hand) target(character@myRing)
 # RulesDict['9d836743-0d5e-4b4e-951a-cbe216558e6f'] = ""
 
 # Shiki (Slash)'s NRG SYPHON
-# RulesDict['de04d64c-9d97-490f-a8c3-7469416bfc85'] = ""
+RulesDict['de04d64c-9d97-490f-a8c3-7469416bfc85'] = """
+action = {F}: destroy() target(character@myRing); hp(+2)
+"""
 
 # Shizumaru's MIDSUMMER RAIN
 # RulesDict['07fb9dba-ef83-4a69-a700-11cff3e313f3'] = ""
@@ -1111,7 +1140,9 @@ action = moveTo(hand) target(character@myRing)
 # RulesDict['faea0028-c313-438e-b9f0-8536e494ddb1'] = ""
 
 # Grace
-# RulesDict['6597d835-666b-4056-8cae-dbf3a3bdc3df'] = ""
+RulesDict['6597d835-666b-4056-8cae-dbf3a3bdc3df'] = """
+action = hp(+5)
+"""
 
 # Grenade
 # RulesDict['26fa7e0e-eb86-40d5-b5ab-39723fd67e43'] = ""
@@ -1180,7 +1211,9 @@ action = prophecy(3)
 # RulesDict['0d1f3d2d-72ef-42e4-9c24-d0b36371b230'] = ""
 
 # Raw shield
-# RulesDict['50afc361-3dd7-4847-ae4c-d9ed84f1d991'] = ""
+RulesDict['50afc361-3dd7-4847-ae4c-d9ed84f1d991'] = """
+action = {F}: destroy() target(character@myRing); hp(prevTgt.BP)
+"""
 
 # Reparation
 # RulesDict['a89ae46c-bbbe-4780-9a7f-3d68857047ac'] = ""
@@ -1252,10 +1285,14 @@ action = prophecy(3)
 # RulesDict['be84124e-5057-4511-a181-7492451db5b2'] = ""
 
 # Bamboo shoots
-# RulesDict['826a8255-ed98-4c13-bb8c-96502837df52'] = ""
+RulesDict['826a8255-ed98-4c13-bb8c-96502837df52'] = """
+action = each(card in opp.hand => hp(+1))
+"""
 
 # Banquet
-# RulesDict['bc59a360-18f6-4c79-8305-77d0975d4106'] = ""
+RulesDict['bc59a360-18f6-4c79-8305-77d0975d4106'] = """
+action = hp(+5)
+"""
 
 # Cash profits
 # RulesDict['0a5179dd-e5a0-499e-90ac-8d62391743b8'] = ""

@@ -138,8 +138,8 @@ def clearGlobalVar(name, player = None):
 
 def replaceVars(str):
    debug("replaceVars({})".format(str))
-   str = re.sub(Regexps['BP'], 'hasattr(getParsedCard(c), "BP") and getParsedCard(c).BP', str)
-   str = re.sub(Regexps['Action'], 'isAction(c)', str)
+   str = re.sub(Regexps['BP'], r'hasattr(getParsedCard(\1), "BP") and getParsedCard(\1).BP', str)
+   str = re.sub(Regexps['Action'], 'isAction(card)', str)
    str = re.sub(Regexps['HandSize'], r'len(\1.hand)', str)
    str = re.sub(Regexps['Ring'], r'getRingSize(\1)', str)
    str = re.sub(Regexps['Chars'], r'getRing(\1)', str)
@@ -150,25 +150,25 @@ def replaceVars(str):
    return str
    
    
-def evalExpression(expr, retValue = False):
+def evalExpression(expr, retValue = False, locals = None):
    expr = replaceVars(expr)
-   forexpr = "[{} for c in {}]"
+   forexpr = "[{} for card in {}]"
    
    if ':' in expr:
       parts = expr.split(":")
       expr = forexpr.format(parts[1], parts[0])
    
-   elif re.search(Regexps['In'], expr):
+   if ' in ' in expr:
       parts = expr.split("in")
       expr = forexpr.format(parts[0], parts[1])
    
-   if re.search(Regexps['All'], expr):
+   if ' all ' in expr:
       expr = expr.replace('all', '')
       # https://docs.python.org/2.7/library/functions.html
       expr = 'all(' + expr + ')'
    
    try:
-      res = eval(expr)
+      res = eval(expr, None, locals)
       if retValue:
          debug("Evaluated expr  %s  (%s)" % (expr, res))
          return res
@@ -611,20 +611,22 @@ def getMarker(card, mkname):
    return card.markers[MarkersDict[mkname]]
 
       
-def changeMarker(cards, marker, question):
+def changeMarker(cards, marker, question = None, count = None):
 # Changes the number of markers in one or more cards
    n = 0
-   for c in cards:
-      if c.markers[marker] > n:
-	     n = c.markers[marker]
-   count = askInteger(question, n)
-   if count == None: return
+   if not count:
+      for c in cards:
+         if c.markers[marker] > n:
+           n = c.markers[marker]
+      count = askInteger(question, n)
+   if count == None:
+      return
    for c in cards:
       n = c.markers[marker]
       c.markers[marker] = count
-      dif = count-n
-      if dif >= 0: dif = "+" + str(dif)   
-      notify("{} sets {}'s {} to {}({}).".format(me, c, marker[0], count, dif))
+      diff = count-n
+      if diff >= 0: diff = "+" + str(diff)   
+      notify("{} sets {}'s {} to {}({}).".format(me, c, marker[0], count, diff))
 
 
 def setMarker(card, mkname, qty=1):
@@ -660,8 +662,10 @@ def dealDamage(dmg, target, source, isPiercing = False):
       notify("{} deals {} {}damage to {}. New HP is {} (before was {}).".format(source, dmg, piercing, target, target.HP, oldHP))
       
       
-def modBP(card, qty):
-   if qty >= 0:
+def modBP(card, qty, mode = None):
+   if mode == '=':
+      changeMarker([card], MarkersDict['BP'], count = qty)
+   elif qty >= 0:
       plusBP([card], count = qty)
    else:
       minusBP([card], count = -qty)
@@ -671,12 +675,16 @@ def modBP(card, qty):
 # Counter Manipulation
 #---------------------------------------------------------------------------
 
-def modSP(count = 1, silent = False):
+def modSP(count = 1, mode = None, silent = False):
 # A function to modify the players SP counter. Can also notify.
    initialSP = me.SP
-   if me.SP + count < 0:
-      count = -me.SP  # SP can't be less than 0
-   me.SP += count # Now increase the SP by the amount passed to us.
+   if mode == '=':
+      me.SP = count
+      count = me.SP - initialSP
+   else:
+      if me.SP + count < 0:
+         count = -initialSP  # SP can't be less than 0
+      me.SP += count # Now increase the SP by the amount passed to us.
    if not silent and count != 0:
       action = "gains" if count >= 0 else "loses"
       notify("{} {} {} SP. New total is {} (before was {}).".format(me, action, count, me.SP, initialSP))
@@ -700,7 +708,7 @@ def payCostSP(count = 1, silent = False, msg = 'play this card', cardType = None
            notify("The cost of the card has been modified by an ability.")
    
    if count >= 0:
-      modSP(count, silent)
+      modSP(count, silent=silent)
    else:
       initialSP = me.SP
       if me.SP + count < 0: # If we don't have enough SP, we assume card effects or mistake and notify the player that they need to do things manually.

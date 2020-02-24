@@ -190,7 +190,7 @@ def playAuto(card, slotIdx=None):
          return
       # Limit of chars played per turn
       if charsPlayed >= CharsPerTurn:
-         if not confirm("Only {} character per turn can be played.\nProceed anyway?".format(CharsPerTurn)):
+         if not confirm("Only {} character per turn can be played (you have played {} characters).\nProceed anyway?".format(CharsPerTurn, charsPlayed)):
             return
       # Player has any empty slot in his ring?
       myRing = getGlobalVar('Ring', me)

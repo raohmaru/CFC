@@ -6991,7 +6991,7 @@
 			<property name="Ability"      value="" />
 			<property name="Ability Type" value="" />
 			<property name="Ability Name" value="" />
-			<property name="Rules"        value="Gain 100 HP for each card in attacking enemy&apos;s hand." />
+			<property name="Rules"        value="Gain 100 HP for each card in enemy&apos;s hand." />
 			<property name="BP"           value="" />
 			<property name="SP"           value="-4" />
 			<property name="Backup 1"     value="" />

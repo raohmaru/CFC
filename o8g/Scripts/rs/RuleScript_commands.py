@@ -119,7 +119,14 @@ def alterCost(event_card_id, cardType, mod):
    debug("{}'s cost has been modified by {} (now costs {})".format(cardType, mod, CardCost[cardType]))
    notify(MSG_RULES['card_cost'].format(cardType.title(), abs(CardCost[cardType]), 'less' if CardCost[cardType] >= 0 else 'more'))
 
-            
+
+def getLocals(vars):
+   return dict(
+      this = vars['source'],
+      tgt = vars['targets'][0] if vars['targets'] else None,
+      prevtgt = vars['rc'].prevTargets[0] if vars['rc'].prevTargets else None
+   )
+
 #---------------------------------------------------------------------------
 # Commands functions
 #---------------------------------------------------------------------------
@@ -129,10 +136,7 @@ def cmd_damage(rc, targets, source, dmg):
    if isNumber(dmg):
       dmg = int(dmg)
    else:
-      if dmg == 'tgt.bp':
-         dmg = getParsedCard(targets[0]).BP
-      elif dmg == 'prevtgt.bp':
-         dmg = getParsedCard(rc.prevTargets[0]).BP
+      dmg = evalExpression(dmg, True, getLocals(locals()))
    for target in targets:
       dealDamage(dmg, target, source)
    rc.applyNext()
@@ -260,36 +264,55 @@ def cmd_moveTo(rc, targets, source, zone, pos = None, reveal = False):
 
 
 def cmd_bp(rc, targets, source, qty):
-   mod = False
-   if qty[0] == 'x':
-      mod = qty[0]
-      amount = num(qty[1:])
-   else:
+   mode = None
+   if isNumber(qty):
       amount = num(qty)
-   debug(">>> cmd_bp({}, {}, {}, {})".format(targets, qty, mod, amount)) #Debug
+   else:
+      mode = qty[0]
+      amount = num(qty[1:])
+   debug(">>> cmd_bp({}, {}, {}, {})".format(targets, qty, mode, amount)) #Debug
    for target in targets:
       if isCharacter(target):
          newQty = amount
-         if mod == 'x':
+         if mode == 'x':
             newQty = getMarker(target, 'BP') * (amount - 1)
          if target.controller == me:
-            modBP(target, newQty)
+            modBP(target, newQty, mode)
          else:
-            remoteCall(target.controller, "modBP", [target, newQty])
+            remoteCall(target.controller, "modBP", [target, newQty, mode])
    rc.applyNext()
 
 
 def cmd_sp(rc, targets, source, qty):
-   qty = int(qty)
+   mode = None
+   if isNumber(qty):
+      qty = num(qty)
+   else:
+      mode = qty[0]
+      qty = num(qty[1:])
    if not targets:
       targets = [me]
-   debug(">>> cmd_sp({}, {})".format(targets, qty)) #Debug
-   if qty > 0:
-      for player in targets:
-         if player == me:
-            modSP(qty)
-         else:
-            remoteCall(player, "modSP", [qty])
+   debug(">>> cmd_sp({}, {}, {})".format(targets, qty, mode)) #Debug
+   for player in targets:
+      if player == me:
+         modSP(qty, mode)
+      else:
+         remoteCall(player, "modSP", [qty, mode])
+   rc.applyNext()
+
+
+def cmd_hp(rc, targets, source, qtyExpr):
+   if isNumber(qtyExpr):
+      qty = int(qtyExpr)
+   else:
+      qty = evalExpression(qtyExpr, True, getLocals(locals()))
+   if not targets or isCard(targets[0]):
+      targets = [me]
+   debug(">>> cmd_hp({}, {}) => {}".format(targets, qtyExpr, qty)) #Debug
+   for player in targets:
+      player.HP += qty
+      sign = '+' if qty >= 0 else ''
+      notify("{} sets {}'s HP to {} ({}{})".format(me, player, player.HP, sign, qty))
    rc.applyNext()
 
 
@@ -437,7 +460,7 @@ def cmd_trash(rc, targets, source, numCards=1):
       targets = [me]
    for player in targets:
       if player == me:
-         trash(count=numCards)
+         trash(me.Deck, count=numCards)
       else:
          remoteCall(player, "trash", [None, 0, 0, False, numCards])
    rc.applyNext()
@@ -462,6 +485,7 @@ RulesCommands.register('rnddiscard',    cmd_randomDiscard)
 RulesCommands.register('moveto',        cmd_moveTo)
 RulesCommands.register('bp',            cmd_bp)
 RulesCommands.register('sp',            cmd_sp)
+RulesCommands.register('hp',            cmd_hp)
 RulesCommands.register('playextrachar', cmd_playExtraChar)
 RulesCommands.register('draw',          cmd_draw)
 RulesCommands.register('steal',         cmd_steal)

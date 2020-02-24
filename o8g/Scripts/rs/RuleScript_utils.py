@@ -182,15 +182,6 @@ class RulesUtils():
                return False
             targets = []
 
-      # Force to pick cards
-      if pick:
-         if pick > 0:
-            targets = targets[:pick]
-            debug("-- Picked {} card(s)".format(len(targets)))
-         else:
-            targets = targets[pick:]
-            debug("-- Picked {} card(s) from the bottom of {}".format(len(targets), ''.join(zone)))
-
       # Pick random cards
       if qty is not None and qty.random:
          samples = qty.samples
@@ -322,6 +313,15 @@ class RulesUtils():
       # Apply filters
       cards_f1 = RulesFilters.applyFiltersTo(cards_f1, filters)
 
+      # Force to pick cards
+      if pick:
+         if pick > 0:
+            cards_f1 = cards_f1[:pick]
+            debug("-- Picked {} card(s)".format(len(cards_f1)))
+         else:
+            cards_f1 = cards_f1[pick:]
+            debug("-- Picked {} card(s) from the bottom of {}".format(len(cards_f1), ''.join(zone)))
+
       if pickMany or (not multiple and not pick):
          if len(cards_f1) == 0:
             whisper(MSG_ERR_NO_FILTERED_CARDS)
@@ -338,7 +338,9 @@ class RulesUtils():
                
          # Last chance to select a card
          if len(cards_f1) > 1 or minQty == 0:
-            article = "the" if zone[1] == RS_KW_ZONE_ARENA else "your"
+            article = 'the'
+            if zone[1] != RS_KW_ZONE_ARENA:
+               article = "{}'s".format(getOpp()) if zone[0] == RS_PREFIX_OPP else 'your' 
             # Choose a ring if we need cards from the same ring
             if zone[0] == RS_PREFIX_SAME and len(players) > 1:
                ctrl = selectRing()
@@ -348,9 +350,7 @@ class RulesUtils():
                if ctrl != me:
                   article = "enemy's"
             # Info message
-            owner = 'his'
-            if zone[0] == RS_PREFIX_OPP:
-               owner = "{}'s".format(getOpp())
+            owner = article.replace('your', 'his')
             notify(MSG_PLAYER_LOOKS.format(me, owner, zone[1]))
             # Select in any zone
             title = msg.format(qtyMsg, article, zone[1], sourceName)
