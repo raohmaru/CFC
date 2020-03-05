@@ -43,7 +43,7 @@ targets = [
    "target = <r2>action@hand[bp>300]",
    "target = <1>action@hand",
    "target = <1,2>action@hand",
-   "target = <,4>*<-2>@myDeck",
+   "target? = <,4>*<-2>@myDeck",
 ]
 actions = [
    # "action = destroy()",
@@ -64,17 +64,17 @@ actions = [
    # "action = {D(action)}: [[if me.HP < 10]] destroy() to(character) & freeze; draw(2) ueot",
    # "action = {F}:  to(character) ueot",
    # "action = {D(2)}: +cantblock to(character@oppRing) ueot",
-   "action = [[may Destroy all humans?]] destroy()",
-   "action = [[if me.hand == 0]] destroy() uynt",
-   # "action = moveTo(ctrlHand) target(characters[bp>=800])",
-   # "action = {F}: moveTo(ctrlDeck) target(characters[-backup]) & shuffle(myDeck) & shuffle(oppDeck)",
+   # "action = [[may Destroy all humans?]] destroy()",
+   # "action = [[if me.hand == 0]] destroy() uynt",
+   "action = moveTo(ctrlHand) target?(characters[bp>=800])",
+   "action = {F}: moveTo(ctrlDeck) target(characters[-backup]) & shuffle(myDeck) & shuffle(oppDeck)",
    # "action = {F}: destroy() target(^character@myRing) & damage(5, character)",
    # "action = [[if  all myring: bp <= 3]] playExtraChar()",
    # "action = {F}: moveTo(@oppDeck) target(*@hand); moveTo(hand) target(*<-1>@oppDeck)",
    # "action = {F}: reveal(hand) & myHand.each(bp <= 3 { bp(+2) }) target(this)"
    # "action = swapChars() target(<2>character)\naction = moveToSlot() target(character)",
    # "action = rndDiscard()",
-   "action = reveal(hand) & each(action in me.hand => bp(+2)) target(this) & discard(actions)"
+   # "action = reveal(hand) & each(action in me.hand => bp(+2)) target(this) & discard(actions)"
 ]
 abilities = [
    "abilities = unblockable",
@@ -99,6 +99,9 @@ autos = [
 evals = [
    "action in me.hand => bp(+2)"
 ]
+requisite = [
+   "requisite = char<1>@oppRing && char<1>@myRing"
+]
 
 if not 'debug' in globals():
    # Make debug accessible from any module
@@ -115,7 +118,8 @@ def test(arr, title):
       print ""
 
 # rules = RulesDict['aa867ea1-89f8-4154-8e20-2263edd00002']
-# test(targets, 'targets')
+test(targets, 'targets')
 # test(actions, 'actions')
 # test(abilities, 'abilities')
-test(autos, 'autos')
+# test(autos, 'autos')
+# test(requisite, 'requisite')

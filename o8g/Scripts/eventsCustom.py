@@ -62,38 +62,38 @@ def removeGameEventListener(obj_id, eventName=None):
 
 def triggerGameEvent(event, *args):
    debug(">>> triggerGameEvent({}, {})".format(event, args)) #Debug
-   eventName = event
+   obj_id = None
    if isinstance(event, list):
-      eventName = event[0]
-      event = ''.join(str(x) for x in event)
+      event, obj_id = event
    ge = getGlobalVar('GameEvents')
    if event in ge:
       for listener in ge[event]:
-         debug("-- Found listener {}".format(listener))
          params = list(args) + listener['args']
-         # Callback could be the ID of a card...
-         if isinstance(listener['callback'], (int, long)):
-            card = Card(listener['callback'])
-            # Don't trigger auto ability for chars in a UA
-            if eventName in GameEventsDisabledUA and inUAttack(card):
-               notify("{}'s ability cannot be activated because it joined an United Attack".format(card))
-               continue
-            # Call callback
-            if card.controller == me:
-               pcard = getParsedCard(card)
-               pcard.rules.execAuto(None, event, *params)
-            elif listener['scope'] in RS_PREFIX_SCOPE:
-               remoteCall(card.controller, "remoteGameEvent", [listener['callback'], event]+list(params))
-               update()
-         # ... or the name of a global function
-         else:
-            try:
-               func = eval(listener['callback']) # eval is a necessary evil...
-            except:
-               debug("Callback function {} is not defined".format(listener['callback']))
-               continue
-            if func(*params):
-               return False
+         if not obj_id or listener['id'] == obj_id:
+            debug("-- Found listener {}".format(listener))
+            # Callback could be the ID of a card...
+            if isinstance(listener['callback'], (int, long)):
+               card = Card(listener['callback'])
+               # Don't trigger auto ability for chars in a UA
+               if event in GameEventsDisabledUA and inUAttack(card):
+                  notify("{}'s ability cannot be activated because it joined an United Attack".format(card))
+                  continue
+               # Call callback
+               if card.controller == me:
+                  pcard = getParsedCard(card)
+                  pcard.rules.execAuto(None, event, *params)
+               elif listener['scope'] in RS_PREFIX_SCOPE:
+                  remoteCall(card.controller, "remoteGameEvent", [listener['callback'], event]+list(params))
+                  update()
+            # ... or the name of a global function
+            else:
+               try:
+                  func = eval(listener['callback']) # eval is a necessary evil...
+               except:
+                  debug("Callback function {} is not defined".format(listener['callback']))
+                  continue
+               if func(*params):
+                  return False
    return True
    
    

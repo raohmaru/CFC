@@ -36,7 +36,7 @@ class RulesUtils():
    @staticmethod
    def getObjIdFromSuffix(suffix, rs):
    # Returns an object ID of the game from the given suffix
-      if suffix == RS_SUFFIX_FROM_THIS:
+      if suffix == RS_SUFFIX_FROM_THIS or suffix == RS_SUFFIX_THIS:
          return str(rs.card_id)
       return ''
 
@@ -357,12 +357,12 @@ class RulesUtils():
             cards_f1 = showCardDlg(cards_f1, title, min=minQty, max=maxQty)
             if cards_f1:
                notify(MSG_PLAYER_SELECTS.format(me, len(cards_f1)))
-         if cards_f1 == None:
+         if cards_f1 == None and minQty != 0:
             return False
 
       # At this point there are not cards to which apply the effect, but the ability
       # is activated anyway
-      if len(cards_f1) == 0:
+      if len(cards_f1) == 0 and minQty != 0:
          notify(MSG_ERR_NO_CARDS)
 
       return cards_f1

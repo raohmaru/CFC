@@ -220,8 +220,8 @@ def attackNoFreeze(card, x = 0, y = 0):
    if automations['Play']:
       if not attackAuto(card): return
    card.highlight = AttackNoFreezeColor
-   setMarker(card, 'No Freeze')
-   notify('{} attacks without freeze with {}.'.format(me, card))
+   setMarker(card, 'Unfreezable')
+   notify('{} attacks with {} (character will not freeze).'.format(me, card))
 
 
 def unitedAttack(card, x = 0, y = 0):
@@ -268,7 +268,7 @@ def activate(card, x = 0, y = 0):
       if not res or res != True:
          if res == ERR_NO_EFFECT:
             notify("{}'s {} has no effect.".format(card, ability))
-         if (pcard.ability is not None and pcard.ability.type == TriggerAbility) or res != ERR_NO_EFFECT:
+         if (hasattr(pcard, 'ability') and pcard.ability.type == TriggerAbility) or res != ERR_NO_EFFECT:
             return
    elif isCharacter(card) and pcard.hasEffect() and pcard.ability.type == TriggerAbility:
       freeze(card, silent = True)
@@ -294,12 +294,12 @@ def freeze(card, x = 0, y = 0, unfreeze = None, silent = False):
 def doesNotUnfreeze(card, x = 0, y = 0):
    mute()
    msg = "not unfreeze"
-   if not MarkersDict["Does Not Unfreeze"] in card.markers:
-      card.highlight = DoesntUnfreezeColor
-      setMarker(card, "Does Not Unfreeze")
+   if not MarkersDict["Cannot Unfreeze"] in card.markers:
+      card.highlight = CannotUnfreeze
+      setMarker(card, "Cannot Unfreeze")
    else:
       card.highlight = None
-      removeMarker(card, "Does Not Unfreeze")
+      removeMarker(card, "Cannot Unfreeze")
       msg = "unfreeze as normal"
 
    notify("{0}'s {1} will {2} during {0}'s Activate phase.".format(card.controller, card, {2}))
@@ -349,15 +349,17 @@ def toggleAbility(card, x = 0, y = 0, remove = False):
    # Removes card from parsed list to parse it again with the new abilities
    if not isCharacter(card) or (card.alternate == '' and card.Rules == ''):
       return
-   removeParsedCard(card)
    if card.alternate == 'noability' and not remove:
       card.alternate = ''
+      removeParsedCard(card)
       parseCard(card)
       if card.Rules != '':
          notify("{} restores {}'s abilities".format(me, card))
       else:
          notify("{} tried to restore {}'s abilities, but it doesn't have any original ability".format(me, card))
    else:
+      triggerGameEvent([GameEvents.Powerless, card._id])
+      removeParsedCard(card)
       if 'noability' in card.alternates:
          card.alternate = 'noability'
       else:

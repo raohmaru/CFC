@@ -40,7 +40,7 @@ def activatePhaseStart():
       if card.controller == me)
    for card in myCards:
       if isCharacter(card):
-         if not MarkersDict["Does Not Unfreeze"] in card.markers:
+         if not MarkersDict["Cannot Unfreeze"] in card.markers:
             freeze(card, unfreeze = True, silent = True)
          removeMarker(card, 'Just Entered')
          clear(card, silent = True)
@@ -73,6 +73,15 @@ def blockPhaseStart():
          notify("{} has paid the cost of the {} United Attack".format(me, uatype))
    # Trigger event
    triggerGameEvent(GameEvents.BlockPhase)
+   # Attacking chars event not in UA
+   atkCards = (card for card in table
+      if card.controller == me
+      and isCharacter(card)
+      and hasMarker(card, 'Attack'))
+   uattack = getGlobalVar('UnitedAttack')
+   for card in atkCards:
+      if len(uattack) == 0 or uattack[0] != card._id:
+         triggerGameEvent([GameEvents.Attacks, card._id], card._id)
 
 
 def endPhaseStart():
@@ -83,7 +92,7 @@ def endPhaseStart():
    # Freeze attacking characters
    for card in myCards:
       if isCharacter(card):
-         if (hasMarker(card, 'Attack') or hasMarker(card, 'United Attack')) and not hasMarker(card, 'No Freeze'):
+         if (hasMarker(card, 'Attack') or hasMarker(card, 'United Attack')) and not hasMarker(card, 'Unfreezable'):
             freeze(card, unfreeze = False, silent = True)
 
    # Calculates and applies attack damage
@@ -103,6 +112,9 @@ def endPhaseStart():
          # Attacker is blocked
          if card._id in blockers:
             blocker = Card(blockers[card._id])
+            # Trigger blocked event if not in UA
+            if pdmg == 0:
+               triggerGameEvent([GameEvents.Blocked, card._id], card._id)
             blocker_bp = getMarker(blocker, 'BP')
             dealDamage(dmg + pdmg, blocker, card)
             dealDamage(blocker_bp, card, blocker)
@@ -118,13 +130,13 @@ def endPhaseStart():
                   else:
                      break
             # Piercing damage of an United Attack
-            if len(players) > 1 and pdmg > 0 and dmg + pdmg > blocker_bp:
+            if len(players) > 1 and (pdmg > 0 or hasMarker(card, 'Pierce')) and dmg + pdmg > blocker_bp:
                dmg = dmg + pdmg - blocker_bp
                dealDamage(dmg, players[1], card, isPiercing = True)
          # Unblocked attacker
          elif len(players) > 1:
             dealDamage(dmg + pdmg, players[1], card)
-            triggerGameEvent([GameEvents.CombatDamaged, card._id])
+            triggerGameEvent([GameEvents.CombatDamaged, card._id], card._id)
    # Trigger event
    triggerGameEvent(GameEvents.EndPhase)
    # Remove "until end of turn" events
@@ -146,7 +158,8 @@ def cleanupPhaseStart():
          removeMarker(card, 'Attack')
          removeMarker(card, 'United Attack')
          removeMarker(card, 'Counter-attack')
-         removeMarker(card, 'No Freeze')
+         removeMarker(card, 'Unfreezable')
+         removeMarker(card, 'Pierce')
          # Clears targets, colors, freezes characters and resets position
          alignCard(card)
          if card.highlight == ActivatedColor:
@@ -172,7 +185,7 @@ def clearKOedChars():
 # Play automations
 #------------------------------------------------------------------------------
 
-def playAuto(card, slotIdx=None):
+def playAuto(card, slotIdx=None, force=False):
    debug(">>> playAuto({})".format(card)) #Debug
    global charsPlayed
    phaseIdx = currentPhase()[1]
@@ -185,12 +198,12 @@ def playAuto(card, slotIdx=None):
          backup(card)
          return
       # Check if the card can be legally played
-      if not me.isActive or phaseIdx != MainPhase:
+      if (not me.isActive or phaseIdx != MainPhase) and not force:
          information("Character cards can only be played on your Main Phase.")
          return
       # Limit of chars played per turn
       if charsPlayed >= CharsPerTurn:
-         if not confirm("Only {} character per turn can be played (you have played {} characters).\nProceed anyway?".format(CharsPerTurn, charsPlayed)):
+         if not confirm("Only {} character per turn can be played\n(you have played {} characters).\nProceed anyway?".format(CharsPerTurn, charsPlayed)):
             return
       # Player has any empty slot in his ring?
       myRing = getGlobalVar('Ring', me)
@@ -332,7 +345,7 @@ def attackAuto(card):
    if hasMarker(card, 'Attack') or hasMarker(card, 'United Attack'):
       removeMarker(card, 'Attack')
       removeMarker(card, 'United Attack')
-      removeMarker(card, 'No Freeze')
+      removeMarker(card, 'Unfreezable')
       clear(card, silent = True)
       alignCard(card)
       notify('{} cancels the attack with {}'.format(me, card))
@@ -459,7 +472,7 @@ def blockAuto(card):
       return
 
    # Triggers a game event to check if block is possible
-   if not triggerGameEvent(GameEvents.Block, target._id):
+   if not triggerGameEvent(GameEvents.CanBeBlocked, target._id):
       return
 
    setMarker(card, 'Counter-attack')
@@ -492,6 +505,10 @@ def activateAuto(card):
          return
       # /\ abilities
       if pcard.ability.type == InstantAbility:
+         # Check if [] abilites can be activated
+         if not getRule('ab_instant_act'):
+            warning(MSG_RULES['ab_instant_act'][False])
+            return
          # Activate only once
          if not hasMarker(card, 'Just Entered'):
             warning("{} abilities can only be activated once when character just enters the ring.".format(InstantUniChar))
@@ -505,10 +522,10 @@ def activateAuto(card):
          # Frozen or attacking?
          if isFrozen(card) or hasMarker(card, 'Attack'):
             warning("Can't activate {} abilities of frozen or attacking characters.".format(TriggerUniChar))
-            return           
-         # Triggers a game event to check if [] abilites can be activated
+            return
+         # Check if [] abilites can be activated
          if not getRule('ab_trigger_act'):
-            warning("{} abilities cannot be activated.".format(TriggerUniChar))
+            warning(MSG_RULES['ab_trigger_act'][False])
             return
       # () abilities
       if pcard.ability.type == AutoAbility:

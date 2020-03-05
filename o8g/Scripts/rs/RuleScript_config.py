@@ -28,9 +28,10 @@ RS_KEY_TARGET    = 'target'
 RS_KEY_ACTION    = 'action'
 RS_KEY_ABILITIES = 'abilities'
 RS_KEY_AUTO      = 'auto'
+RS_KEY_REQ       = 'requisite'
 
 # Regular expressions
-RS_RGX_KEY_TARGET   = re.compile(r'^target\s*=\s*')
+RS_RGX_KEY_TARGET   = re.compile(r'^target\??\s*=\s*')
 RS_RGX_TARGET_TYPE  = re.compile(r'@|\[')
 RS_RGX_TARGET_RESTR = re.compile(r'\[(.+)\]')
 RS_RGX_TARGET_PARAM = re.compile(r'(\w+)\s*([=><]+)\s*(\w+)')
@@ -41,11 +42,12 @@ RS_RGX_TARGET_QTY   = re.compile(r'^<\s*((?:r\d*)|(?:,?[0-9]+){1,2})\s*>')
 RS_RGX_KEY_ACTION   = re.compile(r'^action\s*=\s*')
 RS_RGX_AC_COST      = re.compile(r'(\{.+\}\s*)\s*:\s*')
 RS_RGX_AC_EVENT     = re.compile(r'~\s*([\w, ]+)\s*?~')
-RS_RGX_AC_TARGET    = re.compile(r'\b(?:to|target)\s*\(([^)]+)\)')
+RS_RGX_AC_TARGET    = re.compile(r'\b(?:to|target)(\??)\s*\(([^)]+)\)')
 RS_RGX_AC_EFFECT    = re.compile(r'([\w.]+)\s*\((.*?)\)$')
 
 RS_RGX_KEY_ABILITY  = re.compile(r'^abilities\s*=\s*')
 RS_RGX_KEY_AUTO     = re.compile(r'^auto\s*=\s*')
+RS_RGX_KEY_REQ      = re.compile(r'^requisite\s*=\s*')
 
 RS_RGX_PARAM        = re.compile(r'\(([^)]*)\)')
 RS_RGX_COND         = re.compile(r'\[\[([^\]]+)\]\]\s')
@@ -54,12 +56,19 @@ RS_RGX_COND         = re.compile(r'\[\[([^\]]+)\]\]\s')
 RS_COMMENT_CHAR = '#'
 
 # Operators
-RS_OP_OR    = ','
-RS_OP_AND   = '&'
-RS_OP_SEP   = ';'
-RS_OP_EQUAL = '='
-RS_OP_LTE   = '<='
-RS_OP_GTE   = '>='
+RS_OP_OR       = ','
+RS_OP_AND      = '&'
+RS_OP_SEP      = ';'
+RS_OP_EQUAL    = '='
+RS_OP_LTE      = '<='
+RS_OP_GTE      = '>='
+RS_OP_BOOL_AND = '&&'
+RS_OP_OPT      = '?'
+
+RS_TARGET_OPS = [
+   RS_OP_OR,
+   RS_OP_AND
+]
 
 # Prefixes
 RS_PREFIX_PLUS  = '+'
@@ -115,13 +124,15 @@ RS_PREFIX_SCOPE = [
 # Sufixes
 RS_SUFFIX_PLURAL = 's'
 RS_SUFFIX_FROM_THIS = 'fromthis'
+RS_SUFFIX_THIS = 'this'
 
 RS_SUFFIX_TYPES = [
    RS_SUFFIX_PLURAL
 ]
 
 RS_SUFFIX_EVENTS = [
-   RS_SUFFIX_FROM_THIS
+   RS_SUFFIX_FROM_THIS,
+   RS_SUFFIX_THIS
 ]
 
 # Keywords
@@ -129,20 +140,20 @@ RS_KW_ANY = '*'
 RS_KW_ALL = 'all'
 
 # Target keywords
-RS_KW_TARGET_PLAYER   = 'player'
-RS_KW_TARGET_PLAYERS  = 'players'
-RS_KW_TARGET_ME       = 'me'
-RS_KW_TARGET_OPP      = 'opp'
-RS_KW_TARGET_THIS     = 'this'
-RS_KW_TARGET_CHAR     = 'character'
-RS_KW_TARGET_ACTION   = 'action'
-RS_KW_TARGET_REACTION = 'reaction'
+RS_KW_TARGET_PLAYER    = 'player'
+RS_KW_TARGET_PLAYERS   = 'players'
+RS_KW_TARGET_ME        = 'me'
+RS_KW_TARGET_OPP       = 'opp'
+RS_KW_TARGET_THIS      = 'this'
+RS_KW_TARGET_CHARACTER = 'character'
+RS_KW_TARGET_ACTION    = 'action'
+RS_KW_TARGET_REACTION  = 'reaction'
 RS_KW_TARGETS = [
    RS_KW_TARGET_THIS,
    RS_KW_TARGET_PLAYER,
    RS_KW_TARGET_ME,
    RS_KW_TARGET_OPP,
-   RS_KW_TARGET_CHAR,
+   RS_KW_TARGET_CHARACTER,
    RS_KW_TARGET_ACTION,
    RS_KW_TARGET_REACTION,
    RS_KW_ANY
@@ -162,7 +173,7 @@ RS_KW_PLAYERS_LABELS = [
    'Enemy'
 ]
 RS_KW_CARD_TYPES = [
-   RS_KW_TARGET_CHAR,
+   RS_KW_TARGET_CHARACTER,
    RS_KW_TARGET_ACTION,
    RS_KW_TARGET_REACTION
 ]
@@ -224,3 +235,11 @@ RS_KW_RESTR_LABELS = {
    RS_KW_RESTR_UEOT: 'until end of {}turn',
    RS_KW_RESTR_UYNT: 'until your next turn'
 }
+
+# Effects modes
+RS_MODE_EQUAL = "="
+RS_MODE_MULT = "x"
+RS_MODES = [
+   RS_MODE_EQUAL,
+   RS_MODE_MULT
+]

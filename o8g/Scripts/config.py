@@ -68,19 +68,20 @@ AttackNoFreezeColor = "#ff8000"
 UnitedAttackColor   = "#ff42de"
 BlockColor          = "#ffff00"
 ActivatedColor      = "#0000ff"
-DoesntUnfreezeColor = "#000000"
+CannotUnfreeze = "#000000"
 InfoColor           = "#00ff00"
 
 # Dictionaries which hold all the hard coded markers and tokens (in the markers & tokens set)
 MarkersDict = {
-   "BP"               : ("BP",               "b86fc644-d084-43d3-99d2-5b11457321cc"),
-   "Just Entered"     : ("Just Entered",     "9a52c42c-543f-48bb-9a48-d7599d6c8fae"),
-   "Attack"           : ("Attack",           "023406a3-417c-473d-bc23-481290755a4a"),
-   "United Attack"    : ("United Attack",    "88036e2b-6a1f-40be-a941-988b27c405ba"),
-   "Counter-attack"   : ("Counter-attack",   "2fd7dc74-4149-469d-9bde-53e94b99b934"),
-   "Does Not Unfreeze": ("Does Not Unfreeze", "5231f83b-b78e-48b3-8bce-62031c022bf4"),
-   "No Freeze"        : ("No Freeze",        "fec1976b-9ce5-4b32-8c07-76eadc5607f6"),
-   "Backup"           : ("Backup",           "efd3208d-2ec3-44ca-be1d-858e91628da4")
+   "BP"             : ("BP",             "b86fc644-d084-43d3-99d2-5b11457321cc"),
+   "Just Entered"   : ("Just Entered",   "9a52c42c-543f-48bb-9a48-d7599d6c8fae"),
+   "Attack"         : ("Attack",         "023406a3-417c-473d-bc23-481290755a4a"),
+   "United Attack"  : ("United Attack",  "88036e2b-6a1f-40be-a941-988b27c405ba"),
+   "Counter-attack" : ("Counter-attack", "2fd7dc74-4149-469d-9bde-53e94b99b934"),
+   "Cannot Unfreeze"    : ("Cannot Unfreeze",    "5231f83b-b78e-48b3-8bce-62031c022bf4"),
+   "Unfreezable"    : ("Unfreezable",    "fec1976b-9ce5-4b32-8c07-76eadc5607f6"),
+   "Backup"         : ("Backup",         "efd3208d-2ec3-44ca-be1d-858e91628da4"),
+   "Pierce"         : ("Pierce",         "3131facc-3fe4-4dd5-95ff-afc08570d869"),
 }
 TokensDict = {}
 
@@ -136,7 +137,8 @@ HandSize        = 5
 
 GameRulesDefaults = {
    'ab_trigger_fresh': False, # Activate [] abilities of fresh characters
-   'ab_trigger_act'  : True # Activate [] abilities
+   'ab_trigger_act'  : True,  # Activate [] abilities
+   'ab_instant_act'  : True   # Activate /\ abilities
 }
 
 # Debug
@@ -163,15 +165,18 @@ GameEvents = Struct(**{
    'BlockPhase'   : 'blockphase',
    'EndPhase'     : 'endphase',
    'CleanupPhase' : 'cleanupphase',
-   'Block'        : 'block',
+   'CanBeBlocked' : 'canbeblocked',
    'BeforeBlock'  : 'beforeblock',
    'HandChanges'  : 'handchanges',
    'RingChanges'  : 'ringchanges',
    'BeforePlayAC' : 'beforeplayac',
    'BeforePlayRE' : 'beforeplayre',
-   'CharRemoved'  : 'charremoved',
+   'Removed'      : 'removed',
+   'Powerless'    : 'powerless',
    'BackupLimit'  : 'backuplimit',
-   'CombatDamaged': 'combatdamaged'
+   'CombatDamaged': 'combatdamaged',
+   'Blocked'      : 'blocked',
+   'Attacks'      : 'attacks'
 })
 # When a listener to these events is added, trigger it automatically
 GameEventsExecOnAdded = [
@@ -202,6 +207,7 @@ MSG_COST_NOT_PAYED          = "{} did not pay the activation cost of {}'s {}"
 MSG_AB_NO_EFFECT            = "{}'s ability {} (may) have had no effect."
 MSG_AB_AUTO_ACTIVATION      = "{} has activated {}'s auto ability {}."
 MSG_AB_AUTO_UATTACK         = "Cannot activate {}'s auto ability {} because it joined an United Attack."
+MSG_AB_MISS_REQ             = u"\u2192 There aren't enough targets to activate {}'s ability."
 MSG_DISCARD_RANDOM          = "{} randomly discards {} from its {}."
 MSG_ERR_NO_CARDS            = "There are no targets available, hence the ability has no effect."
 MSG_ERR_NO_CARDS_HAND       = "You don't have enough cards in your hand to pay the cost of the ability."
@@ -240,6 +246,10 @@ MSG_RULES = {
       TriggerUniChar + " abilites cannot be activated.",
       TriggerUniChar + " abilites can be activated again."
    ),
+   'ab_instant_act': (
+      InstantUniChar + " abilites cannot be activated.",
+      InstantUniChar + " abilites can be activated again."
+   ),
    'card_cost': '{} cards now cost {} SP {} to play.'
 }
 ERR_NO_EFFECT = 'err001'
@@ -275,6 +285,7 @@ if me.name == Author and len(players) == 1:
 parsedCards    = {} # Dictionary holding all parsed cards
 cleanedUpRing  = False  # Tracks if the user has run the Clean-up phase
 commander      = None  # RulesCommands instance
+actionLocals   = dict()  # Variables used during action execution
 
 automations = {
    'Play'     : True, # Automatically trigger game effects and card effects when playing cards

@@ -68,8 +68,8 @@ class Rules():
    def addEvent(self, event):
       eventName = event[0] + event[1]
       # Has suffix?
-      if event[2]:
-         eventName += RulesUtils.getObjIdFromSuffix(event[2], self)
+      # if event[2]:
+         # eventName += RulesUtils.getObjIdFromSuffix(event[2], self)
       addGameEventListener(eventName, self.card_id, self.card_id)
       if event[1] in GameEventsExecOnAdded:
          self.execAuto(self.rules_tokens[RS_KEY_AUTO], eventName)
@@ -103,18 +103,20 @@ class Rules():
       debug("Executing rules")
       target = None
       if RS_KEY_TARGET in self.rules_tokens:
-         target = RulesUtils.getTargets(self.rules_tokens[RS_KEY_TARGET], source=Card(self.card_id))
-         if target == False:
+         targetList = self.rules_tokens[RS_KEY_TARGET]
+         target = RulesUtils.getTargets(targetList, source=Card(self.card_id))
+         if target == False and not targetList['opt']:
             debug("Targeting cancelled")
             return False
       
       if RS_KEY_ACTION in self.rules_tokens:
-         return self.execAction(self.rules_tokens[RS_KEY_ACTION], target)
+         req = self.rules_tokens[RS_KEY_REQ] if RS_KEY_REQ in self.rules_tokens else None
+         return self.execAction(self.rules_tokens[RS_KEY_ACTION], target, requisite=req)
       
       return True
 
       
-   def execAction(self, action, target, isAuto=False):
+   def execAction(self, action, target, isAuto=False, requisite=None):
       debug("Executing actions: {}, {}, isAuto={}".format(action, target, isAuto))
       
       if isinstance(action, list):
@@ -136,6 +138,15 @@ class Rules():
       global commander
       if commander is None:
          commander = RulesCommands()
+            
+      # Check if there is any requisite
+      if requisite:
+         debug("Checking requisites: {}".format(requisite))
+         for req in requisite:
+            target = RulesLexer.parseTarget(req)
+            if not RulesUtils.getTargets(target):
+               notify(MSG_AB_MISS_REQ.format(thisCard))
+               return False
             
       # The player must pay the cost, or we cancel
       if action['cost']:
@@ -175,9 +186,9 @@ class Rules():
             
             # Additional target
             if effect[2]:
-               debug("-- Found additional target")
+               debug("-- Found additional {}target".format('optional' if effect[2]['opt'] else ''))
                newTarget = RulesUtils.getTargets(effect[2], source=thisCard)
-               if newTarget == False:
+               if newTarget == False and not effect[2]['opt']:
                   if not isAuto:
                      notify(MSG_ERR_NO_CARDS)
                   return False
@@ -207,7 +218,11 @@ class Rules():
                   if isCard(obj):
                      obj.target(False)
             rnd(10, 1000) # Wait between effects until all animation is done
-            
+      
+      # Reset action local variables
+      global actionLocals
+      actionLocals = dict()
+      
       # if not targets:
          # notify(MSG_AB_NO_EFFECT.format(thisCard, getParsedCard(thisCard).ability))
          
@@ -274,6 +289,8 @@ class Rules():
                   isRandom = True
             for card in cards:
                discard(card, isRandom = isRandom)
+            # Add discarded card to action local variables
+            actionLocals['discarded'] = cards[0]
             
          elif type == RS_KW_COST_SACRIFICE:
             if target:

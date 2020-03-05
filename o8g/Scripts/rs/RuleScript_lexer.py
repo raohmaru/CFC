@@ -28,7 +28,9 @@ target: {
    ],
    'types': ['characters'],
    'zone': ['opp', 'ring'],
-   'pick': -1
+   'pick': -1,
+   'qty': ',4',
+   'opt': False
 },
 action: {
    cost: [
@@ -66,7 +68,11 @@ auto: {
    event: [
       ['my', 'handchanges', 'fromthis']
    ]
-}
+},
+requisite: [
+   'char<1>@oppring',
+   'char<1>@myring'
+]
 """
 
 # Import needed for testing out of OCTGN
@@ -100,7 +106,8 @@ class RulesLexer():
             match = RS_RGX_KEY_TARGET.match(line)
             if match:
                debug("Target key found!")
-               rulesDict[RS_KEY_TARGET] = RulesLexer.parseTarget( line[len(match.group()):] )
+               flag = RS_OP_OPT if RS_OP_OPT in match.group() else None
+               rulesDict[RS_KEY_TARGET] = RulesLexer.parseTarget( line[len(match.group()):], flag )
          # else:
             # debug("Target already defined. Line skipped")
 
@@ -134,12 +141,19 @@ class RulesLexer():
          # else:
             # debug("Action already defined. Line skipped")
             
+         # Check for conditions command
+         if not RS_KEY_REQ in rulesDict:
+            match = RS_RGX_KEY_REQ.match(line)
+            if match:
+               debug("Requisite key found!")
+               rulesDict[RS_KEY_REQ] = line[len(match.group()):].split(RS_OP_BOOL_AND)
+            
       debug(rulesDict)
       return rulesDict
 
 
    @staticmethod
-   def parseTarget(tgtStr):
+   def parseTarget(tgtStr, flag=None):
       tgtStr = tgtStr.strip()
       debug("Parsing target: %s" % tgtStr)
       
@@ -210,7 +224,8 @@ class RulesLexer():
          'pick'   : pick,
          'types'  : types,
          'filters': filters_arr,
-         'zone'   : [zone_prefix, zone]
+         'zone'   : [zone_prefix, zone],
+         'opt'    : True if flag == RS_OP_OPT else False
       }
 
 
@@ -279,8 +294,8 @@ class RulesLexer():
          # Has target?
          match = RS_RGX_AC_TARGET.search(expr)
          if match:
-            debug("---- found target '%s'" % match.group(1))
-            effect[2] = RulesLexer.parseTarget(match.group(1))
+            debug("---- found target '%s'" % match.group(2))
+            effect[2] = RulesLexer.parseTarget(match.group(2), match.group(1))
             expr = re.sub(RS_RGX_AC_TARGET, '', expr).strip()
          # Finally, get the commands
          effect[1] = []

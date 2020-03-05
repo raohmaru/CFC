@@ -110,6 +110,16 @@ def notifyAbilityEnabled(target_id, source_id=None, msg=None, restr=None, isWarn
 
 def callback_true(obj_id):
    return True
+   
+   
+def abl_unfreezable(obj_id):
+   setMarker(Card(obj_id), 'Unfreezable')
+   return True
+   
+   
+def abl_pierce(obj_id):
+   setMarker(Card(obj_id), 'Pierce')
+   return True
 
 
 def abl_add(obj_id, source_id=None, restr=None, events=[], msg=None, checkFunc=None):
@@ -124,6 +134,7 @@ def abl_genericListener(target_id, obj_id, source_id=None, msg=None, checkFunc=N
    debug(">>> abl_genericListener({}, {}, {}, {}, {})".format(target_id, obj_id, source_id, msg, checkFunc))
  #Debug      
    if target_id == obj_id:
+      debug("Invoking ability callback")
       if checkFunc is None:
          notifyAbilityEnabled(target_id, source_id, msg[0], isWarning=True)
          return True
@@ -133,8 +144,10 @@ def abl_genericListener(target_id, obj_id, source_id=None, msg=None, checkFunc=N
    return False
 
 
-RulesAbilities.register('unblockable',     [GameEvents.Block])
+RulesAbilities.register('unblockable',     [GameEvents.CanBeBlocked])
 RulesAbilities.register('cantblock',       [GameEvents.BeforeBlock])
 RulesAbilities.register('cantplayac',      [GameEvents.BeforePlayAC])
 RulesAbilities.register('cantplayre',      [GameEvents.BeforePlayRE])
-RulesAbilities.register('unlimitedbackup', [GameEvents.BackupLimit], 'callback_true')
+RulesAbilities.register('unlimitedbackup', [GameEvents.BackupLimit],  'callback_true')
+RulesAbilities.register('unfreezable',     [GameEvents.Attacks],      'abl_unfreezable')
+RulesAbilities.register('pierce',          [GameEvents.Blocked],      'abl_pierce')

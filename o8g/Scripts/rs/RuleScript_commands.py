@@ -88,35 +88,47 @@ def nextCommand():
    commander.applyNext()
       
 
-def disableRule(rule=None):
+def disableRule(rule):
    debug(">>> disableRule({})".format(rule)) #Debug
+   isDefaultValue = GameRulesDefaults[rule] == False
    rules = getGlobalVar('Rules')
-   rules[rule] = not GameRulesDefaults[rule]
+   if not rule in rules:
+      rules[rule] = []
+   if GameRulesDefaults[rule] == False:
+      rules[rule].pop()
+   else:
+      rules[rule].append(False)
    setGlobalVar('Rules', rules)
-   debug("Rule {} has been disabled".format(rule))
-   if rule in MSG_RULES:
-      notify(MSG_RULES[rule][rules[rule]])
-
-
-def enableRule(event_card_id=None, rule=None, source_id=None):
-   debug(">>> enableRule({})".format(rule)) #Debug
-   if event_card_id == source_id:
-      rules = getGlobalVar('Rules')
-      rules[rule] = GameRulesDefaults[rule]
-      setGlobalVar('Rules', rules)
-      debug("Rule {} has been enabled".format(rule))
+   debug("Rule {} has been disabled ({})".format(rule, rules[rule]))
+   if not getRule(rule):
       if rule in MSG_RULES:
-         notify(MSG_RULES[rule][rules[rule]])
+         notify(MSG_RULES[rule][False])
 
 
-def alterCost(event_card_id, cardType, mod):
+def enableRule(rule):
+   debug(">>> enableRule({})".format(rule)) #Debug
+   rules = getGlobalVar('Rules')
+   if not rule in rules:
+      rules[rule] = []
+   if GameRulesDefaults[rule] == True:
+      rules[rule].pop()
+   else:
+      rules[rule].append(True)
+   setGlobalVar('Rules', rules)
+   debug("Rule {} has been enabled ({})".format(rule, rules[rule]))
+   if getRule(rule):
+      if rule in MSG_RULES:
+         notify(MSG_RULES[rule][True])
+
+
+def alterCost(cardType, mod):
    debug(">>> alterCost({}, {})".format(cardType, mod)) #Debug
    CardCost = getGlobalVar('CardCost')
    if not cardType in CardCost:
        CardCost[cardType] = 0
-   CardCost[cardType] += mod
+   CardCost[cardType] -= mod
    setGlobalVar('CardCost', CardCost)
-   debug("{}'s cost has been modified by {} (now costs {})".format(cardType, mod, CardCost[cardType]))
+   debug("{}'s cost has been modified by {} (now costs {})".format(cardType, mod, -CardCost[cardType]))
    notify(MSG_RULES['card_cost'].format(cardType.title(), abs(CardCost[cardType]), 'less' if CardCost[cardType] >= 0 else 'more'))
 
 
@@ -124,7 +136,9 @@ def getLocals(vars):
    return dict(
       this = vars['source'],
       tgt = vars['targets'][0] if vars['targets'] else None,
-      prevtgt = vars['rc'].prevTargets[0] if vars['rc'].prevTargets else None
+      prevtgt = vars['rc'].prevTargets[0] if vars['rc'].prevTargets else None,
+      # Add action local variables defined in other places
+      **actionLocals
    )
 
 #---------------------------------------------------------------------------
@@ -161,7 +175,7 @@ def cmd_shuffle(rc, targets, source, pileName=None):
          shuffle(pile)
       else:
          remoteCall(pile.controller, "shuffle", [pile])
-   rnd(1, 100) # Wait until all animation is done
+   rnd(10, 1000) # Wait until all animation is done
    rc.applyNext()
 
 
@@ -270,16 +284,15 @@ def cmd_bp(rc, targets, source, qty):
    else:
       mode = qty[0]
       amount = num(qty[1:])
+   if not targets:
+      targets = [source]
    debug(">>> cmd_bp({}, {}, {}, {})".format(targets, qty, mode, amount)) #Debug
    for target in targets:
       if isCharacter(target):
          newQty = amount
          if mode == 'x':
             newQty = getMarker(target, 'BP') * (amount - 1)
-         if target.controller == me:
-            modBP(target, newQty, mode)
-         else:
-            remoteCall(target.controller, "modBP", [target, newQty, mode])
+         modBP(target, newQty, mode)
    rc.applyNext()
 
 
@@ -287,17 +300,16 @@ def cmd_sp(rc, targets, source, qty):
    mode = None
    if isNumber(qty):
       qty = num(qty)
-   else:
+   elif qty[0] in RS_MODES:
       mode = qty[0]
       qty = num(qty[1:])
-   if not targets:
+   else:
+      qty = num(evalExpression(qty, True, getLocals(locals())))
+   if not targets or isCard(targets[0]):
       targets = [me]
    debug(">>> cmd_sp({}, {}, {})".format(targets, qty, mode)) #Debug
    for player in targets:
-      if player == me:
-         modSP(qty, mode)
-      else:
-         remoteCall(player, "modSP", [qty, mode])
+      modSP(qty, mode, player=player)
    rc.applyNext()
 
 
@@ -324,14 +336,14 @@ def cmd_playExtraChar(rc, targets, source, *args):
    rc.applyNext()
 
 
-def cmd_draw(rc, targets, source, qty):
-   if qty == '':
+def cmd_draw(rc, targets, source, qty = None):
+   if qty == '' or not qty:
       qty = 1
    if isNumber(qty):
       amount = num(qty)
    else:
       amount = num(evalExpression(qty, True))
-   if not targets:
+   if not targets or isCard(targets[0]):
       targets = [me]
    debug(">>> cmd_draw({}, {}, {})".format(targets, qty, amount)) #Debug
    for target in targets:
@@ -404,7 +416,16 @@ def cmd_moveRestTo(rc, targets, source, zone):
 def cmd_disableRule(rc, targets, source, rule):
    debug(">>> cmd_disableRule({})".format(rule)) #Debug
    disableRule(rule)
-   addGameEventListener(GameEvents.CharRemoved, 'enableRule', source._id, args=[rule, source._id])
+   addGameEventListener(GameEvents.Removed, 'enableRule', source._id, args=[rule])
+   addGameEventListener(GameEvents.Powerless, 'enableRule', source._id, args=[rule])
+   rc.applyNext()
+   
+   
+def cmd_enableRule(rc, targets, source, rule):
+   debug(">>> cmd_enableRule({})".format(rule)) #Debug
+   enableRule(rule)
+   addGameEventListener(GameEvents.Removed, 'disableRule', source._id, args=[rule])
+   addGameEventListener(GameEvents.Powerless, 'disableRule', source._id, args=[rule])
    rc.applyNext()
 
 
@@ -430,8 +451,9 @@ def cmd_unfreeze(rc, targets, source, *args):
 
 def cmd_alterCost(rc, targets, source, cardType, mod):
    debug(">>> cmd_alterCost({}, {})".format(cardType, mod)) #Debug
-   alterCost(source._id, cardType, num(mod))
-   addGameEventListener(GameEvents.CharRemoved, 'alterCost', source._id, args=[cardType, -num(mod)])
+   alterCost(cardType, num(mod))
+   addGameEventListener(GameEvents.Removed, 'alterCost', source._id, args=[cardType, -num(mod)])
+   addGameEventListener(GameEvents.Powerless, 'alterCost', source._id, args=[cardType, -num(mod)])
    rc.applyNext()
 
 
@@ -494,6 +516,7 @@ RulesCommands.register('each',          cmd_each)
 RulesCommands.register('transform',     cmd_transfrom)
 RulesCommands.register('moverestto',    cmd_moveRestTo)
 RulesCommands.register('disablerule',   cmd_disableRule)
+RulesCommands.register('enablerule',    cmd_enableRule)
 RulesCommands.register('freeze',        cmd_freeze)
 RulesCommands.register('unfreeze',      cmd_unfreeze)
 RulesCommands.register('altercost',     cmd_alterCost)

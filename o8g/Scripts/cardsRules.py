@@ -21,9 +21,11 @@ Case Insensitive
 
 ---------------------------------------------------
 target = <qty> type <pick> [filters] @ zone
+target? = ...
 
 Defines a target used for all effects.
 Only one target key is allowed.
+? -> Target is optional and will always execute actions
 
 qty:
    Values:
@@ -74,6 +76,7 @@ filters: (optional)
       attack
       uattack
       block
+      blocked
       frozen
       fresh
       powerful
@@ -128,8 +131,8 @@ effect:
          discard([target])     # zone: myHand
          rndDiscard([#])
          moveTo(zone [, pos] [, reveal=false])  # pos = unsigned int or '?'
-         bp(#|x#|=#)
-         sp(#|=#)
+         bp(#|x#|=#)  # default target = this
+         sp(#|=#|expr)
          hp(#|expr)
          playExtraChar()
          draw([#|expression])  # Default: 1
@@ -139,6 +142,7 @@ effect:
          each(expr in group => effect)  # effect context: group item
          transform(card name)
          moveRestTo(zone)
+         enableRule(rule)
          disableRule(rule)
          freeze()
          unfreeze()
@@ -159,13 +163,15 @@ effect:
    Variables:
       tgt (current target)
       
-to: (optional)
+to(): (optional)
    Parameters:
       A valid target
    Alias:
       target
    Default:
       current player or this card (depend on context)
+
+to?(): Same as to(), but target is optional and will run next effect in the action
       
 restr: (optional)
    Keywords:
@@ -186,6 +192,9 @@ ability:
       cantblock
       cantplayac
       cantplayre
+      unlimitedbackup
+      unfreezable
+      pierce
       
 ---------------------------------------------------
 auto = ~event[,event]~ [[cond]] effect [& effect] to(target) restr; ...
@@ -199,19 +208,23 @@ event:
       blockphase
       endphase
       cleanupphase
-      block
       beforeblock
       handchanges
       ringchanges
       beforeplayac
       beforeplayre
-      combatdamaged
+      removed
+      powerless
+      combatdamaged [suffix]
+      blocked [suffix]
+      attacks [suffix]
    Prefixes:
       my (default)
       opp
       any
    Suffixes:
       fromThis
+      this
 
 cond:
    @see action:cond
@@ -242,11 +255,18 @@ Available variables:
    tgt
    prevTgt
    this
+   card (only in each())
+   discarded
    alone
    bp
    
 Available functions:
    all group: expr   # context = group item
+
+---------------------------------------------------
+requisite = target [&& target]
+
+A list of targets that al must exist in order to execute the action.
 """
 
 RulesDict = {}
@@ -446,7 +466,7 @@ action = moveRestTo(discards) & reveal() & moveTo(hand, true)
 
 # Batsu's BOILING BLOOD
 RulesDict['4bd333d6-f063-424e-8cf9-3512f96f23b4'] = """
-auto = disableRule(ab_trigger_fresh)
+auto = enableRule(ab_trigger_fresh)
 """
 
 # Daigo's FINISH IT!
@@ -481,7 +501,7 @@ action = unfreeze() target(characters[frozen]@ring)
 
 # Kyosuke's COOL
 RulesDict['7abee6d7-1831-4090-b882-eee2fd3aa246'] = """
-auto = alterCost(action, +2)
+auto = alterCost(action, -2)
 """
 
 # Momo's DADAKKO
@@ -496,7 +516,7 @@ auto = ~activatephase~ bp(+2) to(characters[backedup])
 
 # Raizou's MEDDLER
 RulesDict['c553b9d0-946a-4c61-bc9b-a4b074c49045'] = """
-auto = alterCost(reaction, -3)
+auto = alterCost(reaction, +3)
 """
 
 # Roberto's GOAL KEEPER
@@ -601,34 +621,55 @@ action = {D}{F}: hp(+2)
 """
 
 # Evil Ryu's EVIL ENERGY
-# RulesDict['759b3fef-e5c0-406e-b186-a94b211e8735'] = ""
+RulesDict['759b3fef-e5c0-406e-b186-a94b211e8735'] = """
+action = destroy() target(character[frozen])
+"""
 
 # Gen's CHANGE SCHOOL
-# RulesDict['137d17e0-7c5a-4216-9085-21f05a744fd8'] = ""
+RulesDict['137d17e0-7c5a-4216-9085-21f05a744fd8'] = """
+action = moveTo(deck) target(actions@discards) & shuffle()
+"""
 
 # Gill's ARAHITOGAMI
-# RulesDict['298bd386-e304-4739-95c6-78c9de4c17e4'] = ""
+RulesDict['298bd386-e304-4739-95c6-78c9de4c17e4'] = """
+action = {D(action)}{F}: destroy() target(character[powerless])
+"""
 
 # Guile's SOMERSAULT KICK
-# RulesDict['20cfabef-f733-478f-89d6-25a71371a89e'] = ""
+RulesDict['20cfabef-f733-478f-89d6-25a71371a89e'] = """
+auto = disableRule(ab_instant_act)
+"""
 
 # Hugo's TOUGHNESS
-# RulesDict['3b05eb6f-d20f-433f-9ceb-4d6bb31d0328'] = ""
+RulesDict['3b05eb6f-d20f-433f-9ceb-4d6bb31d0328'] = """
+auto = ~activatephase~ bp(=5)
+"""
 
 # Ibuki's HANA UTA
-# RulesDict['fd549399-59de-4b2c-8aca-5454f7862e50'] = ""
+RulesDict['fd549399-59de-4b2c-8aca-5454f7862e50'] = """
+requisite = character<1>@oppRing
+action = {F}: bp(+3) target(character@oppRing); bp(+3) target(character@myRing)
+"""
 
 # Juli's PSYCHO CHARGE ALPHA
-# RulesDict['a2536791-c173-4228-84ce-4d2dec036ac3'] = ""
+RulesDict['a2536791-c173-4228-84ce-4d2dec036ac3'] = """
+action = {D(character)}{F}: sp(discarded.SP)
+"""
 
 # Karin's COMPENSATION
-# RulesDict['3eb68262-58ec-41c2-8fe0-b8284afc87fb'] = ""
+RulesDict['3eb68262-58ec-41c2-8fe0-b8284afc87fb'] = """
+auto = ~blocked this~ damage(2) to(opp)
+"""
 
 # Ken's RAGE WAVE
-# RulesDict['366963a0-6515-4b14-ae36-475b8000be26'] = ""
+RulesDict['366963a0-6515-4b14-ae36-475b8000be26'] = """
+abilities = unfreezable
+"""
 
 # M. Bison's EVIL CHARISMA
-# RulesDict['229cbb1b-9710-4981-b4ea-e476145d73f4'] = ""
+RulesDict['229cbb1b-9710-4981-b4ea-e476145d73f4'] = """
+action = moveTo(hand) target("Juni"&"Juli"@myDeck) & shuffle(myDeck)
+"""
 
 # Makoto's YELL
 # RulesDict['216e0a0d-a46c-42f4-a0f4-c32ac83d6cc1'] = ""
@@ -703,7 +744,9 @@ action = {D}{F}: hp(+2)
 # RulesDict['1d07a01b-e099-44a8-87eb-71fb2f3fa762'] = ""
 
 # Lilith's BECOMING ONE
-# RulesDict['60b0d429-c2bf-482d-84f1-10c78f424cc6'] = ""
+RulesDict['60b0d429-c2bf-482d-84f1-10c78f424cc6'] = """
+action = moveTo(deck) target(characters@discards) & shuffle()
+"""
 
 # Morrigan's LIFE SUCKER
 RulesDict['4e34756e-34e4-45e5-a6ab-698604c6fb99'] = """
@@ -804,7 +847,9 @@ action = {S}: hp(this.bp)
 # RulesDict['75e57026-e4fe-4470-88b2-22268ddd6b61'] = ""
 
 # Hon Fu's KUURON NO YOMI
-# RulesDict['782a8773-1837-4d7a-8629-30ff08ccddca'] = ""
+RulesDict['782a8773-1837-4d7a-8629-30ff08ccddca'] = """
+auto = ~blocked this~ draw()
+"""
 
 # Hotaru's ITOKATSU
 # RulesDict['928b8c60-483a-467c-9c11-e858009ff362'] = ""
@@ -837,7 +882,9 @@ action = {S}: hp(this.bp)
 # RulesDict['b1082f22-34d1-4ecf-b972-261ace7b2a68'] = ""
 
 # Terry's TERRY RUSH
-# RulesDict['02157c40-3b96-480d-99c5-083613d8eb45'] = ""
+RulesDict['02157c40-3b96-480d-99c5-083613d8eb45'] = """
+abilities = unfreezable
+"""
 
 # Terry Bogard's POWER GEYSER
 # RulesDict['eb648ee7-aa4e-41ce-a7fc-04af31349ca9'] = ""
@@ -904,7 +951,9 @@ action = hp(+2)
 # RulesDict['835fc2ce-bbea-4798-b911-18cc8f1156c7'] = ""
 
 # Lin's DOKUSHU
-# RulesDict['30ecabeb-4da9-4e9c-a936-222b90532e78'] = ""
+RulesDict['30ecabeb-4da9-4e9c-a936-222b90532e78'] = """
+auto = ~blocked this~ sp(-3) to(opp)
+"""
 
 # Orochi's SANITY
 # RulesDict['e9c7f532-89ff-4f69-a885-bc09b549d989'] = ""
@@ -954,7 +1003,9 @@ action = {S}: each(card in me.hand => hp(+1))
 """
 
 # Kojiroh's SHUNJIN
-# RulesDict['f3ddafb5-e6b5-4d07-b883-23cfe6ea6782'] = ""
+RulesDict['f3ddafb5-e6b5-4d07-b883-23cfe6ea6782'] = """
+auto = disableRule(ab_instant_act)
+"""
 
 # Moriya's OBORO
 # RulesDict['9aac7225-cffe-452c-8b8f-e2382ff7219c'] = ""
@@ -987,7 +1038,9 @@ action = {S}: each(card in me.hand => hp(+1))
 # RulesDict['e590d588-84af-4c26-8dbe-e28d5b626747'] = ""
 
 # Asura's RISING EVIL
-# RulesDict['48aba37c-374b-4362-b30a-d41fa9727b2c'] = ""
+RulesDict['48aba37c-374b-4362-b30a-d41fa9727b2c'] = """
+action = moveTo(deck) target(reactions@discards) & shuffle()
+"""
 
 # Cham Cham's PAKU PAKU
 # RulesDict['483b9441-d435-43a3-beb7-61e41c9e4045'] = ""
@@ -1008,7 +1061,9 @@ action = {S}: each(card in me.hand => hp(+1))
 # RulesDict['90c1ccf4-999a-4567-92e4-0f7602b7799e'] = ""
 
 # Haohmaru's IRON SLICE
-# RulesDict['30eaa33f-ca59-4233-81b8-8fe3f0db94dd'] = ""
+RulesDict['30eaa33f-ca59-4233-81b8-8fe3f0db94dd'] = """
+abilities = pierce
+"""
 
 # Haohmaru (WR)'s GANKOU
 # RulesDict['bfb737c0-4dcf-4b0c-b201-45857c83016b'] = ""
@@ -1034,7 +1089,9 @@ action = hp(+5)
 """
 
 # Nicotine's EXORCISM CARD
-# RulesDict['37ccd6b2-dadc-48e2-91fa-da6c823293e9'] = ""
+RulesDict['37ccd6b2-dadc-48e2-91fa-da6c823293e9'] = """
+auto = disableRule(ab_trigger_act)
+"""
 
 # Rimoruru's I'LL PUNISH YOU!
 # RulesDict['b428a15e-adf3-4fd1-897e-8dea39b8d9ca'] = ""
@@ -1160,7 +1217,9 @@ action = hp(+5)
 # RulesDict['eece88a0-17d8-4b16-90b4-ac7317d36f95'] = ""
 
 # Laundry
-# RulesDict['96f72173-528d-4a3a-a85c-9cf92439435a'] = ""
+RulesDict['96f72173-528d-4a3a-a85c-9cf92439435a'] = """
+action = target(all@discards) moveTo(deck) & shuffle()
+"""
 
 # Lightning
 # RulesDict['b7f9fdff-641d-4c16-b9fb-c7429b990fff'] = ""
@@ -1322,7 +1381,9 @@ action = hp(+5)
 # RulesDict['dd49c2e2-3455-481d-b8a7-5f813796b3f4'] = ""
 
 # Go home
-# RulesDict['46deecf5-7f7b-42b5-b6fa-e3162dce2013'] = ""
+RulesDict['46deecf5-7f7b-42b5-b6fa-e3162dce2013'] = """
+action = moveTo(deck) target?(reactions@discards) & shuffle() & draw()
+"""
 
 # Grandmaster
 # RulesDict['5972ea54-137c-41a7-a1eb-b9d9cd0ecfe5'] = ""
@@ -1355,7 +1416,9 @@ action = hp(+5)
 # RulesDict['016a06d3-e739-4862-848a-d40ba0ec12ee'] = ""
 
 # Rest
-# RulesDict['2c9000df-e21a-4482-9dfc-8df3f702e29e'] = ""
+RulesDict['2c9000df-e21a-4482-9dfc-8df3f702e29e'] = """
+action = {D(character)}: sp(discarded.SP)
+"""
 
 # Robber
 # RulesDict['eaf346c3-d2e6-4066-adae-e1678746673d'] = ""

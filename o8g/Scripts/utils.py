@@ -76,6 +76,7 @@ def resetAll():
    clearGlobalVar('Transformed')
    clearGlobalVar('GameEvents')
    clearGlobalVar('CardCost')
+   clearGlobalVar('Rules')
    
    if me.name == Author:
       if debugVerbosity == DebugLevel.Off:
@@ -202,8 +203,11 @@ def getNextActivePlayer():
 
 def getRule(rule):
    rules = getGlobalVar('Rules')
-   if rule in rules:
-      return rules[rule]
+   if rule in rules and rules[rule]:  # Not an empty list []
+      for b in rules[rule]:
+         if not b:
+            return False
+      return True
    else:
       return GameRulesDefaults[rule]
 
@@ -675,19 +679,19 @@ def modBP(card, qty, mode = None):
 # Counter Manipulation
 #---------------------------------------------------------------------------
 
-def modSP(count = 1, mode = None, silent = False):
+def modSP(count = 1, mode = None, silent = False, player = me):
 # A function to modify the players SP counter. Can also notify.
-   initialSP = me.SP
+   initialSP = player.SP
    if mode == '=':
-      me.SP = count
-      count = me.SP - initialSP
+      player.SP = count
+      count = player.SP - initialSP
    else:
-      if me.SP + count < 0:
+      if player.SP + count < 0:
          count = -initialSP  # SP can't be less than 0
-      me.SP += count # Now increase the SP by the amount passed to us.
+      player.SP += count # Now increase the SP by the amount passed to us.
    if not silent and count != 0:
       action = "gains" if count >= 0 else "loses"
-      notify("{} {} {} SP. New total is {} (before was {}).".format(me, action, count, me.SP, initialSP))
+      notify("{} {} {} SP. New total is {} (before was {}).".format(player, action, count, player.SP, initialSP))
 
 
 def payCostSP(count = 1, silent = False, msg = 'play this card', cardType = None):
@@ -705,7 +709,7 @@ def payCostSP(count = 1, silent = False, msg = 'play this card', cardType = None
            cost = max(count, -1)
         if count != cost:
            count = cost
-           notify("The cost of the card has been modified by an ability.")
+           notify("The SP cost of the card has been modified by an ability.")
    
    if count >= 0:
       modSP(count, silent=silent)
