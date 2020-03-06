@@ -141,7 +141,7 @@ class RulesUtils():
       qty     = RulesUtils.getTargetQty(target['qty'])
 
       # If two or more targets, ask for a single target
-      if len(types) > 1:
+      if len(types) > 1 and target['typeop'] == RS_OP_OR:
          # Check if there is any keyword in the target types
          kw_types = set(RS_KW_TARGETS) & set(types)
          if len(kw_types) > 0:
@@ -166,6 +166,7 @@ class RulesUtils():
       debug("-- Retrieved %s cards" % len(cards))
 
       # Filter targets
+      targets = []
       for type in types:
          # If kw is 'player' then must choose between himself or enemy
          if type == RS_KW_TARGET_PLAYER:
@@ -176,13 +177,14 @@ class RulesUtils():
                if t == 0:
                   return False
                type = RS_KW_PLAYERS[t-1]
-         targets = RulesUtils.filterTargets(type, filters, zone, cards, source, msg, pick, qty)
-         if targets == False:
-            if not pick:
-               return False
-            targets = []
+         ftargets = RulesUtils.filterTargets(type, filters, zone, cards, source, msg, pick, qty)
+         if ftargets:
+            targets += ftargets
+      
+      if not targets and not pick:
+         return False
 
-      # Pick random cards
+      # Select random cards
       if qty is not None and qty.random:
          samples = qty.samples
          if samples > len(targets):
@@ -253,12 +255,18 @@ class RulesUtils():
       pickMany = False
       minQty = 1
       maxQty = 1
+      isCardName = False
       if qty is not None:
          if qty.max:
             minQty = qty.min
             maxQty = qty.max
          elif qty.random:
             multiple = True
+            
+      # Type is a card name?
+      if type[0] == RS_KW_NAME:
+         isCardName = True
+         type = type.strip(RS_KW_NAME)
 
       # Check for type suffixes
       typeSuffix, type = RulesLexer.getSuffix(RS_SUFFIX_TYPES, type)
@@ -287,18 +295,15 @@ class RulesUtils():
                # return False
 
       if type != RS_KW_ANY:
-         # Look for (super) type
-         if type in RS_KW_CARD_TYPES:
-            debug("-- checking if any card match type '%s'" % type)
-            cards_f1 = [c for c in cards_f1
-               if c.Type.lower() == type]
-            debug( ("{}, " * len(cards_f1)).format(*cards_f1) )
-         # Look for subtype
-         else:
-            debug("-- checking if any card match subtype '%s'" % type)
-            cards_f1 = [c for c in cards_f1
-               if c.Subtype.lower() == type]
-            # debug( ("{}, " * len(cards_f1)).format(*cards_f1) )
+         attr = 'Subtype'
+         if isCardName:
+            attr = 'Name'
+         elif type in RS_KW_CARD_TYPES:
+            attr = 'Type'
+         debug("-- checking if any card matches %s '%s'" % (attr, type))
+         cards_f1 = [c for c in cards_f1
+            if getattr(c, attr).lower() == type]
+         debug( ("{}, " * len(cards_f1)).format(*cards_f1) )
 
       # Look for targeted cards
       cards_f2 = [c for c in cards_f1

@@ -42,6 +42,7 @@ type:
    Values:
       Any Type: Character, Action, Reaction
       Any Subtype: Warrior, Pilot, Captain...
+      A card name surrounded by double quotes (")
    Keywords:
       player
       me
@@ -127,8 +128,8 @@ effect:
          swapPiles(pile1, pile2)
          shuffle([myDeck])
          destroy()
-         reveal([pile])  # default: target
-         discard([target])     # zone: myHand
+         reveal([pile])     # default: target
+         discard([target])  # zone: myHand
          rndDiscard([#])
          moveTo(zone [, pos] [, reveal=false])  # pos = unsigned int or '?'
          bp(#|x#|=#)  # default target = this
@@ -668,7 +669,7 @@ abilities = unfreezable
 
 # M. Bison's EVIL CHARISMA
 RulesDict['229cbb1b-9710-4981-b4ea-e476145d73f4'] = """
-action = moveTo(hand) target("Juni"&"Juli"@myDeck) & shuffle(myDeck)
+action = moveTo(hand) target?("Juni"&"Juli"<1>@myDeck) & shuffle(myDeck)
 """
 
 # Makoto's YELL

@@ -66,8 +66,8 @@ RS_OP_BOOL_AND = '&&'
 RS_OP_OPT      = '?'
 
 RS_TARGET_OPS = [
-   RS_OP_OR,
-   RS_OP_AND
+   RS_OP_AND,
+   RS_OP_OR
 ]
 
 # Prefixes
@@ -138,6 +138,7 @@ RS_SUFFIX_EVENTS = [
 # Keywords
 RS_KW_ANY = '*'
 RS_KW_ALL = 'all'
+RS_KW_NAME = '"'
 
 # Target keywords
 RS_KW_TARGET_PLAYER    = 'player'

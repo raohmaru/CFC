@@ -27,6 +27,7 @@ target: {
       ['-', 'bp', ('>=', '800')]
    ],
    'types': ['characters'],
+   'typeop': ',',
    'zone': ['opp', 'ring'],
    'pick': -1,
    'qty': ',4',
@@ -172,11 +173,15 @@ class RulesLexer():
          tgtStr = tgtStr.replace(pick_match.group(0), '', 1)
 
       # Get the types
-      types = RS_RGX_TARGET_TYPE.split(tgtStr)
+      types = RS_RGX_TARGET_TYPE.split(tgtStr)[:1]
+      typeOp = RS_OP_OR
       if not types[0]:
          debug("ParseInfo: 'target' has no type parameter. Defult target is {}".format(RS_KW_ANY))
          types[0] = RS_KW_ANY
-      types = types[0].split(RS_OP_OR)
+      for op in RS_TARGET_OPS:
+         if len(types) <= 1:
+            types = types[0].split(op)
+            typeOp = op
       # RS_KW_ANY overrides the rest
       if RS_KW_ANY in types:
          types = [RS_KW_ANY]
@@ -223,6 +228,7 @@ class RulesLexer():
          'qty'    : qty,
          'pick'   : pick,
          'types'  : types,
+         'typeop' : typeOp,
          'filters': filters_arr,
          'zone'   : [zone_prefix, zone],
          'opt'    : True if flag == RS_OP_OPT else False
