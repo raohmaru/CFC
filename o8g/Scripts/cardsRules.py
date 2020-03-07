@@ -129,7 +129,7 @@ effect:
          shuffle([myDeck])
          destroy()
          reveal([pile])     # default: target
-         discard([target])  # zone: myHand
+         discard([#|target])  # default: 1, zone: myHand
          rndDiscard([#])
          moveTo(zone [, pos] [, reveal=false])  # pos = unsigned int or '?'
          bp(#|x#|=#)    # default target = this
@@ -150,8 +150,8 @@ effect:
          alterCost(cardtype, #)
          swapChars()
          moveToSlot()
-         trash([#])     # Default: 1
-         prophecy([#])  # Default: 1
+         trash([#])     # default: 1
+         prophecy([#])  # default: 1
       Ability:
          Keywords:
             @see abilities
@@ -693,13 +693,19 @@ auto = ~activatephase~ each(card in me.hand => sp(-1)); each(card in opp.hand =>
 """
 
 # Rose's TAROT CARD
-# RulesDict['2a039849-7e43-43e2-b67a-2d341d27d9e1'] = ""
+RulesDict['2a039849-7e43-43e2-b67a-2d341d27d9e1'] = """
+action = draw(4) & discard(3)
+"""
 
 # Ryu's SHINKU HADOKEN
-# RulesDict['4f2454d7-2294-47a2-a473-a838c1f7d874'] = ""
+RulesDict['4f2454d7-2294-47a2-a473-a838c1f7d874'] = """
+action = {D(2)}{F}: damage(5) to(character)
+"""
 
 # Ryu (Alpha)'s HADOKEN
-# RulesDict['03a6a70c-6f38-48b5-bcc0-4529ec0a18c2'] = ""
+RulesDict['03a6a70c-6f38-48b5-bcc0-4529ec0a18c2'] = """
+action = {D}{F}: damage(3) to(character)
+"""
 
 # Sagat's TRUE POWER
 # RulesDict['2981e9ad-11e1-4f14-a707-2120bfc0cc2f'] = ""
@@ -738,7 +744,9 @@ auto = ~activatephase~ each(card in me.hand => sp(-1)); each(card in opp.hand =>
 # RulesDict['563fbb65-90bc-43aa-9246-2f69e56ab119'] = ""
 
 # Donovan's CHANGE IMMORTAL
-# RulesDict['7f7fe518-3669-4dad-9063-79052f5067b7'] = ""
+RulesDict['7f7fe518-3669-4dad-9063-79052f5067b7'] = """
+action = {D}{F}: bp(+3)
+"""
 
 # Felicia's SIDEKICK ART
 # RulesDict['53eafaec-68bc-4fe8-88ee-be578a785f5c'] = ""
@@ -786,7 +794,9 @@ action = prophecy(3)
 """
 
 # Kasumi's OVERLAP CRUNCH
-# RulesDict['fc2e9e7c-98dc-4d46-b3ad-0f3ede2fd166'] = ""
+RulesDict['fc2e9e7c-98dc-4d46-b3ad-0f3ede2fd166'] = """
+action = {D}{F}: damage(2) to(opp,character@oppRing)
+"""
 
 # King's DEALER
 # RulesDict['513f441d-fcec-4064-bbe6-152967cf38b8'] = ""
@@ -798,7 +808,9 @@ action = prophecy(3)
 # RulesDict['06c4b88f-8634-4b67-87d0-c0406fa268f1'] = ""
 
 # Ryo's SPIRIT SURGE
-# RulesDict['952dc83f-9f22-4993-a824-707b0682753e'] = ""
+RulesDict['952dc83f-9f22-4993-a824-707b0682753e'] = """
+action = {D(action)}{F}: each(card in me.hand => sp(+1))
+"""
 
 # Ryo Sakazaki's KOUKEN
 # RulesDict['d66622dd-27e3-4e3b-bb1f-245907ee3b66'] = ""
@@ -819,7 +831,10 @@ action = prophecy(3)
 # RulesDict['3d044b8c-bac6-4b9a-bcf5-4868538de313'] = ""
 
 # Andy's SHADOW SLICER
-# RulesDict['299685df-122c-4fbe-a8dd-05ceaaf41055'] = ""
+RulesDict['299685df-122c-4fbe-a8dd-05ceaaf41055'] = """
+target = opp
+action = discard(<r>)
+"""
 
 # B. Jenet's LILIEN KNIGHTS
 # RulesDict['5ca6f345-403b-4ad9-973a-673b8cd1cdb8'] = ""
@@ -898,7 +913,9 @@ abilities = unfreezable
 """
 
 # Terry Bogard's POWER GEYSER
-# RulesDict['eb648ee7-aa4e-41ce-a7fc-04af31349ca9'] = ""
+RulesDict['eb648ee7-aa4e-41ce-a7fc-04af31349ca9'] = """
+action = {D}{F}: destroy() target(character[bp>=8])
+"""
 
 # Wild Wolf's SORRY!
 # RulesDict['8995cad8-feaa-4704-9610-ae5e0dc6d800'] = ""
@@ -918,7 +935,9 @@ action = moveTo(hand) target(character@myRing)
 # RulesDict['4f3dd284-fc50-4d11-8771-3154d2010845'] = ""
 
 # Chizuru's CONTAIN!
-# RulesDict['55ab2891-c99e-4647-8a9d-b01fbce3009f'] = ""
+RulesDict['55ab2891-c99e-4647-8a9d-b01fbce3009f'] = """
+action = {D(action)}{F}: loseAbility() & bp(=1) target(character)
+"""
 
 # Choi's I'LL CUT YOU GOOD!
 # RulesDict['0d76ceeb-f809-464f-9954-240de260a132'] = ""
@@ -994,7 +1013,9 @@ auto = ~blocked this~ sp(-3) to(opp)
 # RulesDict['0eeaf712-f3c6-4696-93cc-615c081b6cdd'] = ""
 
 # Akari's PONTA LEAF
-# RulesDict['9c405677-1d42-4eb7-bb44-7b21c1d84859'] = ""
+RulesDict['9c405677-1d42-4eb7-bb44-7b21c1d84859'] = """
+action = {D(character)}{F}: bp(=discarded[0].bp)
+"""
 
 # Akari (Power)'s 100 DEMON NIGHT
 # RulesDict['03416225-8ed1-48fc-8178-c82559f61dcd'] = ""
@@ -1045,7 +1066,9 @@ abilities = preventpierce
 # RulesDict['04660547-18c8-4eb4-96b5-2a977dda0dcb'] = ""
 
 # Marco's ENEMY CHASER
-# RulesDict['fa585a56-2a8f-48ff-9cc5-1234fecb4b09'] = ""
+RulesDict['fa585a56-2a8f-48ff-9cc5-1234fecb4b09'] = """
+action = {D(all)}{F}: each(card in discarded => damage(1)) to(^characters)
+"""
 
 # Amakusa's GIVE YOURSELF
 # RulesDict['e590d588-84af-4c26-8dbe-e28d5b626747'] = ""
@@ -1056,7 +1079,9 @@ action = moveTo(deck) target(reactions@discards) & shuffle()
 """
 
 # Cham Cham's PAKU PAKU
-# RulesDict['483b9441-d435-43a3-beb7-61e41c9e4045'] = ""
+RulesDict['483b9441-d435-43a3-beb7-61e41c9e4045'] = """
+action = {D(reaction)}{F}: draw(3)
+"""
 
 # Gaira's SHOUT!
 # RulesDict['40ece65c-0c59-4000-ab13-d948c4012f84'] = ""
@@ -1302,7 +1327,9 @@ action = {F}: destroy() target(character@myRing); hp(prevTgt.BP)
 # RulesDict['7f869cae-cf68-4d2d-881d-4f4107134469'] = ""
 
 # Round 2
-# RulesDict['5ed66b91-2f3a-4fae-a1ba-ceb59040ea8c'] = ""
+RulesDict['5ed66b91-2f3a-4fae-a1ba-ceb59040ea8c'] = """
+action = discard(all) & draw(5)
+"""
 
 # School's out
 # RulesDict['0d7b5186-92db-4d61-8309-bfbd593df160'] = ""
@@ -1429,7 +1456,9 @@ action = moveTo(deck) target?(reactions@discards) & shuffle() & draw()
 # RulesDict['81b95f17-ba79-4f2f-aa7f-4808d6fad1ec'] = ""
 
 # Power mode
-# RulesDict['559a71aa-0d14-44b0-bfb9-557d08ae0e0b'] = ""
+RulesDict['559a71aa-0d14-44b0-bfb9-557d08ae0e0b'] = """
+action = {D(2)}: bp(+5) target(character)
+"""
 
 # Reliable warrior
 # RulesDict['016a06d3-e739-4862-848a-d40ba0ec12ee'] = ""
@@ -1455,7 +1484,9 @@ action = {D(character)}: sp(discarded[0].SP)
 # RulesDict['68eaee28-a00a-480f-b8e5-e14d2a8f102c'] = ""
 
 # Striker
-# RulesDict['f9a93f64-d331-4aa8-b58d-c213c8dfd742'] = ""
+RulesDict['f9a93f64-d331-4aa8-b58d-c213c8dfd742'] = """
+action = {D(2)}: damage(+3) to(characters)
+"""
 
 # Super Art select
 # RulesDict['0a951ced-4508-40b9-8350-5dafb6b7e8aa'] = ""
@@ -1464,7 +1495,9 @@ action = {D(character)}: sp(discarded[0].SP)
 # RulesDict['3507e173-6329-4541-99fb-f4b81a482308'] = ""
 
 # Three sisters
-# RulesDict['76c3d3b5-b3bc-41b1-8fef-d9c005269646'] = ""
+RulesDict['76c3d3b5-b3bc-41b1-8fef-d9c005269646'] = """
+action = {D(reaction)}{F}: draw(3)
+"""
 
 # Time bomb
 # RulesDict['48a11103-e08d-4237-952e-bf4cdc2868f7'] = ""

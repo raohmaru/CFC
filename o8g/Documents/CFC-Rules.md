@@ -114,7 +114,9 @@ There is no limitation in the number of Reaction cards a player may play.
 ## The Abilities
 Some characters may have an special effect (called *Ability*), which is represented by an ability type (symbols <span class="ab ab-instant">▲</span>, <span class="ab ab-trigger">■</span> or <span class="ab ab-auto">●</span>) followed with the ability name at the beginning of the rule text.
 
-Every type of ability tells in which moment of the game the ability can be activated. Once activated its effect applies immediately.
+Every type of ability tells in which moment of the game the ability can be activated.
+
+Once an ability is activated, its effect applies immediately, and it apply only once.
 
 ### <span class="ab ab-instant">▲</span> Ability
 A <span class="ab ab-instant">▲</span> ability is activated when that character enters the ring.

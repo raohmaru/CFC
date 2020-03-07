@@ -136,9 +136,10 @@ RS_SUFFIX_EVENTS = [
 ]
 
 # Keywords
-RS_KW_ANY = '*'
-RS_KW_ALL = 'all'
-RS_KW_NAME = '"'
+RS_KW_ANY    = '*'
+RS_KW_ALL    = 'all'
+RS_KW_NAME   = '"'
+RS_KW_RANDOM = 'r'
 
 # Target keywords
 RS_KW_TARGET_PLAYER    = 'player'

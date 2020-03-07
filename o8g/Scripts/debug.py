@@ -41,10 +41,10 @@ def debugScenario():
    gotoMain()
    rnd(100, 10000)  # Delay the next action until all animation is done
    tableCards = [
-       'd8e2ad6f-32a1-46e2-b9cc-936dec91b919' # Oro
-      ,'929afc04-8fc6-4419-80ec-0c9ead5ea105' # Q
-      ,'63df795b-236c-4449-aa96-287a836ed648' # Remy
-      ,'8cb08852-491e-4a34-9589-79bf3959ba63' # Joe
+       'fa585a56-2a8f-48ff-9cc5-1234fecb4b09' # Marco
+      ,'03a6a70c-6f38-48b5-bcc0-4529ec0a18c2' # Ryu (Alpha)
+      # ,'7f7fe518-3669-4dad-9063-79052f5067b7' # Donovan
+      # ,'fc2e9e7c-98dc-4d46-b3ad-0f3ede2fd166' # Kasumi
    ]
    for i, id in enumerate(tableCards):
       debug("Creating card {} at slot {}".format(id, i))
@@ -57,21 +57,20 @@ def debugScenario():
       rnd(1, 100)  # Delay the next action until all animation is done
       
    handCards = [
-       'e8c43fc9-a217-49e6-9847-9c9ced63b0ac' # Pester
-      ,'2644337b-a5f8-4669-858b-824d9607f2d8' # Fellowship
-      ,'a2536791-c173-4228-84ce-4d2dec036ac3' # Juli
-      ,'2c9000df-e21a-4482-9dfc-8df3f702e29e' # Rest
-      # ,'e6e46f83-d089-4762-8d8e-2a3252cfc9db' # Char
-      # ,'525d8365-c90e-491f-9811-1f23efbafccb' # Char
-      # ,'bdeceb7c-9d94-4c98-824b-90d5317d8cda' # Char
-      # ,'e94aaa00-2449-46a4-9ff4-273e6dac272a' # Char
+      # 'eb648ee7-aa4e-41ce-a7fc-04af31349ca9' # Char
+      # ,'55ab2891-c99e-4647-8a9d-b01fbce3009f' # Char
+      # ,'9c405677-1d42-4eb7-bb44-7b21c1d84859' # Char
+      # ,'483b9441-d435-43a3-beb7-61e41c9e4045' # Char
       # ,'85d84ab1-dede-4fc7-b80d-00778f73c905' # Action
       # ,'ac01bbbe-583e-46ae-b26c-3c25eb8f0779' # Action
       # ,'5e2211a0-e52e-4b7b-b03d-f6ecb3660bb0' # Action 0 SP
       # ,'83c33aa8-5981-4352-8107-cbb7e05547ec' # Action -1 SP
       # ,'b95b2104-d184-43cc-bb04-b3eb096c6fca' # Action -2 SP
+      '76c3d3b5-b3bc-41b1-8fef-d9c005269646' # Three sisters
       # ,'556b3359-e642-419a-ab5c-67f70de1bb4f' # Reaction 0 SP
       # ,'46deecf5-7f7b-42b5-b6fa-e3162dce2013' # Reaction -1 SP
+      ,'559a71aa-0d14-44b0-bfb9-557d08ae0e0b' # Power mode
+      ,'f9a93f64-d331-4aa8-b58d-c213c8dfd742' # Striker
       # ,'91e441cc-0f1f-4b01-a2b0-94678d6f0b56' # Reaction -4 SP
    ]
    for id in handCards:
@@ -122,7 +121,7 @@ def debugScenario():
       
    if len(players) > 1:
       update()
-      # remoteCall(players[1], "debugOpp", [])
+      remoteCall(players[1], "debugOpp", [])
       
    debug("<<< debugScenario()") #Debug
    

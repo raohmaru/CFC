@@ -40,12 +40,12 @@ targets = [
    # "target = [fresh]",
    # "target = character@invalidZone",
    # "target = *<2>@oppDeck",
-   # "target = <r>@hand",
-   # "target = <r2>action@hand[bp>300]",
+   "target = <r>@hand",
+   "target = <r2>action@hand[bp>300]",
    # "target = <1>action@hand",
    # "target = <1,2>action@hand",
    # "target? = <,4>*<-2>@myDeck",
-   'target = "Juni"&"Juli"<1>@myDeck'
+   # 'target = "Juni"&"Juli"<1>@myDeck'
 ]
 actions = [
    # "action = destroy()",

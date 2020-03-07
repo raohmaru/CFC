@@ -213,9 +213,16 @@ def cmd_reveal(rc, targets, source, restr, pileName=None):
 
 def cmd_discard(rc, targets, source, restr, whichCards=''):
    debug(">>> cmd_discard({}, {})".format(targets, whichCards)) #Debug
+   if isNumber(whichCards):
+      whichCards = '<{}>*'.format(whichCards)
    cardsTokens = RulesLexer.parseTarget(whichCards)
-   if not targets:
+   if not targets or isCard(targets[0]):
       targets = [me]
+   # Is a random discard?
+   if cardsTokens['qty'] and cardsTokens['qty'][0] == RS_KW_RANDOM:
+      cmd_randomDiscard(rc, targets, source, restr, RulesUtils.getTargetQty(cardsTokens['qty']).samples)
+      return
+   # Normal discard
    for player in targets:
       cardsTokens['zone'] = ['', RS_KW_ZONE_HAND]
       if player != me:
@@ -279,11 +286,17 @@ def cmd_moveTo(rc, targets, source, restr, zone, pos = None, reveal = False):
 
 def cmd_bp(rc, targets, source, restr, qty):
    mode = None
+   amount = None
    if isNumber(qty):
       amount = num(qty)
-   else:
+   elif qty[0] in RS_MODES:
       mode = qty[0]
-      amount = num(qty[1:])
+      if isNumber(qty[1:]):
+         amount = num(qty[1:])
+      else:
+         qty = qty[1:]
+   if amount == None:
+      amount = num(evalExpression(qty, True, getLocals(locals())))
    if not targets:
       targets = [source]
    debug(">>> cmd_bp({}, {}, {}, {})".format(targets, qty, mode, amount)) #Debug
@@ -299,17 +312,17 @@ def cmd_bp(rc, targets, source, restr, qty):
 def cmd_sp(rc, targets, source, restr, qty):
    mode = None
    if isNumber(qty):
-      qty = num(qty)
+      amount = num(qty)
    elif qty[0] in RS_MODES:
       mode = qty[0]
-      qty = num(qty[1:])
+      amount = num(qty[1:])
    else:
-      qty = num(evalExpression(qty, True, getLocals(locals())))
+      amount = num(evalExpression(qty, True, getLocals(locals())))
    if not targets or isCard(targets[0]):
       targets = [me]
-   debug(">>> cmd_sp({}, {}, {})".format(targets, qty, mode)) #Debug
+   debug(">>> cmd_sp({}, {}, {})".format(targets, amount, mode)) #Debug
    for player in targets:
-      modSP(qty, mode, player=player)
+      modSP(amount, mode, player=player)
    rc.applyNext()
 
 
@@ -384,7 +397,7 @@ def cmd_each(rc, targets, source, restr, args):
             subrc.applyAll(func, targets, None, source)
             rnd(1, 100) # Wait between effects until all animation is done
       subrc.destroy()
-   
+   update()
    rc.applyNext()
 
    

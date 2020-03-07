@@ -113,7 +113,7 @@ class RulesUtils():
             'min': int(str),
             'max': int(str)
          })
-      if str[:1] == 'r':
+      if str[:1] == RS_KW_RANDOM:
          samples = num(str[1:])
          if samples == 0:
             samples = 1
@@ -132,7 +132,7 @@ class RulesUtils():
 
    @staticmethod
    def getTargets(target, source=None, msg=None):
-      debug("Checking targets")
+      debug("Getting targets")
 
       types   = target['types']
       zone    = target['zone']
@@ -359,7 +359,11 @@ class RulesUtils():
             notify(MSG_PLAYER_LOOKS.format(me, owner, zone[1]))
             # Select in any zone
             title = msg.format(qtyMsg, article, zone[1], sourceName)
-            cards_f1 = showCardDlg(cards_f1, title, min=minQty, max=maxQty)
+            # If there aren't enough cards to select, just show the cards
+            if len(cards_f1) <= minQty:
+               showCardDlg(cards_f1, title, min=0, max=0)
+            else:
+               cards_f1 = showCardDlg(cards_f1, title, min=minQty, max=maxQty)
             if cards_f1:
                notify(MSG_PLAYER_SELECTS.format(me, len(cards_f1)))
          if cards_f1 == None and minQty != 0:
@@ -367,7 +371,7 @@ class RulesUtils():
 
       # At this point there are not cards to which apply the effect, but the ability
       # is activated anyway
-      if len(cards_f1) == 0 and minQty != 0:
+      if cards_f1 and len(cards_f1) == 0 and minQty != 0:
          notify(MSG_ERR_NO_CARDS)
 
       return cards_f1
