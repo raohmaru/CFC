@@ -111,7 +111,9 @@ def cleanupGameEvents(restr):
       for i, listener in enumerate(ge[e]):
          if listener['restr'] is None:
             continue
-         evRestrTarget, evRestr = listener['restr']
+         evRestrTarget = listener['restr'][0]
+         evRestr       = listener['restr'][1]
+         restrMsg      = listener['restr'][2] if len(listener['restr']) > 2 else None
          if evRestr == restr:
             # Remove event added by me that affects me, or added by the opp that affects to me
             if (
@@ -120,8 +122,8 @@ def cleanupGameEvents(restr):
                len(players) == 1  # for debuggin purposes
             ):
                # Removed message
-               if listener['args'][2] and len(listener['args'][2]) > 1:
-                  notify(listener['args'][2][1].format(getObjName(listener['id'])))
+               if restrMsg:
+                  notify(restrMsg.format(getObjName(listener['id'])))
                del ge[e][i]
                debug("Removed listener for event {} -> {}".format(e, listener))   
    setGlobalVar('GameEvents', ge)

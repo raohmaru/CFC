@@ -138,7 +138,8 @@ HandSize        = 5
 GameRulesDefaults = {
    'ab_trigger_fresh': False, # Activate [] abilities of fresh characters
    'ab_trigger_act'  : True,  # Activate [] abilities
-   'ab_instant_act'  : True   # Activate /\ abilities
+   'ab_instant_act'  : True,  # Activate /\ abilities
+   'piercing'        : True
 }
 
 # Debug
@@ -158,6 +159,16 @@ DebugLevelPrefixes = [
    '[x]====>'
 ]
 
+# Hooks
+Hooks = Struct(**{
+   'CanBeBlocked' : 'canbeblocked',
+   'BeforeBlock'  : 'beforeblock',
+   'BeforePlayAC' : 'beforeplayac',
+   'BeforePlayRE' : 'beforeplayre',
+   'BackupLimit'  : 'backuplimit',
+   'PreventPierce': 'preventpierce'
+})
+
 # Game Events
 GameEvents = Struct(**{
    'ActivatePhase': 'activatephase',
@@ -165,15 +176,10 @@ GameEvents = Struct(**{
    'BlockPhase'   : 'blockphase',
    'EndPhase'     : 'endphase',
    'CleanupPhase' : 'cleanupphase',
-   'CanBeBlocked' : 'canbeblocked',
-   'BeforeBlock'  : 'beforeblock',
    'HandChanges'  : 'handchanges',
    'RingChanges'  : 'ringchanges',
-   'BeforePlayAC' : 'beforeplayac',
-   'BeforePlayRE' : 'beforeplayre',
    'Removed'      : 'removed',
    'Powerless'    : 'powerless',
-   'BackupLimit'  : 'backuplimit',
    'CombatDamaged': 'combatdamaged',
    'Blocked'      : 'blocked',
    'Attacks'      : 'attacks'
@@ -184,8 +190,7 @@ GameEventsExecOnAdded = [
 ]
 # Maps variables to events
 GameEventsFromVars = {
-   'hand.size': GameEvents.HandChanges,
-   'trigger'  : GameEvents.TriggerAbility
+   'hand.size': GameEvents.HandChanges
 }
 
 # Events that should not trigger for chars in a UA
@@ -235,6 +240,9 @@ MSG_ABILITIES = {
    ],
    'unlimitedbackup': [
       "{0} can receive any number of back-ups {3}."
+   ],
+   'preventpierce': [
+      "Piercing damage was prevented by {0}'s {2} ability."
    ]
 }
 MSG_RULES = {
@@ -250,7 +258,11 @@ MSG_RULES = {
       InstantUniChar + " abilites cannot be activated.",
       InstantUniChar + " abilites can be activated again."
    ),
-   'card_cost': '{} cards now cost {} SP {} to play.'
+   'card_cost': '{} cards now cost {} SP {} to play.',
+   'piercing': (
+      'Whenever a character counter-attacks a United Attack, piercing damage is prevented.',  # Disabled
+      'United-Attacks deals piercing damage as normal.'  # Enabled
+   ),
 }
 ERR_NO_EFFECT = 'err001'
 CMD_LABELS = {

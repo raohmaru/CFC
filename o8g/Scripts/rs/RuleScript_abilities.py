@@ -124,8 +124,10 @@ def abl_pierce(obj_id):
 
 def abl_add(obj_id, source_id=None, restr=None, events=[], msg=None, checkFunc=None):
    debug(">>> abl_add({}, {}, {}, {}, {}, {})".format(obj_id, source_id, restr, events, msg, checkFunc)) #Debug
+   if restr and msg and len(msg) > 1:
+      restr = list(restr) + [msg[1]]
    if addGameEventListener(events[0], 'abl_genericListener', obj_id, source_id, restr, [obj_id, source_id, msg, checkFunc]):
-      if msg:
+      if msg and source_id:
          notifyAbilityEnabled(obj_id, source_id, msg[0], getTextualRestr(restr))
 
 
@@ -136,7 +138,7 @@ def abl_genericListener(target_id, obj_id, source_id=None, msg=None, checkFunc=N
    if target_id == obj_id:
       debug("Invoking ability callback")
       if checkFunc is None:
-         notifyAbilityEnabled(target_id, source_id, msg[0], isWarning=True)
+         notifyAbilityEnabled(target_id, source_id, msg[0], isWarning=(len(msg) > 1))
          return True
       else:
          checkFunc = eval(checkFunc)
@@ -144,10 +146,11 @@ def abl_genericListener(target_id, obj_id, source_id=None, msg=None, checkFunc=N
    return False
 
 
-RulesAbilities.register('unblockable',     [GameEvents.CanBeBlocked])
-RulesAbilities.register('cantblock',       [GameEvents.BeforeBlock])
-RulesAbilities.register('cantplayac',      [GameEvents.BeforePlayAC])
-RulesAbilities.register('cantplayre',      [GameEvents.BeforePlayRE])
-RulesAbilities.register('unlimitedbackup', [GameEvents.BackupLimit],  'callback_true')
-RulesAbilities.register('unfreezable',     [GameEvents.Attacks],      'abl_unfreezable')
-RulesAbilities.register('pierce',          [GameEvents.Blocked],      'abl_pierce')
+RulesAbilities.register('unblockable',     [Hooks.CanBeBlocked])
+RulesAbilities.register('cantblock',       [Hooks.BeforeBlock])
+RulesAbilities.register('cantplayac',      [Hooks.BeforePlayAC])
+RulesAbilities.register('cantplayre',      [Hooks.BeforePlayRE])
+RulesAbilities.register('preventpierce',   [Hooks.PreventPierce])
+RulesAbilities.register('unlimitedbackup', [Hooks.BackupLimit],  'callback_true')
+RulesAbilities.register('unfreezable',     [GameEvents.Attacks], 'abl_unfreezable')
+RulesAbilities.register('pierce',          [GameEvents.Blocked], 'abl_pierce')

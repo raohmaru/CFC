@@ -196,6 +196,7 @@ ability:
       unlimitedbackup
       unfreezable
       pierce
+      preventpierce
       
 ---------------------------------------------------
 auto = ~event[,event]~ [[cond]] effect [& effect] to(target) restr; ...
@@ -209,11 +210,8 @@ event:
       blockphase
       endphase
       cleanupphase
-      beforeblock
       handchanges
       ringchanges
-      beforeplayac
-      beforeplayre
       removed
       powerless
       combatdamaged [suffix]
@@ -673,7 +671,9 @@ action = moveTo(hand) target?("Juni"&"Juli"<1>@myDeck) & shuffle(myDeck)
 """
 
 # Makoto's YELL
-# RulesDict['216e0a0d-a46c-42f4-a0f4-c32ac83d6cc1'] = ""
+RulesDict['216e0a0d-a46c-42f4-a0f4-c32ac83d6cc1'] = """
+abilities = preventpierce
+"""
 
 # Oro's TENGU STONE
 # RulesDict['d8e2ad6f-32a1-46e2-b9cc-936dec91b919'] = ""
@@ -1018,7 +1018,9 @@ auto = disableRule(ab_instant_act)
 # RulesDict['781bd288-e9bf-4cf1-b630-0883a2834d0b'] = ""
 
 # Shigen's STEEL BULB
-# RulesDict['ddbfda17-0ba7-422e-9ed3-376a0ba64644'] = ""
+RulesDict['ddbfda17-0ba7-422e-9ed3-376a0ba64644'] = """
+abilities = preventpierce
+"""
 
 # Wanderer's CHANGE!
 # RulesDict['f71ccccf-4c2e-4adf-a409-b8ab8e17c8f1'] = ""
@@ -1358,7 +1360,9 @@ action = hp(+5)
 # RulesDict['0a5179dd-e5a0-499e-90ac-8d62391743b8'] = ""
 
 # Charm
-# RulesDict['36450a2c-321b-4697-a37e-1563b16faf0e'] = ""
+RulesDict['36450a2c-321b-4697-a37e-1563b16faf0e'] = """
+action = disableRule(piercing) oppueot
+"""
 
 # Clone
 # RulesDict['74def9a7-0898-4ed4-93eb-33e57cf3a215'] = ""
