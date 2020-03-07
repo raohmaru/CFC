@@ -845,8 +845,11 @@ def trash(group, x = 0, y = 0, silent = False, count = None):
       return
    defTrashCount = count
    discards = me.piles['Discard Pile']
+   actionLocals['trashed'] = []
    for card in group.top(count):
       card.moveTo(discards)
+      # Add trashed card to action local variables
+      addActionTempVars('trashed', card)
    if len(players) > 1: rnd(1, 100)  # Wait a bit more, as in multiplayer games, things are slower.
    if not silent:
       notify("{} trashes top {} cards {}.".format(me, count, fromWhereStr(group)))

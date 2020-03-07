@@ -41,10 +41,10 @@ def debugScenario():
    gotoMain()
    rnd(100, 10000)  # Delay the next action until all animation is done
    tableCards = [
-       '216e0a0d-a46c-42f4-a0f4-c32ac83d6cc1' # Makoto
-      ,'9d92f2f0-7395-4f1e-bc32-99ec9c82c686' # Momo
-      ,'c023c0dd-677d-488a-83a6-2e9419bcb868' # Elena
-      ,'f67a1f9b-29c7-4ccc-bb17-b80a1c25b67a' # June
+       'd8e2ad6f-32a1-46e2-b9cc-936dec91b919' # Oro
+      ,'929afc04-8fc6-4419-80ec-0c9ead5ea105' # Q
+      ,'63df795b-236c-4449-aa96-287a836ed648' # Remy
+      ,'8cb08852-491e-4a34-9589-79bf3959ba63' # Joe
    ]
    for i, id in enumerate(tableCards):
       debug("Creating card {} at slot {}".format(id, i))
@@ -57,10 +57,10 @@ def debugScenario():
       rnd(1, 100)  # Delay the next action until all animation is done
       
    handCards = [
-       '36450a2c-321b-4697-a37e-1563b16faf0e' # Charm
-      # ,'4e34756e-34e4-45e5-a6ab-698604c6fb99' # Morrigan
-      # ,'3b05eb6f-d20f-433f-9ceb-4d6bb31d0328' # Hugo
-      # ,'38d6c7a8-7463-4aa6-88c4-13f725ada0be' # Char
+       'e8c43fc9-a217-49e6-9847-9c9ced63b0ac' # Pester
+      ,'2644337b-a5f8-4669-858b-824d9607f2d8' # Fellowship
+      ,'a2536791-c173-4228-84ce-4d2dec036ac3' # Juli
+      ,'2c9000df-e21a-4482-9dfc-8df3f702e29e' # Rest
       # ,'e6e46f83-d089-4762-8d8e-2a3252cfc9db' # Char
       # ,'525d8365-c90e-491f-9811-1f23efbafccb' # Char
       # ,'bdeceb7c-9d94-4c98-824b-90d5317d8cda' # Char
@@ -81,18 +81,18 @@ def debugScenario():
       # rnd(1, 100)  # Delay the next action until all animation is done
    
    deckCards = [
-       # 'a2536791-c173-4228-84ce-4d2dec036ac3' # Juli
-      # ,'87e0bd7f-d86e-4455-8f05-292bb16d4949' # Juni
-      # ,'8ce9a56f-8c0c-49e7-879c-12179c63f288' # Char
-      # ,'61ef9ecd-980b-46b8-83fc-12399ce044f1' # Char
-      # ,'0a8f39ff-6b21-4805-bafb-27c3f38d1986' # Char
-      # ,'525d8365-c90e-491f-9811-1f23efbafccb' # Char
-      # ,'bdeceb7c-9d94-4c98-824b-90d5317d8cda' # Char
-      # ,'e94aaa00-2449-46a4-9ff4-273e6dac272a' # Char
-      # ,'85d84ab1-dede-4fc7-b80d-00778f73c905' # Action
-      # ,'ac01bbbe-583e-46ae-b26c-3c25eb8f0779' # Action
-      # ,'556b3359-e642-419a-ab5c-67f70de1bb4f' # Reaction
-      # ,'91e441cc-0f1f-4b01-a2b0-94678d6f0b56' # Reaction
+       'a2536791-c173-4228-84ce-4d2dec036ac3' # Juli
+      ,'87e0bd7f-d86e-4455-8f05-292bb16d4949' # Juni
+      ,'8ce9a56f-8c0c-49e7-879c-12179c63f288' # Char
+      ,'61ef9ecd-980b-46b8-83fc-12399ce044f1' # Char
+      ,'0a8f39ff-6b21-4805-bafb-27c3f38d1986' # Char
+      ,'525d8365-c90e-491f-9811-1f23efbafccb' # Char
+      ,'bdeceb7c-9d94-4c98-824b-90d5317d8cda' # Char
+      ,'e94aaa00-2449-46a4-9ff4-273e6dac272a' # Char
+      ,'85d84ab1-dede-4fc7-b80d-00778f73c905' # Action
+      ,'ac01bbbe-583e-46ae-b26c-3c25eb8f0779' # Action
+      ,'556b3359-e642-419a-ab5c-67f70de1bb4f' # Reaction
+      ,'91e441cc-0f1f-4b01-a2b0-94678d6f0b56' # Reaction
    ]
    for id in deckCards:
       debug("Adding card {} to Deck".format(id))
@@ -122,7 +122,7 @@ def debugScenario():
       
    if len(players) > 1:
       update()
-      remoteCall(players[1], "debugOpp", [])
+      # remoteCall(players[1], "debugOpp", [])
       
    debug("<<< debugScenario()") #Debug
    
@@ -131,8 +131,7 @@ def debugOpp():
    debug(">>> debugOpp()") #Debug
    global charsPlayed
    tableCards = [
-       '216e0a0d-a46c-42f4-a0f4-c32ac83d6cc1' # Makoto
-       # 'd14694b4-484c-4b45-962e-8cbb636d8a9a' # Baby Head
+       'd14694b4-484c-4b45-962e-8cbb636d8a9a' # Baby Head
       ,'24e99a13-cb42-4e16-9900-78dde12e1a4c' # Charlie
       ,'26f3f47c-881f-4d98-a583-ddc6b6b90cd5' # Nemesis
       ,'ff8a97e3-9a78-4c5f-86fa-23480fa57da5' # Pure Rider Akira

@@ -376,7 +376,7 @@ def cmd_each(rc, targets, source, restr, args):
    func = func['effects'][0][1]
    debug(">>> cmd_each({}, {}, {})".format(targets, cond, func)) #Debug
    
-   res = evalExpression(cond, True)
+   res = evalExpression(cond, True, getLocals(locals()))
    if len(res) > 0:
       subrc = RulesCommands()
       for v in res:
@@ -486,7 +486,7 @@ def cmd_moveToSlot(rc, targets, source, restr, *args):
 def cmd_trash(rc, targets, source, restr, numCards=1):
    debug(">>> cmd_trash({}, {})".format(targets, numCards)) #Debug
    numCards = int(numCards)
-   if not targets:
+   if not targets or isCard(targets[0]):
       targets = [me]
    for player in targets:
       if player == me:

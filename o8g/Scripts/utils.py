@@ -141,6 +141,7 @@ def replaceVars(str):
    debug("replaceVars({})".format(str))
    str = re.sub(Regexps['BP'], r'hasattr(getParsedCard(\1), "BP") and getParsedCard(\1).BP', str)
    str = re.sub(Regexps['Action'], 'isAction(card)', str)
+   str = re.sub(Regexps['Char'], 'isCharacter(card)', str)
    str = re.sub(Regexps['HandSize'], r'len(\1.hand)', str)
    str = re.sub(Regexps['Ring'], r'getRingSize(\1)', str)
    str = re.sub(Regexps['Chars'], r'getRing(\1)', str)
@@ -210,6 +211,15 @@ def getRule(rule):
       return True
    else:
       return GameRulesDefaults[rule]
+
+
+def addActionTempVars(name, value, set = False):
+   if set:
+      actionLocals[name] = value
+   else:
+      if not name in actionLocals:
+         actionLocals[name] = []
+      actionLocals[name].append(value)
 
 #---------------------------------------------------------------------------
 # Pile functions

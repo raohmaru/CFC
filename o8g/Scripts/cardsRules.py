@@ -132,9 +132,9 @@ effect:
          discard([target])  # zone: myHand
          rndDiscard([#])
          moveTo(zone [, pos] [, reveal=false])  # pos = unsigned int or '?'
-         bp(#|x#|=#)  # default target = this
-         sp(#|=#|expr)
-         hp(#|expr)
+         bp(#|x#|=#)    # default target = this
+         sp(#|=#|expr)  # default target = me
+         hp(#|expr)     # default target = me
          playExtraChar()
          draw([#|expression])  # Default: 1
          steal()
@@ -256,6 +256,7 @@ Available variables:
    this
    card (only in each())
    discarded
+   trashed
    alone
    bp
    
@@ -652,7 +653,7 @@ action = {F}: bp(+3) target(character@oppRing); bp(+3) target(character@myRing)
 
 # Juli's PSYCHO CHARGE ALPHA
 RulesDict['a2536791-c173-4228-84ce-4d2dec036ac3'] = """
-action = {D(character)}{F}: sp(discarded.SP)
+action = {D(character)}{F}: sp(discarded[0].SP)
 """
 
 # Karin's COMPENSATION
@@ -676,13 +677,20 @@ abilities = preventpierce
 """
 
 # Oro's TENGU STONE
-# RulesDict['d8e2ad6f-32a1-46e2-b9cc-936dec91b919'] = ""
+RulesDict['d8e2ad6f-32a1-46e2-b9cc-936dec91b919'] = """
+auto = ~activatephase~ bp(+1)
+"""
 
 # Q's MYSTERIOUS ORIGIN
-# RulesDict['929afc04-8fc6-4419-80ec-0c9ead5ea105'] = ""
+RulesDict['929afc04-8fc6-4419-80ec-0c9ead5ea105'] = """
+target = players
+auto = ~myEndPhase~ trash(2)
+"""
 
 # Remy's REVENGE
-# RulesDict['63df795b-236c-4449-aa96-287a836ed648'] = ""
+RulesDict['63df795b-236c-4449-aa96-287a836ed648'] = """
+auto = ~activatephase~ each(card in me.hand => sp(-1)); each(card in opp.hand => sp(-1)) to(opp)
+"""
 
 # Rose's TAROT CARD
 # RulesDict['2a039849-7e43-43e2-b67a-2d341d27d9e1'] = ""
@@ -859,7 +867,9 @@ auto = ~blocked this~ draw()
 # RulesDict['b77da717-47d7-4dc1-bb79-cddecf0c5af5'] = ""
 
 # Joe's SCREW UPPER
-# RulesDict['8cb08852-491e-4a34-9589-79bf3959ba63'] = ""
+RulesDict['8cb08852-491e-4a34-9589-79bf3959ba63'] = """
+action = {F}: trash(2) target(opp)
+"""
 
 # Kain's RISOU
 # RulesDict['e81e9366-b3e1-45a6-b010-bd02934b2efd'] = ""
@@ -1261,7 +1271,9 @@ action = prophecy(3)
 # RulesDict['153e2c26-7329-4a5e-a405-43191f75a2ac'] = ""
 
 # Pester
-# RulesDict['e8c43fc9-a217-49e6-9847-9c9ced63b0ac'] = ""
+RulesDict['e8c43fc9-a217-49e6-9847-9c9ced63b0ac'] = """
+action = trash(3) target(opp)
+"""
 
 # Pride
 # RulesDict['a8b949ff-7def-4c0a-8d79-49ad2a1d02d8'] = ""
@@ -1377,7 +1389,9 @@ action = disableRule(piercing) oppueot
 # RulesDict['130c068d-bf62-4013-8b17-32af4a3f6994'] = ""
 
 # Fellowship
-# RulesDict['2644337b-a5f8-4669-858b-824d9607f2d8'] = ""
+RulesDict['2644337b-a5f8-4669-858b-824d9607f2d8'] = """
+action = trash(10) & each(char in trashed => sp(+1))
+"""
 
 # Ferocity
 # RulesDict['55dd552f-0c26-4bc1-819a-92cf32f285ae'] = ""
@@ -1422,7 +1436,7 @@ action = moveTo(deck) target?(reactions@discards) & shuffle() & draw()
 
 # Rest
 RulesDict['2c9000df-e21a-4482-9dfc-8df3f702e29e'] = """
-action = {D(character)}: sp(discarded.SP)
+action = {D(character)}: sp(discarded[0].SP)
 """
 
 # Robber

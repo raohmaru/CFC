@@ -244,7 +244,11 @@ class Rules():
          thisCard = Card(self.card_id)
          notify("Event \"{}\" triggered. Now trying to activate {}'s auto ability from {}'s ring.".format(eventName, thisCard, thisCard.controller))
          if not MarkersDict['United Attack'] in thisCard.markers:
-            self.execAction(auto, [thisCard], True)
+            target = [thisCard]
+            if RS_KEY_TARGET in self.rules_tokens:
+               targetList = self.rules_tokens[RS_KEY_TARGET]
+               target = RulesUtils.getTargets(targetList, thisCard)
+            self.execAction(auto, target, True)
          else:
             notify(MSG_AB_AUTO_UATTACK.format(thisCard, thisCard.Ability))
                
@@ -289,8 +293,8 @@ class Rules():
                   isRandom = True
             for card in cards:
                discard(card, isRandom = isRandom)
-            # Add discarded card to action local variables
-            actionLocals['discarded'] = cards[0]
+            # Add discarded cards to action local variables
+            addActionTempVars('discarded', cards, True)
             
          elif type == RS_KW_COST_SACRIFICE:
             if target:

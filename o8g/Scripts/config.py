@@ -120,6 +120,7 @@ Regexps = dict(
    LeftCond = re.compile(r'^[\w.]+'),
    BP       = re.compile(r'(\w+)\.bp'),
    Action   = re.compile(r'\baction\b'),
+   Char     = re.compile(r'\bchar\b'),
    HandSize = re.compile(r'(\w+)\.hand\.size'),
    Ring     = re.compile(r'(\w+)\.ring'),
    Chars    = re.compile(r'(\w+)\.chars')
