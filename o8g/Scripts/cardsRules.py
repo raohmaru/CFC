@@ -52,6 +52,7 @@ type:
       all
    Prefixes:
       ^ (other)
+      ! (not)
    Sufixes:
       s (plural) (valid on Type, Subtype, player or *)
    Default:
@@ -131,7 +132,7 @@ effect:
          reveal([pile])     # default: target
          discard([#|target])  # default: 1, zone: myHand
          rndDiscard([#])
-         moveTo(zone [, pos] [, reveal=false])  # pos = unsigned int or '?'
+         moveTo(zone [, pos] [, reveal])  # pos = unsigned int or '?'
          bp(#|x#|=#)    # default target = this
          sp(#|=#|expr)  # default target = me
          hp(#|expr)     # default target = me
@@ -152,6 +153,7 @@ effect:
          moveToSlot()
          trash([#])     # default: 1
          prophecy([#])  # default: 1
+         select(target)
       Ability:
          Keywords:
             @see abilities
@@ -323,8 +325,8 @@ auto = ~anyBlockPhase,anyBeforeBlock~ +unblockable to(characters[bp<=3 & attack 
 
 # Damn D's WHISTLE
 RulesDict['66d424bb-e5da-4f61-b063-61efd1fc61a6'] = """
-target = character[bp<=5]@deck
-action = {F}: reveal() & moveTo(hand, true) & shuffle()
+target? = character[bp<=5]@deck
+action = {F}: reveal() & moveTo(hand) & shuffle()
 """
 
 # Guy's HAYA-GAKE
@@ -424,8 +426,8 @@ action = discard(all); moveTo(hand) target(<,2>*@myDiscards)
 
 # Omokane Saki's STAND-BY
 RulesDict['c6ee2630-7f1a-4ac1-95f3-be8db970e855'] = """
-target = character@deck
-action = {F}: reveal() & shuffle() & moveTo(deck, true)
+target? = character@deck
+action = {F}: reveal() & shuffle() & moveTo(deck)
 """
 
 # Chris Redfield's DISORDER
@@ -461,7 +463,7 @@ action = {S}: transform(Zombie) target(character)
 # Akira's BROTHER SEARCH
 RulesDict['1cd7580b-d396-496c-afac-bcd6da9c1f83'] = """
 target = action<1>@deck
-action = moveRestTo(discards) & reveal() & moveTo(hand, true)
+action = moveRestTo(discards) & reveal() & moveTo(hand)
 """
 
 # Batsu's BOILING BLOOD
@@ -708,7 +710,10 @@ action = {D}{F}: damage(3) to(character)
 """
 
 # Sagat's TRUE POWER
-# RulesDict['2981e9ad-11e1-4f14-a707-2120bfc0cc2f'] = ""
+RulesDict['2981e9ad-11e1-4f14-a707-2120bfc0cc2f'] = """
+target = players
+action = reveal(hand) & discard(actions)
+"""
 
 # Sakura's FIGHTING SPIRIT
 # RulesDict['f53e910f-8aef-47dc-a919-af81a5b0d2c4'] = ""
@@ -729,7 +734,10 @@ action = {D}{F}: damage(3) to(character)
 # RulesDict['c09e1c30-468b-4173-8aa8-3e6ba31cd3e8'] = ""
 
 # Kikaioh's FAIR PLAY
-# RulesDict['99081829-e898-4766-8727-b0a2918df49f'] = ""
+RulesDict['99081829-e898-4766-8727-b0a2918df49f'] = """
+target = players
+action = reveal(hand) & discard(reactions)
+"""
 
 # Anakaris's J.O.T.P.
 # RulesDict['9ec88c6c-dc57-41fd-bb90-cf2822a735aa'] = ""
@@ -749,7 +757,9 @@ action = {D}{F}: bp(+3)
 """
 
 # Felicia's SIDEKICK ART
-# RulesDict['53eafaec-68bc-4fe8-88ee-be578a785f5c'] = ""
+RulesDict['53eafaec-68bc-4fe8-88ee-be578a785f5c'] = """
+action = {F}: moveTo(hand) target(<r>action@myDeck)
+"""
 
 # Hsien-Ko's DARK WEAPON
 # RulesDict['299377b4-f955-420b-b252-85ed6cf98c14'] = ""
@@ -777,7 +787,9 @@ auto = ~oppCombatDamaged fromThis~ hp(this.bp)
 # RulesDict['d646ffc5-bec9-4e98-b799-510b4e1ea464'] = ""
 
 # Q-Bee's PLUS B
-# RulesDict['65c91e9d-761c-4978-ba3e-6e05026f080e'] = ""
+RulesDict['65c91e9d-761c-4978-ba3e-6e05026f080e'] = """
+action = moveTo(hand) target?("Q-Bee"s@myDeck) & shuffle(myDeck)
+"""
 
 # Rikuo's WETNESS
 # RulesDict['6c8ec7ed-2442-4847-8f38-8c8f5967b2ba'] = ""
@@ -837,7 +849,9 @@ action = discard(<r>)
 """
 
 # B. Jenet's LILIEN KNIGHTS
-# RulesDict['5ca6f345-403b-4ad9-973a-673b8cd1cdb8'] = ""
+RulesDict['5ca6f345-403b-4ad9-973a-673b8cd1cdb8'] = """
+action = reveal() & moveTo(hand) target?(character[bp<=3]@myDeck) & shuffle()
+"""
 
 # Billy's SHRIKE DROP
 # RulesDict['2e6f329d-9a1e-45b7-864d-67feeb5eade2'] = ""
@@ -854,7 +868,9 @@ action = bp(3) target(character)
 # RulesDict['f3557575-c61e-42fd-9442-9413cea64bdf'] = ""
 
 # Geese's COMPOSURE
-# RulesDict['59253bbd-0dbd-4d43-9a2b-7f01b4bc1f76'] = ""
+RulesDict['59253bbd-0dbd-4d43-9a2b-7f01b4bc1f76'] = """
+action = reveal(hand) & discard(actions) & discard(reactions)
+"""
 
 # Geese Howard's REPPU KEN
 # RulesDict['526c4102-b6da-4880-91dc-1b9b007d4cc5'] = ""
@@ -1266,13 +1282,18 @@ action = target(all@discards) moveTo(deck) & shuffle()
 # RulesDict['9610668a-18c9-4448-8216-f40119a03269'] = ""
 
 # Lunch rush
-# RulesDict['58580e2e-1f48-4210-a68f-57cd900b1036'] = ""
+RulesDict['58580e2e-1f48-4210-a68f-57cd900b1036'] = """
+action = reveal(hand) target(players); each(action in me.hand => draw()); each(action in opp.hand => draw()) target(opp)
+"""
 
 # Makeover
 # RulesDict['f6a32199-62df-49b5-8544-ae7a86915cbe'] = ""
 
 # Management
-# RulesDict['fd8db3d4-7df1-45fb-8712-5c35bb5acb3f'] = ""
+RulesDict['fd8db3d4-7df1-45fb-8712-5c35bb5acb3f'] = """
+target? = action@deck
+action = {F}: reveal() & shuffle() & moveTo(deck)
+"""
 
 # Mega crush
 # RulesDict['5d3bc1c3-692b-4d7c-9781-68fcdc0bd96e'] = ""
@@ -1287,7 +1308,10 @@ action = prophecy(3)
 # RulesDict['51a47b27-abf3-4219-a241-c72bd23b178b'] = ""
 
 # No tricks
-# RulesDict['69cf51ab-090c-4c60-8b58-b71d6455f0a2'] = ""
+RulesDict['69cf51ab-090c-4c60-8b58-b71d6455f0a2'] = """
+target = players
+action = reveal(hand) & discard(!characters)
+"""
 
 # Nothingness
 # RulesDict['6c6fd560-017e-4819-accf-a66faef84218'] = ""
@@ -1356,7 +1380,10 @@ action = discard(all) & draw(5)
 # RulesDict['77792408-ba0f-4e5f-a079-f7eca5955543'] = ""
 
 # Storm rush
-# RulesDict['4d7fd45a-aa2a-48e3-856b-cfb04e203e3b'] = ""
+RulesDict['4d7fd45a-aa2a-48e3-856b-cfb04e203e3b'] = """
+target = players
+action = reveal(hand) & discard(characters)
+"""
 
 # Study
 # RulesDict['c977a855-1358-4dab-870f-dee886f929c3'] = ""
@@ -1441,7 +1468,9 @@ action = moveTo(deck) target?(reactions@discards) & shuffle() & draw()
 # RulesDict['fd8b647c-9fc7-4c3a-bc91-ac5266e50a55'] = ""
 
 # Lucky card
-# RulesDict['21db37a5-3483-41d4-9c6a-529071fce7ba'] = ""
+RulesDict['21db37a5-3483-41d4-9c6a-529071fce7ba'] = """
+action = draw(3) & select(<2>*@hand) & moveTo(myDeck)
+"""
 
 # Manari's song
 # RulesDict['2b3ad6cd-61d8-4786-9268-5963491a1ffa'] = ""

@@ -238,14 +238,10 @@ def swapPiles(pile1, pile2):
    notify("{} swaps its {} with its {}.".format(me, pile1.name, pile2.name))
 
 
-def reveal(group, done=None):
+def reveal(group):
    debug(">>> reveal()") #Debug
    cards = [card for card in group]
    notify("{} shows his {}".format(group.controller, group.name))
-   # Done is the name of a function in the other player domain that must be executed after this
-   # function is fulfilled
-   if done:
-      remoteCall(getOpp(), done, [])
    showCardDlg(cards, "Cards in {}'s {}".format(group.controller, group.name), 0, "", 0)
    
    
@@ -828,6 +824,8 @@ def getAcceptedBackups(card):
 #---------------------------------------------------------------------------
 
 def isNumber(s):
+   if not s:
+      return False
    try:
       float(s)
       return True

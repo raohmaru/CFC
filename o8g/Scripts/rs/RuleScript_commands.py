@@ -74,6 +74,10 @@ class RulesCommands():
          debug("-- cmd not found: {}".format(cmd[0]))
 
 
+   def setTarget(self, target):
+      self.cmdsArgs[0] = target
+
+
    def destroy(self):
       debug(">>> RulesCommands.destroy()")
       self.cmds = None
@@ -83,10 +87,6 @@ class RulesCommands():
 #---------------------------------------------------------------------------
 # Related functions
 #---------------------------------------------------------------------------
-
-def nextCommand():
-   commander.applyNext()
-      
 
 def disableRule(rule):
    debug(">>> disableRule({})".format(rule)) #Debug
@@ -140,6 +140,7 @@ def getLocals(vars):
       # Add action local variables defined in other places
       **actionLocals
    )
+
 
 #---------------------------------------------------------------------------
 # Commands functions
@@ -199,13 +200,14 @@ def cmd_reveal(rc, targets, source, restr, pileName=None):
          if isFaceUp == False:
             card.isFaceUp = False
    elif pileName in RS_KW_ZONES_PILES:
-      pile = RulesUtils.getZoneByName(pileName)
-      if pile.controller == me:
-         # Once the other player is done, apply next command
-         remoteCall(getOpp(), "reveal", [pile, "nextCommand"])
-         return
-      else:
-         reveal(pile)
+      if not targets or isCard(targets[0]):
+         targets = [me]
+      for player in targets:
+         pile = RulesUtils.getZoneByName(pileName, player)
+         if pile.controller == me:
+            remoteCall(getOpp(), "reveal", [pile])
+         else:
+            reveal(pile)
    else:
       debug("{} is not a valid pile".format(pileName))
    rc.applyNext()
@@ -254,17 +256,17 @@ def cmd_randomDiscard(rc, targets, source, restr, numCards=1):
 
 
 def cmd_moveTo(rc, targets, source, restr, zone, pos = None, reveal = False):
-   debug(">>> cmd_moveTo({}, {})".format(targets, zone)) #Debug
+   debug(">>> cmd_moveTo({}, {}, {}, {})".format(targets, zone, pos, reveal)) #Debug
    zonePrefix, zoneName = RulesLexer.getPrefix(RS_PREFIX_ZONES, zone, RS_PREFIX_CTRL)
-   if zoneName in RS_KW_ZONES_PILES:      
-      if pos == 'true':
+   if zoneName in RS_KW_ZONES_PILES:
+      if isNumber(pos):
+         pos = num(pos)
+      elif pos == '?':
+         choice = askChoice("Where to put the card(s)?", ['Top of pile', 'Bottom of pile'])
+         pos = (max(choice, 1) - 1) * -1
+      elif pos is not None:
          reveal = True
          pos = None
-      if pos is not None:
-         if pos == '?':
-            choice = askChoice("Where to put the card(s)?", ['Top of pile', 'Bottom of pile'])
-            pos = (max(choice, 1) - 1) * -1
-         pos = num(pos)
       reveal = bool(reveal)
       for target in targets:
          pile = RulesUtils.getZoneByName(zone, target)
@@ -516,6 +518,15 @@ def cmd_prophecy(rc, targets, source, restr, numCards=1):
    debug(">>> cmd_prophecy({}, {})".format(numCards, pile)) #Debug
    prophecy(group = pile, count = int(numCards))
    rc.applyNext()
+
+
+def cmd_select(rc, targets, source, restr, whichCards):
+   debug(">>> select({})".format(whichCards)) #Debug
+   tokens = RulesLexer.parseTarget(whichCards)
+   target = RulesUtils.getTargets(tokens, source=source)
+   if target:
+      rc.setTarget(target)
+   rc.applyNext()
    
 
 RulesCommands.register('damage',        cmd_damage)
@@ -545,3 +556,4 @@ RulesCommands.register('swapchars',     cmd_swapChars)
 RulesCommands.register('movetoslot',    cmd_moveToSlot)
 RulesCommands.register('trash',         cmd_trash)
 RulesCommands.register('prophecy',      cmd_prophecy)
+RulesCommands.register('select',        cmd_select)

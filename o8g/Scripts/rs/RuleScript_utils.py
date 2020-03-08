@@ -31,6 +31,8 @@ class RulesUtils():
          return getOpp()
       if prefix == RS_PREFIX_CTRL and target:
          return target.controller
+      if isPlayer(target):
+         return target
       return None
 
    @staticmethod
@@ -262,11 +264,6 @@ class RulesUtils():
             maxQty = qty.max
          elif qty.random:
             multiple = True
-            
-      # Type is a card name?
-      if type[0] == RS_KW_NAME:
-         isCardName = True
-         type = type.strip(RS_KW_NAME)
 
       # Check for type suffixes
       typeSuffix, type = RulesLexer.getSuffix(RS_SUFFIX_TYPES, type)
@@ -275,6 +272,11 @@ class RulesUtils():
          # Allow multiple selection?
          if typeSuffix == RS_SUFFIX_PLURAL:
             multiple = True
+            
+      # Type is a card name?
+      if type[0] == RS_KW_NAME:
+         isCardName = True
+         type = type.strip(RS_KW_NAME)
 
       # Check if multiple cards need to be selected
       if minQty > 1 or maxQty > 1:
@@ -300,9 +302,14 @@ class RulesUtils():
             attr = 'Name'
          elif type in RS_KW_CARD_TYPES:
             attr = 'Type'
-         debug("-- checking if any card matches %s '%s'" % (attr, type))
-         cards_f1 = [c for c in cards_f1
-            if getattr(c, attr).lower() == type]
+         cardsByType = []
+         exclude = typePrefix == RS_PREFIX_NOT
+         debug("-- checking if any card %s %s '%s'" % ('does not match' if exclude else 'matches', attr, type))
+         for c in cards_f1:
+            cattr = getattr(c, attr).lower()
+            if (exclude and cattr != type) or (not exclude and cattr == type):
+               cardsByType.append(c)
+         cards_f1 = cardsByType
          debug( ("{}, " * len(cards_f1)).format(*cards_f1) )
 
       # Look for targeted cards

@@ -41,10 +41,10 @@ def debugScenario():
    gotoMain()
    rnd(100, 10000)  # Delay the next action until all animation is done
    tableCards = [
-       'fa585a56-2a8f-48ff-9cc5-1234fecb4b09' # Marco
-      ,'03a6a70c-6f38-48b5-bcc0-4529ec0a18c2' # Ryu (Alpha)
-      # ,'7f7fe518-3669-4dad-9063-79052f5067b7' # Donovan
-      # ,'fc2e9e7c-98dc-4d46-b3ad-0f3ede2fd166' # Kasumi
+       '66d424bb-e5da-4f61-b063-61efd1fc61a6' # Damn D
+      ,'1cd7580b-d396-496c-afac-bcd6da9c1f83' # Akira
+      ,'5ca6f345-403b-4ad9-973a-673b8cd1cdb8' # B. Jenet
+      # ,'53eafaec-68bc-4fe8-88ee-be578a785f5c' # Felicia
    ]
    for i, id in enumerate(tableCards):
       debug("Creating card {} at slot {}".format(id, i))
@@ -57,20 +57,24 @@ def debugScenario():
       rnd(1, 100)  # Delay the next action until all animation is done
       
    handCards = [
-      # 'eb648ee7-aa4e-41ce-a7fc-04af31349ca9' # Char
-      # ,'55ab2891-c99e-4647-8a9d-b01fbce3009f' # Char
-      # ,'9c405677-1d42-4eb7-bb44-7b21c1d84859' # Char
-      # ,'483b9441-d435-43a3-beb7-61e41c9e4045' # Char
-      # ,'85d84ab1-dede-4fc7-b80d-00778f73c905' # Action
-      # ,'ac01bbbe-583e-46ae-b26c-3c25eb8f0779' # Action
+       '65c91e9d-761c-4978-ba3e-6e05026f080e' # Q-Bee
+      ,'5ca6f345-403b-4ad9-973a-673b8cd1cdb8' # B. Jenet
+      ,'de28f9bf-d995-4743-afcd-a28065beb39d' # Cammy (Alpha)'s SPY
+      ,'91cb59bd-1e5a-472d-a410-8fa0e1698eb5' # Roll's OPERATE
+      # ,'55ab2891-c99e-4647-8a9d-b01fbce3009f' # Char 300 BP
+      # ,'248517e9-d7a0-450d-9281-df91d20f68ab' # Char 500 BP
+      # ,'eb648ee7-aa4e-41ce-a7fc-04af31349ca9' # Char 700 BP
+      # ,'4d7520b9-9ced-43e0-a2e7-974d76d8eb82' # Char 1000 BP
+      ,'fd8db3d4-7df1-45fb-8712-5c35bb5acb3f' # Management
+      # ,'69cf51ab-090c-4c60-8b58-b71d6455f0a2' # No tricks
+      # ,'4d7fd45a-aa2a-48e3-856b-cfb04e203e3b' # Storm rush
       # ,'5e2211a0-e52e-4b7b-b03d-f6ecb3660bb0' # Action 0 SP
       # ,'83c33aa8-5981-4352-8107-cbb7e05547ec' # Action -1 SP
       # ,'b95b2104-d184-43cc-bb04-b3eb096c6fca' # Action -2 SP
-      '76c3d3b5-b3bc-41b1-8fef-d9c005269646' # Three sisters
+      # ,'ac01bbbe-583e-46ae-b26c-3c25eb8f0779' # Action -6 SP
+      ,'21db37a5-3483-41d4-9c6a-529071fce7ba' # Lucky card
       # ,'556b3359-e642-419a-ab5c-67f70de1bb4f' # Reaction 0 SP
       # ,'46deecf5-7f7b-42b5-b6fa-e3162dce2013' # Reaction -1 SP
-      ,'559a71aa-0d14-44b0-bfb9-557d08ae0e0b' # Power mode
-      ,'f9a93f64-d331-4aa8-b58d-c213c8dfd742' # Striker
       # ,'91e441cc-0f1f-4b01-a2b0-94678d6f0b56' # Reaction -4 SP
    ]
    for id in handCards:
@@ -80,18 +84,20 @@ def debugScenario():
       # rnd(1, 100)  # Delay the next action until all animation is done
    
    deckCards = [
-       'a2536791-c173-4228-84ce-4d2dec036ac3' # Juli
-      ,'87e0bd7f-d86e-4455-8f05-292bb16d4949' # Juni
-      ,'8ce9a56f-8c0c-49e7-879c-12179c63f288' # Char
-      ,'61ef9ecd-980b-46b8-83fc-12399ce044f1' # Char
-      ,'0a8f39ff-6b21-4805-bafb-27c3f38d1986' # Char
-      ,'525d8365-c90e-491f-9811-1f23efbafccb' # Char
-      ,'bdeceb7c-9d94-4c98-824b-90d5317d8cda' # Char
-      ,'e94aaa00-2449-46a4-9ff4-273e6dac272a' # Char
-      ,'85d84ab1-dede-4fc7-b80d-00778f73c905' # Action
-      ,'ac01bbbe-583e-46ae-b26c-3c25eb8f0779' # Action
-      ,'556b3359-e642-419a-ab5c-67f70de1bb4f' # Reaction
-      ,'91e441cc-0f1f-4b01-a2b0-94678d6f0b56' # Reaction
+       '65c91e9d-761c-4978-ba3e-6e05026f080e' # Q-Bee
+      ,'65c91e9d-761c-4978-ba3e-6e05026f080e' # Q-Bee
+      ,'55ab2891-c99e-4647-8a9d-b01fbce3009f' # Char 300 BP
+      ,'55ab2891-c99e-4647-8a9d-b01fbce3009f' # Char 300 BP
+      ,'248517e9-d7a0-450d-9281-df91d20f68ab' # Char 500 BP
+      ,'eb648ee7-aa4e-41ce-a7fc-04af31349ca9' # Char 700 BP
+      ,'4d7520b9-9ced-43e0-a2e7-974d76d8eb82' # Char 1000 BP
+      ,'5e2211a0-e52e-4b7b-b03d-f6ecb3660bb0' # Action 0 SP
+      # ,'83c33aa8-5981-4352-8107-cbb7e05547ec' # Action -1 SP
+      # ,'b95b2104-d184-43cc-bb04-b3eb096c6fca' # Action -2 SP
+      ,'ac01bbbe-583e-46ae-b26c-3c25eb8f0779' # Action -6 SP
+      ,'556b3359-e642-419a-ab5c-67f70de1bb4f' # Reaction 0 SP
+      # ,'46deecf5-7f7b-42b5-b6fa-e3162dce2013' # Reaction -1 SP
+      # ,'91e441cc-0f1f-4b01-a2b0-94678d6f0b56' # Reaction -4 SP
    ]
    for id in deckCards:
       debug("Adding card {} to Deck".format(id))
@@ -129,11 +135,12 @@ def debugScenario():
 def debugOpp():
    debug(">>> debugOpp()") #Debug
    global charsPlayed
+   
    tableCards = [
-       'd14694b4-484c-4b45-962e-8cbb636d8a9a' # Baby Head
-      ,'24e99a13-cb42-4e16-9900-78dde12e1a4c' # Charlie
-      ,'26f3f47c-881f-4d98-a583-ddc6b6b90cd5' # Nemesis
-      ,'ff8a97e3-9a78-4c5f-86fa-23480fa57da5' # Pure Rider Akira
+       # 'd14694b4-484c-4b45-962e-8cbb636d8a9a' # Baby Head
+      # ,'24e99a13-cb42-4e16-9900-78dde12e1a4c' # Charlie
+      # ,'26f3f47c-881f-4d98-a583-ddc6b6b90cd5' # Nemesis
+      # ,'ff8a97e3-9a78-4c5f-86fa-23480fa57da5' # Pure Rider Akira
    ]
    for i, id in enumerate(tableCards):
       debug("Creating card {} at slot {}".format(id, i))
@@ -141,6 +148,45 @@ def debugOpp():
       playAuto(card, i, True)
       charsPlayed = 0
       rnd(1, 100)  # Delay the next action until all animation is done
+      
+   handCards = [
+      'eb648ee7-aa4e-41ce-a7fc-04af31349ca9' # Char
+      ,'55ab2891-c99e-4647-8a9d-b01fbce3009f' # Char
+      # ,'9c405677-1d42-4eb7-bb44-7b21c1d84859' # Char
+      # ,'483b9441-d435-43a3-beb7-61e41c9e4045' # Char
+      # ,'85d84ab1-dede-4fc7-b80d-00778f73c905' # Action
+      ,'ac01bbbe-583e-46ae-b26c-3c25eb8f0779' # Action
+      ,'5e2211a0-e52e-4b7b-b03d-f6ecb3660bb0' # Action 0 SP
+      # ,'83c33aa8-5981-4352-8107-cbb7e05547ec' # Action -1 SP
+      # ,'b95b2104-d184-43cc-bb04-b3eb096c6fca' # Action -2 SP
+      ,'556b3359-e642-419a-ab5c-67f70de1bb4f' # Reaction 0 SP
+      # ,'46deecf5-7f7b-42b5-b6fa-e3162dce2013' # Reaction -1 SP
+      # ,'91e441cc-0f1f-4b01-a2b0-94678d6f0b56' # Reaction -4 SP
+   ]
+   for id in handCards:
+      debug("Adding card {} to hand".format(id))
+      card = table.create(id, 0, 0, quantity=1, persist=True)
+      card.moveTo(me.hand)
+   
+   deckCards = [
+       '55ab2891-c99e-4647-8a9d-b01fbce3009f' # Char 300 BP
+      ,'55ab2891-c99e-4647-8a9d-b01fbce3009f' # Char 300 BP
+      ,'248517e9-d7a0-450d-9281-df91d20f68ab' # Char 500 BP
+      ,'eb648ee7-aa4e-41ce-a7fc-04af31349ca9' # Char 700 BP
+      ,'4d7520b9-9ced-43e0-a2e7-974d76d8eb82' # Char 1000 BP
+      ,'5e2211a0-e52e-4b7b-b03d-f6ecb3660bb0' # Action 0 SP
+      ,'83c33aa8-5981-4352-8107-cbb7e05547ec' # Action -1 SP
+      ,'b95b2104-d184-43cc-bb04-b3eb096c6fca' # Action -2 SP
+      ,'ac01bbbe-583e-46ae-b26c-3c25eb8f0779' # Action -6 SP
+      ,'556b3359-e642-419a-ab5c-67f70de1bb4f' # Reaction 0 SP
+      ,'46deecf5-7f7b-42b5-b6fa-e3162dce2013' # Reaction -1 SP
+      ,'91e441cc-0f1f-4b01-a2b0-94678d6f0b56' # Reaction -4 SP
+   ]
+   for id in deckCards:
+      debug("Adding card {} to Deck".format(id))
+      card = table.create(id, 0, 0, quantity=1, persist=True)
+      card.moveTo(me.deck)
+      
    debug("<<< debugOpp()") #Debug
    
 
