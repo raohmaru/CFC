@@ -59,7 +59,8 @@ class Rules():
          if auto['event']:
             for event in auto['event']:
                self.addEvent(event)
-         self.addEventsFromIfCond()
+         else:
+            self.addEventsFromIfCond()
          # If it does not have events, then it has commands that must be executed
          if not self.has_events:
             self.execAction(auto, [Card(self.card_id)], True)
@@ -180,6 +181,7 @@ class Rules():
                   res = evalExpression(cond[1])
                   if not res:
                      debug("-- Condition not matching")
+                     notify("Cannot activate the ability because its condition does not match.")
                      if not isAuto:
                         return ERR_NO_EFFECT
                      revert = True
@@ -220,8 +222,7 @@ class Rules():
             rnd(10, 1000) # Wait between effects until all animation is done
       
       # Reset action local variables
-      global actionLocals
-      actionLocals = dict()
+      clearGlobalVar('ActionTempVars')
       
       # if not targets:
          # notify(MSG_AB_NO_EFFECT.format(thisCard, getParsedCard(thisCard).ability))
@@ -242,15 +243,16 @@ class Rules():
       
       if eventName:
          thisCard = Card(self.card_id)
-         notify("Event \"{}\" triggered. Now trying to activate {}'s auto ability from {}'s ring.".format(eventName, thisCard, thisCard.controller))
-         if not MarkersDict['United Attack'] in thisCard.markers:
-            target = [thisCard]
-            if RS_KEY_TARGET in self.rules_tokens:
-               targetList = self.rules_tokens[RS_KEY_TARGET]
-               target = RulesUtils.getTargets(targetList, thisCard)
-            self.execAction(auto, target, True)
-         else:
-            notify(MSG_AB_AUTO_UATTACK.format(thisCard, thisCard.Ability))
+         if getMarker(thisCard, 'BP') > 0:
+            notify("Event \"{}\" triggered. Now trying to activate {}'s auto ability from {}'s ring.".format(eventName, thisCard, thisCard.controller))
+            if not MarkersDict['United Attack'] in thisCard.markers:
+               target = [thisCard]
+               if RS_KEY_TARGET in self.rules_tokens:
+                  targetList = self.rules_tokens[RS_KEY_TARGET]
+                  target = RulesUtils.getTargets(targetList, thisCard)
+               self.execAction(auto, target, True)
+            else:
+               notify(MSG_AB_AUTO_UATTACK.format(thisCard, thisCard.Ability))
                
    
    def payCost(self, costs):
@@ -291,10 +293,12 @@ class Rules():
                # It's a random discard
                if target['qty'] is not None and target['qty'][:1] == 'r':
                   isRandom = True
+            cardsIds = []
             for card in cards:
                discard(card, isRandom = isRandom)
+               cardsIds.append(card._id)
             # Add discarded cards to action local variables
-            addActionTempVars('discarded', cards, True)
+            addActionTempVars('discarded', cardsIds)
             
          elif type == RS_KW_COST_SACRIFICE:
             if target:

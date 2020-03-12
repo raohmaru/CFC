@@ -1,7 +1,7 @@
 # Card Fighters' Clash Changelog
 
 ## 0.7.5
-Scripted abilities: Makoto, Shigen, Charm, Oro, Q, Remy, Pester, Fellowship, Rose, Ryu, Ryu (Alpha), Donovan, Kasumi, Ryo, Andy, Terry Bogard, Chizuru, Akari, Marco, Cham Cham, Round 2, Power mode, Striker, Three sisters, Sagat, Kikaioh, Felicia, Q-Bee, B. Jenet, Lunch rush, No tricks, Storm rush, Lucky card.
+Scripted abilities: Makoto, Shigen, Charm, Oro, Q, Remy, Pester, Fellowship, Rose, Ryu, Ryu (Alpha), Donovan, Kasumi, Ryo, Andy, Terry Bogard, Chizuru, Akari, Marco, Cham Cham, Round 2, Power mode, Striker, Three sisters, Sagat, Kikaioh, Felicia, Q-Bee, B. Jenet, Lunch rush, No tricks, Storm rush, Lucky card, Sakura, Sean, Twelve, Urien, Option, Strider Hiryu, Anakaris, B. B. Hood, Bishamon, Demitri, Hinako.
 ## 0.7.4
 Scripted abilities: Cammy (Alpha), Dhalsim, E. Honda, Eiji, Mischief, Chun-Li, Chun-Li (Alpha), Dan, E. Honda, Elena, Morrigan Aensland, Grant, Kensou, Kagami, Nakoruru (Slash), Rimoruru (Slash), Shiki (Slash), Grace, Raw shield, Bamboo shoots, Banquet, Evil Ryu, Gen, Gill, Guile, Hugo, Ibuki, Juli, Karin, Ken, M. Bison, Lilith, Hon Fu, Terry, Lin, Kojiroh, Asura, Haohmaru, Nicotine, Laundry, Go home, Rest, M. Bison.
 ## 0.7.3

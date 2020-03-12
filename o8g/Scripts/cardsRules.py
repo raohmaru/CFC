@@ -133,7 +133,7 @@ effect:
          discard([#|target])  # default: 1, zone: myHand
          rndDiscard([#])
          moveTo(zone [, pos] [, reveal])  # pos = unsigned int or '?'
-         bp(#|x#|=#)    # default target = this
+         bp(#|x#|=#|expr)    # default target = this
          sp(#|=#|expr)  # default target = me
          hp(#|expr)     # default target = me
          playExtraChar()
@@ -217,8 +217,9 @@ event:
       removed
       powerless
       combatdamaged [suffix]
-      blocked [suffix]
       attacks [suffix]
+      blocks [suffix]
+      blocked [suffix]
    Prefixes:
       my (default)
       opp
@@ -229,6 +230,7 @@ event:
 
 cond:
    @see action:cond
+   Some conditions may create an event if there aren't any
 
 effect:
    @see action:effect
@@ -259,6 +261,8 @@ Available variables:
    card (only in each())
    discarded
    trashed
+   destroyed
+   attacker
    alone
    bp
    
@@ -716,22 +720,35 @@ action = reveal(hand) & discard(actions)
 """
 
 # Sakura's FIGHTING SPIRIT
-# RulesDict['f53e910f-8aef-47dc-a919-af81a5b0d2c4'] = ""
+RulesDict['f53e910f-8aef-47dc-a919-af81a5b0d2c4'] = """
+action = [[if me.hp <= 10]] bp(x2) target(this)
+"""
 
 # Sean's SORE LOSER
-# RulesDict['7f5099da-4bcf-4895-9493-e83a993118b7'] = ""
+RulesDict['7f5099da-4bcf-4895-9493-e83a993118b7'] = """
+auto = ~myEndPhase~ [[if me.hand.size < opp.hand.size]] draw()
+"""
 
 # Twelve's X.C.O.P.Y.
-# RulesDict['e4ae5562-a510-4a1d-98e8-59a91dc1cb8c'] = ""
+RulesDict['e4ae5562-a510-4a1d-98e8-59a91dc1cb8c'] = """
+auto = ~blocks this~ bp(=attacker.bp)
+"""
 
 # Urien's DESPOT
-# RulesDict['79239cad-fd51-4557-9534-af96bd1302bc'] = ""
+RulesDict['79239cad-fd51-4557-9534-af96bd1302bc'] = """
+target = opp
+action = {F}: reveal(hand) & discard(reactions)
+"""
 
 # Option's SUPPORT
-# RulesDict['c3a432e3-3642-46a2-a1e2-e2d5d5f698ab'] = ""
+RulesDict['c3a432e3-3642-46a2-a1e2-e2d5d5f698ab'] = """
+auto = enableRule(backup_fresh)
+"""
 
 # Strider Hiryu's CYPHER
-# RulesDict['c09e1c30-468b-4173-8aa8-3e6ba31cd3e8'] = ""
+RulesDict['c09e1c30-468b-4173-8aa8-3e6ba31cd3e8'] = """
+action = {F}: destroy() target(character[backedup])
+"""
 
 # Kikaioh's FAIR PLAY
 RulesDict['99081829-e898-4766-8727-b0a2918df49f'] = """
@@ -740,16 +757,24 @@ action = reveal(hand) & discard(reactions)
 """
 
 # Anakaris's J.O.T.P.
-# RulesDict['9ec88c6c-dc57-41fd-bb90-cf2822a735aa'] = ""
+RulesDict['9ec88c6c-dc57-41fd-bb90-cf2822a735aa'] = """
+action = loseAbility() target(characters)
+"""
 
 # B. B. Hood's APPLE FOR YOU
-# RulesDict['d44d9e8a-785c-48f2-85a5-ed076c1aa518'] = ""
+RulesDict['d44d9e8a-785c-48f2-85a5-ed076c1aa518'] = """
+action = {F}: destroy() target(^character); moveTo(deck) target(this) & shuffle()
+"""
 
 # Bishamon's REGRETFUL LOP
-# RulesDict['e778bf71-2f0f-4094-b096-b443fdbac8de'] = ""
+RulesDict['e778bf71-2f0f-4094-b096-b443fdbac8de'] = """
+action = destroy() target(^characters@myRing); each(card in destroyed => bp(+3))
+"""
 
 # Demitri's MIDNIGHT BLISS
-# RulesDict['563fbb65-90bc-43aa-9246-2f69e56ab119'] = ""
+RulesDict['563fbb65-90bc-43aa-9246-2f69e56ab119'] = """
+action = {F}: destroy() target(character@myRing) & draw()
+"""
 
 # Donovan's CHANGE IMMORTAL
 RulesDict['7f7fe518-3669-4dad-9063-79052f5067b7'] = """
@@ -965,7 +990,9 @@ action = {D(action)}{F}: loseAbility() & bp(=1) target(character)
 # RulesDict['aa591fb7-0136-4af8-9229-9b6da2e02aca'] = ""
 
 # Hinako's HINAKO'S READY!
-# RulesDict['bbdd3687-7200-4f34-9c96-ed882cee3588'] = ""
+RulesDict['bbdd3687-7200-4f34-9c96-ed882cee3588'] = """
+action = [[if me.hp <= 10]] draw(2)
+"""
 
 # Iori's BLOOD CONTRACT
 # RulesDict['4d7520b9-9ced-43e0-a2e7-974d76d8eb82'] = ""

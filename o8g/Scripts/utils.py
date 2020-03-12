@@ -146,6 +146,7 @@ def replaceVars(str):
    str = re.sub(Regexps['Ring'], r'getRingSize(\1)', str)
    str = re.sub(Regexps['Chars'], r'getRing(\1)', str)
    str = str.replace('.sp', '.SP')
+   str = str.replace('.hp', '.HP')
    str = str.replace('opp', 'getOpp()')
    str = str.replace('alone', 'getRingSize() == 1')
    debug("-- {}".format(str))
@@ -213,13 +214,10 @@ def getRule(rule):
       return GameRulesDefaults[rule]
 
 
-def addActionTempVars(name, value, set = False):
-   if set:
-      actionLocals[name] = value
-   else:
-      if not name in actionLocals:
-         actionLocals[name] = []
-      actionLocals[name].append(value)
+def addActionTempVars(name, value):
+   vars = getGlobalVar('ActionTempVars')
+   vars[name] = value
+   setGlobalVar('ActionTempVars', vars)
 
 #---------------------------------------------------------------------------
 # Pile functions

@@ -68,10 +68,10 @@ actions = [
    # "action = {D(2)}: +cantblock to(character@oppRing) ueot",
    # "action = [[may Destroy all humans?]] destroy()",
    # "action = [[if me.hand == 0]] destroy() uynt",
-   "action = moveTo(ctrlHand) target?(characters[bp>=800])",
-   "action = {F}: moveTo(ctrlDeck) target(characters[-backup]) & shuffle(myDeck) & shuffle(oppDeck)",
+   # "action = moveTo(ctrlHand) target?(characters[bp>=800])",
+   # "action = {F}: moveTo(ctrlDeck) target(characters[-backup]) & shuffle(myDeck) & shuffle(oppDeck)",
    # "action = {F}: destroy() target(^character@myRing) & damage(5, character)",
-   # "action = [[if  all myring: bp <= 3]] playExtraChar()",
+   "action = [[if  all myring: bp <= 3]] playExtraChar()",
    # "action = {F}: moveTo(@oppDeck) target(*@hand); moveTo(hand) target(*<-1>@oppDeck)",
    # "action = {F}: reveal(hand) & myHand.each(bp <= 3 { bp(+2) }) target(this)"
    # "action = swapChars() target(<2>character)\naction = moveToSlot() target(character)",
@@ -120,8 +120,8 @@ def test(arr, title):
       print ""
 
 # rules = RulesDict['aa867ea1-89f8-4154-8e20-2263edd00002']
-test(targets, 'targets')
-# test(actions, 'actions')
+# test(targets, 'targets')
+test(actions, 'actions')
 # test(abilities, 'abilities')
 # test(autos, 'autos')
 # test(requisite, 'requisite')

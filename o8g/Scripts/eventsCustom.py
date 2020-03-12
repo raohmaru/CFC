@@ -82,7 +82,8 @@ def triggerGameEvent(event, *args):
                if card.controller == me:
                   pcard = getParsedCard(card)
                   pcard.rules.execAuto(None, event, *params)
-               elif listener['scope'] in RS_PREFIX_SCOPE:
+               elif listener['scope'] in RS_PREFIX_SCOPE or obj_id:
+                  debug("-- Effect controlled by {}. Sending remote event.".format(card.controller))
                   remoteCall(card.controller, "remoteGameEvent", [listener['callback'], event]+list(params))
                   update()
             # ... or the name of a global function

@@ -133,12 +133,21 @@ def alterCost(cardType, mod):
 
 
 def getLocals(vars):
+   # Adds action local variables defined in other places
+   temp = {}
+   for key, value in getGlobalVar('ActionTempVars').iteritems():
+      if isinstance(value, list):
+         temp[key] = []
+         for v in value:
+            temp[key].append(Card(v))
+      else:
+         temp[key] = Card(value)
+
    return dict(
       this = vars['source'],
-      tgt = vars['targets'][0] if vars['targets'] else None,
+      tgt = vars['targets'][0] if 'targets' in vars and len(vars['targets']) > 0 else None,
       prevtgt = vars['rc'].prevTargets[0] if vars['rc'].prevTargets else None,
-      # Add action local variables defined in other places
-      **actionLocals
+      **temp
    )
 
 
@@ -182,11 +191,15 @@ def cmd_shuffle(rc, targets, source, restr, pileName=None):
 
 def cmd_destroy(rc, targets, source, restr, *args):
    debug(">>> cmd_destroy({})".format(targets)) #Debug
+   cardsIds = []
    for target in targets:
       if target.controller == me:
          destroy(target)
       else:
          remoteCall(target.controller, "destroy", [target, 0, 0, me])
+      # Add destroyet card to action local variables
+      cardsIds.append(target._id)
+   addActionTempVars('destroyed', cardsIds)
    rc.applyNext()
 
 

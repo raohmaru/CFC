@@ -140,7 +140,8 @@ GameRulesDefaults = {
    'ab_trigger_fresh': False, # Activate [] abilities of fresh characters
    'ab_trigger_act'  : True,  # Activate [] abilities
    'ab_instant_act'  : True,  # Activate /\ abilities
-   'piercing'        : True
+   'piercing'        : True,  # Allow piercing damage
+   'backup_fresh'    : False  # Backup fresh characters
 }
 
 # Debug
@@ -182,8 +183,9 @@ GameEvents = Struct(**{
    'Removed'      : 'removed',
    'Powerless'    : 'powerless',
    'CombatDamaged': 'combatdamaged',
+   'Attacks'      : 'attacks',
+   'Blocks'       : 'blocks',
    'Blocked'      : 'blocked',
-   'Attacks'      : 'attacks'
 })
 # When a listener to these events is added, trigger it automatically
 GameEventsExecOnAdded = [
@@ -298,7 +300,6 @@ if me.name == Author and len(players) == 1:
 parsedCards    = {} # Dictionary holding all parsed cards
 cleanedUpRing  = False  # Tracks if the user has run the Clean-up phase
 commander      = None  # RulesCommands instance
-actionLocals   = dict()  # Variables used during action execution
 
 automations = {
    'Play'     : True, # Automatically trigger game effects and card effects when playing cards

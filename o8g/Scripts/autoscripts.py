@@ -113,6 +113,9 @@ def endPhaseStart():
          # Attacker is blocked
          if card._id in blockers:
             blocker = Card(blockers[card._id])
+            # Add discarded cards to action local variables & trigger game event
+            addActionTempVars('attacker', card._id)
+            triggerGameEvent([GameEvents.Blocks, blocker._id], blocker._id)
             # Trigger blocked event if not in UA
             if pdmg == 0:
                triggerGameEvent([GameEvents.Blocked, card._id], card._id)
@@ -300,7 +303,7 @@ def backupAuto(card):
          if not confirm("Can't backup more than {} character per turn.\nProceed anyway?".format(CharsPerTurn)):
             return
    # Target just entered the ring?
-   if MarkersDict['Just Entered'] in target.markers:
+   if MarkersDict['Just Entered'] in target.markers and not getRule('backup_fresh'):
       if not confirm("Characters that just entered the ring this turn can't be backed-up.\nProceed anyway?"):
          return
    # Target is frozen?
