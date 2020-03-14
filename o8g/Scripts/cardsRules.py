@@ -172,7 +172,7 @@ to(): (optional)
    Alias:
       target
    Default:
-      current player or this card (depend on context)
+      current player or the card (depend on context)
 
 to?(): Same as to(), but target is optional and will run next effect in the action
       
@@ -216,7 +216,7 @@ event:
       ringchanges
       removed
       powerless
-      combatdamaged [suffix]
+      playerCombatDamaged [suffix]
       attacks [suffix]
       blocks [suffix]
       blocked [suffix]
@@ -251,20 +251,21 @@ Available variables:
    all global variables
    (me|opp)
       .sp
-      .hand
-      .hand.size
+      .hand [.size]
       .ring
       .chars
    tgt
    prevTgt
    this
    card (only in each())
-   discarded
-   trashed
-   destroyed
+   discarded [.size]
+   trashed [.size]
+   destroyed [.size]
+   moved [.size]
    attacker
    alone
    bp
+   oppDamaged
    
 Available functions:
    all group: expr   # context = group item
@@ -580,7 +581,7 @@ action = destroy() target(@infront)
 
 # Alex's SONIC HEADBUTT
 RulesDict['c7c73d2e-1728-4c1b-ba7e-dcd989e61d98'] = """
-auto = ~oppCombatDamaged fromThis~ +cantplayac to(opp) oppueot
+auto = ~playerCombatDamaged fromThis~ +cantplayac to(opp) oppueot
 """
 
 # Blanka's ELECTRIC DISCHARGE
@@ -787,10 +788,14 @@ action = {F}: moveTo(hand) target(<r>action@myDeck)
 """
 
 # Hsien-Ko's DARK WEAPON
-# RulesDict['299377b4-f955-420b-b252-85ed6cf98c14'] = ""
+RulesDict['299377b4-f955-420b-b252-85ed6cf98c14'] = """
+action = {F}: moveTo(deck); moveTo(deck) target(all@hand) & shuffle() & draw(3)
+"""
 
 # J. Talbain's SEETHING BLOOD
-# RulesDict['3a0e4fbc-6895-43e0-97d1-e1f667aca271'] = ""
+RulesDict['3a0e4fbc-6895-43e0-97d1-e1f667aca271'] = """
+action = [[if oppDamaged]] bp(+3)
+"""
 
 # Jedah's P.D.C.
 # RulesDict['1d07a01b-e099-44a8-87eb-71fb2f3fa762'] = ""
@@ -802,7 +807,7 @@ action = moveTo(deck) target(characters@discards) & shuffle()
 
 # Morrigan's LIFE SUCKER
 RulesDict['4e34756e-34e4-45e5-a6ab-698604c6fb99'] = """
-auto = ~oppCombatDamaged fromThis~ hp(this.bp)
+auto = ~playerCombatDamaged fromThis~ hp(this.bp)
 """
 
 # Morrigan Aensland's GOODNIGHT KISS
@@ -842,7 +847,9 @@ action = {D}{F}: damage(2) to(opp,character@oppRing)
 # RulesDict['d14dd0ed-cba6-404d-b7d1-e25c9b5c78ed'] = ""
 
 # Mr. Karate's M.I.A.
-# RulesDict['06c4b88f-8634-4b67-87d0-c0406fa268f1'] = ""
+RulesDict['06c4b88f-8634-4b67-87d0-c0406fa268f1'] = """
+action = {F}: moveTo(deck) & shuffle()
+"""
 
 # Ryo's SPIRIT SURGE
 RulesDict['952dc83f-9f22-4993-a824-707b0682753e'] = """
@@ -1227,16 +1234,23 @@ action = {F}: destroy() target(character@myRing); hp(+2)
 # RulesDict['b0346de5-63b8-4443-8ea4-8155d889a0fc'] = ""
 
 # Bopper
-# RulesDict['c50f1a40-87e9-41b9-a69c-600b36b68077'] = ""
+RulesDict['c50f1a40-87e9-41b9-a69c-600b36b68077'] = """
+action = destroy() target(character@myRing); damage(prevTgt.BP) to(character)
+"""
 
 # Break up
 # RulesDict['4e493533-2d51-4af6-8a8e-ec55cb1b7ca5'] = ""
 
 # Chaos
-# RulesDict['f215a022-c742-4c96-95d1-40c202f8d104'] = ""
+RulesDict['f215a022-c742-4c96-95d1-40c202f8d104'] = """
+action = destroy() target(character@myRing); damage(3) to(characters)
+"""
 
 # Cover fire
-# RulesDict['713207f3-e051-43f8-9953-0a78e295122b'] = ""
+RulesDict['713207f3-e051-43f8-9953-0a78e295122b'] = """
+target = character
+action = damage(3)
+"""
 
 # Crossover
 # RulesDict['ab631979-20d8-4789-85be-149b414d1ef1'] = ""
@@ -1254,13 +1268,19 @@ action = {F}: destroy() target(character@myRing); hp(+2)
 # RulesDict['e22264db-d58f-48ce-9be7-608bdfdd4299'] = ""
 
 # Earth's pike
-# RulesDict['98e1e7ed-8c66-4105-a2fc-1290036c0f70'] = ""
+RulesDict['98e1e7ed-8c66-4105-a2fc-1290036c0f70'] = """
+target = opp
+action = damage(5)
+"""
 
 # Emulate
 # RulesDict['053ba349-515d-4293-898b-625f837f62b6'] = ""
 
 # Engokogeki
-# RulesDict['1ef4cecb-c096-47e0-995f-a20b6b75325a'] = ""
+RulesDict['1ef4cecb-c096-47e0-995f-a20b6b75325a'] = """
+target = opp
+action = damage(1)
+"""
 
 # Escape
 # RulesDict['96c5cd74-a898-42f3-a169-9f98e1ce8945'] = ""
@@ -1283,7 +1303,10 @@ action = hp(+5)
 """
 
 # Grenade
-# RulesDict['26fa7e0e-eb86-40d5-b5ab-39723fd67e43'] = ""
+RulesDict['26fa7e0e-eb86-40d5-b5ab-39723fd67e43'] = """
+target = opp
+action = damage(3)
+"""
 
 # Heritage
 # RulesDict['14a057f5-be46-4ec0-abee-a6c573f4711e'] = ""
@@ -1314,7 +1337,9 @@ action = reveal(hand) target(players); each(action in me.hand => draw()); each(a
 """
 
 # Makeover
-# RulesDict['f6a32199-62df-49b5-8544-ae7a86915cbe'] = ""
+RulesDict['f6a32199-62df-49b5-8544-ae7a86915cbe'] = """
+action = {F}: moveTo(deck) target?(all@hand) & shuffle() & draw(moved.size + 1)
+"""
 
 # Management
 RulesDict['fd8db3d4-7df1-45fb-8712-5c35bb5acb3f'] = """
@@ -1323,7 +1348,10 @@ action = {F}: reveal() & shuffle() & moveTo(deck)
 """
 
 # Mega crush
-# RulesDict['5d3bc1c3-692b-4d7c-9781-68fcdc0bd96e'] = ""
+RulesDict['5d3bc1c3-692b-4d7c-9781-68fcdc0bd96e'] = """
+target = characters
+action = damage(5)
+"""
 
 # Mischief
 RulesDict['7a394ff3-727d-48d9-91a9-b9cba90510b6'] = """
@@ -1392,7 +1420,9 @@ action = discard(all) & draw(5)
 # RulesDict['0e1b4f81-93e9-44be-ab31-7aed8cb354d0'] = ""
 
 # Shopping
-# RulesDict['0035d193-fe4b-4927-9dc1-6124b26768bc'] = ""
+RulesDict['0035d193-fe4b-4927-9dc1-6124b26768bc'] = """
+action = {F}: moveTo(deck) target(<,3>*@discards) & shuffle() & draw()
+"""
 
 # Showtime!
 # RulesDict['7302a3d9-0ee7-4a5e-93aa-b93cc44b6463'] = ""
@@ -1528,7 +1558,10 @@ action = {D(character)}: sp(discarded[0].SP)
 # RulesDict['eaf346c3-d2e6-4066-adae-e1678746673d'] = ""
 
 # Robot punch
-# RulesDict['91e441cc-0f1f-4b01-a2b0-94678d6f0b56'] = ""
+RulesDict['91e441cc-0f1f-4b01-a2b0-94678d6f0b56'] = """
+target = character
+action = damage(3)
+"""
 
 # Scan
 # RulesDict['1722e9d6-30e1-4355-9aa3-9b80b765754a'] = ""
@@ -1556,7 +1589,9 @@ action = {D(reaction)}{F}: draw(3)
 """
 
 # Time bomb
-# RulesDict['48a11103-e08d-4237-952e-bf4cdc2868f7'] = ""
+RulesDict['48a11103-e08d-4237-952e-bf4cdc2868f7'] = """
+action = {D(character)}: damage(discarded[0].BP) to(character[attack])
+"""
 
 # Vacation
 # RulesDict['f4df6ee6-2fcd-4ba1-b86f-59d5028eb96b'] = ""
@@ -1565,7 +1600,11 @@ action = {D(reaction)}{F}: draw(3)
 # RulesDict['1e54d73a-4795-4eae-b1d1-c0ca5d075fcf'] = ""
 
 # Wanna gimme
-# RulesDict['c6acfab6-c7cb-442e-87f0-432779af5ad9'] = ""
+RulesDict['c6acfab6-c7cb-442e-87f0-432779af5ad9'] = """
+target? = *@deck
+action = {F}: shuffle() & moveTo(deck)
+
+"""
 
 # Who's taller
 # RulesDict['2298624c-1eeb-4f71-b028-b0118ea614ac'] = ""

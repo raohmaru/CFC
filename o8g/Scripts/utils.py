@@ -142,18 +142,19 @@ def replaceVars(str):
    str = re.sub(Regexps['BP'], r'hasattr(getParsedCard(\1), "BP") and getParsedCard(\1).BP', str)
    str = re.sub(Regexps['Action'], 'isAction(card)', str)
    str = re.sub(Regexps['Char'], 'isCharacter(card)', str)
-   str = re.sub(Regexps['HandSize'], r'len(\1.hand)', str)
+   str = re.sub(Regexps['Size'], r'len(\1)', str)
    str = re.sub(Regexps['Ring'], r'getRingSize(\1)', str)
    str = re.sub(Regexps['Chars'], r'getRing(\1)', str)
+   str = re.sub(Regexps['Opp'], r'getOpp()', str)
    str = str.replace('.sp', '.SP')
    str = str.replace('.hp', '.HP')
-   str = str.replace('opp', 'getOpp()')
    str = str.replace('alone', 'getRingSize() == 1')
    debug("-- {}".format(str))
    return str
    
    
 def evalExpression(expr, retValue = False, locals = None):
+   debug("evalExpression({})\nLocals: {}".format(expr, locals))
    expr = replaceVars(expr)
    forexpr = "[{} for card in {}]"
    
@@ -173,13 +174,13 @@ def evalExpression(expr, retValue = False, locals = None):
    try:
       res = eval(expr, None, locals)
       if retValue:
-         debug("Evaluated expr  %s  (%s)" % (expr, res))
+         debug("-- Evaluated expr  %s  (%s)" % (expr, res))
          return res
       else:
-         debug("Evaluated expr  %s  ?  (%s)" % (expr, res))
+         debug("-- Evaluated expr  %s  ?  (%s)" % (expr, bool(res)))
          return bool(res)
    except:
-      debug("%s  is not a valid Python expression" % (expr))
+      debug("-- %s  is not a valid Python expression" % (expr))
       return False
    
    
@@ -218,6 +219,13 @@ def addActionTempVars(name, value):
    vars = getGlobalVar('ActionTempVars')
    vars[name] = value
    setGlobalVar('ActionTempVars', vars)
+
+
+def changeState(name, value):
+   state[name.lower()] = value
+   debug("Game state changed: {} => {}".format(name, value))
+   debug("{}".format(state))
+   
 
 #---------------------------------------------------------------------------
 # Pile functions
@@ -277,9 +285,9 @@ def moveToGroup(group, card, sourceGroup = None, pos = None, reveal = False, sou
       name = card
    elif reveal:
       name = card.Name
-   card.moveTo(group, pos)
    targetCtrl = 'its' if me == sourcePlayer else "{}'s".format(me)
    notify("{} moved {} {} {} {} {}.".format(sourcePlayer, name, fromText, posText, targetCtrl, group.name))
+   card.moveTo(group, pos)
    
 
 def selectRing():
@@ -668,6 +676,9 @@ def dealDamage(dmg, target, source, isPiercing = False):
       target.HP -= dmg
       piercing = "piercing " if isPiercing else ""
       notify("{} deals {} {}damage to {}. New HP is {} (before was {}).".format(source, dmg, piercing, target, target.HP, oldHP))
+      # Change game state
+      if target != me and not isCharacter(source):
+         changeState('oppDamaged', True)
       
       
 def modBP(card, qty, mode = None):

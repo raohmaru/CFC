@@ -121,9 +121,10 @@ Regexps = dict(
    BP       = re.compile(r'([\w\d\[\]]+)\.bp'),
    Action   = re.compile(r'\baction\b'),
    Char     = re.compile(r'\bchar\b'),
-   HandSize = re.compile(r'(\w+)\.hand\.size'),
+   Size     = re.compile(r'([\w.]+)\.size'),
    Ring     = re.compile(r'(\w+)\.ring'),
-   Chars    = re.compile(r'(\w+)\.chars')
+   Chars    = re.compile(r'(\w+)\.chars'),
+   Opp      = re.compile(r'\bopp\b'),
 )
 
 # Rules
@@ -173,19 +174,19 @@ Hooks = Struct(**{
 
 # Game Events
 GameEvents = Struct(**{
-   'ActivatePhase': 'activatephase',
-   'DrawPhase'    : 'drawphase',
-   'BlockPhase'   : 'blockphase',
-   'EndPhase'     : 'endphase',
-   'CleanupPhase' : 'cleanupphase',
-   'HandChanges'  : 'handchanges',
-   'RingChanges'  : 'ringchanges',
-   'Removed'      : 'removed',
-   'Powerless'    : 'powerless',
-   'CombatDamaged': 'combatdamaged',
-   'Attacks'      : 'attacks',
-   'Blocks'       : 'blocks',
-   'Blocked'      : 'blocked',
+   'ActivatePhase'      : 'activatephase',
+   'DrawPhase'          : 'drawphase',
+   'BlockPhase'         : 'blockphase',
+   'EndPhase'           : 'endphase',
+   'CleanupPhase'       : 'cleanupphase',
+   'HandChanges'        : 'handchanges',
+   'RingChanges'        : 'ringchanges',
+   'Removed'            : 'removed',
+   'Powerless'          : 'powerless',
+   'PlayerCombatDamaged': 'playercombatdamaged',
+   'Attacks'            : 'attacks',
+   'Blocks'             : 'blocks',
+   'Blocked'            : 'blocked',
 })
 # When a listener to these events is added, trigger it automatically
 GameEventsExecOnAdded = [
@@ -200,7 +201,7 @@ GameEventsFromVars = {
 GameEventsDisabledUA = [
    GameEvents.EndPhase,
    GameEvents.CleanupPhase,
-   GameEvents.CombatDamaged
+   GameEvents.PlayerCombatDamaged
 ]
 
 # Messages
@@ -300,6 +301,7 @@ if me.name == Author and len(players) == 1:
 parsedCards    = {} # Dictionary holding all parsed cards
 cleanedUpRing  = False  # Tracks if the user has run the Clean-up phase
 commander      = None  # RulesCommands instance
+state = {}
 
 automations = {
    'Play'     : True, # Automatically trigger game effects and card effects when playing cards

@@ -68,9 +68,6 @@ class Rules():
          
    def addEvent(self, event):
       eventName = event[0] + event[1]
-      # Has suffix?
-      # if event[2]:
-         # eventName += RulesUtils.getObjIdFromSuffix(event[2], self)
       addGameEventListener(eventName, self.card_id, self.card_id)
       if event[1] in GameEventsExecOnAdded:
          self.execAuto(self.rules_tokens[RS_KEY_AUTO], eventName)
@@ -178,7 +175,7 @@ class Rules():
                      return False
                elif cond[0] == RS_KW_COND_IF:            
                   debug("-- Found IF condition: {}".format(cond[1]))
-                  res = evalExpression(cond[1])
+                  res = evalExpression(cond[1], False, getLocals())
                   if not res:
                      debug("-- Condition not matching")
                      notify("Cannot activate the ability because its condition does not match.")

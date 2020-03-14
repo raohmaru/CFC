@@ -132,23 +132,28 @@ def alterCost(cardType, mod):
    notify(MSG_RULES['card_cost'].format(cardType.title(), abs(CardCost[cardType]), 'less' if CardCost[cardType] >= 0 else 'more'))
 
 
-def getLocals(vars):
-   # Adds action local variables defined in other places
-   temp = {}
+def getLocals(**kwargs): 
+# Adds action local variables defined in other places
+   locals = {}
+   # Convert card IDs into Card objects
    for key, value in getGlobalVar('ActionTempVars').iteritems():
       if isinstance(value, list):
-         temp[key] = []
+         locals[key] = []
          for v in value:
-            temp[key].append(Card(v))
+            locals[key].append(Card(v))
       else:
-         temp[key] = Card(value)
-
-   return dict(
-      this = vars['source'],
-      tgt = vars['targets'][0] if 'targets' in vars and len(vars['targets']) > 0 else None,
-      prevtgt = vars['rc'].prevTargets[0] if vars['rc'].prevTargets else None,
-      **temp
-   )
+         locals[key] = Card(value)
+        
+   locals.update(state)
+   
+   if kwargs:
+      localVars = dict(
+         this = kwargs['source'],
+         tgt = kwargs['targets'][0] if 'targets' in kwargs and len(kwargs['targets']) > 0 else None,
+         prevtgt = kwargs['rc'].prevTargets[:1] if isinstance(kwargs['rc'].prevTargets, list) else None
+      )
+      locals.update(localVars)
+   return locals
 
 
 #---------------------------------------------------------------------------
@@ -160,7 +165,7 @@ def cmd_damage(rc, targets, source, restr, dmg):
    if isNumber(dmg):
       dmg = int(dmg)
    else:
-      dmg = evalExpression(dmg, True, getLocals(locals()))
+      dmg = evalExpression(dmg, True, getLocals(rc=rc, targets=targets, source=source))
    for target in targets:
       dealDamage(dmg, target, source)
    rc.applyNext()
@@ -271,6 +276,8 @@ def cmd_randomDiscard(rc, targets, source, restr, numCards=1):
 def cmd_moveTo(rc, targets, source, restr, zone, pos = None, reveal = False):
    debug(">>> cmd_moveTo({}, {}, {}, {})".format(targets, zone, pos, reveal)) #Debug
    zonePrefix, zoneName = RulesLexer.getPrefix(RS_PREFIX_ZONES, zone, RS_PREFIX_CTRL)
+   if targets == None:
+      targets = [source]
    if zoneName in RS_KW_ZONES_PILES:
       if isNumber(pos):
          pos = num(pos)
@@ -281,6 +288,7 @@ def cmd_moveTo(rc, targets, source, restr, zone, pos = None, reveal = False):
          reveal = True
          pos = None
       reveal = bool(reveal)
+      cardsIds = []
       for target in targets:
          pile = RulesUtils.getZoneByName(zone, target)
          debug("{}'s {} -> {}'s {}".format(target.controller, target, pile.controller, pile.name))
@@ -296,6 +304,9 @@ def cmd_moveTo(rc, targets, source, restr, zone, pos = None, reveal = False):
          else:
             remoteCall(target.controller, "moveToGroup", [pile, target, None, pos, reveal, me])
          rnd(1, 100) # Wait until all animation is done
+         # Add trashed card to action local variables
+         cardsIds.append(target._id)
+      addActionTempVars('moved', cardsIds)
    rc.applyNext()
 
 
@@ -311,7 +322,7 @@ def cmd_bp(rc, targets, source, restr, qty):
       else:
          qty = qty[1:]
    if amount == None:
-      amount = num(evalExpression(qty, True, getLocals(locals())))
+      amount = num(evalExpression(qty, True, getLocals(rc=rc, targets=targets, source=source)))
    if not targets:
       targets = [source]
    debug(">>> cmd_bp({}, {}, {}, {})".format(targets, qty, mode, amount)) #Debug
@@ -332,7 +343,7 @@ def cmd_sp(rc, targets, source, restr, qty):
       mode = qty[0]
       amount = num(qty[1:])
    else:
-      amount = num(evalExpression(qty, True, getLocals(locals())))
+      amount = num(evalExpression(qty, True, getLocals(rc=rc, targets=targets, source=source)))
    if not targets or isCard(targets[0]):
       targets = [me]
    debug(">>> cmd_sp({}, {}, {})".format(targets, amount, mode)) #Debug
@@ -345,7 +356,7 @@ def cmd_hp(rc, targets, source, restr, qtyExpr):
    if isNumber(qtyExpr):
       qty = int(qtyExpr)
    else:
-      qty = evalExpression(qtyExpr, True, getLocals(locals()))
+      qty = evalExpression(qtyExpr, True, getLocals(rc=rc, targets=targets, source=source))
    if not targets or isCard(targets[0]):
       targets = [me]
    debug(">>> cmd_hp({}, {}) => {}".format(targets, qtyExpr, qty)) #Debug
@@ -370,7 +381,7 @@ def cmd_draw(rc, targets, source, restr, qty = None):
    if isNumber(qty):
       amount = num(qty)
    else:
-      amount = num(evalExpression(qty, True))
+      amount = num(evalExpression(qty, True, getLocals(rc=rc, targets=targets, source=source)))
    if not targets or isCard(targets[0]):
       targets = [me]
    debug(">>> cmd_draw({}, {}, {})".format(targets, qty, amount)) #Debug
@@ -404,7 +415,7 @@ def cmd_each(rc, targets, source, restr, args):
    func = func['effects'][0][1]
    debug(">>> cmd_each({}, {}, {})".format(targets, cond, func)) #Debug
    
-   res = evalExpression(cond, True, getLocals(locals()))
+   res = evalExpression(cond, True, getLocals(rc=rc, targets=targets, source=source))
    if len(res) > 0:
       subrc = RulesCommands()
       for v in res:

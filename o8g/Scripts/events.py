@@ -118,6 +118,7 @@ def onTurnPassed(args):
    if args.player == me:
       charsPlayed = 0  # Num of chars played this turn
       backupsPlayed = 0  # Num of chars backed-up this turn
+      state = {}
       clearGlobalVar('UnitedAttack')
       clearGlobalVar('Blockers')
       if not cleanedUpRing:
