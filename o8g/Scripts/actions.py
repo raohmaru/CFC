@@ -363,11 +363,11 @@ def toggleAbility(card, x = 0, y = 0, remove = False):
       if 'noability' in card.alternates:
          card.alternate = 'noability'
       else:
-         # Updates proxy image of all players
+         # Updates proxy image for all players
          for p in players:
             remoteCall(p, "addAlternateRules", [card, '', '', 'noability'])
             update()
-      notify("{} remove(s) {}'s abilities".format(me, card))
+      notify("{} removes {}'s abilities".format(me, card))
 
 
 def transformCards(cards, x = 0, y = 0):
@@ -482,6 +482,8 @@ def destroy(card, x = 0, y = 0, controller=me):
    card.moveTo(me.piles['Discard Pile'])
    if isCharacter(card):
       action = "KOs"
+   if card.orientation != Rot0:
+      card.orientation = Rot0
    notify("{} {} {} {}.".format(controller, action, card, fromText))
 
 
@@ -725,7 +727,7 @@ def play(card):  # This is the function to play cards from your hand.
       placeCard(card, card.Type)
    if isCharacter(card):
       notify("{} plays {} from its {}{}.".format(me, card, group.name, slot))
-      notify("({} has played {} character{} this turn.)".format(me, charsPlayed, getPlural(charsPlayed)))
+      notify("({} has played {} character{} this turn.)".format(me, state['charsPlayed'], plural(state['charsPlayed'])))
    else:
       notify("{} plays {} from its {}.".format(me, card, group.name))
 
@@ -780,7 +782,7 @@ def refill(group = me.hand):  # Refill the player's hand to its hand size.
 def draw(group = me.Deck):  # Draws one card from the deck into the player's hand.
    mute()
    if len(group) == 0:
-      whisper("Can't draw cards from an empty {}.".format(group.name))
+      whisper("You can't draw cards from an empty {}.".format(group.name))
       return
    group.top().moveTo(me.hand)
    notify("{} draws a card.".format(me))
@@ -799,7 +801,7 @@ def drawMany(group, count = None, silent = False):  # This function draws a vari
       if len(group) > 0:  # If the deck is not empty...
          group.top().moveTo(me.hand)  # ...then move them one by one into their play hand.
    if not silent:
-      notify("{} draws {} card(s).".format(me, i+1))
+      notify("{} draws {} card{}.".format(me, i+1, plural(i+1)))
 
 
 def randomDraw(group = me.Deck, type = None):
@@ -877,7 +879,7 @@ def prophecy(group = me.Deck, x = 0, y = 0, count = None):
          return
       card = card[0]
       if not deckPos:
-         deckPos = askChoice("Where to put the card(s)?", ['Top of deck', 'Bottom of deck'])
+         deckPos = askChoice("Where to put the card?", ['Top of deck', 'Bottom of deck'])
          if deckPos == 0:
             return
       cards.remove(card)

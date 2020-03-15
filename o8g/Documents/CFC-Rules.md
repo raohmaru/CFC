@@ -97,14 +97,14 @@ Only one character card can be played per turn.
 
 Action cards offers a variety of effects, like special powers or events that can help in a battle. You can play them only in your turn.
 
-Each action card have a cost, a number of SP (usually negative) a player must spend to play that card. After it has been played and its effects followed, the card is put into the discard pile.
+Action cards have a cost: a number of SP (usually negative) a player must spend to play the card. After it has been played, its effects are applied immediately and the card is put into the discard pile.
 
-There is no limitation in the number of Action cards a player may play.
+There is no limitation in the number of Action cards a player can play in his turn.
 
 #### Reaction
 ![Reaction card](imgs/Snared.jpg)
 
-Reaction cards are like Action cards but that can be only played during an enemy's Counterattack phase, and only if that enemy is attacking you. After it has been played the card is put into the discard pile.
+Reaction cards are like Action cards but that can be only played during an enemy's Counterattack phase, and only if that enemy is attacking you. After it has been played, its effects are applied immediately and the card is put into the discard pile.
 
 Reaction cards have a cost, a number of SP (usually negative) a player must spend to play that card.
 

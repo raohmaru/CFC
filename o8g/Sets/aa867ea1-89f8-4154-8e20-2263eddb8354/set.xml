@@ -1195,7 +1195,7 @@
 			<property name="Ability"      value="&#164; ENCOURAGEMENT" />
 			<property name="Ability Type" value="&#164;" />
 			<property name="Ability Name" value="ENCOURAGEMENT" />
-			<property name="Rules"        value="At the beginning of your turn, raise the BP of all backed-up characters 200 points." />
+			<property name="Rules"        value="At the beginning of your turn, raise the BP of backed-up characters 200 points." />
 			<property name="BP"           value="700" />
 			<property name="SP"           value="0" />
 			<property name="Backup 1"     value="Gymnast" />

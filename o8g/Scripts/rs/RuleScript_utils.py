@@ -89,7 +89,9 @@ class RulesUtils():
       elif zone == RS_KW_ZONE_INFRONT:
          idx = getSlotIdx(source)
          if idx > -1:
-            cards = [getCardAtSlot(idx, getOpp())]
+            card = getCardAtSlot(idx, getOpp())
+            if card:
+               cards = [card]
 
       elif zone == RS_KW_ZONE_HAND:
          cards = [c for c in player.hand]
@@ -114,6 +116,11 @@ class RulesUtils():
          return Struct(**{
             'min': int(str),
             'max': int(str)
+         })
+      if str == RS_KW_ANYNUM:
+         return Struct(**{
+            'min': 1,
+            'max': NumSlots
          })
       if str[:1] == RS_KW_RANDOM:
          samples = num(str[1:])
@@ -342,12 +349,14 @@ class RulesUtils():
             msg = MSG_SEL_CARD_EFFECT if source else MSG_SEL_CARD
          sourceName = source.Name if source else ''
          qtyMsg = minQty
+         qtyPlural = plural(minQty)
          if minQty < maxQty:
             if minQty == 0:
                qtyMsg = "up to {}".format(maxQty)
             else:
                qtyMsg = "from {} to {}".format(minQty, maxQty)
-               
+            qtyPlural = 's'
+            
          # Last chance to select a card
          if len(cards_f1) > 1 or minQty == 0:
             article = 'the'
@@ -365,7 +374,7 @@ class RulesUtils():
             owner = article.replace('your', 'his')
             notify(MSG_PLAYER_LOOKS.format(me, owner, zone[1]))
             # Select in any zone
-            title = msg.format(qtyMsg, article, zone[1], sourceName)
+            title = msg.format(qtyMsg, qtyPlural, article, zone[1], sourceName)
             # If there aren't enough cards to select, just show the cards
             if len(cards_f1) <= minQty:
                showCardDlg(cards_f1, title, min=0, max=0)

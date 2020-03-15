@@ -113,12 +113,10 @@ def onCardsMoved(args):
 def onTurnPassed(args):
    # Reset some player variables at the start of each turn
    debug(">>> onTurnPassed({}, {})".format(args.player, turnNumber())) #Debug
-   global charsPlayed, backupsPlayed, cleanedUpRing
+   global cleanedUpRing
    # That was my old turn
    if args.player == me:
-      charsPlayed = 0  # Num of chars played this turn
-      backupsPlayed = 0  # Num of chars backed-up this turn
-      state = {}
+      resetState()
       clearGlobalVar('UnitedAttack')
       clearGlobalVar('Blockers')
       if not cleanedUpRing:

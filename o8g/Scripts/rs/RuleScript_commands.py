@@ -137,14 +137,13 @@ def getLocals(**kwargs):
    locals = {}
    # Convert card IDs into Card objects
    for key, value in getGlobalVar('ActionTempVars').iteritems():
+      key = key.lower()
       if isinstance(value, list):
-         locals[key] = []
-         for v in value:
-            locals[key].append(Card(v))
+         locals[key] = [Card(id) for id in value]
       else:
-         locals[key] = Card(value)
+         locals[key] = value
         
-   locals.update(state)
+   locals.update({k.lower(): v for k, v in state.items()})
    
    if kwargs:
       localVars = dict(
@@ -196,15 +195,13 @@ def cmd_shuffle(rc, targets, source, restr, pileName=None):
 
 def cmd_destroy(rc, targets, source, restr, *args):
    debug(">>> cmd_destroy({})".format(targets)) #Debug
-   cardsIds = []
    for target in targets:
       if target.controller == me:
          destroy(target)
       else:
          remoteCall(target.controller, "destroy", [target, 0, 0, me])
       # Add destroyet card to action local variables
-      cardsIds.append(target._id)
-   addActionTempVars('destroyed', cardsIds)
+   addActionTempVars('destroyed', targets)
    rc.applyNext()
 
 
@@ -282,13 +279,12 @@ def cmd_moveTo(rc, targets, source, restr, zone, pos = None, reveal = False):
       if isNumber(pos):
          pos = num(pos)
       elif pos == '?':
-         choice = askChoice("Where to put the card(s)?", ['Top of pile', 'Bottom of pile'])
+         choice = askChoice("Where to put the card{}?".format(plural(len(targets))), ['Top of pile', 'Bottom of pile'])
          pos = (max(choice, 1) - 1) * -1
       elif pos is not None:
          reveal = True
          pos = None
       reveal = bool(reveal)
-      cardsIds = []
       for target in targets:
          pile = RulesUtils.getZoneByName(zone, target)
          debug("{}'s {} -> {}'s {}".format(target.controller, target, pile.controller, pile.name))
@@ -305,8 +301,7 @@ def cmd_moveTo(rc, targets, source, restr, zone, pos = None, reveal = False):
             remoteCall(target.controller, "moveToGroup", [pile, target, None, pos, reveal, me])
          rnd(1, 100) # Wait until all animation is done
          # Add trashed card to action local variables
-         cardsIds.append(target._id)
-      addActionTempVars('moved', cardsIds)
+      addActionTempVars('moved', targets)
    rc.applyNext()
 
 
@@ -368,9 +363,8 @@ def cmd_hp(rc, targets, source, restr, qtyExpr):
 
 
 def cmd_playExtraChar(rc, targets, source, restr, *args):
-   global charsPlayed
-   debug(">>> cmd_playExtraChar() {} -> {}".format(charsPlayed, charsPlayed-1))
-   charsPlayed = 0
+   debug(">>> cmd_playExtraChar() {} -> {}".format(state['charsPlayed'], state['charsPlayed']-1))
+   state['charsPlayed'] = 0
    notify("{} can play an additional character this turn.".format(me))
    rc.applyNext()
 
@@ -410,12 +404,17 @@ def cmd_loseAbility(rc, targets, source, restr, *args):
 
 
 def cmd_each(rc, targets, source, restr, args):
-   cond, func = args.split('=>')
+   cond, func = args.split(RS_KW_ARROW)
    func = RulesLexer.parseAction(func)
    func = func['effects'][0][1]
    debug(">>> cmd_each({}, {}, {})".format(targets, cond, func)) #Debug
    
-   res = evalExpression(cond, True, getLocals(rc=rc, targets=targets, source=source))
+   if not ' in ' in cond:
+      tokens = RulesLexer.parseTarget(cond)
+      res = RulesUtils.getTargets(tokens, source=source)
+   else:
+      res = evalExpression(cond, True, getLocals(rc=rc, targets=targets, source=source))
+   
    if len(res) > 0:
       subrc = RulesCommands()
       for v in res:

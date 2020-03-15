@@ -35,6 +35,7 @@ qty:
       [min],max
    Keywords:
       r[#]
+      **
 
 type:
    Operators:
@@ -140,8 +141,7 @@ effect:
          draw([#|expression])  # Default: 1
          steal()
          loseAbility()
-         each(group: expr => effect)    # effect context: group item
-         each(expr in group => effect)  # effect context: group item
+         each(expr in group -> effect)  # effect context: group item
          transform(card name)
          moveRestTo(zone)
          enableRule(rule)
@@ -262,10 +262,12 @@ Available variables:
    trashed [.size]
    destroyed [.size]
    moved [.size]
+   sacrificed [.size]
    attacker
    alone
    bp
    oppDamaged
+   oppLostSP
    
 Available functions:
    all group: expr   # context = group item
@@ -361,7 +363,7 @@ action = destroy() target(^character@myRing)
 
 # Ruby Heart's TAG ALONG
 RulesDict['ee979882-67cc-4549-881c-8e158df495ce'] = """
-action = [[if all me.chars: bp <= 3]] playExtraChar()
+action = [[if all card.bp <= 3 in me.chars]] playExtraChar()
 """
 
 # Son Son's BUNSHIN
@@ -411,7 +413,7 @@ auto = ~myDrawPhase~ draw() target(me)
 
 # Samanosuke's DEMON GAUNTLET
 RulesDict['a68dc591-6976-4341-b8b9-1a7dc1c71775'] = """
-action = reveal(hand) & each(me.hand: card.bp <= 3 => bp(+2)) target(this)
+action = reveal(hand) & each(card.bp <= 3 in me.hand -> bp(+2)) target(this)
 """
 
 # Ayame's BUTTERFLY ILLUSION
@@ -561,7 +563,7 @@ action = {F}: draw(2) & discard()
 
 # Hayato's ASHURA
 RulesDict['f232c282-6a03-436f-aae2-53f6988c6603'] = """
-action = reveal(hand); each(action in me.hand => bp(+2)) target(this); discard(actions)
+action = reveal(hand); each(action in me.hand -> bp(+2)) target(this); discard(actions)
 """
 
 # June's PLASMA RING
@@ -696,7 +698,7 @@ auto = ~myEndPhase~ trash(2)
 
 # Remy's REVENGE
 RulesDict['63df795b-236c-4449-aa96-287a836ed648'] = """
-auto = ~activatephase~ each(card in me.hand => sp(-1)); each(card in opp.hand => sp(-1)) to(opp)
+auto = ~activatephase~ each(card in me.hand -> sp(-1)); each(card in opp.hand -> sp(-1)) to(opp)
 """
 
 # Rose's TAROT CARD
@@ -769,7 +771,7 @@ action = {F}: destroy() target(^character); moveTo(deck) target(this) & shuffle(
 
 # Bishamon's REGRETFUL LOP
 RulesDict['e778bf71-2f0f-4094-b096-b443fdbac8de'] = """
-action = destroy() target(^characters@myRing); each(card in destroyed => bp(+3))
+action = destroy() target(^characters@myRing); each(card in destroyed -> bp(+3))
 """
 
 # Demitri's MIDNIGHT BLISS
@@ -798,7 +800,9 @@ action = [[if oppDamaged]] bp(+3)
 """
 
 # Jedah's P.D.C.
-# RulesDict['1d07a01b-e099-44a8-87eb-71fb2f3fa762'] = ""
+RulesDict['1d07a01b-e099-44a8-87eb-71fb2f3fa762'] = """
+auto = ~playerCombatDamaged fromThis~ draw()
+"""
 
 # Lilith's BECOMING ONE
 RulesDict['60b0d429-c2bf-482d-84f1-10c78f424cc6'] = """
@@ -811,10 +815,14 @@ auto = ~playerCombatDamaged fromThis~ hp(this.bp)
 """
 
 # Morrigan Aensland's GOODNIGHT KISS
-# RulesDict['73e4c201-f462-4106-9e03-3b63ecd04aab'] = ""
+RulesDict['73e4c201-f462-4106-9e03-3b63ecd04aab'] = """
+action = {S(character)}{F}: sp(+8)
+"""
 
 # Pyron's COSMO POWER
-# RulesDict['d646ffc5-bec9-4e98-b799-510b4e1ea464'] = ""
+RulesDict['d646ffc5-bec9-4e98-b799-510b4e1ea464'] = """
+auto = ~myEndPhase~ [[if me.sp < opp.sp]] sp(+3)
+"""
 
 # Q-Bee's PLUS B
 RulesDict['65c91e9d-761c-4978-ba3e-6e05026f080e'] = """
@@ -822,7 +830,9 @@ action = moveTo(hand) target?("Q-Bee"s@myDeck) & shuffle(myDeck)
 """
 
 # Rikuo's WETNESS
-# RulesDict['6c8ec7ed-2442-4847-8f38-8c8f5967b2ba'] = ""
+RulesDict['6c8ec7ed-2442-4847-8f38-8c8f5967b2ba'] = """
+action = {F}: bp(+2) to(characters[backedup])
+"""
 
 # Kenji's MITTEI
 # RulesDict['487f66ee-c717-41a1-ad2e-31d3fe0dd424'] = ""
@@ -853,7 +863,7 @@ action = {F}: moveTo(deck) & shuffle()
 
 # Ryo's SPIRIT SURGE
 RulesDict['952dc83f-9f22-4993-a824-707b0682753e'] = """
-action = {D(action)}{F}: each(card in me.hand => sp(+1))
+action = {D(action)}{F}: each(card in me.hand -> sp(+1))
 """
 
 # Ryo Sakazaki's KOUKEN
@@ -927,7 +937,9 @@ auto = ~blocked this~ draw()
 # RulesDict['928b8c60-483a-467c-9c11-e858009ff362'] = ""
 
 # Jin Chonshu's FOGEY FISTS
-# RulesDict['b77da717-47d7-4dc1-bb79-cddecf0c5af5'] = ""
+RulesDict['b77da717-47d7-4dc1-bb79-cddecf0c5af5'] = """
+action = {S(^character)}{F}: bp(+sacrificed[0].BP)
+"""
 
 # Joe's SCREW UPPER
 RulesDict['8cb08852-491e-4a34-9589-79bf3959ba63'] = """
@@ -941,7 +953,9 @@ action = {F}: trash(2) target(opp)
 # RulesDict['38fcbdaf-0025-4692-adac-be99aa1be750'] = ""
 
 # Krauser's GIGANTIC CYCLONE
-# RulesDict['f286cc08-ae18-4a40-bd66-17aedcfd9267'] = ""
+RulesDict['f286cc08-ae18-4a40-bd66-17aedcfd9267'] = """
+action = destroy() target(^character@myRing)
+"""
 
 # Mai's MORPH
 # RulesDict['a33974af-3d8e-41d6-8f90-fd6c8d525e18'] = ""
@@ -994,7 +1008,9 @@ action = {D(action)}{F}: loseAbility() & bp(=1) target(character)
 # RulesDict['ab45b64f-e231-44ca-83ad-bd4d89bcb851'] = ""
 
 # Heidern's STORM BRINGER
-# RulesDict['aa591fb7-0136-4af8-9229-9b6da2e02aca'] = ""
+RulesDict['aa591fb7-0136-4af8-9229-9b6da2e02aca'] = """
+auto = ~playerCombatDamaged fromThis~ sp(-3) to(opp); sp(+oppLostSP) to(me)
+"""
 
 # Hinako's HINAKO'S READY!
 RulesDict['bbdd3687-7200-4f34-9c96-ed882cee3588'] = """
@@ -1081,7 +1097,7 @@ action = {D(character)}{F}: bp(=discarded[0].bp)
 
 # Kagami's PHOENIX
 RulesDict['57de9ee8-5791-4696-96a1-057bf866ed9f'] = """
-action = {S}: each(card in me.hand => hp(+1))
+action = {S}: each(card in me.hand -> hp(+1))
 """
 
 # Kojiroh's SHUNJIN
@@ -1110,18 +1126,22 @@ abilities = preventpierce
 # RulesDict['48a553a1-fd40-482a-9161-86be2e29f246'] = ""
 
 # Zantetsu's BYOUMA
-# RulesDict['5ccdb31f-f7f8-4f89-916f-74e9db9130cb'] = ""
+RulesDict['5ccdb31f-f7f8-4f89-916f-74e9db9130cb'] = """
+auto = ~myEndPhase~ damage(2) to(characters)
+"""
 
 # Eri's HOTHEAD
 # RulesDict['04660547-18c8-4eb4-96b5-2a977dda0dcb'] = ""
 
 # Marco's ENEMY CHASER
 RulesDict['fa585a56-2a8f-48ff-9cc5-1234fecb4b09'] = """
-action = {D(all)}{F}: each(card in discarded => damage(1)) to(^characters)
+action = {D(all)}{F}: each(card in discarded -> damage(1)) to(^characters)
 """
 
 # Amakusa's GIVE YOURSELF
-# RulesDict['e590d588-84af-4c26-8dbe-e28d5b626747'] = ""
+RulesDict['e590d588-84af-4c26-8dbe-e28d5b626747'] = """
+action = destroy() target(^characters@myRing); each(card in destroyed -> sp(+5))
+"""
 
 # Asura's RISING EVIL
 RulesDict['48aba37c-374b-4362-b30a-d41fa9727b2c'] = """
@@ -1154,13 +1174,17 @@ abilities = pierce
 """
 
 # Haohmaru (WR)'s GANKOU
-# RulesDict['bfb737c0-4dcf-4b0c-b201-45857c83016b'] = ""
+RulesDict['bfb737c0-4dcf-4b0c-b201-45857c83016b'] = """
+auto = ~myEndPhase~ loseAbility() target(@infront)
+"""
 
 # Kazuki's IMBROGLIO
 # RulesDict['54c61d60-d68a-4ce8-8c2f-65bd0192c26a'] = ""
 
 # Kyoshiro's WARRIOR DANCE
-# RulesDict['7b2a974c-de9b-4f42-a8da-f15b68dbc41c'] = ""
+RulesDict['7b2a974c-de9b-4f42-a8da-f15b68dbc41c'] = """
+action = bp(+1) target(characters@myRing)
+"""
 
 # Mikoto's RED EYES
 # RulesDict['ae20ea05-0df7-4360-99a5-11a7dfe44b9f'] = ""
@@ -1169,7 +1193,9 @@ abilities = pierce
 # RulesDict['248517e9-d7a0-450d-9281-df91d20f68ab'] = ""
 
 # Nakoruru (Bust)'s SHIKURO'S FANG
-# RulesDict['f3f105e5-a0b1-4b4b-9f88-5932182d3ace'] = ""
+RulesDict['f3f105e5-a0b1-4b4b-9f88-5932182d3ace'] = """
+auto = ~myEndPhase~ damage(2) to(characters[frozen]@oppRing)
+"""
 
 # Nakoruru (Slash)'s NATURE'S BALM
 RulesDict['d231ed6e-8f7c-417e-8826-64f9297b395f'] = """
@@ -1222,7 +1248,9 @@ action = {F}: destroy() target(character@myRing); hp(+2)
 # RulesDict['2f8ecb64-d513-4e67-b537-5acef9de6c68'] = ""
 
 # Abduction
-# RulesDict['f7a00823-d37b-48eb-b2f6-c530623a2a9c'] = ""
+RulesDict['f7a00823-d37b-48eb-b2f6-c530623a2a9c'] = """
+action = {S(<**>characters@myRing)}: each(card in sacrificed -> sp(+5))
+"""
 
 # Activate!
 # RulesDict['e2597326-5639-435f-ae33-3303b181527c'] = ""
@@ -1239,7 +1267,9 @@ action = destroy() target(character@myRing); damage(prevTgt.BP) to(character)
 """
 
 # Break up
-# RulesDict['4e493533-2d51-4af6-8a8e-ec55cb1b7ca5'] = ""
+RulesDict['4e493533-2d51-4af6-8a8e-ec55cb1b7ca5'] = """
+action = destroy() target(characters[backedup])
+"""
 
 # Chaos
 RulesDict['f215a022-c742-4c96-95d1-40c202f8d104'] = """
@@ -1265,7 +1295,9 @@ action = damage(3)
 # RulesDict['4124ac7a-b7f5-4784-8246-872621cc9d95'] = ""
 
 # Double KO
-# RulesDict['e22264db-d58f-48ce-9be7-608bdfdd4299'] = ""
+RulesDict['e22264db-d58f-48ce-9be7-608bdfdd4299'] = """
+action = destroy() target(character@myRing); destroy() target(character@oppRing)
+"""
 
 # Earth's pike
 RulesDict['98e1e7ed-8c66-4105-a2fc-1290036c0f70'] = """
@@ -1309,7 +1341,9 @@ action = damage(3)
 """
 
 # Heritage
-# RulesDict['14a057f5-be46-4ec0-abee-a6c573f4711e'] = ""
+RulesDict['14a057f5-be46-4ec0-abee-a6c573f4711e'] = """
+action = {S(<**>characters@myRing)}: each(card in sacrificed -> draw())
+"""
 
 # Hey! Hey!
 # RulesDict['c8284885-2ab1-4020-afc7-faae4e196e74'] = ""
@@ -1333,7 +1367,7 @@ action = target(all@discards) moveTo(deck) & shuffle()
 
 # Lunch rush
 RulesDict['58580e2e-1f48-4210-a68f-57cd900b1036'] = """
-action = reveal(hand) target(players); each(action in me.hand => draw()); each(action in opp.hand => draw()) target(opp)
+action = reveal(hand) target(players); each(action in me.hand -> draw()); each(action in opp.hand -> draw()) target(opp)
 """
 
 # Makeover
@@ -1467,11 +1501,14 @@ action = reveal(hand) & discard(characters)
 # RulesDict['e038ebfd-6c19-4b1c-bf38-a2fd9f5ffbfd'] = ""
 
 # Aura spark
-# RulesDict['be84124e-5057-4511-a181-7492451db5b2'] = ""
+RulesDict['be84124e-5057-4511-a181-7492451db5b2'] = """
+target = character
+action = each(characters[backedup] -> damage(3))
+"""
 
 # Bamboo shoots
 RulesDict['826a8255-ed98-4c13-bb8c-96502837df52'] = """
-action = each(card in opp.hand => hp(+1))
+action = each(card in opp.hand -> hp(+1))
 """
 
 # Banquet
@@ -1480,7 +1517,10 @@ action = hp(+5)
 """
 
 # Cash profits
-# RulesDict['0a5179dd-e5a0-499e-90ac-8d62391743b8'] = ""
+RulesDict['0a5179dd-e5a0-499e-90ac-8d62391743b8'] = """
+target = <**>characters@myRing
+action = moveTo(hand) & each(card in moved -> draw())
+"""
 
 # Charm
 RulesDict['36450a2c-321b-4697-a37e-1563b16faf0e'] = """
@@ -1494,18 +1534,22 @@ action = disableRule(piercing) oppueot
 # RulesDict['fef1b38c-a055-4cd7-9436-34e220c30d52'] = ""
 
 # Evil eye
-# RulesDict['ed5b10af-ad01-4d70-bdac-0a7dfbf9de3f'] = ""
+RulesDict['ed5b10af-ad01-4d70-bdac-0a7dfbf9de3f'] = """
+action = {S(character@myRing)}: bp(=sacrificed[0].bp) target(character)
+"""
 
 # Face off
 # RulesDict['130c068d-bf62-4013-8b17-32af4a3f6994'] = ""
 
 # Fellowship
 RulesDict['2644337b-a5f8-4669-858b-824d9607f2d8'] = """
-action = trash(10) & each(char in trashed => sp(+1))
+action = trash(10) & each(char in trashed -> sp(+1))
 """
 
 # Ferocity
-# RulesDict['55dd552f-0c26-4bc1-819a-92cf32f285ae'] = ""
+RulesDict['55dd552f-0c26-4bc1-819a-92cf32f285ae'] = """
+action = {S(<**>characters@myRing)}: each(card in sacrificed -> damage(3)) to(characters)
+"""
 
 # Galactica phantom
 # RulesDict['dd49c2e2-3455-481d-b8a7-5f813796b3f4'] = ""

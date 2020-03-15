@@ -276,7 +276,7 @@ class Rules():
                if target:
                   max = int(target['types'][0])
                cards = RulesUtils.getCardsFromZone(RS_KW_ZONE_HAND)
-               cards = showCardDlg(cards, "Select {} card{} from you hand to discard".format(max, getPlural(max)), max, min=max)
+               cards = showCardDlg(cards, "Select {} card{} from you hand to discard".format(max, plural(max)), max, min=max)
                if cards == None:
                   return False
             # ... or a valid target
@@ -290,24 +290,24 @@ class Rules():
                # It's a random discard
                if target['qty'] is not None and target['qty'][:1] == 'r':
                   isRandom = True
-            cardsIds = []
             for card in cards:
                discard(card, isRandom = isRandom)
-               cardsIds.append(card._id)
             # Add discarded cards to action local variables
-            addActionTempVars('discarded', cardsIds)
+            addActionTempVars('discarded', cards)
             
          elif type == RS_KW_COST_SACRIFICE:
             if target:
                # The only zone allowed is player's ring
                target['zone'] = ['', RS_KW_ZONE_RING]
-               cards = RulesUtils.getTargets(target, source, MSG_SEL_CARD_SACRIFICE)
+               cards = RulesUtils.getTargets(target, thisCard, MSG_SEL_CARD_SACRIFICE)
                if cards == False or len(cards) == 0:
                   return False
                for card in cards:
                   destroy(card)
+               addActionTempVars('sacrificed', cards)
             else:
                destroy(thisCard)
+               addActionTempVars('sacrificed', [thisCard])
             
          # elif type == RS_KW_COST_EXILE:
          

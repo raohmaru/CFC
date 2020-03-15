@@ -114,7 +114,7 @@ def endPhaseStart():
          if card._id in blockers:
             blocker = Card(blockers[card._id])
             # Add discarded cards to action local variables & trigger game event
-            addActionTempVars('attacker', card._id)
+            addActionTempVars('attacker', [card])
             triggerGameEvent([GameEvents.Blocks, blocker._id], blocker._id)
             # Trigger blocked event if not in UA
             if pdmg == 0:
@@ -197,7 +197,6 @@ def clearKOedChars():
 
 def playAuto(card, slotIdx=None, force=False):
    debug(">>> playAuto({})".format(card)) #Debug
-   global charsPlayed
    phaseIdx = currentPhase()[1]
 
    # Player plays a Character card
@@ -212,8 +211,8 @@ def playAuto(card, slotIdx=None, force=False):
          information("Character cards can only be played on your Main Phase.")
          return
       # Limit of chars played per turn
-      if charsPlayed >= CharsPerTurn:
-         if not confirm("Only {} character per turn can be played\n(you have played {} characters).\nProceed anyway?".format(CharsPerTurn, charsPlayed)):
+      if state['charsPlayed'] >= CharsPerTurn:
+         if not confirm("Only {} character per turn can be played\n(you have played {} characters).\nProceed anyway?".format(CharsPerTurn, state['charsPlayed'])):
             return
       # Player has any empty slot in his ring?
       myRing = getGlobalVar('Ring', me)
@@ -238,7 +237,7 @@ def playAuto(card, slotIdx=None, force=False):
       setMarker(card, 'BP', num(card.BP) / 100)
       setMarker(card, 'Just Entered')
       putAtSlot(card, slotIdx)
-      charsPlayed += 1
+      state['charsPlayed'] += 1
 
    # Player plays an Action card
    elif isAction(card):
@@ -280,7 +279,6 @@ def playAuto(card, slotIdx=None, force=False):
 
 def backupAuto(card):
    debug(">>> backupAuto()") #Debug
-   global backupsPlayed
 
    # Check if the card can be legally played
    if not me.isActive or currentPhase()[1] != MainPhase:
@@ -298,7 +296,7 @@ def backupAuto(card):
       return
    target = targets[0]
    # Backup limit
-   if backupsPlayed >= BackupsPerTurn:
+   if state['backupsPlayed'] >= BackupsPerTurn:
       if triggerGameEvent(Hooks.BackupLimit, target._id):
          if not confirm("Can't backup more than {} character per turn.\nProceed anyway?".format(CharsPerTurn)):
             return
@@ -323,7 +321,8 @@ def backupAuto(card):
          if Card(id).Subtype == card.Subtype:
             avlbckps -= 1
    if avlbckps <= 0:
-      warning("{} can't be backed-up with more than {} {} card(s).".format(target.Name, acceptedBackups.count(card.Subtype), card.Subtype))
+      qty = acceptedBackups.count(card.Subtype)
+      warning("{} can't be backed-up with more than {} {} card{}.".format(target.Name, qty, card.Subtype, plural(qty)))
       return
    # It's a legal backup
    attach(card, target)
@@ -331,7 +330,7 @@ def backupAuto(card):
    card.sendToBack()
    setMarker(card, 'Backup')
    addMarker(target, 'BP', BackupRaiseBP)  # Backed-up char's BP is raised
-   backupsPlayed += 1
+   state['backupsPlayed'] += 1
    return target
 
 

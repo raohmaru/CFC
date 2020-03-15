@@ -34,17 +34,17 @@ def debugScenario():
    if turnNumber() == 0: 
 	   nextTurn(me, True)
    
-   global charsPlayed, debugVerbosity
+   global debugVerbosity
    debugVerbosity = DebugLevel.All
    me.SP = 50
    chooseSide()
    gotoMain()
    rnd(100, 10000)  # Delay the next action until all animation is done
    tableCards = [
-       '4e34756e-34e4-45e5-a6ab-698604c6fb99' # Morrigan
-      ,'3a0e4fbc-6895-43e0-97d1-e1f667aca271' # J. Talbain
-      # ,'d44d9e8a-785c-48f2-85a5-ed076c1aa518' # B. B. Hood
-      # ,'e778bf71-2f0f-4094-b096-b443fdbac8de' # Bishomon
+       # '6c8ec7ed-2442-4847-8f38-8c8f5967b2ba' # Rikuo
+      # ,'d646ffc5-bec9-4e98-b799-510b4e1ea464' # Pyron
+      # ,'5ccdb31f-f7f8-4f89-916f-74e9db9130cb' # Zantetsu
+      # ,'f3f105e5-a0b1-4b4b-9f88-5932182d3ace' # Nakoruru (Bust)
    ]
    for i, id in enumerate(tableCards):
       debug("Creating card {} at slot {}".format(id, i))
@@ -53,23 +53,13 @@ def debugScenario():
       ability = Ability(card)
       if ability.type and ability.type != InstantAbility:
          card.markers[MarkersDict['Just Entered']] = 0
-      charsPlayed = 0
+      state['charsPlayed'] = 0
       rnd(1, 100)  # Delay the next action until all animation is done
       
    handCards = [
-       'c50f1a40-87e9-41b9-a69c-600b36b68077' # Bopper
-      ,'f215a022-c742-4c96-95d1-40c202f8d104' # Chaos
-      ,'713207f3-e051-43f8-9953-0a78e295122b' # Cover fire
-      ,'98e1e7ed-8c66-4105-a2fc-1290036c0f70' # Earth's pike
-      ,'1ef4cecb-c096-47e0-995f-a20b6b75325a' # Engokogeki
-      ,'26fa7e0e-eb86-40d5-b5ab-39723fd67e43' # Grenade
-      ,'5d3bc1c3-692b-4d7c-9781-68fcdc0bd96e' # Mega crush
-      ,'91e441cc-0f1f-4b01-a2b0-94678d6f0b56' # Robot punch
-      ,'48a11103-e08d-4237-952e-bf4cdc2868f7' # Time bomb
-      ,'55ab2891-c99e-4647-8a9d-b01fbce3009f' # Char 300 BP
-      ,'248517e9-d7a0-450d-9281-df91d20f68ab' # Char 500 BP
-      ,'eb648ee7-aa4e-41ce-a7fc-04af31349ca9' # Char 700 BP
-      ,'4d7520b9-9ced-43e0-a2e7-974d76d8eb82' # Char 1000 BP
+      # ,'248517e9-d7a0-450d-9281-df91d20f68ab' # Char 500 BP
+      # ,'eb648ee7-aa4e-41ce-a7fc-04af31349ca9' # Char 700 BP
+      # ,'4d7520b9-9ced-43e0-a2e7-974d76d8eb82' # Char 1000 BP
       # ,'5e2211a0-e52e-4b7b-b03d-f6ecb3660bb0' # Action 0 SP
       # ,'83c33aa8-5981-4352-8107-cbb7e05547ec' # Action -1 SP
       # ,'b95b2104-d184-43cc-bb04-b3eb096c6fca' # Action -2 SP
@@ -85,18 +75,18 @@ def debugScenario():
       # rnd(1, 100)  # Delay the next action until all animation is done
    
    deckCards = [
-       '55ab2891-c99e-4647-8a9d-b01fbce3009f' # Char 300 BP
-      ,'55ab2891-c99e-4647-8a9d-b01fbce3009f' # Char 300 BP
-      ,'248517e9-d7a0-450d-9281-df91d20f68ab' # Char 500 BP
-      ,'eb648ee7-aa4e-41ce-a7fc-04af31349ca9' # Char 700 BP
-      ,'4d7520b9-9ced-43e0-a2e7-974d76d8eb82' # Char 1000 BP
-      ,'5e2211a0-e52e-4b7b-b03d-f6ecb3660bb0' # Action 0 SP
-      ,'83c33aa8-5981-4352-8107-cbb7e05547ec' # Action -1 SP
-      ,'b95b2104-d184-43cc-bb04-b3eb096c6fca' # Action -2 SP
-      ,'ac01bbbe-583e-46ae-b26c-3c25eb8f0779' # Action -6 SP
-      ,'556b3359-e642-419a-ab5c-67f70de1bb4f' # Reaction 0 SP
-      ,'46deecf5-7f7b-42b5-b6fa-e3162dce2013' # Reaction -1 SP
-      ,'91e441cc-0f1f-4b01-a2b0-94678d6f0b56' # Reaction -4 SP
+       # '55ab2891-c99e-4647-8a9d-b01fbce3009f' # Char 300 BP
+      # ,'55ab2891-c99e-4647-8a9d-b01fbce3009f' # Char 300 BP
+      # ,'248517e9-d7a0-450d-9281-df91d20f68ab' # Char 500 BP
+      # ,'eb648ee7-aa4e-41ce-a7fc-04af31349ca9' # Char 700 BP
+      # ,'4d7520b9-9ced-43e0-a2e7-974d76d8eb82' # Char 1000 BP
+      # ,'5e2211a0-e52e-4b7b-b03d-f6ecb3660bb0' # Action 0 SP
+      # ,'83c33aa8-5981-4352-8107-cbb7e05547ec' # Action -1 SP
+      # ,'b95b2104-d184-43cc-bb04-b3eb096c6fca' # Action -2 SP
+      # ,'ac01bbbe-583e-46ae-b26c-3c25eb8f0779' # Action -6 SP
+      # ,'556b3359-e642-419a-ab5c-67f70de1bb4f' # Reaction 0 SP
+      # ,'46deecf5-7f7b-42b5-b6fa-e3162dce2013' # Reaction -1 SP
+      # ,'91e441cc-0f1f-4b01-a2b0-94678d6f0b56' # Reaction -4 SP
    ]
    for id in deckCards:
       debug("Adding card {} to Deck".format(id))
@@ -132,26 +122,24 @@ def debugScenario():
    
    
 def debugOpp():
-   global charsPlayed
-   
    tableCards = [
-       'd14694b4-484c-4b45-962e-8cbb636d8a9a' # 200 BP
-      ,'ff8a97e3-9a78-4c5f-86fa-23480fa57da5' # 400 BP
-      ,'24e99a13-cb42-4e16-9900-78dde12e1a4c' # 600 BP
-      ,'e6e46f83-d089-4762-8d8e-2a3252cfc9db' # 1000 BP
+       # 'd14694b4-484c-4b45-962e-8cbb636d8a9a' # 200 BP
+      # ,'ff8a97e3-9a78-4c5f-86fa-23480fa57da5' # 400 BP
+      # ,'24e99a13-cb42-4e16-9900-78dde12e1a4c' # 600 BP
+      # ,'e6e46f83-d089-4762-8d8e-2a3252cfc9db' # 1000 BP
    ]
    for i, id in enumerate(tableCards):
       card = table.create(id, 0, 0, quantity=1, persist=True)
       playAuto(card, i, True)
-      charsPlayed = 0
+      state['charsPlayed'] = 0
       rnd(1, 100)  # Delay the next action until all animation is done
       
    handCards = [
-       '55ab2891-c99e-4647-8a9d-b01fbce3009f' # Char 300 BP
-      ,'248517e9-d7a0-450d-9281-df91d20f68ab' # Char 500 BP
-      ,'eb648ee7-aa4e-41ce-a7fc-04af31349ca9' # Char 700 BP
-      ,'4d7520b9-9ced-43e0-a2e7-974d76d8eb82' # Char 1000 BP
-      ,'5e2211a0-e52e-4b7b-b03d-f6ecb3660bb0' # Action 0 SP
+       # '55ab2891-c99e-4647-8a9d-b01fbce3009f' # Char 300 BP
+      # ,'248517e9-d7a0-450d-9281-df91d20f68ab' # Char 500 BP
+      # ,'eb648ee7-aa4e-41ce-a7fc-04af31349ca9' # Char 700 BP
+      # ,'4d7520b9-9ced-43e0-a2e7-974d76d8eb82' # Char 1000 BP
+      # ,'5e2211a0-e52e-4b7b-b03d-f6ecb3660bb0' # Action 0 SP
       # ,'83c33aa8-5981-4352-8107-cbb7e05547ec' # Action -1 SP
       # ,'b95b2104-d184-43cc-bb04-b3eb096c6fca' # Action -2 SP
       # ,'ac01bbbe-583e-46ae-b26c-3c25eb8f0779' # Action -6 SP

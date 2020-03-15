@@ -28,15 +28,15 @@ pp = pprint.PrettyPrinter(indent=4)
    
 # Rules to test
 targets = [
-   "target = character",
-   "target = character,reactions",
-   "target = characters[attack]",
-   "target = character@hand",
+   # "target = character",
+   # "target = character,reactions",
+   # "target = characters[attack]",
+   # "target = character@hand",
    # "target = @oppRing",
    # "target = Captain[attack] @ oppRing",
    # "target = robot[-block]@myhand",
    # "target = character,action[bp>=800,frozen]@oppRing",
-   "target = ^character[fresh&powerless]",
+   # "target = ^character[fresh&powerless]",
    # "target = [fresh]",
    # "target = character@invalidZone",
    # "target = *<2>@oppDeck",
@@ -45,6 +45,7 @@ targets = [
    # "target = <1>action@hand",
    # "target = <1,2>action@hand",
    # "target? = <,4>*<-2>@myDeck",
+   "target = <**>characters@myRing",
    # 'target = "Juni"&"Juli"<1>@myDeck'
 ]
 actions = [
@@ -85,9 +86,9 @@ abilities = [
 ]
 autos = [
    # "auto = destroy()",
-   # "auto = ~myHandChanges~ destroy()",
+   "auto = ~my HandChanges~ destroy()",
    # "auto = ~HandChanges~ destroy() & draw(1)",
-   # "auto = ~oppHandChanges~ [[if oppRing<2]] destroy()",
+   "auto = ~opp HandChanges~ [[if oppRing<2]] destroy()",
    # "auto = ~ myHandChanges ~ destroy() to(character@myRing)",
    # "auto = ~myHandChanges~ destroy() ueot",
    # "auto = ~handChanges~ +unblockable",
@@ -120,8 +121,8 @@ def test(arr, title):
       print ""
 
 # rules = RulesDict['aa867ea1-89f8-4154-8e20-2263edd00002']
-# test(targets, 'targets')
+test(targets, 'targets')
 # test(actions, 'actions')
 # test(abilities, 'abilities')
-test(autos, 'autos')
+# test(autos, 'autos')
 # test(requisite, 'requisite')

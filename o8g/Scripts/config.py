@@ -73,15 +73,15 @@ InfoColor           = "#00ff00"
 
 # Dictionaries which hold all the hard coded markers and tokens (in the markers & tokens set)
 MarkersDict = {
-   "BP"             : ("BP",             "b86fc644-d084-43d3-99d2-5b11457321cc"),
-   "Just Entered"   : ("Just Entered",   "9a52c42c-543f-48bb-9a48-d7599d6c8fae"),
-   "Attack"         : ("Attack",         "023406a3-417c-473d-bc23-481290755a4a"),
-   "United Attack"  : ("United Attack",  "88036e2b-6a1f-40be-a941-988b27c405ba"),
-   "Counter-attack" : ("Counter-attack", "2fd7dc74-4149-469d-9bde-53e94b99b934"),
-   "Cannot Unfreeze"    : ("Cannot Unfreeze",    "5231f83b-b78e-48b3-8bce-62031c022bf4"),
-   "Unfreezable"    : ("Unfreezable",    "fec1976b-9ce5-4b32-8c07-76eadc5607f6"),
-   "Backup"         : ("Backup",         "efd3208d-2ec3-44ca-be1d-858e91628da4"),
-   "Pierce"         : ("Pierce",         "3131facc-3fe4-4dd5-95ff-afc08570d869"),
+   "BP"             : ("BP",              "b86fc644-d084-43d3-99d2-5b11457321cc"),
+   "Just Entered"   : ("Just Entered",    "9a52c42c-543f-48bb-9a48-d7599d6c8fae"),
+   "Attack"         : ("Attack",          "023406a3-417c-473d-bc23-481290755a4a"),
+   "United Attack"  : ("United Attack",   "88036e2b-6a1f-40be-a941-988b27c405ba"),
+   "Counter-attack" : ("Counter-attack",  "2fd7dc74-4149-469d-9bde-53e94b99b934"),
+   "Cannot Unfreeze": ("Cannot Unfreeze", "5231f83b-b78e-48b3-8bce-62031c022bf4"),
+   "Unfreezable"    : ("Unfreezable",     "fec1976b-9ce5-4b32-8c07-76eadc5607f6"),
+   "Backup"         : ("Backup",          "efd3208d-2ec3-44ca-be1d-858e91628da4"),
+   "Pierce"         : ("Pierce",          "3131facc-3fe4-4dd5-95ff-afc08570d869"),
 }
 TokensDict = {}
 
@@ -206,7 +206,7 @@ GameEventsDisabledUA = [
 
 # Messages
 MSG_SEL_CHAR_RING           = "Please select a character in your ring.\n(Shift key + Left click on a character)."
-MSG_SEL_CARD                = "Select {} card(s) from {} {}"
+MSG_SEL_CARD                = "Select {} card{} from {} {}"
 MSG_SEL_CARD_EFFECT         = MSG_SEL_CARD + " ({}'s effect)"
 MSG_SEL_CARD_DISCARD        = "Select a card from your {} to discard"
 MSG_SEL_CARD_SACRIFICE      = "Select a card from your {} to KO"
@@ -291,8 +291,6 @@ BPMultiplier = 100  # Model.BP = markers.BP * BPMultiplier
 playerSide     = None  # Variable to keep track on which side each player is
 playerAxis     = None  # Variable to keep track on which axis the player is
 handSize       = HandSize
-charsPlayed    = 0  # Number of chars played this turn
-backupsPlayed  = 0  # Number of chars backed-up this turn
 debugVerbosity = DebugLevel.Off # -1..4 (At -1 means no debugging messages display)
 debugging      = False
 # If I am alone debugging I want to know everything
@@ -301,7 +299,7 @@ if me.name == Author and len(players) == 1:
 parsedCards    = {} # Dictionary holding all parsed cards
 cleanedUpRing  = False  # Tracks if the user has run the Clean-up phase
 commander      = None  # RulesCommands instance
-state = {}
+state          = {}  # Stores the state of the current round
 
 automations = {
    'Play'     : True, # Automatically trigger game effects and card effects when playing cards

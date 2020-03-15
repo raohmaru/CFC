@@ -62,12 +62,11 @@ def resetAll():
 # Clears all the global variables in order to start a new game.
    debug(">>> resetAll()") #Debug
    # Import all our global variables and reset them.
-   global playerSide, handSize, debugVerbosity, parsedCards, charsPlayed, backupsPlayed
+   global playerSide, handSize, debugVerbosity, parsedCards
    playerSide = None
    handSize = HandSize
    parsedCards = {}
-   charsPlayed = 0
-   backupsPlayed = 0
+   resetState()
    me.HP = 30
    me.SP = 0
    clearGlobalVar('Backups')
@@ -138,7 +137,7 @@ def clearGlobalVar(name, player = None):
    
 
 def replaceVars(str):
-   debug("replaceVars({})".format(str))
+   debug("-- replaceVars({})".format(str))
    str = re.sub(Regexps['BP'], r'hasattr(getParsedCard(\1), "BP") and getParsedCard(\1).BP', str)
    str = re.sub(Regexps['Action'], 'isAction(card)', str)
    str = re.sub(Regexps['Char'], 'isCharacter(card)', str)
@@ -149,7 +148,8 @@ def replaceVars(str):
    str = str.replace('.sp', '.SP')
    str = str.replace('.hp', '.HP')
    str = str.replace('alone', 'getRingSize() == 1')
-   debug("-- {}".format(str))
+   str = str.replace('attacker', 'attacker[0]')
+   debug("---- {}".format(str))
    return str
    
    
@@ -158,16 +158,12 @@ def evalExpression(expr, retValue = False, locals = None):
    expr = replaceVars(expr)
    forexpr = "[{} for card in {}]"
    
-   if ':' in expr:
-      parts = expr.split(":")
-      expr = forexpr.format(parts[1], parts[0])
-   
    if ' in ' in expr:
-      parts = expr.split("in")
+      parts = expr.split(' in ')
       expr = forexpr.format(parts[0], parts[1])
    
-   if ' all ' in expr:
-      expr = expr.replace('all', '')
+   if 'all ' in expr:
+      expr = expr.replace('all ', '')
       # https://docs.python.org/2.7/library/functions.html
       expr = 'all(' + expr + ')'
    
@@ -217,6 +213,8 @@ def getRule(rule):
 
 def addActionTempVars(name, value):
    vars = getGlobalVar('ActionTempVars')
+   if isinstance(value, list):
+      value = [card._id for card in value]
    vars[name] = value
    setGlobalVar('ActionTempVars', vars)
 
@@ -225,6 +223,15 @@ def changeState(name, value):
    state[name.lower()] = value
    debug("Game state changed: {} => {}".format(name, value))
    debug("{}".format(state))
+   
+
+def resetState():
+   global state
+   state = {
+      'charsPlayed'  : 0,  # Num of chars played this turn
+      'backupsPlayed': 0,  # Num of chars backed-up this turn
+      'oppDamaged'   : False  # Enemy damaged by non-character card
+   }
    
 
 #---------------------------------------------------------------------------
@@ -325,7 +332,7 @@ def sanitizeStr(str):
    return str
    
 
-def getPlural(num):
+def plural(num):
    if num == 1:
       return ''
    return 's'
@@ -706,6 +713,8 @@ def modSP(count = 1, mode = None, silent = False, player = me):
       player.SP += count # Now increase the SP by the amount passed to us.
    if not silent and count != 0:
       action = "gains" if count >= 0 else "loses"
+      if player != me and count < 0:
+         addActionTempVars('oppLostSP', -count)
       notify("{} {} {} SP. New total is {} (before was {}).".format(player, action, count, player.SP, initialSP))
 
 
