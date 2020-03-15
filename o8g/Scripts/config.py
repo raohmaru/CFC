@@ -110,9 +110,9 @@ InstantAbility = u'\xa2'
 TriggerAbility = u'\xa3'
 AutoAbility    = u'\xa4'
 
-InstantUniChar   = u'\u25B2'
+InstantUniChar = u'\u25B2'
 TriggerUniChar = u'\u2588'
-AutoUniChar      = u'\u25CF'
+AutoUniChar    = u'\u25CF'
 
 # A dictionary which holds the regex used in other scripts
 Regexps = dict(

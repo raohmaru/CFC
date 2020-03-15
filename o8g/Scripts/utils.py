@@ -310,7 +310,7 @@ def moveToGroup(group, card, sourceGroup = None, pos = None, reveal = False, sou
       if pos < 0:
          posText = "to the bottom of"
       elif pos > 0:
-         posText = str(pos) + "to position {} from the top of"
+         posText = "to position {} from the top of".format(pos)
    if sourceGroup.name == 'Hand':
       card.isFaceUp = False
    if group.name == 'Hand':

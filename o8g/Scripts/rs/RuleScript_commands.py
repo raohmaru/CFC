@@ -136,10 +136,13 @@ def getLocals(**kwargs):
    locals.update({k.lower(): v for k, v in state.items()})
    
    if kwargs:
+      prevtgt = None
+      if 'rc' in kwargs and kwargs['rc'].prevTargets != None and len(kwargs['rc'].prevTargets) > 0:
+         prevtgt = kwargs['rc'].prevTargets[0]
       localVars = dict(
-         this = kwargs['source'],
+         this = kwargs['source'] if 'source' in kwargs else None,
          tgt = kwargs['targets'][0] if 'targets' in kwargs and len(kwargs['targets']) > 0 else None,
-         prevtgt = kwargs['rc'].prevTargets[:1] if isinstance(kwargs['rc'].prevTargets, list) else None
+         prevtgt = prevtgt
       )
       locals.update(localVars)
    return locals
@@ -391,6 +394,17 @@ def cmd_loseAbility(rc, targets, source, restr, *args):
       toggleAbility(target, remove=True)
       rnd(1, 100) # Wait until all animation is done
    rc.applyNext()
+   
+
+def cmd_copyAbility(rc, targets, source, restr, expr):
+   debug(">>> cmd_copyAbility({}, {}, {})".format(targets, source, expr)) #Debug
+   card = evalExpression(expr, True, getLocals(rc=rc, targets=targets, source=source))
+   if not targets:
+      targets = [source]
+   if card:
+      for target in targets:
+         copyAbility(target, target = card)
+   rc.applyNext()
 
 
 def cmd_each(rc, targets, source, restr, args):
@@ -426,17 +440,22 @@ def cmd_transfrom(rc, targets, source, restr, cardName):
    rc.applyNext()
 
    
-def cmd_moveRestTo(rc, targets, source, restr, zone):
+def cmd_moveRestTo(rc, targets, source, restr, zone, pos = None):
    pile = me.deck
    index = len(pile)
-   targetZone = RulesUtils.getZoneByName(zone)
    if len(targets) > 0:
       pile = targets[0].group
       index = targets[0].index
-   debug(">>> cmd_moveRestTo({}, {})".format(zone, index)) #Debug
-   notify("{} looks through the top of his {}".format(me, pile.name))
-   for i in range(0, index):
-      moveToGroup(targetZone, pile[0], pile, reveal = True)
+   newPile = [pile[i] for i in range(0, index)]
+   targetZone = RulesUtils.getZoneByName(zone, pile[0])
+   myPile = targetZone.controller == me
+   debug(">>> cmd_moveRestTo({}, {}, {})".format(zone, index, pos)) #Debug
+   notify("{} looks through the top of {} {}".format(me, 'his' if myPile else players[1], pile.name))
+   for card in newPile:
+      if myPile:
+         moveToGroup(targetZone, card, pile, num(pos), True)
+      else:
+         remoteCall(targetZone.controller, "moveToGroup", [targetZone, card, pile, num(pos), True])
       rnd(1, 100) # Wait between effects until all animation is done
    rc.applyNext()
    
@@ -554,6 +573,15 @@ def cmd_select(rc, targets, source, restr, whichCards):
    if target:
       rc.setTarget(target)
    rc.applyNext()
+
+
+def cmd_activate(rc, targets, source, restr, expr):
+   debug(">>> cmd_activate({})".format(expr)) #Debug
+   card = evalExpression(expr, True, getLocals(rc=rc, targets=targets, source=source))
+   if card:
+      pcard = getParsedCard(source, card.model, True, True)
+      pcard.activateEffect()
+   rc.applyNext()
    
 
 RulesCommands.register('damage',        cmd_damage)
@@ -571,6 +599,7 @@ RulesCommands.register('playextrachar', cmd_playExtraChar)
 RulesCommands.register('draw',          cmd_draw)
 RulesCommands.register('steal',         cmd_steal)
 RulesCommands.register('loseability',   cmd_loseAbility)
+RulesCommands.register('copyability',   cmd_copyAbility)
 RulesCommands.register('each',          cmd_each)
 RulesCommands.register('transform',     cmd_transfrom)
 RulesCommands.register('moverestto',    cmd_moveRestTo)
@@ -584,3 +613,4 @@ RulesCommands.register('movetoslot',    cmd_moveToSlot)
 RulesCommands.register('trash',         cmd_trash)
 RulesCommands.register('prophecy',      cmd_prophecy)
 RulesCommands.register('select',        cmd_select)
+RulesCommands.register('activate',      cmd_activate)

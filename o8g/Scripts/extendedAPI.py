@@ -89,6 +89,17 @@ class ExtendedApi(object):
          return None
       return card.Model
       
+   def getCardProperties(self, cardData, propset=''):
+      """Gets all properties from a card data given the property set name (aka alternate).
+      Returns: dict
+      """
+      cardPropertySet = cardData.Properties[propset]
+      props = {}
+      # Keys are objects Octgn.DataNew.Entities.PropertyDef
+      for k in cardPropertySet.Properties.Keys:
+         props[k.Name] = cardPropertySet.Properties.Item[k]
+      return props
+      
    def getCardProperty(self, cardData, propName, propset=''):
       """Gets a value of a property from a card data given the property set name (aka alternate).
       Returns: str

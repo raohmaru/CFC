@@ -223,6 +223,7 @@ def filterHasAbility(card, include, cmd, *args):
 	  
    return bool(card.properties['Ability Type'])
    
+   
 def filterNoAbility(card, include, cmd, *args):
    debug(">>> filterNoAbility({}, {}, {}, {})".format(card, include, cmd, args)) #Debug
 
@@ -231,6 +232,33 @@ def filterNoAbility(card, include, cmd, *args):
 	  
    return not card.properties['Ability Type']
       
+      
+def filterAbilityInstant(card, include, cmd, *args):
+   debug(">>> filterAbilityInstant({}, {}, {}, {})".format(card, include, cmd, args)) #Debug
+
+   if not isCard(card):
+      return False
+	  
+   return bool(card.properties['Ability Type']) and card.properties['Ability Type'] == InstantAbility
+      
+      
+def filterAbilityTrigger(card, include, cmd, *args):
+   debug(">>> filterAbilityTrigger({}, {}, {}, {})".format(card, include, cmd, args)) #Debug
+
+   if not isCard(card):
+      return False
+	  
+   return bool(card.properties['Ability Type']) and card.properties['Ability Type'] == TriggerAbility
+      
+      
+def filterAbilityAuto(card, include, cmd, *args):
+   debug(">>> filterAbilityAuto({}, {}, {}, {})".format(card, include, cmd, args)) #Debug
+
+   if not isCard(card):
+      return False
+	  
+   return bool(card.properties['Ability Type']) and card.properties['Ability Type'] == AutoAbility
+
 
 RulesFilters.registerFilter('bp'       , filterBP)
 RulesFilters.registerFilter('sp'       , filterSP)
@@ -246,3 +274,6 @@ RulesFilters.registerFilter('frozen'   , filterFrozen)
 RulesFilters.registerFilter('fresh'    , filterJustEntered)
 RulesFilters.registerFilter('powerful' , filterHasAbility)
 RulesFilters.registerFilter('powerless', filterNoAbility)
+RulesFilters.registerFilter('abinstant', filterAbilityInstant)
+RulesFilters.registerFilter('abtrigger', filterAbilityTrigger)
+RulesFilters.registerFilter('abauto'   , filterAbilityAuto)

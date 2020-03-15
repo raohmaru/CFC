@@ -84,6 +84,9 @@ filters: (optional)
       fresh
       powerful
       powerless
+      abinstant
+      abtrigger
+      abauto
    Prefixes:
       - (not)
 
@@ -141,6 +144,7 @@ effect:
          draw([#|expression])  # Default: 1
          steal()
          loseAbility()
+         copyAbility(expr)
          each(expr in group -> effect)  # effect context: group item
          transform(card name)
          moveRestTo(zone)
@@ -154,6 +158,7 @@ effect:
          trash([#])     # default: 1
          prophecy([#])  # default: 1
          select(target)
+         activate(expr)
       Ability:
          Keywords:
             @see abilities
@@ -855,10 +860,14 @@ action = {D}{F}: damage(2) to(opp,character@oppRing)
 """
 
 # King's DEALER
-# RulesDict['513f441d-fcec-4064-bbe6-152967cf38b8'] = ""
+RulesDict['513f441d-fcec-4064-bbe6-152967cf38b8'] = """
+action = discard(all); moveTo(hand) target(*@deck) & shuffle()
+"""
 
 # Mr. Big's BIG FREEBIE
-# RulesDict['d14dd0ed-cba6-404d-b7d1-e25c9b5c78ed'] = ""
+RulesDict['d14dd0ed-cba6-404d-b7d1-e25c9b5c78ed'] = """
+action = {D(character[powerful])}{F}: copyAbility(discarded[0]) to(character@myRing)
+"""
 
 # Mr. Karate's M.I.A.
 RulesDict['06c4b88f-8634-4b67-87d0-c0406fa268f1'] = """
@@ -883,7 +892,10 @@ action = {D(action)}{F}: each(card in me.hand -> sp(+1))
 # RulesDict['d5f9a649-cae0-46dc-b22c-139128ac8d52'] = ""
 
 # God Rugal's YUUGOU POWER
-# RulesDict['067d592e-2ddf-43f5-82cc-25c70d29a996'] = ""
+RulesDict['067d592e-2ddf-43f5-82cc-25c70d29a996'] = """
+target = character<1>[powerful]@anyDeck
+action = moveRestTo(ctrlDeck, -1) & moveTo(ctrlDeck, -1, true); copyAbility(prevTgt) to(character)
+"""
 
 # Alfred's WAVE RIDER
 # RulesDict['3d044b8c-bac6-4b9a-bcf5-4868538de313'] = ""
@@ -1009,7 +1021,10 @@ action = {D(action)}{F}: loseAbility() & bp(=1) target(character)
 # RulesDict['0d76ceeb-f809-464f-9954-240de260a132'] = ""
 
 # Clone Zero's MIMIC
-# RulesDict['ab45b64f-e231-44ca-83ad-bd4d89bcb851'] = ""
+RulesDict['ab45b64f-e231-44ca-83ad-bd4d89bcb851'] = """
+target = ^character[powerful]
+action = copyAbility(prevTgt) to(this)
+"""
 
 # Heidern's STORM BRINGER
 RulesDict['aa591fb7-0136-4af8-9229-9b6da2e02aca'] = """
@@ -1091,7 +1106,9 @@ action = {D(character)}{F}: bp(=discarded[0].bp)
 # RulesDict['03416225-8ed1-48fc-8178-c82559f61dcd'] = ""
 
 # Akari (Speed)'s ONE-WAY MORPH
-# RulesDict['299c01d7-37f0-41de-81f3-712b8dd63f11'] = ""
+RulesDict['299c01d7-37f0-41de-81f3-712b8dd63f11'] = """
+action = {D(character[abinstant])}{F}: activate(discarded[0])
+"""
 
 # Akari Ichijou's LET'S GAMBLE!
 # RulesDict['95675af9-956c-4b27-b7e1-a59b10a0cb7c'] = ""
@@ -1292,7 +1309,10 @@ action = damage(3)
 # RulesDict['ab631979-20d8-4789-85be-149b414d1ef1'] = ""
 
 # Curse
-# RulesDict['e1fb17f3-c4bf-4993-9b2f-91706cccf448'] = ""
+RulesDict['e1fb17f3-c4bf-4993-9b2f-91706cccf448'] = """
+target = character<1>[powerful]@anyDeck
+action = moveRestTo(ctrlDeck, -1) & moveTo(ctrlDeck, -1, true); copyAbility(prevTgt) to(characters)
+"""
 
 # Domination
 # RulesDict['e5fa3d6f-3368-4450-8327-3f7672c78834'] = ""
@@ -1324,7 +1344,10 @@ action = damage(1)
 # RulesDict['96c5cd74-a898-42f3-a169-9f98e1ce8945'] = ""
 
 # ESP
-# RulesDict['7b7ffef2-2790-46ed-8407-e7395c26b4a0'] = ""
+RulesDict['7b7ffef2-2790-46ed-8407-e7395c26b4a0'] = """
+target = character[abtrigger]
+action = copyAbility(prevTgt) to(character@myRing)
+"""
 
 # Fate duel
 # RulesDict['3c92b6f8-d68f-4d0f-8a29-f5172b09a864'] = ""
@@ -1489,7 +1512,9 @@ action = reveal(hand) & discard(characters)
 # RulesDict['6504b1a3-e432-4c6c-845b-6ca72500b458'] = ""
 
 # Successor
-# RulesDict['5e2211a0-e52e-4b7b-b03d-f6ecb3660bb0'] = ""
+RulesDict['5e2211a0-e52e-4b7b-b03d-f6ecb3660bb0'] = """
+action = {D(character[powerful])}: copyAbility(discarded[0]) to(character@myRing)
+"""
 
 # Synchro
 # RulesDict['83c33aa8-5981-4352-8107-cbb7e05547ec'] = ""
@@ -1534,7 +1559,9 @@ action = disableRule(piercing) oppueot
 """
 
 # Clone
-# RulesDict['74def9a7-0898-4ed4-93eb-33e57cf3a215'] = ""
+RulesDict['74def9a7-0898-4ed4-93eb-33e57cf3a215'] = """
+action = {D(character[powerful])}: copyAbility(discarded[0]) to(character@myRing)
+"""
 
 # Cruel hunt
 # RulesDict['fef1b38c-a055-4cd7-9436-34e220c30d52'] = ""

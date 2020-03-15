@@ -191,6 +191,9 @@ class Rules():
                   if not isAuto:
                      notify(MSG_ERR_NO_CARDS)
                   return False
+               # Save original target
+               if currTarget:
+                  commander.prevTargets = currTarget
                currTarget = newTarget
             
             if currTarget:

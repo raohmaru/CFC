@@ -21,22 +21,26 @@ import re
 # Card automation functions
 #---------------------------------------------------------------------------
 
-def parseCard(card, ruleId=None, init=True):
+def parseCard(card, ruleId = None, init = True, dryRun = False):
    """ Wrapper for a Card object. Should only be called for cards added to the table or when its effect changes. """
-   debug(">>> parseCard({})".format(card)) #Debug
-   if not card._id in parsedCards:
+   debug(">>> parseCard({}, {}, {}, {})".format(card, ruleId, init, dryRun)) #Debug
+   if not card._id in parsedCards or dryRun:
       if isCharacter(card):
-         parsedCards[card._id] = CharCard(card, ruleId)
+         gc = CharCard(card, ruleId)
       else:
-         parsedCards[card._id] = GameCard(card, ruleId)
+         gc = GameCard(card, ruleId)
       if init:
-         parsedCards[card._id].init()
+         gc.init()
+      if dryRun:
+         return gc
+      else:
+         parsedCards[card._id] = gc
    return parsedCards.get(card._id)
    
 
-def getParsedCard(card):
+def getParsedCard(card, ruleId = None, init = True, dryRun = False):
    debug("Retrieved parsed card for ID {} ({})".format(card._id, card))
-   return parseCard(card, init=False)
+   return parseCard(card, ruleId, init, dryRun)
    
 
 def removeParsedCard(card):
@@ -51,7 +55,7 @@ class GameCard(object):
    rule_id = None
    rules   = None
    
-   def __init__(self, card, ruleId=None):
+   def __init__(self, card, ruleId = None):
       self.card_id = card._id
       self.rule_id = ruleId if ruleId else card.model
       self.rules = Rules(self.rule_id, self.card_id)
@@ -74,13 +78,13 @@ class CharCard(GameCard):
    ability = None
    _BP = 0
    
-   def __init__(self, card, ruleId=None):
+   def __init__(self, card, ruleId = None):
       super(self.__class__, self).__init__(card, ruleId)
    
       self._BP = getMarker(card, 'BP')
       if self._BP == 0 and card.group != table:
          self._BP = int(card.BP) / BPMultiplier
-      ability = Ability(card)
+      ability = Ability(card, ruleId = ruleId)
       if ability.name:
          debug("Found ability {}".format(ability))
          self.ability = ability
@@ -107,12 +111,12 @@ class Ability:
    @property
    def unicodeChar(self):
       # Returns a unicode symbol for the type (for window forms)
-      if self.type == InstantAbility:   return InstantUniChar
+      if self.type == InstantAbility: return InstantUniChar
       if self.type == TriggerAbility: return TriggerUniChar
-      if self.type == AutoAbility:      return AutoUniChar
+      if self.type == AutoAbility   : return AutoUniChar
       return ""
    
-   def __init__(self, obj, rules = None):
+   def __init__(self, obj, rules = None, ruleId = None):
       if isinstance(obj, basestring):
          ability = Regexps['Ability'].match(obj)
          if ability:
@@ -120,6 +124,13 @@ class Ability:
             self.type    = ability.group(1)
             self.name    = ability.group(2)
             self.rules   = rules
+      elif ruleId:
+         cardData  = _extapi.getCardDataByModel(ruleId)
+         cardProps = _extapi.getCardProperties(cardData)
+         self.ability = cardProps['Ability']
+         self.type    = cardProps['Ability Type']
+         self.name    = cardProps['Ability Name']
+         self.rules   = cardProps['Rules']
       elif obj.Ability:
          self.ability = obj.Ability
          self.type    = obj.properties['Ability Type']

@@ -317,7 +317,10 @@ class RulesUtils():
             if (exclude and cattr != type) or (not exclude and cattr == type):
                cardsByType.append(c)
          cards_f1 = cardsByType
-         debug( ("{}, " * len(cards_f1)).format(*cards_f1) )
+         if len(cards_f1) > 0:
+            debug( "      " + ("{}, " * len(cards_f1)).format(*cards_f1) )
+         else:
+            debug("      Nope")
 
       # Look for targeted cards
       cards_f2 = [c for c in cards_f1
