@@ -169,7 +169,8 @@ Hooks = Struct(**{
    'BeforePlayAC' : 'beforeplayac',
    'BeforePlayRE' : 'beforeplayre',
    'BackupLimit'  : 'backuplimit',
-   'PreventPierce': 'preventpierce'
+   'PreventPierce': 'preventpierce',
+   'CallOnRemove' : 'callonremove'
 })
 
 # Game Events
@@ -186,7 +187,7 @@ GameEvents = Struct(**{
    'PlayerCombatDamaged': 'playercombatdamaged',
    'Attacks'            : 'attacks',
    'Blocks'             : 'blocks',
-   'Blocked'            : 'blocked',
+   'Blocked'            : 'blocked'
 })
 # When a listener to these events is added, trigger it automatically
 GameEventsExecOnAdded = [
@@ -262,7 +263,7 @@ MSG_RULES = {
       InstantUniChar + " abilites cannot be activated.",
       InstantUniChar + " abilites can be activated again."
    ),
-   'card_cost': '{} cards now cost {} SP {} to play.',
+   'card_cost': '{} cards now cost {} SP {}to play{}.',
    'piercing': (
       'Whenever a character counter-attacks a United Attack, piercing damage is prevented.',  # Disabled
       'United-Attacks deals piercing damage as normal.'  # Enabled

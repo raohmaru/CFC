@@ -179,7 +179,7 @@ to?(): Same as to(), but target is optional and will run next effect in the acti
 restr: (optional)
    Keywords:
       ueot
-      uynt
+      unac
    Prefixes:
       my (default)
       opp
@@ -510,7 +510,7 @@ action = unfreeze() target(characters[frozen]@ring)
 
 # Kyosuke's COOL
 RulesDict['7abee6d7-1831-4090-b882-eee2fd3aa246'] = """
-auto = alterCost(action, -2)
+auto = alterCost(action, +2)
 """
 
 # Momo's DADAKKO
@@ -525,7 +525,7 @@ auto = ~activatephase~ bp(+2) to(characters[backedup])
 
 # Raizou's MEDDLER
 RulesDict['c553b9d0-946a-4c61-bc9b-a4b074c49045'] = """
-auto = alterCost(reaction, +3)
+auto = alterCost(reaction, -3)
 """
 
 # Roberto's GOAL KEEPER
@@ -835,10 +835,14 @@ action = {F}: bp(+2) to(characters[backedup])
 """
 
 # Kenji's MITTEI
-# RulesDict['487f66ee-c717-41a1-ad2e-31d3fe0dd424'] = ""
+RulesDict['487f66ee-c717-41a1-ad2e-31d3fe0dd424'] = """
+action = moveTo(oppDiscards) target(*@hand); moveTo(hand) target(*<1>@oppDeck)
+"""
 
 # Tessa's SOLAR CANE
-# RulesDict['559c6131-7a72-47c7-9669-6a6c23a48cb7'] = ""
+RulesDict['559c6131-7a72-47c7-9669-6a6c23a48cb7'] = """
+action = {F}: alterCost(action, =0) unac
+"""
 
 # Eiji's PROPHECY
 RulesDict['62067a74-53f9-4bb0-872c-f77e735fc826'] = """
@@ -1225,7 +1229,9 @@ auto = ~myEndPhase~ hp(+1)
 # RulesDict['235b8800-ad31-4224-93c2-4713ae4c45ec'] = ""
 
 # Shiki (Bust)'s YUGA'S SPELL
-# RulesDict['9d836743-0d5e-4b4e-951a-cbe216558e6f'] = ""
+RulesDict['9d836743-0d5e-4b4e-951a-cbe216558e6f'] = """
+auto = alterCost(action, -3)
+"""
 
 # Shiki (Slash)'s NRG SYPHON
 RulesDict['de04d64c-9d97-490f-a8c3-7469416bfc85'] = """

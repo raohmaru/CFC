@@ -41,9 +41,9 @@ def debugScenario():
    gotoMain()
    rnd(100, 10000)  # Delay the next action until all animation is done
    tableCards = [
-       # '6c8ec7ed-2442-4847-8f38-8c8f5967b2ba' # Rikuo
-      # ,'d646ffc5-bec9-4e98-b799-510b4e1ea464' # Pyron
-      # ,'5ccdb31f-f7f8-4f89-916f-74e9db9130cb' # Zantetsu
+       '487f66ee-c717-41a1-ad2e-31d3fe0dd424' # Kenji
+      ,'7abee6d7-1831-4090-b882-eee2fd3aa246' # Kyosuke
+      # ,'559c6131-7a72-47c7-9669-6a6c23a48cb7' # Tessa
       # ,'f3f105e5-a0b1-4b4b-9f88-5932182d3ace' # Nakoruru (Bust)
    ]
    for i, id in enumerate(tableCards):
@@ -57,13 +57,15 @@ def debugScenario():
       rnd(1, 100)  # Delay the next action until all animation is done
       
    handCards = [
+       '9d836743-0d5e-4b4e-951a-cbe216558e6f' # Shiki (Bust)
+      ,'559c6131-7a72-47c7-9669-6a6c23a48cb7' # Tessa
       # ,'248517e9-d7a0-450d-9281-df91d20f68ab' # Char 500 BP
       # ,'eb648ee7-aa4e-41ce-a7fc-04af31349ca9' # Char 700 BP
       # ,'4d7520b9-9ced-43e0-a2e7-974d76d8eb82' # Char 1000 BP
-      # ,'5e2211a0-e52e-4b7b-b03d-f6ecb3660bb0' # Action 0 SP
-      # ,'83c33aa8-5981-4352-8107-cbb7e05547ec' # Action -1 SP
-      # ,'b95b2104-d184-43cc-bb04-b3eb096c6fca' # Action -2 SP
-      # ,'ac01bbbe-583e-46ae-b26c-3c25eb8f0779' # Action -6 SP
+      ,'5e2211a0-e52e-4b7b-b03d-f6ecb3660bb0' # Action 0 SP
+      ,'83c33aa8-5981-4352-8107-cbb7e05547ec' # Action -1 SP
+      ,'b95b2104-d184-43cc-bb04-b3eb096c6fca' # Action -2 SP
+      ,'ac01bbbe-583e-46ae-b26c-3c25eb8f0779' # Action -6 SP
       # ,'556b3359-e642-419a-ab5c-67f70de1bb4f' # Reaction 0 SP
       # ,'46deecf5-7f7b-42b5-b6fa-e3162dce2013' # Reaction -1 SP
       # ,'91e441cc-0f1f-4b01-a2b0-94678d6f0b56' # Reaction -4 SP
@@ -139,10 +141,10 @@ def debugOpp():
       # ,'248517e9-d7a0-450d-9281-df91d20f68ab' # Char 500 BP
       # ,'eb648ee7-aa4e-41ce-a7fc-04af31349ca9' # Char 700 BP
       # ,'4d7520b9-9ced-43e0-a2e7-974d76d8eb82' # Char 1000 BP
-      # ,'5e2211a0-e52e-4b7b-b03d-f6ecb3660bb0' # Action 0 SP
-      # ,'83c33aa8-5981-4352-8107-cbb7e05547ec' # Action -1 SP
-      # ,'b95b2104-d184-43cc-bb04-b3eb096c6fca' # Action -2 SP
-      # ,'ac01bbbe-583e-46ae-b26c-3c25eb8f0779' # Action -6 SP
+      '5e2211a0-e52e-4b7b-b03d-f6ecb3660bb0' # Action 0 SP
+      ,'83c33aa8-5981-4352-8107-cbb7e05547ec' # Action -1 SP
+      ,'b95b2104-d184-43cc-bb04-b3eb096c6fca' # Action -2 SP
+      ,'ac01bbbe-583e-46ae-b26c-3c25eb8f0779' # Action -6 SP
       # ,'556b3359-e642-419a-ab5c-67f70de1bb4f' # Reaction 0 SP
       # ,'46deecf5-7f7b-42b5-b6fa-e3162dce2013' # Reaction -1 SP
       # ,'91e441cc-0f1f-4b01-a2b0-94678d6f0b56' # Reaction -4 SP
@@ -152,9 +154,9 @@ def debugOpp():
       card.moveTo(me.hand)
    
    deckCards = [
-       # '55ab2891-c99e-4647-8a9d-b01fbce3009f' # Char 300 BP
-      # ,'55ab2891-c99e-4647-8a9d-b01fbce3009f' # Char 300 BP
-      # ,'248517e9-d7a0-450d-9281-df91d20f68ab' # Char 500 BP
+       '55ab2891-c99e-4647-8a9d-b01fbce3009f' # Char 300 BP
+      ,'55ab2891-c99e-4647-8a9d-b01fbce3009f' # Char 300 BP
+      ,'248517e9-d7a0-450d-9281-df91d20f68ab' # Char 500 BP
       # ,'eb648ee7-aa4e-41ce-a7fc-04af31349ca9' # Char 700 BP
       # ,'4d7520b9-9ced-43e0-a2e7-974d76d8eb82' # Char 1000 BP
       # ,'5e2211a0-e52e-4b7b-b03d-f6ecb3660bb0' # Action 0 SP

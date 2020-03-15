@@ -80,14 +80,14 @@ def getObjName(obj):
       return obj.name
       
       
-def getTextualRestr(restr):
-   debug(">>> getTextualRestr({})".format(restr)) #Debug
+def getTextualRestr(restr, player = None):
    if not restr:
       return ''
    if restr[1] in RS_KW_RESTR_LABELS:
-      player = ''
-      if restr[0]:
-         player = 'his  '
+      if not player:
+         player = ''
+         if restr[0]:
+            player = 'his  '
       return ' ' + RS_KW_RESTR_LABELS[restr[1]].format(player)
    return restr(1)
    

@@ -31,26 +31,26 @@ RS_KEY_AUTO      = 'auto'
 RS_KEY_REQ       = 'requisite'
 
 # Regular expressions
-RS_RGX_KEY_TARGET   = re.compile(r'^target\??\s*=\s*')
-RS_RGX_TARGET_TYPE  = re.compile(r'@|\[')
-RS_RGX_TARGET_RESTR = re.compile(r'\[(.+)\]')
-RS_RGX_TARGET_PARAM = re.compile(r'(\w+)\s*([=><]+)\s*(\w+)')
-RS_RGX_TARGET_ZONE  = re.compile(r'@\s*([\w*]+).*$')
-RS_RGX_TARGET_PICK  = re.compile(r'<\s*((?:\+|\-)?\s*[0-9]+)\s*>')
-RS_RGX_TARGET_QTY   = re.compile(r'^<\s*((?:\*\*)|(?:r\d*)|(?:,?[0-9]+){1,2})\s*>')
+RS_RGX_KEY_TARGET     = re.compile(r'^target\??\s*=\s*')
+RS_RGX_TARGET_TYPE    = re.compile(r'@|\[')
+RS_RGX_TARGET_FILTERS = re.compile(r'\[(.+)\]')
+RS_RGX_TARGET_PARAM   = re.compile(r'(\w+)\s*([=><]+)\s*(\w+)')
+RS_RGX_TARGET_ZONE    = re.compile(r'@\s*([\w*]+).*$')
+RS_RGX_TARGET_PICK    = re.compile(r'<\s*((?:\+|\-)?\s*[0-9]+)\s*>')
+RS_RGX_TARGET_QTY     = re.compile(r'^<\s*((?:\*\*)|(?:r\d*)|(?:,?[0-9]+){1,2})\s*>')
 
-RS_RGX_KEY_ACTION   = re.compile(r'^action\s*=\s*')
-RS_RGX_AC_COST      = re.compile(r'(\{.+\}\s*)\s*:\s*')
-RS_RGX_AC_EVENT     = re.compile(r'~\s*([\w, ]+)\s*?~')
-RS_RGX_AC_TARGET    = re.compile(r'\b(?:to|target)(\??)\s*\(([^)]+)\)')
-RS_RGX_AC_EFFECT    = re.compile(r'([\w.]+)\s*\((.*?)\)$')
+RS_RGX_KEY_ACTION     = re.compile(r'^action\s*=\s*')
+RS_RGX_AC_COST        = re.compile(r'(\{.+\}\s*)\s*:\s*')
+RS_RGX_AC_EVENT       = re.compile(r'~\s*([\w, ]+)\s*?~')
+RS_RGX_AC_TARGET      = re.compile(r'\b(?:to|target)(\??)\s*\(([^)]+)\)')
+RS_RGX_AC_EFFECT      = re.compile(r'([\w.]+)\s*\((.*?)\)$')
 
-RS_RGX_KEY_ABILITY  = re.compile(r'^abilities\s*=\s*')
-RS_RGX_KEY_AUTO     = re.compile(r'^auto\s*=\s*')
-RS_RGX_KEY_REQ      = re.compile(r'^requisite\s*=\s*')
+RS_RGX_KEY_ABILITY    = re.compile(r'^abilities\s*=\s*')
+RS_RGX_KEY_AUTO       = re.compile(r'^auto\s*=\s*')
+RS_RGX_KEY_REQ        = re.compile(r'^requisite\s*=\s*')
 
-RS_RGX_PARAM        = re.compile(r'\(([^)]*)\)')
-RS_RGX_COND         = re.compile(r'\[\[([^\]]+)\]\]\s')
+RS_RGX_PARAM          = re.compile(r'\(([^)]*)\)')
+RS_RGX_COND           = re.compile(r'\[\[([^\]]+)\]\]\s')
 
 # Comments
 RS_COMMENT_CHAR = '#'
@@ -231,16 +231,21 @@ RS_KW_CMD_COND = [
 
 # Effect restrictions
 RS_KW_RESTR_UEOT = 'ueot'
-RS_KW_RESTR_UYNT = 'uynt'
+RS_KW_RESTR_UNAC = 'unac'  # Until Next Action Card
 RS_KW_CMD_RESTRS = [
    RS_KW_RESTR_UEOT,
-   RS_KW_RESTR_UYNT
+   RS_KW_RESTR_UNAC
 ]
 
 RS_KW_RESTR_LABELS = {
    RS_KW_RESTR_UEOT: 'until end of {}turn',
-   RS_KW_RESTR_UYNT: 'until your next turn'
+   RS_KW_RESTR_UNAC: 'until {} plays an action card'
 }
+
+RS_KW_RESTRS_CLEANUP = [
+   RS_KW_RESTR_UEOT,
+   RS_KW_RESTR_UNAC
+]
 
 # Effects modes
 RS_MODE_EQUAL = "="

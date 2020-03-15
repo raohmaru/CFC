@@ -74,7 +74,7 @@ def resetAll():
    clearGlobalVar('Blockers')
    clearGlobalVar('Transformed')
    clearGlobalVar('GameEvents')
-   clearGlobalVar('CardCost')
+   clearGlobalVar('Modifiers')
    clearGlobalVar('Rules')
    
    if me.name == Author:
@@ -200,6 +200,10 @@ def getNextActivePlayer():
    return players[1] if len(players) > 1 and me.isActive else me
 
 
+#---------------------------------------------------------------------------
+# Game mods
+#---------------------------------------------------------------------------
+
 def getRule(rule):
    rules = getGlobalVar('Rules')
    if rule in rules and rules[rule]:  # Not an empty list []
@@ -232,6 +236,30 @@ def resetState():
       'backupsPlayed': 0,  # Num of chars backed-up this turn
       'oppDamaged'   : False  # Enemy damaged by non-character card
    }
+   
+   
+def addGameMod(type, id, *args):
+   debug(">>> addGameMod({}, {}, {})".format(type, id, args)) #Debug
+   Modifiers = getGlobalVar('Modifiers')
+   if not type in Modifiers:
+      Modifiers[type] = []
+   Modifiers[type].append([id] + list(args))
+   debug("{}".format(Modifiers))
+   setGlobalVar('Modifiers', Modifiers)
+   
+  
+def removeGameMod(id, msg = False):
+   debug(">>> removeGameMod({})".format(id)) #Debug
+   Modifiers = getGlobalVar('Modifiers')
+   debug("{}".format(Modifiers))
+   for key, modList in Modifiers.iteritems():
+      for i, mod in enumerate(list(reversed(modList))):
+         if mod[0] == id:
+            del modList[len(modList) - 1 - i]
+   debug("{}".format(Modifiers))
+   setGlobalVar('Modifiers', Modifiers)
+   if msg:
+      notify(msg)
    
 
 #---------------------------------------------------------------------------
@@ -689,7 +717,7 @@ def dealDamage(dmg, target, source, isPiercing = False):
       
       
 def modBP(card, qty, mode = None):
-   if mode == '=':
+   if mode == RS_MODE_EQUAL:
       changeMarker([card], MarkersDict['BP'], count = qty)
    elif qty >= 0:
       plusBP([card], count = qty)
@@ -704,7 +732,7 @@ def modBP(card, qty, mode = None):
 def modSP(count = 1, mode = None, silent = False, player = me):
 # A function to modify the players SP counter. Can also notify.
    initialSP = player.SP
-   if mode == '=':
+   if mode == RS_MODE_EQUAL:
       player.SP = count
       count = player.SP - initialSP
    else:
@@ -718,36 +746,51 @@ def modSP(count = 1, mode = None, silent = False, player = me):
       notify("{} {} {} SP. New total is {} (before was {}).".format(player, action, count, player.SP, initialSP))
 
 
-def payCostSP(count = 1, silent = False, msg = 'play this card', cardType = None):
+def payCostSP(amount = 1, card = None, msg = 'play this card', cardType = None):
 # Pay an SP cost. However we also check if the cost can actually be paid.
-   count = num(count)
+   debug(">>> payCostSP({}, {})".format(amount, cardType)) #Debug
+   amount = num(amount)
    
    # Cost modifiers
    if cardType:
-     cardType = cardType.lower()
-     CardCost = getGlobalVar('CardCost')
-     if cardType in CardCost and CardCost[cardType] != 0:
-        cost = count + CardCost[cardType]
-        # If initial cost was less than 0, then it cannot be less than -1 (Kyosuke rule)
-        if cost >= 0:
-           cost = max(count, -1)
-        if count != cost:
-           count = cost
-           notify("The SP cost of the card has been modified by an ability.")
+      cardType = cardType.lower()
+      Modifiers = getGlobalVar('Modifiers')
+      debug("-- cardType is {}".format(cardType)) #Debug
+      debug("-- {}".format(Modifiers)) #Debug
+      if 'cost' in Modifiers:
+         newAmount = amount
+         costMod = 0
+         debug("-- Found modifier 'cost'") #Debug
+         for mod in Modifiers['cost']:
+            debug("-- {}".format(mod)) #Debug         
+            if mod[1] == cardType:  # cardType
+               debug("-- Applying mod") #Debug         
+               if mod[3] == RS_MODE_EQUAL:  # mode
+                  newAmount = mod[2]  # amount
+               else:
+                  costMod += mod[2]  # amount
+         debug("-- costMod: {}".format(costMod)) #Debug         
+         if costMod != 0:
+            newAmount += costMod
+            debug("-- newAmount: {}".format(newAmount)) #Debug         
+            # If initial cost is less than 0, then new cost cannot be less than -1 (Kyosuke rule)
+            if newAmount >= 0:
+               newAmount = max(amount, -1)
+         if amount != newAmount:
+            notify("The SP cost of {} has been modified by an ability ({} => {}).".format(card, amount, newAmount))
+            amount = newAmount
    
-   if count >= 0:
-      modSP(count, silent=silent)
+   if amount >= 0:
+      modSP(amount)
    else:
       initialSP = me.SP
-      if me.SP + count < 0: # If we don't have enough SP, we assume card effects or mistake and notify the player that they need to do things manually.
-         if not silent:
-            if not confirm("You do not seem to have enough SP to {}.\nAre you sure you want to proceed?\nCost is {} SP. \
-            \n\n(If you do, your SP will go to the negative. You will need to increase it manually as required.)".format(msg, count)):
-               return False
-            notify("{} was supposed to pay {} SP but only has {}.".format(me, count, me.SP))
-      me.SP += count
-      if not silent:
-         notify("{} has spent {} SP. New total is {}  (before was {}).".format(me, count, me.SP, initialSP))
+      if me.SP + amount < 0: # If we don't have enough SP, we assume card effects or mistake and notify the player that they need to do things manually.
+         if not confirm("You do not seem to have enough SP to {}.\nAre you sure you want to proceed?\nCost is {} SP. \
+         \n\n(If you do, your SP will go to the negative. You will need to increase it manually as required.)".format(msg, amount)):
+            return False
+         notify("{} was supposed to pay {} SP but only has {}.".format(me, amount, me.SP))
+      me.SP += amount
+      notify("{} has spent {} SP. New total is {}  (before was {}).".format(me, amount, me.SP, initialSP))
    return True
 
 

@@ -149,8 +149,9 @@ def endPhaseStart():
             triggerGameEvent([GameEvents.PlayerCombatDamaged, card._id], card._id)
    # Trigger event
    triggerGameEvent(GameEvents.EndPhase)
-   # Remove "until end of turn" events
-   cleanupGameEvents(RS_KW_RESTR_UEOT)
+   # Remove events that should end when the turns finishes
+   for restr in RS_KW_RESTRS_CLEANUP:
+      cleanupGameEvents(restr)
 
 
 def cleanupPhaseStart():
@@ -230,7 +231,7 @@ def playAuto(card, slotIdx=None, force=False):
          warning("Character card can't be played.\nThe selected slot is not empty (it's taken up by {}).\nIf you want to backup, please first target a character in your ring.".format(Card(myRing[slotIdx]).Name))
          return
       # Pay SP cost
-      if not payCostSP(card.SP, cardType = CharType):
+      if not payCostSP(card.SP, card, cardType = CharType):
          return
       # Finally, the card is played
       placeCard(card, card.Type, PlayAction, slotIdx)
@@ -249,9 +250,12 @@ def playAuto(card, slotIdx=None, force=False):
          information("Action cards can only be played on your Main Phase.")
          return
       # Pay SP cost
-      if not payCostSP(card.SP, cardType = ActionType):
+      if not payCostSP(card.SP, card, cardType = ActionType):
          return
       placeCard(card, card.Type, PlayAction)
+      # Remove "until next action card" events
+      if isAction(card):
+         cleanupGameEvents(RS_KW_RESTR_UNAC)
 
    # Player plays a Reaction card
    elif isReaction(card):
@@ -263,7 +267,7 @@ def playAuto(card, slotIdx=None, force=False):
       if not triggerGameEvent(Hooks.BeforePlayRE, me._id):
          return
       # Pay SP cost
-      if not payCostSP(card.SP, cardType = ReactionType):
+      if not payCostSP(card.SP, card, cardType = ReactionType):
          return
       placeCard(card, card.Type, PlayAction)
    # Player plays an unknow card

@@ -1,7 +1,7 @@
 # Card Fighters' Clash Changelog
 
 ## 0.7.6
-Scripted abilities: Hsien-Ko, J. Talbain, Mr. Karate, Bopper, Chaos, Cover fire, Earth's pike, Engokogeki, Grenade, Makeover, Mega crush, Shopping, Robot punch, Time bomb, Wanna gimme.
+Scripted abilities: Hsien-Ko, J. Talbain, Mr. Karate, Bopper, Chaos, Cover fire, Earth's pike, Engokogeki, Grenade, Makeover, Mega crush, Shopping, Robot punch, Time bomb, Wanna gimme, Jedah, Morrigan Aensland, Pyron, Rikuo, Jin Chonshu, Krauser, Heidern, Zantetsu, Amakusa, Haohmaru (WR), Kyoshiro, Nakoruru (Bust), Abduction, Break up, Double KO, Heritage, Aura spark, Cash profits, Evil eye, Ferocity, Kenji, Tessa, Shiki (Bust).
 ## 0.7.5
 Scripted abilities: Makoto, Shigen, Charm, Oro, Q, Remy, Pester, Fellowship, Rose, Ryu, Ryu (Alpha), Donovan, Kasumi, Ryo, Andy, Terry Bogard, Chizuru, Akari, Marco, Cham Cham, Round 2, Power mode, Striker, Three sisters, Sagat, Kikaioh, Felicia, Q-Bee, B. Jenet, Lunch rush, No tricks, Storm rush, Lucky card, Sakura, Sean, Twelve, Urien, Option, Strider Hiryu, Anakaris, B. B. Hood, Bishamon, Demitri, Hinako.
 ## 0.7.4

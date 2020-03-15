@@ -116,7 +116,7 @@ def cleanupGameEvents(restr):
          evRestr       = listener['restr'][1]
          restrMsg      = listener['restr'][2] if len(listener['restr']) > 2 else None
          if evRestr == restr:
-            # Remove event added by me that affects me, or added by the opp that affects to me
+            # Remove event added by me that affects me, or added by the opp that affects me as well
             if (
                (listener['controller'] == me._id and evRestrTarget != RS_PREFIX_OPP) or
                (listener['controller'] != me._id and evRestrTarget == RS_PREFIX_OPP) or
@@ -126,7 +126,13 @@ def cleanupGameEvents(restr):
                if restrMsg:
                   notify(restrMsg.format(getObjName(listener['id'])))
                del ge[e][i]
-               debug("Removed listener for event {} -> {}".format(e, listener))   
+               debug("Removed listener for event {} -> {}".format(e, listener))
+               
+               # Maybe invoke the callback
+               if e == Hooks.CallOnRemove:
+                  func = eval(listener['callback'])
+                  func(*listener['args'])
+                  
    setGlobalVar('GameEvents', ge)
 
    

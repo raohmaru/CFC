@@ -192,7 +192,7 @@ class RulesLexer():
       debug("-- types: %s" % types)
 
       # Get the filters
-      filters = RS_RGX_TARGET_RESTR.search(tgtStr)
+      filters = RS_RGX_TARGET_FILTERS.search(tgtStr)
       filters_arr = []
       if filters:
          filters = filters.group(1).split(RS_OP_OR)
