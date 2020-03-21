@@ -68,7 +68,7 @@ AttackNoFreezeColor = "#ff8000"
 UnitedAttackColor   = "#ff42de"
 BlockColor          = "#ffff00"
 ActivatedColor      = "#0000ff"
-CannotUnfreeze = "#000000"
+CannotUnfreeze      = "#000000"
 InfoColor           = "#00ff00"
 
 # Dictionaries which hold all the hard coded markers and tokens (in the markers & tokens set)

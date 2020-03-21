@@ -21,7 +21,7 @@ import re
 # RULESCRIPT CONST LANGUAGE DEFINITION
 #---------------------------------------------------------------------------
 
-RS_VERSION = '0.1.0'
+RS_VERSION = '0.5.0'
 
 # Available keys
 RS_KEY_TARGET    = 'target'

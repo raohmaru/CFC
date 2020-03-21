@@ -145,6 +145,7 @@ class Rules():
             if not RulesUtils.getTargets(target):
                notify(MSG_AB_MISS_REQ.format(thisCard))
                return False
+            debug("-- Requisites are met")
             
       # The player must pay the cost, or we cancel
       if action['cost']:

@@ -35,7 +35,7 @@ qty:
       [min],max
    Keywords:
       r[#]
-      **
+      ** (any number of cards)
 
 type:
    Operators:
@@ -280,7 +280,7 @@ Available functions:
 ---------------------------------------------------
 requisite = target [&& target]
 
-A list of targets that al must exist in order to execute the action.
+A list of targets that all must exist in order to execute the action.
 """
 
 RulesDict = {}
@@ -490,7 +490,7 @@ action = [[if opp.ring >= 3]] bp(x2) target(this)
 
 # Edge's MANIPULATION
 RulesDict['e9c8e4ca-7d41-43c5-b427-f7e47125052e'] = """
-action = steal() target(@infront)
+action = steal() target(character@infront)
 """
 
 # Hinata's GO FOR IT!
@@ -583,7 +583,7 @@ action = moveTo(hand) target(character@myRing)
 
 # Akuma's SHUN-GOKU-SATSU
 RulesDict['bc5e5159-fe3c-4324-97bb-2b56b920a6a3'] = """
-action = destroy() target(@infront)
+action = destroy() target(character@infront)
 """
 
 # Alex's SONIC HEADBUTT
@@ -880,10 +880,14 @@ action = {D(action)}{F}: each(card in me.hand -> sp(+1))
 """
 
 # Ryo Sakazaki's KOUKEN
-# RulesDict['d66622dd-27e3-4e3b-bb1f-245907ee3b66'] = ""
+RulesDict['d66622dd-27e3-4e3b-bb1f-245907ee3b66'] = """
+action = moveTo(ctrlHand) target(character[abinstant])
+"""
 
 # Yuri's BRING IT ON!
-# RulesDict['3e1736d4-354b-4a5b-962a-4aea0a9e1a4b'] = ""
+RulesDict['3e1736d4-354b-4a5b-962a-4aea0a9e1a4b'] = """
+action = {F}: sp(-3) target(opp)
+"""
 
 # Guy Tendo's LONELY RING
 # RulesDict['9aa78672-8e22-488a-ae4a-ce6c433f3216'] = ""
@@ -931,7 +935,9 @@ action = reveal(hand) & discard(actions) & discard(reactions)
 """
 
 # Geese Howard's REPPU KEN
-# RulesDict['526c4102-b6da-4880-91dc-1b9b007d4cc5'] = ""
+RulesDict['526c4102-b6da-4880-91dc-1b9b007d4cc5'] = """
+action = {F}: damage(this.bp) to(character@infront); moveTo(hand) target(this)
+"""
 
 # Grant's UNBREKABLE BOND
 RulesDict['ae301f49-6e9d-4ca3-aba8-54bb5142e46d'] = """
@@ -1095,7 +1101,9 @@ auto = ~blocked this~ sp(-3) to(opp)
 # RulesDict['ba027d6e-4bc2-4c0d-8e97-4ad1c3baf24c'] = ""
 
 # Yashiro's COUNTERBLOW
-# RulesDict['0eeaf712-f3c6-4696-93cc-615c081b6cdd'] = ""
+RulesDict['0eeaf712-f3c6-4696-93cc-615c081b6cdd'] = """
+action = moveTo(oppHand) target(character@infront)
+"""
 
 # Akari's PONTA LEAF
 RulesDict['9c405677-1d42-4eb7-bb44-7b21c1d84859'] = """
@@ -1152,7 +1160,9 @@ auto = ~myEndPhase~ damage(2) to(characters)
 """
 
 # Eri's HOTHEAD
-# RulesDict['04660547-18c8-4eb4-96b5-2a977dda0dcb'] = ""
+RulesDict['04660547-18c8-4eb4-96b5-2a977dda0dcb'] = """
+action = [[if me.ring > 1]] moveTo(hand)
+"""
 
 # Marco's ENEMY CHASER
 RulesDict['fa585a56-2a8f-48ff-9cc5-1234fecb4b09'] = """
@@ -1187,7 +1197,9 @@ action = {D(reaction)}{F}: draw(3)
 # RulesDict['9a52f604-bf68-4ef4-934b-1c984877d484'] = ""
 
 # Hanzo's DUST CLOUD
-# RulesDict['90c1ccf4-999a-4567-92e4-0f7602b7799e'] = ""
+RulesDict['90c1ccf4-999a-4567-92e4-0f7602b7799e'] = """
+action = {F}: moveTo(hand)
+"""
 
 # Haohmaru's IRON SLICE
 RulesDict['30eaa33f-ca59-4233-81b8-8fe3f0db94dd'] = """
@@ -1196,7 +1208,7 @@ abilities = pierce
 
 # Haohmaru (WR)'s GANKOU
 RulesDict['bfb737c0-4dcf-4b0c-b201-45857c83016b'] = """
-auto = ~myEndPhase~ loseAbility() target(@infront)
+auto = ~myEndPhase~ loseAbility() target(character@infront)
 """
 
 # Kazuki's IMBROGLIO
@@ -1341,7 +1353,10 @@ action = damage(1)
 """
 
 # Escape
-# RulesDict['96c5cd74-a898-42f3-a169-9f98e1ce8945'] = ""
+RulesDict['96c5cd74-a898-42f3-a169-9f98e1ce8945'] = """
+target = character@myRing
+action = moveTo(hand)
+"""
 
 # ESP
 RulesDict['7b7ffef2-2790-46ed-8407-e7395c26b4a0'] = """
@@ -1435,7 +1450,10 @@ action = reveal(hand) & discard(!characters)
 # RulesDict['6c6fd560-017e-4819-accf-a66faef84218'] = ""
 
 # Peacemaker
-# RulesDict['153e2c26-7329-4a5e-a405-43191f75a2ac'] = ""
+RulesDict['153e2c26-7329-4a5e-a405-43191f75a2ac'] = """
+requisite = character<1>@myRing && character<1>@oppRing
+action = moveTo(hand) target(character@myRing); moveTo(oppHand) target(character@oppRing)
+"""
 
 # Pester
 RulesDict['e8c43fc9-a217-49e6-9847-9c9ced63b0ac'] = """
@@ -1457,7 +1475,10 @@ action = {F}: destroy() target(character@myRing); hp(prevTgt.BP)
 """
 
 # Reparation
-# RulesDict['a89ae46c-bbbe-4780-9a7f-3d68857047ac'] = ""
+RulesDict['a89ae46c-bbbe-4780-9a7f-3d68857047ac'] = """
+target = character
+action = moveTo(ctrlHand)
+"""
 
 # Reset button
 # RulesDict['85d84ab1-dede-4fc7-b80d-00778f73c905'] = ""
@@ -1474,7 +1495,10 @@ action = discard(all) & draw(5)
 """
 
 # School's out
-# RulesDict['0d7b5186-92db-4d61-8309-bfbd593df160'] = ""
+RulesDict['0d7b5186-92db-4d61-8309-bfbd593df160'] = """
+target = characters
+action = moveTo(ctrlHand)
+"""
 
 # Seraphic wing
 # RulesDict['ac01bbbe-583e-46ae-b26c-3c25eb8f0779'] = ""
