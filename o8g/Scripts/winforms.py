@@ -132,7 +132,10 @@ def messageBox(msg, title, icon = None):
    else:
       if icon == SystemIcons.Warning:
          notifyBar("#FF0000", msg.replace("\n", " "))
-      whisper(msg)
+      elif icon == SystemIcons.Error:
+         _extapi.warning(msg)
+      else:
+         whisper(msg)
    
 
 def information(msg, title = 'Information'):

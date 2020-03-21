@@ -37,6 +37,7 @@ class ExtendedApi(object):
       self._game = Octgn.Program.GameEngine.Definition  # The game instance
       self._gameMethods = Octgn.Core.DataExtensionMethods.GameExtensionMethods
       self._cardMethods = Octgn.Core.DataExtensionMethods.CardExtensionMethods
+      self.customPlayer = False
       
    @property
    def game(self): return self._game
@@ -48,17 +49,20 @@ class ExtendedApi(object):
       sets = Octgn.Core.DataManagers.SetManager.Get().Sets
       return [set for set in sets]
       
+      
    def getSetByModel(self, setModel):
       """Gets a set by its GUID.
       Returns: Octgn.DataNew.Entities.Set
       """
       return self._gameMethods.GetSetById(self._game, Guid.Parse(setModel))
       
+      
    def getSetByCardData(self, cardData):
       """Gets a set by the given card data.
       Returns: Octgn.DataNew.Entities.Set
       """
       return self._cardMethods.GetSet(cardData)
+      
       
    def getCardById(self, cardId):
       """Gets a card by its internal id.
@@ -67,17 +71,20 @@ class ExtendedApi(object):
       """
       return Octgn.Play.Card.Find(cardId)
       
+      
    def getCardDataByName(self, cardName):
       """Gets a card data by its name.
       Returns: Octgn.DataNew.Entities.Card
       """
       return self._gameMethods.GetCardByName(self._game, cardName)
       
+      
    def getCardDataByModel(self, cardModel):
       """Gets a card data by its GUID.
       Returns: Octgn.DataNew.Entities.Card
       """
       return self._gameMethods.GetCardById(self._game, Guid.Parse(cardModel))
+      
       
    def getCardDataById(self, cardId):
       """Gets a card data by its internal id.
@@ -88,6 +95,7 @@ class ExtendedApi(object):
       if card is None:
          return None
       return card.Model
+      
       
    def getCardProperties(self, cardData, propset=''):
       """Gets all properties from a card data given the property set name (aka alternate).
@@ -100,6 +108,7 @@ class ExtendedApi(object):
          props[k.Name] = cardPropertySet.Properties.Item[k]
       return props
       
+      
    def getCardProperty(self, cardData, propName, propset=''):
       """Gets a value of a property from a card data given the property set name (aka alternate).
       Returns: str
@@ -111,6 +120,7 @@ class ExtendedApi(object):
          return cardPropertySet.Properties.Item[prop[0]]
       return None
       
+      
    def setCardProperty(self, cardData, propName, value, propset=''):
       """Sets the value of a property of a card data given the property set name (aka alternate).
       """
@@ -120,11 +130,13 @@ class ExtendedApi(object):
       if len(prop) > 0:
          cardPropertySet.Properties.Item[prop[0]] = value
          
+         
    def getCardProxyUri(self, set, cardData):
       """Gets the absolute path to the proxy image of the given card data.
       Returns: str
       """
       return System.Uri(Path.Combine(set.ProxyPackUri, self._cardMethods.GetImageUri(cardData) + ".png"))
+         
          
    def generateProxy(self, cardData, alternate):
       """Generates and writes into the disk a new proxy image for the given property set (aka alternate) name.
@@ -144,6 +156,75 @@ class ExtendedApi(object):
             else:
                self._gameMethods.GetCardProxyDef(self._game).SaveProxyImage(self._cardMethods.GetProxyMappings(cardData), uri.LocalPath, crops[0])
       cardData.Alternate = currAlternate
-   
+      
+      
+   def warning(self, str):
+      Octgn.Program.GameMess.AddMessage(Octgn.Core.Play.WarningMessage(str, {}))
+      
+            
+   def system(self, str):
+      Octgn.Program.GameMess.AddMessage(Octgn.Core.Play.SystemMessage(str, {}))
+      
+      
+   def whisper(self, str, color = None, bold = False):
+      msg = str
+      if not self.customPlayer:
+         self.customPlayer = CustomPlayer()
+         
+      self.customPlayer.color = color
+         
+      if bold:
+         self.customPlayer.name = str
+         msg = ''
+      else:
+         self.customPlayer.resetName()
+         
+      Octgn.Program.GameMess.AddMessage(Octgn.Core.Play.PlayerEventMessage(self.customPlayer, msg, {}))
+      
+      
+# Make it global
 if automations['ExtAPI']:
    _extapi = ExtendedApi()
+
+
+# Custom player object to format text messages
+class CustomPlayer(Octgn.Core.Play.IPlayPlayer):
+   def __init__(self):
+      self.color = None
+      self.resetName()
+      
+   # Getters that IronPython calls when getting a property
+   def get_Color(self):
+      return self.color
+      
+   def get_Name(self):
+      return self.name
+      
+   def get_Id(self):
+      return 555
+      
+   def get_State(self):
+      return Octgn.Core.Play.PlayerState.Connected
+      
+   # Setters
+   @property
+   def color(self):
+      return self._color
+    
+   @color.setter
+   def color(self, newColor = None):
+      if not newColor:
+         newColor = '#000000'
+      # color is a System.Windows.Media.Color, which is not available asn an object
+      self._color = Octgn.Core.Play.BuiltInPlayer.Notify.Color.FromRgb(*hexToRGB(newColor))
+      
+   def resetName(self):
+      self.name = u'\u200B'  # Zero-width space character
+      
+   def ToString(self):
+      return self.name
+
+
+def hexToRGB(hex):
+   hex = hex.lstrip('#')
+   return list(int(hex[i:i+2], 16) for i in (0, 2, 4))
