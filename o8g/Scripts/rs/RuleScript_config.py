@@ -44,6 +44,7 @@ RS_RGX_AC_COST        = re.compile(r'(\{.+\}\s*)\s*:\s*')
 RS_RGX_AC_EVENT       = re.compile(r'~\s*([\w, ]+)\s*?~')
 RS_RGX_AC_TARGET      = re.compile(r'\b(?:to|target)(\??)\s*\(([^)]+)\)')
 RS_RGX_AC_EFFECT      = re.compile(r'([\w.]+)\s*\((.*?)\)$')
+RS_RGX_AC_ARGS_SEP    = re.compile(r'(?<!<)(?<!\d),')
 
 RS_RGX_KEY_ABILITY    = re.compile(r'^abilities\s*=\s*')
 RS_RGX_KEY_AUTO       = re.compile(r'^auto\s*=\s*')
@@ -72,7 +73,7 @@ RS_TARGET_OPS = [
 
 # Prefixes
 RS_PREFIX_PLUS  = '+'
-RS_PREFIX_NOT   = '-'
+RS_PREFIX_MINUS = '-'
 RS_PREFIX_MY    = 'my'
 RS_PREFIX_ME    = 'me.'
 RS_PREFIX_OPP   = 'opp'
@@ -105,12 +106,12 @@ RS_PREFIX_EVENTS = [
 ]
 
 RS_PREFIX_FILTERS = [
-   RS_PREFIX_NOT
+   RS_PREFIX_MINUS
 ]
 
 RS_PREFIX_BONUS = [
    RS_PREFIX_PLUS,
-   RS_PREFIX_NOT
+   RS_PREFIX_MINUS
 ]
 
 RS_PREFIX_RESTR = [

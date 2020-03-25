@@ -182,6 +182,12 @@ class ExtendedApi(object):
       Octgn.Program.GameMess.AddMessage(Octgn.Core.Play.PlayerEventMessage(self.customPlayer, msg, {}))
       
       
+   def notify(self, str, color = None, bold = False):
+      self.whisper(str, color, bold)
+      if len(players) > 1:
+         remoteCall(players[1], "_extapi.whisper", [str, color, bold])
+      
+      
 # Make it global
 if automations['ExtAPI']:
    _extapi = ExtendedApi()

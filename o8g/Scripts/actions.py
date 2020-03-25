@@ -21,29 +21,23 @@ import re
 # Phases
 #---------------------------------------------------------------------------
 
-def nextPhase(group = table, x = 0, y = 0):  # Function to take you to the next phase.
+def nextPhase(group = table, x = 0, y = 0):
+   global turns
    idx = currentPhase()[1]
    if idx >= len(Phases) - 1:
       idx = ActivatePhase
-      nextTurn(getNextActivePlayer())
+      turns -= 1
+      if turns == 0:
+         nextTurn(getNextActivePlayer())
+      else:
+         nextTurn(me)
+         notify("{} takes another turn".format(me))
    else:
       idx += 1
    setPhase(idx)
 
 
 def gotoPhase(idx, oldIdx = 0):
-   # if idx == ActivatePhase:
-   if idx == DrawPhase:
-      if turnNumber() == 1:
-         notify("(The player who goes first should skip his Draw phase during their first turn.)")
-   # elif idx == MainPhase:
-   # elif idx == AttackPhase:
-   elif idx == BlockPhase:
-      if len(players) > 1:
-         notify("(Now defending player {} can play Reaction cards and then may choose if block attackers)".format(players[1]))
-   # elif idx == EndPhase:
-   elif idx == CleanupPhase:
-      whisper("(This is the last phase of your turn)")
    triggerPhaseEvent(idx)
 
 
@@ -294,15 +288,15 @@ def freeze(card, x = 0, y = 0, unfreeze = None, silent = False):
 def doesNotUnfreeze(card, x = 0, y = 0):
    mute()
    msg = "not unfreeze"
-   if not MarkersDict["Cannot Unfreeze"] in card.markers:
-      card.highlight = CannotUnfreeze
+   if not hasMarker(card, 'Cannot Unfreeze'):
+      card.filter = CannotUnfreezeFilter
       setMarker(card, "Cannot Unfreeze")
    else:
-      card.highlight = None
+      card.filter = None
       removeMarker(card, "Cannot Unfreeze")
       msg = "unfreeze as normal"
 
-   notify("{0}'s {1} will {2} during {0}'s Activate phase.".format(card.controller, card, {2}))
+   notify("{0}'s {1} will {2} during {0}'s Activate phase.".format(card.controller, card, msg))
 
 
 def clear(card, x = 0, y = 0, silent = False):
@@ -959,11 +953,6 @@ def swapWithDeck(group = me.piles['Discard Pile']):
 
 def setupDebug(group, x=0, y=0):
    mute()
-
-   if not me.name == Author:
-      whisper("This function is only for development purposes.")
-      return
-
    global debugging
    debugging = True
    resetGame()
@@ -986,9 +975,6 @@ def testSuite(group, x=0, y=0):
 def setDebugVerbosity(group, x=0, y=0):
    global debugVerbosity
    mute()
-   if not me.name == Author:
-      whisper("This function is only for development purposes.")
-      return
    levels = [None] * len(DebugLevel.__dict__)
    for attr, value in DebugLevel.__dict__.iteritems():
       levels[value+1] = attr

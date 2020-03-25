@@ -312,7 +312,7 @@ class RulesLexer():
                continue 
             match = RS_RGX_AC_EFFECT.search(cmd)
             if match:
-               params = filter(None, match.group(2).split(','))
+               params = filter(None, RS_RGX_AC_ARGS_SEP.split(match.group(2)))
                params = [p.strip() for p in params]
                effect[1].append([match.group(1), params])
                debug("---- found effect '%s'" % effect[1][-1])

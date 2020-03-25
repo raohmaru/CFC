@@ -24,10 +24,10 @@ class RulesAbilities():
    items = {}
 
    @staticmethod
-   def register(name, events, checkFunc=None):
+   def register(name, event, checkFunc=None):
       msg = MSG_ABILITIES[name] if name in MSG_ABILITIES else None
       RulesAbilities.items[name] = {
-         'events': events,
+         'event': event,
          'msg': msg,
          'checkFunc' : checkFunc
       }
@@ -45,7 +45,7 @@ class RulesAbilities():
          ability = RulesAbilities.items[abilityName]
          obj = getPlayerOrCard(target_id)
          debug("-- adding ability '{}' to {}".format(abilityName, obj))
-         abl_add(target_id, source_id, restr, ability['events'], ability['msg'], ability['checkFunc'])
+         abl_add(target_id, ability['event'], source_id, restr, ability['msg'], ability['checkFunc'])
       else:
          debug("-- ability not found: {}".format(abilityName))
    
@@ -55,9 +55,8 @@ class RulesAbilities():
       card = Card(card_id)
       debug("-- removing ability '{}' from {}".format(ability, card))
       if ability in RulesAbilities.items:
-         for event in RulesAbilities.items[ability]['events']:      
-            if removeGameEventListener(card_id, event):
-               notify("{} has lost the {} ability".format(card, ability))
+         if removeGameEventListener(card_id, RulesAbilities.items[ability]['event']):
+            notify("{} has lost the {} ability".format(card, ability))
       
       
 #---------------------------------------------------------------------------
@@ -120,25 +119,50 @@ def abl_unfreezable(obj_id):
 def abl_pierce(obj_id):
    setMarker(Card(obj_id), 'Pierce')
    return True
+   
+   
+def abl_frosted(obj_id):
+   card = Card(obj_id)
+   if not hasMarker(card, 'Cannot Unfreeze'):
+      doesNotUnfreeze(card)
+   
+   
+def abl_removeFrost(obj_id):
+   card = Card(obj_id)
+   if hasMarker(card, 'Cannot Unfreeze'):
+      doesNotUnfreeze(card)
+   return True
 
 
-def abl_add(obj_id, source_id=None, restr=None, events=[], msg=None, checkFunc=None):
-   debug(">>> abl_add({}, {}, {}, {}, {}, {})".format(obj_id, source_id, restr, events, msg, checkFunc)) #Debug
+def abl_add(obj_id, eventOrFunc, source_id=None, restr=None, msg=None, checkFunc=None):
+   debug(">>> abl_add({}, {}, {}, {}, {}, {})".format(obj_id, eventOrFunc, source_id, restr, msg, checkFunc)) #Debug
+   addEvent = True
+   
    if restr and msg and len(msg) > 1:
       restr = list(restr) + [msg[1]]
-   if addGameEventListener(events[0], 'abl_genericListener', obj_id, source_id, restr, [obj_id, source_id, msg, checkFunc]):
-      if msg and source_id:
-         notifyAbilityEnabled(obj_id, source_id, msg[0], getTextualRestr(restr))
+      
+   if callable(eventOrFunc):
+      eventOrFunc(obj_id)
+      eventOrFunc = Hooks.CallOnRemove
+      addEvent = bool(restr)
+      
+   if addEvent:
+      addGameEventListener(eventOrFunc, 'abl_genericListener', obj_id, source_id, restr, [obj_id, source_id, msg, checkFunc])
+   if msg and source_id:
+      notifyAbilityEnabled(obj_id, source_id, msg[0], getTextualRestr(restr))
 
 
-def abl_genericListener(target_id, obj_id, source_id=None, msg=None, checkFunc=None):
+def abl_genericListener(target_id, obj_id, source_id=None, msgOrFunc=None, checkFunc=None):
    """ Checks if the original card with the ability is equal to the second card the system wants to check """
-   debug(">>> abl_genericListener({}, {}, {}, {}, {})".format(target_id, obj_id, source_id, msg, checkFunc))
- #Debug      
-   if target_id == obj_id:
+   debug(">>> abl_genericListener({}, {}, {}, {}, {})".format(target_id, obj_id, source_id, msgOrFunc, checkFunc))
+   callFunc = False
+   if checkFunc is None and isinstance(msgOrFunc, basestring):
+      checkFunc = msgOrFunc
+      callFunc = True
+   if target_id == obj_id or callFunc:
       debug("Invoking ability callback")
       if checkFunc is None:
-         notifyAbilityEnabled(target_id, source_id, msg[0], isWarning=(len(msg) > 1))
+         notifyAbilityEnabled(target_id, source_id, msgOrFunc[0], isWarning=(len(msgOrFunc) > 1))
          return True
       else:
          checkFunc = eval(checkFunc)
@@ -146,11 +170,13 @@ def abl_genericListener(target_id, obj_id, source_id=None, msg=None, checkFunc=N
    return False
 
 
-RulesAbilities.register('unblockable',     [Hooks.CanBeBlocked])
-RulesAbilities.register('cantblock',       [Hooks.BeforeBlock])
-RulesAbilities.register('cantplayac',      [Hooks.BeforePlayAC])
-RulesAbilities.register('cantplayre',      [Hooks.BeforePlayRE])
-RulesAbilities.register('preventpierce',   [Hooks.PreventPierce])
-RulesAbilities.register('unlimitedbackup', [Hooks.BackupLimit],  'callback_true')
-RulesAbilities.register('unfreezable',     [GameEvents.Attacks], 'abl_unfreezable')
-RulesAbilities.register('pierce',          [GameEvents.Blocked], 'abl_pierce')
+RulesAbilities.register('unblockable',     Hooks.CanBeBlocked)
+RulesAbilities.register('cantblock',       Hooks.BeforeBlock)
+RulesAbilities.register('cantplayac',      Hooks.BeforePlayAC)
+RulesAbilities.register('cantplayre',      Hooks.BeforePlayRE)
+RulesAbilities.register('preventpierce',   Hooks.PreventPierce)
+RulesAbilities.register('rush',            Hooks.PlayFresh)
+RulesAbilities.register('unlimitedbackup', Hooks.BackupLimit,  'callback_true')
+RulesAbilities.register('pierce',          GameEvents.Blocked, 'abl_pierce')
+RulesAbilities.register('unfreezable',     GameEvents.Attacks, 'abl_unfreezable')
+RulesAbilities.register('frosted',         abl_frosted,        'abl_removeFrost')

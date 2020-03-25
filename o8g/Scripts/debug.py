@@ -41,10 +41,10 @@ def debugScenario():
    gotoMain()
    rnd(100, 10000)  # Delay the next action until all animation is done
    tableCards = [
-       'd66622dd-27e3-4e3b-bb1f-245907ee3b66' # Ryo Sakazaki
-      ,'3e1736d4-354b-4a5b-962a-4aea0a9e1a4b' # Yuri
-      ,'526c4102-b6da-4880-91dc-1b9b007d4cc5' # Geese Howard
-      ,'0eeaf712-f3c6-4696-93cc-615c081b6cdd' # Yashiro
+       '0f9e815a-d71a-4eba-9264-6e65c05fe8d7' # Seishiro
+      # ,'54d70bdf-7bfb-4c8a-8111-99b411513622' # Marco R.
+      ,'6814ab83-c21d-4df9-8d07-e977ee27f131' # Blue Mary
+      ,'8b6c2617-7c58-459c-b09f-63c86556d17e' # Yamakazi
    ]
    for i, id in enumerate(tableCards):
       debug("Creating card {} at slot {}".format(id, i))
@@ -57,12 +57,8 @@ def debugScenario():
       rnd(1, 100)  # Delay the next action until all animation is done
       
    handCards = [
-       '04660547-18c8-4eb4-96b5-2a977dda0dcb' # Eri
-      ,'90c1ccf4-999a-4567-92e4-0f7602b7799e' # Hanzo
-      ,'96c5cd74-a898-42f3-a169-9f98e1ce8945' # Escape
-      ,'153e2c26-7329-4a5e-a405-43191f75a2ac' # Peacemaker
-      ,'a89ae46c-bbbe-4780-9a7f-3d68857047ac' # Reparation
-      ,'0d7b5186-92db-4d61-8309-bfbd593df160' # School's out
+       '4124ac7a-b7f5-4784-8246-872621cc9d95' # Double
+      ,'b7f9fdff-641d-4c16-b9fb-c7429b990fff' # Lightning
       # ,'248517e9-d7a0-450d-9281-df91d20f68ab' # Char 500 BP
       # ,'eb648ee7-aa4e-41ce-a7fc-04af31349ca9' # Char 700 BP
       # ,'4d7520b9-9ced-43e0-a2e7-974d76d8eb82' # Char 1000 BP
@@ -84,7 +80,7 @@ def debugScenario():
        # '55ab2891-c99e-4647-8a9d-b01fbce3009f' # Char 300 BP
       # ,'55ab2891-c99e-4647-8a9d-b01fbce3009f' # Char 300 BP
       # ,'248517e9-d7a0-450d-9281-df91d20f68ab' # Char 500 BP
-      # 'eb648ee7-aa4e-41ce-a7fc-04af31349ca9' # Char 700 BP
+      # ,'eb648ee7-aa4e-41ce-a7fc-04af31349ca9' # Char 700 BP
       # ,'4d7520b9-9ced-43e0-a2e7-974d76d8eb82' # Char 1000 BP
       # ,'5e2211a0-e52e-4b7b-b03d-f6ecb3660bb0' # Action 0 SP
       # ,'83c33aa8-5981-4352-8107-cbb7e05547ec' # Action -1 SP
@@ -145,7 +141,7 @@ def debugOpp():
       # ,'248517e9-d7a0-450d-9281-df91d20f68ab' # Char 500 BP
       # ,'eb648ee7-aa4e-41ce-a7fc-04af31349ca9' # Char 700 BP
       # ,'4d7520b9-9ced-43e0-a2e7-974d76d8eb82' # Char 1000 BP
-      # '5e2211a0-e52e-4b7b-b03d-f6ecb3660bb0' # Action 0 SP
+      # ,'5e2211a0-e52e-4b7b-b03d-f6ecb3660bb0' # Action 0 SP
       # ,'83c33aa8-5981-4352-8107-cbb7e05547ec' # Action -1 SP
       # ,'b95b2104-d184-43cc-bb04-b3eb096c6fca' # Action -2 SP
       # ,'ac01bbbe-583e-46ae-b26c-3c25eb8f0779' # Action -6 SP

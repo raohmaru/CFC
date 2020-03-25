@@ -109,7 +109,7 @@ def cleanupGameEvents(restr):
    debug(">>> cleanupGameEvents({})".format(restr)) #Debug
    ge = getGlobalVar('GameEvents')
    for e in ge:
-      for i, listener in enumerate(ge[e]):
+      for i, listener in reversed(list(enumerate(ge[e]))):
          if listener['restr'] is None:
             continue
          evRestrTarget = listener['restr'][0]
@@ -120,7 +120,7 @@ def cleanupGameEvents(restr):
             if (
                (listener['controller'] == me._id and evRestrTarget != RS_PREFIX_OPP) or
                (listener['controller'] != me._id and evRestrTarget == RS_PREFIX_OPP) or
-               len(players) == 1  # for debuggin purposes
+               len(players) == 1  # for debugging purposes
             ):
                # Removed message
                if restrMsg:

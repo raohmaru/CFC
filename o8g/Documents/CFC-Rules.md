@@ -84,13 +84,15 @@ A card has one type, that tells when it can be played and what happens to the ca
 #### Character
 ![Character card](imgs/Karin.jpg)
 
-Characters are cards that represent a character in a video game, and they are placed into an empty slot of your ring. They can attack and deal damage to an enemy, or they can protect and battle against attacking characters.
+Characters are cards that represent a character from a video game, and they are placed into an empty slot of your ring. They can attack and deal damage to an enemy, or they can protect and battle against attacking characters.
 
 Some characters have abilities, represented by an ability symbol (<span class="ab ab-instant">▲</span>, <span class="ab ab-trigger">■</span> or <span class="ab ab-auto">●</span>) followed by the ability name in bold.
 
 Character cards have a SP value that is used when played. If it is 0 or more, you gain that amount of SP. If the SP is a negative, then you must pay that cost to play the card.
 
 Only one character card can be played per turn.
+
+When you play a character, the turn it enters the ring it cannot attack and you can't activate its <span class="ab ab-trigger">■</span> ability.
 
 #### Action
 ![Action card](imgs/Slaughter.jpg)
@@ -222,7 +224,7 @@ You can do any of the following actions in any order:
 
 - Play up to one Character card in an empty slot of your ring.
 - Back-up up to one character in your ring.
-- Activate a <span class="ab ab-trigger">■</span> ability.
+- Activate <span class="ab ab-trigger">■</span> abilities.
 - Play any number of Action cards.
 
 #### 4. Attack phase

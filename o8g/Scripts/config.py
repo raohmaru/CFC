@@ -68,8 +68,10 @@ AttackNoFreezeColor = "#ff8000"
 UnitedAttackColor   = "#ff42de"
 BlockColor          = "#ffff00"
 ActivatedColor      = "#0000ff"
-CannotUnfreeze      = "#000000"
 InfoColor           = "#00ff00"
+
+# Filter colours
+CannotUnfreezeFilter = '#6699d9ff'
 
 # Dictionaries which hold all the hard coded markers and tokens (in the markers & tokens set)
 MarkersDict = {
@@ -120,6 +122,7 @@ Regexps = dict(
    LeftCond = re.compile(r'^[\w.]+'),
    BP       = re.compile(r'([\w\d\[\]]+)\.bp'),
    Action   = re.compile(r'\baction\b'),
+   Reaction = re.compile(r'\breaction\b'),
    Char     = re.compile(r'\bchar\b'),
    Size     = re.compile(r'([\w.]+)\.size'),
    Ring     = re.compile(r'(\w+)\.ring'),
@@ -170,7 +173,8 @@ Hooks = Struct(**{
    'BeforePlayRE' : 'beforeplayre',
    'BackupLimit'  : 'backuplimit',
    'PreventPierce': 'preventpierce',
-   'CallOnRemove' : 'callonremove'
+   'CallOnRemove' : 'callonremove',
+   'PlayFresh'    : 'playfresh'
 })
 
 # Game Events
@@ -223,7 +227,6 @@ MSG_ERR_NO_CARDS            = "There are no targets available, hence the ability
 MSG_ERR_NO_CARDS_HAND       = "You don't have enough cards in your hand to pay the cost of the ability."
 MSG_ERR_NO_FILTERED_CARDS   = "Selected cards don't match the requirements of this card's effect."
 MSG_ERR_NO_FILTERED_PLAYERS = "No player match the requirements of this card's effect."
-MSG_ERR_NO_CARD_TARGETED    = "Please select a card before activating the ability."
 MSG_ERR_TARGET_OTHER        = "{}'s ability cannot select itself, therefore it has been removed from selection."
 MSG_MAY_DEF                 = "Do you want to apply the effect of the card?"
 MSG_ABILITIES = {
@@ -248,6 +251,12 @@ MSG_ABILITIES = {
    ],
    'preventpierce': [
       "Piercing damage was prevented by {0}'s {2} ability."
+   ],
+   'unfreezable': [
+      "{0} will not freeze after attacking{3}."
+   ],
+   'rush': [
+      "{1} can attack this turn due to its ability."
    ]
 }
 MSG_RULES = {
@@ -301,6 +310,7 @@ parsedCards    = {} # Dictionary holding all parsed cards
 cleanedUpRing  = False  # Tracks if the user has run the Clean-up phase
 commander      = None  # RulesCommands instance
 state          = {}  # Stores the state of the current round
+turns          = 1  # The number of consecutive turns a player can play
 
 automations = {
    'Play'     : True, # Automatically trigger game effects and card effects when playing cards

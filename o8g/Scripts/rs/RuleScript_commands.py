@@ -237,7 +237,8 @@ def cmd_discard(rc, targets, source, restr, whichCards=''):
       cardsTokens['zone'] = ['', RS_KW_ZONE_HAND]
       if player != me:
          cardsTokens['zone'][0] = RS_KW_TARGET_OPP
-      cards = RulesUtils.getTargets(cardsTokens)
+      reveal = len(targets) == 1 and player != me
+      cards = RulesUtils.getTargets(cardsTokens, reveal=reveal)
       if cards:
          for card in cards:
             if player == me:
@@ -484,13 +485,15 @@ def cmd_enableRule(rc, targets, source, restr, rule):
    rc.applyNext()
 
 
-def cmd_freeze(rc, targets, source, restr, *args):
-   debug(">>> cmd_freeze({})".format(targets)) #Debug
+def cmd_freeze(rc, targets, source, restr, unfreeze=False):
+   debug(">>> cmd_freeze({}, {})".format(targets, unfreeze)) #Debug
+   if bool(unfreeze):
+      unfreeze = None
    for target in targets:
       if target.controller == me:
-         freeze(target, unfreeze = False)
+         freeze(target, unfreeze = unfreeze)
       else:
-         remoteCall(target.controller, "unfreeze", [target, 0, 0, False])
+         remoteCall(target.controller, "freeze", [target, 0, 0, unfreeze])
    rc.applyNext()
 
 
@@ -500,7 +503,7 @@ def cmd_unfreeze(rc, targets, source, restr, *args):
       if target.controller == me:
          freeze(target, unfreeze = True)
       else:
-         remoteCall(target.controller, "unfreeze", [target, 0, 0, True])
+         remoteCall(target.controller, "freeze", [target, 0, 0, True])
    rc.applyNext()
 
 
@@ -584,6 +587,19 @@ def cmd_activate(rc, targets, source, restr, expr):
    rc.applyNext()
    
 
+def cmd_turns(rc, targets, source, restr, qty):
+   global turns
+   qty = int(qty)
+   debug(">>> cmd_turns({}, {})".format(targets, qty)) #Debug
+   turns += qty
+   if qty > 0:
+      notify("{} will play another turn after this one".format(me))
+   elif qty < 0:
+      notify("{} will skip his next turn".format(me))
+      
+   rc.applyNext()
+   
+   
 RulesCommands.register('damage',        cmd_damage)
 RulesCommands.register('swappiles',     cmd_swapPiles)
 RulesCommands.register('shuffle',       cmd_shuffle)
@@ -614,3 +630,4 @@ RulesCommands.register('trash',         cmd_trash)
 RulesCommands.register('prophecy',      cmd_prophecy)
 RulesCommands.register('select',        cmd_select)
 RulesCommands.register('activate',      cmd_activate)
+RulesCommands.register('turns',         cmd_turns)

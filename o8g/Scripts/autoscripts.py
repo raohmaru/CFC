@@ -35,18 +35,24 @@ def triggerPhaseEvent(phase):
 
 def activatePhaseStart():
    # Unfreeze characters in the player's ring, clear colors and remove script markers
-   notify("{} unfreezes all characters in their ring.".format(me))
    myCards = (card for card in table
       if card.controller == me)
+   frosted = []
    for card in myCards:
       if isCharacter(card):
          if not MarkersDict["Cannot Unfreeze"] in card.markers:
             freeze(card, unfreeze = True, silent = True)
+         else:
+            frosted.append(card)
          removeMarker(card, 'Just Entered')
          clear(card, silent = True)
       # Discard any Action or Reaction card left in the table (just in case player forgot to remove them)
       elif isAction(card) or isReaction(card):
          discard(card)
+   frostedChars = ''
+   if frosted:
+      frostedChars = " but {}".format(' and '.join(["{}".format(c) for c in frosted]))
+   notify("{} unfreezes all characters in their ring{}.".format(me, frostedChars))
    # Trigger event
    triggerGameEvent(GameEvents.ActivatePhase)
 
@@ -54,7 +60,7 @@ def activatePhaseStart():
 def drawPhaseStart():
    if automations['Play']:
       if len(me.Deck) == 0 and len(players) > 1:
-         notify("{} has no cards in their deck and therefore can't draw.\n{} wins the game!".format(me,players[1]))
+         notify("{} has no cards in their deck and therefore can't draw.\n{} WINS THE GAME!".format(me,players[1]))
    # Trigger event
    triggerGameEvent(GameEvents.DrawPhase)
 
@@ -74,10 +80,7 @@ def blockPhaseStart():
    # Trigger event
    triggerGameEvent(GameEvents.BlockPhase)
    # Attacking chars event not in UA
-   atkCards = (card for card in table
-      if card.controller == me
-      and isCharacter(card)
-      and hasMarker(card, 'Attack'))
+   atkCards = getAttackingCards()
    uattack = getGlobalVar('UnitedAttack')
    for card in atkCards:
       if len(uattack) == 0 or uattack[0] != card._id:
@@ -99,10 +102,7 @@ def endPhaseStart():
    if automations['AttackDmg']:
       blockers = getGlobalVar('Blockers')
       uattack = getGlobalVar('UnitedAttack')
-      atkCards = (card for card in table
-         if card.controller == me
-         and isCharacter(card)
-         and hasMarker(card, 'Attack'))
+      atkCards = getAttackingCards()
       for card in atkCards:
          dmg = getMarker(card, 'BP')
          pdmg = 0  # Piercing damage
@@ -235,8 +235,13 @@ def playAuto(card, slotIdx=None, force=False):
          return
       # Finally, the card is played
       placeCard(card, card.Type, PlayAction, slotIdx)
+      # Parse the card to enable card autoscripts
+      removeParsedCard(card)
+      parseCard(card)
       setMarker(card, 'BP', num(card.BP) / 100)
-      setMarker(card, 'Just Entered')
+      # Triggers a game event whether the character can have the "just entered" marker
+      if triggerGameEvent(Hooks.PlayFresh, card._id):
+         setMarker(card, 'Just Entered')
       putAtSlot(card, slotIdx)
       state['charsPlayed'] += 1
 
@@ -253,6 +258,9 @@ def playAuto(card, slotIdx=None, force=False):
       if not payCostSP(card.SP, card, cardType = ActionType):
          return
       placeCard(card, card.Type, PlayAction)
+      # Parse the card to enable card autoscripts
+      removeParsedCard(card)
+      parseCard(card)
       # Remove "until next action card" events
       if isAction(card):
          cleanupGameEvents(RS_KW_RESTR_UNAC)
@@ -270,13 +278,9 @@ def playAuto(card, slotIdx=None, force=False):
       if not payCostSP(card.SP, card, cardType = ReactionType):
          return
       placeCard(card, card.Type, PlayAction)
-   # Player plays an unknow card
-   else:
-      placeCard(card, card.Type)
-
-   # Parse the card to enable card autoscripts
-   removeParsedCard(card)
-   parseCard(card)
+      # Parse the card to enable card autoscripts
+      removeParsedCard(card)
+      parseCard(card)
 
    return True
 

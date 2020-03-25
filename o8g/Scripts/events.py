@@ -113,7 +113,7 @@ def onCardsMoved(args):
 def onTurnPassed(args):
    # Reset some player variables at the start of each turn
    debug(">>> onTurnPassed({}, {})".format(args.player, turnNumber())) #Debug
-   global cleanedUpRing
+   global cleanedUpRing, turns
    # That was my old turn
    if args.player == me:
       resetState()
@@ -124,16 +124,30 @@ def onTurnPassed(args):
    # I start my turn
    elif args.player is not None:
       cleanedUpRing = False
+      turns = 1
    debug("<<< onTurnPassed()") #Debug
 
 
 def onPhasePassed(args):
    name, idx = currentPhase()
    debug(">>> onPhasePassed: {} => {}".format(args.id, idx))
-   if me.isActive:
-      if idx == CleanupPhase:
+   
+   # if idx == ActivatePhase:
+   if idx == DrawPhase:
+      if turnNumber() == 1:
+         _extapi.whisper("(The player who goes first should skip his Draw phase during their first turn.)", "#2c6798")
+   # elif idx == MainPhase:
+   # elif idx == AttackPhase:
+   elif idx == BlockPhase:
+      _extapi.whisper("({} can play Reaction cards and then may choose if block attackers)".format("Now defending player" if me.isActive else "You", "#2c6798"))
+   # elif idx == EndPhase:
+   elif idx == CleanupPhase:
+      if me.isActive:
+         _extapi.whisper("(This is the last phase of your turn)", "#2c6798")
          global cleanedUpRing
          cleanedUpRing = True
+      
+   if me.isActive:
       gotoPhase(idx, args.id)
 
 

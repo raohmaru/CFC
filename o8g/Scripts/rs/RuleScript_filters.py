@@ -50,7 +50,7 @@ class RulesFilters():
    @staticmethod
    def applyFilter(filter, arr):
       # filter = [prfx, cmd, [args]]
-      include = filter[0] != RS_PREFIX_NOT
+      include = filter[0] != RS_PREFIX_MINUS
       cmd = filter[1]
       
       # Get the filter function

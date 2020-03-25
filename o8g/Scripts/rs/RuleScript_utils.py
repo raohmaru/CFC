@@ -140,8 +140,8 @@ class RulesUtils():
 
 
    @staticmethod
-   def getTargets(target, source=None, msg=None):
-      debug("Getting targets")
+   def getTargets(target, source=None, msg=None, reveal=False):
+      debug("Getting targets ({})".format(reveal))
 
       types   = target['types']
       zone    = target['zone']
@@ -186,7 +186,7 @@ class RulesUtils():
                if t == 0:
                   return False
                type = RS_KW_PLAYERS[t-1]
-         ftargets = RulesUtils.filterTargets(type, filters, zone, cards, source, msg, pick, qty)
+         ftargets = RulesUtils.filterTargets(type, filters, zone, cards, source, msg, pick, qty, reveal)
          if ftargets:
             targets += ftargets
       
@@ -205,7 +205,7 @@ class RulesUtils():
 
 
    @staticmethod
-   def filterTargets(type, filters, zone, cards, source=None, msg=None, pick=None, qty=None):
+   def filterTargets(type, filters, zone, cards, source=None, msg=None, pick=None, qty=None, reveal=False):
       debug("-- filter targets by type '%s' in zone %s" % (type, zone))
       targets = None
       if type == RS_KW_TARGET_THIS and source:
@@ -217,7 +217,7 @@ class RulesUtils():
          targets = RulesUtils.filterPlayers(type, filters)
       else:
          # Filter cards with a target
-         targets = RulesUtils.filterCards(type, filters, zone, cards, source, msg, pick, qty)
+         targets = RulesUtils.filterCards(type, filters, zone, cards, source, msg, pick, qty, reveal)
 
       if isinstance(targets, list):
          debug("-- {} target(s) retrieved:".format(len(targets)))
@@ -256,7 +256,7 @@ class RulesUtils():
 
 
    @staticmethod
-   def filterCards(type, filters, zone, cards, source=None, msg=None, pick=None, qty=None):
+   def filterCards(type, filters, zone, cards, source=None, msg=None, pick=None, qty=None, reveal=False):
       debug("-- applying %s filters to %s cards" % (len(filters), len(cards)))
 
       cards_f1 = cards
@@ -326,7 +326,7 @@ class RulesUtils():
       cards_f2 = [c for c in cards_f1
          if c.targetedBy == me]
       if len(cards_f2) == 0:
-         if len(cards_f1) == 0:
+         if len(cards_f1) == 0 and not reveal:
             return False
       else:
          cards_f1 = cards_f2
@@ -345,7 +345,7 @@ class RulesUtils():
             debug("-- Picked {} card(s) from the bottom of {}".format(len(cards_f1), ''.join(zone)))
 
       if pickMany or (not multiple and not pick):
-         if len(cards_f1) == 0:
+         if len(cards_f1) == 0 and not reveal:
             whisper(MSG_ERR_NO_FILTERED_CARDS)
             return False
          if not msg:
@@ -359,9 +359,11 @@ class RulesUtils():
             else:
                qtyMsg = "from {} to {}".format(minQty, maxQty)
             qtyPlural = 's'
+         if type != RS_KW_ANY:
+            qtyMsg = "{} {}".format(qtyMsg, type)
             
          # Last chance to select a card
-         if len(cards_f1) > 1 or minQty == 0:
+         if len(cards_f1) > 1 or minQty == 0 or reveal:
             article = 'the'
             if zone[1] != RS_KW_ZONE_ARENA:
                article = "{}'s".format(getOpp()) if zone[0] == RS_PREFIX_OPP else 'your' 
@@ -380,9 +382,15 @@ class RulesUtils():
             title = msg.format(qtyMsg, qtyPlural, article, zone[1], sourceName)
             # If there aren't enough cards to select, just show the cards
             if len(cards_f1) <= minQty:
-               showCardDlg(cards_f1, title, min=0, max=0)
+               showCardDlg(cards if reveal else cards_f1, title, min=0, max=0)
             else:
-               cards_f1 = showCardDlg(cards_f1, title, min=minQty, max=maxQty)
+               while True:
+                  cards_sel = showCardDlg(cards if reveal else cards_f1, title, min=minQty, max=maxQty)
+                  if cards_sel == None or minQty == 0 or not reveal or len(set(cards_sel) & set(cards_f1)) >= 1:
+                     cards_f1 = cards_sel
+                     break
+                  title = 'Please ' + title[0].lower() + title[1:]
+                  warning(title)
             if cards_f1:
                notify(MSG_PLAYER_SELECTS.format(me, len(cards_f1)))
          if cards_f1 == None and minQty != 0:

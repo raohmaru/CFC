@@ -6289,7 +6289,7 @@
 			<property name="Ability"      value="" />
 			<property name="Ability Type" value="" />
 			<property name="Ability Name" value="" />
-			<property name="Rules"        value="Characters in your ring don&apos;t freeze after a solo or united attack." />
+			<property name="Rules"        value="Until end of turn, characters in your ring don&apos;t freeze after a solo or united attack." />
 			<property name="BP"           value="" />
 			<property name="SP"           value="-2" />
 			<property name="Backup 1"     value="" />

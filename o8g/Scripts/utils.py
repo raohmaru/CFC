@@ -62,11 +62,12 @@ def resetAll():
 # Clears all the global variables in order to start a new game.
    debug(">>> resetAll()") #Debug
    # Import all our global variables and reset them.
-   global playerSide, handSize, debugVerbosity, parsedCards
+   global playerSide, handSize, debugVerbosity, parsedCards, turns
    playerSide = None
    handSize = HandSize
    parsedCards = {}
    resetState()
+   turns = 1
    me.HP = 30
    me.SP = 0
    clearGlobalVar('Backups')
@@ -140,6 +141,7 @@ def replaceVars(str):
    debug("-- replaceVars({})".format(str))
    str = re.sub(Regexps['BP'], r'hasattr(getParsedCard(\1), "BP") and getParsedCard(\1).BP', str)
    str = re.sub(Regexps['Action'], 'isAction(card)', str)
+   str = re.sub(Regexps['Reaction'], 'isReaction(card)', str)
    str = re.sub(Regexps['Char'], 'isCharacter(card)', str)
    str = re.sub(Regexps['Size'], r'len(\1)', str)
    str = re.sub(Regexps['Ring'], r'getRingSize(\1)', str)
@@ -149,6 +151,7 @@ def replaceVars(str):
    str = str.replace('.hp', '.HP')
    str = str.replace('alone', 'getRingSize() == 1')
    str = str.replace('attacker', 'attacker[0]')
+   str = str.replace('soloattack', 'len(getAttackingCards()) == 1')
    debug("---- {}".format(str))
    return str
    
@@ -652,6 +655,12 @@ def passControlTo(player, cards, cb = None):
       update()
       remoteCall(player, cb[0], cb[1])
    
+
+def getAttackingCards():
+   return [card for card in table
+      if card.controller == me
+      and isCharacter(card)
+      and hasMarker(card, 'Attack')]
 
 
 #---------------------------------------------------------------------------
