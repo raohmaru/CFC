@@ -91,12 +91,12 @@ class RulesCommands():
 
 def disableRule(rule):
    debug(">>> disableRule({})".format(rule)) #Debug
-   isDefaultValue = GameRulesDefaults[rule] == False
    rules = getGlobalVar('Rules')
    if not rule in rules:
       rules[rule] = []
    if GameRulesDefaults[rule] == False:
-      rules[rule].pop()
+      if len(rules[rule]) > 0:
+         rules[rule].pop()
    else:
       rules[rule].append(False)
    setGlobalVar('Rules', rules)
@@ -112,7 +112,8 @@ def enableRule(rule):
    if not rule in rules:
       rules[rule] = []
    if GameRulesDefaults[rule] == True:
-      rules[rule].pop()
+      if len(rules[rule]) > 0:
+         rules[rule].pop()
    else:
       rules[rule].append(True)
    setGlobalVar('Rules', rules)
@@ -408,6 +409,12 @@ def cmd_copyAbility(rc, targets, source, restr, expr):
    rc.applyNext()
 
 
+def cmd_swapAbilities(rc, targets, source, restr, *args):
+   debug(">>> cmd_swapAbilities({}, {})".format(targets, source)) #Debug
+   swapAbilities(targets[0], target = targets[1])
+   rc.applyNext()
+   
+
 def cmd_each(rc, targets, source, restr, args):
    cond, func = args.split(RS_KW_ARROW)
    func = RulesLexer.parseAction(func)
@@ -431,12 +438,22 @@ def cmd_each(rc, targets, source, restr, args):
    rc.applyNext()
 
    
-def cmd_transfrom(rc, targets, source, restr, cardName):
-   debug(">>> cmd_transfrom({}, {})".format(targets, cardName)) #Debug
-   models = queryCard({"Name":cardName}, True)
+def cmd_transform(rc, targets, source, restr, expr):
+   model = None
+   models = queryCard({"Name":expr}, True)
    if len(models):
+      model = models[0]
+   else:
+      card = evalExpression(expr, True, getLocals(rc=rc, targets=targets, source=source))
+      if card:
+         model = card.model
+   debug(">>> cmd_transfrom({}, {}) => {}".format(targets, expr, model)) #Debug
+   if model:
       for target in targets:
-         transformCard(target, models[0])
+         if target.controller == me:
+            transformCard(target, model)
+         else:
+            remoteCall(target.controller, "transformCard", [target, model])
          rnd(1,100) # Small wait (bug workaround) to make sure all animations are done.
    rc.applyNext()
 
@@ -582,7 +599,7 @@ def cmd_activate(rc, targets, source, restr, expr):
    debug(">>> cmd_activate({})".format(expr)) #Debug
    card = evalExpression(expr, True, getLocals(rc=rc, targets=targets, source=source))
    if card:
-      pcard = getParsedCard(source, card.model, True, True)
+      pcard = parseCard(source, card.model, dryRun = True)
       pcard.activateEffect()
    rc.applyNext()
    
@@ -599,7 +616,7 @@ def cmd_turns(rc, targets, source, restr, qty):
       
    rc.applyNext()
    
-   
+
 RulesCommands.register('damage',        cmd_damage)
 RulesCommands.register('swappiles',     cmd_swapPiles)
 RulesCommands.register('shuffle',       cmd_shuffle)
@@ -616,8 +633,9 @@ RulesCommands.register('draw',          cmd_draw)
 RulesCommands.register('steal',         cmd_steal)
 RulesCommands.register('loseability',   cmd_loseAbility)
 RulesCommands.register('copyability',   cmd_copyAbility)
+RulesCommands.register('swapabilities', cmd_swapAbilities)
 RulesCommands.register('each',          cmd_each)
-RulesCommands.register('transform',     cmd_transfrom)
+RulesCommands.register('transform',     cmd_transform)
 RulesCommands.register('moverestto',    cmd_moveRestTo)
 RulesCommands.register('disablerule',   cmd_disableRule)
 RulesCommands.register('enablerule',    cmd_enableRule)

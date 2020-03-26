@@ -151,10 +151,13 @@ class ExtendedApi(object):
          crop = None
          if Directory.Exists(cropPath):
             crops = Directory.GetFiles(cropPath, cardData.ImageUri + ".jpg")
-            if crops.Length == 0:
-               self._gameMethods.GetCardProxyDef(self._game).SaveProxyImage(self._cardMethods.GetProxyMappings(cardData), uri.LocalPath)
-            else:
-               self._gameMethods.GetCardProxyDef(self._game).SaveProxyImage(self._cardMethods.GetProxyMappings(cardData), uri.LocalPath, crops[0])
+            try:
+               if crops.Length == 0:
+                  self._gameMethods.GetCardProxyDef(self._game).SaveProxyImage(self._cardMethods.GetProxyMappings(cardData), uri.LocalPath)
+               else:
+                  self._gameMethods.GetCardProxyDef(self._game).SaveProxyImage(self._cardMethods.GetProxyMappings(cardData), uri.LocalPath, crops[0])
+            except EnvironmentError:
+               self.warning('A error ocurred generating the proxy image')
       cardData.Alternate = currAlternate
       
       

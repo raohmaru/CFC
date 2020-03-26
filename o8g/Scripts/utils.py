@@ -77,6 +77,7 @@ def resetAll():
    clearGlobalVar('GameEvents')
    clearGlobalVar('Modifiers')
    clearGlobalVar('Rules')
+   clearGlobalVar('CharsAbilities')
    
    if me.name == Author:
       if debugVerbosity == DebugLevel.Off:
@@ -202,6 +203,13 @@ def getOpp():
 def getNextActivePlayer():
    return players[1] if len(players) > 1 and me.isActive else me
 
+
+def funcBind(player, func, args=[]):
+   if player == me:
+      func(*args)
+   else:
+      remoteCall(player, func.__name__, args)
+      
 
 #---------------------------------------------------------------------------
 # Game mods
@@ -572,6 +580,11 @@ def transformCard(card, cardModel):
       if slotIdx != -1:
          setMarker(newCard, 'BP', num(newCard.BP) / 100)
          putAtSlot(newCard, slotIdx)
+         newCard.orientation = card.orientation
+         if automations['Play']:
+            parseCard(newCard)
+         if card.markers[MarkersDict['Just Entered']] > 0:         
+            setMarker(newCard, 'Just Entered', 1)
       for m in card.markers:
          if m[0] != 'BP':
             setMarker(newCard, m[0], card.markers[m])
@@ -596,6 +609,8 @@ def copyAlternateRules(card, target):
    
    if not automations['ExtAPI']:
       return None
+   if isinstance(target, dict):
+      target = Struct(**target)
    rules = target.Rules
    ability = target.Ability
    if rules:

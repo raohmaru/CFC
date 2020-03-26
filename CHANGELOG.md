@@ -1,7 +1,9 @@
 # Card Fighters' Clash Changelog
 
+## 0.7.8
+Scripted abilities: Gato, Krizalid, Kula, Rugal, Vanessa, Mukuro, Shadow, Substitute, Amnesia, Super Art Select.
 ## 0.7.7
-Scripted abilities: Ryo Sakazaki, Yuri, Geese Howard, Yashiro, Eri, Hanzo, Escape, Peacemaker, Reparation, School's out.
+Scripted abilities: Ryo Sakazaki, Yuri, Geese Howard, Yashiro, Eri, Hanzo, Escape, Peacemaker, Reparation, School's out, Guy Tendo, Takato, Alfred, Billy, Blue Mary, Kim, Marco R., Yamazaki, Choi, Gaira, Galford, Genan, Rimoruru (Bust), Seishiro, Ukyo, Double, Fight!, Lightning, Puppet, Reset button, Stifler, Held back, Reliable warrior, Scan, Suspicious.
 Added functions for colored notifications in the chat.
 ## 0.7.6
 Scripted abilities: Hsien-Ko, J. Talbain, Mr. Karate, Bopper, Chaos, Cover fire, Earth's pike, Engokogeki, Grenade, Makeover, Mega crush, Shopping, Robot punch, Time bomb, Wanna gimme, Jedah, Morrigan Aensland, Pyron, Rikuo, Jin Chonshu, Krauser, Heidern, Zantetsu, Amakusa, Haohmaru (WR), Kyoshiro, Nakoruru (Bust), Abduction, Break up, Double KO, Heritage, Aura spark, Cash profits, Evil eye, Ferocity, Kenji, Tessa, Shiki (Bust), King, Mr. Big, God Rugal, Clone Zero, Akari (Speed), Curse, ESP, Successor, Clone.

@@ -513,7 +513,7 @@ def activateAuto(card):
    if isCharacter(card):
       pcard = getParsedCard(card)
       if not pcard.hasEffect():
-         whisper("{} has no ability".format(card))
+         whisper("{} has no ability to activate".format(card))
          return
       debug("Trying to activate {}'s ability {} {}".format(card.Name, pcard.ability.type, pcard.ability.name))
       # Activate [] and /\ only in player's Main Phase

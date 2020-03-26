@@ -74,6 +74,7 @@ def onCardsMoved(args):
       
       if card.controller != me:
          return
+      # From the table to anywhere else
       if fromGroup == table and toGroup != table:
          if isCharacter(card):
             clearAttachLinks(card)
@@ -85,9 +86,15 @@ def onCardsMoved(args):
                rearrangeUAttack(card)
          # removeParsedCard(card)
          removeGameEventListener(card._id)
+         CharsAbilities = getGlobalVar('CharsAbilities')
+         if card._id in CharsAbilities:
+            del CharsAbilities[card._id]
+         setGlobalVar('CharsAbilities', CharsAbilities)
+      # Move cards in the table
       elif fromGroup == table and toGroup == table:
          if isCharacter(card) and not MarkersDict['Backup'] in card.markers:
             alignBackups(card, *card.position)
+      # From anywhere else to the table
       elif fromGroup != table and toGroup == table:
          if charIsInRing(card):
             ringChanged = True

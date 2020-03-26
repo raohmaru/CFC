@@ -29,18 +29,18 @@ def parseCard(card, ruleId = None, init = True, dryRun = False):
          gc = CharCard(card, ruleId)
       else:
          gc = GameCard(card, ruleId)
+      if not dryRun:
+         parsedCards[card._id] = gc
       if init:
          gc.init()
       if dryRun:
          return gc
-      else:
-         parsedCards[card._id] = gc
    return parsedCards.get(card._id)
    
 
-def getParsedCard(card, ruleId = None, init = True, dryRun = False):
-   debug("Retrieved parsed card for ID {} ({})".format(card._id, card))
-   return parseCard(card, ruleId, init, dryRun)
+def getParsedCard(card):
+   debug("Retrieve parsed card for ID {} ({})".format(card._id, card))
+   return parseCard(card, init=False)
    
 
 def removeParsedCard(card):

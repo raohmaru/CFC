@@ -145,8 +145,9 @@ effect:
          steal()
          loseAbility()
          copyAbility(expr)
+         swapAbilities()
          each(expr in group -> effect)  # effect context: group item
-         transform(card name)
+         transform(card name|expr)
          moveRestTo(zone)
          enableRule(rule)
          disableRule(rule)
@@ -946,7 +947,10 @@ action = bp(3) target(character)
 """
 
 # Gato's LOBOTOMY
-# RulesDict['f3557575-c61e-42fd-9442-9413cea64bdf'] = ""
+RulesDict['f3557575-c61e-42fd-9442-9413cea64bdf'] = """
+target = character
+action = {F}: loseAbility() & bp(+3)
+"""
 
 # Geese's COMPOSURE
 RulesDict['59253bbd-0dbd-4d43-9a2b-7f01b4bc1f76'] = """
@@ -1075,7 +1079,7 @@ action = [[if me.hp <= 10]] draw(2)
 # Jhun Hoon's BROMIDE
 # RulesDict['eba4b6d7-1b14-4112-8e1e-6bee2017d338'] = ""
 
-# K''s UNSTOPPABLE
+# K's UNSTOPPABLE
 # RulesDict['78fc2eb4-f142-471b-83c0-1b615b67bb89'] = ""
 
 # Kensou's MEAT MUFFIN!
@@ -1084,10 +1088,14 @@ action = hp(+2)
 """
 
 # Krizalid's DATA SHOCK
-# RulesDict['2ba9556c-59b0-4154-8325-f9793a8eacb5'] = ""
+RulesDict['2ba9556c-59b0-4154-8325-f9793a8eacb5'] = """
+action = {F}: copyAbility(this) to(^character); loseAbility() target(this)
+"""
 
 # Kula's EARLY THAW
-# RulesDict['1f11dc82-0581-49c2-ae93-35688c6acb7a'] = ""
+RulesDict['1f11dc82-0581-49c2-ae93-35688c6acb7a'] = """
+auto = enableRule(ab_trigger_fresh)
+"""
 
 # Kyo's OROCHI WAVE
 # RulesDict['0fa9c81d-eee6-47e9-9c9b-d4d802bca0c4'] = ""
@@ -1107,7 +1115,9 @@ auto = ~blocked this~ sp(-3) to(opp)
 # RulesDict['e9c7f532-89ff-4f69-a885-bc09b549d989'] = ""
 
 # Rugal's GENOCIDE CUTTER
-# RulesDict['c0f1e98e-4233-446a-af2d-6e50eb8e6177'] = ""
+RulesDict['c0f1e98e-4233-446a-af2d-6e50eb8e6177'] = """
+action = loseAbility() target(^character[powerful])
+"""
 
 # Saishu's EXORCISM
 # RulesDict['b25a11ac-1166-4868-990a-5113350f1502'] = ""
@@ -1119,7 +1129,9 @@ auto = ~blocked this~ sp(-3) to(opp)
 # RulesDict['f0163d6b-bd20-4737-a40b-c84ca19da681'] = ""
 
 # Vanessa's FOOTWORK
-# RulesDict['0fdadc92-0864-46cc-a3ff-c20e2af8249c'] = ""
+RulesDict['0fdadc92-0864-46cc-a3ff-c20e2af8249c'] = """
+auto = alterCost(reaction, +2)
+"""
 
 # Wild Iori's KURF
 # RulesDict['3e38ee5c-2421-4267-b0da-86035060fcc0'] = ""
@@ -1165,7 +1177,9 @@ auto = disableRule(ab_instant_act)
 # RulesDict['9aac7225-cffe-452c-8b8f-e2382ff7219c'] = ""
 
 # Mukuro's LIVING CORPSE
-# RulesDict['34f11eff-b3e2-4ac9-b505-a274eb5291c9'] = ""
+RulesDict['34f11eff-b3e2-4ac9-b505-a274eb5291c9'] = """
+action = loseAbility() target(characters)
+"""
 
 # Setsuna's LIFE SIGN
 # RulesDict['781bd288-e9bf-4cf1-b630-0883a2834d0b'] = ""
@@ -1553,7 +1567,10 @@ action = moveTo(ctrlHand)
 # RulesDict['ac01bbbe-583e-46ae-b26c-3c25eb8f0779'] = ""
 
 # Shadow
-# RulesDict['0e1b4f81-93e9-44be-ab31-7aed8cb354d0'] = ""
+RulesDict['0e1b4f81-93e9-44be-ab31-7aed8cb354d0'] = """
+target = character<1>@anyDeck
+action = moveRestTo(ctrlDeck, -1) & moveTo(ctrlDeck, -1, true); transform(prevTgt) to(character)
+"""
 
 # Shopping
 RulesDict['0035d193-fe4b-4927-9dc1-6124b26768bc'] = """
@@ -1585,7 +1602,9 @@ action = reveal(hand) & discard(characters)
 # RulesDict['c977a855-1358-4dab-870f-dee886f929c3'] = ""
 
 # Substitute
-# RulesDict['6504b1a3-e432-4c6c-845b-6ca72500b458'] = ""
+RulesDict['6504b1a3-e432-4c6c-845b-6ca72500b458'] = """
+action = swapAbilities() target(<2>character[powerful])
+"""
 
 # Successor
 RulesDict['5e2211a0-e52e-4b7b-b03d-f6ecb3660bb0'] = """
@@ -1602,7 +1621,10 @@ action = {D(character[powerful])}: copyAbility(discarded[0]) to(character@myRing
 # RulesDict['2d3891a7-6fc0-4793-9122-5abfc0bb3e22'] = ""
 
 # Amnesia
-# RulesDict['b9023490-790e-4e5f-a495-c196f6672dff'] = ""
+RulesDict['b9023490-790e-4e5f-a495-c196f6672dff'] = """
+target = characters
+action = loseAbility()
+"""
 
 # Ancestry
 # RulesDict['e038ebfd-6c19-4b1c-bf38-a2fd9f5ffbfd'] = ""
@@ -1739,7 +1761,9 @@ action = {D(2)}: damage(+3) to(characters)
 """
 
 # Super Art select
-# RulesDict['0a951ced-4508-40b9-8350-5dafb6b7e8aa'] = ""
+RulesDict['0a951ced-4508-40b9-8350-5dafb6b7e8aa'] = """
+action = swapAbilities() target(<2>character[powerful])
+"""
 
 # Suspicious
 RulesDict['3507e173-6329-4541-99fb-f4b81a482308'] = """

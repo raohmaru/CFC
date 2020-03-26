@@ -248,7 +248,9 @@ When this phase ends, your turn ends and next player's turn begins.
 ## Glossary
 
 __Become Another Card__
-When a card becomes another card, all of the card's properties are replaced by the other card's properties. If the card is a character, the BP is replaced by the other card BP (even if that character has received damage). Any back-up on that card is discarded.
+When a card becomes another card (it is transformed), all of the card's properties are replaced by the other card's properties. If the card is a character, the BP is replaced by the other card BP (even if that character has received damage). Any back-up on the card is discarded.
+
+The current state of the transformed card does not change (fresh, freeze, etc), but all effects applied on the card are terminated.
 
 __Copy Ability__
 To copy an ability from a character and give it to another character. Any existing abilities of the target character are replaced with the copy ability.

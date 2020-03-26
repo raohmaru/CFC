@@ -41,10 +41,10 @@ def debugScenario():
    gotoMain()
    rnd(100, 10000)  # Delay the next action until all animation is done
    tableCards = [
-       '0f9e815a-d71a-4eba-9264-6e65c05fe8d7' # Seishiro
-      # ,'54d70bdf-7bfb-4c8a-8111-99b411513622' # Marco R.
-      ,'6814ab83-c21d-4df9-8d07-e977ee27f131' # Blue Mary
-      ,'8b6c2617-7c58-459c-b09f-63c86556d17e' # Yamakazi
+      '2ba9556c-59b0-4154-8325-f9793a8eacb5' # Krizalid
+      ,'d14694b4-484c-4b45-962e-8cbb636d8a9a' # 200 BP
+      ,'ff8a97e3-9a78-4c5f-86fa-23480fa57da5' # 400 BP
+      ,'80d411e3-c3df-486f-927f-1592d9db65de' # Zombie
    ]
    for i, id in enumerate(tableCards):
       debug("Creating card {} at slot {}".format(id, i))
@@ -57,8 +57,8 @@ def debugScenario():
       rnd(1, 100)  # Delay the next action until all animation is done
       
    handCards = [
-       '4124ac7a-b7f5-4784-8246-872621cc9d95' # Double
-      ,'b7f9fdff-641d-4c16-b9fb-c7429b990fff' # Lightning
+      '0e1b4f81-93e9-44be-ab31-7aed8cb354d0' # Shadow
+      ,'6504b1a3-e432-4c6c-845b-6ca72500b458' # Substitute
       # ,'248517e9-d7a0-450d-9281-df91d20f68ab' # Char 500 BP
       # ,'eb648ee7-aa4e-41ce-a7fc-04af31349ca9' # Char 700 BP
       # ,'4d7520b9-9ced-43e0-a2e7-974d76d8eb82' # Char 1000 BP
@@ -125,7 +125,8 @@ def debugScenario():
    
 def debugOpp():
    tableCards = [
-       'd14694b4-484c-4b45-962e-8cbb636d8a9a' # 200 BP
+      '2ba9556c-59b0-4154-8325-f9793a8eacb5' # Krizalid
+       # 'd14694b4-484c-4b45-962e-8cbb636d8a9a' # 200 BP
       ,'ff8a97e3-9a78-4c5f-86fa-23480fa57da5' # 400 BP
       ,'24e99a13-cb42-4e16-9900-78dde12e1a4c' # 600 BP
       ,'e6e46f83-d089-4762-8d8e-2a3252cfc9db' # 1000 BP

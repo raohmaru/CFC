@@ -254,7 +254,10 @@ def activate(card, x = 0, y = 0):
       return
    ability = "effect"
    pcard = getParsedCard(card)
-   if isCharacter(card) and pcard.hasEffect():
+   if not pcard.hasEffect():
+      whisper("{} has no ability to activate".format(card))
+      return
+   if isCharacter(card):
       ability = "ability {}".format(pcard.ability)
    notify("{} tries to activate {}'s {}.".format(me, card, ability))
    if automations['Play']:
@@ -264,7 +267,7 @@ def activate(card, x = 0, y = 0):
             notify("{}'s {} has no effect.".format(card, ability))
          if (hasattr(pcard, 'ability') and pcard.ability.type == TriggerAbility) or res != ERR_NO_EFFECT:
             return
-   elif isCharacter(card) and pcard.hasEffect() and pcard.ability.type == TriggerAbility:
+   elif isCharacter(card) and pcard.ability.type == TriggerAbility:
       freeze(card, silent = True)
    if card.group == table:
       card.highlight = ActivatedColor
@@ -338,38 +341,14 @@ def askCardBackups(card, x = 0, y = 0):
       information("Only character cards can be backed-up.")
 
 
-def toggleAbility(card, x = 0, y = 0, remove = False):
-   mute()
-   # Removes card from parsed list to parse it again with the new abilities
-   if not isCharacter(card) or (card.alternate == '' and card.Rules == ''):
-      return
-   if card.alternate == 'noability' and not remove:
-      card.alternate = ''
-      removeParsedCard(card)
-      parseCard(card)
-      if card.Rules != '':
-         notify("{} restores {}'s abilities".format(me, card))
-      else:
-         notify("{} tried to restore {}'s abilities, but it doesn't have any original ability".format(me, card))
-   else:
-      triggerGameEvent([GameEvents.Powerless, card._id])
-      removeParsedCard(card)
-      if 'noability' in card.alternates:
-         card.alternate = 'noability'
-      else:
-         # Updates proxy image for all players
-         for p in players:
-            remoteCall(p, "addAlternateRules", [card, '', '', 'noability'])
-            update()
-      notify("{} removes {}'s abilities".format(me, card))
-
-
 def transformCards(cards, x = 0, y = 0):
    mute()
    cardModel = None
    targets =  [c for c in table   if c.targetedBy == me]
    targets += [c for c in me.hand if c.targetedBy == me]
    targets += [c for c in me.piles['Discard Pile'] if c.targetedBy == me]
+   if len(players) > 1:
+      targets += [c for c in players[1].piles['Discard Pile'] if c.targetedBy == me]
    if len(targets) > 0:
       cardModel = targets[0].model
    else:
@@ -382,6 +361,38 @@ def transformCards(cards, x = 0, y = 0):
          transformCard(card, cardModel)
       for target in targets:
          target.target(False)
+
+         
+def toggleAbility(card, x = 0, y = 0, remove = False):
+   mute()
+   # Removes card from parsed list to parse it again with the new abilities
+   if not isCharacter(card) or (card.alternate == '' and card.Rules == ''):
+      return
+   if card.alternate == 'noability' and not remove:
+      card.alternate = ''
+      funcBind(card.controller, removeParsedCard, [card])
+      funcBind(card.controller, parseCard, [card])
+      if card.Rules != '':
+         notify("{} restores {}'s abilities".format(me, card))
+      else:
+         notify("{} tried to restore {}'s abilities, but it doesn't have any original ability".format(me, card))
+   else:
+      triggerGameEvent([GameEvents.Powerless, card._id])
+      funcBind(card.controller, removeParsedCard, [card])
+      CharsAbilities = getGlobalVar('CharsAbilities')
+      if card._id in CharsAbilities:
+         del CharsAbilities[card._id]
+      setGlobalVar('CharsAbilities', CharsAbilities)
+      if 'Model' in card.properties:
+         card.properties['Model'] = None
+      if 'noability' in card.alternates:
+         card.alternate = 'noability'
+      else:
+         # Updates proxy image for all players
+         for p in players:
+            remoteCall(p, "addAlternateRules", [card, '', '', 'noability'])
+            update()
+      notify("{} removes {}'s abilities".format(me, card))
 
 
 def copyAbility(card, x = 0, y = 0, target = None):
@@ -413,14 +424,22 @@ def copyAbility(card, x = 0, y = 0, target = None):
    if target:
       result = copyAlternateRules(card, target)
       if result:
-         removeParsedCard(card)
-         parseCard(card, target.model)
+         CharsAbilities = getGlobalVar('CharsAbilities')
+         model = target.model
+         if isinstance(target, Card):
+            if target._id in CharsAbilities:
+               model = CharsAbilities[target._id]
+         CharsAbilities[card._id] = model
+         setGlobalVar('CharsAbilities', CharsAbilities)
+         funcBind(card.controller, removeParsedCard, [card])
+         funcBind(card.controller, parseCard, [card, model])
          # Updates proxy image for the other players
          for p in players:
             if p != me:
                remoteCall(p, "copyAlternateRules", [card, target])
          update()  # Trying this method to delay next actions until networked tasks are complete
-         notify("{} copies ability {} to {}.".format(me, getParsedCard(card).ability.name, card))
+         ability = getParsedCard(target).ability.name if isinstance(target, Card) else target.Ability
+         notify("{} copies ability {} to {}.".format(me, ability, card))
          return target
       else:
          warning("Target character card doesn't have an ability to copy.")
@@ -429,40 +448,38 @@ def copyAbility(card, x = 0, y = 0, target = None):
    debug("<<< copyAbility()") #Debug
 
 
-def swapAbilities(card, x = 0, y = 0):
-   debug(">>> swapAbilities()") #Debug
+def swapAbilities(card, x = 0, y = 0, target = None):
+   debug(">>> swapAbilities({}, {})".format(card, target)) #Debug
    mute()
-   if not isCharacter(card) or not charIsInRing(card, card.controller):
-      whisper("Abilities can only be swapped between character cards in the ring.")
+   if not isCharacter(card) or not charIsInRing(card, card.controller) or not card.Rules:
+      whisper("Abilities can only be swapped between character cards with abilities in the arena.")
       return
-   targets =  [c for c in table if c.targetedBy == me]
-   if len(targets) == 0:
-      cards = [c for c in getRing() if c.Rules != "" and c != card]
-      targets = showCardDlg(cards, "Choose a character with an ability")
-      if targets == None:
-         return
-   if len(targets) > 0 and isCharacter(targets[0]) and targets[0] != card and charIsInRing(targets[0], targets[0].controller):
+   if not target:
+      targets = [c for c in table if c.targetedBy == me]
+      if len(targets) == 0:
+         cards = [c for c in getRing() if c.Rules != "" and c != card]
+         targets = showCardDlg(cards, "Choose a character with an ability")
+         if targets == None:
+            return
       target = targets[0]
-      if card.Rules and target.Rules:
-         card_copy = Struct(**{
-            'Rules'  : card.Rules,
-            'Ability': card.Ability,
-            'model'  : card.model
-         })
-         copyAbility(card,   target = target)
-         copyAbility(target, target = card_copy)
-      else:
-         warning("Please select two character cards with abilities.")
-      target.target(False)
-   else:
-      warning("Please select a valid character card in the ring.")
+   model = card.model
+   CharsAbilities = getGlobalVar('CharsAbilities')
+   card_copy = Struct(**{
+      'Rules'  : card.Rules,
+      'Ability': card.Ability,
+      'model'  : CharsAbilities[card._id] if card._id in CharsAbilities else card.model
+   })
+   copyAbility(card,   target = target)
+   copyAbility(target, target = card_copy)
+   target.target(False)
+   notify("{} has swapped abilities between {} and {}".format(me, card, target))
       
       
 def stealAbility(card, x = 0, y = 0, target = None):
    target = copyAbility(card, target = target)
    if target:
       toggleAbility(target)
-      notify("{} has stolen ability {} from {} to {}.".format(me, getParsedCard(target).ability.name, target, card))
+      notify("{} has stolen ability {} from {}.".format(card, getParsedCard(target).ability.name, target))
 
    
 #---------------------------------------------------------------------------
