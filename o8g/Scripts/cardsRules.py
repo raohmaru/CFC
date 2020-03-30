@@ -72,8 +72,8 @@ filters: (optional)
       Any Type: Character, Action, Reaction
       Any Subtype: Warrior, Pilot, Captain...
    Keywords:
-      bp [=|>=|<=] number
-      sp [=|>=|<=] number
+      bp =|>=|<= number || bp:lowest
+      sp =|>=|<= number
       backedup
       backup
       attack
@@ -229,6 +229,7 @@ event:
       attacks [suffix]
       blocks [suffix]
       blocked [suffix]
+      canBeBlocked [suffix]
    Prefixes:
       my (default)
       opp
@@ -236,10 +237,12 @@ event:
    Suffixes:
       fromThis
       this
+      any
 
 cond:
    @see action:cond
    Some conditions may create an event if there aren't any
+   After an if condition, it there aren't any effect, the result of the condition may cancel or allow the event default action
 
 effect:
    @see action:effect
@@ -272,6 +275,7 @@ Available variables:
    moved [.size]
    sacrificed [.size]
    attacker
+   blocker
    alone
    soloAttack
    bp
@@ -342,7 +346,7 @@ auto = ~myEndPhase~ moveTo(ctrlHand) target(characters[bp>=8])
 
 # Cody (Alpha)'s BAD STONE
 RulesDict['525d8365-c90e-491f-9811-1f23efbafccb'] = """
-auto = ~anyBlockPhase,anyBeforeBlock~ +unblockable to(characters[bp<=3 & attack & -uattack]) ueot
+auto = oppCanBeBlocked:any? [[if attacker.bp > 3]]
 """
 
 # Damn D's WHISTLE
@@ -353,7 +357,7 @@ action = {F}: reveal() & moveTo(hand) & shuffle()
 
 # Guy's HAYA-GAKE
 RulesDict['2c1d8c60-0858-4524-adc1-e7596a4d08e0'] = """
-auto = ~oppBlockPhase,oppRingChanges~ [[if opp.ring < 2]] +unblockable to(this[attack & -uattack]) ueot
+auto = oppCanBeBlocked:this? [[if me.ring > 1]]
 """
 
 # Haggar's SPINNING LARIAT
@@ -598,7 +602,7 @@ action = destroy() target(character@infront)
 
 # Alex's SONIC HEADBUTT
 RulesDict['c7c73d2e-1728-4c1b-ba7e-dcd989e61d98'] = """
-auto = ~playerCombatDamaged fromThis~ +cantplayac to(opp) oppueot
+auto = ~playerCombatDamaged:fromThis~ +cantplayac to(opp) oppueot
 """
 
 # Blanka's ELECTRIC DISCHARGE
@@ -682,7 +686,7 @@ action = {D(character)}{F}: sp(discarded[0].SP)
 
 # Karin's COMPENSATION
 RulesDict['3eb68262-58ec-41c2-8fe0-b8284afc87fb'] = """
-auto = ~blocked this~ damage(2) to(opp)
+auto = ~blocked:this~ damage(2) to(opp)
 """
 
 # Ken's RAGE WAVE
@@ -749,7 +753,7 @@ auto = ~myEndPhase~ [[if me.hand.size < opp.hand.size]] draw()
 
 # Twelve's X.C.O.P.Y.
 RulesDict['e4ae5562-a510-4a1d-98e8-59a91dc1cb8c'] = """
-auto = ~blocks this~ bp(=attacker.bp)
+auto = ~blocks:this~ bp(=attacker.bp)
 """
 
 # Urien's DESPOT
@@ -816,7 +820,7 @@ action = [[if oppDamaged]] bp(+3)
 
 # Jedah's P.D.C.
 RulesDict['1d07a01b-e099-44a8-87eb-71fb2f3fa762'] = """
-auto = ~playerCombatDamaged fromThis~ draw()
+auto = ~playerCombatDamaged:fromThis~ draw()
 """
 
 # Lilith's BECOMING ONE
@@ -826,7 +830,7 @@ action = moveTo(deck) target(characters@discards) & shuffle()
 
 # Morrigan's LIFE SUCKER
 RulesDict['4e34756e-34e4-45e5-a6ab-698604c6fb99'] = """
-auto = ~playerCombatDamaged fromThis~ hp(this.bp)
+auto = ~playerCombatDamaged:fromThis~ hp(this.bp)
 """
 
 # Morrigan Aensland's GOODNIGHT KISS
@@ -906,7 +910,7 @@ auto = ~blockPhase~ [[if soloAttack]] bp(+2) target(this[attack])
 
 # Takato's AIKI
 RulesDict['d5f9a649-cae0-46dc-b22c-139128ac8d52'] = """
-auto = ~blocks this~ draw(2)
+auto = ~blocks:this~ draw(2)
 """
 
 # God Rugal's YUUGOU POWER
@@ -968,14 +972,18 @@ action = {S}: hp(this.bp)
 """
 
 # Griffon Mask's DAA!
-# RulesDict['d5038a1d-55a1-4d85-a43e-52eb2b8d7b09'] = ""
+RulesDict['d5038a1d-55a1-4d85-a43e-52eb2b8d7b09'] = """
+action = bp(=this.bp) target(characters[bp:lowest])
+"""
 
 # Hokutomaru's FEAR ME
-# RulesDict['75e57026-e4fe-4470-88b2-22268ddd6b61'] = ""
+RulesDict['75e57026-e4fe-4470-88b2-22268ddd6b61'] = """
+auto = oppCanBeBlocked:this? [[if blocker.bp <= this.bp]]
+"""
 
 # Hon Fu's KUURON NO YOMI
 RulesDict['782a8773-1837-4d7a-8629-30ff08ccddca'] = """
-auto = ~blocked this~ draw()
+auto = ~blocked:this~ draw()
 """
 
 # Hotaru's ITOKATSU
@@ -1065,7 +1073,7 @@ action = copyAbility(prevTgt) to(this)
 
 # Heidern's STORM BRINGER
 RulesDict['aa591fb7-0136-4af8-9229-9b6da2e02aca'] = """
-auto = ~playerCombatDamaged fromThis~ sp(-3) to(opp); sp(+oppLostSP) to(me)
+auto = ~playerCombatDamaged:fromThis~ sp(-3) to(opp); sp(+oppLostSP) to(me)
 """
 
 # Hinako's HINAKO'S READY!
@@ -1108,7 +1116,7 @@ auto = enableRule(ab_trigger_fresh)
 
 # Lin's DOKUSHU
 RulesDict['30ecabeb-4da9-4e9c-a936-222b90532e78'] = """
-auto = ~blocked this~ sp(-3) to(opp)
+auto = ~blocked:this~ sp(-3) to(opp)
 """
 
 # Orochi's SANITY

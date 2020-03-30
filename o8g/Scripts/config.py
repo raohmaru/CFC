@@ -167,14 +167,14 @@ DebugLevelPrefixes = [
 
 # Hooks
 Hooks = Struct(**{
-   'CanBeBlocked' : 'canbeblocked',
    'BeforeBlock'  : 'beforeblock',
    'BeforePlayAC' : 'beforeplayac',
    'BeforePlayRE' : 'beforeplayre',
    'BackupLimit'  : 'backuplimit',
    'PreventPierce': 'preventpierce',
    'CallOnRemove' : 'callonremove',
-   'PlayFresh'    : 'playfresh'
+   'PlayFresh'    : 'playfresh',
+   'CanBeBlocked' : 'canbeblocked'
 })
 
 # Game Events
@@ -193,10 +193,12 @@ GameEvents = Struct(**{
    'Blocks'             : 'blocks',
    'Blocked'            : 'blocked'
 })
+
 # When a listener to these events is added, trigger it automatically
 GameEventsExecOnAdded = [
    GameEvents.HandChanges
 ]
+
 # Maps variables to events
 GameEventsFromVars = {
    'hand.size': GameEvents.HandChanges
@@ -207,6 +209,11 @@ GameEventsDisabledUA = [
    GameEvents.EndPhase,
    GameEvents.CleanupPhase,
    GameEvents.PlayerCombatDamaged
+]
+
+# Events which callback can be executed on the player that does not own the card
+GameEventsCallOnHost = [
+   Hooks.CanBeBlocked
 ]
 
 # Messages
@@ -229,21 +236,27 @@ MSG_ERR_NO_FILTERED_CARDS   = "Selected cards don't match the requirements of th
 MSG_ERR_NO_FILTERED_PLAYERS = "No player match the requirements of this card's effect."
 MSG_ERR_TARGET_OTHER        = "{}'s ability cannot select itself, therefore it has been removed from selection."
 MSG_MAY_DEF                 = "Do you want to apply the effect of the card?"
-MSG_ABILITIES = {
+MSG_HOOKS_ERR = {
+   Hooks.BeforeBlock : "{} cannot block due to {}'s {} ability{}.",
+   Hooks.CanBeBlocked: "{} cannot be blocked due to {}'s {} ability{}.",
+   Hooks.BeforePlayAC: "{} cannot play action cards due to {}'s {} ability{}.",
+   Hooks.BeforePlayRE: "{} cannot play reaction cards due to {}'s {} ability{}."
+}
+MSG_AB = {
    'cantblock': [
-      "{} cannot block due to {}'s {} ability{}.",
+      MSG_HOOKS_ERR[Hooks.BeforeBlock],
       "{} can block again."
    ],
    'unblockable': [
-      "{} cannot be blocked due to {}'s {} ability{}.",
+      MSG_HOOKS_ERR[Hooks.CanBeBlocked],
       "{} can be blocked as normal."
    ],
    'cantplayac': [
-      "{} cannot play action cards due to {}'s {} ability{}.",
+      MSG_HOOKS_ERR[Hooks.BeforePlayAC],
       "{} can play action cards again."
    ],
    'cantplayre': [
-      "{} cannot play reaction cards due to {}'s {} ability{}.",
+      MSG_HOOKS_ERR[Hooks.BeforePlayRE],
       "{} can play reaction cards again."
    ],
    'unlimitedbackup': [
@@ -256,7 +269,7 @@ MSG_ABILITIES = {
       "{0} will not freeze after attacking{3}."
    ],
    'rush': [
-      "{1} can attack this turn due to its ability."
+      "{} can attack this turn due to {}'s {} ability."
    ]
 }
 MSG_RULES = {

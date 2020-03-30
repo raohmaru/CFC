@@ -25,7 +25,7 @@ class RulesAbilities():
 
    @staticmethod
    def register(name, event, checkFunc=None):
-      msg = MSG_ABILITIES[name] if name in MSG_ABILITIES else None
+      msg = MSG_AB[name] if name in MSG_AB else None
       RulesAbilities.items[name] = {
          'event': event,
          'msg': msg,
@@ -55,7 +55,7 @@ class RulesAbilities():
       card = Card(card_id)
       debug("-- removing ability '{}' from {}".format(ability, card))
       if ability in RulesAbilities.items:
-         if removeGameEventListener(card_id, RulesAbilities.items[ability]['event']):
+         if removeGameEventListener(card_id, RulesAbilities.items[ability]['event'], 'abl_genericListener'):
             notify("{} has lost the {} ability".format(card, ability))
       
       
@@ -91,7 +91,7 @@ def getTextualRestr(restr, player = None):
    return restr(1)
    
    
-def notifyAbilityEnabled(target_id, source_id=None, msg=None, restr=None, isWarning=False):
+def notifyAbility(target_id, source_id=None, msg=None, restr='', isWarning=False):
    obj = getPlayerOrCard(target_id)
    source = obj
    if source_id is not None:
@@ -139,17 +139,18 @@ def abl_add(obj_id, eventOrFunc, source_id=None, restr=None, msg=None, checkFunc
    addEvent = True
    
    if restr and msg and len(msg) > 1:
-      restr = list(restr) + [msg[1]]
+      restr = list(restr) + [msg[1]] # Show message when the effect has gone because of the restr cleanup
       
    if callable(eventOrFunc):
       eventOrFunc(obj_id)
       eventOrFunc = Hooks.CallOnRemove
       addEvent = bool(restr)
       
+   eventAdded = False
    if addEvent:
-      addGameEventListener(eventOrFunc, 'abl_genericListener', obj_id, source_id, restr, [obj_id, source_id, msg, checkFunc])
-   if msg and source_id:
-      notifyAbilityEnabled(obj_id, source_id, msg[0], getTextualRestr(restr))
+      eventAdded = addGameEventListener(eventOrFunc, 'abl_genericListener', obj_id, source_id, restr, [obj_id, source_id, msg, checkFunc])
+   if eventAdded and msg and source_id:
+      notifyAbility(obj_id, source_id, msg[0], getTextualRestr(restr))
 
 
 def abl_genericListener(target_id, obj_id, source_id=None, msgOrFunc=None, checkFunc=None):
@@ -160,11 +161,11 @@ def abl_genericListener(target_id, obj_id, source_id=None, msgOrFunc=None, check
       checkFunc = msgOrFunc
       callFunc = True
    if target_id == obj_id or callFunc:
-      debug("Invoking ability callback")
       if checkFunc is None:
-         notifyAbilityEnabled(target_id, source_id, msgOrFunc[0], isWarning=(len(msgOrFunc) > 1))
+         debug("Ability callback: True")
          return True
       else:
+         debug("Invoking ability callback: {}".format(checkFunc))
          checkFunc = eval(checkFunc)
          return checkFunc(target_id)
    return False

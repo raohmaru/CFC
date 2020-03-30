@@ -57,15 +57,48 @@ class RulesFilters():
       if   cmd in RulesFilters.filters: func = RulesFilters.filters[cmd]
       elif cmd in RS_KW_CARD_TYPES    : func = filterType
       else                            : func = filterSubtype
+      
+      # Special filtering functions
+      args = filter[2]
+      if args:
+         op, f = args
+         if op == RS_OP_FUNC:
+            if f == 'lowest':
+               value = reduce(lambda a,b: min(a,b), [getCardProp(c, cmd) for c in arr])
+               args = ('=', value)
    
       debug("-- applying filter %s to %s objects" % (filter, len(arr)))
       arr = [c for c in arr
-         if func(c, include, cmd, *filter[2])
+         if func(c, include, cmd, *args)
       ]      
       debug("-- %s objects match the filter" % len(arr))
          
       return arr
       
+
+#---------------------------------------------------------------------------
+# Related functions
+#---------------------------------------------------------------------------
+
+def getCardProp(card, prop):
+   if prop == 'bp':
+      if getMarker(card, 'BP') > 0:
+         return getMarker(card, 'BP')
+      else:
+         return num(card.BP) / BPMultiplier
+   elif prop == 'sp':
+      return num(card.SP)
+       
+
+def compareValuesByOp(v1, v2, op):
+   if op == RS_OP_EQUAL:
+      return v1 == v2
+   elif op == RS_OP_LTE:
+      return v1 <= v2
+   elif op == RS_OP_GTE:
+      return v1 >= v2
+   return False
+
 
 #---------------------------------------------------------------------------
 # Filter functions
@@ -82,12 +115,10 @@ def filterBP(card, include, cmd, *args):
       op, value = args
    except:
       return False
-   value = num(value)
+   if op != RS_OP_FUNC:
+      value = num(value)
 
-   if getMarker(card, 'BP') > 0:
-      bp = getMarker(card, 'BP')
-   else:
-      bp = num(card.BP) / BPMultiplier
+   bp = getCardProp(card, 'bp')
       
    # Compare values
    res = compareValuesByOp(bp, value, op)
@@ -105,7 +136,8 @@ def filterSP(card, include, cmd, *args):
       op, value = args
    except:
       return False
-   value = num(value)
+   if op != RS_OP_FUNC:
+      value = num(value)
 
    sp = num(card.SP)
       

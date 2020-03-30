@@ -75,7 +75,7 @@ def blockPhaseStart():
       if len(uattack) > 0:
          chars = len(uattack) - 1
          uatype = "Double" if chars == 1 else "Triple"
-         payCostSP(-chars*UAttackCost, msg = "do a {} United Attack".format(uatype))
+         payCostSP(-chars*UAttackCost, msg = "does a {} United Attack".format(uatype))
          notify("{} has paid the cost of the {} United Attack".format(me, uatype))
    # Trigger event
    triggerGameEvent(GameEvents.BlockPhase)
@@ -239,16 +239,16 @@ def playAuto(card, slotIdx=None, force=False):
       removeParsedCard(card)
       parseCard(card)
       setMarker(card, 'BP', num(card.BP) / 100)
-      # Triggers a game event whether the character can have the "just entered" marker
-      if triggerGameEvent(Hooks.PlayFresh, card._id):
+      # Triggers a hook whether the character can have the "just entered" marker
+      if triggerHook(Hooks.PlayFresh, card._id):
          setMarker(card, 'Just Entered')
       putAtSlot(card, slotIdx)
       state['charsPlayed'] += 1
 
    # Player plays an Action card
    elif isAction(card):
-      # Triggers a game event to check if the player can play action cards
-      if not triggerGameEvent(Hooks.BeforePlayAC, me._id):
+      # Triggers a hook to check if the player can play action cards
+      if not triggerHook(Hooks.BeforePlayAC, me._id):
          return
       # Check if the card can be legally played
       if not me.isActive or phaseIdx != MainPhase:
@@ -271,8 +271,8 @@ def playAuto(card, slotIdx=None, force=False):
       if me.isActive or phaseIdx != BlockPhase:
          information("Reaction cards can only be played in enemy's Counter-attack Phase.")
          return
-      # Triggers a game event to check if the player can play reaction cards
-      if not triggerGameEvent(Hooks.BeforePlayRE, me._id):
+      # Triggers a hook to check if the player can play reaction cards
+      if not triggerHook(Hooks.BeforePlayRE, me._id):
          return
       # Pay SP cost
       if not payCostSP(card.SP, card, cardType = ReactionType):
@@ -305,7 +305,7 @@ def backupAuto(card):
    target = targets[0]
    # Backup limit
    if state['backupsPlayed'] >= BackupsPerTurn:
-      if triggerGameEvent(Hooks.BackupLimit, target._id):
+      if triggerHook(Hooks.BackupLimit, target._id):
          if not confirm("Can't backup more than {} character per turn.\nProceed anyway?".format(CharsPerTurn)):
             return
    # Target just entered the ring?
@@ -459,8 +459,8 @@ def blockAuto(card):
    if isFrozen(card):
       warning("Frozen characters can't counter-attack.")
       return
-   # Triggers a game event to check if the character can counter-attack
-   if not triggerGameEvent(Hooks.BeforeBlock, card._id):
+   # Triggers a hook to check if the character can counter-attack
+   if not triggerHook([Hooks.BeforeBlock, card._id], card._id):
       return
    # Cancels the character's counter-attack if it's already blocking
    blockers = getGlobalVar('Blockers')
@@ -488,8 +488,10 @@ def blockAuto(card):
       warning("An attacking character can only be blocked by exactly one char")
       return
 
-   # Triggers a game event to check if block is possible
-   if not triggerGameEvent(Hooks.CanBeBlocked, target._id):
+   # Triggers a hook to check if block is possible
+   addActionTempVars('attacker', [target])
+   addActionTempVars('blocker', [card])
+   if not triggerHook([Hooks.CanBeBlocked, target._id], target._id):
       return
 
    setMarker(card, 'Counter-attack')

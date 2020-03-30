@@ -266,9 +266,10 @@ class RulesLexer():
       if match:
          acStr = acStr[len(match.group()):]
          event = []
+         debug(match.groups())
          events = match.group(1).split(',')
          for e in events:
-            e = e.strip().replace(' ', '')
+            e = e.strip().replace(' ', '').replace(':', '')
             # Look for prefixes
             prfx, eventName = RulesLexer.getPrefix(RS_PREFIX_EVENTS, e.strip())
             if prfx == RS_PREFIX_MY:
@@ -348,7 +349,7 @@ class RulesLexer():
       prfx, cmd = RulesLexer.getPrefix(RS_PREFIX_FILTERS, str)
       
       # Look for parameters
-      params = RS_RGX_TARGET_PARAM.match(cmd)
+      params = RS_RGX_TARGET_FPARAM.match(cmd)
       if params:
          cmd = params.group(1)
          args = params.group(2, 3)

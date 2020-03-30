@@ -20,7 +20,7 @@
 # Custom event handlers
 #---------------------------------------------------------------------------
 
-def addGameEventListener(event, callback, obj_id, source_id=None, restr=None, args=[]):
+def addGameEventListener(event, callback, obj_id, source_id=None, restr=None, args=[], appliesto=None):
    ge = getGlobalVar('GameEvents')
    prfx, eventName = RulesLexer.getPrefix(RS_PREFIX_EVENTS, event)
    if not eventName in ge:
@@ -32,7 +32,8 @@ def addGameEventListener(event, callback, obj_id, source_id=None, restr=None, ar
       'callback'  : callback,
       'restr'     : restr,
       'scope'     : prfx,
-      'args'      : args
+      'args'      : args,
+      'appliesto' : appliesto
    }
    for e in ge[eventName]:
       if e['id'] == obj_id and e['callback'] == callback and e['restr'] == restr and e['scope'] == prfx:
@@ -43,14 +44,17 @@ def addGameEventListener(event, callback, obj_id, source_id=None, restr=None, ar
    return True
 
 
-def removeGameEventListener(obj_id, eventName=None):
+def removeGameEventListener(obj_id, eventName=None, callback=None):
    debug(">>> removeGameEventListener({}, {})".format(obj_id, eventName))
    ge = getGlobalVar('GameEvents')
    removed = False
    for e in ge:
       if not eventName or e == eventName:
          for i, listener in reversed(list(enumerate(ge[e]))):
-            if listener['id'] == obj_id or listener['source'] == obj_id:
+            if(
+               (listener['id'] == obj_id or listener['source'] == obj_id) and
+               (not callback or callback == listener['callback'])
+            ):
                # Events with restrictions will eventually be removed in due time
                if listener['restr'] is None:
                   del ge[e][i]
@@ -66,10 +70,11 @@ def triggerGameEvent(event, *args):
    if isinstance(event, list):
       event, obj_id = event
    ge = getGlobalVar('GameEvents')
+   res = (True, None)
    if event in ge:
       for listener in ge[event]:
          params = list(args) + listener['args']
-         if not obj_id or listener['id'] == obj_id:
+         if not obj_id or listener['id'] == obj_id or listener['appliesto'] == RS_SUFFIX_ANY:
             debug("-- Found listener {}".format(listener))
             # Callback could be the ID of a card...
             if isinstance(listener['callback'], (int, long)):
@@ -79,9 +84,12 @@ def triggerGameEvent(event, *args):
                   notify("{}'s ability cannot be activated because it joined an United Attack".format(card))
                   continue
                # Call callback
-               if card.controller == me:
+               if card.controller == me or event in GameEventsCallOnHost:
                   pcard = getParsedCard(card)
-                  pcard.rules.execAuto(None, event, *params)
+                  if card.controller != me and not pcard.rules.parsed:
+                     pcard.init()
+                  if not pcard.rules.execAuto(None, event, *params):
+                     res = (False, listener['callback'])
                elif listener['scope'] in RS_PREFIX_SCOPE or obj_id:
                   debug("-- Effect controlled by {}. Sending remote event.".format(card.controller))
                   remoteCall(card.controller, "remoteGameEvent", [listener['callback'], event]+list(params))
@@ -94,9 +102,18 @@ def triggerGameEvent(event, *args):
                   debug("Callback function {} is not defined".format(listener['callback']))
                   continue
                if func(*params):
-                  return False
-   return True
-   
+                  res = (False, listener['source'])
+   return res
+
+
+def triggerHook(event, *args):
+   res, source = triggerGameEvent(event, *args)
+   if not res:
+      if isinstance(event, list):
+         event = event[0]
+      if event in MSG_HOOKS_ERR:
+         notifyAbility(args[0], source, MSG_HOOKS_ERR[event], isWarning=True)   
+   return res
    
 def remoteGameEvent(cardID, eventName, *args):
    debug(">>> remoteGameEvent({}, {}, {})".format(cardID, eventName, args))

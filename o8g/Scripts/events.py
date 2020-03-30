@@ -146,7 +146,7 @@ def onPhasePassed(args):
    # elif idx == MainPhase:
    # elif idx == AttackPhase:
    elif idx == BlockPhase:
-      _extapi.whisper("({} can play Reaction cards and then may choose if block attackers)".format("Now defending player" if me.isActive else "You", "#2c6798"))
+      _extapi.whisper("({} can play Reaction cards and then may choose if block attackers)".format("Now defending player" if me.isActive else "You"), "#2c6798")
    # elif idx == EndPhase:
    elif idx == CleanupPhase:
       if me.isActive:

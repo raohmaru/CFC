@@ -102,6 +102,7 @@ class CharCard(GameCard):
    def BP(self, value):
       self._BP = value
 
+
 class Ability:
    """ A class that represents an ability """   
    ability = ""

@@ -41,10 +41,10 @@ def debugScenario():
    gotoMain()
    rnd(100, 10000)  # Delay the next action until all animation is done
    tableCards = [
-      '2ba9556c-59b0-4154-8325-f9793a8eacb5' # Krizalid
-      ,'d14694b4-484c-4b45-962e-8cbb636d8a9a' # 200 BP
-      ,'ff8a97e3-9a78-4c5f-86fa-23480fa57da5' # 400 BP
-      ,'80d411e3-c3df-486f-927f-1592d9db65de' # Zombie
+      'ff8a97e3-9a78-4c5f-86fa-23480fa57da5' # 400 BP
+      # '75e57026-e4fe-4470-88b2-22268ddd6b61' # Hokutomaru
+      # ,'55b0c9ff-4b3a-4b08-adc1-f1b5e03adef9' # Nina
+      # ,'80d411e3-c3df-486f-927f-1592d9db65de' # Zombie
    ]
    for i, id in enumerate(tableCards):
       debug("Creating card {} at slot {}".format(id, i))
@@ -57,8 +57,10 @@ def debugScenario():
       rnd(1, 100)  # Delay the next action until all animation is done
       
    handCards = [
-      '0e1b4f81-93e9-44be-ab31-7aed8cb354d0' # Shadow
-      ,'6504b1a3-e432-4c6c-845b-6ca72500b458' # Substitute
+      '525d8365-c90e-491f-9811-1f23efbafccb' # Cody (Alpha)
+      ,'2c1d8c60-0858-4524-adc1-e7596a4d08e0' # Guy
+      ,'55b0c9ff-4b3a-4b08-adc1-f1b5e03adef9' # Nina
+      ,'9c6b99fa-ff60-4d70-aee8-7e1eae6f29b7' # Mack Knife
       # ,'248517e9-d7a0-450d-9281-df91d20f68ab' # Char 500 BP
       # ,'eb648ee7-aa4e-41ce-a7fc-04af31349ca9' # Char 700 BP
       # ,'4d7520b9-9ced-43e0-a2e7-974d76d8eb82' # Char 1000 BP
@@ -125,11 +127,11 @@ def debugScenario():
    
 def debugOpp():
    tableCards = [
-      '2ba9556c-59b0-4154-8325-f9793a8eacb5' # Krizalid
+      '75e57026-e4fe-4470-88b2-22268ddd6b61' # Hokutomaru
        # 'd14694b4-484c-4b45-962e-8cbb636d8a9a' # 200 BP
-      ,'ff8a97e3-9a78-4c5f-86fa-23480fa57da5' # 400 BP
+      # ,'ff8a97e3-9a78-4c5f-86fa-23480fa57da5' # 400 BP
       ,'24e99a13-cb42-4e16-9900-78dde12e1a4c' # 600 BP
-      ,'e6e46f83-d089-4762-8d8e-2a3252cfc9db' # 1000 BP
+      # ,'e6e46f83-d089-4762-8d8e-2a3252cfc9db' # 1000 BP
    ]
    for i, id in enumerate(tableCards):
       card = table.create(id, 0, 0, quantity=1, persist=True)

@@ -33,21 +33,22 @@ targets = [
    # "target = characters[attack]",
    # "target = character@hand",
    # "target = @oppRing",
-   "target = Captain[attack] @ oppRing",
-   "target = robot[-block]@myhand",
+   # "target = Captain[attack] @ oppRing",
+   # "target = robot[-block]@myhand",
    "target = character,action[bp>=800,frozen]@oppRing",
    "target = ^character[fresh&powerless]",
-   "target = ^character[fresh & -powerless]",
+   # "target = ^character[fresh & -powerless]",
    # "target = [fresh]",
    # "target = character@invalidZone",
    # "target = *<2>@oppDeck",
    # "target = <r>@hand",
-   # "target = <r2>action@hand[bp>300]",
+   "target = <r2>action@hand[bp>300]",
    # "target = <1>action@hand",
    # "target = <1,2>action@hand",
    # "target? = <,4>*<-2>@myDeck",
    # "target = <**>characters@myRing",
-   # 'target = "Juni"&"Juli"<1>@myDeck'
+   # 'target = "Juni"&"Juli"<1>@myDeck',
+   "target = characters[bp:lowest]",
 ]
 actions = [
    # "action = destroy()",
@@ -88,9 +89,9 @@ abilities = [
 ]
 autos = [
    # "auto = destroy()",
-   "auto = ~my HandChanges~ destroy()",
+   # "auto = ~my HandChanges~ destroy()",
    # "auto = ~HandChanges~ destroy() & draw(1)",
-   "auto = ~opp HandChanges~ [[if oppRing<2]] destroy()",
+   # "auto = ~opp HandChanges~ [[if oppRing<2]] destroy()",
    # "auto = ~ myHandChanges ~ destroy() to(character@myRing)",
    # "auto = ~myHandChanges~ destroy() ueot",
    # "auto = ~handChanges~ +unblockable",
@@ -98,8 +99,10 @@ autos = [
    # "auto = ~myHandChanges,oppBlockPhase~ -unblockable",
    # "auto = [[may 'Question?']] destroy() & +unblockable to(character@myRing) uynt",
    # "auto = ~myEndPhase~ moveTo(ctrlHand) to(characters[bp>=800])",
-   # "auto = ~anyBlockPhase~ +unblockable to(characters[bp<=300 & attack & -uattack]) ueot",
-   "auto = ~playerCombatDamaged fromThis~ +cantplayac to(opp) oppueot"
+   "auto = ~anyBlockPhase~ +unblockable to(characters[bp<=300 & attack & -uattack]) ueot",
+   # "auto = ~playerCombatDamaged fromThis~ +cantplayac to(opp) oppueot",
+   "auto = ~oppDamaged:fromThis~ draw() target?(opp)",
+   "auto = oppCanBeBlocked:this? [[if blocker.bp > this.bp]]",
 ]
 evals = [
    "action in me.hand => bp(+2)"
@@ -124,7 +127,7 @@ def test(arr, title):
 
 # rules = RulesDict['aa867ea1-89f8-4154-8e20-2263edd00002']
 # test(targets, 'targets')
-test(actions, 'actions')
+# test(actions, 'actions')
 # test(abilities, 'abilities')
-# test(autos, 'autos')
+test(autos, 'autos')
 # test(requisite, 'requisite')

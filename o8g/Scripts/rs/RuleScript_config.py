@@ -34,14 +34,14 @@ RS_KEY_REQ       = 'requisite'
 RS_RGX_KEY_TARGET     = re.compile(r'^target\??\s*=\s*')
 RS_RGX_TARGET_TYPE    = re.compile(r'@|\[')
 RS_RGX_TARGET_FILTERS = re.compile(r'\[(.+)\]')
-RS_RGX_TARGET_PARAM   = re.compile(r'(\w+)\s*([=><]+)\s*(\w+)')
+RS_RGX_TARGET_FPARAM  = re.compile(r'(\w+)\s*([=><:]+)\s*(\w+)')
 RS_RGX_TARGET_ZONE    = re.compile(r'@\s*([\w*]+).*$')
 RS_RGX_TARGET_PICK    = re.compile(r'<\s*((?:\+|\-)?\s*[0-9]+)\s*>')
 RS_RGX_TARGET_QTY     = re.compile(r'^<\s*((?:\*\*)|(?:r\d*)|(?:,?[0-9]+){1,2})\s*>')
 
 RS_RGX_KEY_ACTION     = re.compile(r'^action\s*=\s*')
 RS_RGX_AC_COST        = re.compile(r'(\{.+\}\s*)\s*:\s*')
-RS_RGX_AC_EVENT       = re.compile(r'~\s*([\w, ]+)\s*?~')
+RS_RGX_AC_EVENT       = re.compile(r'^~?\s*([\w, :]+)\s*(?:\?|~)')
 RS_RGX_AC_TARGET      = re.compile(r'\b(?:to|target)(\??)\s*\(([^)]+)\)')
 RS_RGX_AC_EFFECT      = re.compile(r'([\w.]+)\s*\((.*?)\)$')
 RS_RGX_AC_ARGS_SEP    = re.compile(r'(?<!<\d),(?!\d>)')
@@ -51,10 +51,18 @@ RS_RGX_KEY_AUTO       = re.compile(r'^auto\s*=\s*')
 RS_RGX_KEY_REQ        = re.compile(r'^requisite\s*=\s*')
 
 RS_RGX_PARAM          = re.compile(r'\(([^)]*)\)')
-RS_RGX_COND           = re.compile(r'\[\[([^\]]+)\]\]\s')
+RS_RGX_COND           = re.compile(r'\[\[([^\]]+)\]\]\s*')
 
 # Comments
 RS_COMMENT_CHAR = '#'
+
+# Keywords
+RS_KW_ANY    = '*'
+RS_KW_ANYNUM = '**'
+RS_KW_ALL    = 'all'
+RS_KW_NAME   = '"'
+RS_KW_RANDOM = 'r'
+RS_KW_ARROW  = '->'
 
 # Operators
 RS_OP_OR       = ','
@@ -65,6 +73,7 @@ RS_OP_LTE      = '<='
 RS_OP_GTE      = '>='
 RS_OP_BOOL_AND = '&&'
 RS_OP_OPT      = '?'
+RS_OP_FUNC     = ':'
 
 RS_TARGET_OPS = [
    RS_OP_AND,
@@ -125,9 +134,10 @@ RS_PREFIX_SCOPE = [
 ]
 
 # Sufixes
-RS_SUFFIX_PLURAL = 's'
+RS_SUFFIX_PLURAL    = 's'
 RS_SUFFIX_FROM_THIS = 'fromthis'
-RS_SUFFIX_THIS = 'this'
+RS_SUFFIX_THIS      = 'this'
+RS_SUFFIX_ANY       = 'any'
 
 RS_SUFFIX_TYPES = [
    RS_SUFFIX_PLURAL
@@ -135,16 +145,9 @@ RS_SUFFIX_TYPES = [
 
 RS_SUFFIX_EVENTS = [
    RS_SUFFIX_FROM_THIS,
-   RS_SUFFIX_THIS
+   RS_SUFFIX_THIS,
+   RS_SUFFIX_ANY
 ]
-
-# Keywords
-RS_KW_ANY    = '*'
-RS_KW_ANYNUM = '**'
-RS_KW_ALL    = 'all'
-RS_KW_NAME   = '"'
-RS_KW_RANDOM = 'r'
-RS_KW_ARROW  = '->'
 
 # Target keywords
 RS_KW_TARGET_PLAYER    = 'player'

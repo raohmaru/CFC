@@ -140,7 +140,7 @@ def clearGlobalVar(name, player = None):
 
 def replaceVars(str):
    debug("-- replaceVars({})".format(str))
-   str = re.sub(Regexps['BP'], r'hasattr(getParsedCard(\1), "BP") and getParsedCard(\1).BP', str)
+   str = re.sub(Regexps['BP'], r'(hasattr(getParsedCard(\1), "BP") and getParsedCard(\1).BP)', str)
    str = re.sub(Regexps['Action'], 'isAction(card)', str)
    str = re.sub(Regexps['Reaction'], 'isReaction(card)', str)
    str = re.sub(Regexps['Char'], 'isCharacter(card)', str)
@@ -152,6 +152,7 @@ def replaceVars(str):
    str = str.replace('.hp', '.HP')
    str = str.replace('alone', 'getRingSize() == 1')
    str = str.replace('attacker', 'attacker[0]')
+   str = str.replace('blocker', 'blocker[0]')
    str = str.replace('soloattack', 'len(getAttackingCards()) == 1')
    debug("---- {}".format(str))
    return str
@@ -945,17 +946,6 @@ def isAttached(card):
    
 def isFrozen(card):
    return card.orientation & Rot90 == Rot90
-
-
-def compareValuesByOp(v1, v2, op):
-   if op == RS_OP_EQUAL:
-      return v1 == v2
-   elif op == RS_OP_LTE:
-      return v1 <= v2
-   elif op == RS_OP_GTE:
-      return v1 >= v2
-      
-   return False
 
 
 def hasMarker(card, marker, include=True):
