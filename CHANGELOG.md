@@ -1,7 +1,7 @@
 # Card Fighters' Clash Changelog
 
 ## 0.7.8
-Scripted abilities: Gato, Krizalid, Kula, Rugal, Vanessa, Mukuro, Shadow, Substitute, Amnesia, Super Art Select, Griffon Mask, Hokutomaru.
+Scripted abilities: Gato, Krizalid, Kula, Rugal, Vanessa, Mukuro, Shadow, Substitute, Amnesia, Super Art Select, Griffon Mask, Hokutomaru, Iori, Shermie, Genjuro, Mikoto, The Ump, Glare off.
 ## 0.7.7
 Scripted abilities: Ryo Sakazaki, Yuri, Geese Howard, Yashiro, Eri, Hanzo, Escape, Peacemaker, Reparation, School's out, Guy Tendo, Takato, Alfred, Billy, Blue Mary, Kim, Marco R., Yamazaki, Choi, Gaira, Galford, Genan, Rimoruru (Bust), Seishiro, Ukyo, Double, Fight!, Lightning, Puppet, Reset button, Stifler, Held back, Reliable warrior, Scan, Suspicious.
 Added functions for colored notifications in the chat.

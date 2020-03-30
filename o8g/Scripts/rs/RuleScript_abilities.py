@@ -79,15 +79,16 @@ def getObjName(obj):
       return obj.name
       
       
-def getTextualRestr(restr, player = None):
+def getTextualRestr(restr):
    if not restr:
       return ''
    if restr[1] in RS_KW_RESTR_LABELS:
-      if not player:
-         player = ''
-         if restr[0]:
-            player = 'his  '
-      return ' ' + RS_KW_RESTR_LABELS[restr[1]].format(player)
+      possessive = ''
+      player = me
+      if restr[0] == RS_PREFIX_OPP:
+         possessive = 'his '
+         player = players[1]
+      return ' ' + RS_KW_RESTR_LABELS[restr[1]].format(possessive, player)
    return restr(1)
    
    
@@ -172,6 +173,7 @@ def abl_genericListener(target_id, obj_id, source_id=None, msgOrFunc=None, check
 
 
 RulesAbilities.register('unblockable',     Hooks.CanBeBlocked)
+RulesAbilities.register('cantattack',      Hooks.BeforeAttack)
 RulesAbilities.register('cantblock',       Hooks.BeforeBlock)
 RulesAbilities.register('cantplayac',      Hooks.BeforePlayAC)
 RulesAbilities.register('cantplayre',      Hooks.BeforePlayRE)

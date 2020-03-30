@@ -533,7 +533,7 @@ def cmd_alterCost(rc, targets, source, restr, cardType, mod):
    else:
       mode = mod[0]
       mod = num(mod[1:])
-      notify(MSG_RULES['card_cost'].format(cardType.title(), mod, '', getTextualRestr(restr, me)))
+      notify(MSG_RULES['card_cost'].format(cardType.title(), mod, '', getTextualRestr(restr)))
       
    addGameMod('cost', source._id, cardType, mod, mode)
    

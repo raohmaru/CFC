@@ -41,10 +41,10 @@ def debugScenario():
    gotoMain()
    rnd(100, 10000)  # Delay the next action until all animation is done
    tableCards = [
-      'ff8a97e3-9a78-4c5f-86fa-23480fa57da5' # 400 BP
-      # '75e57026-e4fe-4470-88b2-22268ddd6b61' # Hokutomaru
-      # ,'55b0c9ff-4b3a-4b08-adc1-f1b5e03adef9' # Nina
-      # ,'80d411e3-c3df-486f-927f-1592d9db65de' # Zombie
+      '6814ab83-c21d-4df9-8d07-e977ee27f131' # Blue Mary
+      ,'d5e70014-8a56-4d9b-8b06-0192bac3f0b8' # Leon
+      ,'ae20ea05-0df7-4360-99a5-11a7dfe44b9f' # Mikoto
+      # ,'e0c2ac67-1925-4e63-b9ae-9dcbc7ff229f' # The Ump
    ]
    for i, id in enumerate(tableCards):
       debug("Creating card {} at slot {}".format(id, i))
@@ -57,10 +57,7 @@ def debugScenario():
       rnd(1, 100)  # Delay the next action until all animation is done
       
    handCards = [
-      '525d8365-c90e-491f-9811-1f23efbafccb' # Cody (Alpha)
-      ,'2c1d8c60-0858-4524-adc1-e7596a4d08e0' # Guy
-      ,'55b0c9ff-4b3a-4b08-adc1-f1b5e03adef9' # Nina
-      ,'9c6b99fa-ff60-4d70-aee8-7e1eae6f29b7' # Mack Knife
+      'faea0028-c313-438e-b9f0-8536e494ddb1' # Glare off
       # ,'248517e9-d7a0-450d-9281-df91d20f68ab' # Char 500 BP
       # ,'eb648ee7-aa4e-41ce-a7fc-04af31349ca9' # Char 700 BP
       # ,'4d7520b9-9ced-43e0-a2e7-974d76d8eb82' # Char 1000 BP
@@ -127,11 +124,10 @@ def debugScenario():
    
 def debugOpp():
    tableCards = [
-      '75e57026-e4fe-4470-88b2-22268ddd6b61' # Hokutomaru
-       # 'd14694b4-484c-4b45-962e-8cbb636d8a9a' # 200 BP
-      # ,'ff8a97e3-9a78-4c5f-86fa-23480fa57da5' # 400 BP
+       'd14694b4-484c-4b45-962e-8cbb636d8a9a' # 200 BP
+      ,'ff8a97e3-9a78-4c5f-86fa-23480fa57da5' # 400 BP
       ,'24e99a13-cb42-4e16-9900-78dde12e1a4c' # 600 BP
-      # ,'e6e46f83-d089-4762-8d8e-2a3252cfc9db' # 1000 BP
+      ,'e6e46f83-d089-4762-8d8e-2a3252cfc9db' # 1000 BP
    ]
    for i, id in enumerate(tableCards):
       card = table.create(id, 0, 0, quantity=1, persist=True)
@@ -148,8 +144,8 @@ def debugOpp():
       # ,'83c33aa8-5981-4352-8107-cbb7e05547ec' # Action -1 SP
       # ,'b95b2104-d184-43cc-bb04-b3eb096c6fca' # Action -2 SP
       # ,'ac01bbbe-583e-46ae-b26c-3c25eb8f0779' # Action -6 SP
-      # ,'556b3359-e642-419a-ab5c-67f70de1bb4f' # Reaction 0 SP
-      # ,'46deecf5-7f7b-42b5-b6fa-e3162dce2013' # Reaction -1 SP
+      '556b3359-e642-419a-ab5c-67f70de1bb4f' # Reaction 0 SP
+      ,'46deecf5-7f7b-42b5-b6fa-e3162dce2013' # Reaction -1 SP
       # ,'91e441cc-0f1f-4b01-a2b0-94678d6f0b56' # Reaction -4 SP
    ]
    for id in handCards:

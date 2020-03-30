@@ -187,6 +187,7 @@ restr: (optional)
    Keywords:
       ueot
       unac
+      uynt
    Prefixes:
       my (default)
       opp
@@ -199,6 +200,7 @@ Only one abilities key is allowed.
 ability:
    Keywords:
       unblockable
+      cantattack
       cantblock
       cantplayac
       cantplayre
@@ -210,7 +212,7 @@ ability:
       frosted
       
 ---------------------------------------------------
-auto = ~event[,event]~ [[cond]] effect [& effect] to(target) restr; ...
+auto = [~event[,event]~ | hook?] [[cond]] effect [& effect] to(target) restr; ...
 
 Only one auto key is allowed.
 
@@ -229,7 +231,6 @@ event:
       attacks [suffix]
       blocks [suffix]
       blocked [suffix]
-      canBeBlocked [suffix]
    Prefixes:
       my (default)
       opp
@@ -238,6 +239,14 @@ event:
       fromThis
       this
       any
+      
+hook:
+   Keywords:
+      canBeBlocked [suffix]
+   Prefixes:
+      @see auto:event:prefixes
+   Suffixes:
+      @see auto:event:suffixes
 
 cond:
    @see action:cond
@@ -1082,7 +1091,9 @@ action = [[if me.hp <= 10]] draw(2)
 """
 
 # Iori's BLOOD CONTRACT
-# RulesDict['4d7520b9-9ced-43e0-a2e7-974d76d8eb82'] = ""
+RulesDict['4d7520b9-9ced-43e0-a2e7-974d76d8eb82'] = """
+abilities = cantblock
+"""
 
 # Jhun Hoon's BROMIDE
 # RulesDict['eba4b6d7-1b14-4112-8e1e-6bee2017d338'] = ""
@@ -1131,7 +1142,9 @@ action = loseAbility() target(^character[powerful])
 # RulesDict['b25a11ac-1166-4868-990a-5113350f1502'] = ""
 
 # Shermie's GO EASY ON ME
-# RulesDict['672ac290-d6f2-4579-b5ae-1067add14601'] = ""
+RulesDict['672ac290-d6f2-4579-b5ae-1067add14601'] = """
+action = +cantattack target(characters@oppRing) oppueot
+"""
 
 # Shingo's BURNING SHINGO!
 # RulesDict['f0163d6b-bd20-4737-a40b-c84ca19da681'] = ""
@@ -1247,7 +1260,9 @@ action = reveal(hand) target(opp)
 """
 
 # Genjuro's I KNEW IT!
-# RulesDict['9a52f604-bf68-4ef4-934b-1c984877d484'] = ""
+RulesDict['9a52f604-bf68-4ef4-934b-1c984877d484'] = """
+abilities = cantblock
+"""
 
 # Hanzo's DUST CLOUD
 RulesDict['90c1ccf4-999a-4567-92e4-0f7602b7799e'] = """
@@ -1273,7 +1288,9 @@ action = bp(+1) target(characters@myRing)
 """
 
 # Mikoto's RED EYES
-# RulesDict['ae20ea05-0df7-4360-99a5-11a7dfe44b9f'] = ""
+RulesDict['ae20ea05-0df7-4360-99a5-11a7dfe44b9f'] = """
+auto = ~attacks:this~ +cantplayre to(opp) ueot
+"""
 
 # Nakoruru's MAMAHAHA CALL
 # RulesDict['248517e9-d7a0-450d-9281-df91d20f68ab'] = ""
@@ -1336,7 +1353,9 @@ auto = ~anyCleanupPhase~ destroy() target(this[attack,block])
 """
 
 # The Ump's MYSTIC
-# RulesDict['e0c2ac67-1925-4e63-b9ae-9dcbc7ff229f'] = ""
+RulesDict['e0c2ac67-1925-4e63-b9ae-9dcbc7ff229f'] = """
+abilities = cantblock, cantattack
+"""
 
 # Athena's FIRE SWORD
 # RulesDict['2f8ecb64-d513-4e67-b537-5acef9de6c68'] = ""
@@ -1435,7 +1454,9 @@ action = unfreeze() target(characters[frozen]@ring)
 """
 
 # Glare off
-# RulesDict['faea0028-c313-438e-b9f0-8536e494ddb1'] = ""
+RulesDict['faea0028-c313-438e-b9f0-8536e494ddb1'] = """
+action = +cantattack target(characters) uynt
+"""
 
 # Grace
 RulesDict['6597d835-666b-4056-8cae-dbf3a3bdc3df'] = """

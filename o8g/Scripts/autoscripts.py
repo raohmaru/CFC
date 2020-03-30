@@ -55,6 +55,7 @@ def activatePhaseStart():
    notify("{} unfreezes all characters in their ring{}.".format(me, frostedChars))
    # Trigger event
    triggerGameEvent(GameEvents.ActivatePhase)
+   cleanupGameEvents(RS_KW_RESTR_UYNT)
 
 
 def drawPhaseStart():
@@ -67,6 +68,12 @@ def drawPhaseStart():
 
 def attackPhaseStart():
    clearKOedChars()
+   # Discard action cards I have played
+   myActionCards = (card for card in table
+      if card.controller == me
+      and isAction(card))
+   for card in myActionCards:
+      discard(card)
 
 
 def blockPhaseStart():
@@ -147,11 +154,19 @@ def endPhaseStart():
          elif len(players) > 1:
             dealDamage(dmg + pdmg, players[1], card)
             triggerGameEvent([GameEvents.PlayerCombatDamaged, card._id], card._id)
+   
    # Trigger event
    triggerGameEvent(GameEvents.EndPhase)
    # Remove events that should end when the turns finishes
    for restr in RS_KW_RESTRS_CLEANUP:
       cleanupGameEvents(restr)
+      
+   # Discard opponent reaction cards
+   oppReactionCards = (card for card in table
+      if card.controller != me
+      and isReaction(card))
+   for card in oppReactionCards:
+      remoteCall(card.controller, 'discard', [card])
 
 
 def cleanupPhaseStart():
@@ -176,7 +191,7 @@ def cleanupPhaseStart():
          if card.highlight == ActivatedColor:
             card.highlight = None
       # Discard any Action or Reaction card left in the table (just in case player forgot to remove them)
-      elif isAction(card) or isReaction(card):
+      else:
          discard(card)
    clearAll()
 
@@ -357,6 +372,9 @@ def attackAuto(card):
    slotIdx = getSlotIdx(card)
    if slotIdx == -1:
       warning("Please attack with a character in your ring.")
+      return
+   # Triggers a hook to check if the character can attack
+   if not triggerHook([Hooks.BeforeAttack, card._id], card._id):
       return
    # Cancels the character's attack if it's already attacking
    if hasMarker(card, 'Attack') or hasMarker(card, 'United Attack'):

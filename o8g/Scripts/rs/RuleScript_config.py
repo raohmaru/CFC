@@ -235,15 +235,18 @@ RS_KW_CMD_COND = [
 
 # Effect restrictions
 RS_KW_RESTR_UEOT = 'ueot'
+RS_KW_RESTR_UYNT = 'uynt'
 RS_KW_RESTR_UNAC = 'unac'  # Until Next Action Card
 RS_KW_CMD_RESTRS = [
    RS_KW_RESTR_UEOT,
+   RS_KW_RESTR_UYNT,
    RS_KW_RESTR_UNAC
 ]
 
 RS_KW_RESTR_LABELS = {
-   RS_KW_RESTR_UEOT: 'until end of {}turn',
-   RS_KW_RESTR_UNAC: 'until {} plays an action card'
+   RS_KW_RESTR_UEOT: "until end of {0}turn",
+   RS_KW_RESTR_UYNT: "until {1}'s next turn",
+   RS_KW_RESTR_UNAC: 'until {1} plays an action card'
 }
 
 RS_KW_RESTRS_CLEANUP = [

@@ -167,6 +167,7 @@ DebugLevelPrefixes = [
 
 # Hooks
 Hooks = Struct(**{
+   'BeforeAttack' : 'beforeattack',
    'BeforeBlock'  : 'beforeblock',
    'BeforePlayAC' : 'beforeplayac',
    'BeforePlayRE' : 'beforeplayre',
@@ -237,15 +238,20 @@ MSG_ERR_NO_FILTERED_PLAYERS = "No player match the requirements of this card's e
 MSG_ERR_TARGET_OTHER        = "{}'s ability cannot select itself, therefore it has been removed from selection."
 MSG_MAY_DEF                 = "Do you want to apply the effect of the card?"
 MSG_HOOKS_ERR = {
-   Hooks.BeforeBlock : "{} cannot block due to {}'s {} ability{}.",
+   Hooks.BeforeAttack: "{} cannot attack due to {}'s {} ability{}.",
+   Hooks.BeforeBlock : "{} cannot counter-attack due to {}'s {} ability{}.",
    Hooks.CanBeBlocked: "{} cannot be blocked due to {}'s {} ability{}.",
    Hooks.BeforePlayAC: "{} cannot play action cards due to {}'s {} ability{}.",
    Hooks.BeforePlayRE: "{} cannot play reaction cards due to {}'s {} ability{}."
 }
 MSG_AB = {
+   'cantattack': [
+      MSG_HOOKS_ERR[Hooks.BeforeAttack],
+      "{} can attack again."
+   ],
    'cantblock': [
       MSG_HOOKS_ERR[Hooks.BeforeBlock],
-      "{} can block again."
+      "{} can counter-attack again."
    ],
    'unblockable': [
       MSG_HOOKS_ERR[Hooks.CanBeBlocked],

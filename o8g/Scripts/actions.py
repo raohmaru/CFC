@@ -577,7 +577,7 @@ def discardAll(group, x = 0, y = 0):
    for card in group:
       card.moveTo(discards)
    if len(players) > 1: rnd(1, 100) # Wait a bit more, as in multiplayer games, things are slower.
-   notify("{} moves all cards from their {} to its Discard Pile.".format(me, group.name))
+   notify("{} moves all cards from their {} to his discard Pile.".format(me, group.name))
 
 
 def toTableFaceDown(card, x = 0, y = 0):
@@ -766,6 +766,8 @@ def discard(card, x = 0, y = 0, isRandom = False):
    group = card.group
    card.moveTo(me.piles['Discard Pile'])
    msg = "{} has discarded {} from its {}."
+   if group != me.hand:
+      msg = "{} puts {} into his discard pile."
    if isRandom:
       msg = MSG_DISCARD_RANDOM
    notify(msg.format(me, card, group.name))
