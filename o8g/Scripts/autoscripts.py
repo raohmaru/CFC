@@ -68,6 +68,7 @@ def drawPhaseStart():
 
 def attackPhaseStart():
    clearKOedChars()
+   clearGlobalVar('Stack')
    # Discard action cards I have played
    myActionCards = (card for card in table
       if card.controller == me
@@ -96,10 +97,11 @@ def blockPhaseStart():
 
 def endPhaseStart():
    clearKOedChars()
+   clearGlobalVar('Stack')
 
+   # Freeze attacking characters
    myCards = (card for card in table
       if card.controller == me)
-   # Freeze attacking characters
    for card in myCards:
       if isCharacter(card):
          if (hasMarker(card, 'Attack') or hasMarker(card, 'United Attack')) and not hasMarker(card, 'Unfreezable'):
@@ -227,8 +229,9 @@ def playAuto(card, slotIdx=None, force=False):
          information("Character cards can only be played on your Main Phase.")
          return
       # Limit of chars played per turn
-      if state['charsPlayed'] >= CharsPerTurn:
-         if not confirm("Only {} character per turn can be played\n(you have played {} characters).\nProceed anyway?".format(CharsPerTurn, state['charsPlayed'])):
+      charsPlayed = getState(me, 'charsPlayed')
+      if charsPlayed >= CharsPerTurn:
+         if not confirm("Only {} character per turn can be played\n(you have played {} characters).\nProceed anyway?".format(CharsPerTurn, charsPlayed)):
             return
       # Player has any empty slot in his ring?
       myRing = getGlobalVar('Ring', me)
@@ -258,7 +261,7 @@ def playAuto(card, slotIdx=None, force=False):
       if triggerHook(Hooks.PlayFresh, card._id):
          setMarker(card, 'Just Entered')
       putAtSlot(card, slotIdx)
-      state['charsPlayed'] += 1
+      setState(me, 'charsPlayed', charsPlayed + 1)
 
    # Player plays an Action card
    elif isAction(card):
@@ -319,7 +322,8 @@ def backupAuto(card):
       return
    target = targets[0]
    # Backup limit
-   if state['backupsPlayed'] >= BackupsPerTurn:
+   backupsPlayed = getState(me, 'backupsPlayed')
+   if backupsPlayed >= BackupsPerTurn:
       if triggerHook(Hooks.BackupLimit, target._id):
          if not confirm("Can't backup more than {} character per turn.\nProceed anyway?".format(CharsPerTurn)):
             return
@@ -353,7 +357,7 @@ def backupAuto(card):
    card.sendToBack()
    setMarker(card, 'Backup')
    addMarker(target, 'BP', BackupRaiseBP)  # Backed-up char's BP is raised
-   state['backupsPlayed'] += 1
+   setState(me, 'backupsPlayed', backupsPlayed + 1)
    return target
 
 

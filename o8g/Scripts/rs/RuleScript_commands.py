@@ -134,17 +134,14 @@ def getLocals(**kwargs):
       else:
          locals[key] = value
         
-   locals.update({k.lower(): v for k, v in state.items()})
-   
    if kwargs:
-      prevtgt = None
-      if 'rc' in kwargs and kwargs['rc'].prevTargets != None and len(kwargs['rc'].prevTargets) > 0:
-         prevtgt = kwargs['rc'].prevTargets[0]
       localVars = dict(
          this = kwargs['source'] if 'source' in kwargs else None,
-         tgt = kwargs['targets'][0] if 'targets' in kwargs and len(kwargs['targets']) > 0 else None,
-         prevtgt = prevtgt
+         tgt = kwargs['targets'][0] if 'targets' in kwargs and len(kwargs['targets']) > 0 else None
       )
+      rc = kwargs['rc'] if 'rc' in kwargs else commander
+      if rc.prevTargets != None and len(rc.prevTargets) > 0:
+         localVars['prevtgt'] = rc.prevTargets[0]
       locals.update(localVars)
    return locals
 

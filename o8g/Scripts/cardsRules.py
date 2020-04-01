@@ -170,9 +170,6 @@ effect:
    Operators:
       & (and)
       
-   Variables:
-      tgt (current target)
-      
 to(): (optional)
    Parameters:
       A valid target
@@ -227,10 +224,11 @@ event:
       ringchanges
       removed
       powerless
-      playerCombatDamaged [suffix]
-      attacks [suffix]
-      blocks [suffix]
-      blocked [suffix]
+      playerCombatDamaged:[suffix]
+      playerDamaged
+      attacks:[suffix]
+      blocks:[suffix]
+      blocked:[suffix]
    Prefixes:
       my (default)
       opp
@@ -239,6 +237,7 @@ event:
       fromThis
       this
       any
+      card
       
 hook:
    Keywords:
@@ -275,7 +274,8 @@ Available variables:
       .hand [.size]
       .ring
       .chars
-   tgt
+      .damaged
+   tgt (current target)
    prevTgt
    this
    discarded [.size]
@@ -288,8 +288,8 @@ Available variables:
    alone
    soloAttack
    bp
-   oppDamaged
    oppLostSP
+   damagedPlayer
    
 each():
    card
@@ -824,7 +824,7 @@ action = {F}: moveTo(deck); moveTo(deck) target(all@hand) & shuffle() & draw(3)
 
 # J. Talbain's SEETHING BLOOD
 RulesDict['3a0e4fbc-6895-43e0-97d1-e1f667aca271'] = """
-action = [[if oppDamaged]] bp(+3)
+action = [[if opp.damaged]] bp(+3)
 """
 
 # Jedah's P.D.C.
@@ -996,7 +996,9 @@ auto = ~blocked:this~ draw()
 """
 
 # Hotaru's ITOKATSU
-# RulesDict['928b8c60-483a-467c-9c11-e858009ff362'] = ""
+RulesDict['928b8c60-483a-467c-9c11-e858009ff362'] = """
+action = moveTo(deck) target(action@discards)
+"""
 
 # Jin Chonshu's FOGEY FISTS
 RulesDict['b77da717-47d7-4dc1-bb79-cddecf0c5af5'] = """
@@ -1009,7 +1011,9 @@ action = {F}: trash(2) target(opp)
 """
 
 # Kain's RISOU
-# RulesDict['e81e9366-b3e1-45a6-b010-bd02934b2efd'] = ""
+RulesDict['e81e9366-b3e1-45a6-b010-bd02934b2efd'] = """
+auto = ~anyPlayerDamaged:action~ damage(1) to(damagedPlayer)
+"""
 
 # Kim's TRAINING!
 RulesDict['38fcbdaf-0025-4692-adac-be99aa1be750'] = """

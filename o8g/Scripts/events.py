@@ -165,4 +165,12 @@ def onMarkerChanged(args):
       if qty == 0:
          qty = args.value
       getParsedCard(args.card).BP = qty
-      
+
+
+def OnCounterChanged(args):
+   debug(">>> OnCounterChanged: {}, {}, {}, {}".format(args.counter._player, args.counter._name, args.value, args.scripted))
+   player = args.counter._player
+   counterName = args.counter._name
+   setState(player, counterName, player.counters[counterName].value)
+   if args.scripted:
+      popStack()

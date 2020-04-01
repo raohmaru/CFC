@@ -68,7 +68,7 @@ def resetAll():
    parsedCards = {}
    resetState()
    turns = 1
-   me.HP = 30
+   me.HP = StartingHP
    me.SP = 0
    clearGlobalVar('Backups')
    clearGlobalVar('UnitedAttack')
@@ -78,6 +78,7 @@ def resetAll():
    clearGlobalVar('Modifiers')
    clearGlobalVar('Rules')
    clearGlobalVar('CharsAbilities')
+   clearGlobalVar('Stack')
    
    if me.name == Author:
       if debugVerbosity == DebugLevel.Off:
@@ -147,6 +148,7 @@ def replaceVars(str):
    str = re.sub(Regexps['Size'], r'len(\1)', str)
    str = re.sub(Regexps['Ring'], r'getRingSize(\1)', str)
    str = re.sub(Regexps['Chars'], r'getRing(\1)', str)
+   str = re.sub(Regexps['State'], r'getState(\1, "\2")', str)
    str = re.sub(Regexps['Opp'], r'getOpp()', str)
    str = str.replace('.sp', '.SP')
    str = str.replace('.hp', '.HP')
@@ -230,24 +232,41 @@ def getRule(rule):
 def addActionTempVars(name, value):
    vars = getGlobalVar('ActionTempVars')
    if isinstance(value, list):
-      value = [card._id for card in value]
-   vars[name] = value
+      value = [c._id if hasattr(c, '_id') else c for c in value]
+   vars[name.lower()] = value
    setGlobalVar('ActionTempVars', vars)
 
 
-def changeState(name, value):
-   state[name.lower()] = value
-   debug("Game state changed: {} => {}".format(name, value))
-   debug("{}".format(state))
+def getState(player, name = None):
+   debug(">>> getState({}, {})".format(player._id, name))
+   GameState = getGlobalVar('GameState')
+   if not name:
+      return GameState[player._id]
+   elif name in GameState[player._id]:
+      debug(" -- {}".format(GameState[player._id][name]))
+      return GameState[player._id][name]
+   return None
+
+
+def setState(player, name, value):
+   debug(">>> setState({}, {}, {})".format(player._id, name, value))
+   GameState = getGlobalVar('GameState')
+   GameState[player._id][name] = value
+   setGlobalVar('GameState', GameState)
+   debug("GameState: {}".format(GameState))
    
 
 def resetState():
-   global state
-   state = {
-      'charsPlayed'  : 0,  # Num of chars played this turn
-      'backupsPlayed': 0,  # Num of chars backed-up this turn
-      'oppDamaged'   : False  # Enemy damaged by non-character card
-   }
+   GameState = getGlobalVar('GameState')
+   for p in players:
+      GameState[p._id] = {
+         'charsPlayed'  : 0,  # Num of chars played this turn
+         'backupsPlayed': 0,  # Num of chars backed-up this turn
+         'damaged'      : False,  # Player damaged by non-character card
+         'HP'           : p.HP  # You cannot trust player properties in online games, so we keep track of them
+      }
+   setGlobalVar('GameState', GameState)
+   debug(">>> resetState()\n{}".format(GameState)) #Debug
    
    
 def addGameMod(type, id, *args):
@@ -273,6 +292,25 @@ def removeGameMod(id, msg = False):
    if msg:
       notify(msg)
    
+
+def pushStack(event, params, **tempVars):
+   debug(">>> pushStack({}, {}, {})".format(event, params, tempVars)) #Debug
+   Stack = getGlobalVar('Stack')
+   Stack.append([[event] + params, tempVars])
+   setGlobalVar('Stack', Stack)
+   
+
+def popStack():
+   Stack = getGlobalVar('Stack')
+   debug(">>> popStack() --> {}".format(Stack)) #Debug
+   if len(Stack) > 0:
+      item = Stack.pop(0)
+      setGlobalVar('Stack', Stack)
+      event, tempVars = item
+      for key, value in tempVars.iteritems():
+         addActionTempVars(key, value)
+      triggerGameEvent(*event)
+
 
 #---------------------------------------------------------------------------
 # Pile functions
@@ -731,14 +769,17 @@ def dealDamage(dmg, target, source, isPiercing = False):
       dmg = min(dmg, getMarker(target, 'BP'))
       addMarker(target, 'BP', -dmg)
       notify("{} deals {} damage to {}. New BP is {} (before was {}).".format(source, dmg, target, getMarker(target, 'BP'), oldBP))
+   # Damage to a player
    else:
-      oldHP = target.HP
-      target.HP -= dmg
+      if not isCharacter(source):
+         pushStack(GameEvents.PlayerDamaged, [source._id], damagedPlayer=target._id, card=source._id)
+      oldHP = getState(target, 'HP')
+      target.HP = oldHP - dmg
       piercing = "piercing " if isPiercing else ""
       notify("{} deals {} {}damage to {}. New HP is {} (before was {}).".format(source, dmg, piercing, target, target.HP, oldHP))
       # Change game state
       if target != me and not isCharacter(source):
-         changeState('oppDamaged', True)
+         setState(target, 'damaged', True)
       
       
 def modBP(card, qty, mode = None):
@@ -932,6 +973,8 @@ def isCharacter(card):
 
 
 def isAction(card):
+   if not isCard(card):
+      card = Card(card)
    return card.Type == ActionType
 
 

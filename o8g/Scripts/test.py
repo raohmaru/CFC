@@ -99,10 +99,11 @@ autos = [
    # "auto = ~myHandChanges,oppBlockPhase~ -unblockable",
    # "auto = [[may 'Question?']] destroy() & +unblockable to(character@myRing) uynt",
    # "auto = ~myEndPhase~ moveTo(ctrlHand) to(characters[bp>=800])",
-   "auto = ~anyBlockPhase~ +unblockable to(characters[bp<=300 & attack & -uattack]) ueot",
+   # "auto = ~anyBlockPhase~ +unblockable to(characters[bp<=300 & attack & -uattack]) ueot",
    # "auto = ~playerCombatDamaged fromThis~ +cantplayac to(opp) oppueot",
-   "auto = ~oppDamaged:fromThis~ draw() target?(opp)",
-   "auto = oppCanBeBlocked:this? [[if blocker.bp > this.bp]]",
+   # "auto = ~playerDamaged:fromThis~ draw() target?(opp)",
+   "auto = oppCanBeBlocked:any? [[if blocker.bp > this.bp]]",
+   "auto = ~anyPlayerDamaged:action~ damage(1) to(damagedPlayer)",
 ]
 evals = [
    "action in me.hand => bp(+2)"
@@ -127,7 +128,7 @@ def test(arr, title):
 
 # rules = RulesDict['aa867ea1-89f8-4154-8e20-2263edd00002']
 # test(targets, 'targets')
-test(actions, 'actions')
+# test(actions, 'actions')
 # test(abilities, 'abilities')
-# test(autos, 'autos')
+test(autos, 'autos')
 # test(requisite, 'requisite')

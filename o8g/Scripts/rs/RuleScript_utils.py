@@ -167,7 +167,7 @@ class RulesUtils():
          if pile == 0:
             return False
          zone = list(zone)  # Make a copy of the list
-         zone[0] = [RS_PREFIX_MY, RS_PREFIX_OPP][pile-1]      
+         zone[0] = [RS_PREFIX_MY, RS_PREFIX_OPP][pile-1]
 
       # Get all the cards from the given zone
       debug("-- Getting all cards from zone %s" % ''.join(zone))
@@ -191,6 +191,13 @@ class RulesUtils():
             targets += ftargets
       
       if not targets and not pick:
+         ActionTempVars = getGlobalVar('ActionTempVars')
+         debug("-- maybe it's a variable? ({})".format(ActionTempVars))
+         if types[0] in ActionTempVars:
+            try:
+               return [Player(ActionTempVars[types[0]])]
+            except:
+               return [Card(ActionTempVars[types[0]])]
          return False
 
       # Select random cards

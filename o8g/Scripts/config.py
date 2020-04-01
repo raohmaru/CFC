@@ -128,6 +128,7 @@ Regexps = dict(
    Ring     = re.compile(r'(\w+)\.ring'),
    Chars    = re.compile(r'(\w+)\.chars'),
    Opp      = re.compile(r'\bopp\b'),
+   State    = re.compile(r'(\w+)\.(damaged)')
 )
 
 # Rules
@@ -139,6 +140,7 @@ MaxCharsUAttack = 2
 UAttackCost     = 5
 MaxCardCopies   = 3
 HandSize        = 5
+StartingHP      = 30
 
 GameRulesDefaults = {
    'ab_trigger_fresh': False, # Activate [] abilities of fresh characters
@@ -190,6 +192,7 @@ GameEvents = Struct(**{
    'Removed'            : 'removed',
    'Powerless'          : 'powerless',
    'PlayerCombatDamaged': 'playercombatdamaged',
+   'PlayerDamaged'      : 'playerdamaged',
    'Attacks'            : 'attacks',
    'Blocks'             : 'blocks',
    'Blocked'            : 'blocked'
@@ -328,7 +331,6 @@ if me.name == Author and len(players) == 1:
 parsedCards    = {} # Dictionary holding all parsed cards
 cleanedUpRing  = False  # Tracks if the user has run the Clean-up phase
 commander      = None  # RulesCommands instance
-state          = {}  # Stores the state of the current round
 turns          = 1  # The number of consecutive turns a player can play
 
 automations = {

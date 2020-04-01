@@ -266,16 +266,20 @@ class RulesLexer():
       if match:
          acStr = acStr[len(match.group()):]
          event = []
-         debug(match.groups())
          events = match.group(1).split(',')
          for e in events:
-            e = e.strip().replace(' ', '').replace(':', '')
+            e = e.strip().replace(' ', '').split(':')
             # Look for prefixes
-            prfx, eventName = RulesLexer.getPrefix(RS_PREFIX_EVENTS, e.strip())
+            prfx, eventName = RulesLexer.getPrefix(RS_PREFIX_EVENTS, e[0])
             if prfx == RS_PREFIX_MY:
                prfx = ''
             # Look for suffixes
-            sffx, eventName = RulesLexer.getSuffix(RS_SUFFIX_EVENTS, eventName)
+            sffx = ''
+            if len(e) > 1:
+               if e[1] in RS_SUFFIX_EVENTS:
+                  sffx = e[1]
+               else:
+                  acStr = "[[if {}]] ".format(e[1]) + acStr
             debug("-- found event: %s + %s + %s" % (prfx, eventName, sffx))
             event.append([prfx, eventName, sffx])
             
