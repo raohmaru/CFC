@@ -192,12 +192,10 @@ class RulesUtils():
       
       if not targets and not pick:
          ActionTempVars = getGlobalVar('ActionTempVars')
-         debug("-- maybe it's a variable? ({})".format(ActionTempVars))
-         if types[0] in ActionTempVars:
-            try:
-               return [Player(ActionTempVars[types[0]])]
-            except:
-               return [Card(ActionTempVars[types[0]])]
+         debug("-- maybe it's an expression? ({})".format(ActionTempVars))
+         res = evalExpression(types[0], True, getLocals())
+         if res:
+            return [res]
          return False
 
       # Select random cards

@@ -130,9 +130,9 @@ def getLocals(**kwargs):
    for key, value in getGlobalVar('ActionTempVars').iteritems():
       key = key.lower()
       if isinstance(value, list):
-         locals[key] = [Card(id) for id in value]
+         locals[key] = [stringToObject(id) for id in value]
       else:
-         locals[key] = value
+         locals[key] = stringToObject(value)
         
    if kwargs:
       localVars = dict(
@@ -143,6 +143,11 @@ def getLocals(**kwargs):
       if rc.prevTargets != None and len(rc.prevTargets) > 0:
          localVars['prevtgt'] = rc.prevTargets[0]
       locals.update(localVars)
+      
+   # Add some default variables
+   if not 'discarded' in locals:
+      locals['discarded'] = []
+   
    return locals
 
 
@@ -238,6 +243,7 @@ def cmd_discard(rc, targets, source, restr, whichCards=''):
       reveal = len(targets) == 1 and player != me
       cards = RulesUtils.getTargets(cardsTokens, reveal=reveal)
       if cards:
+         addActionTempVars('discarded', cards)
          for card in cards:
             if player == me:
                discard(card)

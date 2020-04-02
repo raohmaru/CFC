@@ -358,6 +358,7 @@ def backupAuto(card):
    setMarker(card, 'Backup')
    addMarker(target, 'BP', BackupRaiseBP)  # Backed-up char's BP is raised
    setState(me, 'backupsPlayed', backupsPlayed + 1)
+   triggerGameEvent(GameEvents.BackedUp, target._id)
    return target
 
 

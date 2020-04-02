@@ -257,6 +257,11 @@ class Rules():
                if RS_KEY_TARGET in self.rules_tokens:
                   targetList = self.rules_tokens[RS_KEY_TARGET]
                   target = RulesUtils.getTargets(targetList, thisCard)
+               # First argument may be the card that triggered the effect
+               if len(args) > 0 and isNumber(args[0]):
+                  source = Card(args[0])
+                  if hasattr(source, 'model'):  # It's an actual card
+                     addActionTempVars('source', source)
                return self.execAction(auto, target, True)
             else:
                notify(MSG_AB_AUTO_UATTACK.format(thisCard, thisCard.Ability))

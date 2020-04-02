@@ -1,5 +1,7 @@
 # Card Fighters' Clash Changelog
 
+## 0.7.9
+Scripted abilities: Mai, Raiden.
 ## 0.7.8
 Scripted abilities: Gato, Krizalid, Kula, Rugal, Vanessa, Mukuro, Shadow, Substitute, Amnesia, Super Art Select, Griffon Mask, Hokutomaru, Iori, Shermie, Genjuro, Mikoto, The Ump, Glare off, Hotaru, Kain.
 ## 0.7.7

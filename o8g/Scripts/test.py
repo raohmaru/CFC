@@ -103,7 +103,8 @@ autos = [
    # "auto = ~playerCombatDamaged fromThis~ +cantplayac to(opp) oppueot",
    # "auto = ~playerDamaged:fromThis~ draw() target?(opp)",
    "auto = oppCanBeBlocked:any? [[if blocker.bp > this.bp]]",
-   "auto = ~anyPlayerDamaged:action~ damage(1) to(damagedPlayer)",
+   # "auto = ~anyPlayerDamaged:action~ damage(1) to(damagedPlayer)",
+   "auto = ~anyPlayerDamaged:action~ [[if me.hp < 10]] hp(+1)",
 ]
 evals = [
    "action in me.hand => bp(+2)"

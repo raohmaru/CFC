@@ -110,9 +110,9 @@ def triggerHook(event, *args):
    res, source = triggerGameEvent(event, *args)
    if not res:
       if isinstance(event, list):
-         event = event[0]
-      if event in MSG_HOOKS_ERR:
-         notifyAbility(args[0], source, MSG_HOOKS_ERR[event], isWarning=True)   
+         ability = event[0]
+      if ability in MSG_HOOKS_ERR:
+         notifyAbility(args[0], source, MSG_HOOKS_ERR[ability], isWarning=True)   
    return res
    
 def remoteGameEvent(cardID, eventName, *args):

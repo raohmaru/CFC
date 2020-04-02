@@ -172,7 +172,7 @@ effect:
       
 to(): (optional)
    Parameters:
-      A valid target
+      A valid target or a expression
    Alias:
       target
    Default:
@@ -224,8 +224,9 @@ event:
       ringchanges
       removed
       powerless
+      backedUp
       playerCombatDamaged:[suffix]
-      playerDamaged
+      playerDamaged:[suffix]
       attacks:[suffix]
       blocks:[suffix]
       blocked:[suffix]
@@ -237,11 +238,11 @@ event:
       fromThis
       this
       any
-      card
+      action
       
 hook:
    Keywords:
-      canBeBlocked [suffix]
+      canBeBlocked:[suffix]
    Prefixes:
       @see auto:event:prefixes
    Suffixes:
@@ -290,6 +291,7 @@ Available variables:
    bp
    oppLostSP
    damagedPlayer
+   source
    
 each():
    card
@@ -366,7 +368,7 @@ action = {F}: reveal() & moveTo(hand) & shuffle()
 
 # Guy's HAYA-GAKE
 RulesDict['2c1d8c60-0858-4524-adc1-e7596a4d08e0'] = """
-auto = oppCanBeBlocked:this? [[if me.ring > 1]]
+auto = oppCanBeBlocked:this? [[if me.ring > 1]] # me.ring is opp.ring
 """
 
 # Haggar's SPINNING LARIAT
@@ -1026,7 +1028,9 @@ action = destroy() target(^character@myRing)
 """
 
 # Mai's MORPH
-# RulesDict['a33974af-3d8e-41d6-8f90-fd6c8d525e18'] = ""
+RulesDict['a33974af-3d8e-41d6-8f90-fd6c8d525e18'] = """
+action = {F}: discard(all) & draw(discarded.size + 1)
+"""
 
 # Marco R.'s WAKE UP!
 RulesDict['54d70bdf-7bfb-4c8a-8111-99b411513622'] = """
@@ -1034,7 +1038,9 @@ auto = ~anyCleanupPhase~ unfreeze() target(characters[frozen])
 """
 
 # Raiden's MIKE APPEAL
-# RulesDict['bfb5d6cd-afca-4aeb-a1da-8204eb4b2eed'] = ""
+RulesDict['bfb5d6cd-afca-4aeb-a1da-8204eb4b2eed'] = """
+auto = ~anyBackedUp~ draw() to(source.controller)
+"""
 
 # Rock Howard's NEO DEADLY RAVE
 # RulesDict['b1082f22-34d1-4ecf-b972-261ace7b2a68'] = ""

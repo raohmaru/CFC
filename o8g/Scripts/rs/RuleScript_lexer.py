@@ -262,6 +262,7 @@ class RulesLexer():
       
       # Get the event trigger
       event = None
+      firstEffect = None
       match = RS_RGX_AC_EVENT.match(acStr)
       if match:
          acStr = acStr[len(match.group()):]
@@ -278,8 +279,10 @@ class RulesLexer():
             if len(e) > 1:
                if e[1] in RS_SUFFIX_EVENTS:
                   sffx = e[1]
+               # transform suffiz into an if condition
                else:
-                  acStr = "[[if {}]] ".format(e[1]) + acStr
+                  debug("-- transforming suffix \"{0}\" into [[if {0}]]".format(e[1]))
+                  firstEffect = [["if", e[1]], [], None, None]
             debug("-- found event: %s + %s + %s" % (prfx, eventName, sffx))
             event.append([prfx, eventName, sffx])
             
@@ -288,13 +291,21 @@ class RulesLexer():
       expressions = acStr.split(RS_OP_SEP)
       for expr in expressions:
          debug("-- Parsing effect '%s'" % expr)
-         effect = [None, None, None, None]
+         if firstEffect:
+            debug("---- Found initial effect '%s'" % firstEffect)
+            effect = firstEffect
+            firstEffect = None
+         else:
+            effect = [None, None, None, None]
          # Look for up to 1 condition
          match = RS_RGX_COND.search(expr)
          if match:
             kw, params = RulesLexer.extractKeyword(match.group(1), RS_KW_CMD_COND)
             if kw:
-               effect[0] = [kw, params]
+               if effect[0]:
+                  effect[0][1] += " and " + params
+               else:
+                  effect[0] = [kw, params]
                debug("---- found condition '%s'" % effect[0])
             expr = re.sub(RS_RGX_COND, '', expr).strip()
          # Look for up to 1 restriction

@@ -141,21 +141,21 @@ def clearGlobalVar(name, player = None):
 
 def replaceVars(str):
    debug("-- replaceVars({})".format(str))
-   str = re.sub(Regexps['BP'], r'(hasattr(getParsedCard(\1), "BP") and getParsedCard(\1).BP)', str)
-   str = re.sub(Regexps['Action'], 'isAction(card)', str)
+   str = re.sub(Regexps['BP']      , r'(hasattr(getParsedCard(\1), "BP") and getParsedCard(\1).BP)', str)
+   str = re.sub(Regexps['Action']  , 'isAction(card)', str)
    str = re.sub(Regexps['Reaction'], 'isReaction(card)', str)
-   str = re.sub(Regexps['Char'], 'isCharacter(card)', str)
-   str = re.sub(Regexps['Size'], r'len(\1)', str)
-   str = re.sub(Regexps['Ring'], r'getRingSize(\1)', str)
-   str = re.sub(Regexps['Chars'], r'getRing(\1)', str)
-   str = re.sub(Regexps['State'], r'getState(\1, "\2")', str)
-   str = re.sub(Regexps['Opp'], r'getOpp()', str)
-   str = str.replace('.sp', '.SP')
-   str = str.replace('.hp', '.HP')
-   str = str.replace('alone', 'getRingSize() == 1')
-   str = str.replace('attacker', 'attacker[0]')
-   str = str.replace('blocker', 'blocker[0]')
-   str = str.replace('soloattack', 'len(getAttackingCards()) == 1')
+   str = re.sub(Regexps['Char']    , 'isCharacter(card)', str)
+   str = re.sub(Regexps['Size']    , r'len(\1)', str)
+   str = re.sub(Regexps['Ring']    , r'getRingSize(\1)', str)
+   str = re.sub(Regexps['Chars']   , r'getRing(\1)', str)
+   str = re.sub(Regexps['State']   , r'getState(\1, "\2")', str)
+   str = re.sub(Regexps['Opp']     , r'getOpp()', str)
+   str = str.replace('.sp'         , '.SP')
+   str = str.replace('.hp'         , '.HP')
+   str = str.replace('alone'       , 'getRingSize() == 1')
+   str = str.replace('attacker'    , 'attacker[0]')
+   str = str.replace('blocker'     , 'blocker[0]')
+   str = str.replace('soloattack'  , 'len(getAttackingCards()) == 1')
    debug("---- {}".format(str))
    return str
    
@@ -230,9 +230,13 @@ def getRule(rule):
 
 
 def addActionTempVars(name, value):
+   debug(">>> addActionTempVars({}, {})".format(name, value)) #Debug
    vars = getGlobalVar('ActionTempVars')
    if isinstance(value, list):
-      value = [c._id if hasattr(c, '_id') else c for c in value]
+      value = objToString(value)
+      value = [objToString(c) for c in value]
+   else:
+      value = objToString(value)
    vars[name.lower()] = value
    setGlobalVar('ActionTempVars', vars)
 
@@ -296,6 +300,8 @@ def removeGameMod(id, msg = False):
 def pushStack(event, params, **tempVars):
    debug(">>> pushStack({}, {}, {})".format(event, params, tempVars)) #Debug
    Stack = getGlobalVar('Stack')
+   for key, value in tempVars.iteritems():
+      tempVars[key] = objToString(value)
    Stack.append([[event] + params, tempVars])
    setGlobalVar('Stack', Stack)
    
@@ -310,6 +316,24 @@ def popStack():
       for key, value in tempVars.iteritems():
          addActionTempVars(key, value)
       triggerGameEvent(*event)
+
+
+def objToString(obj):
+   if isCard(obj):
+      return "{c}" + str(obj._id)
+   elif isPlayer(obj):
+      return "{p}" + str(obj._id)
+   else:
+      return obj
+
+
+def stringToObject(value):
+   if isinstance(value, basestring):
+      if value[:3] == "{c}":
+         return Card(int(value[3:]))
+      elif value[:3] == "{p}":
+         return Player(int(value[3:]))
+   return value
 
 
 #---------------------------------------------------------------------------
@@ -772,7 +796,7 @@ def dealDamage(dmg, target, source, isPiercing = False):
    # Damage to a player
    else:
       if not isCharacter(source):
-         pushStack(GameEvents.PlayerDamaged, [source._id], damagedPlayer=target._id, card=source._id)
+         pushStack(GameEvents.PlayerDamaged, [source._id], damagedPlayer=target, card=source)
       oldHP = getState(target, 'HP')
       target.HP = oldHP - dmg
       piercing = "piercing " if isPiercing else ""
@@ -973,8 +997,6 @@ def isCharacter(card):
 
 
 def isAction(card):
-   if not isCard(card):
-      card = Card(card)
    return card.Type == ActionType
 
 

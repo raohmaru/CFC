@@ -195,7 +195,8 @@ GameEvents = Struct(**{
    'PlayerDamaged'      : 'playerdamaged',
    'Attacks'            : 'attacks',
    'Blocks'             : 'blocks',
-   'Blocked'            : 'blocked'
+   'Blocked'            : 'blocked',
+   'BackedUp'           : 'backedup'
 })
 
 # When a listener to these events is added, trigger it automatically
