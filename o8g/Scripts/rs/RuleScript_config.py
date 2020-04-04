@@ -226,11 +226,18 @@ RS_KW_COST_DISCARD   = 'd'
 RS_KW_COST_EXILE     = 'e'
 
 # Effect conditions
-RS_KW_COND_MAY = 'may'
-RS_KW_COND_IF  = 'if'
+RS_KW_COND_MAY   = 'may'
+RS_KW_COND_IF    = 'if'
+RS_KW_COND_ELIF  = 'elif'
+RS_KW_COND_ELSE  = 'else'
 RS_KW_CMD_COND = [
    RS_KW_COND_MAY,
    RS_KW_COND_IF
+]
+
+RS_KW_CMD_COND_SUB = [
+   RS_KW_COND_ELIF,
+   RS_KW_COND_ELSE
 ]
 
 # Effect restrictions

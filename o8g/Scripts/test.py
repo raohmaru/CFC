@@ -71,8 +71,12 @@ actions = [
    # "action = {F}:  to(character) ueot",
    # "action = {D(2)}: +cantblock to(character@oppRing) ueot",
    # "action = [[may Destroy all humans?]] destroy()",
-   # "action = [[if me.hand == 0]] destroy() uynt",
-   "action = moveTo(ctrlHand, -1, true) target?(characters[bp>=800]) uynt",
+   "action = [[if me.hand == 0]] destroy() uynt",
+   "action = [[if true]] discard(all) target(me) [[elif false]] damage(5) target(opp)",
+   "action = [[if true]] discard(all) [[else]] damage(5) target(opp)",
+   "action = [[if true]] discard(all) [[invalid]] damage(5) target(opp)",
+   "action = [[invalid true]] discard(all) [[else]] damage(5)",
+   # "action = moveTo(ctrlHand, -1, true) target?(characters[bp>=800]) uynt",
    # "action = {F}: moveTo(ctrlDeck) target(characters[-backup]) & shuffle(myDeck) & shuffle(oppDeck)",
    # "action = {F}: destroy() target(^character@myRing) & damage(5, character)",
    # "action = [[if  all myring: bp <= 3]] playExtraChar()",
@@ -129,8 +133,8 @@ def test(arr, title):
       print ""
 
 # rules = RulesDict['aa867ea1-89f8-4154-8e20-2263edd00002']
-test(targets, 'targets')
-# test(actions, 'actions')
+# test(targets, 'targets')
+test(actions, 'actions')
 # test(abilities, 'abilities')
 # test(autos, 'autos')
 # test(requisite, 'requisite')

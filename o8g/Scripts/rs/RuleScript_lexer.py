@@ -46,7 +46,7 @@ action: {
    ],
    effects: [
       [
-         ['may', 'question?'],
+         ['if', 'expression', {action}],
          [
             ['destroy'],
             ['draw', ['2']],
@@ -307,7 +307,21 @@ class RulesLexer():
                else:
                   effect[0] = [kw, params]
                debug("---- found condition '%s'" % effect[0])
+            expr = re.sub(RS_RGX_COND, '', expr, 1).strip()
+            # look for an elif/else condition
+            if kw == RS_KW_COND_IF:               
+               match = RS_RGX_COND.search(expr)
+               if match:
+                  kw, params = RulesLexer.extractKeyword(match.group(1), RS_KW_CMD_COND_SUB)
+                  if kw:
+                     debug("---- found condition '%s'" % kw)
+                     subexpr = expr.replace(RS_KW_COND_ELIF, RS_KW_COND_IF)
+                     subexpr = subexpr[match.start(0):]
+                     effect[0].append(RulesLexer.parseAction(subexpr))
+                  expr = expr[:match.start(0)]
+            # Remove any invalid condition
             expr = re.sub(RS_RGX_COND, '', expr).strip()
+                  
          # Look for up to 1 restriction
          kw, expr = RulesLexer.extractKeyword(expr, RS_KW_CMD_RESTRS, RS_PREFIX_RESTR)
          if kw:

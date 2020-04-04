@@ -166,6 +166,7 @@ class Rules():
          # Conditions
          if effect[0]:
             cond = effect[0]
+            # MAY condition
             if cond[0] == RS_KW_COND_MAY:
                question = MSG_MAY_DEF
                if len(cond) > 1:
@@ -174,11 +175,15 @@ class Rules():
                if not confirm(question):
                   debug("--- {} cancelled".format(me))
                   return False
+            # IF condition
             elif cond[0] == RS_KW_COND_IF:            
                debug("-- Found IF condition: {}".format(cond[1]))
                res = evalExpression(cond[1], False, getLocals(source=thisCard))
                if not res:
-                  debug("-- Condition not matching")
+                  debug("--- Condition not matching")
+                  if len(cond) > 2:
+                     debug("--- Found ELIF/ELSE condition")
+                     return self.execAction(cond[2], target, isAuto, requisite)
                   if len(effect[1]) > 0:
                      notify("Cannot activate the ability because its condition does not match.")
                   if not isAuto:

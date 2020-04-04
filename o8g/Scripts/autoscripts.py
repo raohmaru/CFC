@@ -255,13 +255,15 @@ def playAuto(card, slotIdx=None, force=False):
       placeCard(card, card.Type, PlayAction, slotIdx)
       # Parse the card to enable card autoscripts
       removeParsedCard(card)
-      parseCard(card)
+      pcard = parseCard(card)
       setMarker(card, 'BP', num(card.BP) / 100)
       # Triggers a hook whether the character can have the "just entered" marker
       if triggerHook(Hooks.PlayFresh, card._id):
          setMarker(card, 'Just Entered')
       putAtSlot(card, slotIdx)
       setState(me, 'charsPlayed', charsPlayed + 1)
+      if pcard.ability.type == InstantAbility:
+         whisper(MSG_HINT_ACTIVATE)
 
    # Player plays an Action card
    elif isAction(card):
@@ -279,9 +281,9 @@ def playAuto(card, slotIdx=None, force=False):
       # Parse the card to enable card autoscripts
       removeParsedCard(card)
       parseCard(card)
+      whisper(MSG_HINT_ACTIVATE)
       # Remove "until next action card" events
-      if isAction(card):
-         cleanupGameEvents(RS_KW_RESTR_UNAC)
+      cleanupGameEvents(RS_KW_RESTR_UNAC)
 
    # Player plays a Reaction card
    elif isReaction(card):
@@ -299,6 +301,7 @@ def playAuto(card, slotIdx=None, force=False):
       # Parse the card to enable card autoscripts
       removeParsedCard(card)
       parseCard(card)
+      whisper(MSG_HINT_ACTIVATE)
 
    return True
 

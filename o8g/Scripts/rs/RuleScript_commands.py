@@ -378,8 +378,6 @@ def cmd_draw(rc, targets, source, restr, qty = None):
       targets = [me]
    debug(">>> cmd_draw({}, {}, {})".format(targets, qty, amount)) #Debug
    for target in targets:
-      if isCard(target):
-         target = me
       if target == me:
          drawMany(me.Deck, amount)
       else:

@@ -1124,7 +1124,9 @@ abilities = cantblock
 """
 
 # Jhun Hoon's BROMIDE
-# RulesDict['eba4b6d7-1b14-4112-8e1e-6bee2017d338'] = ""
+RulesDict['eba4b6d7-1b14-4112-8e1e-6bee2017d338'] = """
+action = {F}: draw(3) target(opp)
+"""
 
 # K's UNSTOPPABLE
 RulesDict['78fc2eb4-f142-471b-83c0-1b615b67bb89'] = """
@@ -1297,7 +1299,9 @@ action = unfreeze() target(characters)
 """
 
 # Galford's HEY POPPY!
-# RulesDict['494cb024-ef21-4019-98fe-9afc4355e424'] = ""
+RulesDict['494cb024-ef21-4019-98fe-9afc4355e424'] = """
+action = draw()
+"""
 
 # Genan's PEEPING KAY!
 RulesDict['1c7bc861-c4e0-4127-9fc8-fd56d06ec965'] = """
@@ -1340,7 +1344,9 @@ auto = ~attacks:this~ +cantplayre to(opp) ueot
 """
 
 # Nakoruru's MAMAHAHA CALL
-# RulesDict['248517e9-d7a0-450d-9281-df91d20f68ab'] = ""
+RulesDict['248517e9-d7a0-450d-9281-df91d20f68ab'] = """
+action = {F}: draw()
+"""
 
 # Nakoruru (Bust)'s SHIKURO'S FANG
 RulesDict['f3f105e5-a0b1-4b4b-9f88-5932182d3ace'] = """
@@ -1545,7 +1551,9 @@ action = +unfreezable to(characters@myRing) ueot
 """
 
 # Lucky kitty
-# RulesDict['9610668a-18c9-4448-8216-f40119a03269'] = ""
+RulesDict['9610668a-18c9-4448-8216-f40119a03269'] = """
+action = draw(2)
+"""
 
 # Lunch rush
 RulesDict['58580e2e-1f48-4210-a68f-57cd900b1036'] = """
@@ -1599,7 +1607,9 @@ action = trash(3) target(opp)
 """
 
 # Pride
-# RulesDict['a8b949ff-7def-4c0a-8d79-49ad2a1d02d8'] = ""
+RulesDict['a8b949ff-7def-4c0a-8d79-49ad2a1d02d8'] = """
+action = [[if me.hand.size > opp.hand.size]] discard(all) & draw(opp.hand.size) [[elif opp.hand.size > me.hand.size]] discard(all) & draw(me.hand.size) target(opp)
+"""
 
 # Psyche up!
 RulesDict['11fa47f0-9573-48ca-9a4a-7aa16a4ec76e'] = """
@@ -1694,7 +1704,9 @@ action = {D(character[powerful])}: copyAbility(discarded[0]) to(character@myRing
 """
 
 # Synchro
-# RulesDict['83c33aa8-5981-4352-8107-cbb7e05547ec'] = ""
+RulesDict['83c33aa8-5981-4352-8107-cbb7e05547ec'] = """
+action = moveTo(hand) target(*<1>@oppDeck); moveTo(oppHand) target(*<1>@deck)
+"""
 
 # Tooptadon
 # RulesDict['fa4ee219-8264-41bc-b8a3-23a24df61d9a'] = ""
@@ -1756,7 +1768,9 @@ action = {S(character@myRing)}: bp(=sacrificed[0].bp) target(character)
 """
 
 # Face off
-# RulesDict['130c068d-bf62-4013-8b17-32af4a3f6994'] = ""
+RulesDict['130c068d-bf62-4013-8b17-32af4a3f6994'] = """
+action = draw(2); draw(3) target(opp)
+"""
 
 # Fellowship
 RulesDict['2644337b-a5f8-4669-858b-824d9607f2d8'] = """
@@ -1785,7 +1799,9 @@ action = freeze() target(character[-attack & -uattack & -frozen]@oppRing)
 """
 
 # Lend a hand
-# RulesDict['fd8b647c-9fc7-4c3a-bc91-ac5266e50a55'] = ""
+RulesDict['fd8b647c-9fc7-4c3a-bc91-ac5266e50a55'] = """
+action = each(characters[attack] -> draw(2))
+"""
 
 # Lucky card
 RulesDict['21db37a5-3483-41d4-9c6a-529071fce7ba'] = """
@@ -1881,4 +1897,6 @@ action = {F}: shuffle() & moveTo(deck)
 """
 
 # Who's taller
-# RulesDict['2298624c-1eeb-4f71-b028-b0118ea614ac'] = ""
+RulesDict['2298624c-1eeb-4f71-b028-b0118ea614ac'] = """
+action = [[if me.hand.size < opp.hand.size]] discard(all) & draw(opp.hand.size) [[elif opp.hand.size < me.hand.size]] discard(all) & draw(me.hand.size) target(opp)
+"""
