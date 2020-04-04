@@ -241,6 +241,7 @@ MSG_ERR_NO_FILTERED_CARDS   = "Selected cards don't match the requirements of th
 MSG_ERR_NO_FILTERED_PLAYERS = "No player match the requirements of this card's effect."
 MSG_ERR_TARGET_OTHER        = "{}'s ability cannot select itself, therefore it has been removed from selection."
 MSG_MAY_DEF                 = "Do you want to apply the effect of the card?"
+MSG_HINT_KOED               = "{} has been KOed. You can put it into your discard pile (hover it and press DEL key). In any case, KOed characters will be removed from the ring on phase change."
 MSG_HOOKS_ERR = {
    Hooks.BeforeAttack: "{} cannot attack due to {}'s {} ability{}.",
    Hooks.BeforeBlock : "{} cannot counter-attack due to {}'s {} ability{}.",
@@ -304,7 +305,10 @@ MSG_RULES = {
 ERR_NO_EFFECT = 'err001'
 CMD_LABELS = {
    'swapchars' : 'Swap the positions of two characters in the same ring',
-   'movetoslot': 'Move a character to an empty slot in the same ring'
+   'movetoslot': 'Move a character to an empty slot in the same ring',
+   'damage': 'Deal damage',
+   'hp'    : 'Gain HP',
+   'bp'    : 'Raise the BP of characters'
 }
 
 # Misc

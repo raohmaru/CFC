@@ -265,8 +265,7 @@ class RulesUtils():
       debug("-- applying %s filters to %s cards" % (len(filters), len(cards)))
 
       cards_f1 = cards
-      multiple = False
-      choose = False
+      choose = True
       minQty = 1
       maxQty = 1
       isCardName = False
@@ -274,17 +273,15 @@ class RulesUtils():
          if qty.max:
             minQty = qty.min
             maxQty = qty.max
-            choose = True
          elif qty.random:
-            multiple = True
+            choose = False
 
       # Check for type suffixes
       typeSuffix, type = RulesLexer.getSuffix(RS_SUFFIX_TYPES, type)
       if typeSuffix:
          debug("-- found suffix '%s' in '%s'" % (typeSuffix, type+typeSuffix))
-         # Allow multiple selection?
          if typeSuffix == RS_SUFFIX_PLURAL:
-            multiple = True
+            choose = False
             
       # Type is a card name?
       if type[0] == RS_KW_NAME:
@@ -302,7 +299,6 @@ class RulesUtils():
             if card in cards_f1:
                whisper(MSG_ERR_TARGET_OTHER.format(card))
                cards_f1.remove(card)
-               # return False
 
       if type != RS_KW_ANY:
          attr = 'Subtype'
@@ -345,7 +341,7 @@ class RulesUtils():
             cards_f1 = cards_f1[pick:]
             debug("-- Picked {} card(s) from the bottom of {}".format(len(cards_f1), ''.join(zone)))
 
-      if choose and not multiple:
+      if choose:
          if len(cards_f1) == 0 and not reveal:
             whisper(MSG_ERR_NO_FILTERED_CARDS)
             return False

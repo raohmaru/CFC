@@ -1082,10 +1082,15 @@ action = moveTo(hand) target(character@myRing)
 """
 
 # Athena Asamiya's PSYCHO CHARGE
-# RulesDict['08b229e2-6af7-478a-bda5-774dd66af9f9'] = ""
+RulesDict['08b229e2-6af7-478a-bda5-774dd66af9f9'] = """
+action = {F}: sp(+3)
+"""
 
 # Benimaru's THUNDERGOD FIST
-# RulesDict['4f3dd284-fc50-4d11-8771-3154d2010845'] = ""
+RulesDict['4f3dd284-fc50-4d11-8771-3154d2010845'] = """
+requisite = character<1>@oppRing
+action = {F}: damage(5) to(character@oppRing); damage(5) to(this)
+"""
 
 # Chizuru's CONTAIN!
 RulesDict['55ab2891-c99e-4647-8a9d-b01fbce3009f'] = """
@@ -1122,7 +1127,9 @@ abilities = cantblock
 # RulesDict['eba4b6d7-1b14-4112-8e1e-6bee2017d338'] = ""
 
 # K's UNSTOPPABLE
-# RulesDict['78fc2eb4-f142-471b-83c0-1b615b67bb89'] = ""
+RulesDict['78fc2eb4-f142-471b-83c0-1b615b67bb89'] = """
+action = damage(3) to(^characters)
+"""
 
 # Kensou's MEAT MUFFIN!
 RulesDict['a099049d-37ff-4c72-8691-a1bba86e506a'] = """
@@ -1140,13 +1147,19 @@ auto = enableRule(ab_trigger_fresh)
 """
 
 # Kyo's OROCHI WAVE
-# RulesDict['0fa9c81d-eee6-47e9-9c9b-d4d802bca0c4'] = ""
+RulesDict['0fa9c81d-eee6-47e9-9c9b-d4d802bca0c4'] = """
+action = damage(5) to(opp)
+"""
 
 # Kyo Kusanagi's 182 WAYS
-# RulesDict['37af4395-3d1c-470a-b8e4-cefc39eaa27a'] = ""
+RulesDict['37af4395-3d1c-470a-b8e4-cefc39eaa27a'] = """
+action = damage(3) to(opp,character@oppRing)
+"""
 
 # Leona's X-CALIBRE
-# RulesDict['835fc2ce-bbea-4798-b911-18cc8f1156c7'] = ""
+RulesDict['835fc2ce-bbea-4798-b911-18cc8f1156c7'] = """
+action = damage(2) to(^character)
+"""
 
 # Lin's DOKUSHU
 RulesDict['30ecabeb-4da9-4e9c-a936-222b90532e78'] = """
@@ -1162,7 +1175,9 @@ action = loseAbility() target(^character[powerful])
 """
 
 # Saishu's EXORCISM
-# RulesDict['b25a11ac-1166-4868-990a-5113350f1502'] = ""
+RulesDict['b25a11ac-1166-4868-990a-5113350f1502'] = """
+action = damage(2) to(opp)
+"""
 
 # Shermie's GO EASY ON ME
 RulesDict['672ac290-d6f2-4579-b5ae-1067add14601'] = """
@@ -1170,7 +1185,10 @@ action = +cantattack target(characters@oppRing) oppueot
 """
 
 # Shingo's BURNING SHINGO!
-# RulesDict['f0163d6b-bd20-4737-a40b-c84ca19da681'] = ""
+RulesDict['f0163d6b-bd20-4737-a40b-c84ca19da681'] = """
+requisite = character<1>@oppRing
+action = {F}: damage(3) to(character@oppRing); damage(3) to(this)
+"""
 
 # Vanessa's FOOTWORK
 RulesDict['0fdadc92-0864-46cc-a3ff-c20e2af8249c'] = """
@@ -1181,7 +1199,9 @@ auto = alterCost(reaction, +2)
 # RulesDict['3e38ee5c-2421-4267-b0da-86035060fcc0'] = ""
 
 # Wild Leona's AWAKENING
-# RulesDict['ba027d6e-4bc2-4c0d-8e97-4ad1c3baf24c'] = ""
+RulesDict['ba027d6e-4bc2-4c0d-8e97-4ad1c3baf24c'] = """
+action = damage(4) to(character)
+"""
 
 # Yashiro's COUNTERBLOW
 RulesDict['0eeaf712-f3c6-4696-93cc-615c081b6cdd'] = """
@@ -1218,7 +1238,9 @@ auto = disableRule(ab_instant_act)
 """
 
 # Moriya's OBORO
-# RulesDict['9aac7225-cffe-452c-8b8f-e2382ff7219c'] = ""
+RulesDict['9aac7225-cffe-452c-8b8f-e2382ff7219c'] = """
+auto = ~activatephase~ damage(1) to(opp)
+"""
 
 # Mukuro's LIVING CORPSE
 RulesDict['34f11eff-b3e2-4ac9-b505-a274eb5291c9'] = """
@@ -1303,7 +1325,9 @@ auto = ~myEndPhase~ loseAbility() target(character@infront)
 """
 
 # Kazuki's IMBROGLIO
-# RulesDict['54c61d60-d68a-4ce8-8c2f-65bd0192c26a'] = ""
+RulesDict['54c61d60-d68a-4ce8-8c2f-65bd0192c26a'] = """
+action = {S}: damage(5) to(<r>character@oppRing)
+"""
 
 # Kyoshiro's WARRIOR DANCE
 RulesDict['7b2a974c-de9b-4f42-a8da-f15b68dbc41c'] = """
@@ -1334,7 +1358,9 @@ auto = disableRule(ab_trigger_act)
 """
 
 # Rimoruru's I'LL PUNISH YOU!
-# RulesDict['b428a15e-adf3-4fd1-897e-8dea39b8d9ca'] = ""
+RulesDict['b428a15e-adf3-4fd1-897e-8dea39b8d9ca'] = """
+action = {F}: damage(2) to(opp)
+"""
 
 # Rimoruru (Bust)'s KONRIL
 RulesDict['537aa0e6-9231-423a-8aaa-3b9722cef6ec'] = """
@@ -1576,7 +1602,9 @@ action = trash(3) target(opp)
 # RulesDict['a8b949ff-7def-4c0a-8d79-49ad2a1d02d8'] = ""
 
 # Psyche up!
-# RulesDict['11fa47f0-9573-48ca-9a4a-7aa16a4ec76e'] = ""
+RulesDict['11fa47f0-9573-48ca-9a4a-7aa16a4ec76e'] = """
+action = sp(+5)
+"""
 
 # Puppet
 RulesDict['0d1f3d2d-72ef-42e4-9c24-d0b36371b230'] = """
@@ -1672,7 +1700,11 @@ action = {D(character[powerful])}: copyAbility(discarded[0]) to(character@myRing
 # RulesDict['fa4ee219-8264-41bc-b8a3-23a24df61d9a'] = ""
 
 # Tri-Quiz
-# RulesDict['2d3891a7-6fc0-4793-9122-5abfc0bb3e22'] = ""
+RulesDict['2d3891a7-6fc0-4793-9122-5abfc0bb3e22'] = """
+action = damage(3) target(opp)
+action = hp(+5)
+action = bp(+2) to(characters@myRing)
+"""
 
 # Amnesia
 RulesDict['b9023490-790e-4e5f-a495-c196f6672dff'] = """

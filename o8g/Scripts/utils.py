@@ -809,7 +809,10 @@ def dealDamage(dmg, target, source, isPiercing = False):
       oldBP = getMarker(target, 'BP')
       dmg = min(dmg, getMarker(target, 'BP'))
       addMarker(target, 'BP', -dmg)
-      notify("{} deals {} damage to {}. New BP is {} (before was {}).".format(source, dmg, target, getMarker(target, 'BP'), oldBP))
+      newBP = getMarker(target, 'BP')
+      notify("{} deals {} damage to {}. New BP is {} (before was {}).".format(source, dmg, target, newBP, oldBP))
+      if newBP <= 0:
+         remoteCall(target.controller, 'whisper', [MSG_HINT_KOED.format(target)])
    # Damage to a player
    else:
       if not isCharacter(source):

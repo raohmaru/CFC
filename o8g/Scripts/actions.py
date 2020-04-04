@@ -978,20 +978,6 @@ def setupDebug(group, x=0, y=0):
    resetGame()
 
 
-def testSuite(group, x=0, y=0):
-   mute()
-   whisper("### Checking Debug Validity")
-   if len(players) > 1 or not me.name == Author:
-      whisper("This function is only for development purposes.")
-      return
-   whisper("### Checking Players")
-   if debugVerbosity < DebugLevel.Info:
-      debugVerbosity = DebugLevel.All
-      whisper("Reset debug verbosity to: {}".format(debugVerbosity))
-   whisper("### Setting Table Side")
-   chooseSide()
-
-
 def setDebugVerbosity(group, x=0, y=0):
    global debugVerbosity
    mute()
