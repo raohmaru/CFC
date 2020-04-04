@@ -142,15 +142,15 @@ def onPhasePassed(args):
    # if idx == ActivatePhase:
    if idx == DrawPhase:
       if turnNumber() == 1:
-         _extapi.whisper("(The player who goes first should skip his Draw phase during their first turn.)", "#2c6798")
+         _extapi.whisper("(The player who goes first should skip his Draw phase during their first turn.)", Colors.Blue)
    # elif idx == MainPhase:
    # elif idx == AttackPhase:
    elif idx == BlockPhase:
-      _extapi.whisper("({} can play Reaction cards and then may choose if block attackers)".format("Now defending player" if me.isActive else "You"), "#2c6798")
+      _extapi.whisper("({} can play Reaction cards and then may choose if block attackers)".format("Now defending player" if me.isActive else "You"), Colors.Blue)
    # elif idx == EndPhase:
    elif idx == CleanupPhase:
       if me.isActive:
-         _extapi.whisper("(This is the last phase of your turn)", "#2c6798")
+         _extapi.whisper("(This is the last phase of your turn)", Colors.Blue)
          global cleanedUpRing
          cleanedUpRing = True
       

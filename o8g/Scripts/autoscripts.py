@@ -61,7 +61,8 @@ def activatePhaseStart():
 def drawPhaseStart():
    if automations['Play']:
       if len(me.Deck) == 0 and len(players) > 1:
-         notify("{} has no cards in their deck and therefore can't draw.\n{} WINS THE GAME!".format(me,players[1]))
+         notify("{} has no cards in their deck and therefore can't draw.".format(me))
+         _extapi.notify(MSG_HINT_WIN.format(players[1]), Colors.Black, True)
    # Trigger event
    triggerGameEvent(GameEvents.DrawPhase)
 
@@ -262,7 +263,7 @@ def playAuto(card, slotIdx=None, force=False):
          setMarker(card, 'Just Entered')
       putAtSlot(card, slotIdx)
       setState(me, 'charsPlayed', charsPlayed + 1)
-      if pcard.ability.type == InstantAbility:
+      if pcard.hasEffect() and pcard.ability.type == InstantAbility:
          whisper(MSG_HINT_ACTIVATE)
 
    # Player plays an Action card

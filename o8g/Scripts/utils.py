@@ -199,8 +199,12 @@ def showCardDlg(list, title, max=1, text="Select a card:", min=1, bottomList=Non
    return dlg.show()
             
 
-def getOpp():
-   return players[1] if len(players) > 1 else me
+def getOpp(player = None):
+   if len(players) > 1:
+      if player:
+         return players[1] if player == me else me
+      return players[1]
+   return me
             
 
 def getNextActivePlayer():
@@ -823,6 +827,8 @@ def dealDamage(dmg, target, source, isPiercing = False):
       setState(target, 'HP', newHP)  # Update game state      
       piercing = "piercing " if isPiercing else ""
       notify("{} deals {} {}damage to {}. New HP is {} (before was {}).".format(source, dmg, piercing, target, target.HP, oldHP))
+      if newHP <= 0:
+         _extapi.notify(MSG_HINT_WIN.format(getOpp(target)), Colors.Black, True)
       # Change game state: non-combat damage
       if not isCharacter(source) or not hasMarker(source, 'Attack'):
          setState(target, 'damaged', True)
@@ -887,7 +893,7 @@ def payCostSP(amount = 1, card = None, msg = 'play this card', cardType = None):
          if not confirm("You do not seem to have enough SP to {}.\nAre you sure you want to proceed?\nCost is {} SP. \
          \n\n(If you do, your SP will go to the negative. You will need to increase it manually as required.)".format(msg, amount)):
             return False
-         notify("{} was supposed to pay {} SP but only has {}.".format(me, amount, me.SP))
+         _extapi.notify("{} was supposed to pay {} SP but only has {} SP.".format(me, amount, me.SP), Colors.Red)
       me.SP += amount
       notify("{} has spent {} SP. New total is {}  (before was {}).".format(me, amount, me.SP, initialSP))
    return True

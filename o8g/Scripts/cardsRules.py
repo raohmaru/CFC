@@ -1169,7 +1169,9 @@ auto = ~blocked:this~ sp(-3) to(opp)
 """
 
 # Orochi's SANITY
-# RulesDict['e9c7f532-89ff-4f69-a885-bc09b549d989'] = ""
+RulesDict['e9c7f532-89ff-4f69-a885-bc09b549d989'] = """
+action = sp(=0) target(players)
+"""
 
 # Rugal's GENOCIDE CUTTER
 RulesDict['c0f1e98e-4233-446a-af2d-6e50eb8e6177'] = """
@@ -1198,7 +1200,9 @@ auto = alterCost(reaction, +2)
 """
 
 # Wild Iori's KURF
-# RulesDict['3e38ee5c-2421-4267-b0da-86035060fcc0'] = ""
+RulesDict['3e38ee5c-2421-4267-b0da-86035060fcc0'] = """
+action = destroy() target(character[bp>=8])
+"""
 
 # Wild Leona's AWAKENING
 RulesDict['ba027d6e-4bc2-4c0d-8e97-4ad1c3baf24c'] = """
@@ -1216,7 +1220,9 @@ action = {D(character)}{F}: bp(=discarded[0].bp)
 """
 
 # Akari (Power)'s 100 DEMON NIGHT
-# RulesDict['03416225-8ed1-48fc-8178-c82559f61dcd'] = ""
+RulesDict['03416225-8ed1-48fc-8178-c82559f61dcd'] = """
+action = {F}: destroy() target(characters)
+"""
 
 # Akari (Speed)'s ONE-WAY MORPH
 RulesDict['299c01d7-37f0-41de-81f3-712b8dd63f11'] = """
@@ -1532,7 +1538,10 @@ action = {S(<**>characters@myRing)}: each(card in sacrificed -> draw())
 """
 
 # Hey! Hey!
-# RulesDict['c8284885-2ab1-4020-afc7-faae4e196e74'] = ""
+RulesDict['c8284885-2ab1-4020-afc7-faae4e196e74'] = """
+target = players
+action = sp(=0)
+"""
 
 # Indulge
 # RulesDict['6eec9528-7473-47a5-916b-a22261f79816'] = ""
@@ -1593,7 +1602,10 @@ action = reveal(hand) & discard(!characters)
 """
 
 # Nothingness
-# RulesDict['6c6fd560-017e-4819-accf-a66faef84218'] = ""
+RulesDict['6c6fd560-017e-4819-accf-a66faef84218'] = """
+target = characters[bp<=4]
+action = destroy()
+"""
 
 # Peacemaker
 RulesDict['153e2c26-7329-4a5e-a405-43191f75a2ac'] = """
@@ -1656,7 +1668,10 @@ action = moveTo(ctrlHand)
 """
 
 # Seraphic wing
-# RulesDict['ac01bbbe-583e-46ae-b26c-3c25eb8f0779'] = ""
+RulesDict['ac01bbbe-583e-46ae-b26c-3c25eb8f0779'] = """
+target = characters[bp>=5]
+action = destroy()
+"""
 
 # Shadow
 RulesDict['0e1b4f81-93e9-44be-ab31-7aed8cb354d0'] = """
@@ -1673,7 +1688,10 @@ action = {F}: moveTo(deck) target(<,3>*@discards) & shuffle() & draw()
 # RulesDict['7302a3d9-0ee7-4a5e-93aa-b93cc44b6463'] = ""
 
 # Slaughter
-# RulesDict['62a6c4e0-51d0-4a23-9854-9ba0a25bc751'] = ""
+RulesDict['62a6c4e0-51d0-4a23-9854-9ba0a25bc751'] = """
+target = characters
+action = destroy()
+"""
 
 # SP partner
 # RulesDict['37b88c5f-026b-40e4-bfd2-e5b7b83a7394'] = ""
@@ -1760,7 +1778,10 @@ action = {D(character[powerful])}: copyAbility(discarded[0]) to(character@myRing
 """
 
 # Cruel hunt
-# RulesDict['fef1b38c-a055-4cd7-9436-34e220c30d52'] = ""
+RulesDict['fef1b38c-a055-4cd7-9436-34e220c30d52'] = """
+target = characters[bp>=8 & attack]
+action = destroy()
+"""
 
 # Evil eye
 RulesDict['ed5b10af-ad01-4d70-bdac-0a7dfbf9de3f'] = """

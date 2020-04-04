@@ -84,11 +84,12 @@ def aclb_Destroy(args, x = 0, y = 0):
 
       
 def aclb_RevealTopDeck(group, x = 0, y = 0):
-   if group[0].isFaceUp:
-      return "Hide top card"
-   else:
-      return "Reveal top card"
-      return "Discard"
+   if len(group) > 0:
+      if group[0].isFaceUp:
+         return "Hide top card"
+      else:
+         return "Reveal top card"
+         return "Discard"
 
       
 def aclb_PlayAutomation(group, x = 0, y = 0):

@@ -16,6 +16,17 @@
 # along with this script.  If not, see <http://www.gnu.org/licenses/>.
 
 #---------------------------------------------------------------------------
+# Some extended consts
+#---------------------------------------------------------------------------
+
+Colors = Struct(**{
+   'Black' : '#000000',
+   'Red'   : '#CC0000',
+   'Blue'  : '#2C6798'
+})
+
+
+#---------------------------------------------------------------------------
 # Extended API
 #---------------------------------------------------------------------------
 
@@ -169,38 +180,43 @@ class ExtendedApi(object):
       Octgn.Program.GameMess.AddMessage(Octgn.Core.Play.SystemMessage(str, {}))
       
       
-   def whisper(self, str, color = None, bold = False):
+   def whisper(self, str, color = Colors.Black, bold = False):
       msg = str
-      if not self.customPlayer:
-         self.customPlayer = CustomPlayer()
-         
-      self.customPlayer.color = color
-         
+      customPlayer = CustomPlayer(color, bold)
       if bold:
-         self.customPlayer.name = str
+         customPlayer.name = str
          msg = ''
-      else:
-         self.customPlayer.resetName()
-         
-      Octgn.Program.GameMess.AddMessage(Octgn.Core.Play.PlayerEventMessage(self.customPlayer, msg, {}))
+      update()  # To make next function work if this has been invoked from a remote call
+      Octgn.Program.GameMess.AddMessage(Octgn.Core.Play.PlayerEventMessage(customPlayer, msg, {}))
+      del customPlayer
       
       
-   def notify(self, str, color = None, bold = False):
+   def notify(self, str, color = Colors.Black, bold = False):
       self.whisper(str, color, bold)
       if len(players) > 1:
-         remoteCall(players[1], "_extapi.whisper", [str, color, bold])
+         remoteCall(players[1], "_extapi_whisper_", [str, color, bold])
       
       
 # Make it global
 if automations['ExtAPI']:
    _extapi = ExtendedApi()
+   # Aliases for remoteCall
+   _extapi_whisper_ = _extapi.whisper
 
+
+#---------------------------------------------------------------------------
+# Utilities
+#---------------------------------------------------------------------------
 
 # Custom player object to format text messages
 class CustomPlayer(Octgn.Core.Play.IPlayPlayer):
-   def __init__(self):
-      self.color = None
-      self.resetName()
+   id = 555
+   def __init__(self, color = Colors.Black, bold = False):
+      # color is a System.Windows.Media.Color, which is not available as an object
+      self.color = Octgn.Core.Play.BuiltInPlayer.Notify.Color.FromRgb(*hexToRGB(color))
+      self.name = u'\u200B'  # Zero-width space character
+      CustomPlayer.id += 1
+      self.id = CustomPlayer.id
       
    # Getters that IronPython calls when getting a property
    def get_Color(self):
@@ -210,25 +226,10 @@ class CustomPlayer(Octgn.Core.Play.IPlayPlayer):
       return self.name
       
    def get_Id(self):
-      return 555
+      return self.id
       
    def get_State(self):
       return Octgn.Core.Play.PlayerState.Connected
-      
-   # Setters
-   @property
-   def color(self):
-      return self._color
-    
-   @color.setter
-   def color(self, newColor = None):
-      if not newColor:
-         newColor = '#000000'
-      # color is a System.Windows.Media.Color, which is not available asn an object
-      self._color = Octgn.Core.Play.BuiltInPlayer.Notify.Color.FromRgb(*hexToRGB(newColor))
-      
-   def resetName(self):
-      self.name = u'\u200B'  # Zero-width space character
       
    def ToString(self):
       return self.name
