@@ -269,35 +269,43 @@ Expressions:
 
 A valid Python expression.
 Available variables:
-   all global variables
-   (me|opp)
+   tgt (current target)
+   prevTgt
+   -- players --
+   me
+   opp
+   damagedPlayer
+      .hp
       .sp
-      .hand [.size]
+      .hand
+         .size
       .ring
       .chars
       .damaged
-   tgt (current target)
-   prevTgt
+      .lostSP
+   -- piles --
+   discarded
+   trashed
+   destroyed
+   moved
+   sacrificed
+      .size
+   -- cards --
    this
-   discarded [.size]
-   trashed [.size]
-   destroyed [.size]
-   moved [.size]
-   sacrificed [.size]
    attacker
    blocker
+   trigger
+      .bp
+   -- bool --
    alone
    soloAttack
-   bp
-   oppLostSP
-   damagedPlayer
-   source
+   oppLostSP   
    
-each():
-   card
-   character
-   action
-   reaction
+   context: each()
+      card
+      character
+      action
+      reaction
    
 Available functions:
    all group: expr   # context = group item
@@ -1039,11 +1047,14 @@ auto = ~anyCleanupPhase~ unfreeze() target(characters[frozen])
 
 # Raiden's MIKE APPEAL
 RulesDict['bfb5d6cd-afca-4aeb-a1da-8204eb4b2eed'] = """
-auto = ~anyBackedUp~ draw() to(source.controller)
+auto = ~anyBackedUp~ draw() to(trigger.controller)
 """
 
 # Rock Howard's NEO DEADLY RAVE
-# RulesDict['b1082f22-34d1-4ecf-b972-261ace7b2a68'] = ""
+RulesDict['b1082f22-34d1-4ecf-b972-261ace7b2a68'] = """
+action = {S}: each(card in opp.hand -> damage(1)) to(opp)
+# action = {S}: damage(opp.hand.size) to(opp)
+"""
 
 # Terry's TERRY RUSH
 RulesDict['02157c40-3b96-480d-99c5-083613d8eb45'] = """
@@ -1056,7 +1067,9 @@ action = {D}{F}: destroy() target(character[bp>=8])
 """
 
 # Wild Wolf's SORRY!
-# RulesDict['8995cad8-feaa-4704-9610-ae5e0dc6d800'] = ""
+RulesDict['8995cad8-feaa-4704-9610-ae5e0dc6d800'] = """
+action = {F}: moveTo(hand) target(<1>*<5>@deck); moveTo(discards) target(*<4>@deck)
+"""
 
 # Yamazaki's FACE OFF
 RulesDict['8b6c2617-7c58-459c-b09f-63c86556d17e'] = """
@@ -1092,7 +1105,7 @@ action = copyAbility(prevTgt) to(this)
 
 # Heidern's STORM BRINGER
 RulesDict['aa591fb7-0136-4af8-9229-9b6da2e02aca'] = """
-auto = ~playerCombatDamaged:fromThis~ sp(-3) to(opp); sp(+oppLostSP) to(me)
+auto = ~playerCombatDamaged:fromThis~ sp(-3) to(opp); sp(+opp.lostSP) to(me)
 """
 
 # Hinako's HINAKO'S READY!
@@ -1382,7 +1395,9 @@ action = {S(<**>characters@myRing)}: each(card in sacrificed -> sp(+5))
 # RulesDict['80692723-3895-435f-bf8f-e94507704af5'] = ""
 
 # Best shot
-# RulesDict['b0346de5-63b8-4443-8ea4-8155d889a0fc'] = ""
+RulesDict['b0346de5-63b8-4443-8ea4-8155d889a0fc'] = """
+action = moveTo(hand) target(<1>*<3>@deck); moveTo(discards) target(*<2>@deck)
+"""
 
 # Bopper
 RulesDict['c50f1a40-87e9-41b9-a69c-600b36b68077'] = """

@@ -128,7 +128,7 @@ Regexps = dict(
    Ring     = re.compile(r'(\w+)\.ring'),
    Chars    = re.compile(r'(\w+)\.chars'),
    Opp      = re.compile(r'\bopp\b'),
-   State    = re.compile(r'(\w+)\.(damaged)')
+   State    = re.compile(r'(\w+)\.(damaged|lostsp)')
 )
 
 # Rules

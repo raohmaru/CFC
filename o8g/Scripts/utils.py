@@ -243,6 +243,7 @@ def addActionTempVars(name, value):
 
 def getState(player, name = None):
    debug(">>> getState({}, {})".format(player._id, name))
+   name = name.lower()
    GameState = getGlobalVar('GameState')
    if not name:
       return GameState[player._id]
@@ -255,7 +256,7 @@ def getState(player, name = None):
 def setState(player, name, value):
    debug(">>> setState({}, {}, {})".format(player._id, name, value))
    GameState = getGlobalVar('GameState')
-   GameState[player._id][name] = value
+   GameState[player._id][name.lower()] = value
    setGlobalVar('GameState', GameState)
    debug("GameState: {}".format(GameState))
    
@@ -264,10 +265,13 @@ def resetState():
    GameState = getGlobalVar('GameState')
    for p in players:
       GameState[p._id] = {
-         'charsPlayed'  : 0,  # Num of chars played this turn
-         'backupsPlayed': 0,  # Num of chars backed-up this turn
+         'charsplayed'  : 0,  # Num of chars played this turn
+         'backupsplayed': 0,  # Num of chars backed-up this turn
          'damaged'      : False,  # Player damaged by non-character card
-         'HP'           : p.HP  # You cannot trust player properties in online games, so we keep track of them
+         'lostsp'       : 0,
+          # You cannot trust player properties in online games, so we keep track of them
+         'hp'           : p.HP,
+         'sp'           : p.SP 
       }
    setGlobalVar('GameState', GameState)
    debug(">>> resetState()\n{}".format(GameState)) #Debug
@@ -786,25 +790,6 @@ def toggleMarker(card, mkname):
    else:
       setMarker(card, mkname, 1)
       
-
-def dealDamage(dmg, target, source, isPiercing = False):
-   if isinstance(target, Card):
-      oldBP = getMarker(target, 'BP')
-      dmg = min(dmg, getMarker(target, 'BP'))
-      addMarker(target, 'BP', -dmg)
-      notify("{} deals {} damage to {}. New BP is {} (before was {}).".format(source, dmg, target, getMarker(target, 'BP'), oldBP))
-   # Damage to a player
-   else:
-      if not isCharacter(source):
-         pushStack(GameEvents.PlayerDamaged, [source._id], damagedPlayer=target, card=source)
-      oldHP = getState(target, 'HP')
-      target.HP = oldHP - dmg
-      piercing = "piercing " if isPiercing else ""
-      notify("{} deals {} {}damage to {}. New HP is {} (before was {}).".format(source, dmg, piercing, target, target.HP, oldHP))
-      # Change game state
-      if target != me and not isCharacter(source):
-         setState(target, 'damaged', True)
-      
       
 def modBP(card, qty, mode = None):
    if mode == RS_MODE_EQUAL:
@@ -819,6 +804,27 @@ def modBP(card, qty, mode = None):
 # Counter Manipulation
 #---------------------------------------------------------------------------
 
+def dealDamage(dmg, target, source, isPiercing = False):
+   if isinstance(target, Card):
+      oldBP = getMarker(target, 'BP')
+      dmg = min(dmg, getMarker(target, 'BP'))
+      addMarker(target, 'BP', -dmg)
+      notify("{} deals {} damage to {}. New BP is {} (before was {}).".format(source, dmg, target, getMarker(target, 'BP'), oldBP))
+   # Damage to a player
+   else:
+      if not isCharacter(source):
+         pushStack(GameEvents.PlayerDamaged, [source._id], damagedPlayer=target, card=source)
+      oldHP = getState(target, 'HP')
+      newHP = oldHP - dmg
+      target.HP = newHP
+      setState(target, 'HP', newHP)  # Update game state      
+      piercing = "piercing " if isPiercing else ""
+      notify("{} deals {} {}damage to {}. New HP is {} (before was {}).".format(source, dmg, piercing, target, target.HP, oldHP))
+      # Change game state: non-combat damage
+      if not isCharacter(source) or not hasMarker(source, 'Attack'):
+         setState(target, 'damaged', True)
+
+
 def modSP(count = 1, mode = None, silent = False, player = me):
 # A function to modify the players SP counter. Can also notify.
    initialSP = player.SP
@@ -831,8 +837,8 @@ def modSP(count = 1, mode = None, silent = False, player = me):
       player.SP += count # Now increase the SP by the amount passed to us.
    if not silent and count != 0:
       action = "gains" if count >= 0 else "loses"
-      if player != me and count < 0:
-         addActionTempVars('oppLostSP', -count)
+      if count < 0:
+         setState(player, 'lostSP', -count)
       notify("{} {} {} SP. New total is {} (before was {}).".format(player, action, count, player.SP, initialSP))
 
 

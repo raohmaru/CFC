@@ -120,7 +120,7 @@ class RulesUtils():
       if str == RS_KW_ANYNUM:
          return Struct(**{
             'min': 1,
-            'max': NumSlots
+            'max': RS_KW_ANYNUM
          })
       if str[:1] == RS_KW_RANDOM:
          samples = num(str[1:])
@@ -266,7 +266,7 @@ class RulesUtils():
 
       cards_f1 = cards
       multiple = False
-      pickMany = False
+      choose = False
       minQty = 1
       maxQty = 1
       isCardName = False
@@ -274,6 +274,7 @@ class RulesUtils():
          if qty.max:
             minQty = qty.min
             maxQty = qty.max
+            choose = True
          elif qty.random:
             multiple = True
 
@@ -289,11 +290,6 @@ class RulesUtils():
       if type[0] == RS_KW_NAME:
          isCardName = True
          type = type.strip(RS_KW_NAME)
-
-      # Check if multiple cards need to be selected
-      if minQty > 1 or maxQty > 1:
-         multiple = True
-         pickMany = True
 
       # Check for type prefixes
       typePrefix, type = RulesLexer.getPrefix(RS_PREFIX_TYPES, type)
@@ -349,7 +345,7 @@ class RulesUtils():
             cards_f1 = cards_f1[pick:]
             debug("-- Picked {} card(s) from the bottom of {}".format(len(cards_f1), ''.join(zone)))
 
-      if pickMany or (not multiple and not pick):
+      if choose and not multiple:
          if len(cards_f1) == 0 and not reveal:
             whisper(MSG_ERR_NO_FILTERED_CARDS)
             return False
@@ -358,6 +354,8 @@ class RulesUtils():
          sourceName = source.Name if source else ''
          qtyMsg = minQty
          qtyPlural = plural(minQty)
+         if qty is not None and qty.max == RS_KW_ANYNUM:
+            maxQty = len(cards_f1)
          if minQty < maxQty:
             if minQty == 0:
                qtyMsg = "up to {}".format(maxQty)

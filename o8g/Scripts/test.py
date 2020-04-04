@@ -28,26 +28,27 @@ pp = pprint.PrettyPrinter(indent=4)
    
 # Rules to test
 targets = [
-   # "target = character",
-   # "target = character,reactions",
-   # "target = characters[attack]",
-   # "target = character@hand",
-   # "target = @oppRing",
-   # "target = Captain[attack] @ oppRing",
-   # "target = robot[-block]@myhand",
+   "target = character",
+   "target = character,reactions",
+   "target = characters[attack]",
+   "target = character@hand",
+   "target = @oppRing",
+   "target = Captain[attack] @ oppRing",
+   "target = robot[-block]@myhand",
    "target = character,action[bp>=800,frozen]@oppRing",
    "target = ^character[fresh&powerless]",
-   # "target = ^character[fresh & -powerless]",
-   # "target = [fresh]",
-   # "target = character@invalidZone",
-   # "target = *<2>@oppDeck",
-   # "target = <r>@hand",
+   "target = ^character[fresh & -powerless]",
+   "target = [fresh]",
+   "target = character@invalidZone",
+   "target = *<2>@oppDeck",
+   "target = <r>@hand",
    "target = <r2>action@hand[bp>300]",
-   # "target = <1>action@hand",
-   # "target = <1,2>action@hand",
-   # "target? = <,4>*<-2>@myDeck",
-   # "target = <**>characters@myRing",
-   # 'target = "Juni"&"Juli"<1>@myDeck',
+   "target = <1>action@hand",
+   "target = <1,2>action@hand",
+   "target? = <,4>*<-2>@myDeck",
+   "target? = <1?>*<2>@deck",
+   "target = <**>characters@myRing",
+   'target = "Juni"&"Juli"<1>@myDeck',
    "target = characters[bp:lowest]",
 ]
 actions = [
@@ -128,8 +129,8 @@ def test(arr, title):
       print ""
 
 # rules = RulesDict['aa867ea1-89f8-4154-8e20-2263edd00002']
-# test(targets, 'targets')
+test(targets, 'targets')
 # test(actions, 'actions')
 # test(abilities, 'abilities')
-test(autos, 'autos')
+# test(autos, 'autos')
 # test(requisite, 'requisite')

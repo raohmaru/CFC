@@ -259,9 +259,9 @@ class Rules():
                   target = RulesUtils.getTargets(targetList, thisCard)
                # First argument may be the card that triggered the effect
                if len(args) > 0 and isNumber(args[0]):
-                  source = Card(args[0])
-                  if hasattr(source, 'model'):  # It's an actual card
-                     addActionTempVars('source', source)
+                  trigger = Card(args[0])
+                  if hasattr(trigger, 'model'):  # It's an actual card
+                     addActionTempVars('trigger', trigger)
                return self.execAction(auto, target, True)
             else:
                notify(MSG_AB_AUTO_UATTACK.format(thisCard, thisCard.Ability))
