@@ -151,6 +151,17 @@ def getLocals(**kwargs):
    return locals
 
 
+def getEnvVars(): 
+# Adds action global variables
+   global envVars
+   if not envVars:
+      envVars = {}
+      globalFuncs = [flipCoin]
+      for f in globalFuncs:
+         envVars[f.__name__.lower()] = f
+   return envVars
+
+
 #---------------------------------------------------------------------------
 # Commands functions
 #---------------------------------------------------------------------------
@@ -271,35 +282,34 @@ def cmd_randomDiscard(rc, targets, source, restr, numCards=1):
 def cmd_moveTo(rc, targets, source, restr, zone, pos = None, reveal = False):
    debug(">>> cmd_moveTo({}, {}, {}, {})".format(targets, zone, pos, reveal)) #Debug
    zonePrefix, zoneName = RulesLexer.getPrefix(RS_PREFIX_ZONES, zone, RS_PREFIX_CTRL)
-   if not targets:
-      targets = [source]
-   if zoneName in RS_KW_ZONES_PILES:
-      if isNumber(pos):
-         pos = num(pos)
-      elif pos == '?':
-         choice = askChoice("Where to put the card{}?".format(plural(len(targets))), ['Top of pile', 'Bottom of pile'])
-         pos = (max(choice, 1) - 1) * -1
-      elif pos is not None:
-         reveal = True
-         pos = None
-      reveal = bool(reveal)
-      for target in targets:
-         pile = RulesUtils.getZoneByName(zone, target)
-         debug("{}'s {} -> {}'s {}".format(target.controller, target, pile.controller, pile.name))
-         if target.controller == me and pile.controller == me:
-            moveToGroup(pile, target, pos = pos, reveal = reveal)
-         elif target.controller == me and pile.controller != me:
-            group = target.group
-            target.moveToTable(0, 0, True)
-            target.controller = pile.controller
-            remoteCall(target.controller, "moveToGroup", [pile, target, group, pos, reveal, me])
-         elif target.controller != me and pile.controller == me:
-            remoteCall(target.controller, "passControlTo", [me, [target], ["moveToGroup", [pile, target, target.group, pos, reveal, me]]])
-         else:
-            remoteCall(target.controller, "moveToGroup", [pile, target, None, pos, reveal, me])
-         rnd(1, 100) # Wait until all animation is done
-         # Add trashed card to action local variables
-      addActionTempVars('moved', targets)
+   if targets:
+      if zoneName in RS_KW_ZONES_PILES:
+         if isNumber(pos):
+            pos = num(pos)
+         elif pos == '?':
+            choice = askChoice("Where to put the card{}?".format(plural(len(targets))), ['Top of pile', 'Bottom of pile'])
+            pos = (max(choice, 1) - 1) * -1
+         elif pos is not None:
+            reveal = True
+            pos = None
+         reveal = bool(reveal)
+         for target in targets:
+            pile = RulesUtils.getZoneByName(zone, target)
+            debug("{}'s {} -> {}'s {}".format(target.controller, target, pile.controller, pile.name))
+            if target.controller == me and pile.controller == me:
+               moveToGroup(pile, target, pos = pos, reveal = reveal)
+            elif target.controller == me and pile.controller != me:
+               group = target.group
+               target.moveToTable(0, 0, True)
+               target.controller = pile.controller
+               remoteCall(target.controller, "moveToGroup", [pile, target, group, pos, reveal, me])
+            elif target.controller != me and pile.controller == me:
+               remoteCall(target.controller, "passControlTo", [me, [target], ["moveToGroup", [pile, target, target.group, pos, reveal, me]]])
+            else:
+               remoteCall(target.controller, "moveToGroup", [pile, target, None, pos, reveal, me])
+            rnd(1, 100) # Wait until all animation is done
+            # Add trashed card to action local variables
+         addActionTempVars('moved', targets)
    rc.applyNext()
 
 
@@ -428,7 +438,7 @@ def cmd_each(rc, targets, source, restr, args):
    else:
       res = evalExpression(cond, True, getLocals(rc=rc, targets=targets, source=source))
    
-   if len(res) > 0:
+   if res and len(res) > 0:
       subrc = RulesCommands()
       for v in res:
          if v:
@@ -587,15 +597,6 @@ def cmd_prophecy(rc, targets, source, restr, numCards=1):
    rc.applyNext()
 
 
-def cmd_select(rc, targets, source, restr, whichCards):
-   debug(">>> select({})".format(whichCards)) #Debug
-   tokens = RulesLexer.parseTarget(whichCards)
-   target = RulesUtils.getTargets(tokens, source=source)
-   if target:
-      rc.setTarget(target)
-   rc.applyNext()
-
-
 def cmd_activate(rc, targets, source, restr, expr):
    debug(">>> cmd_activate({})".format(expr)) #Debug
    card = evalExpression(expr, True, getLocals(rc=rc, targets=targets, source=source))
@@ -647,6 +648,5 @@ RulesCommands.register('swapchars',     cmd_swapChars)
 RulesCommands.register('movetoslot',    cmd_moveToSlot)
 RulesCommands.register('trash',         cmd_trash)
 RulesCommands.register('prophecy',      cmd_prophecy)
-RulesCommands.register('select',        cmd_select)
 RulesCommands.register('activate',      cmd_activate)
 RulesCommands.register('turns',         cmd_turns)

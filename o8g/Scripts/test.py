@@ -117,6 +117,10 @@ evals = [
 requisite = [
    "requisite = char<1>@oppRing && char<1>@myRing"
 ]
+vars = [
+   "vars = coin := rnd(2)",
+   "vars = coin := flipCoin(); res := rnd(4)",
+]
 
 if not 'debug' in globals():
    # Make debug accessible from any module
@@ -134,7 +138,8 @@ def test(arr, title):
 
 # rules = RulesDict['aa867ea1-89f8-4154-8e20-2263edd00002']
 # test(targets, 'targets')
-test(actions, 'actions')
+# test(actions, 'actions')
 # test(abilities, 'abilities')
 # test(autos, 'autos')
 # test(requisite, 'requisite')
+test(vars, 'vars')

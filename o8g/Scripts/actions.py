@@ -111,13 +111,15 @@ def scoop(group, x=0, y=0):
    notify("{} resets the game.".format(me))
 
 
-def flipCoin(group, x = 0, y = 0):
+def flipCoin(group = None, x = 0, y = 0):
    mute()
+   notify("{} flips a coin...".format(me))
    n = rnd(1, 2)
    if n == 1:
-      notify("{} flips Heads.".format(me))
+      notify(u" \u2192 flips Heads.")
    else:
-      notify("{} flips Tails.".format(me))
+      notify(u" \u2192 flips Tails.")
+   return n
 
 
 def randomPick(group, x = 0, y = 0, fromPlayer = None):

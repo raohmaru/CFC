@@ -63,6 +63,8 @@ def drawPhaseStart():
       if len(me.Deck) == 0 and len(players) > 1:
          notify("{} has no cards in their deck and therefore can't draw.".format(me))
          _extapi.notify(MSG_HINT_WIN.format(players[1]), Colors.Black, True)
+      else:
+         draw()
    # Trigger event
    triggerGameEvent(GameEvents.DrawPhase)
 

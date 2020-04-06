@@ -100,7 +100,7 @@ def switchAutomation(name, command = None):
    else:
       automations[name] = command
    status = "ON" if automations[name] else "OFF"
-   notify("--> {}'s {} automations are {}.".format(me, name, status))
+   notify(" -> {}'s {} automations are {}.".format(me, name, status))
 
    debug("<<< switchAutomation({})".format(name)) #Debug
 
@@ -160,7 +160,7 @@ def replaceVars(str):
    return str
    
    
-def evalExpression(expr, retValue = False, locals = None):
+def evalExpression(expr, retValue = False, locals = None, globals = None):
    debug("evalExpression({})\nLocals: {}".format(expr, locals))
    expr = replaceVars(expr)
    forexpr = "[{} for card in {}]"
@@ -175,7 +175,7 @@ def evalExpression(expr, retValue = False, locals = None):
       expr = 'all(' + expr + ')'
    
    try:
-      res = eval(expr, None, locals)
+      res = eval(expr, globals, locals)
       if retValue:
          debug("-- Evaluated expr  %s  (%s)" % (expr, res))
          return res
@@ -184,7 +184,7 @@ def evalExpression(expr, retValue = False, locals = None):
          return bool(res)
    except:
       debug("-- %s  is not a valid Python expression" % (expr))
-      return False
+      return None
    
    
 def showCardDlg(list, title, max=1, text="Select a card:", min=1, bottomList=None, label=None, bottomLabel=None):

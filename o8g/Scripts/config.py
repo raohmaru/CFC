@@ -233,7 +233,7 @@ MSG_COST_NOT_PAYED          = "{} did not pay the activation cost of {}'s {}"
 MSG_AB_NO_EFFECT            = "{}'s ability {} (may) have had no effect."
 MSG_AB_AUTO_ACTIVATION      = "{} has activated {}'s auto ability {}."
 MSG_AB_AUTO_UATTACK         = "Cannot activate {}'s auto ability {} because it joined an United Attack."
-MSG_AB_MISS_REQ             = u"\u2192 There aren't enough targets to activate {}'s ability."
+MSG_AB_MISS_REQ             = u" \u2192 There aren't enough targets to activate {}'s ability."
 MSG_DISCARD_RANDOM          = "{} randomly discards {} from its {}."
 MSG_ERR_NO_CARDS            = "There are no targets available, hence the ability has no effect."
 MSG_ERR_NO_CARDS_HAND       = "You don't have enough cards in your hand to pay the cost of the ability."
@@ -339,6 +339,7 @@ parsedCards    = {} # Dictionary holding all parsed cards
 cleanedUpRing  = False  # Tracks if the user has run the Clean-up phase
 commander      = None  # RulesCommands instance
 turns          = 1  # The number of consecutive turns a player can play
+envVars        = None  # Global variables to be used in eval() expression
 
 automations = {
    'Play'     : True, # Automatically trigger game effects and card effects when playing cards

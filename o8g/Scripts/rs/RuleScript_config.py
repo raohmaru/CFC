@@ -29,6 +29,7 @@ RS_KEY_ACTION    = 'action'
 RS_KEY_ABILITIES = 'abilities'
 RS_KEY_AUTO      = 'auto'
 RS_KEY_REQ       = 'requisite'
+RS_KEY_VARS      = 'vars'
 
 # Regular expressions
 RS_RGX_KEY_TARGET     = re.compile(r'^target\??\s*=\s*')
@@ -49,6 +50,7 @@ RS_RGX_AC_ARGS_SEP    = re.compile(r'(?<!<\d),(?!\d>)')
 RS_RGX_KEY_ABILITY    = re.compile(r'^abilities\s*=\s*')
 RS_RGX_KEY_AUTO       = re.compile(r'^auto\s*=\s*')
 RS_RGX_KEY_REQ        = re.compile(r'^requisite\s*=\s*')
+RS_RGX_KEY_VARS       = re.compile(r'^vars\s*=\s*')
 
 RS_RGX_PARAM          = re.compile(r'\(([^)]*)\)')
 RS_RGX_COND           = re.compile(r'\[\[([^\]]+)\]\]\s*')
@@ -74,6 +76,7 @@ RS_OP_GTE      = '>='
 RS_OP_BOOL_AND = '&&'
 RS_OP_OPT      = '?'
 RS_OP_FUNC     = ':'
+RS_OP_ASSIGN   = ':='
 
 RS_TARGET_OPS = [
    RS_OP_AND,

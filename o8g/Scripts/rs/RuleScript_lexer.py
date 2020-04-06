@@ -73,6 +73,9 @@ auto: {
 requisite: [
    'char<1>@oppring',
    'char<1>@myring'
+],
+vars: [
+   ['varname'. 'value or expr']
 ]
 """
 
@@ -148,6 +151,13 @@ class RulesLexer():
             if match:
                debug("Requisite key found!")
                rulesDict[RS_KEY_REQ] = line[len(match.group()):].split(RS_OP_BOOL_AND)
+            
+         # Check for variables command
+         if not RS_KEY_VARS in rulesDict:
+            match = RS_RGX_KEY_VARS.match(line)
+            if match:
+               debug("Variables key found!")
+               rulesDict[RS_KEY_VARS] = RulesLexer.parseVars( line[len(match.group()):] )
             
       debug(rulesDict)
       return rulesDict
@@ -366,6 +376,16 @@ class RulesLexer():
       abilities = [ item.strip() for item in abilities ]
       abilities = filter(None, abilities)
       return abilities
+
+
+   @staticmethod
+   def parseVars(str):
+      debug("Parsing vars: %s" % str)
+      strArr = str.split(RS_OP_SEP)
+      vars = []
+      for item in strArr:
+         vars.append([v.strip() for v in item.split(RS_OP_ASSIGN)])
+      return vars
       
    
    @staticmethod

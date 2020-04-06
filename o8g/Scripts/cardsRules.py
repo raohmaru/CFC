@@ -158,7 +158,6 @@ effect:
          moveToSlot()
          trash([#])     # default: 1
          prophecy([#])  # default: 1
-         select(target)
          activate(expr)
          turns(#)  # unsiged int, target = current player
       Ability:
@@ -314,6 +313,25 @@ Available functions:
 requisite = target [&& target]
 
 A list of targets that all must exist in order to execute the action.
+@see target
+
+---------------------------------------------------
+vars = varname := value [; varname := value] 
+
+Assigns a value to a variable, which will exists during the execution of the effects.
+
+Several variables can be joined with ';'.
+
+varname:
+   A valid identifier
+   
+value:
+   A value or a valid Python expression
+   @see Expressions
+   
+   
+Identifier:
+   An identifier is a word that contain the character _ and/or any of the following character ranges: a-z, A-Z, 0-9.
 """
 
 RulesDict = {}
@@ -456,7 +474,7 @@ action = reveal(hand) & each(card.bp <= 3 in me.hand -> bp(+2)) target(this)
 
 # Ayame's BUTTERFLY ILLUSION
 RulesDict['33796f5f-c699-42e8-a084-fd28663f08ae'] = """
-auto = ~activatePhase~ moveTo(hand)
+auto = ~activatePhase~ moveTo(hand) target(this)
 """
 
 # Falcon's POWER STONE
@@ -904,7 +922,7 @@ action = {D(character[powerful])}{F}: copyAbility(discarded[0]) to(character@myR
 
 # Mr. Karate's M.I.A.
 RulesDict['06c4b88f-8634-4b67-87d0-c0406fa268f1'] = """
-action = {F}: moveTo(deck) & shuffle()
+action = {F}: moveTo(deck) & shuffle() target(this)
 """
 
 # Ryo's SPIRIT SURGE
@@ -1230,7 +1248,10 @@ action = {D(character[abinstant])}{F}: activate(discarded[0])
 """
 
 # Akari Ichijou's LET'S GAMBLE!
-# RulesDict['95675af9-956c-4b27-b7e1-a59b10a0cb7c'] = ""
+RulesDict['95675af9-956c-4b27-b7e1-a59b10a0cb7c'] = """
+vars = coin := flipCoin()
+action = {F}: [[if coin == 1]] bp(+5) target(character) [[else]] damage(3) to(this)
+"""
 
 # Awakened Kaede's POWER MATCH
 # RulesDict['da18d80a-ffa3-4df4-a3a7-7779bb5ad577'] = ""
@@ -1276,7 +1297,7 @@ auto = ~myEndPhase~ damage(2) to(characters)
 
 # Eri's HOTHEAD
 RulesDict['04660547-18c8-4eb4-96b5-2a977dda0dcb'] = """
-action = [[if me.ring > 1]] moveTo(hand)
+action = [[if me.ring > 1]] moveTo(hand) target(this)
 """
 
 # Marco's ENEMY CHASER
@@ -1321,7 +1342,7 @@ abilities = cantblock
 
 # Hanzo's DUST CLOUD
 RulesDict['90c1ccf4-999a-4567-92e4-0f7602b7799e'] = """
-action = {F}: moveTo(hand)
+action = {F}: moveTo(hand) target(this)
 """
 
 # Haohmaru's IRON SLICE
@@ -1826,7 +1847,7 @@ action = each(characters[attack] -> draw(2))
 
 # Lucky card
 RulesDict['21db37a5-3483-41d4-9c6a-529071fce7ba'] = """
-action = draw(3) & select(<2>*@hand) & moveTo(myDeck)
+action = draw(3); moveTo(myDeck) target(<2>*@hand)
 """
 
 # Manari's song

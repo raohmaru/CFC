@@ -109,13 +109,12 @@ class Rules():
             return False
       
       if RS_KEY_ACTION in self.rules_tokens:
-         req = self.rules_tokens[RS_KEY_REQ] if RS_KEY_REQ in self.rules_tokens else None
-         return self.execAction(self.rules_tokens[RS_KEY_ACTION], target, requisite=req)
+         return self.execAction(self.rules_tokens[RS_KEY_ACTION], target)
       
       return True
 
       
-   def execAction(self, action, target, isAuto=False, requisite=None):
+   def execAction(self, action, target, isAuto=False):
       debug("Executing actions: {}, {}, isAuto={}".format(action, target, isAuto))
       
       if isinstance(action, list):
@@ -139,7 +138,8 @@ class Rules():
          commander = RulesCommands()
             
       # Check if there is any requisite
-      if requisite:
+      if RS_KEY_REQ in self.rules_tokens:
+         requisite = self.rules_tokens[RS_KEY_REQ]
          debug("Checking requisites: {}".format(requisite))
          for req in requisite:
             target = RulesLexer.parseTarget(req)
@@ -147,6 +147,16 @@ class Rules():
                notify(MSG_AB_MISS_REQ.format(thisCard))
                return False
             debug("-- Requisites are met")
+            
+      # Add temp variables
+      if RS_KEY_VARS in self.rules_tokens:
+         vars = self.rules_tokens[RS_KEY_VARS]
+         debug("Adding temp vars: {}".format(vars))
+         for var in vars:
+            res = evalExpression(var[1], True, getLocals(source=thisCard), getEnvVars())
+            if res is not None:
+               debug("-- {} := {}".format(var[0], res))
+               addActionTempVars(var[0], res)
             
       # The player must pay the cost, or we cancel
       if action['cost']:
@@ -183,7 +193,7 @@ class Rules():
                   debug("--- Condition not matching")
                   if len(cond) > 2:
                      debug("--- Found ELIF/ELSE condition")
-                     return self.execAction(cond[2], target, isAuto, requisite)
+                     return self.execAction(cond[2], target, isAuto)
                   if len(effect[1]) > 0:
                      notify("Cannot activate the ability because its condition does not match.")
                   if not isAuto:

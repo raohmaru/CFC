@@ -1,7 +1,7 @@
 # Card Fighters' Clash Changelog
 
 ## 0.7.10
-Scripted abilities: Orochi, Wild Iori, Akari (Power), Hey! Hey!, Nothingness, Seraphic wing, Slaughter, Cruel hunt.
+Scripted abilities: Orochi, Wild Iori, Akari (Power), Hey! Hey!, Nothingness, Seraphic wing, Slaughter, Cruel hunt, Akari Ichijou.
 ## 0.7.9
 Scripted abilities: Mai, Raiden, Rock Howard, Wild Wolf, Best shot, Athena Asamiya, Benimaru, K, Kyo, Kyo Kusanagi, Leona, Saishu, Shingo, Wild Leona, Moriya, Kazuki, Rimoruru, Psyche up!, Tri-Quiz, Jhun Hoon, Galford, Nakoruru, Lucky kitty, Pride, Synchro, Face off, Lend a hand, Who's taller.
 ## 0.7.8
