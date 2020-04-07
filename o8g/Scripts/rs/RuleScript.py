@@ -120,9 +120,12 @@ class Rules():
       if isinstance(action, list):
          debug("Several actions found, player must choose one")
          actionLabels = []
-         for a in action:
+         cardLabels = self.rules_tokens[RS_KEY_LABEL] if RS_KEY_LABEL in self.rules_tokens else []
+         for i, a in enumerate(action):
             label = a['effects'][0][1][0][0]
-            if label in CMD_LABELS:
+            if 0 <= i < len(cardLabels): # Does the list have the index?
+               label = cardLabels[i]
+            elif label in CMD_LABELS:
                label = CMD_LABELS[label]
             actionLabels.append(label)
          t = askChoice("Select an effect", actionLabels)

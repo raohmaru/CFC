@@ -237,12 +237,13 @@ MSG_AB_MISS_REQ             = u" \u2192 There aren't enough targets to activate 
 MSG_DISCARD_RANDOM          = "{} randomly discards {} from its {}."
 MSG_ERR_NO_CARDS            = "There are no targets available, hence the ability has no effect."
 MSG_ERR_NO_CARDS_HAND       = "You don't have enough cards in your hand to pay the cost of the ability."
+MSG_ERR_NO_CARDS_DISCARD    = "There are no cards to discard [of the chosen type] in {}'s hand."
 MSG_ERR_NO_FILTERED_CARDS   = "Selected cards don't match the requirements of this card's effect."
 MSG_ERR_NO_FILTERED_PLAYERS = "No player match the requirements of this card's effect."
 MSG_ERR_TARGET_OTHER        = "{}'s ability cannot select itself, therefore it has been removed from selection."
 MSG_MAY_DEF                 = "Do you want to apply the effect of the card?"
 MSG_HINT_KOED               = "({} has been KOed. You can put it into your discard pile (hover it and press DEL key). In any case, KOed characters will be removed from the ring on phase change.)"
-MSG_HINT_ACTIVATE           = "(Now you can activate the card effect by double-click on it.)"
+MSG_HINT_ACTIVATE           = "(Now you can activate the card's effect by double-click on it.)"
 MSG_HINT_WIN                = "{} wins the game!"
 MSG_HOOKS_ERR = {
    Hooks.BeforeAttack: "{} cannot attack due to {}'s {} ability{}.",
@@ -308,9 +309,11 @@ ERR_NO_EFFECT = 'err001'
 CMD_LABELS = {
    'swapchars' : 'Swap the positions of two characters in the same ring',
    'movetoslot': 'Move a character to an empty slot in the same ring',
-   'damage': 'Deal damage',
-   'hp'    : 'Gain HP',
-   'bp'    : 'Raise the BP of characters'
+   'damage'    : 'Deal damage',
+   'hp'        : 'Gain HP',
+   'bp'        : 'Raise the BP of characters',
+   'discard'   : 'Discard card(s)',
+   'destroy'   : 'KO character(s)'
 }
 
 # Misc

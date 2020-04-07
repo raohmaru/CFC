@@ -1,5 +1,7 @@
 # Card Fighters' Clash Changelog
 
+## 0.7.11
+Scripted abilities: Awakened Kaede, Setsuna, SP leak.
 ## 0.7.10
 Scripted abilities: Orochi, Wild Iori, Akari (Power), Hey! Hey!, Nothingness, Seraphic wing, Slaughter, Cruel hunt, Akari Ichijou.
 ## 0.7.9

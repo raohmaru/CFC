@@ -202,6 +202,8 @@ def cmd_shuffle(rc, targets, source, restr, pileName=None):
 
 def cmd_destroy(rc, targets, source, restr, *args):
    debug(">>> cmd_destroy({})".format(targets)) #Debug
+   if not targets:
+      targets = [source]
    for target in targets:
       if target.controller == me:
          destroy(target)
@@ -260,6 +262,8 @@ def cmd_discard(rc, targets, source, restr, whichCards=''):
                discard(card)
             else:
                remoteCall(player, "discard", [card])
+      else:
+         notify(MSG_ERR_NO_CARDS_DISCARD.format(player))
    rc.applyNext()
 
 

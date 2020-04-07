@@ -121,6 +121,18 @@ vars = [
    "vars = coin := rnd(2)",
    "vars = coin := flipCoin(); res := rnd(4)",
 ]
+labels = [
+   "label = KO this character",
+   "label = 'KO this character'",
+]
+rules = [
+   """
+   label  = "KO this character"
+   action = destroy()
+   label  = "Discard a character card"
+   action = discard(character)
+   """
+]
 
 if not 'debug' in globals():
    # Make debug accessible from any module
@@ -142,4 +154,6 @@ def test(arr, title):
 # test(abilities, 'abilities')
 # test(autos, 'autos')
 # test(requisite, 'requisite')
-test(vars, 'vars')
+# test(vars, 'vars')
+test(labels, 'labels')
+test(rules, 'rules')

@@ -75,7 +75,10 @@ requisite: [
    'char<1>@myring'
 ],
 vars: [
-   ['varname'. 'value or expr']
+   ['varname', 'value or expr']
+],
+label: [
+   'String label'
 ]
 """
 
@@ -93,8 +96,9 @@ class RulesLexer():
       rules = rules.strip().split('\n')
       rulesDict = {}
 
-      for line in rules:
-         line = line.strip().lower()
+      for rule in rules:
+         rule = rule.strip()
+         line = rule.lower()
          debug("Parsing line: %s" % line)
 
          # Skip comment lines
@@ -158,6 +162,16 @@ class RulesLexer():
             if match:
                debug("Variables key found!")
                rulesDict[RS_KEY_VARS] = RulesLexer.parseVars( line[len(match.group()):] )
+            
+         # Check for label command
+         match = RS_RGX_KEY_LABEL.match(line)
+         if match:
+            debug("Label key found!")
+            label = rule[len(match.group()):].strip('"').strip("'")
+            if RS_KEY_LABEL in rulesDict:
+               rulesDict[RS_KEY_LABEL].append(label)
+            else:
+               rulesDict[RS_KEY_LABEL] = [label]
             
       debug(rulesDict)
       return rulesDict

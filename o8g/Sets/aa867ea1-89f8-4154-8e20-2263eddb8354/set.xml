@@ -7477,7 +7477,7 @@
 			<property name="Ability"      value="" />
 			<property name="Ability Type" value="" />
 			<property name="Ability Name" value="" />
-			<property name="Rules"        value="Attacking enemy loses 5 SP." />
+			<property name="Rules"        value="Enemy loses 5 SP." />
 			<property name="BP"           value="" />
 			<property name="SP"           value="0" />
 			<property name="Backup 1"     value="" />

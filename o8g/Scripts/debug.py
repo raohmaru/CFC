@@ -41,8 +41,8 @@ def debugScenario():
    gotoMain()
    rnd(100, 10000)  # Delay the next action until all animation is done
    tableCards = [
-       '95675af9-956c-4b27-b7e1-a59b10a0cb7c' # Akari Ichijou
-      # ,'3e38ee5c-2421-4267-b0da-86035060fcc0' # Wild Iori
+       'da18d80a-ffa3-4df4-a3a7-7779bb5ad577' # Awakened Kaede
+      ,'781bd288-e9bf-4cf1-b630-0883a2834d0b' # Setsuna
       # ,'03416225-8ed1-48fc-8178-c82559f61dcd' # Akari (Power)
       # ,'0fa9c81d-eee6-47e9-9c9b-d4d802bca0c4' # Kyo
    ]
@@ -57,8 +57,9 @@ def debugScenario():
       rnd(1, 100)  # Delay the next action until all animation is done
       
    handCards = [
-      '153e2c26-7329-4a5e-a405-43191f75a2ac'
-      # ,'248517e9-d7a0-450d-9281-df91d20f68ab' # Char 500 BP
+      '68eaee28-a00a-480f-b8e5-e14d2a8f102c' # SP leak
+       # '8bb477f9-5004-4018-8d5e-73c6a23e8912' # Char 300 BP
+      ,'248517e9-d7a0-450d-9281-df91d20f68ab' # Char 500 BP
       # ,'eb648ee7-aa4e-41ce-a7fc-04af31349ca9' # Char 700 BP
       # ,'4d7520b9-9ced-43e0-a2e7-974d76d8eb82' # Char 1000 BP
       # ,'5e2211a0-e52e-4b7b-b03d-f6ecb3660bb0' # Action 0 SP
@@ -124,9 +125,8 @@ def debugScenario():
    
 def debugOpp():
    tableCards = [
-       'd14694b4-484c-4b45-962e-8cbb636d8a9a' # 200 BP
-      ,'ff8a97e3-9a78-4c5f-86fa-23480fa57da5' # 400 BP
-      ,'95675af9-956c-4b27-b7e1-a59b10a0cb7c' # Akari Ichijou
+       # 'd14694b4-484c-4b45-962e-8cbb636d8a9a' # 200 BP
+      # ,'ff8a97e3-9a78-4c5f-86fa-23480fa57da5' # 400 BP
       # ,'24e99a13-cb42-4e16-9900-78dde12e1a4c' # 600 BP
       # ,'e6e46f83-d089-4762-8d8e-2a3252cfc9db' # 1000 BP
    ]

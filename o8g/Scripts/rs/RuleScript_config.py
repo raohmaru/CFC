@@ -30,6 +30,7 @@ RS_KEY_ABILITIES = 'abilities'
 RS_KEY_AUTO      = 'auto'
 RS_KEY_REQ       = 'requisite'
 RS_KEY_VARS      = 'vars'
+RS_KEY_LABEL     = 'label'
 
 # Regular expressions
 RS_RGX_KEY_TARGET     = re.compile(r'^target\??\s*=\s*')
@@ -51,6 +52,7 @@ RS_RGX_KEY_ABILITY    = re.compile(r'^abilities\s*=\s*')
 RS_RGX_KEY_AUTO       = re.compile(r'^auto\s*=\s*')
 RS_RGX_KEY_REQ        = re.compile(r'^requisite\s*=\s*')
 RS_RGX_KEY_VARS       = re.compile(r'^vars\s*=\s*')
+RS_RGX_KEY_LABEL      = re.compile(r'^label\s*=\s*')
 
 RS_RGX_PARAM          = re.compile(r'\(([^)]*)\)')
 RS_RGX_COND           = re.compile(r'\[\[([^\]]+)\]\]\s*')

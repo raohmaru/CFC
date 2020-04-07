@@ -264,6 +264,39 @@ restr:
    @see action:restr
 
 ---------------------------------------------------
+requisite = target [&& target]
+
+A list of targets that all must exist in order to execute the action.
+@see target
+
+---------------------------------------------------
+vars = varname := value [; varname := value] 
+
+Assigns a value to a variable, which will exists during the execution of the effects.
+
+Several variables can be joined with ';'.
+
+varname:
+   A valid identifier
+   
+value:
+   number
+   string
+   boolean
+   A valid expression (@see Expressions)
+   
+   
+Identifier:
+   An identifier is a word that contain the character _ and/or any of the following character ranges: a-z, A-Z, 0-9.
+
+---------------------------------------------------
+label = "string"
+
+A label to show in the "choose an action" dialog.
+Value can be quoted or not. Case-sensitive.
+@see action
+
+---------------------------------------------------
 Expressions:
 
 A valid Python expression.
@@ -308,30 +341,6 @@ Available variables:
    
 Available functions:
    all group: expr   # context = group item
-
----------------------------------------------------
-requisite = target [&& target]
-
-A list of targets that all must exist in order to execute the action.
-@see target
-
----------------------------------------------------
-vars = varname := value [; varname := value] 
-
-Assigns a value to a variable, which will exists during the execution of the effects.
-
-Several variables can be joined with ';'.
-
-varname:
-   A valid identifier
-   
-value:
-   A value or a valid Python expression
-   @see Expressions
-   
-   
-Identifier:
-   An identifier is a word that contain the character _ and/or any of the following character ranges: a-z, A-Z, 0-9.
 """
 
 RulesDict = {}
@@ -1254,7 +1263,9 @@ action = {F}: [[if coin == 1]] bp(+5) target(character) [[else]] damage(3) to(th
 """
 
 # Awakened Kaede's POWER MATCH
-# RulesDict['da18d80a-ffa3-4df4-a3a7-7779bb5ad577'] = ""
+RulesDict['da18d80a-ffa3-4df4-a3a7-7779bb5ad577'] = """
+auto = ~activatephase~ sp(-2) to(players)
+"""
 
 # Kagami's PHOENIX
 RulesDict['57de9ee8-5791-4696-96a1-057bf866ed9f'] = """
@@ -1277,7 +1288,12 @@ action = loseAbility() target(characters)
 """
 
 # Setsuna's LIFE SIGN
-# RulesDict['781bd288-e9bf-4cf1-b630-0883a2834d0b'] = ""
+RulesDict['781bd288-e9bf-4cf1-b630-0883a2834d0b'] = """
+label  = "KO this character"
+action = destroy()
+label  = "Discard a character card"
+action = discard(character)
+"""
 
 # Shigen's STEEL BULB
 RulesDict['ddbfda17-0ba7-422e-9ed3-376a0ba64644'] = """
@@ -1897,7 +1913,9 @@ action = {F}: reveal(hand); each(reaction in opp.hand -> draw(2)) target(me)
 # RulesDict['30fdfea5-4781-40b8-a8e7-7830fba3bcd6'] = ""
 
 # SP leak
-# RulesDict['68eaee28-a00a-480f-b8e5-e14d2a8f102c'] = ""
+RulesDict['68eaee28-a00a-480f-b8e5-e14d2a8f102c'] = """
+action = sp(-5) to(opp)
+"""
 
 # Striker
 RulesDict['f9a93f64-d331-4aa8-b58d-c213c8dfd742'] = """
