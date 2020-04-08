@@ -44,14 +44,14 @@ import re
 
 # Phases
 Phases = [
-   '\n=== PRE-GAME SETUP Phase: {} ==='.format(me),
-   "\n=== ACTIVATE Phase: {} ===",
-   "\n=== DRAW Phase: {} ===",
-   "\n=== MAIN Phase: {} ===",
-   "\n=== ATTACK Phase: {} ===",
-   "\n=== COUNTERATTACK Phase: {} ===",
-   "\n=== END Phase: {} ===",
-   "\n=== CLEANUP Phase: {} ==="
+   'Setup',
+   'Activate',
+   'Draw',
+   'Main',
+   'Attack',
+   'Counter-attack',
+   'End',
+   'Cleanup'
 ]
 SetupPhase    = 0
 ActivatePhase = 1
@@ -143,11 +143,12 @@ HandSize        = 5
 StartingHP      = 30
 
 GameRulesDefaults = {
-   'ab_trigger_fresh': False, # Activate [] abilities of fresh characters
-   'ab_trigger_act'  : True,  # Activate [] abilities
-   'ab_instant_act'  : True,  # Activate /\ abilities
-   'piercing'        : True,  # Allow piercing damage
-   'backup_fresh'    : False  # Backup fresh characters
+   'ab_trigger_fresh'  : False, # Activate [] abilities of fresh characters
+   'ab_trigger_act'    : True,  # Activate [] abilities
+   'ab_instant_act'    : True,  # Activate /\ abilities
+   'piercing'          : True,  # Allow piercing damage
+   'backup_fresh'      : False, # Backup fresh characters
+   'play_char_bp_limit': None   # BP limit to play chars
 }
 
 # Debug
@@ -176,7 +177,7 @@ Hooks = Struct(**{
    'BackupLimit'  : 'backuplimit',
    'PreventPierce': 'preventpierce',
    'CallOnRemove' : 'callonremove',
-   'PlayFresh'    : 'playfresh',
+   'PlayAsFresh'  : 'playasfresh',
    'CanBeBlocked' : 'canbeblocked'
 })
 
@@ -222,6 +223,9 @@ GameEventsCallOnHost = [
 ]
 
 # Messages
+MSG_PHASES = [
+   '\n=== PRE-GAME SETUP Phase: {} ==='
+]
 MSG_SEL_CHAR_RING           = "Please select a character in your ring.\n(Shift key + Left click on a character)."
 MSG_SEL_CARD                = "Select {} card{} from {} {}"
 MSG_SEL_CARD_EFFECT         = MSG_SEL_CARD + " ({}'s effect)"
@@ -229,6 +233,7 @@ MSG_SEL_CARD_DISCARD        = "Select a card from your {} to discard"
 MSG_SEL_CARD_SACRIFICE      = "Select a card from your {} to KO"
 MSG_PLAYER_LOOKS            = "{} is looking into {} {}..."
 MSG_PLAYER_SELECTS          = "{} has selected {} card(s)"
+MSG_PLAYER_SELECTS_NAMED    = "{} selects {}"
 MSG_COST_NOT_PAYED          = "{} did not pay the activation cost of {}'s {}"
 MSG_AB_NO_EFFECT            = "{}'s ability {} (may) have had no effect."
 MSG_AB_AUTO_ACTIVATION      = "{} has activated {}'s auto ability {}."
@@ -304,6 +309,10 @@ MSG_RULES = {
       'Whenever a character counter-attacks a United Attack, piercing damage is prevented.',  # Disabled
       'United-Attacks deals piercing damage as normal.'  # Enabled
    ),
+   'play_char_bp_limit': (
+      'Character cards of any BP can be played as normal.',
+      'Character cards with BP {} or greater cannot be played.'
+   )
 }
 ERR_NO_EFFECT = 'err001'
 CMD_LABELS = {

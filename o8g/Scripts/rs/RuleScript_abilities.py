@@ -150,8 +150,8 @@ def abl_add(obj_id, eventOrFunc, source_id=None, restr=None, msg=None, checkFunc
    eventAdded = False
    if addEvent:
       eventAdded = addGameEventListener(eventOrFunc, 'abl_genericListener', obj_id, source_id, restr, [obj_id, source_id, msg, checkFunc])
-   if eventAdded and msg and source_id:
-      notifyAbility(obj_id, source_id, msg[0], getTextualRestr(restr))
+   if eventAdded and msg:
+      notifyAbility(obj_id, source_id if source_id else obj_id, msg[0], getTextualRestr(restr))
 
 
 def abl_genericListener(target_id, obj_id, source_id=None, msgOrFunc=None, checkFunc=None):
@@ -178,7 +178,7 @@ RulesAbilities.register('cantblock',       Hooks.BeforeBlock)
 RulesAbilities.register('cantplayac',      Hooks.BeforePlayAC)
 RulesAbilities.register('cantplayre',      Hooks.BeforePlayRE)
 RulesAbilities.register('preventpierce',   Hooks.PreventPierce)
-RulesAbilities.register('rush',            Hooks.PlayFresh)
+RulesAbilities.register('rush',            Hooks.PlayAsFresh)
 RulesAbilities.register('unlimitedbackup', Hooks.BackupLimit,  'callback_true')
 RulesAbilities.register('pierce',          GameEvents.Blocked, 'abl_pierce')
 RulesAbilities.register('unfreezable',     GameEvents.Attacks, 'abl_unfreezable')

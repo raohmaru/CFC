@@ -41,25 +41,24 @@ def debugScenario():
    gotoMain()
    rnd(100, 10000)  # Delay the next action until all animation is done
    tableCards = [
-       'da18d80a-ffa3-4df4-a3a7-7779bb5ad577' # Awakened Kaede
-      ,'781bd288-e9bf-4cf1-b630-0883a2834d0b' # Setsuna
-      # ,'03416225-8ed1-48fc-8178-c82559f61dcd' # Akari (Power)
-      # ,'0fa9c81d-eee6-47e9-9c9b-d4d802bca0c4' # Kyo
+       '235b8800-ad31-4224-93c2-4713ae4c45ec' # Shiki
+      ,'07fb9dba-ef83-4a69-a700-11cff3e313f3' # Shizumaru
+      ,'ce62aaad-d114-4ce6-842f-7f6ed39f1afa' # Sougetsu
+      # ,'4bd333d6-f063-424e-8cf9-3512f96f23b4' # Batsu
    ]
    for i, id in enumerate(tableCards):
       debug("Creating card {} at slot {}".format(id, i))
       card = table.create(id, 0, 0, quantity=1, persist=True)
       playAuto(card, i)
       ability = Ability(card)
-      if ability.type and ability.type != InstantAbility:
-         card.markers[MarkersDict['Just Entered']] = 0
+      # if ability.type and ability.type == TriggerAbility:
+         # card.markers[MarkersDict['Just Entered']] = 0
       setState(me, 'charsPlayed', 0)
       rnd(1, 100)  # Delay the next action until all animation is done
       
    handCards = [
-      '68eaee28-a00a-480f-b8e5-e14d2a8f102c' # SP leak
        # '8bb477f9-5004-4018-8d5e-73c6a23e8912' # Char 300 BP
-      ,'248517e9-d7a0-450d-9281-df91d20f68ab' # Char 500 BP
+      # ,'248517e9-d7a0-450d-9281-df91d20f68ab' # Char 500 BP
       # ,'eb648ee7-aa4e-41ce-a7fc-04af31349ca9' # Char 700 BP
       # ,'4d7520b9-9ced-43e0-a2e7-974d76d8eb82' # Char 1000 BP
       # ,'5e2211a0-e52e-4b7b-b03d-f6ecb3660bb0' # Action 0 SP
@@ -125,9 +124,10 @@ def debugScenario():
    
 def debugOpp():
    tableCards = [
+      'ce62aaad-d114-4ce6-842f-7f6ed39f1afa' # Sougetsu
        # 'd14694b4-484c-4b45-962e-8cbb636d8a9a' # 200 BP
       # ,'ff8a97e3-9a78-4c5f-86fa-23480fa57da5' # 400 BP
-      # ,'24e99a13-cb42-4e16-9900-78dde12e1a4c' # 600 BP
+      # '24e99a13-cb42-4e16-9900-78dde12e1a4c' # 600 BP
       # ,'e6e46f83-d089-4762-8d8e-2a3252cfc9db' # 1000 BP
    ]
    for i, id in enumerate(tableCards):
@@ -139,7 +139,7 @@ def debugOpp():
    handCards = [
        # '8bb477f9-5004-4018-8d5e-73c6a23e8912' # Char 300 BP
       # ,'248517e9-d7a0-450d-9281-df91d20f68ab' # Char 500 BP
-      # ,'8cb08852-491e-4a34-9589-79bf3959ba63' # Char 700 BP
+      # '8cb08852-491e-4a34-9589-79bf3959ba63' # Char 700 BP
       # ,'4d7520b9-9ced-43e0-a2e7-974d76d8eb82' # Char 1000 BP
       # ,'5e2211a0-e52e-4b7b-b03d-f6ecb3660bb0' # Action 0 SP
       # ,'83c33aa8-5981-4352-8107-cbb7e05547ec' # Action -1 SP

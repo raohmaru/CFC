@@ -24,6 +24,14 @@ def triggerPhaseEvent(phase):
    debug(">>> triggerPhaseEvent({})".format(phase)) #Debug
    mute()
    if not automations['Phase']: return
+   
+   skipPhases = getState(me, 'skip')
+   if phase in skipPhases:
+      notify("{} skips his {} phase due to an ability.".format(me, Phases[phase]))
+      skipPhases.remove(phase)  # remove by value
+      setState(me, 'skip', skipPhases)
+      nextPhase()
+      return
 
    if   phase == ActivatePhase: activatePhaseStart()
    elif phase == DrawPhase:     drawPhaseStart()
@@ -236,6 +244,13 @@ def playAuto(card, slotIdx=None, force=False):
       if charsPlayed >= CharsPerTurn:
          if not confirm("Only {} character per turn can be played\n(you have played {} characters).\nProceed anyway?".format(CharsPerTurn, charsPlayed)):
             return
+      # BP limit?
+      bplimit = getRule('play_char_bp_limit')
+      if bplimit:
+         bplimit = reduce(lambda a,b: min(a,b), bplimit)
+         if num(card.BP) / BPMultiplier >= bplimit:
+            warning(MSG_RULES['play_char_bp_limit'][True].format(bplimit))
+            return
       # Player has any empty slot in his ring?
       myRing = getGlobalVar('Ring', me)
       if myRing.count(None) == 0:
@@ -259,9 +274,9 @@ def playAuto(card, slotIdx=None, force=False):
       # Parse the card to enable card autoscripts
       removeParsedCard(card)
       pcard = parseCard(card)
-      setMarker(card, 'BP', num(card.BP) / 100)
+      setMarker(card, 'BP', num(card.BP) / BPMultiplier)
       # Triggers a hook whether the character can have the "just entered" marker
-      if triggerHook(Hooks.PlayFresh, card._id):
+      if triggerHook(Hooks.PlayAsFresh, card._id):
          setMarker(card, 'Just Entered')
       putAtSlot(card, slotIdx)
       setState(me, 'charsPlayed', charsPlayed + 1)
@@ -563,6 +578,10 @@ def activateAuto(card):
             return
       # [] abilities
       if pcard.ability.type == TriggerAbility:
+         # Check if [] abilites can be activated
+         if not getRule('ab_trigger_act'):
+            warning(MSG_RULES['ab_trigger_act'][False])
+            return
          # Just entered?
          if not getRule('ab_trigger_fresh') and hasMarker(card, 'Just Entered'):
             if not confirm("Can't activate {} abilities of characters that just entered the ring.\nProceed anyway?".format(TriggerUniChar)):
@@ -570,10 +589,6 @@ def activateAuto(card):
          # Frozen or attacking?
          if isFrozen(card) or hasMarker(card, 'Attack'):
             warning("Can't activate {} abilities of frozen or attacking characters.".format(TriggerUniChar))
-            return
-         # Check if [] abilites can be activated
-         if not getRule('ab_trigger_act'):
-            warning(MSG_RULES['ab_trigger_act'][False])
             return
       # () abilities
       if pcard.ability.type == AutoAbility:

@@ -109,6 +109,7 @@ def triggerGameEvent(event, *args):
 def triggerHook(event, *args):
    res, source = triggerGameEvent(event, *args)
    if not res:
+      ability = None
       if isinstance(event, list):
          ability = event[0]
       if ability in MSG_HOOKS_ERR:

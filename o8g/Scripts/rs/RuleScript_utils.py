@@ -315,7 +315,7 @@ class RulesUtils():
                cardsByType.append(c)
          cards_f1 = cardsByType
          if len(cards_f1) > 0:
-            debug( "      " + ("{}, " * len(cards_f1)).format(*cards_f1) )
+            debug( "      " + ("{}, " * len(cards_f1)).format(*cards_f1)[:-2] )
          else:
             debug("      Nope")
 
@@ -391,7 +391,10 @@ class RulesUtils():
                   title = 'Please ' + title[0].lower() + title[1:]
                   warning(title)
             if cards_f1:
-               notify(MSG_PLAYER_SELECTS.format(me, len(cards_f1)))
+               if isVisible(cards_f1[0]):
+                  notify(MSG_PLAYER_SELECTS_NAMED.format(me, ("{}, " * len(cards_f1)).format(*cards_f1)[:-2]))
+               else:
+                  notify(MSG_PLAYER_SELECTS.format(me, len(cards_f1)))
          if cards_f1 == None and minQty != 0:
             return False
 

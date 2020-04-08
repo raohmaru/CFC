@@ -160,6 +160,7 @@ effect:
          prophecy([#])  # default: 1
          activate(expr)
          turns(#)  # unsiged int, target = current player
+         skip(phase)
       Ability:
          Keywords:
             @see abilities
@@ -1301,10 +1302,15 @@ abilities = preventpierce
 """
 
 # Wanderer's CHANGE!
-# RulesDict['f71ccccf-4c2e-4adf-a409-b8ab8e17c8f1'] = ""
+RulesDict['f71ccccf-4c2e-4adf-a409-b8ab8e17c8f1'] = """
+target = character@oppRing
+action = bp(=prevTgt.BP) target(this)
+"""
 
 # Yuki's PRIESTESS SEAL
-# RulesDict['48a553a1-fd40-482a-9161-86be2e29f246'] = ""
+RulesDict['48a553a1-fd40-482a-9161-86be2e29f246'] = """
+auto = enableRule(play_char_bp_limit, 8)
+"""
 
 # Zantetsu's BYOUMA
 RulesDict['5ccdb31f-f7f8-4f89-916f-74e9db9130cb'] = """
@@ -1427,7 +1433,9 @@ abilities = frosted
 """
 
 # Shiki's WISHING OF A SMILE
-# RulesDict['235b8800-ad31-4224-93c2-4713ae4c45ec'] = ""
+RulesDict['235b8800-ad31-4224-93c2-4713ae4c45ec'] = """
+action = bp(+3) to(characters[bp<=3])
+"""
 
 # Shiki (Bust)'s YUGA'S SPELL
 RulesDict['9d836743-0d5e-4b4e-951a-cbe216558e6f'] = """
@@ -1440,10 +1448,14 @@ action = {F}: destroy() target(character@myRing); hp(+2)
 """
 
 # Shizumaru's MIDSUMMER RAIN
-# RulesDict['07fb9dba-ef83-4a69-a700-11cff3e313f3'] = ""
+RulesDict['07fb9dba-ef83-4a69-a700-11cff3e313f3'] = """
+action = {S}: discard(all) target(players)
+"""
 
 # Sougetsu's FRIGID SMIRK
-# RulesDict['ce62aaad-d114-4ce6-842f-7f6ed39f1afa'] = ""
+RulesDict['ce62aaad-d114-4ce6-842f-7f6ed39f1afa'] = """
+action = skip(draw) target(opp)
+"""
 
 # Ukyo's DWINDLING LIFE
 RulesDict['8bb3dd10-bb0f-4380-9772-c97ba0428378'] = """

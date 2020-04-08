@@ -85,7 +85,7 @@ def setup(group=table, x=0, y=0, silent=False):
    if len(me.Deck) == 0:
       warning("Please load a deck first.")
       return
-   notify(Phases[SetupPhase].format(me))
+   notify(MSG_PHASES[SetupPhase].format(me))
    me.Deck.shuffle()
    refill() # We fill the player's play hand to their hand size
    notify("Setup for player {} completed.".format(me))

@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8" standalone="yes"?>
-<set name="Core Set" id="aa867ea1-89f8-4154-8e20-2263eddb8354" version="1.2.6.0" gameId="e3d56d9e-900d-49c6-b6ae-22cbb51be153" gameVersion="0.7.2">
+<set name="Core Set" id="aa867ea1-89f8-4154-8e20-2263eddb8354" version="1.2.6.0" gameId="e3d56d9e-900d-49c6-b6ae-22cbb51be153" gameVersion="0.7.4">
 	<packaging>
 		<pack name="Booster" id="800ab974-9fee-45c6-8d15-3c995c732cdc">
 			<options>
@@ -475,7 +475,7 @@
 			<property name="Ability"      value="&#163; ENEMY&apos;S ABILITY" />
 			<property name="Ability Type" value="&#163;" />
 			<property name="Ability Name" value="ENEMY&apos;S ABILITY" />
-			<property name="Rules"        value="Steals an ability from a character.&#xD;&#xA;(This character gets that ability.)" />
+			<property name="Rules"        value="Steals the abilities from another character.&#xD;&#xA;(This character gets that ability.)" />
 			<property name="BP"           value="600" />
 			<property name="SP"           value="1" />
 			<property name="Backup 1"     value="Android" />
@@ -1015,7 +1015,7 @@
 			<property name="Ability"      value="&#162; MANIPULATION" />
 			<property name="Ability Type" value="&#162;" />
 			<property name="Ability Name" value="MANIPULATION" />
-			<property name="Rules"        value="Steals an ability from the character in front of it. (This character gets that ability.)" />
+			<property name="Rules"        value="Steals the abilities from the character in front of it. (This character gets that ability.)" />
 			<property name="BP"           value="500" />
 			<property name="SP"           value="2" />
 			<property name="Backup 1"     value="Brute" />
@@ -1843,7 +1843,7 @@
 			<property name="Ability"      value="&#163; ARAHITOGAMI" />
 			<property name="Ability Type" value="&#163;" />
 			<property name="Ability Name" value="ARAHITOGAMI" />
-			<property name="Rules"        value="Discard an action card. KO a character with no ability." />
+			<property name="Rules"        value="Discard an action card. KO a character with no abilities." />
 			<property name="BP"           value="700" />
 			<property name="SP"           value="0" />
 			<property name="Backup 1"     value="Deity" />
@@ -3260,7 +3260,7 @@
 			<property name="Publisher"    value="SNK" />
 			<property name="Team"         value="Fatal Fury" />
 			<property name="Type"         value="Character" />
-			<property name="Subtype"      value="Kobudo" />
+			<property name="Subtype"      value="Gangster" />
 			<property name="Rarity"       value="B" />
 			<property name="Ability"      value="&#162; SHRIKE DROP" />
 			<property name="Ability Type" value="&#162;" />
@@ -3394,7 +3394,7 @@
 			<property name="Rules"        value="Reveal your hand, then discard all action and reaction cards." />
 			<property name="BP"           value="1500" />
 			<property name="SP"           value="-1" />
-			<property name="Backup 1"     value="Kobudo" />
+			<property name="Backup 1"     value="Gangster" />
 			<property name="Backup 2"     value="" />
 			<property name="Backup 3"     value="" />
 			<property name="Number"       value="C188" />
@@ -3412,7 +3412,7 @@
 			<property name="Rules"        value="Deals damage equal to its BP to the character in front of it. Return this character to your hand." />
 			<property name="BP"           value="500" />
 			<property name="SP"           value="2" />
-			<property name="Backup 1"     value="Kobudo" />
+			<property name="Backup 1"     value="Gangster" />
 			<property name="Backup 2"     value="Gangster" />
 			<property name="Backup 3"     value="" />
 			<property name="Number"       value="C189" />
@@ -4042,7 +4042,7 @@
 			<property name="Rules"        value="Discard an action card. A character loses its abilities and its BP become 100." />
 			<property name="BP"           value="300" />
 			<property name="SP"           value="3" />
-			<property name="Backup 1"     value="Kobudo" />
+			<property name="Backup 1"     value="Priest" />
 			<property name="Backup 2"     value="" />
 			<property name="Backup 3"     value="" />
 			<property name="Number"       value="C224" />
@@ -4111,7 +4111,7 @@
 			<property name="Ability"      value="&#162; MIMIC" />
 			<property name="Ability Type" value="&#162;" />
 			<property name="Ability Name" value="MIMIC" />
-			<property name="Rules"        value="Copy an ability from another character. This character gets that ability." />
+			<property name="Rules"        value="Copy the abilities from another character. This character gets those abilities." />
 			<property name="BP"           value="700" />
 			<property name="SP"           value="0" />
 			<property name="Backup 1"     value="Robot" />
@@ -4764,7 +4764,7 @@
 			<property name="SP"           value="1" />
 			<property name="Backup 1"     value="Samurai" />
 			<property name="Backup 2"     value="Magician" />
-			<property name="Backup 3"     value="Kobudo" />
+			<property name="Backup 3"     value="Priest" />
 			<property name="Number"       value="C264" />
 			<property name="Illustrator"  value="Art by Ying" />
 		</card>
@@ -4818,7 +4818,7 @@
 			<property name="SP"           value="4" />
 			<property name="Backup 1"     value="Samurai" />
 			<property name="Backup 2"     value="Magician" />
-			<property name="Backup 3"     value="Kobudo" />
+			<property name="Backup 3"     value="Priest" />
 			<property name="Number"       value="C267" />
 			<property name="Illustrator"  value="Art by Tonko" />
 		</card>
@@ -4889,7 +4889,7 @@
 			<property name="BP"           value="500" />
 			<property name="SP"           value="2" />
 			<property name="Backup 1"     value="Samurai" />
-			<property name="Backup 2"     value="Kobudo" />
+			<property name="Backup 2"     value="Priest" />
 			<property name="Backup 3"     value="" />
 			<property name="Number"       value="C271" />
 			<property name="Illustrator"  value="Art by Tonko" />
@@ -4988,7 +4988,7 @@
 			<property name="Publisher"    value="SNK" />
 			<property name="Team"         value="Last Blade" />
 			<property name="Type"         value="Character" />
-			<property name="Subtype"      value="Kobudo" />
+			<property name="Subtype"      value="Priest" />
 			<property name="Rarity"       value="A" />
 			<property name="Ability"      value="&#164; PRIESTESS SEAL" />
 			<property name="Ability Type" value="&#164;" />
@@ -7405,7 +7405,7 @@
 			<property name="Ability"      value="" />
 			<property name="Ability Type" value="" />
 			<property name="Ability Name" value="" />
-			<property name="Rules"        value="Steal an ability from a character. A character in your ring gets that ability." />
+			<property name="Rules"        value="Steal the abilities from a character. A character in your ring gets those abilities." />
 			<property name="BP"           value="" />
 			<property name="SP"           value="-3" />
 			<property name="Backup 1"     value="" />

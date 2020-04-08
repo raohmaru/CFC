@@ -89,38 +89,24 @@ class RulesCommands():
 # Related functions
 #---------------------------------------------------------------------------
 
-def disableRule(rule):
-   debug(">>> disableRule({})".format(rule)) #Debug
-   rules = getGlobalVar('Rules')
-   if not rule in rules:
-      rules[rule] = []
-   if GameRulesDefaults[rule] == False:
-      if len(rules[rule]) > 0:
-         rules[rule].pop()
+def toggleRule(ruleName, value, id):
+   debug(">>> toggleRule({}, {}, {})".format(ruleName, value, id)) #Debug
+   Rules = getGlobalVar('Rules')
+   if not ruleName in Rules:
+      Rules[ruleName] = {}
+   rule = Rules[ruleName]
+   if id in rule:
+      del rule[id]
    else:
-      rules[rule].append(False)
-   setGlobalVar('Rules', rules)
-   debug("Rule {} has been disabled ({})".format(rule, rules[rule]))
-   if not getRule(rule):
-      if rule in MSG_RULES:
-         notify(MSG_RULES[rule][False])
-
-
-def enableRule(rule):
-   debug(">>> enableRule({})".format(rule)) #Debug
-   rules = getGlobalVar('Rules')
-   if not rule in rules:
-      rules[rule] = []
-   if GameRulesDefaults[rule] == True:
-      if len(rules[rule]) > 0:
-         rules[rule].pop()
-   else:
-      rules[rule].append(True)
-   setGlobalVar('Rules', rules)
-   debug("Rule {} has been enabled ({})".format(rule, rules[rule]))
-   if getRule(rule):
-      if rule in MSG_RULES:
-         notify(MSG_RULES[rule][True])
+      if isNumber(value):
+         value = int(value)
+      rule[id] = value
+   setGlobalVar('Rules', Rules)
+   debug("Rule {} has been {} ({})".format(ruleName, ('disabled','enabled')[bool(value)], Rules[ruleName]))
+   ruleValue = getRule(ruleName)
+   if (bool(value) and ruleValue) or (value == False and not ruleValue):
+      if ruleName in MSG_RULES:
+         notify(MSG_RULES[ruleName][bool(value)].format(value))
 
 
 def getLocals(**kwargs): 
@@ -495,8 +481,8 @@ def cmd_moveRestTo(rc, targets, source, restr, zone, pos = None):
   
 def cmd_disableRule(rc, targets, source, restr, rule):
    debug(">>> cmd_disableRule({})".format(rule)) #Debug
-   disableRule(rule)
-   args = ['enableRule', source._id, None, restr, [rule]]
+   toggleRule(rule, False, source._id)
+   args = ['toggleRule', source._id, None, restr, [rule, True, source._id]]
    if isCharacter(Card(source._id)):
       addGameEventListener(GameEvents.Removed,   *args)
       addGameEventListener(GameEvents.Powerless, *args)
@@ -505,10 +491,10 @@ def cmd_disableRule(rc, targets, source, restr, rule):
    rc.applyNext()
    
    
-def cmd_enableRule(rc, targets, source, restr, rule):
+def cmd_enableRule(rc, targets, source, restr, rule, value = True):
    debug(">>> cmd_enableRule({})".format(rule)) #Debug
-   enableRule(rule)
-   args = ['disableRule', source._id, None, restr, [rule]]
+   toggleRule(rule, value, source._id)
+   args = ['toggleRule', source._id, None, restr, [rule, False, source._id]]
    if isCharacter(Card(source._id)):
       addGameEventListener(GameEvents.Removed,   *args)
       addGameEventListener(GameEvents.Powerless, *args)
@@ -623,6 +609,19 @@ def cmd_turns(rc, targets, source, restr, qty):
    rc.applyNext()
    
 
+def cmd_skip(rc, targets, source, restr, phase):
+   phases = map(str.lower, Phases)
+   idx = phases.index(phase)
+   debug(">>> cmd_skip({}, {} ({}))".format(targets, phase, idx)) #Debug
+   for player in targets:
+      skipPhases = getState(player, 'skip')
+      if not idx in skipPhases:
+         skipPhases.append(idx)
+         setState(player, 'skip', skipPhases)
+      notify("{} will skip his next {} phase.".format(player, phase.title()))
+   rc.applyNext()
+   
+
 RulesCommands.register('damage',        cmd_damage)
 RulesCommands.register('swappiles',     cmd_swapPiles)
 RulesCommands.register('shuffle',       cmd_shuffle)
@@ -654,3 +653,4 @@ RulesCommands.register('trash',         cmd_trash)
 RulesCommands.register('prophecy',      cmd_prophecy)
 RulesCommands.register('activate',      cmd_activate)
 RulesCommands.register('turns',         cmd_turns)
+RulesCommands.register('skip',          cmd_skip)

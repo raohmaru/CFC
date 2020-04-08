@@ -225,8 +225,10 @@ def funcBind(player, func, args=[]):
 def getRule(rule):
    rules = getGlobalVar('Rules')
    if rule in rules and rules[rule]:  # Not an empty list []
-      for b in rules[rule]:
-         if not b:
+      for key, v in rules[rule].iteritems():
+         if not isinstance(v, bool):
+            return rules[rule].values()
+         if not v:
             return False
       return True
    else:
@@ -268,14 +270,16 @@ def setState(player, name, value):
 def resetState():
    GameState = getGlobalVar('GameState')
    for p in players:
+      gs = GameState[p._id] if p._id in GameState else {}
       GameState[p._id] = {
          'charsplayed'  : 0,  # Num of chars played this turn
          'backupsplayed': 0,  # Num of chars backed-up this turn
          'damaged'      : False,  # Player damaged by non-character card
          'lostsp'       : 0,
+         'skip'         : gs['skip'] if 'skip' in gs else [], # Skip phases, don't reset
           # You cannot trust player properties in online games, so we keep track of them
          'hp'           : p.HP,
-         'sp'           : p.SP 
+         'sp'           : p.SP
       }
    setGlobalVar('GameState', GameState)
    debug(">>> resetState()\n{}".format(GameState)) #Debug
@@ -1044,3 +1048,11 @@ def inUAttack(card):
    if len(uattack) > 0 and card._id in uattack:
       return True
    return False
+
+
+def isVisible(card):
+   if not card.isFaceUp:
+      return False
+   if card.group.name == 'Hand':
+      return False
+   return True
