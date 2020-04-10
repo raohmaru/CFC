@@ -143,6 +143,7 @@ RS_SUFFIX_PLURAL    = 's'
 RS_SUFFIX_FROM_THIS = 'fromthis'
 RS_SUFFIX_THIS      = 'this'
 RS_SUFFIX_ANY       = 'any'
+RS_SUFFIX_ONCE      = 'once'
 
 RS_SUFFIX_TYPES = [
    RS_SUFFIX_PLURAL
@@ -151,7 +152,8 @@ RS_SUFFIX_TYPES = [
 RS_SUFFIX_EVENTS = [
    RS_SUFFIX_FROM_THIS,
    RS_SUFFIX_THIS,
-   RS_SUFFIX_ANY
+   RS_SUFFIX_ANY,
+   RS_SUFFIX_ONCE
 ]
 
 # Target keywords

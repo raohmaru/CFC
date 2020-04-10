@@ -107,9 +107,10 @@ autos = [
    # "auto = ~anyBlockPhase~ +unblockable to(characters[bp<=300 & attack & -uattack]) ueot",
    # "auto = ~playerCombatDamaged fromThis~ +cantplayac to(opp) oppueot",
    # "auto = ~playerDamaged:fromThis~ draw() target?(opp)",
-   "auto = oppCanBeBlocked:any? [[if blocker.bp > this.bp]]",
+   # "auto = oppCanBeBlocked:any? [[if blocker.bp > this.bp]]",
    # "auto = ~anyPlayerDamaged:action~ damage(1) to(damagedPlayer)",
-   "auto = ~anyPlayerDamaged:action~ [[if me.hp < 10]] hp(+1)",
+   # "auto = ~anyPlayerDamaged:action~ [[if me.hp < 10]] hp(+1)",
+   "auto = ~myEndPhase:once~ discard(all)",
 ]
 evals = [
    "action in me.hand => bp(+2)"
@@ -152,8 +153,8 @@ def test(arr, title):
 # test(targets, 'targets')
 # test(actions, 'actions')
 # test(abilities, 'abilities')
-# test(autos, 'autos')
+test(autos, 'autos')
 # test(requisite, 'requisite')
 # test(vars, 'vars')
-test(labels, 'labels')
-test(rules, 'rules')
+# test(labels, 'labels')
+# test(rules, 'rules')

@@ -240,6 +240,7 @@ event:
       this
       any
       action
+      once
       
 hook:
    Keywords:
@@ -1485,7 +1486,10 @@ action = +unlimitedbackup & enableRule(backup_fresh) ueot
 """
 
 # Awakening
-# RulesDict['80692723-3895-435f-bf8f-e94507704af5'] = ""
+RulesDict['80692723-3895-435f-bf8f-e94507704af5'] = """
+target = character
+action = bp(+3)
+"""
 
 # Best shot
 RulesDict['b0346de5-63b8-4443-8ea4-8155d889a0fc'] = """
@@ -1514,7 +1518,10 @@ action = damage(3)
 """
 
 # Crossover
-# RulesDict['ab631979-20d8-4789-85be-149b414d1ef1'] = ""
+RulesDict['ab631979-20d8-4789-85be-149b414d1ef1'] = """
+action = moveTo(deck) target(*s@hand) & shuffle(); moveTo(hand) target(*s@discards)
+auto = ~myEndPhase:once~ discard(all)
+"""
 
 # Curse
 RulesDict['e1fb17f3-c4bf-4993-9b2f-91706cccf448'] = """
@@ -1740,7 +1747,10 @@ action = {F}: moveTo(deck) target(<,3>*@discards) & shuffle() & draw()
 """
 
 # Showtime!
-# RulesDict['7302a3d9-0ee7-4a5e-93aa-b93cc44b6463'] = ""
+RulesDict['7302a3d9-0ee7-4a5e-93aa-b93cc44b6463'] = """
+target = characters@myRing
+action = bp(+2)
+"""
 
 # Slaughter
 RulesDict['62a6c4e0-51d0-4a23-9854-9ba0a25bc751'] = """

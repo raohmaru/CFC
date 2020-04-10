@@ -253,7 +253,10 @@ class Rules():
          # notify(MSG_AB_NO_EFFECT.format(thisCard, getParsedCard(thisCard).ability))
          
       if isAuto and not revert:
-         notify(MSG_AB_AUTO_ACTIVATION.format(thisCard.controller, thisCard, getParsedCard(thisCard).ability))
+         if isCharacter(thisCard):
+            notify(MSG_AB_AUTO_ACT_CHAR.format(thisCard.controller, thisCard, getParsedCard(thisCard).ability))
+         else:
+            notify(MSG_AB_AUTO_ACT.format(thisCard.controller, thisCard))
       
       return True
 
@@ -268,8 +271,11 @@ class Rules():
       
       if eventName:
          thisCard = Card(self.card_id)
-         if getMarker(thisCard, 'BP') > 0:
-            notify("Event \"{}\" triggered. Now trying to activate {}'s auto ability from {}'s ring.".format(eventName, thisCard, thisCard.controller))
+         if not isCharacter(thisCard) or getMarker(thisCard, 'BP') > 0:
+            if isCharacter(thisCard):
+               notify(MSG_AB_AUTO_TRIGGER_CHAR.format(eventName, thisCard, thisCard.controller, thisCard.group.name))
+            else:
+               notify(MSG_AB_AUTO_TRIGGER.format(eventName, thisCard, thisCard.controller))
             if not MarkersDict['United Attack'] in thisCard.markers:
                target = [thisCard]
                if RS_KEY_TARGET in self.rules_tokens:

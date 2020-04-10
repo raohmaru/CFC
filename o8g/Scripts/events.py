@@ -84,12 +84,12 @@ def onCardsMoved(args):
                triggerGameEvent([GameEvents.Removed, card._id])
             if MarkersDict['Attack'] in markers or MarkersDict['United Attack'] in markers:
                rearrangeUAttack(card)
-         # removeParsedCard(card)
-         removeGameEventListener(card._id)
-         CharsAbilities = getGlobalVar('CharsAbilities')
-         if card._id in CharsAbilities:
-            del CharsAbilities[card._id]
-         setGlobalVar('CharsAbilities', CharsAbilities)
+            # removeParsedCard(card)
+            removeGameEventListener(card._id)
+            CharsAbilities = getGlobalVar('CharsAbilities')
+            if card._id in CharsAbilities:
+               del CharsAbilities[card._id]
+            setGlobalVar('CharsAbilities', CharsAbilities)
       # Move cards in the table
       elif fromGroup == table and toGroup == table:
          if isCharacter(card) and not MarkersDict['Backup'] in card.markers:

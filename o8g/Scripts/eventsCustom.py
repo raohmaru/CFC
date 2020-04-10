@@ -74,7 +74,11 @@ def triggerGameEvent(event, *args):
    if event in ge:
       for listener in ge[event]:
          params = list(args) + listener['args']
-         if not obj_id or listener['id'] == obj_id or listener['appliesto'] == RS_SUFFIX_ANY:
+         if (
+            (not obj_id and (not listener['appliesto'] or listener['appliesto'] == RS_SUFFIX_ONCE))
+            or listener['id'] == obj_id
+            or listener['appliesto'] == RS_SUFFIX_ANY
+         ):
             debug("-- Found listener {}".format(listener))
             res = (True, None)
             # Callback could be the ID of a card...
@@ -96,6 +100,8 @@ def triggerGameEvent(event, *args):
                   debug("-- Effect controlled by {}. Sending remote event.".format(card.controller))
                   remoteCall(card.controller, "remoteGameEvent", [listener['callback'], event]+list(params))
                   update()
+               if listener['appliesto'] == RS_SUFFIX_ONCE:
+                  removeGameEventListener(card._id)
             # ... or the name of a global function
             else:
                try:
