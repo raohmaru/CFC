@@ -71,8 +71,10 @@ class RulesCommands():
                   RulesAbilities.remove(params, target._id)
                else:
                   RulesAbilities.add(params, target._id, source._id, restr)
+         self.applyNext()
       else:
          debug("-- cmd not found: {}".format(cmd[0]))
+         self.applyNext()
 
 
    def setTarget(self, target):

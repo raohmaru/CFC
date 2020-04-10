@@ -1,7 +1,7 @@
 # Card Fighters' Clash Changelog
 
 ## 0.7.12
-Scripted abilities: Wanderer, Yuki, Shiki, Shizumaru, Sougetsu.
+Scripted abilities: Wanderer, Yuki, Shiki, Shizumaru, Sougetsu,  Athena, Activate.
 ## 0.7.11
 Scripted abilities: Awakened Kaede, Setsuna, SP leak.
 ## 0.7.10

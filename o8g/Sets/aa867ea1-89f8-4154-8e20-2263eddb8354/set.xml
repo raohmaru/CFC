@@ -925,7 +925,7 @@
 			<property name="Ability"      value="&#163; RESIDENT EVIL" />
 			<property name="Ability Type" value="&#163;" />
 			<property name="Ability Name" value="RESIDENT EVIL" />
-			<property name="Rules"        value="KO this character. A character becomes a Zombie card. (It loses his back-ups.)" />
+			<property name="Rules"        value="KO this character. A character becomes a Zombie card. (It loses its back-ups.)" />
 			<property name="BP"           value="200" />
 			<property name="SP"           value="2" />
 			<property name="Backup 1"     value="Zombie" />
@@ -6703,7 +6703,7 @@
 			<property name="Ability"      value="" />
 			<property name="Ability Type" value="" />
 			<property name="Ability Name" value="" />
-			<property name="Rules"        value="Select a character. Look through the top of any deck until you reveal a character card. If you do, selected character becomes that card. (It loses his back-ups.) Put the cards revealed this way on the bottom of that deck in any order." />
+			<property name="Rules"        value="Select a character. Look through the top of any deck until you reveal a character card. If you do, selected character becomes that card. (It loses its back-ups.) Put the cards revealed this way on the bottom of that deck in any order." />
 			<property name="BP"           value="" />
 			<property name="SP"           value="-4" />
 			<property name="Backup 1"     value="" />

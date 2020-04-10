@@ -41,10 +41,13 @@ def debugScenario():
    gotoMain()
    rnd(100, 10000)  # Delay the next action until all animation is done
    tableCards = [
-       '235b8800-ad31-4224-93c2-4713ae4c45ec' # Shiki
-      ,'07fb9dba-ef83-4a69-a700-11cff3e313f3' # Shizumaru
-      ,'ce62aaad-d114-4ce6-842f-7f6ed39f1afa' # Sougetsu
-      # ,'4bd333d6-f063-424e-8cf9-3512f96f23b4' # Batsu
+       '75e57026-e4fe-4470-88b2-22268ddd6b61'
+      ,'e0c2ac67-1925-4e63-b9ae-9dcbc7ff229f'
+      ,'2f8ecb64-d513-4e67-b537-5acef9de6c68'
+       # 'd14694b4-484c-4b45-962e-8cbb636d8a9a' # 200 BP
+      ,'c7d128ea-a3b9-4b04-b8b2-a61153b5b2e6' # 400 BP
+      # ,'24e99a13-cb42-4e16-9900-78dde12e1a4c' # 600 BP
+      # ,'e6e46f83-d089-4762-8d8e-2a3252cfc9db' # 1000 BP
    ]
    for i, id in enumerate(tableCards):
       debug("Creating card {} at slot {}".format(id, i))
@@ -57,10 +60,13 @@ def debugScenario():
       rnd(1, 100)  # Delay the next action until all animation is done
       
    handCards = [
-       # '8bb477f9-5004-4018-8d5e-73c6a23e8912' # Char 300 BP
-      # ,'248517e9-d7a0-450d-9281-df91d20f68ab' # Char 500 BP
-      # ,'eb648ee7-aa4e-41ce-a7fc-04af31349ca9' # Char 700 BP
-      # ,'4d7520b9-9ced-43e0-a2e7-974d76d8eb82' # Char 1000 BP
+       '55b0c9ff-4b3a-4b08-adc1-f1b5e03adef9'
+      ,'3d044b8c-bac6-4b9a-bcf5-4868538de313'
+      ,'e2597326-5639-435f-ae33-3303b181527c'
+      # ,'8bb477f9-5004-4018-8d5e-73c6a23e8912' # Char 300 BP
+      ,'e910f462-bea9-4262-b168-c7c512eb6511' # Char 500 BP
+      ,'0fdadc92-0864-46cc-a3ff-c20e2af8249c' # Char 700 BP
+      # ,'af43872e-e47d-4fe0-9b55-aedd8a0d0fc7' # Char 800 BP
       # ,'5e2211a0-e52e-4b7b-b03d-f6ecb3660bb0' # Action 0 SP
       # ,'83c33aa8-5981-4352-8107-cbb7e05547ec' # Action -1 SP
       # ,'b95b2104-d184-43cc-bb04-b3eb096c6fca' # Action -2 SP
@@ -124,10 +130,11 @@ def debugScenario():
    
 def debugOpp():
    tableCards = [
-      'ce62aaad-d114-4ce6-842f-7f6ed39f1afa' # Sougetsu
+       'd5e70014-8a56-4d9b-8b06-0192bac3f0b8'
+      ,'9d92f2f0-7395-4f1e-bc32-99ec9c82c686'
        # 'd14694b4-484c-4b45-962e-8cbb636d8a9a' # 200 BP
-      # ,'ff8a97e3-9a78-4c5f-86fa-23480fa57da5' # 400 BP
-      # '24e99a13-cb42-4e16-9900-78dde12e1a4c' # 600 BP
+      # ,'c7d128ea-a3b9-4b04-b8b2-a61153b5b2e6' # 400 BP
+      # ,'24e99a13-cb42-4e16-9900-78dde12e1a4c' # 600 BP
       # ,'e6e46f83-d089-4762-8d8e-2a3252cfc9db' # 1000 BP
    ]
    for i, id in enumerate(tableCards):
@@ -138,9 +145,9 @@ def debugOpp():
       
    handCards = [
        # '8bb477f9-5004-4018-8d5e-73c6a23e8912' # Char 300 BP
-      # ,'248517e9-d7a0-450d-9281-df91d20f68ab' # Char 500 BP
-      # '8cb08852-491e-4a34-9589-79bf3959ba63' # Char 700 BP
-      # ,'4d7520b9-9ced-43e0-a2e7-974d76d8eb82' # Char 1000 BP
+      # ,'e910f462-bea9-4262-b168-c7c512eb6511' # Char 500 BP
+      # ,'0fdadc92-0864-46cc-a3ff-c20e2af8249c' # Char 700 BP
+      # ,'af43872e-e47d-4fe0-9b55-aedd8a0d0fc7' # Char 800 BP
       # ,'5e2211a0-e52e-4b7b-b03d-f6ecb3660bb0' # Action 0 SP
       # ,'83c33aa8-5981-4352-8107-cbb7e05547ec' # Action -1 SP
       # ,'b95b2104-d184-43cc-bb04-b3eb096c6fca' # Action -2 SP

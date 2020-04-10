@@ -66,7 +66,7 @@ CleanupPhase  = 7
 AttackColor         = "#ff0000"
 AttackNoFreezeColor = "#ff8000"
 UnitedAttackColor   = "#ff42de"
-BlockColor          = "#ffff00"
+BlockColor          = "#119281"
 ActivatedColor      = "#0000ff"
 InfoColor           = "#00ff00"
 
@@ -178,7 +178,8 @@ Hooks = Struct(**{
    'PreventPierce': 'preventpierce',
    'CallOnRemove' : 'callonremove',
    'PlayAsFresh'  : 'playasfresh',
-   'CanBeBlocked' : 'canbeblocked'
+   'CanBlock'     : 'canblock',
+   'BeforeDamage' : 'beforedamage'
 })
 
 # Game Events
@@ -214,12 +215,13 @@ GameEventsFromVars = {
 GameEventsDisabledUA = [
    GameEvents.EndPhase,
    GameEvents.CleanupPhase,
-   GameEvents.PlayerCombatDamaged
+   GameEvents.PlayerCombatDamaged,
+   Hooks.BeforeDamage
 ]
 
 # Events which callback can be executed on the player that does not own the card
 GameEventsCallOnHost = [
-   Hooks.CanBeBlocked
+   Hooks.CanBlock
 ]
 
 # Messages
@@ -253,7 +255,7 @@ MSG_HINT_WIN                = "{} wins the game!"
 MSG_HOOKS_ERR = {
    Hooks.BeforeAttack: "{} cannot attack due to {}'s {} ability{}.",
    Hooks.BeforeBlock : "{} cannot counter-attack due to {}'s {} ability{}.",
-   Hooks.CanBeBlocked: "{} cannot be blocked due to {}'s {} ability{}.",
+   Hooks.CanBlock: "{} cannot be blocked due to {}'s {} ability{}.",
    Hooks.BeforePlayAC: "{} cannot play action cards due to {}'s {} ability{}.",
    Hooks.BeforePlayRE: "{} cannot play reaction cards due to {}'s {} ability{}."
 }
@@ -267,7 +269,7 @@ MSG_AB = {
       "{} can counter-attack again."
    ],
    'unblockable': [
-      MSG_HOOKS_ERR[Hooks.CanBeBlocked],
+      MSG_HOOKS_ERR[Hooks.CanBlock],
       "{} can be blocked as normal."
    ],
    'cantplayac': [
@@ -308,6 +310,10 @@ MSG_RULES = {
    'piercing': (
       'Whenever a character counter-attacks a United Attack, piercing damage is prevented.',  # Disabled
       'United-Attacks deals piercing damage as normal.'  # Enabled
+   ),
+   'backup_fresh': (
+      'Characters cannot receive back-up the turn they enter the ring.',
+      'Characters can receive back-up the turn they enter the ring.'
    ),
    'play_char_bp_limit': (
       'Character cards of any BP can be played as normal.',

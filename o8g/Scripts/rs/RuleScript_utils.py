@@ -320,14 +320,15 @@ class RulesUtils():
             debug("      Nope")
 
       # Look for targeted cards
-      cards_f2 = [c for c in cards_f1
-         if c.targetedBy == me]
-      if len(cards_f2) == 0:
-         if len(cards_f1) == 0 and not reveal:
-            return False
-      else:
-         cards_f1 = cards_f2
-         debug("-- %s cards targeted" % len(cards_f1))
+      if typeSuffix != RS_SUFFIX_PLURAL:
+         cards_f2 = [c for c in cards_f1
+            if c.targetedBy == me]
+         if len(cards_f2) == 0:
+            if len(cards_f1) == 0 and not reveal:
+               return False
+         else:
+            cards_f1 = cards_f2
+            debug("-- %s cards targeted" % len(cards_f1))
 
       # Apply filters
       cards_f1 = RulesFilters.applyFiltersTo(cards_f1, filters)

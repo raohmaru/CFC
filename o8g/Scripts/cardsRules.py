@@ -230,6 +230,7 @@ event:
       attacks:[suffix]
       blocks:[suffix]
       blocked:[suffix]
+      beforeDamage:[suffix]
    Prefixes:
       my (default)
       opp
@@ -242,7 +243,7 @@ event:
       
 hook:
    Keywords:
-      canBeBlocked:[suffix]
+      canBlock:[suffix]
    Prefixes:
       @see auto:event:prefixes
    Suffixes:
@@ -393,7 +394,7 @@ auto = ~myEndPhase~ moveTo(ctrlHand) target(characters[bp>=8])
 
 # Cody (Alpha)'s BAD STONE
 RulesDict['525d8365-c90e-491f-9811-1f23efbafccb'] = """
-auto = oppCanBeBlocked:any? [[if attacker.bp > 3]]
+auto = oppCanBlock:any? [[if attacker.bp > 3]]
 """
 
 # Damn D's WHISTLE
@@ -404,7 +405,7 @@ action = {F}: reveal() & moveTo(hand) & shuffle()
 
 # Guy's HAYA-GAKE
 RulesDict['2c1d8c60-0858-4524-adc1-e7596a4d08e0'] = """
-auto = oppCanBeBlocked:this? [[if me.ring > 1]] # me.ring is opp.ring
+auto = oppCanBlock:this? [[if me.ring > 1]] # me.ring is opp.ring
 """
 
 # Haggar's SPINNING LARIAT
@@ -1025,7 +1026,7 @@ action = bp(=this.bp) target(characters[bp:lowest])
 
 # Hokutomaru's FEAR ME
 RulesDict['75e57026-e4fe-4470-88b2-22268ddd6b61'] = """
-auto = oppCanBeBlocked:this? [[if blocker.bp <= this.bp]]
+auto = oppCanBlock:this? [[if blocker.bp <= this.bp]]
 """
 
 # Hon Fu's KUURON NO YOMI
@@ -1468,7 +1469,9 @@ abilities = cantblock, cantattack
 """
 
 # Athena's FIRE SWORD
-# RulesDict['2f8ecb64-d513-4e67-b537-5acef9de6c68'] = ""
+RulesDict['2f8ecb64-d513-4e67-b537-5acef9de6c68'] = """
+auto = ~beforeDamage:this~ damage(6) to(opp)
+"""
 
 # Abduction
 RulesDict['f7a00823-d37b-48eb-b2f6-c530623a2a9c'] = """
@@ -1476,7 +1479,10 @@ action = {S(<**>characters@myRing)}: each(card in sacrificed -> sp(+5))
 """
 
 # Activate!
-# RulesDict['e2597326-5639-435f-ae33-3303b181527c'] = ""
+RulesDict['e2597326-5639-435f-ae33-3303b181527c'] = """
+target = characters@myRing
+action = +unlimitedbackup & enableRule(backup_fresh) ueot
+"""
 
 # Awakening
 # RulesDict['80692723-3895-435f-bf8f-e94507704af5'] = ""

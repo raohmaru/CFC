@@ -70,18 +70,20 @@ def triggerGameEvent(event, *args):
    if isinstance(event, list):
       event, obj_id = event
    ge = getGlobalVar('GameEvents')
-   res = (True, None)
+   res = (None, None)
    if event in ge:
       for listener in ge[event]:
          params = list(args) + listener['args']
          if not obj_id or listener['id'] == obj_id or listener['appliesto'] == RS_SUFFIX_ANY:
             debug("-- Found listener {}".format(listener))
+            res = (True, None)
             # Callback could be the ID of a card...
             if isinstance(listener['callback'], (int, long)):
                card = Card(listener['callback'])
                # Don't trigger auto ability for chars in a UA
                if event in GameEventsDisabledUA and inUAttack(card):
                   notify("{}'s ability cannot be activated because it joined an United Attack".format(card))
+                  res = (False, listener['callback'])
                   continue
                # Call callback
                if card.controller == me or event in GameEventsCallOnHost:
@@ -101,21 +103,22 @@ def triggerGameEvent(event, *args):
                except:
                   debug("Callback function {} is not defined".format(listener['callback']))
                   continue
-               if func(*params):
-                  res = (False, listener['source'])
+               res = (func(*params), listener['source'] if listener['source'] else listener['id'])
    return res
 
 
 def triggerHook(event, *args):
    res, source = triggerGameEvent(event, *args)
-   if not res:
-      ability = None
+   debug(">>> triggerHook({}, {}) => {}, {}".format(event, args, res, source))
+   if not res and source:
+      ability = event
       if isinstance(event, list):
          ability = event[0]
       if ability in MSG_HOOKS_ERR:
          notifyAbility(args[0], source, MSG_HOOKS_ERR[ability], isWarning=True)   
    return res
    
+
 def remoteGameEvent(cardID, eventName, *args):
    debug(">>> remoteGameEvent({}, {}, {})".format(cardID, eventName, args))
    card = Card(cardID)
