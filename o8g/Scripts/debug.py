@@ -41,10 +41,8 @@ def debugScenario():
    gotoMain()
    rnd(100, 10000)  # Delay the next action until all animation is done
    tableCards = [
-      '2f8ecb64-d513-4e67-b537-5acef9de6c68'
-      ,'8bb3dd10-bb0f-4380-9772-c97ba0428378'
-       # 'd14694b4-484c-4b45-962e-8cbb636d8a9a' # 200 BP
-      # ,'c7d128ea-a3b9-4b04-b8b2-a61153b5b2e6' # 400 BP
+       'd14694b4-484c-4b45-962e-8cbb636d8a9a' # 200 BP
+      ,'c7d128ea-a3b9-4b04-b8b2-a61153b5b2e6' # 400 BP
       # ,'24e99a13-cb42-4e16-9900-78dde12e1a4c' # 600 BP
       # ,'e6e46f83-d089-4762-8d8e-2a3252cfc9db' # 1000 BP
    ]
@@ -59,15 +57,14 @@ def debugScenario():
       rnd(1, 100)  # Delay the next action until all animation is done
       
    handCards = [
-       '80692723-3895-435f-bf8f-e94507704af5' # Awakening
-      ,'ab631979-20d8-4789-85be-149b414d1ef1' # Crossover
+      '3c92b6f8-d68f-4d0f-8a29-f5172b09a864' # Fate duel
       # ,'8bb477f9-5004-4018-8d5e-73c6a23e8912' # Char 300 BP
       # ,'e910f462-bea9-4262-b168-c7c512eb6511' # Char 500 BP
       # ,'0fdadc92-0864-46cc-a3ff-c20e2af8249c' # Char 700 BP
       # ,'af43872e-e47d-4fe0-9b55-aedd8a0d0fc7' # Char 800 BP
       # ,'5e2211a0-e52e-4b7b-b03d-f6ecb3660bb0' # Action 0 SP
       # ,'83c33aa8-5981-4352-8107-cbb7e05547ec' # Action -1 SP
-      # ,'b95b2104-d184-43cc-bb04-b3eb096c6fca' # Action -2 SP
+      # ,'80692723-3895-435f-bf8f-e94507704af5' # Action -3 SP
       # ,'ac01bbbe-583e-46ae-b26c-3c25eb8f0779' # Action -6 SP
       # ,'556b3359-e642-419a-ab5c-67f70de1bb4f' # Reaction 0 SP
       # ,'46deecf5-7f7b-42b5-b6fa-e3162dce2013' # Reaction -1 SP
@@ -77,17 +74,16 @@ def debugScenario():
       debug("Adding card {} to hand".format(id))
       card = table.create(id, 0, 0, quantity=1, persist=True)
       card.moveTo(me.hand)
-      # rnd(1, 100)  # Delay the next action until all animation is done
    
    deckCards = [
-       '55ab2891-c99e-4647-8a9d-b01fbce3009f' # Char 300 BP
-      ,'55ab2891-c99e-4647-8a9d-b01fbce3009f' # Char 300 BP
+       # '55ab2891-c99e-4647-8a9d-b01fbce3009f' # Char 300 BP
+      # ,'55ab2891-c99e-4647-8a9d-b01fbce3009f' # Char 300 BP
       # ,'248517e9-d7a0-450d-9281-df91d20f68ab' # Char 500 BP
       # ,'eb648ee7-aa4e-41ce-a7fc-04af31349ca9' # Char 700 BP
       # ,'4d7520b9-9ced-43e0-a2e7-974d76d8eb82' # Char 1000 BP
       # ,'5e2211a0-e52e-4b7b-b03d-f6ecb3660bb0' # Action 0 SP
       # ,'83c33aa8-5981-4352-8107-cbb7e05547ec' # Action -1 SP
-      # ,'b95b2104-d184-43cc-bb04-b3eb096c6fca' # Action -2 SP
+      # ,'80692723-3895-435f-bf8f-e94507704af5' # Action -3 SP
       # ,'ac01bbbe-583e-46ae-b26c-3c25eb8f0779' # Action -6 SP
       # ,'556b3359-e642-419a-ab5c-67f70de1bb4f' # Reaction 0 SP
       # ,'46deecf5-7f7b-42b5-b6fa-e3162dce2013' # Reaction -1 SP
@@ -97,27 +93,25 @@ def debugScenario():
       debug("Adding card {} to Deck".format(id))
       card = table.create(id, 0, 0, quantity=1, persist=True)
       card.moveTo(me.deck)
-      # rnd(1, 100)  # Delay the next action until all animation is done
    
    discardCards = [
-       '365cddf9-f741-4a3e-bf07-de4b3eecc6d2' # Char
-      ,'d14694b4-484c-4b45-962e-8cbb636d8a9a' # Char
-      # ,'8ce9a56f-8c0c-49e7-879c-12179c63f288' # Char
-      # ,'61ef9ecd-980b-46b8-83fc-12399ce044f1' # Char
-      # ,'0a8f39ff-6b21-4805-bafb-27c3f38d1986' # Char
-      # ,'525d8365-c90e-491f-9811-1f23efbafccb' # Char
-      # ,'bdeceb7c-9d94-4c98-824b-90d5317d8cda' # Char
-      # 'e94aaa00-2449-46a4-9ff4-273e6dac272a' # Char
-      # ,'85d84ab1-dede-4fc7-b80d-00778f73c905' # Action
-      # ,'ac01bbbe-583e-46ae-b26c-3c25eb8f0779' # Action
-      # ,'556b3359-e642-419a-ab5c-67f70de1bb4f' # Reaction
-      # ,'91e441cc-0f1f-4b01-a2b0-94678d6f0b56' # Reaction
+       # '55ab2891-c99e-4647-8a9d-b01fbce3009f' # Char 300 BP
+      # ,'55ab2891-c99e-4647-8a9d-b01fbce3009f' # Char 300 BP
+      # ,'248517e9-d7a0-450d-9281-df91d20f68ab' # Char 500 BP
+      # ,'eb648ee7-aa4e-41ce-a7fc-04af31349ca9' # Char 700 BP
+      # ,'4d7520b9-9ced-43e0-a2e7-974d76d8eb82' # Char 1000 BP
+      # ,'5e2211a0-e52e-4b7b-b03d-f6ecb3660bb0' # Action 0 SP
+      # ,'83c33aa8-5981-4352-8107-cbb7e05547ec' # Action -1 SP
+      # ,'80692723-3895-435f-bf8f-e94507704af5' # Action -3 SP
+      # ,'ac01bbbe-583e-46ae-b26c-3c25eb8f0779' # Action -6 SP
+      # ,'556b3359-e642-419a-ab5c-67f70de1bb4f' # Reaction 0 SP
+      # ,'46deecf5-7f7b-42b5-b6fa-e3162dce2013' # Reaction -1 SP
+      # ,'91e441cc-0f1f-4b01-a2b0-94678d6f0b56' # Reaction -4 SP
    ]
    for id in discardCards:
       debug("Adding card {} to Discard pile".format(id))
       card = table.create(id, 0, 0, quantity=1, persist=True)
       card.moveTo(me.piles['Discard Pile'])
-      # rnd(1, 100)  # Delay the next action until all animation is done
       
    if len(players) > 1:
       update()
@@ -128,10 +122,10 @@ def debugScenario():
    
 def debugOpp():
    tableCards = [
-       # 'd14694b4-484c-4b45-962e-8cbb636d8a9a' # 200 BP
+       'd14694b4-484c-4b45-962e-8cbb636d8a9a' # 200 BP
       # ,'c7d128ea-a3b9-4b04-b8b2-a61153b5b2e6' # 400 BP
       # ,'24e99a13-cb42-4e16-9900-78dde12e1a4c' # 600 BP
-      # ,'e6e46f83-d089-4762-8d8e-2a3252cfc9db' # 1000 BP
+      ,'e6e46f83-d089-4762-8d8e-2a3252cfc9db' # 1000 BP
    ]
    for i, id in enumerate(tableCards):
       card = table.create(id, 0, 0, quantity=1, persist=True)
@@ -146,7 +140,7 @@ def debugOpp():
       # ,'af43872e-e47d-4fe0-9b55-aedd8a0d0fc7' # Char 800 BP
       # ,'5e2211a0-e52e-4b7b-b03d-f6ecb3660bb0' # Action 0 SP
       # ,'83c33aa8-5981-4352-8107-cbb7e05547ec' # Action -1 SP
-      # ,'b95b2104-d184-43cc-bb04-b3eb096c6fca' # Action -2 SP
+      # ,'80692723-3895-435f-bf8f-e94507704af5' # Action -3 SP
       # ,'ac01bbbe-583e-46ae-b26c-3c25eb8f0779' # Action -6 SP
       # ,'556b3359-e642-419a-ab5c-67f70de1bb4f' # Reaction 0 SP
       # ,'46deecf5-7f7b-42b5-b6fa-e3162dce2013' # Reaction -1 SP
@@ -164,7 +158,7 @@ def debugOpp():
       # ,'4d7520b9-9ced-43e0-a2e7-974d76d8eb82' # Char 1000 BP
       # ,'5e2211a0-e52e-4b7b-b03d-f6ecb3660bb0' # Action 0 SP
       # ,'83c33aa8-5981-4352-8107-cbb7e05547ec' # Action -1 SP
-      # ,'b95b2104-d184-43cc-bb04-b3eb096c6fca' # Action -2 SP
+      # ,'80692723-3895-435f-bf8f-e94507704af5' # Action -3 SP
       # ,'ac01bbbe-583e-46ae-b26c-3c25eb8f0779' # Action -6 SP
       # ,'556b3359-e642-419a-ab5c-67f70de1bb4f' # Reaction 0 SP
       # ,'46deecf5-7f7b-42b5-b6fa-e3162dce2013' # Reaction -1 SP
@@ -173,6 +167,25 @@ def debugOpp():
    for id in deckCards:
       card = table.create(id, 0, 0, quantity=1, persist=True)
       card.moveTo(me.deck)
+   
+   discardCards = [
+       # '55ab2891-c99e-4647-8a9d-b01fbce3009f' # Char 300 BP
+      # '55ab2891-c99e-4647-8a9d-b01fbce3009f' # Char 300 BP
+      # ,'248517e9-d7a0-450d-9281-df91d20f68ab' # Char 500 BP
+      # ,'eb648ee7-aa4e-41ce-a7fc-04af31349ca9' # Char 700 BP
+      # ,'4d7520b9-9ced-43e0-a2e7-974d76d8eb82' # Char 1000 BP
+      # ,'5e2211a0-e52e-4b7b-b03d-f6ecb3660bb0' # Action 0 SP
+      # ,'83c33aa8-5981-4352-8107-cbb7e05547ec' # Action -1 SP
+      # ,'80692723-3895-435f-bf8f-e94507704af5' # Action -3 SP
+      # ,'ac01bbbe-583e-46ae-b26c-3c25eb8f0779' # Action -6 SP
+      # ,'556b3359-e642-419a-ab5c-67f70de1bb4f' # Reaction 0 SP
+      # ,'46deecf5-7f7b-42b5-b6fa-e3162dce2013' # Reaction -1 SP
+      # ,'91e441cc-0f1f-4b01-a2b0-94678d6f0b56' # Reaction -4 SP
+   ]
+   for id in discardCards:
+      debug("Adding card {} to Discard pile".format(id))
+      card = table.create(id, 0, 0, quantity=1, persist=True)
+      card.moveTo(me.piles['Discard Pile'])
       
 
 def debugBackups():
@@ -185,3 +198,7 @@ def debugBackups():
 def debugTarget(str):
    cardsTokens = RulesLexer.parseTarget(str.lower())
    print("{}".format(RulesUtils.getTargets(cardsTokens)))
+
+
+def cardsNamesStr(cards):
+   return ("{}, " * len(cards)).format(*cards)[:-2]

@@ -40,6 +40,7 @@ RS_RGX_TARGET_FPARAM  = re.compile(r'(\w+)\s*([=><:]+)\s*(\w+)')
 RS_RGX_TARGET_ZONE    = re.compile(r'@\s*([\w*]+).*$')
 RS_RGX_TARGET_PICK    = re.compile(r'<\s*((?:\+|\-)?\s*[0-9]+)\s*>')
 RS_RGX_TARGET_QTY     = re.compile(r'^<\s*((?:\*\*)|(?:r\d*)|(?:,?[0-9]+){1,2})\s*>')
+RS_RGX_KEY_SELECTOR   = re.compile(r'::(\w+)\((.+)\)?$')
 
 RS_RGX_KEY_ACTION     = re.compile(r'^action\s*=\s*')
 RS_RGX_AC_COST        = re.compile(r'(\{.+\}\s*)\s*:\s*')

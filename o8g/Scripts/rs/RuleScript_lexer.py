@@ -22,17 +22,20 @@
 # http://www.jayconrod.com/posts/37/a-simple-interpreter-from-scratch-in-python-part-1
    
 """      
-target: {
-   'filters': [
-      ['-', 'bp', ('>=', '800')]
-   ],
-   'types': ['characters'],
-   'typeop': ',',
-   'zone': ['opp', 'ring'],
-   'pick': -1,
-   'qty': ',4',
-   'opt': False
-},
+target: [
+   {
+      'filters': [
+         ['-', 'bp', ('>=', '800')]
+      ],
+      'types': ['characters'],
+      'typeop': ',',
+      'zone': ['opp', 'ring'],
+      'pick': -1,
+      'qty': ',4',
+      'opt': False,
+      'selector': (type, expr)
+   }
+],
 action: {
    cost: [
       [
@@ -115,7 +118,11 @@ class RulesLexer():
             if match:
                debug("Target key found!")
                flag = RS_OP_OPT if RS_OP_OPT in match.group() else None
-               rulesDict[RS_KEY_TARGET] = RulesLexer.parseTarget( line[len(match.group()):], flag )
+               targets = line[len(match.group()):].split(RS_OP_SEP)
+               targetsList = []
+               for target in targets:
+                  targetsList.append(RulesLexer.parseTarget(target, flag))
+               rulesDict[RS_KEY_TARGET] = targetsList
          # else:
             # debug("Target already defined. Line skipped")
 
@@ -195,6 +202,13 @@ class RulesLexer():
       if pick_match:
          pick = int(pick_match.group(1))
          tgtStr = tgtStr.replace(pick_match.group(0), '', 1)
+      
+      # Get the selector
+      sel_match = RS_RGX_KEY_SELECTOR.search(tgtStr)
+      selector = None
+      if sel_match:
+         selector = sel_match.groups()
+         tgtStr = tgtStr.replace(sel_match.group(0), '')
 
       # Get the types
       types = RS_RGX_TARGET_TYPE.split(tgtStr)[:1]
@@ -249,13 +263,14 @@ class RulesLexer():
       debug("-- zone: %s" % zone)
       
       return {
-         'qty'    : qty,
-         'pick'   : pick,
-         'types'  : types,
-         'typeop' : typeOp,
-         'filters': filters_arr,
-         'zone'   : [zone_prefix, zone],
-         'opt'    : True if flag == RS_OP_OPT else False
+         'qty'     : qty,
+         'pick'    : pick,
+         'types'   : types,
+         'typeop'  : typeOp,
+         'filters' : filters_arr,
+         'zone'    : [zone_prefix, zone],
+         'opt'     : True if flag == RS_OP_OPT else False,
+         'selector': selector
       }
 
 

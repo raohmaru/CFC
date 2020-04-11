@@ -28,28 +28,29 @@ pp = pprint.PrettyPrinter(indent=4)
    
 # Rules to test
 targets = [
-   "target = character",
-   "target = character,reactions",
-   "target = characters[attack]",
-   "target = character@hand",
-   "target = @oppRing",
-   "target = Captain[attack] @ oppRing",
-   "target = robot[-block]@myhand",
-   "target = character,action[bp>=800,frozen]@oppRing",
-   "target = ^character[fresh&powerless]",
-   "target = ^character[fresh & -powerless]",
-   "target = [fresh]",
-   "target = character@invalidZone",
-   "target = *<2>@oppDeck",
-   "target = <r>@hand",
-   "target = <r2>action@hand[bp>300]",
-   "target = <1>action@hand",
-   "target = <1,2>action@hand",
-   "target? = <,4>*<-2>@myDeck",
-   "target? = <1?>*<2>@deck",
-   "target = <**>characters@myRing",
-   'target = "Juni"&"Juli"<1>@myDeck',
+   # "target = character",
+   # "target = character,reactions",
+   # "target = characters[attack]",
+   # "target = character@hand",
+   # "target = @oppRing",
+   # "target = Captain[attack] @ oppRing",
+   # "target = robot[-block]@myhand",
+   # "target = character,action[bp>=800,frozen]@oppRing",
+   # "target = ^character[fresh&powerless]",
+   # "target = ^character[fresh & -powerless]",
+   # "target = [fresh]",
+   # "target = character@invalidZone",
+   # "target = *<2>@oppDeck",
+   # "target = <r>@hand",
+   # "target = <r2>action@hand[bp>300]",
+   # "target = <1>action@hand",
+   # "target = <1,2>action@hand",
+   # "target? = <,4>*<-2>@myDeck",
+   # "target? = <1?>*<2>@deck",
+   # "target = <**>characters@myRing",
+   # 'target = "Juni"&"Juli"<1>@myDeck',
    "target = characters[bp:lowest]",
+   "target = character@myRing; character@oppRing",
 ]
 actions = [
    # "action = destroy()",
@@ -71,11 +72,11 @@ actions = [
    # "action = {F}:  to(character) ueot",
    # "action = {D(2)}: +cantblock to(character@oppRing) ueot",
    # "action = [[may Destroy all humans?]] destroy()",
-   "action = [[if me.hand == 0]] destroy() uynt",
-   "action = [[if true]] discard(all) target(me) [[elif false]] damage(5) target(opp)",
-   "action = [[if true]] discard(all) [[else]] damage(5) target(opp)",
-   "action = [[if true]] discard(all) [[invalid]] damage(5) target(opp)",
-   "action = [[invalid true]] discard(all) [[else]] damage(5)",
+   # "action = [[if me.hand == 0]] destroy() uynt",
+   # "action = [[if true]] discard(all) target(me) [[elif false]] damage(5) target(opp)",
+   # "action = [[if true]] discard(all) [[else]] damage(5) target(opp)",
+   # "action = [[if true]] discard(all) [[invalid]] damage(5) target(opp)",
+   # "action = [[invalid true]] discard(all) [[else]] damage(5)",
    # "action = moveTo(ctrlHand, -1, true) target?(characters[bp>=800]) uynt",
    # "action = {F}: moveTo(ctrlDeck) target(characters[-backup]) & shuffle(myDeck) & shuffle(oppDeck)",
    # "action = {F}: destroy() target(^character@myRing) & damage(5, character)",
@@ -84,8 +85,9 @@ actions = [
    # "action = {F}: reveal(hand) & myHand.each(bp <= 3 { bp(+2) }) target(this)"
    # "action = swapChars() target(<2>character)\naction = moveToSlot() target(character)",
    # "action = rndDiscard()",
-   # "action = reveal(hand) & each(action in me.hand => bp(+2)) target(this) & discard(actions)"
-   # "action = discard(<,1>action@oppHand)",
+   "action = reveal(hand) & each(action in me.hand => bp(+2)) target(this) & discard(actions)"
+   "action = discard(<,1>action@oppHand)",
+   "action = destroy() target(characters::not(prevTgt))",
 ]
 abilities = [
    "abilities = unblockable",
@@ -151,9 +153,9 @@ def test(arr, title):
 
 # rules = RulesDict['aa867ea1-89f8-4154-8e20-2263edd00002']
 # test(targets, 'targets')
-# test(actions, 'actions')
+test(actions, 'actions')
 # test(abilities, 'abilities')
-test(autos, 'autos')
+# test(autos, 'autos')
 # test(requisite, 'requisite')
 # test(vars, 'vars')
 # test(labels, 'labels')

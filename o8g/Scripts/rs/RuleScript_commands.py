@@ -122,15 +122,18 @@ def getLocals(**kwargs):
       else:
          locals[key] = stringToObject(value)
         
+   rc = commander
    if kwargs:
       localVars = dict(
          this = kwargs['source'] if 'source' in kwargs else None,
          tgt = kwargs['targets'][0] if 'targets' in kwargs and len(kwargs['targets']) > 0 else None
       )
-      rc = kwargs['rc'] if 'rc' in kwargs else commander
-      if rc.prevTargets != None and len(rc.prevTargets) > 0:
-         localVars['prevtgt'] = rc.prevTargets[0]
       locals.update(localVars)
+      if 'rc' in kwargs:
+         rc = kwargs['rc']
+      
+   if rc.prevTargets != None and len(rc.prevTargets) > 0:
+      locals['prevtgt'] = rc.prevTargets[0]
       
    # Add some default variables
    if not 'discarded' in locals:
@@ -241,7 +244,7 @@ def cmd_discard(rc, targets, source, restr, whichCards=''):
       cardsTokens['zone'] = ['', RS_KW_ZONE_HAND]
       if player != me:
          cardsTokens['zone'][0] = RS_KW_TARGET_OPP
-      reveal = len(targets) == 1 and player != me
+      reveal = 'all' if len(targets) == 1 and player != me else False
       cards = RulesUtils.getTargets(cardsTokens, reveal=reveal)
       if cards:
          addActionTempVars('discarded', cards)
@@ -426,7 +429,7 @@ def cmd_each(rc, targets, source, restr, args):
    
    if not ' in ' in cond:
       tokens = RulesLexer.parseTarget(cond)
-      res = RulesUtils.getTargets(tokens, source=source)
+      res = RulesUtils.getTargets(tokens, source=source, reveal=False)
    else:
       res = evalExpression(cond, True, getLocals(rc=rc, targets=targets, source=source))
    

@@ -20,11 +20,12 @@
 Case Insensitive
 
 ---------------------------------------------------
-target = <qty> type <pick> [filters] @ zone
+target = <qty> type <pick> [filters] @ zone ::selector([args]); ...
 target? = ...
 
-Defines a target used for all effects.
+Defines target(s) used for all effects.
 Only one target key is allowed.
+Several targets can be joined with ';'.
 ? -> Target is optional and will always execute actions
 
 qty:
@@ -40,6 +41,7 @@ qty:
 type:
    Operators:
       , (or)
+      & (and)
    Values:
       Any Type: Character, Action, Reaction
       Any Subtype: Warrior, Pilot, Captain...
@@ -105,6 +107,10 @@ zone: (optional)
       ctrl
       same (only applies to ring)
       any
+      
+selector: (optional)
+   Keywords:
+      not(expr)
 
 ---------------------------------------------------
 action = {cost}: [[cond]] effect [& effect] to(target) restr; ...
@@ -1476,7 +1482,7 @@ auto = ~beforeDamage:this~ damage(6) to(opp)
 
 # Abduction
 RulesDict['f7a00823-d37b-48eb-b2f6-c530623a2a9c'] = """
-action = {S(<**>characters@myRing)}: each(card in sacrificed -> sp(+5))
+action = {S(<**>character@myRing)}: each(card in sacrificed -> sp(+5))
 """
 
 # Activate!
@@ -1530,7 +1536,9 @@ action = moveRestTo(ctrlDeck, -1) & moveTo(ctrlDeck, -1, true); copyAbility(prev
 """
 
 # Domination
-# RulesDict['e5fa3d6f-3368-4450-8327-3f7672c78834'] = ""
+RulesDict['e5fa3d6f-3368-4450-8327-3f7672c78834'] = """
+action = {D(action)}: transform(discarded[0]) target(*s@hand)
+"""
 
 # Double
 RulesDict['4124ac7a-b7f5-4784-8246-872621cc9d95'] = """
@@ -1550,7 +1558,10 @@ action = damage(5)
 """
 
 # Emulate
-# RulesDict['053ba349-515d-4293-898b-625f837f62b6'] = ""
+RulesDict['053ba349-515d-4293-898b-625f837f62b6'] = """
+target = !"Emulate"[action]@oppDiscards
+action = activate(tgt)
+"""
 
 # Engokogeki
 RulesDict['1ef4cecb-c096-47e0-995f-a20b6b75325a'] = """
@@ -1571,7 +1582,11 @@ action = copyAbility(prevTgt) to(character@myRing)
 """
 
 # Fate duel
-# RulesDict['3c92b6f8-d68f-4d0f-8a29-f5172b09a864'] = ""
+RulesDict['3c92b6f8-d68f-4d0f-8a29-f5172b09a864'] = """
+requisite = character<1>@myRing && character<1>@oppRing
+target = character@myRing; character@oppRing
+action = destroy() target(characters::not(tgt))
+"""
 
 # Fight!
 RulesDict['b95b2104-d184-43cc-bb04-b3eb096c6fca'] = """
@@ -1596,7 +1611,7 @@ action = damage(3)
 
 # Heritage
 RulesDict['14a057f5-be46-4ec0-abee-a6c573f4711e'] = """
-action = {S(<**>characters@myRing)}: each(card in sacrificed -> draw())
+action = {S(<**>character@myRing)}: each(card in sacrificed -> draw())
 """
 
 # Hey! Hey!
@@ -1828,7 +1843,7 @@ action = hp(+5)
 
 # Cash profits
 RulesDict['0a5179dd-e5a0-499e-90ac-8d62391743b8'] = """
-target = <**>characters@myRing
+target = <**>character@myRing
 action = moveTo(hand) & each(card in moved -> draw())
 """
 
@@ -1865,7 +1880,7 @@ action = trash(10) & each(char in trashed -> sp(+1))
 
 # Ferocity
 RulesDict['55dd552f-0c26-4bc1-819a-92cf32f285ae'] = """
-action = {S(<**>characters@myRing)}: each(card in sacrificed -> damage(3)) to(characters)
+action = {S(<**>character@myRing)}: each(card in sacrificed -> damage(3)) to(characters)
 """
 
 # Galactica phantom

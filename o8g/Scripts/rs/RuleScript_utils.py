@@ -140,14 +140,15 @@ class RulesUtils():
 
 
    @staticmethod
-   def getTargets(target, source=None, msg=None, reveal=False):
+   def getTargets(target, source=None, msg=None, reveal=True):
       debug("Getting targets ({})".format(reveal))
 
-      types   = target['types']
-      zone    = target['zone']
-      filters = target['filters']
-      pick    = target['pick']
-      qty     = RulesUtils.getTargetQty(target['qty'])
+      types    = target['types']
+      zone     = target['zone']
+      filters  = target['filters']
+      pick     = target['pick']
+      qty      = RulesUtils.getTargetQty(target['qty'])
+      selector = target['selector']
 
       # If two or more targets, ask for a single target
       if len(types) > 1 and target['typeop'] == RS_OP_OR:
@@ -205,12 +206,16 @@ class RulesUtils():
             samples = len(targets)
          targets = random.sample(targets, samples)
          debug("-- Randomly selected {} card(s)".format(samples))
+         
+      # Apply a final selector
+      if selector and targets:
+         targets = RulesSelectors.applySelector(selector, targets)
 
       return targets
 
 
    @staticmethod
-   def filterTargets(type, filters, zone, cards, source=None, msg=None, pick=None, qty=None, reveal=False):
+   def filterTargets(type, filters, zone, cards, source=None, msg=None, pick=None, qty=None, reveal=True):
       debug("-- filter targets by type '%s' in zone %s" % (type, zone))
       targets = None
       if type == RS_KW_TARGET_THIS and source:
@@ -261,7 +266,7 @@ class RulesUtils():
 
 
    @staticmethod
-   def filterCards(type, filters, zone, cards, source=None, msg=None, pick=None, qty=None, reveal=False):
+   def filterCards(type, filters, zone, cards, source=None, msg=None, pick=None, qty=None, reveal=True):
       debug("-- applying %s filters to %s cards" % (len(filters), len(cards)))
 
       cards_f1 = cards
@@ -282,11 +287,6 @@ class RulesUtils():
          debug("-- found suffix '%s' in '%s'" % (typeSuffix, type+typeSuffix))
          if typeSuffix == RS_SUFFIX_PLURAL:
             choose = False
-            
-      # Type is a card name?
-      if type[0] == RS_KW_NAME:
-         isCardName = True
-         type = type.strip(RS_KW_NAME)
 
       # Check for type prefixes
       typePrefix, type = RulesLexer.getPrefix(RS_PREFIX_TYPES, type)
@@ -299,6 +299,11 @@ class RulesUtils():
             if card in cards_f1:
                whisper(MSG_ERR_TARGET_OTHER.format(card))
                cards_f1.remove(card)
+            
+      # Type is a card name?
+      if type[0] == RS_KW_NAME:
+         isCardName = True
+         type = type.strip(RS_KW_NAME)
 
       if type != RS_KW_ANY:
          attr = 'Subtype'
@@ -315,7 +320,7 @@ class RulesUtils():
                cardsByType.append(c)
          cards_f1 = cardsByType
          if len(cards_f1) > 0:
-            debug( "      " + ("{}, " * len(cards_f1)).format(*cards_f1)[:-2] )
+            debug( "      " + cardsNamesStr(cards_f1))
          else:
             debug("      Nope")
 
@@ -382,7 +387,7 @@ class RulesUtils():
             title = msg.format(qtyMsg, qtyPlural, article, zone[1], sourceName)
             # If there aren't enough cards to select, just show the cards
             if len(cards_f1) <= minQty:
-               showCardDlg(cards if reveal else cards_f1, title, min=0, max=0)
+               showCardDlg(cards if reveal == 'all' else cards_f1, title, min=0, max=0)
             else:
                while True:
                   cards_sel = showCardDlg(cards if reveal else cards_f1, title, min=minQty, max=maxQty)
@@ -393,7 +398,7 @@ class RulesUtils():
                   warning(title)
             if cards_f1:
                if isVisible(cards_f1[0]):
-                  notify(MSG_PLAYER_SELECTS_NAMED.format(me, ("{}, " * len(cards_f1)).format(*cards_f1)[:-2]))
+                  notify(MSG_PLAYER_SELECTS_NAMED.format(me, cardsNamesStr(cards_f1)))
                else:
                   notify(MSG_PLAYER_SELECTS.format(me, len(cards_f1)))
          if cards_f1 == None and minQty != 0:

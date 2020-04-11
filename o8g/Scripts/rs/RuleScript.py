@@ -88,7 +88,19 @@ class Rules():
                   event = RulesLexer.getPrefix(RS_PREFIX_EVENTS, leftCond.group())
                   if event[1] in GameEventsFromVars:
                      self.addEvent((event[0], GameEventsFromVars[event[1]]))
-   
+                     
+                     
+   def getTargets(self, targetList):
+      targets = []
+      thisCard = Card(self.card_id)
+      for item in targetList:
+         target = RulesUtils.getTargets(item, source=thisCard)
+         if target == False and not item['opt']:
+            debug("Targeting cancelled")
+            return False
+         targets += target
+      return targets
+      
       
    def activate(self):
       # Just in case
@@ -100,16 +112,26 @@ class Rules():
          return True
    
       debug("Executing rules")
-      target = None
+            
+      # Check if there is any requisite
+      if RS_KEY_REQ in self.rules_tokens:
+         requisite = self.rules_tokens[RS_KEY_REQ]
+         debug("Checking requisites: {}".format(requisite))
+         for req in requisite:
+            reqTarget = RulesLexer.parseTarget(req)
+            if not RulesUtils.getTargets(reqTarget, reveal=False):
+               notify(MSG_AB_MISS_REQ.format(Card(self.card_id)))
+               return False
+            debug("-- Requisites are met")
+            
+      targets = None
       if RS_KEY_TARGET in self.rules_tokens:
-         targetList = self.rules_tokens[RS_KEY_TARGET]
-         target = RulesUtils.getTargets(targetList, source=Card(self.card_id))
-         if target == False and not targetList['opt']:
-            debug("Targeting cancelled")
+         targets = self.getTargets(self.rules_tokens[RS_KEY_TARGET])
+         if targets == False:
             return False
       
       if RS_KEY_ACTION in self.rules_tokens:
-         return self.execAction(self.rules_tokens[RS_KEY_ACTION], target)
+         return self.execAction(self.rules_tokens[RS_KEY_ACTION], targets)
       
       return True
 
@@ -139,17 +161,6 @@ class Rules():
       global commander
       if commander is None:
          commander = RulesCommands()
-            
-      # Check if there is any requisite
-      if RS_KEY_REQ in self.rules_tokens:
-         requisite = self.rules_tokens[RS_KEY_REQ]
-         debug("Checking requisites: {}".format(requisite))
-         for req in requisite:
-            target = RulesLexer.parseTarget(req)
-            if not RulesUtils.getTargets(target):
-               notify(MSG_AB_MISS_REQ.format(thisCard))
-               return False
-            debug("-- Requisites are met")
             
       # Add temp variables
       if RS_KEY_VARS in self.rules_tokens:
@@ -209,6 +220,7 @@ class Rules():
          # Additional target
          if effect[2]:
             debug("-- Found additional {}target".format('optional' if effect[2]['opt'] else ''))
+            addActionTempVars('tgt', currTarget)
             newTarget = RulesUtils.getTargets(effect[2], source=thisCard)
             if newTarget == False and not effect[2]['opt']:
                if not isAuto:
@@ -277,16 +289,19 @@ class Rules():
             else:
                notify(MSG_AB_AUTO_TRIGGER.format(eventName, thisCard, thisCard.controller))
             if not MarkersDict['United Attack'] in thisCard.markers:
-               target = [thisCard]
+               targets = [thisCard]
                if RS_KEY_TARGET in self.rules_tokens:
-                  targetList = self.rules_tokens[RS_KEY_TARGET]
-                  target = RulesUtils.getTargets(targetList, thisCard)
-               # First argument may be the card that triggered the effect
+                  newTargets = self.getTargets(self.rules_tokens[RS_KEY_TARGET])
+                  if newTargets:
+                     targets = newTargets
+                  
+               # First argument can be the card that triggered the effect
                if len(args) > 0 and isNumber(args[0]):
                   trigger = Card(args[0])
                   if hasattr(trigger, 'model'):  # It's an actual card
                      addActionTempVars('trigger', trigger)
-               return self.execAction(auto, target, True)
+               
+               return self.execAction(auto, targets, True)
             else:
                notify(MSG_AB_AUTO_UATTACK.format(thisCard, thisCard.Ability))
       
