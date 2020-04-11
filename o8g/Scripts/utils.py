@@ -387,7 +387,7 @@ def getRingSize(player = me):
    return NumSlots - getGlobalVar('Ring', player).count(None)
 
 
-def moveToGroup(group, card, sourceGroup = None, pos = None, reveal = False, sourcePlayer = me):
+def moveToGroup(group, card, sourceGroup = None, pos = None, reveal = None, sourcePlayer = me):
    if not sourceGroup:
       sourceGroup = card.group
    fromText = fromWhereStr(sourceGroup, sourcePlayer)
@@ -402,10 +402,11 @@ def moveToGroup(group, card, sourceGroup = None, pos = None, reveal = False, sou
    if group.name == 'Hand':
       posText = "into"
    name = 'a card'
-   if card.isFaceUp:
-      name = card
-   elif reveal:
-      name = card.Name
+   if reveal != False:
+      if card.isFaceUp:
+         name = card
+      elif reveal:
+         name = card.Name
    targetCtrl = 'its' if me == sourcePlayer else "{}'s".format(me)
    notify("{} moved {} {} {} {} {}.".format(sourcePlayer, name, fromText, posText, targetCtrl, group.name))
    card.moveTo(group, pos)

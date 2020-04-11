@@ -579,7 +579,7 @@ def discardAll(group, x = 0, y = 0):
    for card in group:
       card.moveTo(discards)
    if len(players) > 1: rnd(1, 100) # Wait a bit more, as in multiplayer games, things are slower.
-   notify("{} moves all cards from their {} to his discard Pile.".format(me, group.name))
+   notify("{} moves all cards from its {} to his discard Pile.".format(me, group.name))
 
 
 def toTableFaceDown(card, x = 0, y = 0):
@@ -904,7 +904,7 @@ def prophecy(group = me.Deck, x = 0, y = 0, count = None):
       card = item[0]
       pos = (item[1] - 1) * -1
       if group.controller == me:
-         moveToGroup(group, card, pos = pos)
+         moveToGroup(group, card, pos = pos, reveal = False)
       else:
          remoteCall(group.controller, "moveToGroup", [group, card, group, pos, False, me])
 

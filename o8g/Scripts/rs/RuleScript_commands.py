@@ -132,7 +132,7 @@ def getLocals(**kwargs):
       if 'rc' in kwargs:
          rc = kwargs['rc']
       
-   if rc.prevTargets != None and len(rc.prevTargets) > 0:
+   if rc and rc.prevTargets != None and len(rc.prevTargets) > 0:
       locals['prevtgt'] = rc.prevTargets[0]
       
    # Add some default variables
@@ -274,7 +274,7 @@ def cmd_randomDiscard(rc, targets, source, restr, numCards=1):
    rc.applyNext()
 
 
-def cmd_moveTo(rc, targets, source, restr, zone, pos = None, reveal = False):
+def cmd_moveTo(rc, targets, source, restr, zone, pos = None, reveal = None):
    debug(">>> cmd_moveTo({}, {}, {}, {})".format(targets, zone, pos, reveal)) #Debug
    zonePrefix, zoneName = RulesLexer.getPrefix(RS_PREFIX_ZONES, zone, RS_PREFIX_CTRL)
    if targets:
@@ -285,9 +285,10 @@ def cmd_moveTo(rc, targets, source, restr, zone, pos = None, reveal = False):
             choice = askChoice("Where to put the card{}?".format(plural(len(targets))), ['Top of pile', 'Bottom of pile'])
             pos = (max(choice, 1) - 1) * -1
          elif pos is not None:
-            reveal = True
+            reveal = pos
             pos = None
-         reveal = bool(reveal)
+         if reveal is not None:
+            reveal = True if reveal == 'true' else False
          for target in targets:
             pile = RulesUtils.getZoneByName(zone, target)
             debug("{}'s {} -> {}'s {}".format(target.controller, target, pile.controller, pile.name))
@@ -305,6 +306,21 @@ def cmd_moveTo(rc, targets, source, restr, zone, pos = None, reveal = False):
             rnd(1, 100) # Wait until all animation is done
             # Add trashed card to action local variables
          addActionTempVars('moved', targets)
+   rc.applyNext()
+
+
+def cmd_movePile(rc, targets, source, restr, zone1, zone2):
+   debug(">>> cmd_movePile({}, {})".format(zone1, zone2)) #Debug
+   z1Prefix, z1Name = RulesLexer.getPrefix(RS_PREFIX_ZONES, zone1, RS_PREFIX_CTRL)
+   z2Prefix, z2Name = RulesLexer.getPrefix(RS_PREFIX_ZONES, zone2, RS_PREFIX_CTRL)
+   if z1Name in RS_KW_ZONES_PILES and z2Name in RS_KW_ZONES_PILES:
+      pile1 = RulesUtils.getZoneByName(zone1)
+      pile2 = RulesUtils.getZoneByName(zone2)
+      mute()
+      for card in pile1:
+         card.moveTo(pile2)
+      if len(players) > 1: rnd(1, 100) # Wait a bit more, as in multiplayer games, things are slower.
+      notify("{} moves all cards from its {} to its {}.".format(me, pile1.name, pile2.name))      
    rc.applyNext()
 
 
@@ -635,6 +651,7 @@ RulesCommands.register('reveal',        cmd_reveal)
 RulesCommands.register('discard',       cmd_discard)
 RulesCommands.register('rnddiscard',    cmd_randomDiscard)
 RulesCommands.register('moveto',        cmd_moveTo)
+RulesCommands.register('movepile',      cmd_movePile)
 RulesCommands.register('bp',            cmd_bp)
 RulesCommands.register('sp',            cmd_sp)
 RulesCommands.register('hp',            cmd_hp)

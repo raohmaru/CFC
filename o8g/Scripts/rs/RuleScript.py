@@ -98,7 +98,8 @@ class Rules():
          if target == False and not item['opt']:
             debug("Targeting cancelled")
             return False
-         targets += target
+         if target:
+            targets += target
       return targets
       
       

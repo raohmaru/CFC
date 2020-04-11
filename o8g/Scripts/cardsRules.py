@@ -143,6 +143,7 @@ effect:
          discard([#|target])  # default: 1, zone: myHand
          rndDiscard([#])
          moveTo(zone [, pos] [, reveal])  # pos = signed int or '?'
+         movepile(pile1, pile2)
          bp(#|x#|=#|expr)    # default target = this
          sp(#|=#|expr)  # default target = me
          hp(#|expr)     # default target = me
@@ -407,7 +408,7 @@ auto = oppCanBlock:any? [[if attacker.bp > 3]]
 # Damn D's WHISTLE
 RulesDict['66d424bb-e5da-4f61-b063-61efd1fc61a6'] = """
 target? = character[bp<=5]@deck
-action = {F}: reveal() & moveTo(hand) & shuffle()
+action = {F}: reveal() & moveTo(hand, true) & shuffle()
 """
 
 # Guy's HAYA-GAKE
@@ -508,7 +509,7 @@ action = discard(all); moveTo(hand) target(<,2>*@myDiscards)
 # Omokane Saki's STAND-BY
 RulesDict['c6ee2630-7f1a-4ac1-95f3-be8db970e855'] = """
 target? = character@deck
-action = {F}: reveal() & shuffle() & moveTo(deck)
+action = {F}: reveal() & shuffle() & moveTo(deck, true)
 """
 
 # Chris Redfield's DISORDER
@@ -544,7 +545,7 @@ action = {S}: transform(Zombie) target(character)
 # Akira's BROTHER SEARCH
 RulesDict['1cd7580b-d396-496c-afac-bcd6da9c1f83'] = """
 target = action<1>@deck
-action = moveRestTo(discards) & reveal() & moveTo(hand)
+action = moveRestTo(discards) & reveal() & moveTo(hand, true)
 """
 
 # Batsu's BOILING BLOOD
@@ -668,7 +669,7 @@ action = trash(5)
 
 # Cammy (Alpha)'s SPY
 RulesDict['de28f9bf-d995-4743-afcd-a28065beb39d'] = """
-action = moveTo(oppDeck, ?) target(*@oppHand)
+action = moveTo(oppDeck, ?, true) target(*@oppHand)
 """
 
 # Chun-Li's S.B. KICK
@@ -678,7 +679,7 @@ action = sp(=0); bp(=1) target(^characters)
 
 # Chun-Li (Alpha)'s GOMEN-NE!
 RulesDict['7b9371dc-63a4-4dd8-91e9-5380aae0491f'] = """
-action = moveTo(oppDiscards) target(<2>*<3>@oppDeck)
+action = moveTo(oppDiscards, true) target(<2>*<3>@oppDeck)
 """
 
 # Dan's WHAT GIVES?
@@ -751,7 +752,7 @@ abilities = unfreezable
 
 # M. Bison's EVIL CHARISMA
 RulesDict['229cbb1b-9710-4981-b4ea-e476145d73f4'] = """
-action = moveTo(hand) target?("Juni"&"Juli"<1>@myDeck) & shuffle(myDeck)
+action = moveTo(hand, true) target?("Juni"&"Juli"<1>@myDeck) & shuffle(myDeck)
 """
 
 # Makoto's YELL
@@ -900,7 +901,7 @@ auto = ~myEndPhase~ [[if me.sp < opp.sp]] sp(+3)
 
 # Q-Bee's PLUS B
 RulesDict['65c91e9d-761c-4978-ba3e-6e05026f080e'] = """
-action = moveTo(hand) target?("Q-Bee"s@myDeck) & shuffle(myDeck)
+action = moveTo(hand, true) target?("Q-Bee"s@myDeck) & shuffle(myDeck)
 """
 
 # Rikuo's WETNESS
@@ -987,7 +988,8 @@ action = discard(<r>)
 
 # B. Jenet's LILIEN KNIGHTS
 RulesDict['5ca6f345-403b-4ad9-973a-673b8cd1cdb8'] = """
-action = reveal() & moveTo(hand) target?(character[bp<=3]@myDeck) & shuffle()
+target? = character[bp<=3]@myDeck
+action = reveal() & moveTo(hand, true) & shuffle()
 """
 
 # Billy's SHRIKE DROP
@@ -1621,10 +1623,16 @@ action = sp(=0)
 """
 
 # Indulge
-# RulesDict['6eec9528-7473-47a5-916b-a22261f79816'] = ""
+RulesDict['6eec9528-7473-47a5-916b-a22261f79816'] = """
+target = characters
+action = bp(=2)
+"""
 
 # Last resort
-# RulesDict['eece88a0-17d8-4b16-90b4-ac7317d36f95'] = ""
+RulesDict['eece88a0-17d8-4b16-90b4-ac7317d36f95'] = """
+target = <5>*@myDeck
+action = discard(all) & movePile(deck, discards) & moveTo(deck, false) & shuffle()
+"""
 
 # Laundry
 RulesDict['96f72173-528d-4a3a-a85c-9cf92439435a'] = """
@@ -1654,7 +1662,7 @@ action = {F}: moveTo(deck) target?(all@hand) & shuffle() & draw(moved.size + 1)
 # Management
 RulesDict['fd8db3d4-7df1-45fb-8712-5c35bb5acb3f'] = """
 target? = action@deck
-action = {F}: reveal() & shuffle() & moveTo(deck)
+action = {F}: reveal() & shuffle() & moveTo(deck, true)
 """
 
 # Mega crush

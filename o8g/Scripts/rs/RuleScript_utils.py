@@ -354,7 +354,7 @@ class RulesUtils():
          if not msg:
             msg = MSG_SEL_CARD_EFFECT if source else MSG_SEL_CARD
          sourceName = source.Name if source else ''
-         qtyMsg = minQty
+         qtyMsg = min(minQty, len(cards_f1))
          qtyPlural = plural(minQty)
          if qty is not None and qty.max == RS_KW_ANYNUM:
             maxQty = len(cards_f1)
@@ -390,7 +390,7 @@ class RulesUtils():
                showCardDlg(cards if reveal == 'all' else cards_f1, title, min=0, max=0)
             else:
                while True:
-                  cards_sel = showCardDlg(cards if reveal else cards_f1, title, min=minQty, max=maxQty)
+                  cards_sel = showCardDlg(cards if reveal == 'all' else cards_f1, title, min=minQty, max=maxQty)
                   if cards_sel == None or minQty == 0 or not reveal or len(set(cards_sel) & set(cards_f1)) >= 1:
                      cards_f1 = cards_sel
                      break
