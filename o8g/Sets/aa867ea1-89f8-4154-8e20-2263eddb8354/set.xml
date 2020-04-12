@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8" standalone="yes"?>
-<set name="Core Set" id="aa867ea1-89f8-4154-8e20-2263eddb8354" version="1.2.6.0" gameId="e3d56d9e-900d-49c6-b6ae-22cbb51be153" gameVersion="0.7.4">
+<set name="Core Set" id="aa867ea1-89f8-4154-8e20-2263eddb8354" version="1.3.0.0" gameId="e3d56d9e-900d-49c6-b6ae-22cbb51be153" gameVersion="0.7.13">
 	<packaging>
 		<pack name="Booster" id="800ab974-9fee-45c6-8d15-3c995c732cdc">
 			<options>
@@ -3193,7 +3193,7 @@
 			<property name="Ability"      value="&#163; YUUGOU POWER" />
 			<property name="Ability Type" value="&#163;" />
 			<property name="Ability Name" value="YUUGOU POWER" />
-			<property name="Rules"        value="Select a character. Look through the top of any deck until you reveal a character card with an ability. If you do, selected character gets a copy of that ability. Put the cards revealed this way on the bottom of that deck in any order." />
+			<property name="Rules"        value="Select a character. Look through the top of any deck until you reveal a character card with an ability. If you do, selected character gets a copy of that ability. Put the cards revealed this way on the bottom of that deck." />
 			<property name="BP"           value="900" />
 			<property name="SP"           value="0" />
 			<property name="Backup 1"     value="Boss" />
@@ -5947,7 +5947,7 @@
 			<property name="Ability"      value="" />
 			<property name="Ability Type" value="" />
 			<property name="Ability Name" value="" />
-			<property name="Rules"        value="Look through the top of any deck until you reveal a character card with an ability. If you do, all characters get a copy of that ability. Put the cards revealed this way on the bottom of that deck in any order." />
+			<property name="Rules"        value="Look through the top of any deck until you reveal a character card with an ability. If you do, all characters get a copy of that ability. Put the cards revealed this way on the bottom of that deck." />
 			<property name="BP"           value="" />
 			<property name="SP"           value="-4" />
 			<property name="Backup 1"     value="" />
@@ -6253,7 +6253,7 @@
 			<property name="Ability"      value="" />
 			<property name="Ability Type" value="" />
 			<property name="Ability Name" value="" />
-			<property name="Rules"        value="Search your deck for five cards and put them aside. Discard your hand and put your deck into your discard pile. Then shuffle the cards set aside this way on your deck." />
+			<property name="Rules"        value="Search your deck for up to five cards and put them aside. Discard your hand and put your deck into your discard pile. Then shuffle the cards set aside this way on your deck." />
 			<property name="BP"           value="" />
 			<property name="SP"           value="-8" />
 			<property name="Backup 1"     value="" />
@@ -6397,9 +6397,9 @@
 			<property name="Ability"      value="" />
 			<property name="Ability Type" value="" />
 			<property name="Ability Name" value="" />
-			<property name="Rules"        value="Look at the top three cards of any deck, then put them on the top or the bottom of that deck in any order." />
+			<property name="Rules"        value="Look at the top three cards of any deck, then put them back in any order. You may shuffle that deck." />
 			<property name="BP"           value="" />
-			<property name="SP"           value="-2" />
+			<property name="SP"           value="-1" />
 			<property name="Backup 1"     value="" />
 			<property name="Backup 2"     value="" />
 			<property name="Backup 3"     value="" />
@@ -6631,7 +6631,7 @@
 			<property name="Ability"      value="" />
 			<property name="Ability Type" value="" />
 			<property name="Ability Name" value="" />
-			<property name="Rules"        value="Put a random card from your discard pile or an enemy&apos;s discard pile on top of your deck or that enemy&apos;s deck." />
+			<property name="Rules"        value="Put a random card from your discard pile into your hand." />
 			<property name="BP"           value="" />
 			<property name="SP"           value="-2" />
 			<property name="Backup 1"     value="" />
@@ -6703,7 +6703,7 @@
 			<property name="Ability"      value="" />
 			<property name="Ability Type" value="" />
 			<property name="Ability Name" value="" />
-			<property name="Rules"        value="Select a character. Look through the top of any deck until you reveal a character card. If you do, selected character becomes that card. (It loses its back-ups.) Put the cards revealed this way on the bottom of that deck in any order." />
+			<property name="Rules"        value="Select a character. Look through the top of any deck until you reveal a character card. If you do, selected character becomes that card. (It loses its back-ups.) Put the cards revealed this way on the bottom of that deck." />
 			<property name="BP"           value="" />
 			<property name="SP"           value="-4" />
 			<property name="Backup 1"     value="" />
@@ -6775,7 +6775,7 @@
 			<property name="Ability"      value="" />
 			<property name="Ability Type" value="" />
 			<property name="Ability Name" value="" />
-			<property name="Rules"        value="If you have played a character this turn, you may play an additional character." />
+			<property name="Rules"        value="You can play up to two characters cards this turn." />
 			<property name="BP"           value="" />
 			<property name="SP"           value="-7" />
 			<property name="Backup 1"     value="" />

@@ -148,7 +148,8 @@ GameRulesDefaults = {
    'ab_instant_act'    : True,  # Activate /\ abilities
    'piercing'          : True,  # Allow piercing damage
    'backup_fresh'      : False, # Backup fresh characters
-   'play_char_bp_limit': None   # BP limit to play chars
+   'play_char_bp_limit': None,  # BP limit to play chars
+   'chars_per_turn'    : None
 }
 
 # Debug
@@ -321,6 +322,10 @@ MSG_RULES = {
    'play_char_bp_limit': (
       'Character cards of any BP can be played as normal.',
       'Character cards with BP {} or greater cannot be played.'
+   ),
+   'chars_per_turn': (
+      'Only {} character card{} can be played per turn.'.format(CharsPerTurn, plural(CharsPerTurn)),
+      'Up to {} character cards can be played per turn.'
    )
 }
 ERR_NO_EFFECT = 'err001'
@@ -331,7 +336,8 @@ CMD_LABELS = {
    'hp'        : 'Gain HP',
    'bp'        : 'Raise the BP of characters',
    'discard'   : 'Discard card(s)',
-   'destroy'   : 'KO character(s)'
+   'destroy'   : 'KO character(s)',
+   'shuffle'   : 'Shuffle the deck'
 }
 
 # Misc

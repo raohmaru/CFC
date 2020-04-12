@@ -877,7 +877,7 @@ def trash(group, x = 0, y = 0, silent = False, count = None):
       notify("{} trashes top {} cards {}.".format(me, count, fromWhereStr(group)))
 
 
-def prophecy(group = me.Deck, x = 0, y = 0, count = None):
+def prophecy(group = me.Deck, x = 0, y = 0, count = None, deckPos = 0):
    mute()
    if len(group) == 0:
       return
@@ -889,7 +889,6 @@ def prophecy(group = me.Deck, x = 0, y = 0, count = None):
    defProphecyCount = count
    cards = [c for c in group[:count]]
    cardsPos = []
-   deckPos = 0
    owner = 'his' if group.controller == me else "{}'s".format(group.controller)
    notify(MSG_PLAYER_LOOKS.format(me, owner, group.name))
    while len(cards) > 0:

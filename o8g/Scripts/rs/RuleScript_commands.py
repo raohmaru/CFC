@@ -57,6 +57,16 @@ class RulesCommands():
       funcStr = cmd[0]
       params = cmd[1]
       
+      if funcStr[-1] == RS_OP_OPT:
+         funcStr = funcStr[:-1]
+         question = funcStr
+         if funcStr in CMD_LABELS:
+            question = CMD_LABELS[funcStr]
+         if not confirm("{}?".format(question)):
+            debug("-- optional cmd: not apply")
+            self.applyNext()
+            return
+      
       # Executing command functions
       if funcStr in RulesCommands.items and not revert:
          debug("-- applying cmd '%s' to targets %s (%s)" % (funcStr, targets, restr))
@@ -187,8 +197,9 @@ def cmd_shuffle(rc, targets, source, restr, pileName=None):
    if not pileName:
       pileName = RS_KW_ZONE_DECK
    prefix, name = RulesLexer.getPrefix(RS_PREFIX_ZONES, pileName)
-   if name == RS_KW_ZONE_DECK:
-      pile = RulesUtils.getZoneByName(pileName)
+   if name in RS_KW_ZONES_PILES:
+      target = targets[0] if targets else None
+      pile = RulesUtils.getZoneByName(pileName, target)
       if pile.controller == me:
          shuffle(pile)
       else:
@@ -601,12 +612,17 @@ def cmd_trash(rc, targets, source, restr, numCards=1):
    rc.applyNext()
 
 
-def cmd_prophecy(rc, targets, source, restr, numCards=1):
+def cmd_prophecy(rc, targets, source, restr, numCards=1, deckPos=0):
    pile = me.Deck
    if targets:
       pile = targets[0].group
-   debug(">>> cmd_prophecy({}, {})".format(numCards, pile)) #Debug
-   prophecy(group = pile, count = int(numCards))
+   if deckPos != 0:
+      if deckPos == 'top':
+         deckPos = 1
+      else:
+         deckPos = 2
+   debug(">>> cmd_prophecy({}, {}, {})".format(numCards, pile, deckPos)) #Debug
+   prophecy(group = pile, count = int(numCards), deckPos = deckPos)
    rc.applyNext()
 
 
@@ -668,6 +684,7 @@ RulesCommands.register('transform',     cmd_transform)
 RulesCommands.register('moverestto',    cmd_moveRestTo)
 RulesCommands.register('disablerule',   cmd_disableRule)
 RulesCommands.register('enablerule',    cmd_enableRule)
+RulesCommands.register('modrule',       cmd_enableRule)  # alias
 RulesCommands.register('freeze',        cmd_freeze)
 RulesCommands.register('unfreeze',      cmd_unfreeze)
 RulesCommands.register('altercost',     cmd_alterCost)

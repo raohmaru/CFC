@@ -245,8 +245,13 @@ def playAuto(card, slotIdx=None, force=False):
          return
       # Limit of chars played per turn
       charsPlayed = getState(me, 'charsPlayed')
-      if charsPlayed >= CharsPerTurn:
-         if not confirm("Only {} character per turn can be played\n(you have played {} characters).\nProceed anyway?".format(CharsPerTurn, charsPlayed)):
+      charsPerTurn = getRule('chars_per_turn')
+      if charsPerTurn:
+         charsPerTurn = reduce(lambda a,b: max(a,b), charsPerTurn)
+      else:
+         charsPerTurn = CharsPerTurn
+      if charsPlayed >= charsPerTurn:
+         if not confirm("Only {} character card{} per turn can be played\n(you have played {} character{}).\nProceed anyway?".format(charsPerTurn, plural(charsPerTurn), charsPlayed, plural(charsPlayed))):
             return
       # BP limit?
       bplimit = getRule('play_char_bp_limit')
@@ -350,7 +355,7 @@ def backupAuto(card):
    backupsPlayed = getState(me, 'backupsPlayed')
    if backupsPlayed >= BackupsPerTurn:
       if triggerHook(Hooks.BackupLimit, target._id) != False:
-         if not confirm("Can't backup more than {} character per turn.\nProceed anyway?".format(CharsPerTurn)):
+         if not confirm("Can't backup more than {} character per turn.\nProceed anyway?".format(BackupsPerTurn)):
             return
    # Target just entered the ring?
    if MarkersDict['Just Entered'] in target.markers and not getRule('backup_fresh'):

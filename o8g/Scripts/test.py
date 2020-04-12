@@ -75,8 +75,8 @@ actions = [
    # "action = [[if me.hand == 0]] destroy() uynt",
    # "action = [[if true]] discard(all) target(me) [[elif false]] damage(5) target(opp)",
    # "action = [[if true]] discard(all) [[else]] damage(5) target(opp)",
-   "action = [[if true]] discard(all) [[invalid]] damage(5) target(opp)",
-   "action = reveal(); [[if true]] destroy() target(opp)",
+   # "action = [[if true]] discard(all) [[invalid]] damage(5) target(opp)",
+   # "action = reveal(); [[if true]] destroy() target(opp)",
    # "action = [[invalid true]] discard(all) [[else]] damage(5)",
    # "action = moveTo(ctrlHand, -1, true) target?(characters[bp>=800]) uynt",
    # "action = {F}: moveTo(ctrlDeck) target(characters[-backup]) & shuffle(myDeck) & shuffle(oppDeck)",
@@ -89,6 +89,7 @@ actions = [
    # "action = reveal(hand) & each(action in me.hand => bp(+2)) target(this) & discard(actions)"
    # "action = discard(<,1>action@oppHand)",
    # "action = destroy() target(characters::not(prevTgt))",
+   "action = shuffle?()",
 ]
 abilities = [
    "abilities = unblockable",
@@ -106,14 +107,14 @@ autos = [
    # "auto = ~myHandChanges~ -unblockable",
    # "auto = ~myHandChanges,oppBlockPhase~ -unblockable",
    # "auto = [[may 'Question?']] destroy() & +unblockable to(character@myRing) uynt",
-   # "auto = ~myEndPhase~ moveTo(ctrlHand) to(characters[bp>=800])",
+   "auto = ~myEndPhase~ moveTo(ctrlHand) to(characters[bp>=800])",
    # "auto = ~anyBlockPhase~ +unblockable to(characters[bp<=300 & attack & -uattack]) ueot",
    # "auto = ~playerCombatDamaged fromThis~ +cantplayac to(opp) oppueot",
-   # "auto = ~playerDamaged:fromThis~ draw() target?(opp)",
-   # "auto = oppCanBeBlocked:any? [[if blocker.bp > this.bp]]",
-   # "auto = ~anyPlayerDamaged:action~ damage(1) to(damagedPlayer)",
-   "auto = ~anyPlayerDamaged:action~ [[if me.hp < 10]] hp(+1)",
-   "auto = ~myEndPhase:once~ discard(all)",
+   "auto = ~playerDamaged:fromThis~ draw() target?(opp)",
+   "auto = ?oppCanBeBlocked:any? [[if blocker.bp > this.bp]]",
+   "auto = ~anyPlayerDamaged:action~ damage(1) to(damagedPlayer)",
+   # "auto = ~anyPlayerDamaged:action~ [[if me.hp < 10]] hp(+1)",
+   # "auto = ~myEndPhase:once~ discard(all)",
 ]
 evals = [
    "action in me.hand => bp(+2)"
@@ -154,9 +155,9 @@ def test(arr, title):
 
 # rules = RulesDict['aa867ea1-89f8-4154-8e20-2263edd00002']
 # test(targets, 'targets')
-# test(actions, 'actions')
+test(actions, 'actions')
 # test(abilities, 'abilities')
-test(autos, 'autos')
+# test(autos, 'autos')
 # test(requisite, 'requisite')
 # test(vars, 'vars')
 # test(labels, 'labels')

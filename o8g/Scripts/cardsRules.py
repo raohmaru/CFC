@@ -134,7 +134,8 @@ cond: (optional)
       
 effect:
    Values:
-      Effect command (followed by () with 0 or more parameters):
+      Effect command (followed by () or ?() with 0 or more parameters):
+      ?() marks the command as optional:
          damage(#|expr)
          swapPiles(pile1, pile2)
          shuffle([myDeck])
@@ -143,7 +144,7 @@ effect:
          discard([#|target])  # default: 1, zone: myHand
          rndDiscard([#])
          moveTo(zone [, pos] [, reveal])  # pos = signed int or '?'
-         movepile(pile1, pile2)
+         movePile(pile1, pile2)
          bp(#|x#|=#|expr)    # default target = this
          sp(#|=#|expr)  # default target = me
          hp(#|expr)     # default target = me
@@ -157,6 +158,7 @@ effect:
          transform(card name|expr)
          moveRestTo(zone)
          enableRule(rule)
+         modRule(rule, arg)
          disableRule(rule)
          freeze([toggle])
          unfreeze()
@@ -216,7 +218,7 @@ ability:
       frosted
       
 ---------------------------------------------------
-auto = [~event[,event]~ | hook?] [[cond]] effect [& effect] to(target) restr; ...
+auto = [~event[,event]~ | ?hook?] [[cond]] effect [& effect] to(target) restr; ...
 
 Only one auto key is allowed.
 
@@ -350,6 +352,8 @@ Available variables:
    
 Available functions:
    all group: expr   # context = group item
+   isChar()
+   flipCoin()
 """
 
 RulesDict = {}
@@ -401,7 +405,7 @@ auto = ~myEndPhase~ moveTo(ctrlHand) target(characters[bp>=8])
 
 # Cody (Alpha)'s BAD STONE
 RulesDict['525d8365-c90e-491f-9811-1f23efbafccb'] = """
-auto = oppCanBlock:any? [[if attacker.bp > 3]]
+auto = ?oppCanBlock:any? [[if attacker.bp > 3]]
 """
 
 # Damn D's WHISTLE
@@ -412,7 +416,7 @@ action = {F}: reveal() & moveTo(hand, true) & shuffle()
 
 # Guy's HAYA-GAKE
 RulesDict['2c1d8c60-0858-4524-adc1-e7596a4d08e0'] = """
-auto = oppCanBlock:this? [[if me.ring > 1]] # me.ring is opp.ring
+auto = ?oppCanBlock:this? [[if me.ring > 1]] # me.ring is opp.ring
 """
 
 # Haggar's SPINNING LARIAT
@@ -518,7 +522,7 @@ action = [[if opp.ring >= 3]] damage(2) to(characters@oppRing)
 
 # Claire's DECOY
 RulesDict['a25d74b5-8774-4729-8ac2-b820878241b9'] = """
-action = {S}: moveTo(hand) target(<r>character@myDeck)
+action = {S}: moveTo(hand) target(<r>character@myDeck) & shuffle()
 """
 
 # Jill's BERETTA
@@ -860,7 +864,7 @@ action = {D}{F}: bp(+3)
 
 # Felicia's SIDEKICK ART
 RulesDict['53eafaec-68bc-4fe8-88ee-be578a785f5c'] = """
-action = {F}: moveTo(hand) target(<r>action@myDeck)
+action = {F}: moveTo(hand) target(<r>action@myDeck) & shuffle()
 """
 
 # Hsien-Ko's DARK WEAPON
@@ -1034,7 +1038,7 @@ action = bp(=this.bp) target(characters[bp:lowest])
 
 # Hokutomaru's FEAR ME
 RulesDict['75e57026-e4fe-4470-88b2-22268ddd6b61'] = """
-auto = oppCanBlock:this? [[if blocker.bp <= this.bp]]
+auto = ?oppCanBlock:this? [[if blocker.bp <= this.bp]]
 """
 
 # Hon Fu's KUURON NO YOMI
@@ -1318,7 +1322,7 @@ action = bp(=prevTgt.BP) target(this)
 
 # Yuki's PRIESTESS SEAL
 RulesDict['48a553a1-fd40-482a-9161-86be2e29f246'] = """
-auto = enableRule(play_char_bp_limit, 8)
+auto = modRule(play_char_bp_limit, 8)
 """
 
 # Zantetsu's BYOUMA
@@ -1629,7 +1633,7 @@ action = bp(=2)
 
 # Last resort
 RulesDict['eece88a0-17d8-4b16-90b4-ac7317d36f95'] = """
-target = <5>*@myDeck
+target = <1,5>*@myDeck
 action = discard(all) & movePile(deck, discards) & moveTo(deck, false) & shuffle()
 """
 
@@ -1673,7 +1677,7 @@ action = damage(5)
 # Mischief
 RulesDict['7a394ff3-727d-48d9-91a9-b9cba90510b6'] = """
 target = *s@anyDeck
-action = prophecy(3)
+action = prophecy(3, top) & shuffle?(ctrlDeck)
 """
 
 # Morph
@@ -1739,10 +1743,14 @@ action = freeze() target(characters@myRing) & turns(+1)
 """
 
 # Revive
-# RulesDict['5f19902c-60fb-44b8-9e64-eab4b31c9d3d'] = ""
+RulesDict['5f19902c-60fb-44b8-9e64-eab4b31c9d3d'] = """
+action = moveTo(hand) target(character@discards)
+"""
 
 # Roulette
-# RulesDict['7f869cae-cf68-4d2d-881d-4f4107134469'] = ""
+RulesDict['7f869cae-cf68-4d2d-881d-4f4107134469'] = """
+action = moveTo(hand) target(<r>*@discards)
+"""
 
 # Round 2
 RulesDict['5ed66b91-2f3a-4fae-a1ba-ceb59040ea8c'] = """
@@ -1785,7 +1793,9 @@ action = destroy()
 """
 
 # SP partner
-# RulesDict['37b88c5f-026b-40e4-bfd2-e5b7b83a7394'] = ""
+RulesDict['37b88c5f-026b-40e4-bfd2-e5b7b83a7394'] = """
+action = modRule(chars_per_turn, 2) ueot
+"""
 
 # Stifler
 RulesDict['77792408-ba0f-4e5f-a079-f7eca5955543'] = """
@@ -1800,7 +1810,9 @@ action = reveal(hand) & discard(characters)
 """
 
 # Study
-# RulesDict['c977a855-1358-4dab-870f-dee886f929c3'] = ""
+RulesDict['c977a855-1358-4dab-870f-dee886f929c3'] = """
+action = moveTo(hand) target(action@discards)
+"""
 
 # Substitute
 RulesDict['6504b1a3-e432-4c6c-845b-6ca72500b458'] = """
