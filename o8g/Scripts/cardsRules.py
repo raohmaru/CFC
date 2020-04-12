@@ -170,6 +170,7 @@ effect:
          activate(expr)
          turns(#)  # unsiged int, target = current player
          skip(phase)
+         unite()
       Ability:
          Keywords:
             @see abilities
@@ -1795,7 +1796,7 @@ action = destroy()
 
 # SP partner
 RulesDict['37b88c5f-026b-40e4-bfd2-e5b7b83a7394'] = """
-action = modRule(chars_per_turn, 2) ueot
+action = modRule(play_char_limit, 2) ueot
 """
 
 # Stifler
@@ -1944,10 +1945,15 @@ action = draw(3); moveTo(myDeck) target(<2>*@hand)
 """
 
 # Manari's song
-# RulesDict['2b3ad6cd-61d8-4786-9268-5963491a1ffa'] = ""
+RulesDict['2b3ad6cd-61d8-4786-9268-5963491a1ffa'] = """
+action = [[if me.ring == 0]] disableRule(dmg_combat_deal) oppueot
+"""
 
 # Overdoing it
-# RulesDict['556b3359-e642-419a-ab5c-67f70de1bb4f'] = ""
+RulesDict['556b3359-e642-419a-ab5c-67f70de1bb4f'] = """
+target = <2,3>character[attack & -uattack]
+action = unite()
+"""
 
 # Overheat
 # RulesDict['27befc33-c2be-40d2-8839-bb8ee41f8d95'] = ""

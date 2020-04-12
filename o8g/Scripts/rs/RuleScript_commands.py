@@ -101,7 +101,7 @@ class RulesCommands():
 # Related functions
 #---------------------------------------------------------------------------
 
-def toggleRule(ruleName, value, id):
+def toggleRule(ruleName, value, id, restr = None):
    debug(">>> toggleRule({}, {}, {})".format(ruleName, value, id)) #Debug
    Rules = getGlobalVar('Rules')
    if not ruleName in Rules:
@@ -118,7 +118,8 @@ def toggleRule(ruleName, value, id):
    ruleValue = getRule(ruleName)
    if (bool(value) and ruleValue) or (value == False and not ruleValue):
       if ruleName in MSG_RULES:
-         notify(MSG_RULES[ruleName][bool(value)].format(value))
+         restr = getTextualRestr(restr)
+         notify(MSG_RULES[ruleName][bool(value)].format(value, restr))
 
 
 def getLocals(**kwargs): 
@@ -517,8 +518,8 @@ def cmd_moveRestTo(rc, targets, source, restr, zone, pos = None):
   
 def cmd_disableRule(rc, targets, source, restr, rule):
    debug(">>> cmd_disableRule({})".format(rule)) #Debug
-   toggleRule(rule, False, source._id)
-   args = ['toggleRule', source._id, None, restr, [rule, True, source._id]]
+   toggleRule(rule, False, source._id, restr)
+   args = ['toggleRule', source._id, None, restr, [rule, True, source._id, restr]]
    if isCharacter(Card(source._id)):
       addGameEventListener(GameEvents.Removed,   *args)
       addGameEventListener(GameEvents.Powerless, *args)
@@ -529,8 +530,8 @@ def cmd_disableRule(rc, targets, source, restr, rule):
    
 def cmd_enableRule(rc, targets, source, restr, rule, value = True):
    debug(">>> cmd_enableRule({})".format(rule)) #Debug
-   toggleRule(rule, value, source._id)
-   args = ['toggleRule', source._id, None, restr, [rule, False, source._id]]
+   toggleRule(rule, value, source._id, restr)
+   args = ['toggleRule', source._id, None, restr, [rule, False, source._id, restr]]
    if isCharacter(Card(source._id)):
       addGameEventListener(GameEvents.Removed,   *args)
       addGameEventListener(GameEvents.Powerless, *args)
@@ -665,6 +666,22 @@ def cmd_skip(rc, targets, source, restr, phase):
       notify("{} will skip his next {} phase.".format(player, phase.title()))
    rc.applyNext()
    
+   
+def cmd_unite(rc, targets, source, restr, *args):
+   debug(">>> cmd_unite({})".format(targets)) #Debug
+   if targets:
+      uattack = getGlobalVar('UnitedAttack')
+      if len(uattack) > 0:
+         target = Card(uattack[0])
+      else:
+         target = targets[0]
+      for card in targets:
+         if card != target:
+            remoteCall(getOpp(), "unitedAttackAuto", [card, [target], False])
+            rnd(1, 100) # Wait until all animation is done
+      notify("{} has forced {} to do an United Attack".format(me, cardsNamesStr(targets)))
+   rc.applyNext()
+   
 
 RulesCommands.register('damage',        cmd_damage)
 RulesCommands.register('swappiles',     cmd_swapPiles)
@@ -700,3 +717,4 @@ RulesCommands.register('prophecy',      cmd_prophecy)
 RulesCommands.register('activate',      cmd_activate)
 RulesCommands.register('turns',         cmd_turns)
 RulesCommands.register('skip',          cmd_skip)
+RulesCommands.register('unite',         cmd_unite)

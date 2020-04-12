@@ -149,7 +149,8 @@ GameRulesDefaults = {
    'piercing'          : True,  # Allow piercing damage
    'backup_fresh'      : False, # Backup fresh characters
    'play_char_bp_limit': None,  # BP limit to play chars
-   'chars_per_turn'    : None
+   'play_char_limit'   : None,  # Num chars can be played per turn
+   'dmg_combat_deal'   : True   # Deal combat damage
 }
 
 # Debug
@@ -246,16 +247,17 @@ MSG_AB_AUTO_ACT_CHAR        = "{} has activated {}'s auto ability {}."
 MSG_AB_AUTO_UATTACK         = "Cannot activate {}'s auto ability {} because it joined an United Attack."
 MSG_AB_MISS_REQ             = u" \u2192 There aren't enough targets to activate {}'s ability."
 MSG_DISCARD_RANDOM          = "{} randomly discards {} from its {}."
+MSG_MAY_DEF                 = "Do you want to apply the effect of the card?"
+MSG_HINT_KOED               = "({} has been KOed. You can put it into your discard pile (hover it and press DEL key). In any case, KOed characters will be removed from the ring on phase change.)"
+MSG_HINT_ACTIVATE           = "(Now you can activate the card's effect by double-click on it.)"
+MSG_HINT_WIN                = "{} wins the game!"
+MSG_UA_MAX                  = "Can't be more than {} characters in a United Attack."
 MSG_ERR_NO_CARDS            = "There are no targets available, hence the ability has no effect."
 MSG_ERR_NO_CARDS_HAND       = "You don't have enough cards in your hand to pay the cost of the ability."
 MSG_ERR_NO_CARDS_DISCARD    = "There are no cards to discard [of the chosen type] in {}'s hand."
 MSG_ERR_NO_FILTERED_CARDS   = "Selected cards don't match the requirements of this card's effect."
 MSG_ERR_NO_FILTERED_PLAYERS = "No player match the requirements of this card's effect."
 MSG_ERR_TARGET_OTHER        = "{}'s ability cannot select itself, therefore it has been removed from selection."
-MSG_MAY_DEF                 = "Do you want to apply the effect of the card?"
-MSG_HINT_KOED               = "({} has been KOed. You can put it into your discard pile (hover it and press DEL key). In any case, KOed characters will be removed from the ring on phase change.)"
-MSG_HINT_ACTIVATE           = "(Now you can activate the card's effect by double-click on it.)"
-MSG_HINT_WIN                = "{} wins the game!"
 MSG_HOOKS_ERR = {
    Hooks.BeforeAttack: "{} cannot attack due to {}'s {} ability{}.",
    Hooks.BeforeBlock : "{} cannot counter-attack due to {}'s {} ability{}.",
@@ -325,9 +327,13 @@ MSG_RULES = {
       'Character cards of any BP can be played as normal.',
       'Character cards with BP {} or greater cannot be played.'
    ),
-   'chars_per_turn': (
+   'play_char_limit': (
       'Only {} character card can be played per turn.'.format(CharsPerTurn),
-      'Up to {} character cards can be played per turn.'
+      'Up to {0} character cards can be played per turn{1}.'
+   ),
+   'dmg_combat_deal': (
+      'Characters deal no combat damage{1}',
+      'Characters deal combat damage as normal'
    )
 }
 ERR_NO_EFFECT = 'err001'

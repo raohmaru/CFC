@@ -246,7 +246,7 @@ def playAuto(card, slotIdx=None, force=False):
          return
       # Limit of chars played per turn
       charsPlayed = getState(me, 'charsPlayed')
-      charsPerTurn = getRule('chars_per_turn')
+      charsPerTurn = getRule('play_char_limit')
       if charsPerTurn:
          charsPerTurn = reduce(lambda a,b: max(a,b), charsPerTurn)
       else:
@@ -443,14 +443,16 @@ def attackAuto(card):
    return True
 
 
-def unitedAttackAuto(card):
+def unitedAttackAuto(card, targets = None, payCost = True):
    debug(">>> unitedAttackAuto()") #Debug
 
    # Check if an attacking char has been selected
    myRing = getGlobalVar('Ring', me)
-   targets = getTargetedCards(card)
-   if len(targets) == 0 or not targets[0]._id in myRing or (not MarkersDict['Attack'] in targets[0].markers and not MarkersDict['United Attack'] in targets[0].markers):
-      warning("Please select an attacking character in your ring.\n(Shift key + Left click on a character).")
+   if not targets:
+      targets = getTargetedCards(card)
+   if len(targets) == 0 or not targets[0]._id in myRing or (not hasMarker(targets[0], 'Attack') and not hasMarker(targets[0], 'United Attack')):
+      if payCost:  # False if called remotely
+         warning("Please select an attacking character in your ring.\n(Shift key + Left click on a character).")
       return
    target = targets[0]
    # Allowed uattacks
@@ -470,16 +472,20 @@ def unitedAttackAuto(card):
       and MarkersDict['United Attack'] in c.markers]
    # Max chars per United Attack
    if len(united) >= MaxCharsUAttack:
-      warning("Can't be more than {} characters in a United Attack.".format(MaxCharsUAttack+1))
+      if payCost:  # False if called remotely
+         warning(MSG_UA_MAX.format(MaxCharsUAttack+1))
+      else:
+         notify(MSG_UA_MAX.format(MaxCharsUAttack+1))
       return
    totalUnited = len(united) + 1 # Chars in UA + current char
    # Cost
-   cost = totalUnited * UAttackCost
-   cost = getCostMod(cost, "ua" + str(totalUnited+1))
-   if cost > me.SP:
-      type = ["Double", "Triple"][totalUnited-1]
-      if not confirm("You do not seem to have enough SP to do a {} United Attack (it costs {} SP).\nProceed anyway?".format(type, cost)):
-         return
+   if payCost:
+      cost = totalUnited * UAttackCost
+      cost = getCostMod(cost, "ua" + str(totalUnited+1))
+      if cost > me.SP:
+         type = ["Double", "Triple"][totalUnited-1]
+         if not confirm("You do not seem to have enough SP to do a {} United Attack (it costs {} SP).\nProceed anyway?".format(type, cost)):
+            return
 
    # Update UnitedAttack list
    uattack = getGlobalVar('UnitedAttack')
@@ -491,8 +497,10 @@ def unitedAttackAuto(card):
    debug("UnitedAttack: {}".format(uattack))
 
    setMarker(card, 'United Attack')
+   removeMarker(card, 'Attack')
    target.target(False)
    alignCard(card)
+   card.highlight = UnitedAttackColor  # yep also in actions.py unitedAttack()
 
    return target
 

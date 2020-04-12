@@ -462,6 +462,17 @@ def plural(num):
    return 's'
    
 
+def cardsNamesStr(cards):
+   if not cards:
+      return ''
+   if len(cards) == 1:
+      return cards[0]
+   arr = list(cards[:-1])
+   str = ("{}, " * len(arr)).format(*arr)[:-2]
+   str += " and {}".format(cards[-1])
+   return str
+   
+   
 #---------------------------------------------------------------------------
 # Card functions
 #---------------------------------------------------------------------------
@@ -577,11 +588,11 @@ def alignCard(card, x=None, y=None, slotIdx=None):
          return
       slotIdx = fixSlotIdx(slotIdx)
       # Align attacking chars
-      if MarkersDict['Attack'] in card.markers:
+      if hasMarker(card, 'Attack'):
          x, y = CardsCoords['Attack'+`slotIdx`]
          y = fixCardY(y)
       # Align chars in a uattack
-      elif MarkersDict['United Attack'] in card.markers:
+      elif hasMarker(card, 'United Attack'):
          uattack = getGlobalVar('UnitedAttack')
          if len(uattack) <= 1 or card._id not in uattack:
             return
@@ -593,7 +604,7 @@ def alignCard(card, x=None, y=None, slotIdx=None):
          y += oy * idx
          z = lead.index - 1 * idx
       # Align blockers
-      elif MarkersDict['Counter-attack'] in card.markers:
+      elif hasMarker(card, 'Counter-attack'):
          blockers = getGlobalVar('Blockers')         
          for i in blockers:
             if blockers[i] == card._id:
@@ -823,6 +834,9 @@ def modBP(card, qty, mode = None):
 #---------------------------------------------------------------------------
 
 def dealDamage(dmg, target, source, isPiercing = False):
+   if not getRule('dmg_combat_deal') and isCharacter(source) and (hasMarker(source, 'Attack') or hasMarker(source, 'Counter-attack')):
+      notify("{} deals no combat damage due to an abilty or effect.".format(source))
+      return
    if isinstance(target, Card):
       oldBP = getMarker(target, 'BP')
       dmg = min(dmg, getMarker(target, 'BP'))

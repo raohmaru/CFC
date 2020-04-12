@@ -83,12 +83,10 @@ def getTextualRestr(restr):
    if not restr:
       return ''
    if restr[1] in RS_KW_RESTR_LABELS:
-      possessive = ''
       player = me
       if restr[0] == RS_PREFIX_OPP:
-         possessive = 'his '
-         player = players[1]
-      return ' ' + RS_KW_RESTR_LABELS[restr[1]].format(possessive, player)
+         player = getOpp()
+      return ' ' + RS_KW_RESTR_LABELS[restr[1]].format(player)
    return restr(1)
    
    

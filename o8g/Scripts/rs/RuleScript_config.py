@@ -259,9 +259,9 @@ RS_KW_CMD_RESTRS = [
 ]
 
 RS_KW_RESTR_LABELS = {
-   RS_KW_RESTR_UEOT: "until end of {0}turn",
-   RS_KW_RESTR_UYNT: "until {1}'s next turn",
-   RS_KW_RESTR_UNAC: 'until {1} plays an action card'
+   RS_KW_RESTR_UEOT: "until end of {}'s turn",
+   RS_KW_RESTR_UYNT: "until {}'s next turn",
+   RS_KW_RESTR_UNAC: 'until {} plays an action card'
 }
 
 RS_KW_RESTRS_CLEANUP = [
