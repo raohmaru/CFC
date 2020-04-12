@@ -141,7 +141,7 @@ def clearGlobalVar(name, player = None):
 
 def replaceVars(str):
    debug("-- replaceVars({})".format(str))
-   str = re.sub(Regexps['BP']      , r'(hasattr(getParsedCard(\1), "BP") and getParsedCard(\1).BP)', str)
+   str = re.sub(Regexps['BP']      , r'hasattr(getParsedCard(\1), "BP") and getParsedCard(\1).BP', str)
    str = re.sub(Regexps['Action']  , 'isAction(card)', str)
    str = re.sub(Regexps['Reaction'], 'isReaction(card)', str)
    str = re.sub(Regexps['Char']    , 'isCharacter(card)', str)
@@ -156,6 +156,7 @@ def replaceVars(str):
    str = str.replace('attacker'    , 'attacker[0]')
    str = str.replace('blocker'     , 'blocker[0]')
    str = str.replace('soloattack'  , 'len(getAttackingCards()) == 1')
+   str = str.replace('.discards'   , '.piles["Discard Pile"]')
    debug("---- {}".format(str))
    return str
    
@@ -296,7 +297,7 @@ def addGameMod(type, id, *args):
    
   
 def removeGameMod(id, msg = False):
-   debug(">>> removeGameMod({})".format(id)) #Debug
+   debug(">>> removeGameMod({}, {})".format(id, msg)) #Debug
    Modifiers = getGlobalVar('Modifiers')
    debug("{}".format(Modifiers))
    for key, modList in Modifiers.iteritems():
@@ -864,45 +865,23 @@ def modSP(count = 1, mode = None, silent = False, player = me):
       notify("{} {} {} SP. New total is {} (before was {}).".format(player, action, count, player.SP, initialSP))
 
 
-def payCostSP(amount = 1, card = None, msg = 'play this card', cardType = None):
+def payCostSP(amount = 1, obj = None, msg = 'play this card', type = None):
 # Pay an SP cost. However we also check if the cost can actually be paid.
-   debug(">>> payCostSP({}, {})".format(amount, cardType)) #Debug
+   debug(">>> payCostSP({}, {})".format(amount, type)) #Debug
    amount = num(amount)
    
    # Cost modifiers
-   if cardType:
-      cardType = cardType.lower()
-      Modifiers = getGlobalVar('Modifiers')
-      debug("-- cardType is {}".format(cardType)) #Debug
-      debug("-- {}".format(Modifiers)) #Debug
-      if 'cost' in Modifiers:
-         newAmount = amount
-         costMod = 0
-         debug("-- Found modifier 'cost'") #Debug
-         for mod in Modifiers['cost']:
-            debug("-- {}".format(mod)) #Debug         
-            if mod[1] == cardType:  # cardType
-               debug("-- Applying mod") #Debug         
-               if mod[3] == RS_MODE_EQUAL:  # mode
-                  newAmount = mod[2]  # amount
-               else:
-                  costMod += mod[2]  # amount
-         debug("-- costMod: {}".format(costMod)) #Debug         
-         if costMod != 0:
-            newAmount += costMod
-            debug("-- newAmount: {}".format(newAmount)) #Debug         
-            # If initial cost is less than 0, then new cost cannot be less than -1 (Kyosuke rule)
-            if newAmount >= 0:
-               newAmount = max(amount, -1)
-         if amount != newAmount:
-            notify("The SP cost of {} has been modified by an ability ({} => {}).".format(card, amount, newAmount))
-            amount = newAmount
+   if type:
+      newAmount = getCostMod(amount, type, obj)
+      if amount != newAmount:
+         notify("The SP cost of {} has been modified by an ability ({} => {}).".format(obj, amount, newAmount))
+         amount = newAmount
    
    if amount >= 0:
       modSP(amount)
    else:
       initialSP = me.SP
-      if me.SP + amount < 0: # If we don't have enough SP, we assume card effects or mistake and notify the player that they need to do things manually.
+      if me.SP + amount < 0: # If we don't have enough SP, notify the player that they need to do things manually
          if not confirm("You do not seem to have enough SP to {}.\nAre you sure you want to proceed?\nCost is {} SP. \
          \n\n(If you do, your SP will go to the negative. You will need to increase it manually as required.)".format(msg, amount)):
             return False
@@ -910,6 +889,28 @@ def payCostSP(amount = 1, card = None, msg = 'play this card', cardType = None):
       me.SP += amount
       notify("{} has spent {} SP. New total is {}  (before was {}).".format(me, amount, me.SP, initialSP))
    return True
+   
+   
+def getCostMod(initialAmount, type, obj=None):
+   debug(">>> getCostMod({}, {})".format(obj, type)) #Debug
+   newAmount = initialAmount
+   type = type.lower()
+   Modifiers = getGlobalVar('Modifiers')
+   if 'cost' in Modifiers:
+      costMod = 0
+      for mod in Modifiers['cost']:
+         if mod[1] == type:
+            debug("-- Found cost modifier: {}".format(mod))
+            if mod[3] == RS_MODE_EQUAL:  # mode
+               newAmount = mod[2]
+            else:
+               costMod += mod[2]
+      if costMod != 0:
+         newAmount += costMod
+         # If initial cost is less than 0, then new cost cannot be less than -1 (Kyosuke rule)
+         if newAmount >= 0 and isCard(obj):
+            newAmount = max(initialAmount, -1)
+   return newAmount
 
 
 #------------------------------------------------------------------------------

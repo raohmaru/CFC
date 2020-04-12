@@ -155,7 +155,11 @@ def getEnvVars():
 # Adds action global variables
    global envVars
    if not envVars:
-      envVars = {}
+      envVars = {
+         'me': me,
+         # aliases
+         'ischar': isCharacter
+      }
       # To use in eval()
       globalFuncs = [getParsedCard, isAction, isReaction, isCharacter, getRingSize, getRing, getState, getOpp, getAttackingCards]
       for f in globalFuncs:
@@ -164,8 +168,6 @@ def getEnvVars():
       globalFuncs = [flipCoin, isCharacter]
       for f in globalFuncs:
          envVars[f.__name__.lower()] = f
-      # Aliases
-      envVars['ischar'] = isCharacter
    return envVars
 
 
@@ -559,23 +561,26 @@ def cmd_unfreeze(rc, targets, source, restr, *args):
    rc.applyNext()
 
 
-def cmd_alterCost(rc, targets, source, restr, cardType, mod):
-   debug(">>> cmd_alterCost({}, {})".format(cardType, mod)) #Debug
+def cmd_alterCost(rc, targets, source, restr, type, mod):
+   debug(">>> cmd_alterCost({}, {})".format(type, mod)) #Debug
    mode = None
+   msg = MSG_RULES['card_cost']
+   if 'cost_' + type in MSG_RULES:
+      msg = MSG_RULES['cost_' + type]
    if isNumber(mod):
       mod = num(mod)
-      notify(MSG_RULES['card_cost'].format(cardType.title(), abs(mod), 'less ' if mod >= 0 else 'more ', ''))
+      notify(msg.format(type.title(), abs(mod), 'less ' if mod >= 0 else 'more ', getTextualRestr(restr)))
    else:
       mode = mod[0]
       mod = num(mod[1:])
-      notify(MSG_RULES['card_cost'].format(cardType.title(), mod, '', getTextualRestr(restr)))
+      notify(msg.format(type.title(), mod, '', getTextualRestr(restr)))
       
-   addGameMod('cost', source._id, cardType, mod, mode)
+   addGameMod('cost', source._id, type, mod, mode)
    
    if restr:
       addGameEventListener(Hooks.CallOnRemove, 'removeGameMod', source._id, restr=restr, args=[source._id])
    else:
-      msg = MSG_RULES['card_cost'].format(cardType.title(), abs(mod), 'more ' if mod >= 0 else 'less ', '')
+      msg = msg.format(type.title(), abs(mod), 'more ' if mod >= 0 else 'less ', '')
       addGameEventListener(GameEvents.Removed,   'removeGameMod', source._id, args=[source._id, msg])
       addGameEventListener(GameEvents.Powerless, 'removeGameMod', source._id, args=[source._id, msg])
    rc.applyNext()

@@ -93,9 +93,10 @@ def blockPhaseStart():
       uattack = getGlobalVar('UnitedAttack')
       if len(uattack) > 0:
          chars = len(uattack) - 1
-         uatype = "Double" if chars == 1 else "Triple"
-         payCostSP(-chars*UAttackCost, msg = "does a {} United Attack".format(uatype))
-         notify("{} has paid the cost of the {} United Attack".format(me, uatype))
+         uatype = ["Double", "Triple"][chars-1] + " United Attack"
+         uacost = "ua{}".format(len(uattack))
+         payCostSP(-chars*UAttackCost, uatype, "do a {}".format(uatype), uacost)
+         notify("{} has paid the cost of the {}".format(me, uatype))
    # Trigger event
    triggerGameEvent(GameEvents.BlockPhase)
    # Attacking chars event not in UA
@@ -276,7 +277,7 @@ def playAuto(card, slotIdx=None, force=False):
          warning("Character card can't be played.\nThe selected slot is not empty (it's taken up by {}).\nIf you want to backup, please first target a character in your ring.".format(Card(myRing[slotIdx]).Name))
          return
       # Pay SP cost
-      if not payCostSP(card.SP, card, cardType = CharType):
+      if not payCostSP(card.SP, card, type = CharType):
          return
       # Finally, the card is played
       placeCard(card, card.Type, PlayAction, slotIdx)
@@ -302,7 +303,7 @@ def playAuto(card, slotIdx=None, force=False):
          information("Action cards can only be played on your Main Phase.")
          return
       # Pay SP cost
-      if not payCostSP(card.SP, card, cardType = ActionType):
+      if not payCostSP(card.SP, card, type = ActionType):
          return
       placeCard(card, card.Type, PlayAction)
       # Parse the card to enable card autoscripts
@@ -322,7 +323,7 @@ def playAuto(card, slotIdx=None, force=False):
       if triggerHook(Hooks.BeforePlayRE, me._id) == False:
          return
       # Pay SP cost
-      if not payCostSP(card.SP, card, cardType = ReactionType):
+      if not payCostSP(card.SP, card, type = ReactionType):
          return
       placeCard(card, card.Type, PlayAction)
       # Parse the card to enable card autoscripts
@@ -463,18 +464,21 @@ def unitedAttackAuto(card):
          else:
             warning("Only one United Attack is allowed.")
             return
-   # Max chars per United Attack
+   # Current chars in the United Attack
    united = [c for c in table
       if c.controller == me
       and MarkersDict['United Attack'] in c.markers]
+   # Max chars per United Attack
    if len(united) >= MaxCharsUAttack:
       warning("Can't be more than {} characters in a United Attack.".format(MaxCharsUAttack+1))
       return
+   totalUnited = len(united) + 1 # Chars in UA + current char
    # Cost
-   cost = (len(united)+1) * UAttackCost
+   cost = totalUnited * UAttackCost
+   cost = getCostMod(cost, "ua" + str(totalUnited+1))
    if cost > me.SP:
-      type = 'Double' if len(united) == 0 else 'Triple'
-      if not confirm("You do not seem to have enough SP to do a {} United Attack (it costs {}).\nProceed anyway?".format(type, cost)):
+      type = ["Double", "Triple"][totalUnited-1]
+      if not confirm("You do not seem to have enough SP to do a {} United Attack (it costs {} SP).\nProceed anyway?".format(type, cost)):
          return
 
    # Update UnitedAttack list

@@ -322,6 +322,7 @@ Available variables:
       .sp
       .hand
          .size
+      .discards
       .ring
       .chars
       .damaged
@@ -1830,7 +1831,9 @@ action = moveTo(hand) target(*<1>@oppDeck); moveTo(oppHand) target(*<1>@deck)
 """
 
 # Tooptadon
-# RulesDict['fa4ee219-8264-41bc-b8a3-23a24df61d9a'] = ""
+RulesDict['fa4ee219-8264-41bc-b8a3-23a24df61d9a'] = """
+action = alterCost(ua2, =0) & alterCost(ua3, =5) ueot
+"""
 
 # Tri-Quiz
 RulesDict['2d3891a7-6fc0-4793-9122-5abfc0bb3e22'] = """
@@ -1846,7 +1849,9 @@ action = loseAbility()
 """
 
 # Ancestry
-# RulesDict['e038ebfd-6c19-4b1c-bf38-a2fd9f5ffbfd'] = ""
+RulesDict['e038ebfd-6c19-4b1c-bf38-a2fd9f5ffbfd'] = """
+action = each(card.bp <= 3 in me.discards -> bp(+1)) target(character)
+"""
 
 # Aura spark
 RulesDict['be84124e-5057-4511-a181-7492451db5b2'] = """
@@ -1907,7 +1912,10 @@ action = {S(<**>character@myRing)}: each(card in sacrificed -> damage(3)) to(cha
 """
 
 # Galactica phantom
-# RulesDict['dd49c2e2-3455-481d-b8a7-5f813796b3f4'] = ""
+RulesDict['dd49c2e2-3455-481d-b8a7-5f813796b3f4'] = """
+target = character[uattack]
+action = destroy()
+"""
 
 # Go home
 RulesDict['46deecf5-7f7b-42b5-b6fa-e3162dce2013'] = """
@@ -1915,7 +1923,10 @@ action = moveTo(deck) target?(reactions@discards) & shuffle() & draw()
 """
 
 # Grandmaster
-# RulesDict['5972ea54-137c-41a7-a1eb-b9d9cd0ecfe5'] = ""
+RulesDict['5972ea54-137c-41a7-a1eb-b9d9cd0ecfe5'] = """
+action = moveTo(hand) target(reactions@discards)
+auto = ~anyEndPhase:once~ discard(reactions)
+"""
 
 # Held back
 RulesDict['372525df-1345-47cc-ae2f-2fe34a226ac9'] = """

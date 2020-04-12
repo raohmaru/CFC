@@ -311,6 +311,8 @@ MSG_RULES = {
       InstantUniChar + " abilites can be activated again."
    ),
    'card_cost': '{} cards now cost {} SP {}to play{}.',
+   'cost_ua2': 'Double united attacks now cost {1} SP{3}.',
+   'cost_ua3': 'Triple united attacks now cost {1} SP{3}.',
    'piercing': (
       'Whenever a character counter-attacks a United Attack, piercing damage is prevented.',  # Disabled
       'United-Attacks deals piercing damage as normal.'  # Enabled
@@ -324,7 +326,7 @@ MSG_RULES = {
       'Character cards with BP {} or greater cannot be played.'
    ),
    'chars_per_turn': (
-      'Only {} character card{} can be played per turn.'.format(CharsPerTurn, plural(CharsPerTurn)),
+      'Only {} character card can be played per turn.'.format(CharsPerTurn),
       'Up to {} character cards can be played per turn.'
    )
 }
