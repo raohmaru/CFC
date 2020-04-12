@@ -210,6 +210,9 @@ class RulesUtils():
       # Apply a final selector
       if selector and targets:
          targets = RulesSelectors.applySelector(selector, targets)
+         
+      if not targets:
+         whisper(MSG_ERR_NO_FILTERED_CARDS)
 
       return targets
 
@@ -348,12 +351,12 @@ class RulesUtils():
             debug("-- Picked {} card(s) from the bottom of {}".format(len(cards_f1), ''.join(zone)))
 
       if choose:
-         if len(cards_f1) == 0 and not reveal:
-            whisper(MSG_ERR_NO_FILTERED_CARDS)
+         if len(cards_f1) == 0:
             return False
          if not msg:
             msg = MSG_SEL_CARD_EFFECT if source else MSG_SEL_CARD
          sourceName = source.Name if source else ''
+         # Quantity message
          qtyMsg = min(minQty, len(cards_f1))
          qtyPlural = plural(minQty)
          if qty is not None and qty.max == RS_KW_ANYNUM:
@@ -383,7 +386,6 @@ class RulesUtils():
             # Info message
             owner = article.replace('your', 'his')
             notify(MSG_PLAYER_LOOKS.format(me, owner, zone[1]))
-            # Select in any zone
             title = msg.format(qtyMsg, qtyPlural, article, zone[1], sourceName)
             # If there aren't enough cards to select, just show the cards
             if len(cards_f1) <= minQty:

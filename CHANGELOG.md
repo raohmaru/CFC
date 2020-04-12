@@ -1,7 +1,7 @@
 # Card Fighters' Clash Changelog
 
 ## 0.7.13
-Scripted abilities: Indulge, Last resort.
+Scripted abilities: Indulge, Last resort, Morph.
 ## 0.7.12
 Scripted abilities: Wanderer, Yuki, Shiki, Shizumaru, Sougetsu,  Athena, Activate, Awakening, Crossover, Showtime, Domination, Emulate, Fate duel.
 ## 0.7.11

@@ -160,7 +160,7 @@ def replaceVars(str):
    return str
    
    
-def evalExpression(expr, retValue = False, locals = None, globals = None):
+def evalExpression(expr, retValue = False, locals = None):
    debug("evalExpression({})\nLocals: {}".format(expr, locals))
    expr = replaceVars(expr)
    forexpr = "[{} for card in {}]"
@@ -175,7 +175,7 @@ def evalExpression(expr, retValue = False, locals = None, globals = None):
       expr = 'all(' + expr + ')'
    
    try:
-      res = eval(expr, globals, locals)
+      res = eval(expr, getEnvVars(), locals)
       if retValue:
          debug("-- Evaluated expr  %s  (%s)" % (expr, res))
          return res
@@ -367,9 +367,17 @@ def swapPiles(pile1, pile2):
 
 def reveal(group):
    debug(">>> reveal()") #Debug
-   cards = [card for card in group]
-   notify("{} shows his {}".format(group.controller, group.name))
-   showCardDlg(cards, "Cards in {}'s {}".format(group.controller, group.name), 0, "", 0)
+   if isinstance(group, list):
+      for card in group:
+         isFaceUp = card.isFaceUp
+         card.isFaceUp = True
+         notify("{} reveals {} {}.".format(me, card, fromWhereStr(card.group)))
+         if isFaceUp == False:
+            card.isFaceUp = False
+   else:
+      cards = [card for card in group]
+      notify("{} shows his {}".format(group.controller, group.name))
+      showCardDlg(cards, "Cards in {}'s {}".format(group.controller, group.name), 0, "", 0)
    
    
 def getRing(player = None):

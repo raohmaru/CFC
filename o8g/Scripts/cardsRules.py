@@ -283,7 +283,6 @@ A list of targets that all must exist in order to execute the action.
 vars = varname := value [; varname := value] 
 
 Assigns a value to a variable, which will exists during the execution of the effects.
-
 Several variables can be joined with ';'.
 
 varname:
@@ -1269,8 +1268,8 @@ action = {D(character[abinstant])}{F}: activate(discarded[0])
 
 # Akari Ichijou's LET'S GAMBLE!
 RulesDict['95675af9-956c-4b27-b7e1-a59b10a0cb7c'] = """
-vars = coin := flipCoin()
-action = {F}: [[if coin == 1]] bp(+5) target(character) [[else]] damage(3) to(this)
+vars = _coin := flipCoin()
+action = {F}: [[if _coin]] bp(+5) target(character) [[else]] damage(3) to(this)
 """
 
 # Awakened Kaede's POWER MATCH
@@ -1678,7 +1677,11 @@ action = prophecy(3)
 """
 
 # Morph
-# RulesDict['51a47b27-abf3-4219-a241-c72bd23b178b'] = ""
+RulesDict['51a47b27-abf3-4219-a241-c72bd23b178b'] = """
+target = character; *<1>@oppDeck
+vars = _char := tgt[0]; _card := tgt[1]
+action = reveal() target(_card); [[if isChar(_card)]] bp(=_card.bp) to(_char) [[else]] destroy() target(_char)
+"""
 
 # No tricks
 RulesDict['69cf51ab-090c-4c60-8b58-b71d6455f0a2'] = """

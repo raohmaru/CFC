@@ -137,7 +137,7 @@ class Rules():
       return True
 
       
-   def execAction(self, action, target, isAuto=False):
+   def execAction(self, action, target, isAuto=False, isBranch=False):
       debug("Executing actions: {}, {}, isAuto={}".format(action, target, isAuto))
       
       if isinstance(action, list):
@@ -158,26 +158,28 @@ class Rules():
          action = action[t-1]
             
       thisCard = Card(self.card_id)
+      addActionTempVars('tgt', target)
       
       global commander
       if commander is None:
          commander = RulesCommands()
             
-      # Add temp variables
-      if RS_KEY_VARS in self.rules_tokens:
-         vars = self.rules_tokens[RS_KEY_VARS]
-         debug("Adding temp vars: {}".format(vars))
-         for var in vars:
-            res = evalExpression(var[1], True, getLocals(source=thisCard), getEnvVars())
-            if res is not None:
-               debug("-- {} := {}".format(var[0], res))
-               addActionTempVars(var[0], res)
-            
-      # The player must pay the cost, or we cancel
-      if action['cost']:
-         if not self.payCost(action['cost']):
-            notify(MSG_COST_NOT_PAYED.format(me, thisCard, ('effect', 'ability')[isCharacter(thisCard)]))
-            return False
+      if not isBranch:
+         # Add temp variables
+         if RS_KEY_VARS in self.rules_tokens:
+            vars = self.rules_tokens[RS_KEY_VARS]
+            debug("Adding temp vars: {}".format(vars))
+            for var in vars:
+               res = evalExpression(var[1], True, getLocals(source=thisCard))
+               if res is not None:
+                  debug("-- {} := {}".format(var[0], res))
+                  addActionTempVars(var[0], res)
+               
+         # The player must pay the cost, or we cancel
+         if action['cost']:
+            if not self.payCost(action['cost']):
+               notify(MSG_COST_NOT_PAYED.format(me, thisCard, ('effect', 'ability')[isCharacter(thisCard)]))
+               return False
             
       # Apply the effects
       for i, effect in enumerate(action['effects']):
@@ -208,7 +210,7 @@ class Rules():
                   debug("--- Condition not matching")
                   if len(cond) > 2:
                      debug("--- Found ELIF/ELSE condition")
-                     return self.execAction(cond[2], target, isAuto)
+                     return self.execAction(cond[2], target, isAuto, True)
                   if len(effect[1]) > 0:
                      notify("Cannot activate the ability because its condition does not match.")
                   if not isAuto:
@@ -221,7 +223,6 @@ class Rules():
          # Additional target
          if effect[2]:
             debug("-- Found additional {}target".format('optional' if effect[2]['opt'] else ''))
-            addActionTempVars('tgt', currTarget)
             newTarget = RulesUtils.getTargets(effect[2], source=thisCard)
             if newTarget == False and not effect[2]['opt']:
                if not isAuto:

@@ -124,11 +124,10 @@ def getLocals(**kwargs):
         
    rc = commander
    if kwargs:
-      localVars = dict(
-         this = kwargs['source'] if 'source' in kwargs else None,
-         tgt = kwargs['targets'][0] if 'targets' in kwargs and len(kwargs['targets']) > 0 else None
-      )
-      locals.update(localVars)
+      if 'source' in kwargs:
+         locals['this'] = kwargs['source']
+      if 'targets' in kwargs and len(kwargs['targets']) > 0:
+         locals['tgt'] = kwargs['targets'][0]
       if 'rc' in kwargs:
          rc = kwargs['rc']
       
@@ -147,9 +146,16 @@ def getEnvVars():
    global envVars
    if not envVars:
       envVars = {}
-      globalFuncs = [flipCoin]
+      # To use in eval()
+      globalFuncs = [getParsedCard, isAction, isReaction, isCharacter, getRingSize, getRing, getState, getOpp, getAttackingCards]
+      for f in globalFuncs:
+         envVars[f.__name__] = f
+      # Used in cardRules
+      globalFuncs = [flipCoin, isCharacter]
       for f in globalFuncs:
          envVars[f.__name__.lower()] = f
+      # Aliases
+      envVars['ischar'] = isCharacter
    return envVars
 
 
@@ -208,12 +214,10 @@ def cmd_destroy(rc, targets, source, restr, *args):
 def cmd_reveal(rc, targets, source, restr, pileName=None):
    debug(">>> cmd_reveal({})".format(pileName)) #Debug
    if not pileName:
-      for card in targets:
-         isFaceUp = card.isFaceUp
-         card.isFaceUp = True
-         notify("{} reveals {} {}.".format(me, card, fromWhereStr(card.group)))
-         if isFaceUp == False:
-            card.isFaceUp = False
+      if targets[0].controller == me:
+         reveal(targets)
+      else:
+         remoteCall(getOpp(), "reveal", [targets])
    elif pileName in RS_KW_ZONES_PILES:
       if not targets or isCard(targets[0]):
          targets = [me]
@@ -223,8 +227,6 @@ def cmd_reveal(rc, targets, source, restr, pileName=None):
             remoteCall(getOpp(), "reveal", [pile])
          else:
             reveal(pile)
-   else:
-      debug("{} is not a valid pile".format(pileName))
    rc.applyNext()
 
 

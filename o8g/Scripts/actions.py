@@ -113,13 +113,16 @@ def scoop(group, x=0, y=0):
 
 def flipCoin(group = None, x = 0, y = 0):
    mute()
+   sides = ['Heads','Tails']
    notify("{} flips a coin...".format(me))
+   choice = askChoice("Call heads or tails", sides)
+   if choice == 0:
+      choice = 1
+   notify("{} has choosen {}".format(me, sides[choice-1]))
    n = rnd(1, 2)
-   if n == 1:
-      notify(u" \u2192 flips Heads.")
-   else:
-      notify(u" \u2192 flips Tails.")
-   return n
+   wins = n == choice
+   notify(u" \u2192 flips {} ({}).".format(sides[n-1], ('loses', 'wins')[wins]))
+   return wins
 
 
 def randomPick(group, x = 0, y = 0, fromPlayer = None):
