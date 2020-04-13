@@ -31,19 +31,17 @@ class RulesFilters():
    @staticmethod   
    def applyFiltersTo(arr, filters):
       if len(filters) > 0:
+         arr2 = []
          for filter in filters:
-            # filter could be a list of chained filters
+            # filter could be a list of chained filters (&)
             if isinstance(filter[0], list):
                arr2 = arr
                for f in filter:
                   arr2 = RulesFilters.applyFilter(f, arr2)
+            # optional filter (,)
             else:
-               arr2 = RulesFilters.applyFilter(filter, arr)
-            # Break on any match
-            if len(arr2) > 0:
-               break
-         arr = arr2
-      
+               arr2 += RulesFilters.applyFilter(filter, arr)
+         arr = list(set(arr2))  # unique values
       return arr
    
    

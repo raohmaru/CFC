@@ -171,6 +171,7 @@ effect:
          turns(#)  # unsiged int, target = current player
          skip(phase)
          unite()
+         removeFromAttack()
       Ability:
          Keywords:
             @see abilities
@@ -2044,7 +2045,10 @@ action = bp(+3)
 """
 
 # Waiting in vain
-# RulesDict['1e54d73a-4795-4eae-b1d1-c0ca5d075fcf'] = ""
+RulesDict['1e54d73a-4795-4eae-b1d1-c0ca5d075fcf'] = """
+target = characters[attack,uattack]@oppRing
+action = removeFromAttack()
+"""
 
 # Wanna gimme
 RulesDict['c6acfab6-c7cb-442e-87f0-432779af5ad9'] = """

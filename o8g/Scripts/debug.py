@@ -41,8 +41,7 @@ def debugScenario():
    gotoMain()
    rnd(100, 10000)  # Delay the next action until all animation is done
    tableCards = [
-      '7717e285-f824-4bfa-bd76-c0039c97190e' # Mega Man
-      ,'d14694b4-484c-4b45-962e-8cbb636d8a9a' # 200 BP
+      'd14694b4-484c-4b45-962e-8cbb636d8a9a' # 200 BP
       # ,'c7d128ea-a3b9-4b04-b8b2-a61153b5b2e6' # 400 BP
       # ,'24e99a13-cb42-4e16-9900-78dde12e1a4c' # 600 BP
       # ,'e6e46f83-d089-4762-8d8e-2a3252cfc9db' # 1000 BP
@@ -58,7 +57,7 @@ def debugScenario():
       rnd(1, 100)  # Delay the next action until all animation is done
       
    handCards = [
-      'eaf346c3-d2e6-4066-adae-e1678746673d' # Robber
+      '1e54d73a-4795-4eae-b1d1-c0ca5d075fcf' # Waiting in vain
       # '556b3359-e642-419a-ab5c-67f70de1bb4f' # Overdoing it
       # ,'8bb477f9-5004-4018-8d5e-73c6a23e8912' # Char 300 BP
       # ,'e910f462-bea9-4262-b168-c7c512eb6511' # Char 500 BP
@@ -122,10 +121,10 @@ def debugScenario():
    
 def debugOpp():
    tableCards = [
-       # 'd14694b4-484c-4b45-962e-8cbb636d8a9a' # 200 BP
-      # ,'c7d128ea-a3b9-4b04-b8b2-a61153b5b2e6' # 400 BP
-      # ,'24e99a13-cb42-4e16-9900-78dde12e1a4c' # 600 BP
-      # ,'e6e46f83-d089-4762-8d8e-2a3252cfc9db' # 1000 BP
+       'd14694b4-484c-4b45-962e-8cbb636d8a9a' # 200 BP
+      ,'c7d128ea-a3b9-4b04-b8b2-a61153b5b2e6' # 400 BP
+      ,'24e99a13-cb42-4e16-9900-78dde12e1a4c' # 600 BP
+      ,'e6e46f83-d089-4762-8d8e-2a3252cfc9db' # 1000 BP
    ]
    for i, id in enumerate(tableCards):
       card = table.create(id, 0, 0, quantity=1, persist=True)

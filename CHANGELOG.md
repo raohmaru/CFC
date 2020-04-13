@@ -1,5 +1,7 @@
 # Card Fighters' Clash Changelog
 
+## 0.7.14
+Scripted abilities: Waiting in vain.
 ## 0.7.13
 Scripted abilities: Indulge, Last resort, Morph, Revive, Roulette, SP partner, Study, Tooptadon, Ancestry, Galactica phantom, Grandmaster, Manari's song, Overdoing it, Overheat, Painful treatment, Robber, Snared, Vacation.
 ## 0.7.12

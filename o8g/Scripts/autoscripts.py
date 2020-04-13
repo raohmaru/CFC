@@ -393,11 +393,11 @@ def backupAuto(card):
    return target
 
 
-def attackAuto(card):
+def attackAuto(card, force = False):
    debug(">>> attackAuto()") #Debug
 
    # Check if we can attack
-   if not me.isActive or currentPhase()[1] != AttackPhase:
+   if not force and (not me.isActive or currentPhase()[1] != AttackPhase):
       information("You can only attack in your Attack Phase.")
       return
    # Only for character cards...

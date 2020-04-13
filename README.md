@@ -9,8 +9,6 @@ This plugin allows online playing and creation of CFC decks.
 
 Official plugin site: http://octgngames.com/cfc/
 
-The python scripts are based on the game definitions by [db0](https://github.com/db0).
-
 ## Development
 The project uses [Rake](https://github.com/ruby/rake) to automate some tasks, available through the 
 the following commands:

@@ -767,11 +767,12 @@ def passControlTo(player, cards, cb = None):
       remoteCall(player, cb[0], cb[1])
    
 
-def getAttackingCards():
+def getAttackingCards(player = me, getUA = False):
    return [card for card in table
-      if card.controller == me
+      if card.controller == player
       and isCharacter(card)
-      and hasMarker(card, 'Attack')]
+      and hasMarker(card, 'Attack')
+      or (getUA and hasMarker(card, 'United Attack'))]
 
 
 #---------------------------------------------------------------------------
