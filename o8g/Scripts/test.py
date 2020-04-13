@@ -42,15 +42,15 @@ targets = [
    # "target = character@invalidZone",
    # "target = *<2>@oppDeck",
    # "target = <r>@hand",
-   # "target = <r2>action@hand[bp>300]",
+   "target = <r2>action@hand[bp>300]",
    # "target = <1>action@hand",
    # "target = <1,2>action@hand",
    # "target? = <,4>*<-2>@myDeck",
    # "target? = <1?>*<2>@deck",
    # "target = <**>characters@myRing",
    # 'target = "Juni"&"Juli"<1>@myDeck',
-   "target = characters[bp:lowest]",
-   "target = character@myRing; character@oppRing",
+   # "target = characters[bp:lowest]",
+   # "target = character@myRing; character@oppRing",
 ]
 actions = [
    # "action = destroy()",
@@ -154,8 +154,8 @@ def test(arr, title):
       print ""
 
 # rules = RulesDict['aa867ea1-89f8-4154-8e20-2263edd00002']
-# test(targets, 'targets')
-test(actions, 'actions')
+test(targets, 'targets')
+# test(actions, 'actions')
 # test(abilities, 'abilities')
 # test(autos, 'autos')
 # test(requisite, 'requisite')

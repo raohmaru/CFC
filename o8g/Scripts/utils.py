@@ -212,7 +212,7 @@ def getNextActivePlayer():
    return players[1] if len(players) > 1 and me.isActive else me
 
 
-def funcBind(player, func, args=[]):
+def funcCall(player, func, args=[]):
    if player == me:
       func(*args)
    else:
@@ -466,7 +466,7 @@ def cardsNamesStr(cards):
    if not cards:
       return ''
    if len(cards) == 1:
-      return cards[0]
+      return "{}".format(cards[0])
    arr = list(cards[:-1])
    str = ("{}, " * len(arr)).format(*arr)[:-2]
    str += " and {}".format(cards[-1])

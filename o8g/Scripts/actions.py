@@ -370,20 +370,20 @@ def transformCards(cards, x = 0, y = 0):
          
 def toggleAbility(card, x = 0, y = 0, remove = False):
    mute()
-   # Removes card from parsed list to parse it again with the new abilities
    if not isCharacter(card) or (card.alternate == '' and card.Rules == ''):
       return
    if card.alternate == 'noability' and not remove:
       card.alternate = ''
-      funcBind(card.controller, removeParsedCard, [card])
-      funcBind(card.controller, parseCard, [card])
+      # Removes card from parsed list to parse it again with the new abilities
+      funcCall(card.controller, removeParsedCard, [card])
+      funcCall(card.controller, parseCard, [card])
       if card.Rules != '':
          notify("{} restores {}'s abilities".format(me, card))
       else:
          notify("{} tried to restore {}'s abilities, but it doesn't have any original ability".format(me, card))
    else:
       triggerGameEvent([GameEvents.Powerless, card._id])
-      funcBind(card.controller, removeParsedCard, [card])
+      funcCall(card.controller, removeParsedCard, [card])
       CharsAbilities = getGlobalVar('CharsAbilities')
       if card._id in CharsAbilities:
          del CharsAbilities[card._id]
@@ -436,14 +436,14 @@ def copyAbility(card, x = 0, y = 0, target = None):
                model = CharsAbilities[target._id]
          CharsAbilities[card._id] = model
          setGlobalVar('CharsAbilities', CharsAbilities)
-         funcBind(card.controller, removeParsedCard, [card])
-         funcBind(card.controller, parseCard, [card, model])
+         funcCall(card.controller, removeParsedCard, [card])
+         funcCall(card.controller, parseCard, [card, model])
          # Updates proxy image for the other players
          for p in players:
             if p != me:
                remoteCall(p, "copyAlternateRules", [card, target])
          update()  # Trying this method to delay next actions until networked tasks are complete
-         ability = getParsedCard(target).ability.name if isinstance(target, Card) else target.Ability
+         ability = Ability(target, ruleId=model).name if isinstance(target, Card) else target.Ability
          notify("{} copies ability {} to {}.".format(me, ability, card))
          return target
       else:
@@ -483,8 +483,9 @@ def swapAbilities(card, x = 0, y = 0, target = None):
 def stealAbility(card, x = 0, y = 0, target = None):
    target = copyAbility(card, target = target)
    if target:
-      toggleAbility(target)
-      notify("{} has stolen ability {} from {}.".format(card, getParsedCard(target).ability.name, target))
+      ability = getParsedCard(target).ability.name
+      toggleAbility(target, remove=True)
+      notify("{} steals ability {} from {} and gives it to {}.".format(me, ability, target, card))
 
    
 #---------------------------------------------------------------------------

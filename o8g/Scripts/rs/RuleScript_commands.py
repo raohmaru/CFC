@@ -422,8 +422,13 @@ def cmd_draw(rc, targets, source, restr, qty = None):
    rc.applyNext()
 
 
-def cmd_steal(rc, targets, source, restr, *args):
-   debug(">>> cmd_steal({}, {})".format(targets, source)) #Debug
+def cmd_steal(rc, targets, source, restr, extraSource = None):
+   if extraSource:
+      cardsTokens = RulesLexer.parseTarget(extraSource)
+      cards = RulesUtils.getTargets(cardsTokens)
+      if cards:
+         source = cards[0]
+   debug(">>> cmd_steal({}, {}, {})".format(targets, source, extraSource)) #Debug
    stealAbility(source, target = targets[0])
    rc.applyNext()
 

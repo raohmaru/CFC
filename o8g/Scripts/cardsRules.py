@@ -150,7 +150,7 @@ effect:
          hp(#|expr)     # default target = me
          playExtraChar()
          draw([#|expression])  # Default: 1
-         steal()
+         steal([copyToTarget]) # default = this card
          loseAbility()
          copyAbility(expr)
          swapAbilities()
@@ -453,7 +453,7 @@ action = [[if me.hand.size < opp.hand.size]] draw(opp.hand.size - me.hand.size) 
 
 # Mega Man's ENEMY'S ABILITY
 RulesDict['7717e285-f824-4bfa-bd76-c0039c97190e'] = """
-action = {F}: steal() target(^character)
+action = {F}: steal() target(^character[powerful])
 """
 
 # Mega Man X's PARTS CHANGE
@@ -1956,10 +1956,16 @@ action = unite()
 """
 
 # Overheat
-# RulesDict['27befc33-c2be-40d2-8839-bb8ee41f8d95'] = ""
+RulesDict['27befc33-c2be-40d2-8839-bb8ee41f8d95'] = """
+target = opp
+action = discard(<r2>)
+"""
 
 # Painful treatment
-# RulesDict['81b95f17-ba79-4f2f-aa7f-4808d6fad1ec'] = ""
+RulesDict['81b95f17-ba79-4f2f-aa7f-4808d6fad1ec'] = """
+target = characters[bp<=3]
+action = bp(+5)
+"""
 
 # Power mode
 RulesDict['559a71aa-0d14-44b0-bfb9-557d08ae0e0b'] = """
@@ -1978,7 +1984,9 @@ action = {D(character)}: sp(discarded[0].SP)
 """
 
 # Robber
-# RulesDict['eaf346c3-d2e6-4066-adae-e1678746673d'] = ""
+RulesDict['eaf346c3-d2e6-4066-adae-e1678746673d'] = """
+action = steal(character) to(character[powerful])
+"""
 
 # Robot punch
 RulesDict['91e441cc-0f1f-4b01-a2b0-94678d6f0b56'] = """
@@ -1993,7 +2001,10 @@ action = {F}: reveal(hand); each(reaction in opp.hand -> draw(2)) target(me)
 """
 
 # Snared
-# RulesDict['30fdfea5-4781-40b8-a8e7-7830fba3bcd6'] = ""
+RulesDict['30fdfea5-4781-40b8-a8e7-7830fba3bcd6'] = """
+target = *@discards
+action = moveTo(hand)
+"""
 
 # SP leak
 RulesDict['68eaee28-a00a-480f-b8e5-e14d2a8f102c'] = """
@@ -2027,7 +2038,10 @@ action = {D(character)}: damage(discarded[0].BP) to(character[attack])
 """
 
 # Vacation
-# RulesDict['f4df6ee6-2fcd-4ba1-b86f-59d5028eb96b'] = ""
+RulesDict['f4df6ee6-2fcd-4ba1-b86f-59d5028eb96b'] = """
+target = character
+action = bp(+3)
+"""
 
 # Waiting in vain
 # RulesDict['1e54d73a-4795-4eae-b1d1-c0ca5d075fcf'] = ""
@@ -2036,7 +2050,6 @@ action = {D(character)}: damage(discarded[0].BP) to(character[attack])
 RulesDict['c6acfab6-c7cb-442e-87f0-432779af5ad9'] = """
 target? = *@deck
 action = {F}: shuffle() & moveTo(deck)
-
 """
 
 # Who's taller

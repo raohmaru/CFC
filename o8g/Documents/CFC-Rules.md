@@ -114,22 +114,22 @@ There is no limitation in the number of Reaction cards a player may play.
 
 
 ## The Abilities
-Some characters may have an special effect (called *Ability*), which is represented by an ability type (symbols <span class="ab ab-instant">▲</span>, <span class="ab ab-trigger">■</span> or <span class="ab ab-auto">●</span>) followed with the ability name at the beginning of the rule text.
+Some characters may have an special effect (called *Ability*), which is represented by an ability type (symbols <span class="ab ab-instant">▲</span>, <span class="ab ab-trigger">■</span> or <span class="ab ab-auto">●</span>) followed with the ability name, at the beginning of the rule text.
 
 Every type of ability tells in which moment of the game the ability can be activated.
 
-Once an ability is activated, its effect applies immediately, and it apply only once.
+Once an ability is activated, its effect applies immediately, and it applies only once.
 
 ### <span class="ab ab-instant">▲</span> Ability
-A <span class="ab ab-instant">▲</span> ability is activated when that character enters the ring.
+<span class="ab ab-instant">▲</span> ability are activated when the character enters the ring.
 
 ### <span class="ab ab-trigger">■</span> Ability
-A <span class="ab ab-trigger">■</span> ability can be activated only in your Main phase. When it is activated the character enters the freeze state.
+<span class="ab ab-trigger">■</span> abilities can be activated only in your Main phase. When it is activated the character enters the freeze state.
 
 Frozen characters and characters that just entered the ring cannot activate a <span class="ab ab-trigger">■</span> ability in that turn.
 
 ### <span class="ab ab-auto">●</span> Ability
-A <span class="ab ab-auto">●</span> ability is always active as long as that character is on the ring.
+<span class="ab ab-auto">●</span> abilities are always active as long as that character is on the ring.
 
 Whenever a character with a <span class="ab ab-auto">●</span> ability takes part in a United Attack, that ability is nullified until the end of the turn.
 
