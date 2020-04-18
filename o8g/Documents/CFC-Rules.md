@@ -6,9 +6,9 @@ This document is designed for people who want to start learning the rules and ga
 ## Introduction
 Card Fighters' Clash (we will refer to it as CFC) is a card game for two players based on SNK Playmore’s video game [SNK vs. Capcom Card Fighters' Clash 2 Expand Edition](http://neogeo.freeplaytech.com/svc-2/). Players try to defeat each other in a battle playing powerful characters based on Capcom and SNK Playmore video games. Characters have unique abilities that can dramatically change the course of the game, and the character's KI energy is manifested in the form of Soul Points, which can be used to attack the opponent or to play Action cards and Reaction cards –they add exciting effects to the battle that can be played even in opponent's turn.
 
-Players start the game (in CFC every game is a battle!) with a deck of cards and an initial amount of HP (Hit Points or player's life). A deck may contain any number Character, Action or Reaction cards, but it can't have more than three copies of any single card with the same name. Each player shuffles his deck and draws an initial hand of 5 cards, and then they are ready to fight.
+Players start the game (in CFC every game is a battle!) with a deck of cards and an initial amount of **HP** (Hit Points or player's life). A deck may contain any number Character, Action or Reaction cards, but it can't have more than three copies of any single card with the same name. Each player shuffles his deck and draws an initial hand of 5 cards, and then they are ready to fight.
 
-In their respective turn, players draw cards from his deck, play cards from his hand and attack the opponent (in CFC we refer to an opponent as an *enemy*) with the characters he has in play. The the enemy has the opportunity to counterattack with his characters or by playing Reaction cards.
+In their respective turn, players draw cards from his deck, play cards from his hand and attack the opponent (in CFC we refer to an opponent as an *enemy*) with the characters he has in play. The the enemy has the opportunity to counter-attack with his characters or by playing Reaction cards.
 
 The battle ends when a player's HP (Hit Points or player's life) drops to 0 or less, that is when dealt damage by a character or by the effect of a card. But also a player can lose the battle if he runs out of cards in his deck. So be ready to strike hard and block enemy's attacks, and you will have a chance to win the battle.
 
@@ -24,30 +24,28 @@ The game board of CFC has two different zones: the Game Area (also called **Aren
 
 The Arena is divided into two parts, one for each player, called the **Ring**. The Ring is where the players places their character cards, always in an empty slot. In a regular CFC game, each Ring has four slots, that means that players can play up to four characters by placing the cards in an empty slot.
 
-When a player attacks with their characters, these cards are placed in the Attack Line by moving them one space forward (but without invading the other player's ring). If the other player blocks an attack (he does a counterattack) with a character, he moves that card to its Attack Line in front of the attacking card.
+When a player attacks with their characters, these cards are placed in the Attack Line by moving them one space forward (but without invading the other player's ring). If the other player blocks an attack (he does a counter-attack) with a character, he moves that card to its Attack Line in front of the attacking card.
 
-At the end of a turn, character cards are moved back to their slot.
+At the end of a turn, character cards are moved back to their corresponding slot.
 
 ### Deck
 Players need a deck of at least 50 cards to play CFC. A deck can contain any type of card but with the following limitation: it can't have more than three copies of any single card with the same name (*for example, a deck can contain three cards named "Akuma" and another three cards named "Shinjin Akuma"*).
 
 When a player draws a card, he must draw from the top of his deck (unless an effect says the opposite).
 
-If a player cannot draw cards form his deck during his Draw phase, he loses the battle.
-
 ### Discards Pile
-When a character is KO'ed (that is, its Battle Points lowers to 0 or by an effect) it's moved from a Ring to its controller Discard Pile , faced up.
+When a character is **KO'ed** (that is, its Battle Points lowers to 0 or by an effect) it's moved from a Ring to its controller Discard Pile , faced up.
 Action cards and Reaction cards go to the Discard Pile as well, after their effects are resolved.
 
 Any player may look at a Discards Pile, but the order of the cards can't be changed.
 
 ### Removed Pile
-Some effects ~~(like Fellowship)~~ send cards to the Removed Pile. Cards in this pile are considered out of the game to any effect.
+Some effects may send cards to the Removed Pile. Cards in this pile are considered out of the game to any effect.
 
 Removed cards are kept face up and may be examined by any player at any time.
 
 ### Hand
-Cards held by each player are called the Hand. When starting a battle, players draw 5 cards from their deck.
+Cards held by each player are called the **Hand**. When starting a battle, players draw 5 cards from their deck.
 
 There's no limit on the number of cards a player can have in his hand.
 
@@ -61,7 +59,7 @@ By playing cards players can bring into the battle powerful fighters and effects
 1. **Battle Points (BP)**. It represents a character's attack power and its strength. When a character is dealt damage, its BP is reduced by that number of damage points.
    If the BP lowers to zero, that character is KO'ed and goes to the discard pile.
 2. **Soul Points (SP)**. It represents Ki energy in battles. Players can spend SP to play cards and to make United Attacks.  
-   When a player plays a card, he gains the SP listed in that card. If the SP is 0 or is a negative value, then the player must spend that amount from his SP or that card can't be played.
+   When a player plays a card, he gains the SP listed in that card. If the SP is a negative value, then the player must spend that amount from his SP or that card can't be played.
 3. **Publisher and Team**. These are the name of the video game where a character appeared (second logo) and that game publisher (first logo).
 4. **Card name**.
    The icon on the left represents the card subtype.
@@ -82,7 +80,7 @@ By playing cards players can bring into the battle powerful fighters and effects
 A card has one type, that tells when it can be played and what happens to the card after it's played.
 
 #### Character
-![Character card](imgs/Karin.jpg)
+![Character card](imgs/card-character.jpg)
 
 Characters are cards that represent a character from a video game, and they are placed into an empty slot of your ring. They can attack and deal damage to an enemy, or they can protect and battle against attacking characters.
 
@@ -95,7 +93,7 @@ Only one character card can be played per turn.
 When you play a character, the turn it enters the ring it cannot attack and you can't activate its <span class="ab ab-trigger">■</span> ability.
 
 #### Action
-![Action card](imgs/Slaughter.jpg)
+![Action card](imgs/card-action.jpg)
 
 Action cards offers a variety of effects, like special powers or events that can help in a battle. You can play them only in your turn.
 
@@ -104,9 +102,9 @@ Action cards have a cost: a number of SP (usually negative) a player must spend 
 There is no limitation in the number of Action cards a player can play in his turn.
 
 #### Reaction
-![Reaction card](imgs/Snared.jpg)
+![Reaction card](imgs/card-reaction.jpg)
 
-Reaction cards are like Action cards but that can be only played during an enemy's Counterattack phase, and only if that enemy is attacking you. After it has been played, its effects are applied immediately and the card is put into the discard pile.
+Reaction cards are like Action cards but that can be only played during an enemy's Counter-attack phase, and only if that enemy is attacking you. After it has been played, its effects are applied immediately and the card is put into the discard pile.
 
 Reaction cards have a cost, a number of SP (usually negative) a player must spend to play that card.
 
@@ -135,7 +133,7 @@ Whenever a character with a <span class="ab ab-auto">●</span> ability takes pa
 
 
 ## Back-ups
-You can attach cards from your hand on characters in your ring to raise its power. By doing so you are backing-up the character in your ring.
+You can attach cards from your hand on characters in your ring to raise its power. By doing so you are **backing-up** the character in your ring.
 
 To back-up a character, choose a card in your hand which subtype matches one those listed in the character. Then place the card below that character.
 
@@ -172,10 +170,10 @@ The total BP of the characters in a United Attack is considered when dealing dam
 
 If a United Attack is countered, enemy character deals damage to each attacking character, in ordered sequence, until it is KO'ed or all participants in the United Attack are KO'ed.
 
-### Counterattack (Block)
-A counterattack happens when defending player counters (blocks) an attack with an unfrozen character in his ring.
+### Counter-attack (Block)
+A counter-attack happens when defending player counters (blocks) an attack with an unfrozen character in his ring.
 
-A character can only counterattack one attack. An attack can only be countered by one single character.
+A character can only counter-attack one attack. An attack can only be countered by one single character.
 
 Damage is dealt simultaneously between attacking characters and countering characters. Each character is dealt damage equal to the other character's BP.
 
@@ -207,7 +205,7 @@ Each turn is composed of a set of different parts or *phases*. Whenever you ente
 2. Draw phase
 3. Main phase
 4. Attack phase
-5. Counterattack phase
+5. Counter-attack phase
 6. End phase
 7. Cleanup phase
 
@@ -217,12 +215,13 @@ Any ability that happens "At the beginning of your turn" will trigger.
 
 #### 2. Draw phase
 You draw a card from your deck.  
-The player who goes first will skip his Draw phase during their first turn.
+The player who goes first will skip his Draw phase during their first turn.  
+If you cannot draw cards form yout deck during this phase, you lose the game.
 
 #### 3. Main phase
 You can do any of the following actions in any order:
 
-- Play up to one Character card in an empty slot of your ring.
+- Play up to one Character card in any empty slot of your ring.
 - Back-up up to one character in your ring.
 - Activate <span class="ab ab-trigger">■</span> abilities.
 - Play any number of Action cards.
@@ -230,12 +229,12 @@ You can do any of the following actions in any order:
 #### 4. Attack phase
 You can attack with any number of your unfrozen characters to a single enemy.
 
-#### 5. Counterattack phase
-If active player attacks with one or more characters, the Counterattack phase is activated.
+#### 5. Counter-attack phase
+If active player attacks with one or more characters, the Counter-attack phase is activated. If he does not attack, then Counter-attack phase is skipped.
 
 Enemy can play Reaction cards.
  
-Enemy decides which, if any, of his unfrozen characters will counterattack the attacking characters. Then damage (if any) is dealt to characters and/or defending player.
+Enemy decides which, if any, of his unfrozen characters will counter-attack the attacking characters. Then damage (if any) is dealt to characters and/or defending player.
 
 #### 6. End phase
 Characters that attacked this turn are frozen. Any character in the Attack Line is moved back to its original slot.  
@@ -248,24 +247,26 @@ When this phase ends, your turn ends and next player's turn begins.
 ## Glossary
 
 __Become Another Card__
-When a card becomes another card (it is transformed), all of the card's properties are replaced by the other card's properties. If the card is a character, the BP is replaced by the other card BP (even if that character has received damage). Any back-up on the card is discarded.
+When a card becomes another card (this is, it is transformed), all of the card's properties are replaced by the other card's properties. If the card is a character, the BP is replaced by the other card BP (even if that character has received damage). Any back-up on the card is discarded.
 
 The current state of the transformed card does not change (fresh, freeze, etc), but all effects applied on the card are terminated.
 
+If a transformed card goes to a pile (deck, discard pile or removed pile), it is transformed back to its original card.
+
 __Copy Ability__
-To copy an ability from a character and give it to another character. Any existing abilities of the target character are replaced with the copy ability.
+To copy an ability from a character and give it to another character. Any existing abilities of the target character are replaced with the copied ability.
 
 __Give Ability__
 See *Steal Ability*.
 
 __Freeze__
-A character in a "freeze" state (or *frozen*) can't attack, counterattack or activate <span class="ab ab-trigger">■</span> abilities.
+A character in a "freeze" state (or *frozen*) can't attack, counter-attack or activate <span class="ab ab-trigger">■</span> abilities.
 
 __Fresh__
 A character that has just entered the ring in your turn.
 
 __KO__
-Whenever a character's BP lowers to zero, that character is KO'ed and it is into the discard pile.
+Whenever a character's BP lowers to zero, that character is KO'ed and it is placed into the discard pile.
 
 __Lose Ability__
 To remove an ability from a character.
@@ -294,7 +295,5 @@ When a character leaves the "freeze" state. See *Freeze*.
 
 ## Additional Links
 Source code: https://github.com/raohmaru/CFC
-Issues: https://github.com/raohmaru/CFC/issues
+Open an issues: https://github.com/raohmaru/CFC/issues
 Changelog: https://github.com/raohmaru/CFC/blob/master/CHANGELOG.md
-SNK vs. Capcom Card Fighters' Clash 2 Expand Edition official website (Japanese): http://neogeo.freeplaytech.com/svc-2/
-SNK Vs. Capcom Card Fighters' Clash 2 English Edition: http://cfc2english.blogspot.com.es/
