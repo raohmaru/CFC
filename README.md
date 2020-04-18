@@ -7,7 +7,7 @@ SNK Playmore.
 This is a game definition plugin for the free card game engine [Online Card and Tabletop Gaming Network (OCTGN)](http://octgn.net/).
 This plugin allows online playing and creation of CFC decks.
 
-Official plugin site: http://octgngames.com/cfc/
+Official plugin site: https://cardfightersclash.wordpress.com/
 
 ## Development
 The project uses [Rake](https://github.com/ruby/rake) to automate some tasks, available through the 

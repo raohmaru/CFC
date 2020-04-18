@@ -3,15 +3,16 @@
       xmlns:xsd="http://www.w3.org/2001/XMLSchema"
       name="Card Fighters' Clash"
       id="e3d56d9e-900d-49c6-b6ae-22cbb51be153"
-      octgnVersion="3.4.214.0"
-      version="0.7.14.433"
+      octgnVersion="3.4.217.0"
+      version="0.8.0.456"
       markersize="20"
       tags="capcom snk fighter"
-      description="A card game based in the SNK Playmore’s video game SNK vs. Capcom Card Fighters' Clash 2 Expand Edition.
-      &#xd;&#xd;Automation rank: A
-      &#xd;(This game contains play, event and cards automations to play faster with less mistakes.)"
-      setsurl="http://octgngames.com/cfc/image-packs/"
-      gameurl="http://octgngames.com/cfc/"
+      description="Card game based in the SNK Playmore’s video game SNK vs. Capcom Card Fighters' Clash 2 Expand Edition. Players try to defeat each other in a battle playing powerful characters from Capcom and SNK Playmore.
+      &#xd;&#xd;This game is for 2 players.
+      &#xd;&#xd;Automation rank: S
+      &#xd;(This game contains fully automation of play, events and cards to ease game play.)"
+      setsurl="https://cardfightersclash.wordpress.com/image-packs/"
+      gameurl="https://cardfightersclash.wordpress.com/"
       authors="raohmaru"
       iconurl="https://raw.github.com/raohmaru/CFC/master/cfc_logo.png"
       scriptVersion="3.1.0.2"
@@ -19,6 +20,7 @@
 	
 	<scripts>
 		<script src="Scripts/config.py" />
+		<script src="Scripts/config_messages.py" />
 		<script src="Scripts/actions.py" />
 		<script src="Scripts/events.py" />
 		<script src="Scripts/eventsCustom.py" />
@@ -126,7 +128,7 @@
 	</gameboards>
 	
 	<table name="Table" visibility="undefined" ordered="False" width="1250" height="750" background="Resources/Background/background.jpg" backgroundStyle="uniformToFill">
-		<groupaction menu="Next phase" shortcut="Tab" execute="nextPhase" showIf="acsh_gameStarted" />
+		<groupaction menu="Next phase" shortcut="Tab" execute="nextPhase" showIf="acsh_gameStarted" getName="aclb_NextOrPass" />
 		<groupactions menu="Phases..." showIf="acsh_gameStarted">
 			<groupaction menu="Go to Activate phase"      shortcut="F1" execute="gotoActivate" />
 			<groupaction menu="Go to Draw phase"          shortcut="F2" execute="gotoDraw" />
@@ -190,7 +192,7 @@
 		<cardactions menu="Combat..." showIf="acsh_isChar">
 			<cardaction menu="Attack" shortcut="Ctrl+A" execute="attack" getName="aclb_Attack" showIf="acsh_isActivePlayer" />
 			<cardaction menu="Attack without freezing" shortcut="Ctrl+Shift+A" execute="attackNoFreeze" showIf="acsh_isActivePlayerAndNotAttacking" />
-			<cardaction menu="United Attack" shortcut="Ctrl+Alt+A" execute="attack" showIf="acsh_isActivePlayerAndNotAttacking" />
+			<cardaction menu="United Attack" shortcut="Ctrl+Alt+A" execute="unitedAttack" showIf="acsh_isActivePlayerAndNotAttacking" />
 			<cardaction menu="Counter-attack (Block)" shortcut="Ctrl+B" execute="block" getName="aclb_Block" showIf="acsh_isNotActivePlayer" />
 		</cardactions>
 		<cardactions menu="Move...">
@@ -311,7 +313,7 @@
 			<cardaction menu="Put into Deck (Bottom)" shortcut="Ctrl+Shift+D" execute="toDeckBottom" />
 			<cardaction menu="Put into Removed Pile" shortcut="Shift+Del" execute="remove" />
 		</group>
-		<group name="Removed pile" visibility="all" icon="Resources/Groups/removed.png" collapsed="True">
+		<!-- <group name="Removed pile" visibility="all" icon="Resources/Groups/removed.png" collapsed="True">
 			<groupaction menu="Shuffle" shortcut="Ctrl+S" execute="shuffle" />
 			<groupactions menu="Move All Cards To...">
 				<groupaction menu="Hand" shortcut="Ctrl+Shift+H" execute="toHandAll" />
@@ -323,7 +325,7 @@
 			<cardaction menu="Put card into Discard pile" shortcut="Del" execute="discard" />
 			<cardaction menu="Put into Deck (Top)" shortcut="Ctrl+D" execute="toDeckTop" />
 			<cardaction menu="Put into Deck (Bottom)" shortcut="Ctrl+Shift+D" execute="toDeckBottom" />
-		</group>
+		</group> -->
 	</player>
 	
 	<deck>
