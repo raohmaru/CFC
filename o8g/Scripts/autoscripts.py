@@ -36,7 +36,12 @@ def triggerPhaseEvent(phase):
    if   phase == ActivatePhase: activatePhaseStart()
    elif phase == DrawPhase:     drawPhaseStart()
    elif phase == AttackPhase:   attackPhaseStart()
-   elif phase == BlockPhase:    blockPhaseStart()
+   elif phase == BlockPhase:
+      if len(getAttackingCards(me, True)) == 0:
+         notify("{} skips their {} phase because there are no attacking characters.".format(me, Phases[phase]))
+         nextPhase()
+      else:
+         blockPhaseStart()
    elif phase == EndPhase:      endPhaseStart()
    elif phase == CleanupPhase:  cleanupPhaseStart()
 
@@ -53,13 +58,15 @@ def activatePhaseStart():
          else:
             frosted.append(card)
          removeMarker(card, 'Just Entered')
+         removeMarker(card, 'Counter-attack')
          clear(card, silent = True)
+         alignCard(card)
       # Discard any Action or Reaction card left in the table (just in case player forgot to remove them)
-      elif isAction(card) or isReaction(card):
+      else:
          discard(card)
    frostedChars = ''
    if frosted:
-      frostedChars = " but {}".format(' and '.join(["{}".format(c) for c in frosted]))
+      frostedChars = " but {}".format(cardsNamesStr(frosted))
    notify("{} unfreezes all characters in their ring{}.".format(me, frostedChars))
    # Trigger event
    triggerGameEvent(GameEvents.ActivatePhase)
@@ -71,7 +78,7 @@ def drawPhaseStart():
       if len(me.Deck) == 0 and len(players) > 1:
          notify("{} has no cards in their deck and therefore can't draw.".format(me))
          _extapi.notify(MSG_HINT_WIN.format(players[1]), Colors.Black, True)
-      else:
+      elif turnNumber() > 1:
          draw()
    # Trigger event
    triggerGameEvent(GameEvents.DrawPhase)
@@ -89,19 +96,17 @@ def attackPhaseStart():
 
 
 def blockPhaseStart():
+   uattack = getGlobalVar('UnitedAttack')
+   # Attacking chars event not in UA
+   atkCards = getAttackingCards()
    if automations['Play']:
-      uattack = getGlobalVar('UnitedAttack')
       if len(uattack) > 0:
          chars = len(uattack) - 1
          uatype = ["Double", "Triple"][chars-1] + " United Attack"
          uacost = "ua{}".format(len(uattack))
          payCostSP(-chars*UAttackCost, uatype, "do a {}".format(uatype), uacost)
          notify("{} has paid the cost of the {}".format(me, uatype))
-   # Trigger event
    triggerGameEvent(GameEvents.BlockPhase)
-   # Attacking chars event not in UA
-   atkCards = getAttackingCards()
-   uattack = getGlobalVar('UnitedAttack')
    for card in atkCards:
       if len(uattack) == 0 or uattack[0] != card._id:
          triggerGameEvent([GameEvents.Attacks, card._id], card._id)
@@ -188,11 +193,8 @@ def endPhaseStart():
 
 
 def cleanupPhaseStart():
-   # Trigger event
    triggerGameEvent(GameEvents.CleanupPhase)
-   
    clearKOedChars()
-
    # Clean my ring
    myCards = (card for card in table
       if card.controller == me)
@@ -205,7 +207,8 @@ def cleanupPhaseStart():
          removeMarker(card, 'Unfreezable')
          removeMarker(card, 'Pierce')
          # Clears targets, colors, freezes characters and resets position
-         alignCard(card)
+         if not hasMarker(card, 'Backup'):
+            alignCard(card)
          if card.highlight == ActivatedColor:
             card.highlight = None
       # Discard any Action or Reaction card left in the table (just in case player forgot to remove them)
@@ -221,8 +224,11 @@ def clearKOedChars():
          if isCharacter(card) and not isAttached(card))
       for card in charCards:
          if getMarker(card, 'BP') == 0:
-            notify("{}'s {} BP is 0. It will be KOed from the ring".format(card.controller, card))
-            remoteCall(card.controller, "destroy", [card])
+            notify("{}'s {} BP is 0. It will be KOed from the ring.".format(card.controller, card))
+            if card.controller == me:
+               destroy(card)
+            else:
+               remoteCall(card.controller, "destroy", [card])
 
 
 #------------------------------------------------------------------------------
@@ -355,7 +361,7 @@ def backupAuto(card):
    # Backup limit
    backupsPlayed = getState(me, 'backupsPlayed')
    if backupsPlayed >= BackupsPerTurn:
-      if triggerHook(Hooks.BackupLimit, target._id) != False:
+      if triggerHook([Hooks.BackupLimit, target._id]) != False:
          if not confirm("Can't backup more than {} character per turn.\nProceed anyway?".format(BackupsPerTurn)):
             return
    # Target just entered the ring?
@@ -387,10 +393,11 @@ def backupAuto(card):
    placeCard(card, card.Type, BackupAction, target)
    card.sendToBack()
    setMarker(card, 'Backup')
+   oldBP = getMarker(target, 'BP')
    addMarker(target, 'BP', BackupRaiseBP)  # Backed-up char's BP is raised
    setState(me, 'backupsPlayed', backupsPlayed + 1)
    triggerGameEvent(GameEvents.BackedUp, target._id)
-   return target
+   return (target, oldBP)
 
 
 def attackAuto(card, force = False):
@@ -545,12 +552,17 @@ def blockAuto(card):
    enemyRing = getGlobalVar('Ring', players[1])
    targets = getTargetedCards(card, True, False)
    if len(targets) == 0 or not targets[0]._id in enemyRing or not MarkersDict['Attack'] in targets[0].markers:
-      warning("Please select an attacking enemy character (Shift key + Left click on a character).\nIf blocking an United Attack, then select the leading character.")
-      return
+      # Automatically select an attacking character if there is only one
+      atkCards = getAttackingCards(getOpp())
+      if len(atkCards) == 1:
+         targets = atkCards
+      else:
+         warning("Please select an attacking enemy character (Shift key + Left click on a character).\nIf blocking an United Attack, then select the leading character.")
+         return
    target = targets[0]
    # An attacker can only be blocked by exactly 1 char
    if target._id in blockers:
-      warning("An attacking character can only be blocked by exactly one char")
+      warning("An attacking character can only be blocked by exactly one character.")
       return
 
    # Triggers a hook to check if block is possible
@@ -613,10 +625,8 @@ def activateAuto(card):
             return
       # () abilities
       if pcard.ability.type == AutoAbility:
-         # Nor in a United Attack
-         if hasMarker(card, 'United Attack'):
-            warning("Can't activate {} abilities of characters which joined a United Attack.".format(AutoUniChar))
-            return
+         whisper("{} abilities are activated automatically, you don't need to manually activate them.".format(AutoUniChar))
+         return
 
       # Activate [] ability?
       if pcard.ability.type == TriggerAbility:

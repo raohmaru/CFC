@@ -1774,8 +1774,9 @@ action = destroy()
 
 # Shadow
 RulesDict['0e1b4f81-93e9-44be-ab31-7aed8cb354d0'] = """
-target = character<1>@anyDeck
-action = moveRestTo(ctrlDeck, -1) & moveTo(ctrlDeck, -1, true); transform(prevTgt) to(character)
+target = character; character<1>@anyDeck
+vars = _char := tgt[0]; _card := tgt[1]
+action = moveRestTo(ctrlDeck, -1) & moveTo(ctrlDeck, -1, true) target(_card); transform(_card) to(_char)
 """
 
 # Shopping

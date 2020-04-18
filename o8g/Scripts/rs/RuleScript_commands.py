@@ -336,7 +336,7 @@ def cmd_movePile(rc, targets, source, restr, zone1, zone2):
       for card in pile1:
          card.moveTo(pile2)
       if len(players) > 1: rnd(1, 100) # Wait a bit more, as in multiplayer games, things are slower.
-      notify("{} moves all cards from its {} to its {}.".format(me, pile1.name, pile2.name))      
+      notify("{} moves all cards from their {} to its {}.".format(me, pile1.name, pile2.name))      
    rc.applyNext()
 
 
@@ -511,7 +511,7 @@ def cmd_moveRestTo(rc, targets, source, restr, zone, pos = None):
    targetZone = RulesUtils.getZoneByName(zone, pile[0])
    myPile = targetZone.controller == me
    debug(">>> cmd_moveRestTo({}, {}, {})".format(zone, index, pos)) #Debug
-   notify("{} looks through the top of {} {}".format(me, 'his' if myPile else players[1], pile.name))
+   notify("{} looks through the top of {} {} ({} card{} revealed)".format(me, 'his' if myPile else players[1], pile.name, index+1, plural(index+1)))
    for card in newPile:
       if myPile:
          moveToGroup(targetZone, card, pile, num(pos), True)

@@ -379,6 +379,8 @@ def reveal(group):
       cards = [card for card in group]
       notify("{} shows his {}".format(group.controller, group.name))
       showCardDlg(cards, "Cards in {}'s {}".format(group.controller, group.name), 0, "", 0)
+      for card in cards:
+         card.peek()
    
    
 def getRing(player = None):
@@ -415,6 +417,7 @@ def moveToGroup(group, card, sourceGroup = None, pos = None, reveal = None, sour
       if card.isFaceUp:
          name = card
       elif reveal:
+         remoteCall(getOpp(), "cardPeek", [card])
          name = card.Name
    targetCtrl = 'its' if me == sourcePlayer else "{}'s".format(me)
    notify("{} moved {} {} {} {} {}.".format(sourcePlayer, name, fromText, posText, targetCtrl, group.name))
@@ -428,6 +431,10 @@ def selectRing():
    if t == 0:
       return False
    return players[t-1]
+   
+   
+def cardPeek(card):
+   card.peek()
 
 
 #---------------------------------------------------------------------------
@@ -513,6 +520,21 @@ def placeCard(card, type = None, action = None, target = None, faceDown = False)
             numBkps = len([id for id in backups if backups[id] == target._id])
             coords = (cx+CardsCoords['BackupOffset'][0]*numBkps, cy+CardsCoords['BackupOffset'][1]*numBkps)
          card.moveToTable(coords[0], coords[1], faceDown)
+      # Place action and reaction card at the right side of any card placed previoulsy
+      elif type == ActionType or type == ReactionType:
+         posY = fixCardY(0)
+         posX = -CardWidth/2
+         cards = [c for c in table
+            if c.controller == me
+            and not isCharacter(c)]
+         for c in cards:
+            pos = c.position
+            if pos[1] == posY:
+               if playerSide == 1:
+                  posX = max(posX, pos[0]+CardWidth)
+               else:
+                  posX = min(posX, pos[0]-CardWidth)
+         card.moveToTable(posX, posY, faceDown)
       else:
          card.moveToTable(-CardWidth/2, fixCardY(0), faceDown)
    else:
@@ -691,12 +713,14 @@ def transformCard(card, cardModel):
    else:
       notify("{} transformed a card {}.".format(me, fromWhereStr(group)))
    model = card.model
+   update()
    transfCards = getGlobalVar('Transformed')
    if card._id in transfCards:
       model = transfCards[card._id]
       del transfCards[card._id]
    transfCards[newCard._id] = model
    setGlobalVar('Transformed', transfCards)
+   debug("{}".format(transfCards))
    card.delete()
    
    
@@ -877,7 +901,7 @@ def modSP(count = 1, mode = None, silent = False, player = me):
       action = "gains" if count >= 0 else "loses"
       if count < 0:
          setState(player, 'lostSP', -count)
-      notify("{} {} {} SP. New total is {} (before was {}).".format(player, action, count, player.SP, initialSP))
+      notify("{} {} {} SP. New total is {} SP (before was {}).".format(player, action, count, player.SP, initialSP))
 
 
 def payCostSP(amount = 1, obj = None, msg = 'play this card', type = None):
@@ -902,7 +926,7 @@ def payCostSP(amount = 1, obj = None, msg = 'play this card', type = None):
             return False
          _extapi.notify("{} was supposed to pay {} SP but only has {} SP.".format(me, amount, me.SP), Colors.Red)
       me.SP += amount
-      notify("{} has spent {} SP. New total is {}  (before was {}).".format(me, amount, me.SP, initialSP))
+      notify("{} has spent {} SP. New total is {} SP (before was {}).".format(me, amount, me.SP, initialSP))
    return True
    
    

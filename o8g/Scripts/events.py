@@ -82,8 +82,10 @@ def onCardsMoved(args):
                freeSlot(card)
                ringChanged = True
                triggerGameEvent([GameEvents.Removed, card._id])
+            phaseIdx = currentPhase()[1]
             if MarkersDict['Attack'] in markers or MarkersDict['United Attack'] in markers:
-               rearrangeUAttack(card)
+               if phaseIdx == AttackPhase or phaseIdx == BlockPhase:
+                  rearrangeUAttack(card)
             # removeParsedCard(card)
             removeGameEventListener(card._id)
             CharsAbilities = getGlobalVar('CharsAbilities')
@@ -99,6 +101,8 @@ def onCardsMoved(args):
          if charIsInRing(card):
             ringChanged = True
       # Restore transformed card if it goes to a pile
+      debug("onCardsMoved: {} ({}) from {} to {}".format(card, card._id, fromGroup._name, toGroup._name))
+      debug("{}".format(transfCards))
       if toGroup._name in me.piles:
          if card._id in transfCards:
             newCard = toGroup.create(transfCards[card._id], quantity = 1)
@@ -146,7 +150,7 @@ def onPhasePassed(args):
    # elif idx == MainPhase:
    # elif idx == AttackPhase:
    elif idx == BlockPhase:
-      _extapi.whisper("({} can play Reaction cards and then may choose if block attackers)".format("Now defending player" if me.isActive else "You"), Colors.Blue)
+      _extapi.whisper("({} can play Reaction cards and then you may choose if block attackers)".format("Now defending player" if me.isActive else "You"), Colors.Blue)
    # elif idx == EndPhase:
    elif idx == CleanupPhase:
       if me.isActive:

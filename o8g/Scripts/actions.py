@@ -22,19 +22,22 @@ import re
 #---------------------------------------------------------------------------
 
 def nextPhase(group = table, x = 0, y = 0):
-   global turns
-   idx = currentPhase()[1]
-   if idx >= len(Phases) - 1:
-      idx = ActivatePhase
-      turns -= 1
-      if turns == 0:
-         nextTurn(getNextActivePlayer())
+   phaseIdx = currentPhase()[1]
+   if me.isActive:
+      global turns
+      if phaseIdx >= len(Phases) - 1:
+         phaseIdx = ActivatePhase
+         turns -= 1
+         if turns == 0:
+            nextTurn(getNextActivePlayer())
+         else:
+            nextTurn(me)
+            notify("{} takes another turn".format(me))
       else:
-         nextTurn(me)
-         notify("{} takes another turn".format(me))
-   else:
-      idx += 1
-   setPhase(idx)
+         phaseIdx += 1
+      setPhase(phaseIdx)
+   elif phaseIdx == BlockPhase:
+      notify("{} has finalized the {} phase. {} can go to the next phase.".format(me, Phases[phaseIdx], getOpp()))
 
 
 def gotoPhase(idx, oldIdx = 0):
@@ -85,8 +88,9 @@ def setup(group=table, x=0, y=0, silent=False):
    if len(me.Deck) == 0:
       warning("Please load a deck first.")
       return
-   notify(MSG_PHASES[SetupPhase].format(me))
+   _extapi.notify(MSG_PHASES[SetupPhase].format(me), Colors.LightBlue, True)
    me.Deck.shuffle()
+   notify("{} shuffles their deck.".format(me))
    refill() # We fill the player's play hand to their hand size
    notify("Setup for player {} completed.".format(me))
    # Start the turn of the first player to do the setup
@@ -168,7 +172,8 @@ def clearAll(group = table, x = 0, y = 0, allPlayers = False):
 def alignCards(group, x = 0, y = 0):
    myCards = (card for card in table
       if card.controller == me
-      and (isCharacter(card)))
+      and isCharacter(card)
+      and not hasMarker(card, 'Backup'))
    for card in myCards:
       alignCard(card)
 
@@ -338,7 +343,8 @@ def askCardBackups(card, x = 0, y = 0):
                charsBackup.append(c)
             elif c.highlight == InfoColor:
                c.highlight = None
-      whisper("Highlighting compatible back-ups cards in your hand: " + ("{}, " * len(charsBackup)).format(*charsBackup).rstrip(','))
+      if len(charsBackup) > 0:
+         whisper("Highlighting compatible back-ups cards in your hand: {}".format(cardsNamesStr(charsBackup)))
       msg = "{} can be backed-up with the following character types:\n- {}".format(card.Name, '\n- '.join(filter(None, acceptedBackups)))
       information(msg)
       whisper(msg)
@@ -583,7 +589,7 @@ def discardAll(group, x = 0, y = 0):
    for card in group:
       card.moveTo(discards)
    if len(players) > 1: rnd(1, 100) # Wait a bit more, as in multiplayer games, things are slower.
-   notify("{} moves all cards from its {} to his discard Pile.".format(me, group.name))
+   notify("{} moves all cards from their {} to his discard Pile.".format(me, group.name))
 
 
 def toTableFaceDown(card, x = 0, y = 0):
@@ -743,11 +749,11 @@ def play(card):  # This is the function to play cards from your hand.
    else:
       placeCard(card, card.Type)
    if isCharacter(card):
-      notify("{} plays {} from its {}{}.".format(me, card, group.name, slot))
+      notify("{} plays {} from their {}{}.".format(me, card, group.name, slot))
       charsPlayed = getState(me, 'charsPlayed')
       notify("({} has played {} character{} this turn.)".format(me, charsPlayed, plural(charsPlayed)))
    else:
-      notify("{} plays {} from its {}.".format(me, card, group.name))
+      notify("{} plays {} from their {}.".format(me, card, group.name))
 
    debug("<<< playing card end") #Debug
 
@@ -760,10 +766,12 @@ def backup(card, x = 0, y = 0):  # Play a card as backup attached to a character
    if automations['Play']:
       target = backupAuto(card)
       if target:
-         notify("{} backups {} with {} from its {} (new BP is {}).".format(me, target, card, group.name, getMarker(target, 'BP')))
+         target, oldBP = target
+         newBP = getMarker(target, 'BP')
+         notify("{0} backups {1} with {2} from their {3}. New BP of {1} is {4} (before was {5}).".format(me, target, card, group.name, newBP, oldBP))
    else:
       placeCard(card, card.Type)
-      notify("{} backups with {} from its {}.".format(me, card, group.name))
+      notify("{} backups with {} from their {}.".format(me, card, group.name))
 
    debug("<<< backup()") #Debug
 
@@ -772,7 +780,7 @@ def discard(card, x = 0, y = 0, isRandom = False):
    mute()
    group = card.group
    card.moveTo(me.piles['Discard Pile'])
-   msg = "{} has discarded {} from its {}."
+   msg = "{} has discarded {} from their {}."
    if group != me.hand:
       msg = "{} puts {} into his discard pile."
    if isRandom:
@@ -792,7 +800,7 @@ def randomDiscard(group = me.hand, x = 0, y = 0):
 def refill(group = me.hand):  # Refill the player's hand to its hand size.
    playhand = len(me.hand) # count how many cards there are currently there.
    if playhand < handSize:
-      drawMany(me.Deck, handSize - playhand, True) # If there's less cards than the handSize, draw from the deck until it's full.
+      drawMany(me.Deck, handSize - playhand) # If there's less cards than the handSize, draw from the deck until it's full.
 
 
 #---------------------------------------------------------------------------

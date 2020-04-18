@@ -73,7 +73,7 @@ InfoColor           = "#00ff00"
 # Filter colours
 CannotUnfreezeFilter = '#6699d9ff'
 
-# Dictionaries which hold all the hard coded markers and tokens (in the markers & tokens set)
+# Dictionary which hold all the hard coded markers and tokens (in the markers & tokens set)
 MarkersDict = {
    "BP"             : ("BP",              "b86fc644-d084-43d3-99d2-5b11457321cc"),
    "Just Entered"   : ("Just Entered",    "9a52c42c-543f-48bb-9a48-d7599d6c8fae"),
@@ -85,7 +85,6 @@ MarkersDict = {
    "Backup"         : ("Backup",          "efd3208d-2ec3-44ca-be1d-858e91628da4"),
    "Pierce"         : ("Pierce",          "3131facc-3fe4-4dd5-95ff-afc08570d869"),
 }
-TokensDict = {}
 
 # A table holding tuples with the location for the cards according its states
 CardsCoords = dict(
@@ -99,7 +98,7 @@ CardsCoords = dict(
    Attack2       = ( 44,  29),
    Attack3       = ( 221, 29),
    BackupOffset  = ( 0,   13),
-   UAttackOffset = ( 38,  0)
+   UAttackOffset = ( 43,  0)
 )
 
 # Card types
@@ -226,128 +225,6 @@ GameEventsCallOnHost = [
    Hooks.CanBlock
 ]
 
-# Messages
-MSG_PHASES = [
-   '\n=== PRE-GAME SETUP Phase: {} ==='
-]
-MSG_SEL_CHAR_RING           = "Please select a character in your ring.\n(Shift key + Left click on a character)."
-MSG_SEL_CARD                = "Select {} card{} from {} {}"
-MSG_SEL_CARD_EFFECT         = MSG_SEL_CARD + " ({}'s effect)"
-MSG_SEL_CARD_DISCARD        = "Select a card from your {} to discard"
-MSG_SEL_CARD_SACRIFICE      = "Select a card from your {} to KO"
-MSG_PLAYER_LOOKS            = "{} is looking into {} {}..."
-MSG_PLAYER_SELECTS          = "{} has selected {} card(s)"
-MSG_PLAYER_SELECTS_NAMED    = "{} selects {}"
-MSG_COST_NOT_PAYED          = "{} did not pay the activation cost of {}'s {}"
-MSG_AB_NO_EFFECT            = "{}'s ability {} (may) have had no effect."
-MSG_AB_AUTO_TRIGGER         = "Event \"{}\" triggered. Now trying to activate {}'s effect."
-MSG_AB_AUTO_TRIGGER_CHAR    = "Event \"{}\" triggered. Now trying to activate {}'s auto ability from {}'s {}."
-MSG_AB_AUTO_ACT             = "{} has activated {}'s effect"
-MSG_AB_AUTO_ACT_CHAR        = "{} has activated {}'s auto ability {}."
-MSG_AB_AUTO_UATTACK         = "Cannot activate {}'s auto ability {} because it joined an United Attack."
-MSG_AB_MISS_REQ             = u" \u2192 There aren't enough targets to activate {}'s ability."
-MSG_DISCARD_RANDOM          = "{} randomly discards {} from its {}."
-MSG_MAY_DEF                 = "Do you want to apply the effect of the card?"
-MSG_HINT_KOED               = "({} has been KOed. You can put it into your discard pile (hover it and press DEL key). In any case, KOed characters will be removed from the ring on phase change.)"
-MSG_HINT_ACTIVATE           = "(Now you can activate the card's effect by double-click on it.)"
-MSG_HINT_WIN                = "{} wins the game!"
-MSG_UA_MAX                  = "Can't be more than {} characters in a United Attack."
-MSG_ERR_NO_CARDS            = "There are no targets available, hence the ability has no effect."
-MSG_ERR_NO_CARDS_HAND       = "You don't have enough cards in your hand to pay the cost of the ability."
-MSG_ERR_NO_CARDS_DISCARD    = "There are no cards to discard [of the chosen type] in {}'s hand."
-MSG_ERR_NO_FILTERED_CARDS   = "Selected cards don't match the requirements of this card's effect."
-MSG_ERR_NO_FILTERED_PLAYERS = "No player match the requirements of this card's effect."
-MSG_ERR_TARGET_OTHER        = "{}'s ability cannot select itself, therefore it has been removed from selection."
-MSG_HOOKS_ERR = {
-   Hooks.BeforeAttack: "{} cannot attack due to {}'s {} ability{}.",
-   Hooks.BeforeBlock : "{} cannot counter-attack due to {}'s {} ability{}.",
-   Hooks.CanBlock: "{} cannot be blocked due to {}'s {} ability{}.",
-   Hooks.BeforePlayAC: "{} cannot play action cards due to {}'s {} ability{}.",
-   Hooks.BeforePlayRE: "{} cannot play reaction cards due to {}'s {} ability{}."
-}
-MSG_AB = {
-   'cantattack': [
-      MSG_HOOKS_ERR[Hooks.BeforeAttack],
-      "{} can attack again."
-   ],
-   'cantblock': [
-      MSG_HOOKS_ERR[Hooks.BeforeBlock],
-      "{} can counter-attack again."
-   ],
-   'unblockable': [
-      MSG_HOOKS_ERR[Hooks.CanBlock],
-      "{} can be blocked as normal."
-   ],
-   'cantplayac': [
-      MSG_HOOKS_ERR[Hooks.BeforePlayAC],
-      "{} can play action cards again."
-   ],
-   'cantplayre': [
-      MSG_HOOKS_ERR[Hooks.BeforePlayRE],
-      "{} can play reaction cards again."
-   ],
-   'unlimitedbackup': [
-      "{0} can receive any number of back-ups {3}."
-   ],
-   'preventpierce': [
-      "Piercing damage was prevented by {0}'s {2} ability."
-   ],
-   'unfreezable': [
-      "{0} will not freeze after attacking{3}."
-   ],
-   'rush': [
-      "{} can attack this turn due to {}'s {} ability."
-   ]
-}
-MSG_RULES = {
-   'ab_trigger_fresh': (
-      'Characters cannot use {} abilities the turn they enter the ring.'.format(TriggerUniChar),  # Disabled
-      'Characters can use {} abilities the turn they enter the ring.'.format(TriggerUniChar)  # Enabled
-   ),
-   'ab_trigger_act': (
-      TriggerUniChar + " abilites cannot be activated.",
-      TriggerUniChar + " abilites can be activated again."
-   ),
-   'ab_instant_act': (
-      InstantUniChar + " abilites cannot be activated.",
-      InstantUniChar + " abilites can be activated again."
-   ),
-   'card_cost': '{} cards now cost {} SP {}to play{}.',
-   'cost_ua2': 'Double united attacks now cost {1} SP{3}.',
-   'cost_ua3': 'Triple united attacks now cost {1} SP{3}.',
-   'piercing': (
-      'Whenever a character counter-attacks a United Attack, piercing damage is prevented.',  # Disabled
-      'United-Attacks deals piercing damage as normal.'  # Enabled
-   ),
-   'backup_fresh': (
-      'Characters cannot receive back-up the turn they enter the ring.',
-      'Characters can receive back-up the turn they enter the ring.'
-   ),
-   'play_char_bp_limit': (
-      'Character cards of any BP can be played as normal.',
-      'Character cards with BP {} or greater cannot be played.'
-   ),
-   'play_char_limit': (
-      'Only {} character card can be played per turn.'.format(CharsPerTurn),
-      'Up to {0} character cards can be played per turn{1}.'
-   ),
-   'dmg_combat_deal': (
-      'Characters deal no combat damage{1}',
-      'Characters deal combat damage as normal'
-   )
-}
-ERR_NO_EFFECT = 'err001'
-CMD_LABELS = {
-   'swapchars' : 'Swap the positions of two characters in the same ring',
-   'movetoslot': 'Move a character to an empty slot in the same ring',
-   'damage'    : 'Deal damage',
-   'hp'        : 'Gain HP',
-   'bp'        : 'Raise the BP of characters',
-   'discard'   : 'Discard card(s)',
-   'destroy'   : 'KO character(s)',
-   'shuffle'   : 'Shuffle the deck'
-}
-
 # Misc
 CardWidth    = 90
 CardHeight   = 126
@@ -367,7 +244,7 @@ playerAxis     = None  # Variable to keep track on which axis the player is
 handSize       = HandSize
 debugVerbosity = DebugLevel.Off # -1..4 (At -1 means no debugging messages display)
 debugging      = False
-# If I am alone debugging I want to know everything
+# If I am alone debugging I want to know EVERYTHING
 if me.name == Author and len(players) == 1:
    debugVerbosity = DebugLevel.All
 parsedCards    = {} # Dictionary holding all parsed cards

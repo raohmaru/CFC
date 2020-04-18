@@ -118,3 +118,10 @@ def aclb_AttackDamage(group, x = 0, y = 0):
       return "Attack Damage automation is ON"
    else:
       return "Attack Damage automation is OFF"
+
+      
+def aclb_NextOrPass(group, x = 0, y = 0):
+   if me.isActive:
+      return "Next phase"
+   else:
+      return "Pass"

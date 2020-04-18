@@ -382,9 +382,12 @@ class RulesUtils():
                   return False
                cards_f1 = [c for c in cards_f1 if c.controller == ctrl]
                if ctrl != me:
-                  article = "enemy's"
+                  article = "{}'s".format(getOpp())
             # Info message
-            owner = article.replace('your', 'his')
+            owner = article.replace('your', 'their')
+            if pick:
+               pickMsg = " the {} {} card{} of ".format('top' if pick > 0 else 'bottom', abs(pick), plural(abs(pick)))
+               owner = pickMsg + owner
             notify(MSG_PLAYER_LOOKS.format(me, owner, zone[1]))
             title = msg.format(qtyMsg, qtyPlural, article, zone[1], sourceName)
             # If there aren't enough cards to select, just show the cards
