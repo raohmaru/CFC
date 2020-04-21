@@ -1,12 +1,14 @@
 # Card Fighters' Clash Changelog
 
+## 0.8.1
+Minor fixes and improvements.
+Updated character card design.
 ## 0.8.0
 All cards scripted.  
 Updated docs.  
 Markers updated to not display quantity.  
 Lots of gameplay improvements.  
 Updated ring design.
-Minor fixes and improvements.
 ## 0.7.14
 Scripted abilities: Waiting in vain.
 ## 0.7.13
