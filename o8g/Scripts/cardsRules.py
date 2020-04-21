@@ -1798,7 +1798,7 @@ action = destroy()
 
 # SP partner
 RulesDict['37b88c5f-026b-40e4-bfd2-e5b7b83a7394'] = """
-action = modRule(play_char_limit, 2) ueot
+action = playExtraChar()
 """
 
 # Stifler

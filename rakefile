@@ -4,8 +4,7 @@ require 'json'
 require 'redcarpet'
 
 
-OCTGN_dir = "C:/Games/OCTGN"
-OCTGN_data_dir = "C:/Users/Raohmaru/Documents/OCTGN"
+OCTGN_data_dir =  ENV["USERPROFILE"] + "/Documents/OCTGN"
 start_time = Time.now
 CLOBBER.include ["o8g/*.o8g", "#{OCTGN_data_dir}/LocalFeed/Card*.nupkg", "o8g/Scripts/**/*.pyc"]
 
@@ -14,7 +13,7 @@ task :default => [:build]
 
 desc "Builds a .o8g and a .nupkg file from the game definition files"
 task :build => [:versionbump, :docs] do
-  sh "#{OCTGN_dir}/o8build.exe -d=o8g"
+  sh "o8build.exe -d=o8g"
 end
 
 
@@ -61,15 +60,15 @@ end
 
 desc "Verifies the files as a valid game definition"
 task :test do
-  sh "#{OCTGN_dir}/o8build.exe -v -d=o8g"
+  sh "o8build.exe -v -d=o8g"
 end
 
 
 desc "Runs OCTGN in dev mode, in the table view with the CFC game loaded"
 task :octgn do
   # OCTGN window closes after the loading screen ends
-  # system "#{OCTGN_dir}/OCTGN.exe /t /g=e3d56d9e-900d-49c6-b6ae-22cbb51be153 /x"
-  puts "Run #{OCTGN_dir}/OCTGN.exe /t /g=e3d56d9e-900d-49c6-b6ae-22cbb51be153 /x"
+  # system "OCTGN.exe /t /g=e3d56d9e-900d-49c6-b6ae-22cbb51be153 /x"
+  puts "Run OCTGN.exe /t /g=e3d56d9e-900d-49c6-b6ae-22cbb51be153 /x"
 end
 
 

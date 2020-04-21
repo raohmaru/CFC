@@ -6775,7 +6775,7 @@
 			<property name="Ability"      value="" />
 			<property name="Ability Type" value="" />
 			<property name="Ability Name" value="" />
-			<property name="Rules"        value="You can play up to two characters cards this turn." />
+			<property name="Rules"        value="You may play an additional character." />
 			<property name="BP"           value="" />
 			<property name="SP"           value="-7" />
 			<property name="Backup 1"     value="" />

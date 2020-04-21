@@ -34,7 +34,12 @@ def triggerPhaseEvent(phase):
       return
 
    if   phase == ActivatePhase: activatePhaseStart()
-   elif phase == DrawPhase:     drawPhaseStart()
+   elif phase == DrawPhase:
+      if turnNumber() == 1:
+         notify("{} skips their {} phase (the first player must skip it during their first turn).".format(me, Phases[phase]))
+         nextPhase()
+      else:
+         drawPhaseStart()
    elif phase == AttackPhase:   attackPhaseStart()
    elif phase == BlockPhase:
       if len(getAttackingCards(me, True)) == 0:
@@ -78,7 +83,7 @@ def drawPhaseStart():
       if len(me.Deck) == 0 and len(players) > 1:
          notify("{} has no cards in their deck and therefore can't draw.".format(me))
          _extapi.notify(MSG_HINT_WIN.format(players[1]), Colors.Black, True)
-      elif turnNumber() > 1:
+      else:
          draw()
    # Trigger event
    triggerGameEvent(GameEvents.DrawPhase)
@@ -252,11 +257,7 @@ def playAuto(card, slotIdx=None, force=False):
          return
       # Limit of chars played per turn
       charsPlayed = getState(me, 'charsPlayed')
-      charsPerTurn = getRule('play_char_limit')
-      if charsPerTurn:
-         charsPerTurn = reduce(lambda a,b: max(a,b), charsPerTurn)
-      else:
-         charsPerTurn = CharsPerTurn
+      charsPerTurn = getState(me, 'charsPerTurn')
       if charsPlayed >= charsPerTurn:
          if not confirm("Only {} character card{} per turn can be played\n(you have played {} character{}).\nProceed anyway?".format(charsPerTurn, plural(charsPerTurn), charsPlayed, plural(charsPlayed))):
             return

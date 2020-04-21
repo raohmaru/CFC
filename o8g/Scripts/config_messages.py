@@ -119,10 +119,6 @@ MSG_RULES = {
       'Character cards of any BP can be played as normal.',
       'Character cards with BP {} or greater cannot be played.'
    ),
-   'play_char_limit': (
-      'Only {} character card can be played per turn.'.format(CharsPerTurn),
-      'Up to {0} character cards can be played per turn{1}.'
-   ),
    'dmg_combat_deal': (
       'Characters deal no combat damage{1}',
       'Characters deal combat damage as normal'

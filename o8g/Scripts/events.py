@@ -144,12 +144,12 @@ def onPhasePassed(args):
    debug(">>> onPhasePassed: {} => {}".format(args.id, idx))
    
    # if idx == ActivatePhase:
-   if idx == DrawPhase:
-      if turnNumber() == 1:
-         _extapi.whisper("(The player who goes first should skip his Draw phase during their first turn.)", Colors.Blue)
+   # elif idx == DrawPhase:
+      # if turnNumber() == 1:
+         # _extapi.whisper("(The player who goes first must skip his Draw phase during their first turn.)", Colors.Blue)
    # elif idx == MainPhase:
    # elif idx == AttackPhase:
-   elif idx == BlockPhase:
+   if idx == BlockPhase:
       _extapi.whisper("({} can play Reaction cards and then you may choose if block attackers)".format("Now defending player" if me.isActive else "You"), Colors.Blue)
    # elif idx == EndPhase:
    elif idx == CleanupPhase:

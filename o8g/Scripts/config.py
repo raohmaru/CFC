@@ -148,7 +148,6 @@ GameRulesDefaults = {
    'piercing'          : True,  # Allow piercing damage
    'backup_fresh'      : False, # Backup fresh characters
    'play_char_bp_limit': None,  # BP limit to play chars
-   'play_char_limit'   : None,  # Num chars can be played per turn
    'dmg_combat_deal'   : True   # Deal combat damage
 }
 

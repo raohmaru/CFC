@@ -250,11 +250,11 @@ def addActionTempVars(name, value):
 
 def getState(player, name = None):
    debug(">>> getState({}, {})".format(player._id, name))
-   name = name.lower()
    GameState = getGlobalVar('GameState')
    if not name:
       return GameState[player._id]
-   elif name in GameState[player._id]:
+   name = name.lower()
+   if name in GameState[player._id]:
       debug(" -- {}".format(GameState[player._id][name]))
       return GameState[player._id][name]
    return None
@@ -274,6 +274,7 @@ def resetState():
       gs = GameState[p._id] if p._id in GameState else {}
       GameState[p._id] = {
          'charsplayed'  : 0,  # Num of chars played this turn
+         'charsperturn' : CharsPerTurn, # Allowed number of chars to play per turn
          'backupsplayed': 0,  # Num of chars backed-up this turn
          'damaged'      : False,  # Player damaged by non-character card
          'lostsp'       : 0,

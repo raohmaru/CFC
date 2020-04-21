@@ -336,6 +336,7 @@ class RulesUtils():
                return False
          else:
             cards_f1 = cards_f2
+            choose = False
             debug("-- %s cards targeted" % len(cards_f1))
 
       # Apply filters

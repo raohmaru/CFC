@@ -398,8 +398,9 @@ def cmd_hp(rc, targets, source, restr, qtyExpr):
 
 
 def cmd_playExtraChar(rc, targets, source, restr, *args):
-   debug(">>> cmd_playExtraChar() {} -> {}".format(state['charsPlayed'], state['charsPlayed']-1))
-   state['charsPlayed'] = 0
+   cpt = getState(me, 'charsPerTurn')
+   debug(">>> cmd_playExtraChar() {} -> {}".format(cpt, cpt+1))
+   setState(me, 'charsPerTurn', cpt+1)
    notify("{} can play an additional character this turn.".format(me))
    rc.applyNext()
 

@@ -40,7 +40,16 @@ def parseCard(card, ruleId = None, init = True, dryRun = False):
 
 def getParsedCard(card):
    debug("Retrieve parsed card for ID {} ({})".format(card._id, card))
-   return parseCard(card, init=False)
+   ruleId = None
+   if card.controller != me:
+      CharsAbilities = getGlobalVar('CharsAbilities')
+      if card._id in CharsAbilities:
+         ruleId = CharsAbilities[card._id]
+      pcard = parsedCards.get(card._id)
+      if pcard and ruleId and pcard.rule_id != ruleId:
+         debug("Updating opp parsed card")
+         removeParsedCard(card)
+   return parseCard(card, ruleId, False)
    
 
 def removeParsedCard(card):
