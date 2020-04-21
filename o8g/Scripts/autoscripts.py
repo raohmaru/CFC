@@ -21,7 +21,7 @@
 
 def triggerPhaseEvent(phase):
    # Function which triggers effects at the start or end of the phase
-   debug(">>> triggerPhaseEvent({})".format(phase)) #Debug
+   debug(">>> triggerPhaseEvent({})".format(phase))
    mute()
    if not automations['Phase']: return
    
@@ -241,7 +241,7 @@ def clearKOedChars():
 #------------------------------------------------------------------------------
 
 def playAuto(card, slotIdx=None, force=False):
-   debug(">>> playAuto({})".format(card)) #Debug
+   debug(">>> playAuto({})".format(card))
    phaseIdx = currentPhase()[1]
 
    # Player plays a Character card
@@ -342,7 +342,7 @@ def playAuto(card, slotIdx=None, force=False):
 
 
 def backupAuto(card):
-   debug(">>> backupAuto()") #Debug
+   debug(">>> backupAuto()")
 
    # Check if the card can be legally played
    if not me.isActive or currentPhase()[1] != MainPhase:
@@ -402,7 +402,7 @@ def backupAuto(card):
 
 
 def attackAuto(card, force = False):
-   debug(">>> attackAuto()") #Debug
+   debug(">>> attackAuto()")
 
    # Check if we can attack
    if not force and (not me.isActive or currentPhase()[1] != AttackPhase):
@@ -452,7 +452,7 @@ def attackAuto(card, force = False):
 
 
 def unitedAttackAuto(card, targets = None, payCost = True):
-   debug(">>> unitedAttackAuto()") #Debug
+   debug(">>> unitedAttackAuto()")
 
    # Check if an attacking char has been selected
    myRing = getGlobalVar('Ring', me)
@@ -514,7 +514,7 @@ def unitedAttackAuto(card, targets = None, payCost = True):
 
 
 def blockAuto(card):
-   debug(">>> blockAuto()") #Debug
+   debug(">>> blockAuto()")
 
    # Check if the card can be legally played
    if me.isActive or currentPhase()[1] != BlockPhase:
@@ -544,7 +544,7 @@ def blockAuto(card):
       for i in blockers:
          if blockers[i] == card._id:
             del blockers[i]
-            debug("Removed blocker {}".format(blockers)) #Debug
+            debug("Removed blocker {}".format(blockers))
             setGlobalVar('Blockers', blockers)
             break
       notify('{} cancels the counter-attack with {}'.format(me, card))
@@ -584,7 +584,7 @@ def blockAuto(card):
 
 
 def activateAuto(card):
-   debug(">>> activateAuto()") #Debug
+   debug(">>> activateAuto()")
 
    if card.highlight == ActivatedColor:
       whisper("{}'s ability or effect has already been activated".format(card))
@@ -643,7 +643,7 @@ def activateAuto(card):
 
 def rearrangeUAttack(card):
    # Rearrange or cancels a uattack if the card was part of it
-   debug(">>> rearrangeUAttack()") #Debug
+   debug(">>> rearrangeUAttack()")
    uattack = getGlobalVar('UnitedAttack')
    if card._id in uattack:
       notify("{} was part of an United Attack. Now it will be rearranged.".format(card))

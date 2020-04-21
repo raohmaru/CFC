@@ -32,7 +32,7 @@ def num(s):
 
       
 def checkTwoSidedTable():
-   debug(">>> checkTwoSidedTable()") #Debug
+   debug(">>> checkTwoSidedTable()")
    mute()
    if not table.isTwoSided():
       warning("This game is designed to be played on a two-sided table.\nPlease start a new game and make sure the appropriate option is checked.")
@@ -60,7 +60,7 @@ def chooseSide():
 
 def resetAll():
 # Clears all the global variables in order to start a new game.
-   debug(">>> resetAll()") #Debug
+   debug(">>> resetAll()")
    # Import all our global variables and reset them.
    global playerSide, handSize, debugVerbosity, parsedCards, turns
    playerSide = None
@@ -79,18 +79,11 @@ def resetAll():
    clearGlobalVar('Rules')
    clearGlobalVar('CharsAbilities')
    clearGlobalVar('Stack')
-   
-   if me.name == Author:
-      if debugVerbosity == DebugLevel.Off:
-         debugVerbosity = DebugLevel.All
-   else:
-      debugVerbosity = DebugLevel.Off # Reset means normal game.
-   
-   debug("<<< resetAll()") #Debug
+   debug("<<< resetAll()")
 
 
 def switchAutomation(name, command = None):
-   debug(">>> switchAutomation({})".format(name)) #Debug
+   debug(">>> switchAutomation({})".format(name))
 
    global automations
    if not name in automations:
@@ -102,7 +95,7 @@ def switchAutomation(name, command = None):
    status = "ON" if automations[name] else "OFF"
    notify(" -> {}'s {} automations are {}.".format(me, name, status))
 
-   debug("<<< switchAutomation({})".format(name)) #Debug
+   debug("<<< switchAutomation({})".format(name))
 
 
 def rollDie(num):
@@ -237,7 +230,7 @@ def getRule(rule):
 
 
 def addActionTempVars(name, value):
-   debug(">>> addActionTempVars({}, {})".format(name, value)) #Debug
+   debug(">>> addActionTempVars({}, {})".format(name, value))
    vars = getGlobalVar('ActionTempVars')
    if isinstance(value, list):
       value = objToString(value)
@@ -284,11 +277,11 @@ def resetState():
          'sp'           : p.SP
       }
    setGlobalVar('GameState', GameState)
-   debug(">>> resetState()\n{}".format(GameState)) #Debug
+   debug(">>> resetState()\n{}".format(GameState))
    
    
 def addGameMod(type, id, *args):
-   debug(">>> addGameMod({}, {}, {})".format(type, id, args)) #Debug
+   debug(">>> addGameMod({}, {}, {})".format(type, id, args))
    Modifiers = getGlobalVar('Modifiers')
    if not type in Modifiers:
       Modifiers[type] = []
@@ -298,7 +291,7 @@ def addGameMod(type, id, *args):
    
   
 def removeGameMod(id, msg = False):
-   debug(">>> removeGameMod({}, {})".format(id, msg)) #Debug
+   debug(">>> removeGameMod({}, {})".format(id, msg))
    Modifiers = getGlobalVar('Modifiers')
    debug("{}".format(Modifiers))
    for key, modList in Modifiers.iteritems():
@@ -312,7 +305,7 @@ def removeGameMod(id, msg = False):
    
 
 def pushStack(event, params, **tempVars):
-   debug(">>> pushStack({}, {}, {})".format(event, params, tempVars)) #Debug
+   debug(">>> pushStack({}, {}, {})".format(event, params, tempVars))
    Stack = getGlobalVar('Stack')
    for key, value in tempVars.iteritems():
       tempVars[key] = objToString(value)
@@ -322,7 +315,7 @@ def pushStack(event, params, **tempVars):
 
 def popStack():
    Stack = getGlobalVar('Stack')
-   debug(">>> popStack() --> {}".format(Stack)) #Debug
+   debug(">>> popStack() --> {}".format(Stack))
    if len(Stack) > 0:
       item = Stack.pop(0)
       setGlobalVar('Stack', Stack)
@@ -368,7 +361,7 @@ def swapPiles(pile1, pile2):
 
 
 def reveal(group):
-   debug(">>> reveal()") #Debug
+   debug(">>> reveal()")
    if isinstance(group, list):
       for card in group:
          isFaceUp = card.isFaceUp
@@ -507,7 +500,7 @@ def fixSlotIdx(slotIdx, player = me):
 def placeCard(card, type = None, action = None, target = None, faceDown = False):
 # This function automatically places a card on the table according to what type of card is being placed
 # It is called by one of the various custom types and each type has a different value depending on if the player is on the X or Y axis.
-   debug(">>> placeCard()") #Debug
+   debug(">>> placeCard()")
 
    if automations['Play']:
       if type == CharType and action != None:
@@ -546,7 +539,7 @@ def placeCard(card, type = None, action = None, target = None, faceDown = False)
 
 def freeSlot(card):
 # Frees a slot of the ring. It normally happens when a character leaves the ring
-   debug(">>> freeSlot({})".format(card)) #Debug
+   debug(">>> freeSlot({})".format(card))
    
    myRing = getGlobalVar('Ring', me)
    if card._id in myRing:
@@ -559,7 +552,7 @@ def freeSlot(card):
 
    
 def getSlotIdx(card, player = me):
-   debug(">>> getSlotIdx({})".format(card)) #Debug
+   debug(">>> getSlotIdx({})".format(card))
    
    ring = getGlobalVar('Ring', player)
    for i, id in enumerate(ring):
@@ -573,7 +566,7 @@ def getSlotIdx(card, player = me):
    
    
 def getCardAtSlot(idx, player = me):
-   debug(">>> getCardAtSlot({}, {})".format(idx, player)) #Debug
+   debug(">>> getCardAtSlot({}, {})".format(idx, player))
    
    ring = getGlobalVar('Ring', player)
    if player != me:
@@ -589,7 +582,7 @@ def charIsInRing(card, player = me):
 
    
 def putAtSlot(card, idx, player = me, move = False):
-   debug(">>> putAtSlot({}, {}, move={})".format(card, idx, move)) #Debug
+   debug(">>> putAtSlot({}, {}, move={})".format(card, idx, move))
    if idx < NumSlots:
       ring = getGlobalVar('Ring', player)
       if move:
@@ -602,7 +595,7 @@ def putAtSlot(card, idx, player = me, move = False):
 
 
 def alignCard(card, x=None, y=None, slotIdx=None):
-   debug(">>> alignCard({}, {}, {}, {})".format(card, x, y, slotIdx)) #Debug
+   debug(">>> alignCard({}, {}, {}, {})".format(card, x, y, slotIdx))
    z = None
    if x == None or y == None:
       if slotIdx == None:
@@ -646,7 +639,7 @@ def alignCard(card, x=None, y=None, slotIdx=None):
 
 
 def alignBackups(card, x=0, y=0):
-   debug(">>> alignBackups({}, {}, {})".format(card, x, y)) #Debug
+   debug(">>> alignBackups({}, {}, {})".format(card, x, y))
    attachs = getAttachmets(card)
    if len(attachs) > 0:
       ox, oy = CardsCoords['BackupOffset']
@@ -688,7 +681,7 @@ def revealDrawnCard(card, type = None, faceUp = True):
    
    
 def transformCard(card, cardModel):
-   debug(">>> transformCard({}, {})".format(card, cardModel)) #Debug
+   debug(">>> transformCard({}, {})".format(card, cardModel))
    
    group = card.group
    cx, cy = card.position
@@ -726,7 +719,7 @@ def transformCard(card, cardModel):
    
    
 def copyAlternateRules(card, target):
-   debug(">>> copyAlternateRules({}, {})".format(card, target)) #Debug
+   debug(">>> copyAlternateRules({}, {})".format(card, target))
    
    if not automations['ExtAPI']:
       return None
@@ -741,7 +734,7 @@ def copyAlternateRules(card, target):
    
    
 def addAlternateRules(card, ability, rules, altname=None):
-   debug(">>> addAlternateRules({}, {}, {})".format(card, ability, altname)) #Debug
+   debug(">>> addAlternateRules({}, {}, {})".format(card, ability, altname))
    
    if not automations['ExtAPI']:
       return None
@@ -907,7 +900,7 @@ def modSP(count = 1, mode = None, silent = False, player = me):
 
 def payCostSP(amount = 1, obj = None, msg = 'play this card', type = None):
 # Pay an SP cost. However we also check if the cost can actually be paid.
-   debug(">>> payCostSP({}, {})".format(amount, type)) #Debug
+   debug(">>> payCostSP({}, {})".format(amount, type))
    amount = num(amount)
    
    # Cost modifiers
@@ -932,7 +925,7 @@ def payCostSP(amount = 1, obj = None, msg = 'play this card', type = None):
    
    
 def getCostMod(initialAmount, type, obj=None):
-   debug(">>> getCostMod({}, {})".format(obj, type)) #Debug
+   debug(">>> getCostMod({}, {})".format(obj, type))
    newAmount = initialAmount
    type = type.lower()
    Modifiers = getGlobalVar('Modifiers')
@@ -958,7 +951,7 @@ def getCostMod(initialAmount, type, obj=None):
 #------------------------------------------------------------------------------
 
 def attach(card, target):
-   debug(">>> attachCard()") #Debug
+   debug(">>> attachCard()")
    target.target(False)
    backups = getGlobalVar('Backups')
    backups[card._id] = target._id
@@ -968,7 +961,7 @@ def attach(card, target):
    
 
 def dettach(card):
-   debug(">>> dettach()") #Debug
+   debug(">>> dettach()")
    mute()
    card.target(False)
    backups = getGlobalVar('Backups')
@@ -995,7 +988,7 @@ def dettach(card):
 def clearAttachLinks(card):
 # This function takes care to discard any attachments of a card that left play
 # It also clear the card from the attach dictionary, if it was itself attached to another card
-   debug(">>> clearAttachLinks({})".format(card)) #Debug
+   debug(">>> clearAttachLinks({})".format(card))
    
    backups = getGlobalVar('Backups')
    # Next line causes an error
@@ -1018,11 +1011,11 @@ def clearAttachLinks(card):
    setGlobalVar('Backups', backups)
    
    debugBackups()   
-   debug("<<< clearAttachLinks()") #Debug
+   debug("<<< clearAttachLinks()")
    
 
 def getAttachmets(card):
-   debug(">>> getAttachmets({})".format(card)) #Debug
+   debug(">>> getAttachmets({})".format(card))
    
    # Returns a list with all the cards attached to this card
    backups = getGlobalVar('Backups')

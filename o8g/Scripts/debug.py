@@ -19,17 +19,15 @@
 # Debugging
 #------------------------------------------------------------------------------
 
-def debug(msg, level = 1):
-   if debugVerbosity < DebugLevel.Info:
-      return
-   if debugVerbosity >= level:
+def debug(msg):
+   if debugVerbosity > 0:
       msg = "{}".format(msg)
-      msg = DebugLevelPrefixes[level] + ' ' + msg
+      msg = '[#]=> ' + msg
       whisper(msg)
    
 
 def debugScenario():
-   debug(">>> debugScenario()") #Debug
+   debug(">>> debugScenario()")
    
    if me.name != Author:
       return
@@ -38,7 +36,7 @@ def debugScenario():
 	   nextTurn(me, True)
    
    global debugVerbosity
-   debugVerbosity = DebugLevel.All
+   debugVerbosity = DebugLevel.Debug
    me.SP = 50
    chooseSide()
    gotoMain()
@@ -120,7 +118,7 @@ def debugScenario():
       update()
       remoteCall(players[1], "debugOpp", [])
       
-   debug("<<< debugScenario()") #Debug
+   debug("<<< debugScenario()")
    
    
 def debugOpp():

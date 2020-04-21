@@ -134,7 +134,7 @@ def abl_removeFrost(obj_id):
 
 
 def abl_add(obj_id, eventOrFunc, source_id=None, restr=None, msg=None, checkFunc=None):
-   debug(">>> abl_add({}, {}, {}, {}, {}, {})".format(obj_id, eventOrFunc, source_id, restr, msg, checkFunc)) #Debug
+   debug(">>> abl_add({}, {}, {}, {}, {}, {})".format(obj_id, eventOrFunc, source_id, restr, msg, checkFunc))
    addEvent = True
    
    if restr and msg and len(msg) > 1:

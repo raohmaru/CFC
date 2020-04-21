@@ -67,7 +67,7 @@ def removeGameEventListener(obj_id, eventName=None, callback=None):
 def triggerGameEvent(event, *args):
    if not automations['Play']:
       return
-   debug(">>> triggerGameEvent({}, {})".format(event, args)) #Debug
+   debug(">>> triggerGameEvent({}, {})".format(event, args))
    obj_id = None
    if isinstance(event, list):
       event, obj_id = event
@@ -135,7 +135,7 @@ def remoteGameEvent(cardID, eventName, *args):
    
    
 def cleanupGameEvents(restr):
-   debug(">>> cleanupGameEvents({})".format(restr)) #Debug
+   debug(">>> cleanupGameEvents({})".format(restr))
    ge = getGlobalVar('GameEvents')
    for e in ge:
       for i, listener in reversed(list(enumerate(ge[e]))):
@@ -148,8 +148,7 @@ def cleanupGameEvents(restr):
             # Remove event added by me that affects me, or added by the opp that affects me as well
             if (
                (listener['controller'] == me._id and evRestrTarget != RS_PREFIX_OPP) or
-               (listener['controller'] != me._id and evRestrTarget == RS_PREFIX_OPP) or
-               len(players) == 1  # for debugging purposes
+               (listener['controller'] != me._id and evRestrTarget == RS_PREFIX_OPP)
             ):
                # Removed message
                if restrMsg:
@@ -172,6 +171,6 @@ def getTargetofSourceEvent(source):
       for listener in ge[e]:
          if listener['source'] == source:
             targets.append(Card(listener['id']))
-   debug(">>> getTargetofSourceEvent({}) -> {}".format(source, targets)) #Debug
+   debug(">>> getTargetofSourceEvent({}) -> {}".format(source, targets))
    return targets
    

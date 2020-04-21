@@ -35,7 +35,7 @@ def onDeckLoaded(args):
    player = args.player
    groups = args.groups
    if player != me: return # We only want the owner of the deck to run this script
-   debug(">>> onDeckLoaded({})".format(player)) #Debug
+   debug(">>> onDeckLoaded({})".format(player))
    notify("{} has loaded a deck. Now his deck has {} cards.".format(player, len(me.Deck)))
    mute()
    cards = {}
@@ -123,7 +123,7 @@ def onCardsMoved(args):
    
 def onTurnPassed(args):
    # Reset some player variables at the start of each turn
-   debug(">>> onTurnPassed({}, {})".format(args.player, turnNumber())) #Debug
+   debug(">>> onTurnPassed({}, {})".format(args.player, turnNumber()))
    global cleanedUpRing, turns
    # That was my old turn
    if args.player == me:
@@ -136,7 +136,7 @@ def onTurnPassed(args):
    elif args.player is not None:
       cleanedUpRing = False
       turns = 1
-   debug("<<< onTurnPassed()") #Debug
+   debug("<<< onTurnPassed()")
 
 
 def onPhasePassed(args):

@@ -78,7 +78,7 @@ def gotoCleanup(group = table, x = 0, y = 0, silent = False):
 
 def setup(group=table, x=0, y=0, silent=False):
 # This function is usually the first one the player does
-   debug(">>> setup()") #Debug
+   debug(">>> setup()")
    mute()
    # if not silent:
       # if not confirm("Are you sure you want to setup for a new game?"):
@@ -100,7 +100,7 @@ def setup(group=table, x=0, y=0, silent=False):
 
 def scoop(group, x=0, y=0):
 # Reset the game
-   debug(">>> reset()") #Debug
+   debug(">>> reset()")
    mute()
    if not confirm("Are you sure you want to reset the game?"):
       return
@@ -229,7 +229,7 @@ def attackNoFreeze(card, x = 0, y = 0):
 
 
 def unitedAttack(card, x = 0, y = 0):
-   debug(">>> unitedAttack()") #Debug
+   debug(">>> unitedAttack()")
    mute()
    cardsnames = card
    if automations['Play']:
@@ -256,7 +256,7 @@ def block(card, x = 0, y = 0):
 
 
 def activate(card, x = 0, y = 0):
-   debug(">>> activate()") #Debug
+   debug(">>> activate()")
    mute()
    if card.highlight == ActivatedColor:
       card.highlight = None
@@ -407,7 +407,7 @@ def toggleAbility(card, x = 0, y = 0, remove = False):
 
 
 def copyAbility(card, x = 0, y = 0, target = None):
-   debug(">>> copyAbility({}, {})".format(card, target)) #Debug
+   debug(">>> copyAbility({}, {})".format(card, target))
    mute()
    if not isCharacter(card):
       whisper("Abilities can only be copied to character cards.")
@@ -456,11 +456,11 @@ def copyAbility(card, x = 0, y = 0, target = None):
          warning("Target character card doesn't have an ability to copy.")
    else:
       warning("Please select a valid character card.")
-   debug("<<< copyAbility()") #Debug
+   debug("<<< copyAbility()")
 
 
 def swapAbilities(card, x = 0, y = 0, target = None):
-   debug(">>> swapAbilities({}, {})".format(card, target)) #Debug
+   debug(">>> swapAbilities({}, {})".format(card, target))
    mute()
    if not isCharacter(card) or not charIsInRing(card, card.controller) or not card.Rules:
       whisper("Abilities can only be swapped between character cards with abilities in the arena.")
@@ -593,7 +593,7 @@ def discardAll(group, x = 0, y = 0):
 
 
 def toTableFaceDown(card, x = 0, y = 0):
-   debug(">>> toTableFaceDown {}".format(card)) #Debug
+   debug(">>> toTableFaceDown {}".format(card))
    mute()
    fromText = fromWhereStr(card.group)
    placeCard(card, card.Type, faceDown=True)
@@ -601,7 +601,7 @@ def toTableFaceDown(card, x = 0, y = 0):
 
 
 def changeSlot(card, x = 0, y = 0, targets = None):
-   debug(">>> changeSlot {}".format(card)) #Debug
+   debug(">>> changeSlot {}".format(card))
    mute()
    cardSlot = getSlotIdx(card, card.controller)
    if cardSlot == -1:
@@ -736,7 +736,7 @@ def minusSPX(group, x = 0, y = 0):
 #---------------------------------------------------------------------------
 
 def play(card):  # This is the function to play cards from your hand.
-   debug(">>> playing card {}".format(card)) #Debug
+   debug(">>> playing card {}".format(card))
 
    mute()
    if not playerSide:
@@ -755,11 +755,11 @@ def play(card):  # This is the function to play cards from your hand.
    else:
       notify("{} plays {} from their {}.".format(me, card, group.name))
 
-   debug("<<< playing card end") #Debug
+   debug("<<< playing card end")
 
 
 def backup(card, x = 0, y = 0):  # Play a card as backup attached to a character in the player's ring
-   debug(">>> backup with card {}".format(card)) #Debug
+   debug(">>> backup with card {}".format(card))
 
    mute()
    group = card.group
@@ -773,7 +773,7 @@ def backup(card, x = 0, y = 0):  # Play a card as backup attached to a character
       placeCard(card, card.Type)
       notify("{} backups with {} from their {}.".format(me, card, group.name))
 
-   debug("<<< backup()") #Debug
+   debug("<<< backup()")
 
 
 def discard(card, x = 0, y = 0, isRandom = False):
@@ -994,14 +994,12 @@ def setupDebug(group, x=0, y=0):
 def setDebugVerbosity(group, x=0, y=0):
    global debugVerbosity
    mute()
-   levels = [None] * len(DebugLevel.__dict__)
-   for attr, value in DebugLevel.__dict__.iteritems():
-      levels[value+1] = attr
-   choice = askChoice("Set debug verbosity to:", levels)
+   levels = DebugLevel.__dict__.keys()
+   choice = askChoice("Set debug verbosity to: (current is {})".format(levels[debugVerbosity]), levels)
    if choice == 0:
       return
-   debugVerbosity = choice - 2
-   whisper("Debug verbosity is now: {} ({})".format(levels[choice-1], debugVerbosity))
+   debugVerbosity = choice - 1
+   whisper("Debug verbosity is now: {} ({})".format(levels[debugVerbosity], debugVerbosity))
 
 
 def createCard(group, x=0, y=0):

@@ -64,7 +64,7 @@ class RulesUtils():
       elif name == RS_KW_ZONE_KILL:
          zone = player.piles['Removed Pile']
 
-      debug("getZoneByName({}) => {}".format(name, zone)) #Debug
+      debug("getZoneByName({}) => {}".format(name, zone))
 
       return zone
 
@@ -234,13 +234,12 @@ class RulesUtils():
 
       if isinstance(targets, list):
          debug("-- {} target(s) retrieved:".format(len(targets)))
-         if debugVerbosity >= DebugLevel.Debug:
-            for i, t in enumerate(targets):
-               if i < 10:
-                  debug("        {}".format(t))
-               else:
-                  debug("        ...")
-                  break
+         for i, t in enumerate(targets):
+            if i < 10:
+               debug("        {}".format(t))
+            else:
+               debug("        ...")
+               break
       return targets
 
 
