@@ -66,12 +66,19 @@ CleanupPhase  = 7
 AttackColor         = "#ff0000"
 AttackNoFreezeColor = "#ff8000"
 UnitedAttackColor   = "#ff42de"
-BlockColor          = "#119281"
+BlockColor          = "#11aa43"
 ActivatedColor      = "#0000ff"
 InfoColor           = "#00ff00"
 
 # Filter colours
 CannotUnfreezeFilter = '#6699d9ff'
+JustEnteredFilter    = '#55dddd00'
+KOedFilter           = '#55ff0000'
+
+FiltersDict = {
+   'Just Entered'   : JustEnteredFilter,
+   'Cannot Unfreeze': CannotUnfreezeFilter
+}
 
 # Dictionary which hold all the hard coded markers and tokens (in the markers & tokens set)
 MarkersDict = {
@@ -230,7 +237,7 @@ BPMultiplier = 100  # Model.BP = markers.BP * BPMultiplier
 playerSide     = None  # Variable to keep track on which side each player is
 playerAxis     = None  # Variable to keep track on which axis the player is
 handSize       = HandSize
-debugVerbosity = DebugLevel.Off # -1..4 (At -1 means no debugging messages display)
+debugVerbosity = DebugLevel.Off
 debugging      = False
 # If I am alone debugging I want to know EVERYTHING
 if me.name == Author and len(players) == 1:

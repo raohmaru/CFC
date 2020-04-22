@@ -2,9 +2,10 @@ require 'rake/clean'
 require 'rubygems'
 require 'json'
 require 'redcarpet'
+require 'pathname'; 
 
-
-OCTGN_data_dir =  ENV["USERPROFILE"] + "/Documents/OCTGN"
+# Absolute path does not work anymore in Win10?
+OCTGN_data_dir = Pathname.new(Pathname.new(ENV["USERPROFILE"] + "/Documents/OCTGN")).relative_path_from(File.dirname(__FILE__)).to_s
 start_time = Time.now
 CLOBBER.include ["o8g/*.o8g", "#{OCTGN_data_dir}/LocalFeed/Card*.nupkg", "o8g/Scripts/**/*.pyc"]
 
@@ -52,11 +53,13 @@ task :deploy => [:clobber, :build] do
   puts "Time elapsed: #{(end_time - start_time)*1000} milliseconds"
 end
 
+
 desc "Copies python files to the game's script folder under OCTGN's games database folder"
 task :copy => [:test] do
   cp_r "o8g/Scripts/.", "#{OCTGN_data_dir}/GameDatabase/e3d56d9e-900d-49c6-b6ae-22cbb51be153/Scripts/"
   puts "\nTask completed at " + Time.now.strftime("%d-%m-%Y %H:%M")
 end
+
 
 desc "Verifies the files as a valid game definition"
 task :test do

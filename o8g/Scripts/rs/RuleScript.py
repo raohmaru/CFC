@@ -256,7 +256,7 @@ class Rules():
             # Clear visual target
             if targets and not isAuto:
                for obj in targets:
-                  if isCard(obj):
+                  if isCard(obj) and obj.targetedBy:
                      obj.target(False)
          rnd(10, 1000) # Wait between effects until all animation is done
       

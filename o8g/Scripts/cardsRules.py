@@ -515,7 +515,7 @@ action = discard(all); moveTo(hand) target(<,2>*@myDiscards)
 # Omokane Saki's STAND-BY
 RulesDict['c6ee2630-7f1a-4ac1-95f3-be8db970e855'] = """
 target? = character@deck
-action = {F}: reveal() & shuffle() & moveTo(deck, true)
+action = reveal() & shuffle() & moveTo(deck, true)
 """
 
 # Chris Redfield's DISORDER
@@ -1350,7 +1350,7 @@ action = destroy() target(^characters@myRing); each(card in destroyed -> sp(+5))
 
 # Asura's RISING EVIL
 RulesDict['48aba37c-374b-4362-b30a-d41fa9727b2c'] = """
-action = moveTo(deck) target(reactions@discards) & shuffle()
+action = moveTo(deck) target?(reactions@discards) & shuffle()
 """
 
 # Cham Cham's PAKU PAKU
@@ -1731,7 +1731,7 @@ action = freeze(toggle)
 
 # Raw shield
 RulesDict['50afc361-3dd7-4847-ae4c-d9ed84f1d991'] = """
-action = {F}: destroy() target(character@myRing); hp(prevTgt.BP)
+action = destroy() target(character@myRing); hp(prevTgt.BP)
 """
 
 # Reparation

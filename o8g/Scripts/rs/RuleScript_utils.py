@@ -213,6 +213,12 @@ class RulesUtils():
          
       if not targets:
          whisper(MSG_ERR_NO_FILTERED_CARDS)
+      # Draw an arrow between the source card and the targets
+      elif source and isCard(source):
+         for c in targets:
+            if isCard(c):
+               source.arrow(c)
+               update()
 
       return targets
 
@@ -351,7 +357,7 @@ class RulesUtils():
             debug("-- Picked {} card(s) from the bottom of {}".format(len(cards_f1), ''.join(zone)))
 
       if choose:
-         if len(cards_f1) == 0:
+         if len(cards_f1) == 0 and reveal != 'all':
             return False
          if not msg:
             msg = MSG_SEL_CARD_EFFECT if source else MSG_SEL_CARD

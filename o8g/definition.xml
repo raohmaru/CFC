@@ -4,7 +4,7 @@
       name="Card Fighters' Clash"
       id="e3d56d9e-900d-49c6-b6ae-22cbb51be153"
       octgnVersion="3.4.217.0"
-      version="0.8.1.468"
+      version="0.8.1.476"
       markersize="20"
       tags="capcom snk fighter"
       description="Card game based in the SNK Playmore’s video game SNK vs. Capcom Card Fighters' Clash 2 Expand Edition. Players try to defeat each other in a battle playing powerful characters from Capcom and SNK Playmore.
@@ -188,16 +188,15 @@
 		
 		<cardaction menu="Default action" default="True" execute="defaultAction" getName="aclb_Default" />
 		<cardaction menu="(Un)Freeze" shortcut="Ctrl+F" execute="freeze" getName="aclb_Freeze" showIf="acsh_isChar" />
-		<cardaction menu="Don't unfreeze on Activate phase" shortcut="Ctrl+Shift+F" execute="doesNotUnfreeze" showIf="acsh_isChar" />
-		<cardactions menu="Combat..." showIf="acsh_isChar">
-			<cardaction menu="Attack" shortcut="Ctrl+A" execute="attack" getName="aclb_Attack" showIf="acsh_isActivePlayer" />
-			<cardaction menu="Attack without freezing" shortcut="Ctrl+Shift+A" execute="attackNoFreeze" showIf="acsh_isActivePlayerAndNotAttacking" />
-			<cardaction menu="United Attack" shortcut="Ctrl+Alt+A" execute="unitedAttack" showIf="acsh_isActivePlayerAndNotAttacking" />
-			<cardaction menu="Counter-attack (Block)" shortcut="Ctrl+B" execute="block" getName="aclb_Block" showIf="acsh_isNotActivePlayer" />
+		<cardactions menu="Combat..." showIf="acsh_isActivePlayerAttack">
+			<cardaction menu="Attack" shortcut="Ctrl+A" execute="attack" getName="aclb_Attack" />
+			<cardaction menu="Attack without freezing" shortcut="Ctrl+Shift+A" execute="attackNoFreeze" showIf="acsh_isNotAttacking" />
+			<cardaction menu="United Attack" shortcut="Ctrl+Alt+A" execute="unitedAttack" showIf="acsh_isNotAttacking" />
 		</cardactions>
+		<cardaction menu="Counter-attack (Block)" shortcut="Ctrl+B" execute="block" getName="aclb_Block" showIf="acsh_isNotActivePlayerBlock" />
 		<cardactions menu="Move...">
 			<cardaction menu="KO" shortcut="Del" execute="destroy" getName="aclb_Destroy" />
-			<cardaction menu="Remove" shortcut="Shift+Del" execute="remove" />
+			<!-- <cardaction menu="Remove" shortcut="Shift+Del" execute="remove" /> -->
 			<cardaction menu="Return to Hand" shortcut="Ctrl+H" execute="toHand" />
 			<cardaction menu="Put into Deck (Top)" shortcut="Ctrl+D" execute="toDeckTop" />
 			<cardaction menu="Put into Deck (Bottom)" shortcut="Ctrl+Shift+D" execute="toDeckBottom" />
@@ -240,7 +239,7 @@
 		</cardactions>
 		<cardaction menu="Transform" shortcut="Ctrl+Shift+T" batchExecute="transformCards" />
 		<cardaction menu="Realign card" shortcut="Ctrl+I" execute="alignCardAction" />
-		<cardaction menu="Show available backups" shortcut="Ctrl+Alt+B" execute="askCardBackups" showIf="acsh_isChar" />
+		<cardaction menu="Show compatible backups" shortcut="Ctrl+Alt+B" execute="askCardBackups" showIf="acsh_isChar" />
 		<cardaction menu="Clear" shortcut="Esc" execute="clear" />
 	</table>
 	
@@ -283,7 +282,7 @@
 			<groupaction menu="Shuffle" shortcut="Ctrl+S" execute="shuffle" />
 			<groupaction menu="Trash X cards" shortcut="Ctrl+Shift+T" execute="trash" />
 			<groupaction menu="Rearrange X cards" shortcut="Ctrl+Shift+S" execute="prophecy" />
-			<groupaction menu="Reveal/Hide top card" shortcut="Ctrl+R" execute="revealTopDeck" getName="aclb_RevealTopDeck" />
+			<!-- <groupaction menu="Reveal/Hide top card" shortcut="Ctrl+R" execute="revealTopDeck" getName="aclb_RevealTopDeck" /> -->
 			<groupactions menu="Move all cards to...">
 				<groupaction menu="Hand" shortcut="Ctrl+Shift+H" execute="toHandAll" />
 				<groupaction menu="Discard pile" shortcut="Ctrl+Shift+Del" execute="discardAll" />
@@ -311,7 +310,7 @@
 			<cardaction menu="Return card to Hand" shortcut="Ctrl+H" default="True" execute="toHand" />
 			<cardaction menu="Put into Deck (Top)" shortcut="Ctrl+D" execute="toDeckTop" />
 			<cardaction menu="Put into Deck (Bottom)" shortcut="Ctrl+Shift+D" execute="toDeckBottom" />
-			<cardaction menu="Put into Removed Pile" shortcut="Shift+Del" execute="remove" />
+			<!-- <cardaction menu="Put into Removed Pile" shortcut="Shift+Del" execute="remove" /> -->
 		</group>
 		<!-- <group name="Removed pile" visibility="all" icon="Resources/Groups/removed.png" collapsed="True">
 			<groupaction menu="Shuffle" shortcut="Ctrl+S" execute="shuffle" />

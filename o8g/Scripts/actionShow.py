@@ -20,16 +20,12 @@
 #---------------------------------------------------------------------------
 
 def acsh_Debug(args, x = 0, y = 0):
-   if me.name == Author:
-      return True
-   return False
+   return me.name == Author and acsh_Debug
 
       
 def acsh_isChar(args, x = 0, y = 0):
    card = args[0]
-   if isCharacter(card):
-      return True
-   return False
+   return isCharacter(card)
 
       
 def acsh_gameStarted(args, x = 0, y = 0):
@@ -40,21 +36,19 @@ def acsh_gameNotStarted(args, x = 0, y = 0):
    return turnNumber() == 0
 
 
-def acsh_isActivePlayer(args, x = 0, y = 0):
-   return me.isActive
+def acsh_isActivePlayerAttack(args, x = 0, y = 0):
+   card = args[0]
+   return isCharacter(card) and me.isActive and currentPhase()[1] == AttackPhase
 
 
-def acsh_isNotActivePlayer(args, x = 0, y = 0):
-   return not me.isActive
+def acsh_isNotActivePlayerBlock(args, x = 0, y = 0):
+   card = args[0]
+   return isCharacter(card) and not me.isActive and currentPhase()[1] == BlockPhase
 
       
-def acsh_isActivePlayerAndNotAttacking(args, x = 0, y = 0):
+def acsh_isNotAttacking(args, x = 0, y = 0):
    card = args[0]
-   if not me.isActive:
-      return False
-   if not MarkersDict['Attack'] in card.markers and not MarkersDict['United Attack'] in card.markers:
-      return True
-   return False
+   return not hasMarker(card, 'Attack') and not hasMarker(card, 'United Attack')
 
       
 def acsh_hasAbility(args, x = 0, y = 0):

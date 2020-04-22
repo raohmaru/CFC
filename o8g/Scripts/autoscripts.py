@@ -64,7 +64,7 @@ def activatePhaseStart():
             frosted.append(card)
          removeMarker(card, 'Just Entered')
          removeMarker(card, 'Counter-attack')
-         clear(card, silent = True)
+         clear(card)
          alignCard(card)
       # Discard any Action or Reaction card left in the table (just in case player forgot to remove them)
       else:
@@ -92,12 +92,13 @@ def drawPhaseStart():
 def attackPhaseStart():
    clearKOedChars()
    clearGlobalVar('Stack')
-   # Discard action cards I have played
-   myActionCards = (card for card in table
-      if card.controller == me
-      and isAction(card))
-   for card in myActionCards:
-      discard(card)
+   for card in table:
+      if card.controller == me:
+         # Discard action cards I have played
+         if isAction(card):
+            discard(card)
+         else:
+            card.target(False)
 
 
 def blockPhaseStart():
@@ -356,8 +357,19 @@ def backupAuto(card):
    myRing = getGlobalVar('Ring', me)
    targets = getTargetedCards(card)
    if len(targets) == 0 or not targets[0]._id in myRing:
-      warning(MSG_SEL_CHAR_RING)
-      return
+      targets = []
+      # Get a compatible character in the ring
+      for c in getRing():
+         acceptedBackups = getAcceptedBackups(c)
+         if card.Subtype in acceptedBackups:
+            targets.append(c)
+      if targets:
+         targets = showCardDlg(targets, 'Select a character to back-up')
+         if targets == None:
+            return
+      else:
+         warning('There are not compatible characters to back-up in the ring.')
+         return
    target = targets[0]
    # Backup limit
    backupsPlayed = getState(me, 'backupsPlayed')
@@ -425,7 +437,7 @@ def attackAuto(card, force = False):
       removeMarker(card, 'Attack')
       removeMarker(card, 'United Attack')
       removeMarker(card, 'Unfreezable')
-      clear(card, silent = True)
+      clear(card)
       alignCard(card)
       notify('{} cancels the attack with {}'.format(me, card))
       rearrangeUAttack(card)
@@ -539,7 +551,7 @@ def blockAuto(card):
    blockers = getGlobalVar('Blockers')
    if MarkersDict['Counter-attack'] in card.markers:
       removeMarker(card, 'Counter-attack')
-      clear(card, silent = True)
+      clear(card)
       alignCard(card)
       for i in blockers:
          if blockers[i] == card._id:

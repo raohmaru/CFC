@@ -1,8 +1,11 @@
 # Card Fighters' Clash Changelog
 
 ## 0.8.1
-Minor fixes and improvements.
 Updated character card design.
+Simplify contextual menu.
+Cards tint colors for more clearer info.
+Draw arrows between source card of the effect and targets.
+Minor fixes and improvements.
 ## 0.8.0
 All cards scripted.  
 Updated docs.  

@@ -22,6 +22,9 @@
 
 # Happens when the table first loads, and never again
 def onTableLoaded():
+   settings = getSetting('settings', str(automations))
+   automations.update(eval(settings))
+   debug("Settings loaded: {}".format(automations))
    checkTwoSidedTable()
 
 
@@ -150,8 +153,13 @@ def onPhasePassed(args):
    # elif idx == MainPhase:
    # elif idx == AttackPhase:
    if idx == BlockPhase:
+      if not me.isActive and len(getAttackingCards(getOpp(), True)) > 0:
+         setStop(idx, True)
+         whisper("Press TAB key when done to return priority to attacking player.")
       _extapi.whisper("({} can play Reaction cards and then you may choose if block attackers)".format("Now defending player" if me.isActive else "You"), Colors.Blue)
-   # elif idx == EndPhase:
+   elif idx == EndPhase:
+      if not me.isActive:
+         setStop(BlockPhase, False)
    elif idx == CleanupPhase:
       if me.isActive:
          _extapi.whisper("(This is the last phase of your turn)", Colors.Blue)
@@ -163,12 +171,22 @@ def onPhasePassed(args):
 
 
 def onMarkerChanged(args):
-   debug(">>> onMarkerChanged: {}, {}, {}, {}".format(args.card, args.marker, args.id, args.value))
-   if args.marker == 'BP':
-      qty = getMarker(args.card, 'BP')
+   card = args.card
+   marker = args.marker
+   debug(">>> onMarkerChanged: {}, {}, {}, {}".format(card, marker, args.id, args.value))
+   if marker == 'BP':
+      qty = getMarker(card, 'BP')
+      getParsedCard(card).BP = qty if qty > 0 else args.value  # last BP before being Koed
       if qty == 0:
-         qty = args.value
-      getParsedCard(args.card).BP = qty
+         card.filter = KOedFilter
+      elif hasFilter(card, KOedFilter):
+         card.filter = None
+   # Tint cards according to the markers
+   elif marker in FiltersDict:
+      if getMarker(card, marker) > 0:
+         card.filter = FiltersDict[marker]
+      elif hasFilter(card, FiltersDict[marker]):
+         card.filter = None
 
 
 def OnCounterChanged(args):

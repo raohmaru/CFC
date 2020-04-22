@@ -37,6 +37,7 @@ def nextPhase(group = table, x = 0, y = 0):
          phaseIdx += 1
       setPhase(phaseIdx)
    elif phaseIdx == BlockPhase:
+      setStop(phaseIdx, False)
       notify("{} has finalized the {} phase. {} can go to the next phase.".format(me, Phases[phaseIdx], getOpp()))
 
 
@@ -111,7 +112,7 @@ def scoop(group, x=0, y=0):
    toOwnerDeck(me.Deck)
    toOwnerDeck(me.hand)
    toOwnerDeck(me.piles['Discard Pile'])
-   toOwnerDeck(me.piles['Removed Pile'])
+   # toOwnerDeck(me.piles['Removed Pile'])
    notify("{} resets the game.".format(me))
 
 
@@ -162,11 +163,11 @@ def randomPickEnemy(group, x = 0, y = 0):
       randomPick(group, fromPlayer = players[1])
 
 
-def clearAll(group = table, x = 0, y = 0, allPlayers = False):
+def clearAll(group = table, x = 0, y = 0):
    notify("{} clears all targets and highlights.".format(me))
    for card in table:
-      if allPlayers or card.controller == me:
-         clear(card, silent = True)
+      if card.controller == me:
+         clear(card)
 
 
 def alignCards(group, x = 0, y = 0):
@@ -302,20 +303,16 @@ def doesNotUnfreeze(card, x = 0, y = 0):
    mute()
    msg = "not unfreeze"
    if not hasMarker(card, 'Cannot Unfreeze'):
-      card.filter = CannotUnfreezeFilter
       setMarker(card, "Cannot Unfreeze")
    else:
-      card.filter = None
       removeMarker(card, "Cannot Unfreeze")
       msg = "unfreeze as normal"
 
    notify("{0}'s {1} will {2} during {0}'s Activate phase.".format(card.controller, card, msg))
 
 
-def clear(card, x = 0, y = 0, silent = False):
-   if not silent: notify("{} clears {}.".format(me, card))
+def clear(card, x = 0, y = 0):
    card.target(False)
-   card.arrow(card, False)
    if not card.highlight in [ActivatedColor]:
       card.highlight = None
 

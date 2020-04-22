@@ -92,6 +92,7 @@ def switchAutomation(name, command = None):
       automations[name] = not automations[name]
    else:
       automations[name] = command
+   setSetting('settings', str(automations))
    status = "ON" if automations[name] else "OFF"
    notify(" -> {}'s {} automations are {}.".format(me, name, status))
 
@@ -1099,3 +1100,7 @@ def isVisible(card):
    if card.group.name == 'Hand':
       return False
    return True
+
+
+def hasFilter(card, filter):
+   return card.filter and card.filter[1:] == filter[3:]
