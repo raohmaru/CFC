@@ -56,6 +56,7 @@ def onDeckLoaded(args):
          return
    if automations['Play']:
       setup(silent=True)
+   playSnd('load-deck')
 
       
 def onCardsMoved(args):
@@ -103,6 +104,10 @@ def onCardsMoved(args):
       elif fromGroup != table and toGroup == table:
          if charIsInRing(card):
             ringChanged = True
+      if toGroup._name == 'Hand':
+         playSnd('to-hand')
+      elif toGroup != table:
+         playSnd('move-card')
       # Restore transformed card if it goes to a pile
       debug("onCardsMoved: {} ({}) from {} to {}".format(card, card._id, fromGroup._name, toGroup._name))
       debug("{}".format(transfCards))
@@ -139,6 +144,7 @@ def onTurnPassed(args):
    elif args.player is not None:
       cleanedUpRing = False
       turns = 1
+   playSnd('turn-change-1')
    debug("<<< onTurnPassed()")
 
 
@@ -168,6 +174,8 @@ def onPhasePassed(args):
       
    if me.isActive:
       gotoPhase(idx, args.id)
+      if idx != ActivatePhase:
+         playSnd('phase-change')
 
 
 def onMarkerChanged(args):

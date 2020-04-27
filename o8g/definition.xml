@@ -4,7 +4,7 @@
       name="Card Fighters' Clash"
       id="e3d56d9e-900d-49c6-b6ae-22cbb51be153"
       octgnVersion="3.4.217.0"
-      version="0.8.1.476"
+      version="0.8.1.481"
       markersize="20"
       tags="capcom snk fighter"
       description="Card game based in the SNK Playmore’s video game SNK vs. Capcom Card Fighters' Clash 2 Expand Edition. Players try to defeat each other in a battle playing powerful characters from Capcom and SNK Playmore.
@@ -17,7 +17,7 @@
       iconurl="https://raw.github.com/raohmaru/CFC/master/cfc_logo.png"
       scriptVersion="3.1.0.2"
 	  usetwosidedtable="True">
-	
+
 	<scripts>
 		<script src="Scripts/config.py" />
 		<script src="Scripts/config_messages.py" />
@@ -30,6 +30,7 @@
 		<script src="Scripts/utils_random.py" />
 		<script src="Scripts/debug.py" />
 		<script src="Scripts/winforms.py" />
+		<script src="Scripts/sounds.py" />
 		<script src="Scripts/extendedAPI.py" />
 		<script src="Scripts/actionLabels.py" />
 		<script src="Scripts/actionShow.py" />
@@ -43,7 +44,7 @@
 		<script src="Scripts/rs/RuleScript_selectors.py" />
 		<script src="Scripts/rs/RuleScript_utils.py" />
 	</scripts>
-	
+
 	<events>
 		<event name="OnTableLoaded"        action="onTableLoaded" />
 		<event name="OnGameStarted"        action="onGameStarted" />
@@ -55,21 +56,46 @@
 		<event name="OnMarkerChanged"      action="onMarkerChanged" />
 		<event name="OnCounterChanged"     action="OnCounterChanged" />
 	</events>
-	
-	<!-- <sounds>
-		<sound name="tim" src="sounds/soundfile.mp3"/>
-	</sounds> -->
-	
+
+	<sounds>
+		<sound name="activate-1" src="Resources/Sounds/activate-1.mp3"/>
+		<sound name="activate-2" src="Resources/Sounds/activate-2.mp3"/>
+		<sound name="attack-1" src="Resources/Sounds/attack-1.mp3"/>
+		<sound name="attack-2" src="Resources/Sounds/attack-2.mp3"/>
+		<sound name="backup" src="Resources/Sounds/backup.mp3"/>
+		<sound name="block-1" src="Resources/Sounds/block-1.mp3"/>
+		<sound name="block-2" src="Resources/Sounds/block-2.mp3"/>
+		<sound name="cancel-1" src="Resources/Sounds/cancel-1.mp3"/>
+		<sound name="card-play-1" src="Resources/Sounds/card-play-1.mp3"/>
+		<sound name="card-play-2" src="Resources/Sounds/card-play-2.mp3"/>
+		<sound name="damage-char-1" src="Resources/Sounds/damage-char-1.mp3"/>
+		<sound name="damage-char-2" src="Resources/Sounds/damage-char-2.mp3"/>
+		<sound name="damage-player-1" src="Resources/Sounds/damage-player-1.mp3"/>
+		<sound name="damage-player-2" src="Resources/Sounds/damage-player-2.mp3"/>
+		<sound name="discard" src="Resources/Sounds/discard.mp3"/>
+		<sound name="draw" src="Resources/Sounds/draw.mp3"/>
+		<sound name="ko-1" src="Resources/Sounds/ko-1.mp3"/>
+		<sound name="ko-2" src="Resources/Sounds/ko-2.mp3"/>
+		<sound name="load-deck" src="Resources/Sounds/load-deck.mp3"/>
+		<sound name="move-card" src="Resources/Sounds/move-card.mp3"/>
+		<sound name="phase-change" src="Resources/Sounds/phase-change.mp3"/>
+		<sound name="shuffle" src="Resources/Sounds/shuffle.mp3"/>
+		<sound name="tap" src="Resources/Sounds/tap.mp3"/>
+		<sound name="to-hand" src="Resources/Sounds/to-hand.mp3"/>
+		<sound name="turn-change-1" src="Resources/Sounds/turn-change-1.mp3"/>
+		<sound name="untap" src="Resources/Sounds/untap.mp3"/>
+	</sounds>
+
 	<fonts>
 		<font src="Resources/Fonts/SourceSansPro-Regular_CFC.ttf" size="12" target="context" />
 		<font src="Resources/Fonts/SourceSansPro-Regular_CFC.ttf" size="12" target="chat" />
 		<font src="Resources/Fonts/SourceSansPro-Regular_CFC.ttf" size="12" target="deckeditor" />
 		<!-- <font src="Resources/Fonts/SourceSansPro-Regular_CFC.ttf" size="12" target="notes" /> -->
 	</fonts>
-	
+
 	<proxygen definitionsrc="Proxy/proxydef.xml">
 	</proxygen>
-	
+
 	<phases>
 		<phase name="Activate Phase (F1)"       icon="Resources/Phases/phase1.png" />
 		<phase name="Draw Phase (F2)"           icon="Resources/Phases/phase2.png" />
@@ -78,8 +104,8 @@
 		<phase name="Counter-attack Phase (F5)" icon="Resources/Phases/phase5.png" />
 		<phase name="End Phase (F6)"            icon="Resources/Phases/phase6.png" />
 		<phase name="Cleanup Phase (F7)"        icon="Resources/Phases/phase7.png" />
-	</phases> 
-	
+	</phases>
+
 	<documents>
 		<document name="Rulebook" icon="Documents/manual.png" src="Documents/CFC-Rules.html" />
 		<document name="Gameplay" icon="Documents/manual-octgn.png" src="Documents/CFC-Octgn.html" />
@@ -90,7 +116,7 @@
 	<gameModes>
 		<gameMode name="Standard" shortDescription="Regular game where Player's ring has 4 slots for characters" image="Resources/Art/standard.jpg" playerCount="2" />
 	</gameModes>
-	
+
 	<globalvariables>
 		<globalvariable name="Backups" value="{}" />
 		<globalvariable name="UnitedAttack" value="[]" />
@@ -104,7 +130,7 @@
 		<globalvariable name="Stack" value="[]" />
 		<globalvariable name="GameState" value="{}" />
 	</globalvariables>
-	
+
 	<card back="Resources/Card/back.jpg" front="Resources/Card/front.png" width="90" height="126" cornerRadius="3">
 		<property name="Publisher" type="String" ignoreText="True" textKind="Enum" />
 		<property name="Team" type="String" ignoreText="True" textKind="Enum" />
@@ -123,10 +149,10 @@
 		<property name="Number" type="String" ignoreText="True" />
 		<property name="Illustrator" type="String" ignoreText="True" />
 	</card>
-	
+
 	<gameboards src="Resources/Background/ring.png" x="-327" y="-342" width="655" height="684">
 	</gameboards>
-	
+
 	<table name="Table" visibility="undefined" ordered="False" width="1250" height="750" background="Resources/Background/background.jpg" backgroundStyle="uniformToFill">
 		<groupaction menu="Next phase" shortcut="Tab" execute="nextPhase" showIf="acsh_gameStarted" getName="aclb_NextOrPass" />
 		<groupactions menu="Phases..." showIf="acsh_gameStarted">
@@ -139,7 +165,7 @@
 			<groupaction menu="Go to Cleanup phase"       shortcut="F7" execute="gotoCleanup" />
 		</groupactions>
 		<groupaction menu="Setup game" shortcut="Ctrl+Shift+S" execute="setup" showIf="acsh_gameNotStarted" />
-		<groupactions menu="SP...">
+		<!-- <groupactions menu="SP...">
 			<groupactions menu="Gain SP...">
 				<groupaction menu="by 1" shortcut="Ctrl+1" execute="plusSP" />
 				<groupaction menu="by 2" shortcut="Ctrl+2" execute="plusSP2" />
@@ -164,7 +190,7 @@
 				<groupaction menu="by 9" shortcut="Ctrl+Shift+9" execute="minusSP9" />
 				<groupaction menu="by X" shortcut="Ctrl+Shift+0" execute="minusSPX" />
 			</groupactions>
-		</groupactions>
+		</groupactions> -->
 		<groupaction menu="Realign cards" shortcut="Ctrl+I" execute="alignCards" />
 		<groupaction menu="Clear cards" shortcut="esc" execute="clearAll" />
 		<groupactions menu="Random...">
@@ -179,13 +205,14 @@
 			<groupaction menu="Switch Phase Triggers automation ON/OFF" execute="switchPhaseAutomation" getName="aclb_PhaseAutomation" />
 			<groupaction menu="Switch Alert Messages ON/OFF" execute="switchWinForms" getName="aclb_WinForms" />
 			<groupaction menu="Switch Attack Damage automation ON/OFF" execute="switchAttackDamage" getName="aclb_AttackDamage" />
+			<groupaction menu="Switch Sounds ON/OFF" execute="switchSounds" getName="aclb_Sounds" />
 		</groupactions>
 		<groupactions menu="Debug..." showIf="acsh_Debug">
 			<groupaction menu="Setup" execute="setupDebug" />
 			<groupaction menu="Set debug verbosity" execute="setDebugVerbosity" />
 			<groupaction menu="Create card" execute="createCard" />
 		</groupactions>
-		
+
 		<cardaction menu="Default action" default="True" execute="defaultAction" getName="aclb_Default" />
 		<cardaction menu="(Un)Freeze" shortcut="Ctrl+F" execute="freeze" getName="aclb_Freeze" showIf="acsh_isChar" />
 		<cardactions menu="Combat..." showIf="acsh_isActivePlayerAttack">
@@ -242,11 +269,11 @@
 		<cardaction menu="Show compatible backups" shortcut="Ctrl+Alt+B" execute="askCardBackups" showIf="acsh_isChar" />
 		<cardaction menu="Clear" shortcut="Esc" execute="clear" />
 	</table>
-	
+
 	<player summary="HP: {#HP} | SP: {#SP} | Hand: {#Hand}">
 		<counter name="HP" icon="Resources/Counters/hp.png" default="30" reset="True" />
 		<counter name="SP" icon="Resources/Counters/sp.png" default="0"  reset="True" />
-		
+
 		<globalvariable name="Ring" value="[None,None,None,None]" />
 
 		<hand name="Hand" visibility="me" icon="Resources/Groups/hand.png">
@@ -326,7 +353,7 @@
 			<cardaction menu="Put into Deck (Bottom)" shortcut="Ctrl+Shift+D" execute="toDeckBottom" />
 		</group> -->
 	</player>
-	
+
 	<deck>
 		<section name="Main" group="Deck" />
 	</deck>

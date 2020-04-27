@@ -253,7 +253,8 @@ automations = {
    'Phase'    : True, # Automatically trigger phase related events, and effects from cards in play
    'WinForms' : True, # Game will use the custom Windows Forms for displaying info pop-ups
    'AttackDmg': True, # Applies attack damage automatically
-   'ExtAPI'   : True  # Make use of the extended API to access the C# API
+   'ExtAPI'   : True,  # Make use of the extended API to access the C# API
+   'Sounds'   : True  # Play sound effect
 }
 
 # Default values used in dialogs that can be overridden by the user to remember his last input

@@ -441,6 +441,7 @@ def attackAuto(card, force = False):
       alignCard(card)
       notify('{} cancels the attack with {}'.format(me, card))
       rearrangeUAttack(card)
+      playSnd('cancel-1')
       return
    # Char just entered the ring?
    if hasMarker(card, 'Just Entered'):
@@ -560,6 +561,7 @@ def blockAuto(card):
             setGlobalVar('Blockers', blockers)
             break
       notify('{} cancels the counter-attack with {}'.format(me, card))
+      playSnd('cancel-1')
       return
    # Check if an attacking enemy char has been selected
    enemyRing = getGlobalVar('Ring', players[1])

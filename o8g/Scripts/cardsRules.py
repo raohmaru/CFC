@@ -1662,13 +1662,13 @@ action = reveal(hand) target(players); each(action in me.hand -> draw()); each(a
 
 # Makeover
 RulesDict['f6a32199-62df-49b5-8544-ae7a86915cbe'] = """
-action = {F}: moveTo(deck) target?(all@hand) & shuffle() & draw(moved.size + 1)
+action = moveTo(deck) target?(all@hand) & shuffle() & draw(moved.size + 1)
 """
 
 # Management
 RulesDict['fd8db3d4-7df1-45fb-8712-5c35bb5acb3f'] = """
 target? = action@deck
-action = {F}: reveal() & shuffle() & moveTo(deck, true)
+action = reveal() & shuffle() & moveTo(deck, true)
 """
 
 # Mega crush
@@ -1781,7 +1781,7 @@ action = moveRestTo(ctrlDeck, -1) & moveTo(ctrlDeck, -1, true) target(_card); tr
 
 # Shopping
 RulesDict['0035d193-fe4b-4927-9dc1-6124b26768bc'] = """
-action = {F}: moveTo(deck) target(<,3>*@discards) & shuffle() & draw()
+action = moveTo(deck) target(<,3>*@discards) & shuffle() & draw()
 """
 
 # Showtime!
@@ -1999,7 +1999,7 @@ action = damage(3)
 # Scan
 RulesDict['1722e9d6-30e1-4355-9aa3-9b80b765754a'] = """
 target = opp
-action = {F}: reveal(hand); each(reaction in opp.hand -> draw(2)) target(me)
+action = reveal(hand); each(reaction in opp.hand -> draw(2)) target(me)
 """
 
 # Snared
@@ -2026,12 +2026,12 @@ action = swapAbilities() target(<2>character[powerful])
 # Suspicious
 RulesDict['3507e173-6329-4541-99fb-f4b81a482308'] = """
 target = opp
-action = {F}: reveal(hand) & discard(!characters)
+action = reveal(hand) & discard(!characters)
 """
 
 # Three sisters
 RulesDict['76c3d3b5-b3bc-41b1-8fef-d9c005269646'] = """
-action = {D(reaction)}{F}: draw(3)
+action = {D(reaction)}: draw(3)
 """
 
 # Time bomb
@@ -2054,7 +2054,7 @@ action = removeFromAttack()
 # Wanna gimme
 RulesDict['c6acfab6-c7cb-442e-87f0-432779af5ad9'] = """
 target? = *@deck
-action = {F}: shuffle() & moveTo(deck)
+action = shuffle() & moveTo(deck)
 """
 
 # Who's taller

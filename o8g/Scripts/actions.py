@@ -193,6 +193,10 @@ def switchWinForms(group, x = 0, y = 0):
 
 def switchAttackDamage(group, x = 0, y = 0):
    switchAutomation('AttackDmg')
+   
+   
+def switchSounds(group, x = 0, y = 0):
+   switchAutomation('Sounds')
 
 
 #---------------------------------------------------------------------------
@@ -217,6 +221,7 @@ def attack(card, x = 0, y = 0):
    if automations['Play']:
       if not attackAuto(card): return
    card.highlight = AttackColor
+   playSnd('attack-1')
    notify('{} attacks with {}'.format(me, card))
 
 
@@ -240,6 +245,7 @@ def unitedAttack(card, x = 0, y = 0):
       else:
          return
    card.highlight = UnitedAttackColor
+   playSnd('attack-2')
    notify('{} does an United Attack with {}.'.format(me, cardsnames))
 
 
@@ -253,6 +259,7 @@ def block(card, x = 0, y = 0):
       else:
          return
    card.highlight = BlockColor
+   playSnd('block-1')
    notify('{} counter-attacks {}'.format(me, text))
 
 
@@ -282,6 +289,10 @@ def activate(card, x = 0, y = 0):
       freeze(card, silent = True)
    if card.group == table:
       card.highlight = ActivatedColor
+   if isCharacter(card):
+      playSnd('activate-1')
+   else:
+      playSnd('activate-2')
    notify("{} has activated {}'s {}.".format(me, card, ability))
 
 
@@ -293,8 +304,10 @@ def freeze(card, x = 0, y = 0, unfreeze = None, silent = False):
       card.orientation ^= Rot90
    if isFrozen(card):
       if not silent: notify('{} freezes {}'.format(me, card))
+      playSnd('tap')
    else:
       if not silent: notify('{} unfreezes {}'.format(me, card))
+      playSnd('untap')
    if card.highlight == ActivatedColor:
       card.highlight = None
 
@@ -502,6 +515,9 @@ def destroy(card, x = 0, y = 0, controller=me):
    card.moveTo(me.piles['Discard Pile'])
    if isCharacter(card):
       action = "KOs"
+      playSnd('ko-1')
+   else:
+      playSnd('ko-2')
    if card.orientation != Rot0:
       card.orientation = Rot0
    notify("{} {} {} {}.".format(controller, action, card, fromText))
@@ -748,8 +764,10 @@ def play(card):  # This is the function to play cards from your hand.
    if isCharacter(card):
       notify("{} plays {} from their {}{}.".format(me, card, group.name, slot))
       charsPlayed = getState(me, 'charsPlayed')
+      playSnd('card-play-1')
       notify("({} has played {} character{} this turn.)".format(me, charsPlayed, plural(charsPlayed)))
    else:
+      playSnd('card-play-2')
       notify("{} plays {} from their {}.".format(me, card, group.name))
 
    debug("<<< playing card end")
@@ -769,7 +787,7 @@ def backup(card, x = 0, y = 0):  # Play a card as backup attached to a character
    else:
       placeCard(card, card.Type)
       notify("{} backups with {} from their {}.".format(me, card, group.name))
-
+   playSnd('backup')
    debug("<<< backup()")
 
 
@@ -782,6 +800,7 @@ def discard(card, x = 0, y = 0, isRandom = False):
       msg = "{} puts {} into his discard pile."
    if isRandom:
       msg = MSG_DISCARD_RANDOM
+   playSnd('discard')
    notify(msg.format(me, card, group.name))
 
 
@@ -810,6 +829,7 @@ def draw(group = me.Deck):  # Draws one card from the deck into the player's han
       whisper("You can't draw cards from an empty {}.".format(group.name))
       return
    group.top().moveTo(me.hand)
+   playSnd('draw')
    notify("{} draws a card.".format(me))
 
 
@@ -924,6 +944,7 @@ def shuffle(group):
       if card.isFaceUp:
          card.isFaceUp = False
    group.shuffle()
+   playSnd('shuffle')
    notify("{} shuffled its {}".format(me, group.name))
 
 
@@ -936,6 +957,7 @@ def reshuffle(group = me.piles['Discard Pile']):
    rnd(100, 10000) # Bug 105 workaround. This delays the next action until all animation is done.
                # see https://octgn.16bugs.com/projects/3602/bugs/102681
    Deck.shuffle() # Then use the built-in shuffle action
+   playSnd('shuffle')
    notify("{} reshuffled its {} into its Deck.".format(me, group.name)) # And inform everyone.
 
 
@@ -947,6 +969,7 @@ def reshuffleCards(group, cardType):
          card.moveTo(Deck) # Move the player's cards from the discard to its deck one-by-one.
    update()  # Trying this method to delay next actions until networked tasks are complete
    Deck.shuffle()
+   playSnd('shuffle')
    notify("{} shuffles all {} cards from his {} into its Deck.".format(me, cardType, group.name)) # And inform everyone.
 
 

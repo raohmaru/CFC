@@ -106,6 +106,13 @@ def aclb_PhaseAutomation(group, x = 0, y = 0):
       return "Phase Triggers automation is OFF"
 
       
+def aclb_Sounds(group, x = 0, y = 0):
+   if automations['Sounds']:
+      return "Sound effects are ON"
+   else:
+      return "Sound effects are OFF"
+
+      
 def aclb_WinForms(group, x = 0, y = 0):
    if automations['WinForms']:
       return "Alert Messages is ON"

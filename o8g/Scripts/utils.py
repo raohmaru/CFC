@@ -863,6 +863,10 @@ def dealDamage(dmg, target, source, isPiercing = False):
       addMarker(target, 'BP', -dmg)
       newBP = getMarker(target, 'BP')
       notify("{} deals {} damage to {}. New BP is {} (before was {}).".format(source, dmg, target, newBP, oldBP))
+      if isCharacter(source):
+         playSnd('damage-char-1')
+      else:
+         playSnd('damage-char-2')
       if newBP <= 0:
          remoteCall(target.controller, 'whisper', [MSG_HINT_KOED.format(target)])
    # Damage to a player
@@ -880,6 +884,9 @@ def dealDamage(dmg, target, source, isPiercing = False):
       # Change game state: non-combat damage
       if not isCharacter(source) or not hasMarker(source, 'Attack'):
          setState(target, 'damaged', True)
+         playSnd('damage-player-2')
+      else:
+         playSnd('damage-player-1')
 
 
 def modSP(count = 1, mode = None, silent = False, player = me):
