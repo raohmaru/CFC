@@ -1,5 +1,8 @@
 # Card Fighters' Clash Changelog
 
+## 0.8.2
+Simplified contextual menu.
+Improved gameplay.
 ## 0.8.1
 Updated character card design.
 Added sound effects.

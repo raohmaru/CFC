@@ -316,6 +316,7 @@ A valid Python expression.
 Available variables:
    tgt (current target)
    prevTgt
+   uaBP
    -- players --
    me
    opp
@@ -815,7 +816,7 @@ auto = ~myEndPhase~ [[if me.hand.size < opp.hand.size]] draw()
 
 # Twelve's X.C.O.P.Y.
 RulesDict['e4ae5562-a510-4a1d-98e8-59a91dc1cb8c'] = """
-auto = ~blocks:this~ bp(=attacker.bp)
+auto = ~blocks:this~ bp(=uaBP)
 """
 
 # Urien's DESPOT

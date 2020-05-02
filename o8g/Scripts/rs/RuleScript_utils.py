@@ -357,6 +357,10 @@ class RulesUtils():
             debug("-- Picked {} card(s) from the bottom of {}".format(len(cards_f1), ''.join(zone)))
          if qty is None:
             choose = False
+      
+      # Don't look for cards in this zone, there is only one
+      if zone[1] == RS_KW_ZONE_INFRONT:
+         choose = False
 
       if choose:
          if len(cards_f1) == 0 and reveal != 'all':

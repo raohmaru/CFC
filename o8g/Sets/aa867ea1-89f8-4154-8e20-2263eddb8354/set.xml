@@ -835,7 +835,7 @@
 			<property name="Ability"      value="&#163; DECOY" />
 			<property name="Ability Type" value="&#163;" />
 			<property name="Ability Name" value="DECOY" />
-			<property name="Rules"        value="KO this character. Draw a character card at random from your deck. (To draw a card at random, shuffle your deck and look through the top of it until you reveal a card of the selected type. If you do, put that card into your hand. Then shuffle your deck.)" />
+			<property name="Rules"        value="KO this character. Draw a character card at random from your deck." />
 			<property name="BP"           value="400" />
 			<property name="SP"           value="3" />
 			<property name="Backup 1"     value="Agent" />
@@ -2563,7 +2563,7 @@
 			<property name="Ability"      value="&#163; SIDEKICK ART" />
 			<property name="Ability Type" value="&#163;" />
 			<property name="Ability Name" value="SIDEKICK ART" />
-			<property name="Rules"        value="Draw an action card at random from your deck. (To draw a card at random, shuffle your deck and look through the top of it until you reveal a card of the selected type. If you do, put that card into your hand. Then shuffle your deck.)" />
+			<property name="Rules"        value="Draw an action card at random from your deck." />
 			<property name="BP"           value="500" />
 			<property name="SP"           value="1" />
 			<property name="Backup 1"     value="Beast" />

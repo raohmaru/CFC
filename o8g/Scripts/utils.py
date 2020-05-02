@@ -182,11 +182,11 @@ def evalExpression(expr, retValue = False, locals = None):
       return None
    
    
-def showCardDlg(list, title, max=1, text="Select a card:", min=1, bottomList=None, label=None, bottomLabel=None):
+def showCardDlg(list, title, max=1, text="Card Selection", min=1, bottomList=None, label=None, bottomLabel=None):
    debug("showCardDlg({}, {}, {}, {}, {}, {}, {}, {})".format(list, title, max, text, min, bottomList, label, bottomLabel))
    dlg = cardDlg(list, bottomList)
-   dlg.title = title
-   dlg.text = text
+   dlg.title = text
+   dlg.text = title
    dlg.min = min
    dlg.max = max
    dlg.label = label
@@ -374,7 +374,7 @@ def reveal(group):
    else:
       cards = [card for card in group]
       notify("{} shows his {}".format(group.controller, group.name))
-      showCardDlg(cards, "Cards in {}'s {}".format(group.controller, group.name), 0, "", 0)
+      showCardDlg(cards, "Cards in {}'s {}".format(group.controller, group.name), 0, min=0)
       for card in cards:
          card.peek()
    

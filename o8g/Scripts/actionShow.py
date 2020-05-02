@@ -38,19 +38,22 @@ def acsh_gameNotStarted(args, x = 0, y = 0):
 
 def acsh_isActivePlayerAttack(args, x = 0, y = 0):
    card = args[0]
-   return isCharacter(card) and me.isActive and currentPhase()[1] == AttackPhase
+   return isCharacter(card) and me.isActive and currentPhase()[1] == AttackPhase and not (hasMarker(card, 'Attack') or hasMarker(card, 'United Attack'))
 
 
-def acsh_isNotActivePlayerBlock(args, x = 0, y = 0):
-   card = args[0]
-   return isCharacter(card) and not me.isActive and currentPhase()[1] == BlockPhase
-
-      
-def acsh_isNotAttacking(args, x = 0, y = 0):
-   card = args[0]
-   return not hasMarker(card, 'Attack') and not hasMarker(card, 'United Attack')
-
-      
 def acsh_hasAbility(args, x = 0, y = 0):
    card = args[0]
    return bool(card.properties['Ability Type'])
+
+      
+def acsh_AutoPlayOff(args, x = 0, y = 0):
+   return not automations['Play'] and not debugging
+
+      
+def acsh_isCharAndAutoPlayOff(args, x = 0, y = 0):
+   return acsh_isChar(args) and acsh_AutoPlayOff(args)
+
+      
+def acsh_canBackup(args, x = 0, y = 0):
+   card = args[0]
+   return isCharacter(card) and me.isActive and currentPhase()[1] == MainPhase

@@ -164,14 +164,14 @@ def randomPickEnemy(group, x = 0, y = 0):
       randomPick(group, fromPlayer = players[1])
 
 
-def clearAll(group = table, x = 0, y = 0):
+def clearAll(group = None, x = 0, y = 0):
    notify("{} clears all targets and highlights.".format(me))
    for card in table:
       if card.controller == me:
-         clear(card)
+         clear(card, group)
 
 
-def alignCards(group, x = 0, y = 0):
+def alignCards(group = None, x = 0, y = 0):
    myCards = (card for card in table
       if card.controller == me
       and isCharacter(card)
@@ -269,7 +269,7 @@ def block(card, x = 0, y = 0):
 def activate(card, x = 0, y = 0):
    debug(">>> activate()")
    mute()
-   if card.highlight == ActivatedColor:
+   if card.highlight == ActivatedColor and not automations['Play']:
       card.highlight = None
       card.target(None)
       notify("{} deactivates {}.".format(me, card))
@@ -287,7 +287,7 @@ def activate(card, x = 0, y = 0):
       if not res or res != True:
          if res == ERR_NO_EFFECT:
             notify("{}'s {} has no effect.".format(card, ability))
-         if (hasattr(pcard, 'ability') and pcard.ability.type == TriggerAbility) or res != ERR_NO_EFFECT:
+         if (isCharacter(card) and pcard.ability.type == TriggerAbility) or res != ERR_NO_EFFECT:
             return
    elif isCharacter(card) and pcard.ability.type == TriggerAbility:
       freeze(card, silent = True)
@@ -311,8 +311,9 @@ def freeze(card, x = 0, y = 0, unfreeze = None, silent = False):
       if not silent:
          notify('{} {}freezes {}'.format(me, ('un', '')[isFrozen(card)], card))
       playSnd(('untap','tap')[isFrozen(card)])
-   if card.highlight == ActivatedColor:
+   if not isFrozen(card) and card.highlight == ActivatedColor:
       card.highlight = None
+      card.target(None)
 
 
 def doesNotUnfreeze(card, x = 0, y = 0):
@@ -329,7 +330,14 @@ def doesNotUnfreeze(card, x = 0, y = 0):
 
 def clear(card, x = 0, y = 0):
    card.target(False)
-   if not card.highlight in [ActivatedColor]:
+   if automations['Play']:
+      # Triggered from the menu
+      if x != 0 or y != 0:
+         if card.highlight in [InfoColor]:
+            card.highlight = None
+      else:
+         card.highlight = None
+   else:
       card.highlight = None
 
 
@@ -357,9 +365,16 @@ def askCardBackups(card, x = 0, y = 0):
             elif c.highlight == InfoColor:
                c.highlight = None
       if len(charsBackup) > 0:
-         whisper("Highlighting compatible back-ups cards in your hand: {}".format(cardsNamesStr(charsBackup)))
-      msg = "{} can be backed-up with the following character types:\n- {}".format(card.Name, '\n- '.join(filter(None, acceptedBackups)))
-      information(msg)
+         if charIsInRing(card):
+            targets = showCardDlg(charsBackup, 'Select a character card from your hand to back-up {}'.format(card.Name))
+            if targets:
+               backup(targets[0], target=card)
+         whisper("Highlighting compatible back-ups cards in your hand: {}.".format(cardsNamesStr(charsBackup)))
+      else:
+         if charIsInRing(card):
+            whisper("You don't have compatible character cards in your hand to backup {}.".format(card))
+      msg = "{} can be backed-up with the following character types:\n  - {}".format(card.Name, '\n  - '.join(filter(None, acceptedBackups)))
+      # information(msg)
       whisper(msg)
    else:
       information("Only character cards can be backed-up.")
@@ -463,6 +478,9 @@ def copyAbility(card, x = 0, y = 0, target = None):
                remoteCall(p, "copyAlternateRules", [card, target])
          update()  # Trying this method to delay next actions until networked tasks are complete
          ability = Ability(target, ruleId=model).name if isinstance(target, Card) else target.Ability
+         if getParsedCard(card).ability.type != InstantAbility:
+            if card.highlight == ActivatedColor:
+               card.highlight = None
          notify("{} copies ability {} to {}.".format(me, ability, card))
          return target
       else:
@@ -776,13 +794,12 @@ def play(card):  # This is the function to play cards from your hand.
    debug("<<< playing card end")
 
 
-def backup(card, x = 0, y = 0):  # Play a card as backup attached to a character in the player's ring
+def backup(card, x = 0, y = 0, target = None):  # Play a card as backup attached to a character in the player's ring
    debug(">>> backup with card {}".format(card))
-
    mute()
    group = card.group
    if automations['Play']:
-      target = backupAuto(card)
+      target = backupAuto(card, target)
       if target:
          target, oldBP = target
          newBP = getMarker(target, 'BP')
@@ -792,7 +809,6 @@ def backup(card, x = 0, y = 0):  # Play a card as backup attached to a character
       placeCard(card, card.Type)
       notify("{} backups with {} from their {}.".format(me, card, group.name))
       playSnd('backup')
-   debug("<<< backup()")
 
 
 def discard(card, x = 0, y = 0, isRandom = False):

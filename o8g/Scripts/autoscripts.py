@@ -23,7 +23,7 @@ def triggerPhaseEvent(phase):
    # Function which triggers effects at the start or end of the phase
    debug(">>> triggerPhaseEvent({})".format(phase))
    mute()
-   if not automations['Phase']: return
+   if not automations['Play']: return
    
    skipPhases = getState(me, 'skip')
    if phase in skipPhases:
@@ -65,7 +65,8 @@ def activatePhaseStart():
          removeMarker(card, 'Just Entered')
          removeMarker(card, 'Counter-attack')
          clear(card)
-         alignCard(card)
+         if not hasMarker(card, 'Backup'):
+            alignCard(card)
       # Discard any Action or Reaction card left in the table (just in case player forgot to remove them)
       else:
          discard(card)
@@ -87,6 +88,7 @@ def drawPhaseStart():
          draw()
    # Trigger event
    triggerGameEvent(GameEvents.DrawPhase)
+   alignCards()
 
 
 def attackPhaseStart():
@@ -99,6 +101,8 @@ def attackPhaseStart():
             discard(card)
          else:
             card.target(False)
+            if not hasMarker(card, 'Backup'):
+               alignCard(card)
 
 
 def blockPhaseStart():
@@ -116,6 +120,7 @@ def blockPhaseStart():
    for card in atkCards:
       if len(uattack) == 0 or uattack[0] != card._id:
          triggerGameEvent([GameEvents.Attacks, card._id], card._id)
+   alignCards()
 
 
 def endPhaseStart():
@@ -127,6 +132,8 @@ def endPhaseStart():
       if card.controller == me)
    for card in myCards:
       if isCharacter(card):
+         if not hasMarker(card, 'Backup'):
+            alignCard(card)
          if (hasMarker(card, 'Attack') or hasMarker(card, 'United Attack')) and not hasMarker(card, 'Unfreezable'):
             freeze(card, unfreeze = False, silent = True)
 
@@ -145,8 +152,9 @@ def endPhaseStart():
          # Attacker is blocked
          if card._id in blockers:
             blocker = Card(blockers[card._id])
-            # Add discarded cards to action local variables & trigger game event
+            # Add attacking cards to action local variables & trigger game event
             addActionTempVars('attacker', [card])
+            addActionTempVars('uaBP', dmg + pdmg)
             triggerGameEvent([GameEvents.Blocks, blocker._id], blocker._id)
             # Trigger blocked event if not in UA
             if pdmg == 0:
@@ -342,7 +350,7 @@ def playAuto(card, slotIdx=None, force=False):
    return True
 
 
-def backupAuto(card):
+def backupAuto(card, target = None):
    debug(">>> backupAuto()")
 
    # Check if the card can be legally played
@@ -355,22 +363,23 @@ def backupAuto(card):
       return
    # Check if a valid char has been selected
    myRing = getGlobalVar('Ring', me)
-   targets = getTargetedCards(card)
-   if len(targets) == 0 or not targets[0]._id in myRing:
-      targets = []
-      # Get a compatible character in the ring
-      for c in getRing(me):
-         acceptedBackups = getAcceptedBackups(c)
-         if card.Subtype in acceptedBackups:
-            targets.append(c)
-      if targets:
-         targets = showCardDlg(targets, 'Select a character to back-up')
-         if targets == None:
+   if not target:
+      targets = getTargetedCards(card)
+      if len(targets) == 0 or not targets[0]._id in myRing:
+         targets = []
+         # Get a compatible character in the ring
+         for c in getRing(me):
+            acceptedBackups = getAcceptedBackups(c)
+            if card.Subtype in acceptedBackups:
+               targets.append(c)
+         if targets:
+            targets = showCardDlg(targets, 'Select a character to back-up')
+            if targets == None:
+               return
+         else:
+            warning('There are not compatible characters to back-up in the ring.')
             return
-      else:
-         warning('There are not compatible characters to back-up in the ring.')
-         return
-   target = targets[0]
+      target = targets[0]
    # Backup limit
    backupsPlayed = getState(me, 'backupsPlayed')
    if backupsPlayed >= BackupsPerTurn:
@@ -427,21 +436,14 @@ def attackAuto(card, force = False):
    # ... in player's ring
    slotIdx = getSlotIdx(card)
    if slotIdx == -1:
-      warning("Please attack with a character in your ring.")
+      warning(MSG_ERR_ATTACK_CHAR_RING)
       return
    # Triggers a hook to check if the character can attack
    if triggerHook([Hooks.BeforeAttack, card._id], card._id) == False:
       return
    # Cancels the character's attack if it's already attacking
    if hasMarker(card, 'Attack') or hasMarker(card, 'United Attack'):
-      removeMarker(card, 'Attack')
-      removeMarker(card, 'United Attack')
-      removeMarker(card, 'Unfreezable')
-      clear(card)
-      alignCard(card)
-      notify('{} cancels the attack with {}'.format(me, card))
-      rearrangeUAttack(card)
-      playSnd('cancel-1')
+      cancelAttack(card)
       return
    # Char just entered the ring?
    if hasMarker(card, 'Just Entered'):
@@ -467,14 +469,26 @@ def attackAuto(card, force = False):
 def unitedAttackAuto(card, targets = None, payCost = True):
    debug(">>> unitedAttackAuto()")
 
+   # Is char in player's ring?
+   if not charIsInRing(card):
+      warning(MSG_ERR_ATTACK_CHAR_RING)
+      return 
    # Check if an attacking char has been selected
    myRing = getGlobalVar('Ring', me)
+   # Cancels the character's attack if it's already attacking
+   if hasMarker(card, 'Attack') or hasMarker(card, 'United Attack'):
+      cancelAttack(card)
+      return
    if not targets:
       targets = getTargetedCards(card)
    if len(targets) == 0 or not targets[0]._id in myRing or (not hasMarker(targets[0], 'Attack') and not hasMarker(targets[0], 'United Attack')):
       if payCost:  # False if called remotely
-         warning("Please select an attacking character in your ring.\n(Shift key + Left click on a character).")
-      return
+         targets = getAttackingCards()
+         if len(targets) > 1:
+            targets = showCardDlg(targets, 'Select an attacking character to join an United Attack.')
+         if not targets:
+            warning("Please select an attacking character in your ring.\n(Shift key + Left click on a character).")
+            return
    target = targets[0]
    # Allowed uattacks
    uattack = getGlobalVar('UnitedAttack')
@@ -567,13 +581,17 @@ def blockAuto(card):
    enemyRing = getGlobalVar('Ring', players[1])
    targets = getTargetedCards(card, True, False)
    if len(targets) == 0 or not targets[0]._id in enemyRing or not MarkersDict['Attack'] in targets[0].markers:
-      # Automatically select an attacking character if there is only one
-      atkCards = getAttackingCards(getOpp())
+      # Automatically select an attacking character if there is only one...
+      atkCards = [c for c in getAttackingCards(getOpp())
+         if c._id not in blockers]
       if len(atkCards) == 1:
          targets = atkCards
       else:
-         warning("Please select an attacking enemy character (Shift key + Left click on a character).\nIf blocking an United Attack, then select the leading character.")
-         return
+         # ...or show card dialog to choose
+         targets = showCardDlg(atkCards, 'Select an attacking character to counter-attack.')
+         if not targets:
+            warning("Please select an attacking enemy character (Shift key + Left click on a character).\nIf blocking an United Attack, then select the leading character.")
+            return
    target = targets[0]
    # An attacker can only be blocked by exactly 1 char
    if target._id in blockers:
@@ -601,13 +619,13 @@ def activateAuto(card):
    debug(">>> activateAuto()")
 
    if card.highlight == ActivatedColor:
-      whisper("{}'s ability or effect has already been activated".format(card))
+      notify("{}'s ability or effect has already been activated".format(card))
       return
    # Character ability
    if isCharacter(card):
       pcard = getParsedCard(card)
       if not pcard.hasEffect():
-         whisper("{} has no ability to activate".format(card))
+         notify("{} has no ability to activate".format(card))
          return
       debug("Trying to activate {}'s ability {} {}".format(card.Name, pcard.ability.type, pcard.ability.name))
       # Activate [] and /\ only in player's Main Phase
@@ -680,3 +698,14 @@ def rearrangeUAttack(card):
          for cid in uattack[1:]:
             alignCard(Card(cid))
       debug("UnitedAttack: {}".format(getGlobalVar('UnitedAttack')))
+      
+
+def cancelAttack(card):
+   removeMarker(card, 'Attack')
+   removeMarker(card, 'United Attack')
+   removeMarker(card, 'Unfreezable')
+   clear(card)
+   alignCard(card)
+   notify('{} cancels the attack with {}'.format(me, card))
+   rearrangeUAttack(card)
+   playSnd('cancel-1')

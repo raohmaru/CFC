@@ -32,30 +32,20 @@ def aclb_Default(args, x = 0, y = 0):
    phaseIdx = currentPhase()[1]
    if isCharacter(card):
       if me.isActive and phaseIdx == AttackPhase:
-         return "Attack"
+         if hasMarker(card, 'Attack') or hasMarker(card, 'United Attack'):
+            return "Remove from attack"
+         else:
+            return "Attack"
          
       if not me.isActive and phaseIdx == BlockPhase:
-         return "Counter-attack"
+         if hasMarker(card, 'Counter-attack'):
+            return "Remove from combat"
+         else:
+            return "Counter-attack"
       
       return "Use ability"
    else:
       return "Resolve"
-
-      
-def aclb_Attack(args, x = 0, y = 0):
-   card = args[0]
-   if MarkersDict['Attack'] in card.markers or MarkersDict['United Attack'] in card.markers:
-      return "Remove from attack"
-   else:
-      return
-
-      
-def aclb_Block(args, x = 0, y = 0):
-   card = args[0]
-   if MarkersDict['Counter-attack'] in card.markers:
-      return "Don't counter-attack"
-   else:
-      return
 
       
 def aclb_ChangeSlot(args, x = 0, y = 0):
@@ -94,37 +84,30 @@ def aclb_RevealTopDeck(group, x = 0, y = 0):
       
 def aclb_PlayAutomation(group, x = 0, y = 0):
    if automations['Play']:
-      return "Play automation is ON"
+      return u'\u2714 Play automation'
    else:
-      return "Play automation is OFF"
-
-      
-def aclb_PhaseAutomation(group, x = 0, y = 0):
-   if automations['Phase']:
-      return "Phase Triggers automation is ON"
-   else:
-      return "Phase Triggers automation is OFF"
+      return "Play automation"
 
       
 def aclb_Sounds(group, x = 0, y = 0):
    if automations['Sounds']:
-      return "Game Sounds are ON"
+      return u'\u2714 Game Sounds'
    else:
-      return "Game Sounds are OFF"
+      return "Game Sounds"
 
       
 def aclb_WinForms(group, x = 0, y = 0):
    if automations['WinForms']:
-      return "Alert Messages is ON"
+      return u'\u2714 Alert Messages'
    else:
-      return "Alert Messages is OFF"
+      return "Alert Messages"
 
       
 def aclb_AttackDamage(group, x = 0, y = 0):
    if automations['AttackDmg']:
-      return "Attack Damage automation is ON"
+      return u'\u2714 Attack Damage automation'
    else:
-      return "Attack Damage automation is OFF"
+      return "Attack Damage automation"
 
       
 def aclb_NextOrPass(group, x = 0, y = 0):
