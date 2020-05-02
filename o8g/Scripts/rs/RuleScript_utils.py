@@ -355,6 +355,8 @@ class RulesUtils():
          else:
             cards_f1 = cards_f1[pick:]
             debug("-- Picked {} card(s) from the bottom of {}".format(len(cards_f1), ''.join(zone)))
+         if qty is None:
+            choose = False
 
       if choose:
          if len(cards_f1) == 0 and reveal != 'all':

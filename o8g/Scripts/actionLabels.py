@@ -108,9 +108,9 @@ def aclb_PhaseAutomation(group, x = 0, y = 0):
       
 def aclb_Sounds(group, x = 0, y = 0):
    if automations['Sounds']:
-      return "Sound effects are ON"
+      return "Game Sounds are ON"
    else:
-      return "Sound effects are OFF"
+      return "Game Sounds are OFF"
 
       
 def aclb_WinForms(group, x = 0, y = 0):

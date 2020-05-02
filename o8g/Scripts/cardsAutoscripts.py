@@ -54,17 +54,22 @@ def getParsedCard(card):
 
 def removeParsedCard(card):
    debug("Removed parsed card for ID {} ({})".format(card._id, card))
-   parsedCards.pop(card._id, None)
+   gc = parsedCards.pop(card._id, None)
+   if gc:
+      del gc.card
+      del gc
    removeGameEventListener(card._id)
 
 
 class GameCard(object):
    """ A class which stores the card effect name and its parsed rule scripts """
+   card    = None
    card_id = None
    rule_id = None
    rules   = None
    
    def __init__(self, card, ruleId = None):
+      self.card = card
       self.card_id = card._id
       self.rule_id = ruleId if ruleId else card.model
       self.rules = Rules(self.rule_id, self.card_id)
@@ -85,14 +90,11 @@ class GameCard(object):
 class CharCard(GameCard):
    """ A class which stores the character card ability name and its parsed rule scripts """
    ability = None
-   _BP = 0
+   lastBP = 0
    
    def __init__(self, card, ruleId = None):
       super(self.__class__, self).__init__(card, ruleId)
    
-      self._BP = getMarker(card, 'BP')
-      if self._BP == 0 and card.group != table:
-         self._BP = int(card.BP) / BPMultiplier
       ability = Ability(card, ruleId = ruleId)
       if ability.name:
          debug("Found ability {}".format(ability))
@@ -105,11 +107,10 @@ class CharCard(GameCard):
 
    @property
    def BP(self):
-      return self._BP
-      
-   @BP.setter
-   def BP(self, value):
-      self._BP = value
+      _BP = getMarker(self.card, 'BP')
+      if _BP == 0 and self.card.group != table:
+         _BP = self.lastBP if self.lastBP > 0 else int(self.card.BP) / BPMultiplier
+      return _BP
 
 
 class Ability:

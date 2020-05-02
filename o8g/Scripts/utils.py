@@ -62,7 +62,7 @@ def resetAll():
 # Clears all the global variables in order to start a new game.
    debug(">>> resetAll()")
    # Import all our global variables and reset them.
-   global playerSide, handSize, debugVerbosity, parsedCards, turns
+   global playerSide, handSize, parsedCards, turns
    playerSide = None
    handSize = HandSize
    parsedCards = {}
@@ -248,6 +248,7 @@ def getState(player, name = None):
    if not name:
       return GameState[player._id]
    name = name.lower()
+   debug("GameState: {}".format(GameState))
    if name in GameState[player._id]:
       debug(" -- {}".format(GameState[player._id][name]))
       return GameState[player._id][name]
@@ -412,7 +413,8 @@ def moveToGroup(group, card, sourceGroup = None, pos = None, reveal = None, sour
       if card.isFaceUp:
          name = card
       elif reveal:
-         remoteCall(getOpp(), "cardPeek", [card])
+         if group.name in ['Hand']:
+            remoteCall(getOpp(), "cardPeek", [card])
          name = card.Name
    targetCtrl = 'its' if me == sourcePlayer else "{}'s".format(me)
    notify("{} moved {} {} {} {} {}.".format(sourcePlayer, name, fromText, posText, targetCtrl, group.name))

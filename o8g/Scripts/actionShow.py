@@ -20,7 +20,7 @@
 #---------------------------------------------------------------------------
 
 def acsh_Debug(args, x = 0, y = 0):
-   return me.name == Author and acsh_Debug
+   return me.name == Author
 
       
 def acsh_isChar(args, x = 0, y = 0):

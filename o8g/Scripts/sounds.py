@@ -20,6 +20,13 @@
 # Sound interface
 #---------------------------------------------------------------------------
 
-def playSnd(name):
+def playSnd(name, isInternal=False):
    if automations['Sounds']:
-      playSound(name)
+      if (isInternal or debugging):
+         try:
+            sound = Octgn.Program.GameEngine.Definition.Sounds[name]
+            Octgn.Utils.Sounds.PlayGameSound(sound)
+         except:
+            debug("Sound {} does not exist".format(name))
+      else:
+         playSound(name)

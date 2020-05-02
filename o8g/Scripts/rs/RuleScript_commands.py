@@ -92,7 +92,6 @@ class RulesCommands():
 
 
    def destroy(self):
-      debug(">>> RulesCommands.destroy()")
       self.cmds = None
       self.prevTargets = None
       
@@ -228,10 +227,11 @@ def cmd_destroy(rc, targets, source, restr, *args):
 def cmd_reveal(rc, targets, source, restr, pileName=None):
    debug(">>> cmd_reveal({})".format(pileName))
    if not pileName:
-      if targets[0].controller == me:
-         reveal(targets)
-      else:
-         remoteCall(getOpp(), "reveal", [targets])
+      if targets:
+         if targets[0].controller == me:
+            reveal(targets)
+         else:
+            remoteCall(getOpp(), "reveal", [targets])
    elif pileName in RS_KW_ZONES_PILES:
       if not targets or isCard(targets[0]):
          targets = [me]
@@ -595,10 +595,11 @@ def cmd_alterCost(rc, targets, source, restr, type, mod):
 
 def cmd_swapChars(rc, targets, source, restr, *args):
    debug(">>> cmd_swapChars({})".format(targets))
-   if targets[0].controller == me:
-      changeSlot(targets[0], targets = [targets[1]])
-   else:
-      remoteCall(targets[0].controller, "changeSlot", [targets[0], 0, 0, [targets[1]]])
+   if len(targets) >= 2:
+      if targets[0].controller == me:
+         changeSlot(targets[0], targets = [targets[1]])
+      else:
+         remoteCall(targets[0].controller, "changeSlot", [targets[0], 0, 0, [targets[1]]])
    rc.applyNext()
 
 

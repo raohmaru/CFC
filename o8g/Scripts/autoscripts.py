@@ -324,7 +324,7 @@ def playAuto(card, slotIdx=None, force=False):
    # Player plays a Reaction card
    elif isReaction(card):
       # Check if the card can be legally played
-      if me.isActive or phaseIdx != BlockPhase:
+      if (me.isActive or phaseIdx != BlockPhase) and not debugging:
          information("Reaction cards can only be played in enemy's Counter-attack Phase.")
          return
       # Triggers a hook to check if the player can play reaction cards
@@ -359,7 +359,7 @@ def backupAuto(card):
    if len(targets) == 0 or not targets[0]._id in myRing:
       targets = []
       # Get a compatible character in the ring
-      for c in getRing():
+      for c in getRing(me):
          acceptedBackups = getAcceptedBackups(c)
          if card.Subtype in acceptedBackups:
             targets.append(c)

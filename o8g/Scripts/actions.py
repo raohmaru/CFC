@@ -39,6 +39,7 @@ def nextPhase(group = table, x = 0, y = 0):
    elif phaseIdx == BlockPhase:
       setStop(phaseIdx, False)
       notify("{} has finalized the {} phase. {} can go to the next phase.".format(me, Phases[phaseIdx], getOpp()))
+      playSnd('notification')
 
 
 def gotoPhase(idx, oldIdx = 0):
@@ -197,6 +198,8 @@ def switchAttackDamage(group, x = 0, y = 0):
    
 def switchSounds(group, x = 0, y = 0):
    switchAutomation('Sounds')
+   # Udpate OCTGN preferences
+   Octgn.Core.Prefs.EnableGameSound = automations['Sounds']
 
 
 #---------------------------------------------------------------------------
@@ -211,7 +214,7 @@ def defaultAction(card, x = 0, y = 0):
       block(card, x, y)
    elif (
          (me.isActive and (isCharacter(card) or isAction(card)))
-         or (not me.isActive and phaseIdx == BlockPhase and isReaction(card))
+         or (isReaction(card) and ((not me.isActive and phaseIdx == BlockPhase) or debugging))
       ):
       activate(card, x, y)
 
@@ -259,7 +262,7 @@ def block(card, x = 0, y = 0):
       else:
          return
    card.highlight = BlockColor
-   playSnd('block-1')
+   playSnd('block')
    notify('{} counter-attacks {}'.format(me, text))
 
 
@@ -268,6 +271,7 @@ def activate(card, x = 0, y = 0):
    mute()
    if card.highlight == ActivatedColor:
       card.highlight = None
+      card.target(None)
       notify("{} deactivates {}.".format(me, card))
       return
    ability = "effect"
@@ -298,16 +302,15 @@ def activate(card, x = 0, y = 0):
 
 def freeze(card, x = 0, y = 0, unfreeze = None, silent = False):
    mute()
+   initialRot = card.orientation
    if unfreeze != None:
       card.orientation = Rot0 if unfreeze else Rot90
    else:
       card.orientation ^= Rot90
-   if isFrozen(card):
-      if not silent: notify('{} freezes {}'.format(me, card))
-      playSnd('tap')
-   else:
-      if not silent: notify('{} unfreezes {}'.format(me, card))
-      playSnd('untap')
+   if card.orientation != initialRot:
+      if not silent:
+         notify('{} {}freezes {}'.format(me, ('un', '')[isFrozen(card)], card))
+      playSnd(('untap','tap')[isFrozen(card)])
    if card.highlight == ActivatedColor:
       card.highlight = None
 
@@ -784,10 +787,11 @@ def backup(card, x = 0, y = 0):  # Play a card as backup attached to a character
          target, oldBP = target
          newBP = getMarker(target, 'BP')
          notify("{0} backups {1} with {2} from their {3}. New BP of {1} is {4} (before was {5}).".format(me, target, card, group.name, newBP, oldBP))
+         playSnd('backup')
    else:
       placeCard(card, card.Type)
       notify("{} backups with {} from their {}.".format(me, card, group.name))
-   playSnd('backup')
+      playSnd('backup')
    debug("<<< backup()")
 
 
@@ -989,11 +993,11 @@ def reshuffleRE(group = me.piles['Discard Pile']):
 def revealTopDeck(group, x = 0, y = 0):
    mute()
    if group[0].isFaceUp:
-      notify("{} hides {} from top of Library.".format(me, group[0]))
+      notify("{} hides {} from the top of their Deck.".format(me, group[0]))
       group[0].isFaceUp = False
    else:
       group[0].isFaceUp = True
-      notify("{} reveals {} from top of Library.".format(me, group[0]))
+      notify("{} reveals {} from the top of their Deck.".format(me, group[0]))
 
 
 def swapWithDeck(group = me.piles['Discard Pile']):
@@ -1011,7 +1015,7 @@ def setupDebug(group, x=0, y=0):
    resetGame()
 
 
-def setDebugVerbosity(group, x=0, y=0):
+def setDebugVerbosity(group=None, x=0, y=0):
    global debugVerbosity
    mute()
    levels = DebugLevel.__dict__.keys()

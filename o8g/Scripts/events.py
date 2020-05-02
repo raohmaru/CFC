@@ -144,7 +144,7 @@ def onTurnPassed(args):
    elif args.player is not None:
       cleanedUpRing = False
       turns = 1
-   playSnd('turn-change-1')
+      playSnd('turn-change')
    debug("<<< onTurnPassed()")
 
 
@@ -173,9 +173,11 @@ def onPhasePassed(args):
          cleanedUpRing = True
       
    if me.isActive:
-      gotoPhase(idx, args.id)
       if idx != ActivatePhase:
          playSnd('phase-change')
+      elif turnNumber() == 1:
+         playSnd('turn-change')
+      gotoPhase(idx, args.id)
 
 
 def onMarkerChanged(args):
@@ -184,7 +186,7 @@ def onMarkerChanged(args):
    debug(">>> onMarkerChanged: {}, {}, {}, {}".format(card, marker, args.id, args.value))
    if marker == 'BP':
       qty = getMarker(card, 'BP')
-      getParsedCard(card).BP = qty if qty > 0 else args.value  # last BP before being Koed
+      getParsedCard(card).lastBP = qty if qty > 0 else args.value  # last BP before being Koed
       if qty == 0:
          card.filter = KOedFilter
       elif hasFilter(card, KOedFilter):

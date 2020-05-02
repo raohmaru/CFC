@@ -123,26 +123,36 @@ class MessageBoxForm(CustomForm):
       # g.DrawIcon(self.Icon, 0, 0)
 
 
-def messageBox(msg, title, icon = None):
+def messageBox(type, msg, title, icon = None):
    debug(">>> messageBox({}) with message: {}".format(title, msg))
    if automations['WinForms']:
       Application.EnableVisualStyles()
       form = MessageBoxForm(msg, title, icon)
+      playSnd('win-{}'.format(type), True)
       showWinForm(form)
    else:
-      if icon == SystemIcons.Warning:
+      if type == 'warning':
          notifyBar("#FF0000", msg.replace("\n", " "))
-      elif icon == SystemIcons.Error:
+      elif type == 'error':
          _extapi.warning(msg)
       else:
          whisper(msg)
    
 
 def information(msg, title = 'Information'):
-   messageBox(msg, title, SystemIcons.Information)
+   messageBox('info', msg, title, SystemIcons.Information)
 
 def warning(msg, title = 'Warning'):
-   messageBox(msg, title, SystemIcons.Warning)
+   messageBox('warning', msg, title, SystemIcons.Warning)
 
 def error(msg, title = 'Error'):
-   messageBox(msg, title, SystemIcons.Error)
+   messageBox('error', msg, title, SystemIcons.Error)
+
+
+#---------------------------------------------------------------------------
+# Overrides
+#---------------------------------------------------------------------------
+
+def confirm(str):
+   playSnd('win-confirm', True)
+   return _api.Confirm(str)

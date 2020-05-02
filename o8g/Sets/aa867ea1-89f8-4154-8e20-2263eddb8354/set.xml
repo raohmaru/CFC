@@ -938,7 +938,7 @@
 			<property name="Publisher"    value="Capcom" />
 			<property name="Team"         value="Rival School" />
 			<property name="Type"         value="Character" />
-			<property name="Subtype"      value="Kung-fu" />
+			<property name="Subtype"      value="Pilot" />
 			<property name="Rarity"       value="C" />
 			<property name="Ability"      value="&#162; BROTHER SEARCH" />
 			<property name="Ability Type" value="&#162;" />

@@ -240,7 +240,7 @@ handSize       = HandSize
 debugVerbosity = DebugLevel.Off
 debugging      = False
 # If I am alone debugging I want to know EVERYTHING
-if me.name == Author and len(players) == 1:
+if me.name == Author:
    debugVerbosity = DebugLevel.Debug
 parsedCards    = {} # Dictionary holding all parsed cards
 cleanedUpRing  = False  # Tracks if the user has run the Clean-up phase
