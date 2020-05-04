@@ -41,7 +41,8 @@ class RulesFilters():
             # optional filter (,)
             else:
                arr2 += RulesFilters.applyFilter(filter, arr)
-         arr = list(set(arr2))  # unique values
+         # arr = list(set(arr2))  # unique values not ordered
+         arr = unique(arr2)  # unique values ordered
       return arr
    
    
@@ -83,7 +84,7 @@ def getCardProp(card, prop):
       if getMarker(card, 'BP') > 0:
          return getMarker(card, 'BP')
       else:
-         return num(card.BP) / BPMultiplier
+         return num(card.BP) / BPDivisor
    elif prop == 'sp':
       return num(card.SP)
        
@@ -114,7 +115,7 @@ def filterBP(card, include, cmd, *args):
    except:
       return False
    if op != RS_OP_FUNC:
-      value = num(value)
+      value = num(value) * BPMultiplier
 
    bp = getCardProp(card, 'bp')
       

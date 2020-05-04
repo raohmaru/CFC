@@ -675,6 +675,8 @@ def changeSlot(card, x = 0, y = 0, targets = None):
 # --------------
 def plusBP(cards, x = 0, y = 0, silent = False, count = 1):
    mute()
+   if count < BPMultiplier:
+      count *= BPMultiplier
    for card in cards:
       addMarker(card, 'BP', count)
       if not silent:
@@ -682,6 +684,8 @@ def plusBP(cards, x = 0, y = 0, silent = False, count = 1):
 
 def minusBP(cards, x = 0, y = 0, silent = False, count = 1):
    mute()
+   if count < BPMultiplier:
+      count *= BPMultiplier
    for card in cards:
       c = count
       bp = getMarker(card, 'BP')

@@ -274,7 +274,7 @@ def playAuto(card, slotIdx=None, force=False):
       bplimit = getRule('play_char_bp_limit')
       if bplimit:
          bplimit = reduce(lambda a,b: min(a,b), bplimit)
-         if num(card.BP) / BPMultiplier >= bplimit:
+         if num(card.BP) / BPDivisor >= bplimit:
             warning(MSG_RULES['play_char_bp_limit'][True].format(bplimit))
             return
       # Player has any empty slot in his ring?
@@ -300,7 +300,7 @@ def playAuto(card, slotIdx=None, force=False):
       # Parse the card to enable card autoscripts
       removeParsedCard(card)
       pcard = parseCard(card)
-      setMarker(card, 'BP', num(card.BP) / BPMultiplier)
+      setMarker(card, 'BP', num(card.BP) / BPDivisor)
       # Triggers a hook whether the character can have the "just entered" marker
       if triggerHook(Hooks.PlayAsFresh, card._id) != False:
          setMarker(card, 'Just Entered')
@@ -640,7 +640,7 @@ def activateAuto(card):
             return
          # Activate only once
          if not hasMarker(card, 'Just Entered'):
-            warning("{} abilities can only be activated once when character just enters the ring.".format(InstantUniChar))
+            warning("{} abilities can only be activated once when the character just enters the ring.".format(InstantUniChar))
             return
       # [] abilities
       if pcard.ability.type == TriggerAbility:

@@ -409,7 +409,7 @@ auto = ~myEndPhase~ moveTo(ctrlHand) target(characters[bp>=8])
 
 # Cody (Alpha)'s BAD STONE
 RulesDict['525d8365-c90e-491f-9811-1f23efbafccb'] = """
-auto = ?oppCanBlock:any? [[if attacker.bp > 3]]
+auto = ?oppCanBlock:any? [[if attacker.bp > 300]]
 """
 
 # Damn D's WHISTLE
@@ -445,7 +445,7 @@ action = destroy() target(^character@myRing)
 
 # Ruby Heart's TAG ALONG
 RulesDict['ee979882-67cc-4549-881c-8e158df495ce'] = """
-action = [[if all card.bp <= 3 in me.chars]] playExtraChar()
+action = [[if all card.bp <= 300 in me.chars]] playExtraChar()
 """
 
 # Son Son's BUNSHIN
@@ -495,7 +495,7 @@ auto = ~myDrawPhase~ draw() target(me)
 
 # Samanosuke's DEMON GAUNTLET
 RulesDict['a68dc591-6976-4341-b8b9-1a7dc1c71775'] = """
-action = reveal(hand) & each(card.bp <= 3 in me.hand -> bp(+2)) target(this)
+action = reveal(hand) & each(card.bp <= 300 in me.hand -> bp(+2)) target(this)
 """
 
 # Ayame's BUTTERFLY ILLUSION
@@ -806,7 +806,7 @@ action = reveal(hand) & discard(actions)
 
 # Sakura's FIGHTING SPIRIT
 RulesDict['f53e910f-8aef-47dc-a919-af81a5b0d2c4'] = """
-action = [[if me.hp <= 10]] bp(x2) target(this)
+action = [[if me.hp <= 1000]] bp(x2) target(this)
 """
 
 # Sean's SORE LOSER
@@ -1160,7 +1160,7 @@ auto = ~playerCombatDamaged:fromThis~ sp(-3) to(opp); sp(+opp.lostSP) to(me)
 
 # Hinako's HINAKO'S READY!
 RulesDict['bbdd3687-7200-4f34-9c96-ed882cee3588'] = """
-action = [[if me.hp <= 10]] draw(2)
+action = [[if me.hp <= 1000]] draw(2)
 """
 
 # Iori's BLOOD CONTRACT
@@ -1854,7 +1854,7 @@ action = loseAbility()
 
 # Ancestry
 RulesDict['e038ebfd-6c19-4b1c-bf38-a2fd9f5ffbfd'] = """
-action = each(card.bp <= 3 in me.discards -> bp(+1)) target(character)
+action = each(card.bp <= 300 in me.discards -> bp(+1)) target(character)
 """
 
 # Aura spark

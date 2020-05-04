@@ -47,7 +47,7 @@ def acsh_hasAbility(args, x = 0, y = 0):
 
       
 def acsh_AutoPlayOff(args, x = 0, y = 0):
-   return not automations['Play'] and not debugging
+   return debugging or not automations['Play']
 
       
 def acsh_isCharAndAutoPlayOff(args, x = 0, y = 0):

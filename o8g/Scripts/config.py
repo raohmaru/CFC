@@ -137,16 +137,27 @@ Regexps = dict(
    State    = re.compile(r'(\w+)\.(damaged|lostsp)')
 )
 
+# Misc
+CardWidth    = 90
+CardHeight   = 126
+Xaxis        = 'x'
+Yaxis        = 'y'
+PlayAction   = 'play'
+BackupAction = 'backup'
+Author       = 'raohmaru'
+BPDivisor    = 1  # 100
+BPMultiplier = 100
+
 # Rules
 NumSlots        = 4
 CharsPerTurn    = 1
 BackupsPerTurn  = 1
-BackupRaiseBP   = 3
+BackupRaiseBP   = 3 * BPMultiplier
 MaxCharsUAttack = 2
 UAttackCost     = 5
 MaxCardCopies   = 3
 HandSize        = 5
-StartingHP      = 30
+StartingHP      = 30 * BPMultiplier
 
 GameRulesDefaults = {
    'ab_trigger_fresh'  : False, # Activate [] abilities of fresh characters
@@ -220,16 +231,6 @@ GameEventsCallOnHost = [
    Hooks.CanBlock
 ]
 
-# Misc
-CardWidth    = 90
-CardHeight   = 126
-Xaxis        = 'x'
-Yaxis        = 'y'
-PlayAction   = 'play'
-BackupAction = 'backup'
-Author       = 'raohmaru'
-BPMultiplier = 100  # Model.BP = markers.BP * BPMultiplier
-
 #---------------------------------------------------------------------------
 # Global variables (for the current user)
 #---------------------------------------------------------------------------
@@ -240,7 +241,7 @@ handSize       = HandSize
 debugVerbosity = DebugLevel.Off
 debugging      = False
 # If I am alone debugging I want to know EVERYTHING
-if me.name == Author:
+if me.name == Author and len(players) == 1:
    debugVerbosity = DebugLevel.Debug
 parsedCards    = {} # Dictionary holding all parsed cards
 cleanedUpRing  = False  # Tracks if the user has run the Clean-up phase

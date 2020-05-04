@@ -111,6 +111,8 @@ def toggleRule(ruleName, value, id, restr = None):
    else:
       if isNumber(value):
          value = int(value)
+         if ruleName == 'play_char_bp_limit':
+            value *= BPMultiplier
       rule[id] = value
    setGlobalVar('Rules', Rules)
    debug("Rule {} has been {} ({})".format(ruleName, ('disabled','enabled')[bool(value)], Rules[ruleName]))
@@ -178,7 +180,7 @@ def getEnvVars():
 def cmd_damage(rc, targets, source, restr, dmg):
    debug(">>> cmd_damage({}, {})".format(targets, dmg))
    if isNumber(dmg):
-      dmg = int(dmg)
+      dmg = int(dmg) * BPMultiplier
    else:
       dmg = evalExpression(dmg, True, getLocals(rc=rc, targets=targets, source=source))
    for target in targets:
@@ -344,11 +346,13 @@ def cmd_bp(rc, targets, source, restr, qty):
    mode = None
    amount = None
    if isNumber(qty):
-      amount = num(qty)
+      amount = num(qty) * BPMultiplier
    elif qty[0] in RS_MODES:
       mode = qty[0]
       if isNumber(qty[1:]):
          amount = num(qty[1:])
+         if mode != RS_MODE_MULT:
+            amount *= BPMultiplier
       else:
          qty = qty[1:]
    if amount == None:
@@ -384,7 +388,7 @@ def cmd_sp(rc, targets, source, restr, qty):
 
 def cmd_hp(rc, targets, source, restr, qtyExpr):
    if isNumber(qtyExpr):
-      qty = int(qtyExpr)
+      qty = int(qtyExpr) * BPMultiplier
    else:
       qty = evalExpression(qtyExpr, True, getLocals(rc=rc, targets=targets, source=source))
    if not targets or isCard(targets[0]):
