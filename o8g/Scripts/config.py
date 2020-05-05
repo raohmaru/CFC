@@ -249,13 +249,15 @@ commander      = None  # RulesCommands instance
 turns          = 1  # The number of consecutive turns a player can play
 envVars        = None  # Global variables to be used in eval() expression
 
-automations = {
-   'Play'     : True, # Automatically trigger game effects and card effects when playing cards
-   'Phase'    : True, # Automatically trigger phase related events, and effects from cards in play
-   'WinForms' : True, # Game will use the custom Windows Forms for displaying info pop-ups
-   'AttackDmg': True, # Applies attack damage automatically
-   'ExtAPI'   : True,  # Make use of the extended API to access the C# API
-   'Sounds'   : True  # Play sound effect
+settings = {
+   'Play'         : True, # Automatically trigger game effects and card effects when playing cards
+   'Phase'        : True, # Automatically trigger phase related events, and effects from cards in play
+   'WinForms'     : True, # Game will use the custom Windows Forms for displaying info pop-ups
+   'AttackDmg'    : True, # Applies attack damage automatically
+   'ExtAPI'       : True, # Make use of the extended API to access the C# API
+   'Sounds'       : True, # Play sound effect
+   'WelcomeScreen': True, # Show welcome screen
+   'GameVersion'  : '0.0.0',
 }
 
 # Default values used in dialogs that can be overridden by the user to remember his last input

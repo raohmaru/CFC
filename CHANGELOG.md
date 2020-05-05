@@ -1,8 +1,10 @@
 # Card Fighters' Clash Changelog
 
 ## 0.8.2
-Simplified contextual menu.
+Character's BP and player's HP to thousands.
+Simplified in-game contextual menu.
 Improved gameplay.
+Prevent accidental moving of markers.
 ## 0.8.1
 Updated character card design.
 Added sound effects.

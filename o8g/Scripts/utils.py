@@ -82,21 +82,24 @@ def resetAll():
    debug("<<< resetAll()")
 
 
-def switchAutomation(name, command = None):
-   debug(">>> switchAutomation({})".format(name))
+def switchSetting(name, value = None):
+   debug(">>> switchSetting({})".format(name))
 
-   global automations
-   if not name in automations:
+   global settings
+   if not name in settings:
       return
-   if command == None:
-      automations[name] = not automations[name]
+   if value == None:
+      settings[name] = not settings[name]
    else:
-      automations[name] = command
-   setSetting('settings', str(automations))
-   status = "ON" if automations[name] else "OFF"
-   notify(" -> {}'s {} automations are {}.".format(me, name, status))
+      settings[name] = value
+   setSetting('settings', str(settings))
+   if isinstance(settings[name], bool):
+      status = "ON" if settings[name] else "OFF"
+   else:
+      status = settings[name]
+   notify(" -> {}'s {} setting is {}.".format(me, name, status))
 
-   debug("<<< switchAutomation({})".format(name))
+   debug("<<< switchSetting({})".format(name))
 
 
 def rollDie(num):
@@ -511,7 +514,7 @@ def placeCard(card, type = None, action = None, target = None, faceDown = False)
 # It is called by one of the various custom types and each type has a different value depending on if the player is on the X or Y axis.
    debug(">>> placeCard()")
 
-   if automations['Play']:
+   if settings['Play']:
       if type == CharType and action != None:
          coords = (0, fixCardY(0))
          if action == PlayAction:
@@ -702,7 +705,7 @@ def transformCard(card, cardModel):
          setMarker(newCard, 'BP', num(newCard.BP) / 100)
          putAtSlot(newCard, slotIdx)
          newCard.orientation = card.orientation
-         if automations['Play']:
+         if settings['Play']:
             parseCard(newCard)
          if card.markers[MarkersDict['Just Entered']] > 0:         
             setMarker(newCard, 'Just Entered', 1)
@@ -730,7 +733,7 @@ def transformCard(card, cardModel):
 def copyAlternateRules(card, target):
    debug(">>> copyAlternateRules({}, {})".format(card, target))
    
-   if not automations['ExtAPI']:
+   if not settings['ExtAPI']:
       return None
    if isinstance(target, dict):
       target = Struct(**target)
@@ -745,7 +748,7 @@ def copyAlternateRules(card, target):
 def addAlternateRules(card, ability, rules, altname=None):
    debug(">>> addAlternateRules({}, {}, {})".format(card, ability, altname))
    
-   if not automations['ExtAPI']:
+   if not settings['ExtAPI']:
       return None
    ability = Ability(ability, rules)
    if not altname:

@@ -41,7 +41,7 @@ try:
    import System
 
 except:
-   automations['ExtAPI'] = False
+   settings['ExtAPI'] = False
    
 class ExtendedApi(object):
 # An extended API with methods that directly call C# methods
@@ -199,7 +199,7 @@ class ExtendedApi(object):
       
       
 # Make it global
-if automations['ExtAPI']:
+if settings['ExtAPI']:
    _extapi = ExtendedApi()
    # Aliases for remoteCall
    _extapi_whisper_ = _extapi.whisper

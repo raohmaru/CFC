@@ -65,7 +65,7 @@ def removeGameEventListener(obj_id, eventName=None, callback=None):
 
 
 def triggerGameEvent(event, *args):
-   if not automations['Play']:
+   if not settings['Play']:
       return
    debug(">>> triggerGameEvent({}, {})".format(event, args))
    obj_id = None

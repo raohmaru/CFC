@@ -23,7 +23,7 @@ def triggerPhaseEvent(phase):
    # Function which triggers effects at the start or end of the phase
    debug(">>> triggerPhaseEvent({})".format(phase))
    mute()
-   if not automations['Play']: return
+   if not settings['Play']: return
    
    skipPhases = getState(me, 'skip')
    if phase in skipPhases:
@@ -80,7 +80,7 @@ def activatePhaseStart():
 
 
 def drawPhaseStart():
-   if automations['Play']:
+   if settings['Play']:
       if len(me.Deck) == 0 and len(players) > 1:
          notify("{} has no cards in their deck and therefore can't draw.".format(me))
          _extapi.notify(MSG_HINT_WIN.format(players[1]), Colors.Black, True)
@@ -109,7 +109,7 @@ def blockPhaseStart():
    uattack = getGlobalVar('UnitedAttack')
    # Attacking chars event not in UA
    atkCards = getAttackingCards()
-   if automations['Play']:
+   if settings['Play']:
       if len(uattack) > 0:
          chars = len(uattack) - 1
          uatype = ["Double", "Triple"][chars-1] + " United Attack"
@@ -138,7 +138,7 @@ def endPhaseStart():
             freeze(card, unfreeze = False, silent = True)
 
    # Calculates and applies attack damage
-   if automations['AttackDmg']:
+   if settings['AttackDmg']:
       blockers = getGlobalVar('Blockers')
       uattack = getGlobalVar('UnitedAttack')
       atkCards = getAttackingCards()
@@ -233,7 +233,7 @@ def cleanupPhaseStart():
 
 def clearKOedChars():
    # KOs characters with 0 BP
-   if automations['AttackDmg']:
+   if settings['AttackDmg']:
       charCards = (card for card in table
          if isCharacter(card) and not isAttached(card))
       for card in charCards:
@@ -246,7 +246,7 @@ def clearKOedChars():
 
 
 #------------------------------------------------------------------------------
-# Play automations
+# Play settings
 #------------------------------------------------------------------------------
 
 def playAuto(card, slotIdx=None, force=False):

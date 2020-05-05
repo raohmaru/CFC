@@ -27,7 +27,7 @@ try:
    from System.Windows.Forms import *
    from System.Drawing import *
 except:
-   automations['WinForms'] = False
+   settings['WinForms'] = False
 
 
 # Base class for custom forms
@@ -125,7 +125,7 @@ class MessageBoxForm(CustomForm):
 
 def messageBox(type, msg, title, icon = None):
    debug(">>> messageBox({}) with message: {}".format(title, msg))
-   if automations['WinForms']:
+   if settings['WinForms']:
       Application.EnableVisualStyles()
       form = MessageBoxForm(msg, title, icon)
       playSnd('win-{}'.format(type), True)
@@ -156,3 +156,11 @@ def error(msg, title = 'Error'):
 def confirm(str):
    playSnd('win-confirm', True)
    return _api.Confirm(str)
+   
+
+# clr.AddReference('WindowsBase')
+# System.Windows.Threading.Dispatcher.CurrentDispatcher.Invoke
+
+# clr.AddReferenceByName("PresentationCore, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35")
+# clr.AddReferenceByName("PresentationFramework, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35")
+# Octgn.Play.Gui.Commands.LoadPrebuiltDeck.Execute({}, System.Windows.ContentElement())

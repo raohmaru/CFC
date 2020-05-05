@@ -20,12 +20,17 @@
 # Event handlers
 #---------------------------------------------------------------------------
 
-# Happens when the table first loads, and never again
 def onTableLoaded():
-   settings = getSetting('settings', str(automations))
-   automations.update(eval(settings))
-   debug("Settings loaded: {}".format(automations))
+# Happens when the table first loads, and never again
+   global settings
+   try:
+      strSettings = getSetting('settings', str(settings))
+      settings.update(eval(strSettings))
+      debug("Settings loaded: {}".format(settings))
+   except:
+      debug("Error loading settings}")
    checkTwoSidedTable()
+   showWelcomeScreen()
 
 
 def onGameStarted():
@@ -48,13 +53,13 @@ def onDeckLoaded(args):
       else:
          cards[card.Name] = 1
       if cards[card.Name] > MaxCardCopies:
-         msg = "INVALID DECK: {0}'s deck has more than {1} copies of a card (only {1} are allowed)".format(player, MaxCardCopies)
+         msg = "INVALID DECK: {0}'s deck has more than {1} copies of a card (only {1} copies are allowed)".format(player, MaxCardCopies)
          notify(msg)
          # A more visible notification for all players
          for p in players:
             remoteCall(p, "notifyBar", ["#FF0000", msg])
          return
-   if automations['Play']:
+   if settings['Play']:
       setup(silent=True)
    playSnd('load-deck')
 
@@ -183,20 +188,30 @@ def onPhasePassed(args):
 def onMarkerChanged(args):
    card = args.card
    marker = args.marker
-   debug(">>> onMarkerChanged: {}, {}, {}, {}".format(card, marker, args.id, args.value))
+   oldValue = args.value
+   debug(">>> onMarkerChanged: {}, {}, {}, {}".format(card, marker, args.id, oldValue))
    if marker == 'BP':
       qty = getMarker(card, 'BP')
-      getParsedCard(card).lastBP = qty if qty > 0 else args.value  # last BP before being Koed
-      if qty == 0:
-         card.filter = KOedFilter
-      elif hasFilter(card, KOedFilter):
-         card.filter = None
+      if settings['Play']:
+         getParsedCard(card).lastBP = qty if qty > 0 else oldValue  # last BP before being KOed
+      if args.scripted or not settings['Play']:
+         if qty == 0:
+            card.filter = KOedFilter
+         elif hasFilter(card, KOedFilter):
+            card.filter = None
    # Tint cards according to the markers
    elif marker in FiltersDict:
-      if getMarker(card, marker) > 0:
-         card.filter = FiltersDict[marker]
-      elif hasFilter(card, FiltersDict[marker]):
-         card.filter = None
+      if args.scripted or not settings['Play']:
+         if getMarker(card, marker) > 0:
+            card.filter = FiltersDict[marker]
+         elif hasFilter(card, FiltersDict[marker]):
+            card.filter = None
+   
+   # Don't allow movement of markers
+   if settings['Play']:
+      debug("scripted? {} ({})".format(args.scripted, type(args.scripted)))
+      if not args.scripted:
+         setMarker(card, marker, oldValue)
 
 
 def OnCounterChanged(args):

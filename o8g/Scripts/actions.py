@@ -96,7 +96,7 @@ def setup(group=table, x=0, y=0, silent=False):
    refill() # We fill the player's play hand to their hand size
    notify("Setup for player {} completed.".format(me))
    # Start the turn of the first player to do the setup
-   if automations['Play']:
+   if settings['Play']:
       me.setActive()
 
 
@@ -181,25 +181,29 @@ def alignCards(group = None, x = 0, y = 0):
 
 
 def switchPlayAutomation(group, x = 0, y = 0):
-   switchAutomation('Play')
+   switchSetting('Play')
 
 
 def switchPhaseAutomation(group, x = 0, y = 0):
-   switchAutomation('Phase')
+   switchSetting('Phase')
 
 
 def switchWinForms(group, x = 0, y = 0):
-   switchAutomation('WinForms')
+   switchSetting('WinForms')
 
 
 def switchAttackDamage(group, x = 0, y = 0):
-   switchAutomation('AttackDmg')
+   switchSetting('AttackDmg')
    
    
 def switchSounds(group, x = 0, y = 0):
-   switchAutomation('Sounds')
+   switchSetting('Sounds')
    # Udpate OCTGN preferences
-   Octgn.Core.Prefs.EnableGameSound = automations['Sounds']
+   Octgn.Core.Prefs.EnableGameSound = settings['Sounds']
+   
+   
+def switchWelcomeScreen(group, x = 0, y = 0):
+   switchSetting('WelcomeScreen')
 
 
 #---------------------------------------------------------------------------
@@ -221,7 +225,7 @@ def defaultAction(card, x = 0, y = 0):
 
 def attack(card, x = 0, y = 0):
    mute()
-   if automations['Play']:
+   if settings['Play']:
       if not attackAuto(card): return
    card.highlight = AttackColor
    playSnd('attack-1')
@@ -230,7 +234,7 @@ def attack(card, x = 0, y = 0):
 
 def attackNoFreeze(card, x = 0, y = 0):
    mute()
-   if automations['Play']:
+   if settings['Play']:
       if not attackAuto(card): return
    card.highlight = AttackNoFreezeColor
    setMarker(card, 'Unfreezable')
@@ -241,7 +245,7 @@ def unitedAttack(card, x = 0, y = 0):
    debug(">>> unitedAttack()")
    mute()
    cardsnames = card
-   if automations['Play']:
+   if settings['Play']:
       target = unitedAttackAuto(card)
       if target:
          cardsnames = '{} and {}'.format(card, target)
@@ -255,7 +259,7 @@ def unitedAttack(card, x = 0, y = 0):
 def block(card, x = 0, y = 0):
    mute()
    text = 'with {}'.format(card)
-   if automations['Play']:
+   if settings['Play']:
       target = blockAuto(card)
       if target:
          text = '{} '.format(target) + text
@@ -269,7 +273,7 @@ def block(card, x = 0, y = 0):
 def activate(card, x = 0, y = 0):
    debug(">>> activate()")
    mute()
-   if card.highlight == ActivatedColor and not automations['Play']:
+   if card.highlight == ActivatedColor and not settings['Play']:
       card.highlight = None
       card.target(None)
       notify("{} deactivates {}.".format(me, card))
@@ -282,7 +286,7 @@ def activate(card, x = 0, y = 0):
    if isCharacter(card):
       ability = "ability {}".format(pcard.ability)
    notify("{} tries to activate {}'s {}.".format(me, card, ability))
-   if automations['Play']:
+   if settings['Play']:
       res = activateAuto(card)
       if not res or res != True:
          if res == ERR_NO_EFFECT:
@@ -330,7 +334,7 @@ def doesNotUnfreeze(card, x = 0, y = 0):
 
 def clear(card, x = 0, y = 0):
    card.target(False)
-   if automations['Play']:
+   if settings['Play']:
       # Triggered from the menu
       if x != 0 or y != 0:
          if card.highlight in [InfoColor]:
@@ -781,7 +785,7 @@ def play(card):  # This is the function to play cards from your hand.
       chooseSide()  # Just in case...
    slot = ""
    group = card.group
-   if automations['Play']:
+   if settings['Play']:
       if not playAuto(card): return
       slot = " in slot {}".format(getSlotIdx(card)+1)
    else:
@@ -802,7 +806,7 @@ def backup(card, x = 0, y = 0, target = None):  # Play a card as backup attached
    debug(">>> backup with card {}".format(card))
    mute()
    group = card.group
-   if automations['Play']:
+   if settings['Play']:
       target = backupAuto(card, target)
       if target:
          target, oldBP = target

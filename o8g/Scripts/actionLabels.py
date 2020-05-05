@@ -83,31 +83,23 @@ def aclb_RevealTopDeck(group, x = 0, y = 0):
 
       
 def aclb_PlayAutomation(group, x = 0, y = 0):
-   if automations['Play']:
-      return u'\u2714 Play automation'
-   else:
-      return "Play automation"
+   return aclb_setting('Play automation', 'Play')
 
       
 def aclb_Sounds(group, x = 0, y = 0):
-   if automations['Sounds']:
-      return u'\u2714 Game Sounds'
-   else:
-      return "Game Sounds"
+   return aclb_setting('Game Sounds', 'Sounds')
 
       
 def aclb_WinForms(group, x = 0, y = 0):
-   if automations['WinForms']:
-      return u'\u2714 Alert Messages'
-   else:
-      return "Alert Messages"
+   return aclb_setting('Alert Messages', 'WinForms')
 
       
 def aclb_AttackDamage(group, x = 0, y = 0):
-   if automations['AttackDmg']:
-      return u'\u2714 Attack Damage automation'
-   else:
-      return "Attack Damage automation"
+   return aclb_setting('Attack Damage automation', 'AttackDmg')
+
+      
+def aclb_WelcomeScreen(group, x = 0, y = 0):
+   return aclb_setting('Show Welcome Screen', 'WelcomeScreen')
 
       
 def aclb_NextOrPass(group, x = 0, y = 0):
@@ -115,3 +107,7 @@ def aclb_NextOrPass(group, x = 0, y = 0):
       return "Next phase"
    else:
       return "Pass"
+
+def aclb_setting(label, setting):
+   return "{}{}".format(u'\u2714 ' if settings[setting] else u' \u2002 \u2002 ', label)
+   

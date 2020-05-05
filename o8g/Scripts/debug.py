@@ -21,7 +21,7 @@
 
 def debug(msg):
    if debugVerbosity > 0:
-      msg = "{}".format(msg)
+      # msg = "{}".format(msg)
       msg = '[#]=> ' + msg
       whisper(msg)
    
