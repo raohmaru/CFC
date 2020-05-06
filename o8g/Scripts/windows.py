@@ -25,37 +25,43 @@ def showWelcomeScreen():
          showChangelog()
       return
       
-   choiceList = ['Rulebook', 'Download Image packs', 'What\'s new'] #, 'Tutorial']
+   choiceList = ['How to play', 'Rulebook', 'Download card images', 'What\'s new'] #, 'Tutorial']
    colorsList = ['#004d99'] * len(choiceList)
    buttons = ['Close', 'Do not show again']
    msg = """         Welcome to Card Fighters' Clash!\n
-If you are new to the game, here you will find useful links to get started with the mechanics.
+Here you will find useful information to get started with the game.
 Good battle!"""
    choice = askChoice(msg, choiceList, colorsList, buttons)
    
    if choice == 1:
-      openUrl('https://cardfightersclash.wordpress.com/rulebook/')
+      openUrl('https://cardfightersclash.wordpress.com/how-to-play/')
       showWelcomeScreen()
       
    elif choice == 2:
-      openUrl('https://cardfightersclash.wordpress.com/image-packs/')
+      openUrl('https://cardfightersclash.wordpress.com/rulebook/')
       showWelcomeScreen()
       
    elif choice == 3:
-      showChangelog()
+      openUrl('https://cardfightersclash.wordpress.com/image-packs/')
       showWelcomeScreen()
       
    elif choice == 4:
-      return
+      showChangelog()
+      showWelcomeScreen()
       
    elif choice == -2:
       switchSetting('WelcomeScreen', False)
 
 
+#---------------------------------------------------------------------------
+# Changelog screen
+#---------------------------------------------------------------------------
+
 def showChangelog():
    switchSetting('GameVersion', gameVersion)
-   msg = """Version 0.8.2
+   msg = """What's new in version 0.8.2
 
+- This window :)
 - Character's BP and player's HP to thousands.
 - Simplified in-game contextual menu.
 - Improved gameplay.

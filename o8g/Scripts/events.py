@@ -186,31 +186,33 @@ def onPhasePassed(args):
 
 
 def onMarkerChanged(args):
+# Invoked on all players
    card = args.card
    marker = args.marker
    oldValue = args.value
    debug(">>> onMarkerChanged: {}, {}, {}, {}".format(card, marker, args.id, oldValue))
    if marker == 'BP':
       qty = getMarker(card, 'BP')
-      if settings['Play']:
+      if args.scripted and settings['Play']:
          getParsedCard(card).lastBP = qty if qty > 0 else oldValue  # last BP before being KOed
       if args.scripted or not settings['Play']:
-         if qty == 0:
-            card.filter = KOedFilter
-         elif hasFilter(card, KOedFilter):
-            card.filter = None
+         if card.controller == me:
+            if qty == 0:
+               card.filter = KOedFilter
+            elif hasFilter(card, KOedFilter):
+               card.filter = None
    # Tint cards according to the markers
    elif marker in FiltersDict:
       if args.scripted or not settings['Play']:
-         if getMarker(card, marker) > 0:
-            card.filter = FiltersDict[marker]
-         elif hasFilter(card, FiltersDict[marker]):
-            card.filter = None
+         if card.controller == me:
+            if getMarker(card, marker) > 0:
+               card.filter = FiltersDict[marker]
+            elif hasFilter(card, FiltersDict[marker]):
+               card.filter = None
    
    # Don't allow movement of markers
    if settings['Play']:
-      debug("scripted? {} ({})".format(args.scripted, type(args.scripted)))
-      if not args.scripted:
+      if not args.scripted and card.controller == me:
          setMarker(card, marker, oldValue)
 
 

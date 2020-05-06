@@ -97,7 +97,7 @@ def switchSetting(name, value = None):
       status = "ON" if settings[name] else "OFF"
    else:
       status = settings[name]
-   notify(" -> {}'s {} setting is {}.".format(me, name, status))
+   debug(" -> {}'s {} setting is {}.".format(me, name, status))
 
    debug("<<< switchSetting({})".format(name))
 

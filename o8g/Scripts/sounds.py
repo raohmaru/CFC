@@ -21,7 +21,7 @@
 #---------------------------------------------------------------------------
 
 def playSnd(name, isInternal=False):
-   if settings['Sounds']:
+   # if settings['Sounds']:
       if isInternal or debugging:
          try:
             sound = Octgn.Program.GameEngine.Definition.Sounds[name]
