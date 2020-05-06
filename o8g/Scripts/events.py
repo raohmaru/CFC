@@ -196,7 +196,7 @@ def onMarkerChanged(args):
       if args.scripted and settings['Play']:
          getParsedCard(card).lastBP = qty if qty > 0 else oldValue  # last BP before being KOed
       if args.scripted or not settings['Play']:
-         if card.controller == me:
+         if card.controller == me and isCharacter(card):
             if qty == 0:
                card.filter = KOedFilter
             elif hasFilter(card, KOedFilter):
@@ -204,7 +204,7 @@ def onMarkerChanged(args):
    # Tint cards according to the markers
    elif marker in FiltersDict:
       if args.scripted or not settings['Play']:
-         if card.controller == me:
+         if card.controller == me and isCharacter(card):
             if getMarker(card, marker) > 0:
                card.filter = FiltersDict[marker]
             elif hasFilter(card, FiltersDict[marker]):

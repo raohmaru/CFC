@@ -180,7 +180,7 @@ class RulesLexer():
             else:
                rulesDict[RS_KEY_LABEL] = [label]
             
-      debug(rulesDict)
+      debug("{}".format(rulesDict))
       return rulesDict
 
 

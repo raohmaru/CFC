@@ -893,7 +893,7 @@ action = moveTo(deck) target(characters@discards) & shuffle()
 
 # Morrigan's LIFE SUCKER
 RulesDict['4e34756e-34e4-45e5-a6ab-698604c6fb99'] = """
-auto = ~playerCombatDamaged:fromThis~ hp(this.bp)
+auto = ~playerCombatDamaged:fromThis~ hp(+this.bp)
 """
 
 # Morrigan Aensland's GOODNIGHT KISS
