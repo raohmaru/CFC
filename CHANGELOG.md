@@ -1,16 +1,18 @@
 # Card Fighters' Clash Changelog
 
+## 0.8.3
+Bug fixes.
 ## 0.8.2
-Character's BP and player's HP to thousands.
-Simplified in-game contextual menu.
-Improved gameplay.
+Character's BP and player's HP to thousands.  
+Simplified in-game contextual menu.  
+Improved gameplay.  
 Prevent accidental moving of markers.
 ## 0.8.1
-Updated character card design.
-Added sound effects.
-Simplify contextual menu.
-Apply tint colors to cards to represent certain states.
-When applying an effect, draw arrows between source card and targets.
+Updated character card design.  
+Added sound effects.  
+Simplify contextual menu.  
+Apply tint colors to cards to represent certain states.  
+When applying an effect, draw arrows between source card and targets.  
 Minor fixes and improvements.
 ## 0.8.0
 All cards scripted.  

@@ -607,6 +607,8 @@ def putAtSlot(card, idx, player = me, move = False):
 
 
 def alignCard(card, x=None, y=None, slotIdx=None):
+   if hasMarker(card, 'Backup'):
+      return
    debug(">>> alignCard({}, {}, {}, {})".format(card, x, y, slotIdx))
    z = None
    if x == None or y == None:
@@ -658,8 +660,8 @@ def alignBackups(card, x=0, y=0):
       z = card.index
       debug("{}'s index: {}".format(card, z))
       for i, c in enumerate(attachs):
-         nx = x+ox*(i+1)
-         ny = y+oy*(i+1)
+         nx = x + ox * (i + 1)
+         ny = y + oy * (i + 1)
          cx, cy = c.position
          if nx != cx or ny != cy:
             c.moveToTable(nx, ny)

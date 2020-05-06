@@ -167,7 +167,7 @@ def onPhasePassed(args):
       if not me.isActive and len(getAttackingCards(getOpp(), True)) > 0:
          setStop(idx, True)
          whisper("Press TAB key when done to return priority to attacking player.")
-      _extapi.whisper("({} can play Reaction cards and then you may choose if block attackers)".format("Now defending player" if me.isActive else "You"), Colors.Blue)
+      _extapi.whisper(MSG_HINT_BLOCK.format(['defending player', 'You'](me.isActive), ['', 'you '](me.isActive)), Colors.Blue)
    elif idx == EndPhase:
       if not me.isActive:
          setStop(BlockPhase, False)

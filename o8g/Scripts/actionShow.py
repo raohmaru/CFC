@@ -57,3 +57,7 @@ def acsh_isCharAndAutoPlayOff(args, x = 0, y = 0):
 def acsh_canBackup(args, x = 0, y = 0):
    card = args[0]
    return isCharacter(card) and me.isActive and currentPhase()[1] == MainPhase
+
+      
+def acsh_hidden(args, x = 0, y = 0):
+   return False

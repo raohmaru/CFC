@@ -65,8 +65,7 @@ def activatePhaseStart():
          removeMarker(card, 'Just Entered')
          removeMarker(card, 'Counter-attack')
          clear(card)
-         if not hasMarker(card, 'Backup'):
-            alignCard(card)
+         alignCard(card)
       # Discard any Action or Reaction card left in the table (just in case player forgot to remove them)
       else:
          discard(card)
@@ -101,8 +100,7 @@ def attackPhaseStart():
             discard(card)
          else:
             card.target(False)
-            if not hasMarker(card, 'Backup'):
-               alignCard(card)
+            alignCard(card)
 
 
 def blockPhaseStart():
@@ -132,8 +130,7 @@ def endPhaseStart():
       if card.controller == me)
    for card in myCards:
       if isCharacter(card):
-         if not hasMarker(card, 'Backup'):
-            alignCard(card)
+         alignCard(card)
          if (hasMarker(card, 'Attack') or hasMarker(card, 'United Attack')) and not hasMarker(card, 'Unfreezable'):
             freeze(card, unfreeze = False, silent = True)
 
@@ -221,8 +218,7 @@ def cleanupPhaseStart():
          removeMarker(card, 'Unfreezable')
          removeMarker(card, 'Pierce')
          # Clears targets, colors, freezes characters and resets position
-         if not hasMarker(card, 'Backup'):
-            alignCard(card)
+         alignCard(card)
          if card.highlight == ActivatedColor:
             card.highlight = None
       # Discard any Action or Reaction card left in the table (just in case player forgot to remove them)

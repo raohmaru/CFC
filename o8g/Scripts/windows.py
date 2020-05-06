@@ -25,7 +25,7 @@ def showWelcomeScreen():
          showChangelog()
       return
       
-   choiceList = ['How to play', 'Rulebook', 'Download card images', 'What\'s new'] #, 'Tutorial']
+   choiceList = ['How to play', 'Rulebook', 'Download card images', 'Download card images', 'What\'s new'] #, 'Tutorial']
    colorsList = ['#004d99'] * len(choiceList)
    buttons = ['Close', 'Do not show again']
    msg = """         Welcome to Card Fighters' Clash!\n
@@ -46,6 +46,10 @@ Good battle!"""
       showWelcomeScreen()
       
    elif choice == 4:
+      openUrl('https://cardfightersclash.wordpress.com/feedback/')
+      showWelcomeScreen()
+      
+   elif choice == 5:
       showChangelog()
       showWelcomeScreen()
       

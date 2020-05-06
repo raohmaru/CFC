@@ -174,8 +174,7 @@ def clearAll(group = None, x = 0, y = 0):
 def alignCards(group = None, x = 0, y = 0):
    myCards = (card for card in table
       if card.controller == me
-      and isCharacter(card)
-      and not hasMarker(card, 'Backup'))
+      and isCharacter(card))
    for card in myCards:
       alignCard(card)
 
@@ -238,6 +237,7 @@ def attackNoFreeze(card, x = 0, y = 0):
       if not attackAuto(card): return
    card.highlight = AttackNoFreezeColor
    setMarker(card, 'Unfreezable')
+   playSnd('attack-1')
    notify('{} attacks with {} (character will not freeze).'.format(me, card))
 
 
@@ -378,7 +378,7 @@ def askCardBackups(card, x = 0, y = 0):
          if charIsInRing(card):
             whisper("You don't have compatible character cards in your hand to backup {}.".format(card))
       msg = "{} can be backed-up with the following character types:\n  - {}".format(card.Name, '\n  - '.join(filter(None, acceptedBackups)))
-      # information(msg)
+      information(msg)
       whisper(msg)
    else:
       information("Only character cards can be backed-up.")
