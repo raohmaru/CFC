@@ -132,7 +132,7 @@ def messageBox(type, msg, title, icon = None):
       showWinForm(form)
    else:
       if type == 'warning':
-         notifyBar("#FF0000", msg.replace("\n", " "))
+         notification(msg.replace("\n", " "), Colors.Red)
       elif type == 'error':
          _extapi.warning(msg)
       else:
@@ -147,6 +147,15 @@ def warning(msg, title = 'Warning'):
 
 def error(msg, title = 'Error'):
    messageBox('error', msg, title, SystemIcons.Error)
+   
+def notification(msg, color = '#000000', toAll = False, player = None):
+   if player:
+      remoteCall(player, "notification", [msg, color])
+   elif toAll:
+      for p in players:
+         remoteCall(p, "notification", [msg, color])
+   else:
+      notifyBar(color, msg + ' ' * 2000)
 
 
 #---------------------------------------------------------------------------
@@ -164,3 +173,5 @@ def confirm(str):
 # clr.AddReferenceByName("PresentationCore, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35")
 # clr.AddReferenceByName("PresentationFramework, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35")
 # Octgn.Play.Gui.Commands.LoadPrebuiltDeck.Execute({}, System.Windows.ContentElement())
+
+# Octgn.WindowManager.PlayWindow.AddHandler(Octgn.Play.Gui.CardControl.CardHoveredEvent, Octgn.Play.Gui.CardEventHandler(btnHover))

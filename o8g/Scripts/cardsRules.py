@@ -185,7 +185,7 @@ to(): (optional)
    Parameters:
       A valid target or a expression
    Alias:
-      target
+      target, from
    Default:
       current player or the card (depend on context)
 
@@ -435,7 +435,7 @@ action = [[if alone]] bp(x2) target(this)
 
 # Lucifer's SACRIFICE
 RulesDict['39b7d042-d2c5-4ff3-aad5-231bd3ccc9e7'] = """
-action = {F}: destroy() target(^character@myRing); damage(prevTgt.BP) to(character)
+action = {F}: destroy() target(^character@myRing); damage(prevTgt.lastBP) to(character)
 """
 
 # Mech Zangief's ANTISOCIAL
@@ -979,7 +979,7 @@ auto = ~blocks:this~ draw(2)
 # God Rugal's YUUGOU POWER
 RulesDict['067d592e-2ddf-43f5-82cc-25c70d29a996'] = """
 target = character<1>[powerful]@anyDeck
-action = moveRestTo(ctrlDeck, -1) & moveTo(ctrlDeck, -1, true); copyAbility(prevTgt) to(character)
+action = {F}: moveRestTo(ctrlDeck, -1) & moveTo(ctrlDeck, -1, true); copyAbility(prevTgt) to(character)
 """
 
 # Alfred's WAVE RIDER
@@ -1361,7 +1361,7 @@ action = {D(reaction)}{F}: draw(3)
 
 # Gaira's SHOUT!
 RulesDict['40ece65c-0c59-4000-ab13-d948c4012f84'] = """
-action = unfreeze() target(characters)
+action = unfreeze() target(characters[frozen])
 """
 
 # Galford's HEY POPPY!
@@ -1513,7 +1513,7 @@ action = moveTo(hand) target(<1>*<3>@deck); moveTo(discards) target(*<2>@deck)
 
 # Bopper
 RulesDict['c50f1a40-87e9-41b9-a69c-600b36b68077'] = """
-action = destroy() target(character@myRing); damage(prevTgt.BP) to(character)
+action = destroy() target(character@myRing); damage(prevTgt.lastBP) to(character)
 """
 
 # Break up
@@ -1732,7 +1732,7 @@ action = freeze(toggle)
 
 # Raw shield
 RulesDict['50afc361-3dd7-4847-ae4c-d9ed84f1d991'] = """
-action = destroy() target(character@myRing); hp(prevTgt.BP)
+action = destroy() target(character@myRing); hp(prevTgt.lastBP)
 """
 
 # Reparation
@@ -1988,7 +1988,7 @@ action = {D(character)}: sp(discarded[0].SP)
 
 # Robber
 RulesDict['eaf346c3-d2e6-4066-adae-e1678746673d'] = """
-action = steal(character) to(character[powerful])
+action = steal(character@ring) from(character[powerful])
 """
 
 # Robot punch

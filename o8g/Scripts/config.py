@@ -105,13 +105,15 @@ CardsCoords = dict(
    Attack2       = ( 44,  29),
    Attack3       = ( 221, 29),
    BackupOffset  = ( 0,   13),
-   UAttackOffset = ( 43,  0)
+   UAttackOffset = ( 43,  0),
+   Button        = ( 415, 29)
 )
 
 # Card types
 CharType     = 'Character'
 ActionType   = 'Action'
 ReactionType = 'Reaction'
+ButtonType   = 'Button'
 
 # Card abilities
 InstantAbility = u'\xa2'
@@ -127,6 +129,7 @@ Regexps = dict(
    Ability  = re.compile(r'(.)\s+([^\r]+)'),
    LeftCond = re.compile(r'^[\w.]+'),
    BP       = re.compile(r'([\w\d\[\]]+)\.bp'),
+   LastBP   = re.compile(r'([\w\d\[\]]+)\.lastbp'),
    Action   = re.compile(r'\baction\b'),
    Reaction = re.compile(r'\breaction\b'),
    Char     = re.compile(r'\bchar\b'),
@@ -241,13 +244,14 @@ handSize       = HandSize
 debugVerbosity = DebugLevel.Off
 debugging      = False
 # If I am alone debugging I want to know EVERYTHING
-if me.name == Author and len(players) == 1:
-   debugVerbosity = DebugLevel.Debug
+# if me.name == Author and len(players) == 1:
+   # debugVerbosity = DebugLevel.Debug
 parsedCards    = {} # Dictionary holding all parsed cards
 cleanedUpRing  = False  # Tracks if the user has run the Clean-up phase
 commander      = None  # RulesCommands instance
 turns          = 1  # The number of consecutive turns a player can play
 envVars        = None  # Global variables to be used in eval() expression
+buttons        = {}  # Holds the buttons created
 
 settings = {
    'Play'         : True, # Automatically trigger game effects and card effects when playing cards

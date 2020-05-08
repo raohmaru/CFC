@@ -15,17 +15,22 @@
 # You should have received a copy of the GNU General Public License
 # along with this script.  If not, see <http://www.gnu.org/licenses/>.
 
+def getGameVersion():
+# Returns game version in the format  x.x.x
+   return '.'.join(gameVersion.split('.')[:3])
+
+
 #---------------------------------------------------------------------------
 # Welcome screen
 #---------------------------------------------------------------------------
 
 def showWelcomeScreen():
    if not settings['WelcomeScreen']:
-      if settings['GameVersion'] != gameVersion:
+      if settings['GameVersion'] != getGameVersion():
          showChangelog()
       return
       
-   choiceList = ['How to play', 'Rulebook', 'Download card images', 'Download card images', 'What\'s new'] #, 'Tutorial']
+   choiceList = ['How to play', 'Rulebook', 'Download card images', 'Help us improve', 'What\'s new?'] #, 'Tutorial']
    colorsList = ['#004d99'] * len(choiceList)
    buttons = ['Close', 'Do not show again']
    msg = """         Welcome to Card Fighters' Clash!\n
@@ -62,12 +67,10 @@ Good battle!"""
 #---------------------------------------------------------------------------
 
 def showChangelog():
-   switchSetting('GameVersion', gameVersion)
-   msg = """What's new in version 0.8.2
+   switchSetting('GameVersion', getGameVersion())
+   msg = """What's new in version 0.8.3
 
-- This window :)
-- Character's BP and player's HP to thousands.
-- Simplified in-game contextual menu.
-- Improved gameplay.
-- Prevent accidental moving of markers."""
+- Play priority control: Now attacking player must wait until defending player is done before he or she can continue to their next phase.
+- Added a "Done" button for defending player in block phase.
+- Bug fixes."""
    askChoice(msg, [], [], ['Close'])

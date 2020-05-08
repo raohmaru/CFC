@@ -139,6 +139,7 @@ def clearGlobalVar(name, player = None):
 def replaceVars(str):
    debug("-- replaceVars({})".format(str))
    str = re.sub(Regexps['BP']      , r'hasattr(getParsedCard(\1), "BP") and getParsedCard(\1).BP', str)
+   str = re.sub(Regexps['LastBP']  , r'getParsedCard(\1).lastBP', str)
    str = re.sub(Regexps['Action']  , 'isAction(card)', str)
    str = re.sub(Regexps['Reaction'], 'isReaction(card)', str)
    str = re.sub(Regexps['Char']    , 'isCharacter(card)', str)
@@ -251,9 +252,11 @@ def addActionTempVars(name, value):
    setGlobalVar('ActionTempVars', vars)
 
 
-def getState(player, name = None):
-   debug(">>> getState({}, {})".format(player._id, name))
+def getState(player = None, name = None):
+   debug(">>> getState({}, {})".format(player, name))
    GameState = getGlobalVar('GameState')
+   if not player:
+      return GameState[name] if name in GameState else None
    if not name:
       return GameState[player._id]
    name = name.lower()
@@ -265,15 +268,19 @@ def getState(player, name = None):
 
 
 def setState(player, name, value):
-   debug(">>> setState({}, {}, {})".format(player._id, name, value))
+   debug(">>> setState({}, {}, {})".format(player, name, value))
    GameState = getGlobalVar('GameState')
-   GameState[player._id][name.lower()] = value
+   if player:
+      GameState[player._id][name.lower()] = value
+   else:
+      GameState[name.lower()] = value
    setGlobalVar('GameState', GameState)
    debug("GameState: {}".format(GameState))
    
 
 def resetState():
    GameState = getGlobalVar('GameState')
+   GameState['priority'] = getActivePlayer()._id if getActivePlayer() else 0  # Player with the priority
    for p in players:
       gs = GameState[p._id] if p._id in GameState else {}
       GameState[p._id] = {
@@ -433,7 +440,7 @@ def moveToGroup(group, card, sourceGroup = None, pos = None, reveal = None, sour
 def selectRing():
    if len(players) == 1:
       return me
-   t = askChoice("Select a ring", ['My ring', 'Enemy ring'])
+   t = askChoice("Select a ring", ['My ring', 'Enemy\'s ring'])
    if t == 0:
       return False
    return players[t-1]
@@ -521,7 +528,7 @@ def placeCard(card, type = None, action = None, target = None, faceDown = False)
             coords = CardsCoords['Slot'+`fixSlotIdx(target)`]
             coords = (coords[0], fixCardY(coords[1]))
          elif action == BackupAction:
-            cx,cy = target.position
+            cx, cy = target.position
             backups = getGlobalVar('Backups')
             numBkps = len([id for id in backups if backups[id] == target._id])
             coords = (cx+CardsCoords['BackupOffset'][0]*numBkps, cy+CardsCoords['BackupOffset'][1]*numBkps)
@@ -704,7 +711,7 @@ def transformCard(card, cardModel):
       clearAttachLinks(card)
       slotIdx = getSlotIdx(card)
       if slotIdx != -1:
-         setMarker(newCard, 'BP', num(newCard.BP) / 100)
+         setMarker(newCard, 'BP', num(newCard.BP) / BPDivisor)
          putAtSlot(newCard, slotIdx)
          newCard.orientation = card.orientation
          if settings['Play']:
@@ -872,8 +879,8 @@ def dealDamage(dmg, target, source, isPiercing = False):
       return
    if isinstance(target, Card):
       oldBP = getMarker(target, 'BP')
-      dmg = min(dmg, getMarker(target, 'BP'))
-      addMarker(target, 'BP', -dmg)
+      minDmg = min(dmg, getMarker(target, 'BP'))
+      addMarker(target, 'BP', -minDmg)
       newBP = getMarker(target, 'BP')
       notify("{} deals {} damage to {}. New BP is {} (before was {}).".format(source, dmg, target, newBP, oldBP))
       if isCharacter(source):
@@ -893,7 +900,10 @@ def dealDamage(dmg, target, source, isPiercing = False):
       piercing = "piercing " if isPiercing else ""
       notify("{} deals {} {}damage to {}. New HP is {} (before was {}).".format(source, dmg, piercing, target, target.HP, oldHP))
       if newHP <= 0:
-         _extapi.notify(MSG_HINT_WIN.format(getOpp(target)), Colors.Black, True)
+         msg = MSG_HINT_WIN.format(getOpp(target))
+         _extapi.notify(msg, Colors.Black, True)
+         if not debugging:
+            notification(msg, Colors.Black, True)
       # Change game state: non-combat damage
       if not isCharacter(source) or not hasMarker(source, 'Attack'):
          setState(target, 'damaged', True)
@@ -928,7 +938,7 @@ def payCostSP(amount = 1, obj = None, msg = 'play this card', type = None):
    if type:
       newAmount = getCostMod(amount, type, obj)
       if amount != newAmount:
-         notify("The SP cost of {} has been modified by an ability ({} => {}).".format(obj, amount, newAmount))
+         notify(u"The SP cost of {} has been modified by an ability ({} \u2192 {}).".format(obj, amount, newAmount))
          amount = newAmount
    
    if amount >= 0:
@@ -1085,6 +1095,10 @@ def isAction(card):
 
 def isReaction(card):
    return card.Type == ReactionType
+
+
+def isButton(card):
+   return card._id in buttons
 
 
 def isAttached(card):

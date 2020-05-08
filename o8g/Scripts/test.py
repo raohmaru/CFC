@@ -90,7 +90,8 @@ actions = [
    # "action = reveal(hand) & each(action in me.hand => bp(+2)) target(this) & discard(actions)"
    # "action = discard(<,1>action@oppHand)",
    # "action = destroy() target(characters::not(prevTgt))",
-   "action = shuffle?()",
+   # "action = shuffle?()",
+   "action = steal(character@ring) from(character[powerful])",
 ]
 abilities = [
    "abilities = unblockable",
@@ -155,8 +156,8 @@ def test(arr, title):
       print ""
 
 # rules = RulesDict['aa867ea1-89f8-4154-8e20-2263edd00002']
-test(targets, 'targets')
-# test(actions, 'actions')
+# test(targets, 'targets')
+test(actions, 'actions')
 # test(abilities, 'abilities')
 # test(autos, 'autos')
 # test(requisite, 'requisite')

@@ -33,7 +33,7 @@ Colors = Struct(**{
 
 try:
    import clr
-   # Start to hacking :)
+   # Start to hack :)
    clr.AddReference("Octgn")
    clr.AddReference("Octgn.Core")
    # clr.AddReference("Octgn.DataNew")
@@ -98,12 +98,20 @@ class ExtendedApi(object):
       return self._gameMethods.GetCardById(self._game, Guid.Parse(cardModel))
       
       
+   def getCardIdentityById(self, cardId):
+      """Gets a card identity by its internal id.
+      Examples: _extapi.getCardIdentityById(card._id)
+      Returns: Octgn.Play.CardIdentity
+      """
+      return Octgn.Play.CardIdentity.Find(cardId)
+      
+      
    def getCardDataById(self, cardId):
       """Gets a card data by its internal id.
       Examples: _extapi.getCardDataById(card._id)
       Returns: Octgn.DataNew.Entities.Card
       """
-      card = Octgn.Play.CardIdentity.Find(cardId)
+      card = self.getCardIdentityById(cardId)
       if card is None:
          return None
       return card.Model

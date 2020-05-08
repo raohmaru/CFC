@@ -4,7 +4,7 @@
       name="Card Fighters' Clash"
       id="e3d56d9e-900d-49c6-b6ae-22cbb51be153"
       octgnVersion="3.4.217.0"
-      version="0.8.3.517"
+      version="0.8.3.540"
       markersize="20"
       tags="capcom snk fighter"
       description="Card game based on the SNK Playmore’s video game SNK vs. Capcom Card Fighters' Clash 2 Expand Edition.
@@ -32,6 +32,7 @@
 		<script src="Scripts/winforms.py" />
 		<script src="Scripts/windows.py" />
 		<script src="Scripts/sounds.py" />
+		<script src="Scripts/buttons.py" />
 		<script src="Scripts/extendedAPI.py" />
 		<script src="Scripts/actionLabels.py" />
 		<script src="Scripts/actionShow.py" />
@@ -56,6 +57,7 @@
 		<event name="OnPhasePassed"        action="onPhasePassed" />
 		<event name="OnMarkerChanged"      action="onMarkerChanged" />
 		<event name="OnCounterChanged"     action="OnCounterChanged" />
+		<event name="OnCardClicked"        action="OnCardClicked" />
 	</events>
 
 	<sounds>
@@ -136,7 +138,7 @@
 		<globalvariable name="GameState" value="{}" />
 	</globalvariables>
 
-	<card back="Resources/Card/back.jpg" front="Resources/Card/front.png" width="90" height="126" cornerRadius="3">
+	<card back="Resources/Card/card-back.jpg" front="Resources/Card/card-front.png" width="90" height="126" cornerRadius="3">
 		<property name="Publisher" type="String" ignoreText="True" textKind="Enum" />
 		<property name="Team" type="String" ignoreText="True" textKind="Enum" />
 		<property name="Type" type="String" textKind="Enum" />
@@ -153,6 +155,8 @@
 		<property name="Backup 3" type="String" textKind="Enum" />
 		<property name="Number" type="String" ignoreText="True" />
 		<property name="Illustrator" type="String" ignoreText="True" />
+		
+		<size name="button" width="110" height="110" front="Resources/Card/button-back.png" back="Resources/Card/button-front.png"/>
 	</card>
 
 	<gameboards src="Resources/Background/ring.png" x="-327" y="-342" width="655" height="684">
@@ -204,7 +208,7 @@
 			<groupaction menu="Pick a random card (Mine)"  execute="randomPickMine" />
 			<groupaction menu="Pick a random card (Enemy)" execute="randomPickEnemy" />
 		</groupactions>
-		<groupaction menu="Restart game" execute="scoop" />
+		<groupaction menu="Restart game" execute="scoop" showIf="acsh_Debug"/>
 		<groupactions menu="Settings...">
 			<groupaction menu="Switch Play automation ON/OFF" execute="switchPlayAutomation" getName="aclb_PlayAutomation" />
 			<groupaction menu="Switch Alert Messages ON/OFF" execute="switchWinForms" getName="aclb_WinForms" />
@@ -222,11 +226,11 @@
 		<cardaction menu="(Un)Freeze" shortcut="Ctrl+F" execute="freeze" getName="aclb_Freeze" showIf="acsh_isChar" />
 		<cardactions menu="Combat..." showIf="acsh_isActivePlayerAttack">
 			<cardaction menu="Attack" shortcut="Ctrl+A" execute="attack" />
-			<cardaction menu="Attack without freezing" shortcut="Ctrl+Shift+A" execute="attackNoFreeze" />
-			<cardaction menu="Join United Attack" shortcut="Ctrl+Alt+A" execute="unitedAttack" />
+			<cardaction menu="Attack without freezing" shortcut="Ctrl+Shift+A" execute="attackNoFreeze" showIf="acsh_AutoPlayOff" />
+			<cardaction menu="United Attack" shortcut="Ctrl+Alt+A" execute="unitedAttack" getName="aclb_unitedAttack" />
 			<cardaction menu="Counter-attack" shortcut="Ctrl+B" execute="block" getName="aclb_Block" showIf="acsh_hidden" />
 		</cardactions>
-		<cardactions menu="Move...">
+		<cardactions menu="Move..." showIf="acsh_notButton">
 			<cardaction menu="KO" shortcut="Del" execute="destroy" getName="aclb_Destroy" />
 			<!-- <cardaction menu="Remove" shortcut="Shift+Del" execute="remove" /> -->
 			<cardaction menu="Return to Hand" shortcut="Ctrl+H" execute="toHand" />

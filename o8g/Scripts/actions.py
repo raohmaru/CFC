@@ -24,6 +24,14 @@ import re
 def nextPhase(group = table, x = 0, y = 0):
    phaseIdx = currentPhase()[1]
    if me.isActive:
+      if phaseIdx == BlockPhase and getState(None, 'priority') != me._id:
+         whisper('You cannot pass the phase until {} is done.'.format(getOpp()))
+         playSnd('win-warning')
+         return
+      # Priority back to me
+      if getState(None, 'priority') != me._id:
+         setState(None, 'priority', me._id)
+      
       global turns
       if phaseIdx >= len(Phases) - 1:
          phaseIdx = ActivatePhase
@@ -36,9 +44,13 @@ def nextPhase(group = table, x = 0, y = 0):
       else:
          phaseIdx += 1
       setPhase(phaseIdx)
-   elif phaseIdx == BlockPhase:
+   elif phaseIdx == BlockPhase and getState(None, 'priority') == me._id:
       setStop(phaseIdx, False)
-      notify("{} has finalized the {} phase. {} can go to the next phase.".format(me, Phases[phaseIdx], getOpp()))
+      # Pass priority to opponent
+      setState(None, 'priority', getOpp()._id)
+      notify(MSG_PHASE_DONE.format(me, Phases[phaseIdx], getOpp()))
+      notification(MSG_PHASE_DONE.format(me, Phases[phaseIdx], 'you'), player = getOpp())
+      removeButton('BlockDone')
       playSnd('notification')
 
 
@@ -78,7 +90,7 @@ def gotoCleanup(group = table, x = 0, y = 0, silent = False):
 # Table group actions
 #---------------------------------------------------------------------------
 
-def setup(group=table, x=0, y=0, silent=False):
+def setup(group = table, x = 0, y = 0, silent = False):
 # This function is usually the first one the player does
    debug(">>> setup()")
    mute()
@@ -96,7 +108,7 @@ def setup(group=table, x=0, y=0, silent=False):
    refill() # We fill the player's play hand to their hand size
    notify("Setup for player {} completed.".format(me))
    # Start the turn of the first player to do the setup
-   if settings['Play']:
+   if settings['Play'] and not getActivePlayer():
       me.setActive()
 
 
@@ -211,10 +223,16 @@ def switchWelcomeScreen(group, x = 0, y = 0):
 
 def defaultAction(card, x = 0, y = 0):
    phaseIdx = currentPhase()[1]
-   if me.isActive and phaseIdx == AttackPhase and isCharacter(card):
+   # Button
+   if isButton(card):
+      buttonAction(card)
+   # Char Attack
+   elif me.isActive and phaseIdx == AttackPhase and isCharacter(card):
       attack(card, x, y)
+   # Char block
    elif not me.isActive and phaseIdx == BlockPhase and isCharacter(card):
       block(card, x, y)
+   # Activate ability/effect
    elif (
          (me.isActive and (isCharacter(card) or isAction(card)))
          or (isReaction(card) and ((not me.isActive and phaseIdx == BlockPhase) or debugging))
@@ -320,16 +338,19 @@ def freeze(card, x = 0, y = 0, unfreeze = None, silent = False):
       card.target(None)
 
 
-def doesNotUnfreeze(card, x = 0, y = 0):
+def doesNotUnfreeze(card, x = 0, y = 0, restr = None):
    mute()
    msg = "not unfreeze"
+   when = ''
    if not hasMarker(card, 'Cannot Unfreeze'):
       setMarker(card, "Cannot Unfreeze")
+      if restr:
+         when = 'next '
    else:
       removeMarker(card, "Cannot Unfreeze")
       msg = "unfreeze as normal"
 
-   notify("{0}'s {1} will {2} during {0}'s Activate phase.".format(card.controller, card, msg))
+   notify("{0}'s {1} will {2} during {0}'s {3}Activate phase.".format(card.controller, card, msg, when))
 
 
 def clear(card, x = 0, y = 0):
@@ -361,6 +382,7 @@ def askCardBackups(card, x = 0, y = 0):
    if isCharacter(card):
       acceptedBackups = getAcceptedBackups(card)
       charsBackup = []
+      res = False
       for c in me.hand:
          if isCharacter(c):
             if c != card and c.Subtype in acceptedBackups:
@@ -372,14 +394,15 @@ def askCardBackups(card, x = 0, y = 0):
          if charIsInRing(card):
             targets = showCardDlg(charsBackup, 'Select a character card from your hand to back-up {}'.format(card.Name))
             if targets:
-               backup(targets[0], target=card)
+               res = backup(targets[0], target=card)
          whisper("Highlighting compatible back-ups cards in your hand: {}.".format(cardsNamesStr(charsBackup)))
       else:
          if charIsInRing(card):
             whisper("You don't have compatible character cards in your hand to backup {}.".format(card))
       msg = "{} can be backed-up with the following character types:\n  - {}".format(card.Name, '\n  - '.join(filter(None, acceptedBackups)))
-      information(msg)
       whisper(msg)
+      if not res:
+         information(msg)
    else:
       information("Only character cards can be backed-up.")
 
@@ -535,6 +558,8 @@ def stealAbility(card, x = 0, y = 0, target = None):
 
 def destroy(card, x = 0, y = 0, controller=me):
    mute()
+   if isButton(card) and not debugging:
+      return
    fromText = fromWhereStr(card.group)
    action = "discards"
    card.moveTo(me.piles['Discard Pile'])
@@ -813,6 +838,7 @@ def backup(card, x = 0, y = 0, target = None):  # Play a card as backup attached
          newBP = getMarker(target, 'BP')
          notify("{0} backups {1} with {2} from their {3}. New BP of {1} is {4} (before was {5}).".format(me, target, card, group.name, newBP, oldBP))
          playSnd('backup')
+         return True
    else:
       placeCard(card, card.Type)
       notify("{} backups with {} from their {}.".format(me, card, group.name))

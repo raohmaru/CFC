@@ -1,7 +1,10 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
-<set name="Markers" id="243f4bca-ce77-47cc-a652-ee5de6b176b0" version="1.1.0.0" 
-     gameId="e3d56d9e-900d-49c6-b6ae-22cbb51be153" gameVersion="0.8.0"
-     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="CardSet.xsd">
+<set name="Markers"
+	 id="243f4bca-ce77-47cc-a652-ee5de6b176b0"
+	 version="1.2.0.0" 
+     gameId="e3d56d9e-900d-49c6-b6ae-22cbb51be153"
+	 gameVersion="0.8.3"
+	 hidden="true">
 	<markers>
 		<marker name="BP" id="b86fc644-d084-43d3-99d2-5b11457321cc"/>
 		<marker name="Just Entered" id="9a52c42c-543f-48bb-9a48-d7599d6c8fae"/>
@@ -13,4 +16,24 @@
 		<marker name="Backup" id="efd3208d-2ec3-44ca-be1d-858e91628da4"/>
 		<marker name="Pierce" id="3131facc-3fe4-4dd5-95ff-afc08570d869"/>
 	</markers>
+	<cards>
+		<card name="BlockDone" id="a7694a83-7743-4c44-8fed-43142102cd62" size="button">
+			<property name="Publisher"    value="" />
+			<property name="Team"         value="" />
+			<property name="Type"         value="Button" />
+			<property name="Subtype"      value="" />
+			<property name="Rarity"       value="" />
+			<property name="Ability"      value="" />
+			<property name="Ability Type" value="" />
+			<property name="Ability Name" value="" />
+			<property name="Rules"        value="" />
+			<property name="BP"           value="" />
+			<property name="SP"           value="" />
+			<property name="Backup 1"     value="" />
+			<property name="Backup 2"     value="" />
+			<property name="Backup 3"     value="" />
+			<property name="Number"       value="" />
+			<property name="Illustrator"  value="" />
+		</card>
+	</cards>
 </set>

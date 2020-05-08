@@ -1,6 +1,8 @@
 # Card Fighters' Clash Changelog
 
 ## 0.8.3
+Play priority control.
+Added a "Done" button for defending player in block phase.
 Bug fixes.
 ## 0.8.2
 Character's BP and player's HP to thousands.  

@@ -99,7 +99,7 @@ def notifyAbility(target_id, source_id=None, msg=None, restr='', isWarning=False
       func = warning if isWarning else notify
       name = obj
       if isPlayer(obj) or isWarning:
-         name = getObjName(obj)
+         name = 'You' if isWarning else getObjName(obj)
       func(msg.format(name, source.Name, source.properties['Ability Name'], restr))
 
 #---------------------------------------------------------------------------
@@ -120,10 +120,10 @@ def abl_pierce(obj_id):
    return False
    
    
-def abl_frosted(obj_id):
+def abl_frosted(obj_id, restr = None):
    card = Card(obj_id)
    if not hasMarker(card, 'Cannot Unfreeze'):
-      doesNotUnfreeze(card)
+      doesNotUnfreeze(card, restr = restr)
    
    
 def abl_removeFrost(obj_id):
@@ -141,7 +141,7 @@ def abl_add(obj_id, eventOrFunc, source_id=None, restr=None, msg=None, checkFunc
       restr = list(restr) + [msg[1]] # Show message when the effect has gone because of the restr cleanup
       
    if callable(eventOrFunc):
-      eventOrFunc(obj_id)
+      eventOrFunc(obj_id, restr)
       eventOrFunc = Hooks.CallOnRemove
       addEvent = bool(restr)
       

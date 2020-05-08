@@ -16,6 +16,3 @@ To make the game more enjoyable some decisions where taken to balance the game, 
 Characters with low BP now have higher SP value than cards with high BP. That means no more useless cards like Cathy & Roddy in the video game.
 
 Depending on the power of character's ability its SP is decreased. For some characters the SP have a negative value due to its powerful abilities, like Kyo's Orochi Wave or Jin Saotome's Saotome Dynamite.
-
-### Why my HP is 30 instead of 3000?
-For the sake of simplicity HP, BP and damage points are divided by 100. Small numbers for counters are easier to manage in OCTGN than large numbers, since the counters are usually modified in increments of 1.

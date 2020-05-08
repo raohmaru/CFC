@@ -47,7 +47,8 @@ def acsh_hasAbility(args, x = 0, y = 0):
 
       
 def acsh_AutoPlayOff(args, x = 0, y = 0):
-   return debugging or not settings['Play']
+   card = args[0] if args != table else None
+   return (not card or not isButton(card)) and (debugging or not settings['Play'])
 
       
 def acsh_isCharAndAutoPlayOff(args, x = 0, y = 0):
@@ -61,3 +62,7 @@ def acsh_canBackup(args, x = 0, y = 0):
       
 def acsh_hidden(args, x = 0, y = 0):
    return False
+
+      
+def acsh_notButton(args, x = 0, y = 0):
+   return not isButton(args[0])

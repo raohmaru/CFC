@@ -40,8 +40,9 @@ MSG_MAY_DEF                 = "Do you want to apply the effect of the card?"
 MSG_HINT_KOED               = "({} has been KOed. You should put it into your discard pile. In any case, KOed characters will be removed from the ring on phase change.)"
 MSG_HINT_ACTIVATE           = "(Now you must activate the card's effect by double-click on it.)"
 MSG_HINT_WIN                = "{} wins the game!"
-MSG_HINT_BLOCK              = "(Now {} can play Reaction cards and then {} may choose if block attackers)"
+MSG_HINT_BLOCK              = "(Now {} can play Reaction cards and then {}may choose if block attackers)"
 MSG_UA_MAX                  = "Can't be more than {} characters in a United Attack."
+MSG_PHASE_DONE              = "{} has finalized the {} phase. {} can go to the next phase."
 
 MSG_ERR_NO_CARDS            = "There are no targets available, hence the ability has no effect."
 MSG_ERR_NO_CARDS_HAND       = "You don't have enough cards in your hand to pay the cost of the ability."
@@ -50,6 +51,8 @@ MSG_ERR_NO_FILTERED_CARDS   = "Selected cards don't match the requirements of th
 MSG_ERR_NO_FILTERED_PLAYERS = "No player match the requirements of this card's effect."
 MSG_ERR_TARGET_OTHER        = "{}'s ability cannot select itself, therefore it has been removed from selection."
 MSG_ERR_ATTACK_CHAR_RING    = "Please attack with a character in your ring."
+MSG_ERR_ATTACK_FRESH        = "Characters that just entered the ring can't attack this turn.\nProceed anyway?"
+MSG_ERR_BLOCK_ONE           = "An attacking character can only be blocked by exactly one character."
 MSG_HOOKS_ERR = {
    Hooks.BeforeAttack: "{} cannot attack due to {}'s {} ability{}.",
    Hooks.BeforeBlock : "{} cannot counter-attack due to {}'s {} ability{}.",

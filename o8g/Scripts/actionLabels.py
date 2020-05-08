@@ -44,6 +44,8 @@ def aclb_Default(args, x = 0, y = 0):
             return "Counter-attack"
       
       return "Use ability"
+   elif isButton(card):
+      return "Activate"
    else:
       return "Resolve"
 
@@ -110,4 +112,11 @@ def aclb_NextOrPass(group, x = 0, y = 0):
 
 def aclb_setting(label, setting):
    return "{}{}".format(u'\u2714 ' if settings[setting] else u' \u2002 \u2002 ', label)
+
+      
+def aclb_unitedAttack(group, x = 0, y = 0):
+   if getGlobalVar('UnitedAttack'):
+      return "Join United Attack"
+   else:
+      return "United Attack"
    

@@ -42,7 +42,8 @@ def onGameStarted():
 def onDeckLoaded(args):
    player = args.player
    groups = args.groups
-   if player != me: return # We only want the owner of the deck to run this script
+   if player != me:  # We only want the owner of the deck to run this script
+      return
    debug(">>> onDeckLoaded({})".format(player))
    notify("{} has loaded a deck. Now his deck has {} cards.".format(player, len(me.Deck)))
    mute()
@@ -54,10 +55,9 @@ def onDeckLoaded(args):
          cards[card.Name] = 1
       if cards[card.Name] > MaxCardCopies:
          msg = "INVALID DECK: {0}'s deck has more than {1} copies of a card (only {1} copies are allowed)".format(player, MaxCardCopies)
-         notify(msg)
+         _extapi.notify(msg, Colors.Red)
          # A more visible notification for all players
-         for p in players:
-            remoteCall(p, "notifyBar", ["#FF0000", msg])
+         notification(msg, Colors.Red, True)
          return
    if settings['Play']:
       setup(silent=True)
@@ -166,8 +166,9 @@ def onPhasePassed(args):
    if idx == BlockPhase:
       if not me.isActive and len(getAttackingCards(getOpp(), True)) > 0:
          setStop(idx, True)
-         whisper("Press TAB key when done to return priority to attacking player.")
-      _extapi.whisper(MSG_HINT_BLOCK.format(['defending player', 'You'](me.isActive), ['', 'you '](me.isActive)), Colors.Blue)
+         addButton('BlockDone')
+         whisper("When done, press TAB key or click in the \"Done\" button to return priority to attacking player.")
+      _extapi.whisper(MSG_HINT_BLOCK.format(('You','defending player')[me.isActive], ('you ','')[me.isActive]), Colors.Blue)
    elif idx == EndPhase:
       if not me.isActive:
          setStop(BlockPhase, False)
@@ -223,3 +224,12 @@ def OnCounterChanged(args):
    setState(player, counterName, player.counters[counterName].value)
    if args.scripted:
       popStack()
+
+
+def OnCardClicked(args):
+   card = args.card
+   mouseButton = args.mouseButton
+   debug(">>> OnCardClicked: {}, {}, {}".format(card, mouseButton, args.keysDown))
+   if card and card.controller == me:
+      if isButton(card) and mouseButton == 0:  # Left button
+         buttonAction(card)

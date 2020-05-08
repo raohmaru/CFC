@@ -82,7 +82,10 @@ def drawPhaseStart():
    if settings['Play']:
       if len(me.Deck) == 0 and len(players) > 1:
          notify("{} has no cards in their deck and therefore can't draw.".format(me))
-         _extapi.notify(MSG_HINT_WIN.format(players[1]), Colors.Black, True)
+         msg = MSG_HINT_WIN.format(players[1])
+         _extapi.notify(msg, Colors.Black, True)
+         if not debugging:
+            notification(msg, Colors.Black, True)
       else:
          draw()
    # Trigger event
@@ -119,6 +122,8 @@ def blockPhaseStart():
       if len(uattack) == 0 or uattack[0] != card._id:
          triggerGameEvent([GameEvents.Attacks, card._id], card._id)
    alignCards()
+   # Pass priority to opponent
+   setState(None, 'priority', getOpp()._id)
 
 
 def endPhaseStart():
@@ -159,7 +164,7 @@ def endPhaseStart():
             blocker_bp = getMarker(blocker, 'BP')
             dealDamage(dmg + pdmg, blocker, card)
             dealDamage(blocker_bp, card, blocker)
-            # Blocker damages to chars in an United Attack
+            # Blocker damages to chars in United Attack
             if isUA and blocker_bp > dmg:
                new_bp = blocker_bp - dmg
                for x in range(1, len(uattack)):
@@ -170,20 +175,25 @@ def endPhaseStart():
                      new_bp = abs(rest_bp)
                   else:
                      break
-            # Piercing damage of an United Attack
+            # Piercing damage of United Attack
+            uadmg = dmg + pdmg - blocker_bp
             if (
                   len(players) > 1 and
                   getRule('piercing') and
-                  (pdmg > 0 or hasMarker(card, 'Pierce')) and
-                  dmg + pdmg > blocker_bp and
-                  triggerGameEvent(Hooks.PreventPierce, blocker._id)
-               ):
-               dmg = dmg + pdmg - blocker_bp
-               dealDamage(dmg, players[1], card, isPiercing = True)
+                  uadmg > 0 and
+                  (
+                     (isUA and triggerHook([Hooks.PreventPierce, blocker._id], blocker._id) != False)
+                     # One does not simply stop Haohmaru
+                     or hasMarker(card, 'Pierce')
+                  )
+               ):               
+               dealDamage(uadmg, players[1], card, isPiercing = True)
+            elif pdmg > 0:
+               notify("{} points of piercing damage were prevented.".format(uadmg))
          # Unblocked attacker
          elif len(players) > 1:
             doDamage = True
-            if triggerHook([Hooks.BeforeDamage, card._id], card._id):
+            if triggerHook([Hooks.BeforeDamage, card._id], card._id) != False:
                doDamage = False
             if doDamage:
                dealDamage(dmg + pdmg, players[1], card)
@@ -206,9 +216,9 @@ def endPhaseStart():
 def cleanupPhaseStart():
    triggerGameEvent(GameEvents.CleanupPhase)
    clearKOedChars()
-   # Clean my ring
-   myCards = (card for card in table
-      if card.controller == me)
+   # Clean up my ring
+   myCards = [card for card in table
+      if card.controller == me]
    for card in myCards:
       if isCharacter(card):
          # Remove script makers
@@ -224,6 +234,14 @@ def cleanupPhaseStart():
       # Discard any Action or Reaction card left in the table (just in case player forgot to remove them)
       else:
          discard(card)
+   # Ensure there aren't any "ghost" id
+   # It happened at least once
+   ring = getGlobalVar('Ring', me)
+   for id in ring:
+      if id != None:
+         c = Card(id)
+         if c not in myCards:
+            freeSlot(c)
    clearAll()
 
 
@@ -283,7 +301,7 @@ def playAuto(card, slotIdx=None, force=False):
          slotIdx = askForSlot()
          if slotIdx == -1:
             return
-      # Is really that slot empty?
+      # Is really empty that slot?
       debug("Selected slot: {} ({})".format(slotIdx, myRing[slotIdx]))
       if myRing[slotIdx] != None:
          warning("Character card can't be played.\nThe selected slot is not empty (it's taken up by {}).\nIf you want to backup, please first target a character in your ring.".format(Card(myRing[slotIdx]).Name))
@@ -443,7 +461,7 @@ def attackAuto(card, force = False):
       return
    # Char just entered the ring?
    if hasMarker(card, 'Just Entered'):
-      if not confirm("Characters that just entered the ring can't attack this turn.\nProceed anyway?"):
+      if not confirm(MSG_ERR_ATTACK_FRESH):
          return
    # Frozen char?
    if isFrozen(card):
@@ -469,6 +487,14 @@ def unitedAttackAuto(card, targets = None, payCost = True):
    if not charIsInRing(card):
       warning(MSG_ERR_ATTACK_CHAR_RING)
       return 
+   # If is the only attacker, do a regular attack
+   if len(getAttackingCards(me)) == 0:
+      attack(card)
+      return
+   # Char just entered the ring?
+   if hasMarker(card, 'Just Entered'):
+      if not confirm(MSG_ERR_ATTACK_FRESH):
+         return
    # Check if an attacking char has been selected
    myRing = getGlobalVar('Ring', me)
    # Cancels the character's attack if it's already attacking
@@ -576,22 +602,28 @@ def blockAuto(card):
    # Check if an attacking enemy char has been selected
    enemyRing = getGlobalVar('Ring', players[1])
    targets = getTargetedCards(card, True, False)
-   if len(targets) == 0 or not targets[0]._id in enemyRing or not MarkersDict['Attack'] in targets[0].markers:
+   if len(targets) > 0:
+      if not targets[0]._id in enemyRing or not MarkersDict['Attack'] in targets[0].markers:
+         warning("Please select an attacking enemy character (Shift key + Left click on a character).\nIf blocking an United Attack, then select the leading character.")
+         return
+   if len(targets) == 0:
       # Automatically select an attacking character if there is only one...
       atkCards = [c for c in getAttackingCards(getOpp())
          if c._id not in blockers]
       if len(atkCards) == 1:
          targets = atkCards
-      else:
+      elif len(atkCards) > 1:
          # ...or show card dialog to choose
          targets = showCardDlg(atkCards, 'Select an attacking character to counter-attack.')
-         if not targets:
-            warning("Please select an attacking enemy character (Shift key + Left click on a character).\nIf blocking an United Attack, then select the leading character.")
-            return
+      else:
+         whisper('There are not available attacking characters to block.')
+         whisper("({})".format(MSG_ERR_BLOCK_ONE))
+      if not targets:
+         return
    target = targets[0]
    # An attacker can only be blocked by exactly 1 char
    if target._id in blockers:
-      warning("An attacking character can only be blocked by exactly one character.")
+      warning(MSG_ERR_BLOCK_ONE)
       return
 
    # Triggers a hook to check if block is possible
