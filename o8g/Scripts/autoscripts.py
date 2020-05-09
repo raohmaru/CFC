@@ -479,7 +479,7 @@ def attackAuto(card, force = False):
    return True
 
 
-def unitedAttackAuto(card, targets = None, payCost = True):
+def unitedAttackAuto(card, targets = None, force = False):
    debug(">>> unitedAttackAuto()")
 
    # Is char in player's ring?
@@ -494,16 +494,16 @@ def unitedAttackAuto(card, targets = None, payCost = True):
    if hasMarker(card, 'Just Entered'):
       if not confirm(MSG_ERR_ATTACK_FRESH):
          return
-   # Check if an attacking char has been selected
-   myRing = getGlobalVar('Ring', me)
    # Cancels the character's attack if it's already attacking
-   if hasMarker(card, 'Attack') or hasMarker(card, 'United Attack'):
+   if not force and (hasMarker(card, 'Attack') or hasMarker(card, 'United Attack')):
       cancelAttack(card)
       return
+   # Check if an attacking char has been selected
+   myRing = getGlobalVar('Ring', me)
    if not targets:
       targets = getTargetedCards(card)
    if len(targets) == 0 or not targets[0]._id in myRing or (not hasMarker(targets[0], 'Attack') and not hasMarker(targets[0], 'United Attack')):
-      if payCost:  # False if called remotely
+      if not force:
          targets = getAttackingCards()
          if len(targets) > 1:
             targets = showCardDlg(targets, 'Select an attacking character to join an United Attack.')
@@ -528,14 +528,14 @@ def unitedAttackAuto(card, targets = None, payCost = True):
       and MarkersDict['United Attack'] in c.markers]
    # Max chars per United Attack
    if len(united) >= MaxCharsUAttack:
-      if payCost:  # False if called remotely
+      if not force:
          warning(MSG_UA_MAX.format(MaxCharsUAttack+1))
       else:
          notify(MSG_UA_MAX.format(MaxCharsUAttack+1))
       return
    totalUnited = len(united) + 1 # Chars in UA + current char
    # Cost
-   if payCost:
+   if not force:
       cost = totalUnited * UAttackCost
       cost = getCostMod(cost, "ua" + str(totalUnited+1))
       if cost > me.SP:

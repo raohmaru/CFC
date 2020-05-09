@@ -98,7 +98,10 @@ def notifyAbility(target_id, source_id=None, msg=None, restr='', isWarning=False
       func = warning if isWarning else notify
       name = obj
       if isPlayer(obj) or isWarning:
-         name = 'You' if isWarning else getObjName(obj)
+         if isPlayer(obj) and isWarning:
+            name = 'You'
+         else:
+            name = getObjName(obj)
       func(msg.format(name, source.Name, source.properties['Ability Name'], restr))
 
 #---------------------------------------------------------------------------

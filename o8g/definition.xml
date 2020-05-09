@@ -4,12 +4,12 @@
       name="Card Fighters' Clash"
       id="e3d56d9e-900d-49c6-b6ae-22cbb51be153"
       octgnVersion="3.4.217.0"
-      version="0.8.3.545"
+      version="0.8.3.547"
       markersize="20"
       tags="capcom snk fighter"
       description="Card game based on the SNK Playmore’s video game SNK vs. Capcom Card Fighters' Clash 2 Expand Edition.
       &#xd;&#xd;This game is for 2 players.
-      &#xd;&#xd;Automation rank: S
+      &#xd;&#xd;Automation rank: A
       &#xd;(This game contains fully automation of play, events and cards to ease game play.)"
       setsurl="https://cardfightersclash.wordpress.com/image-packs/"
       gameurl="https://cardfightersclash.wordpress.com/"

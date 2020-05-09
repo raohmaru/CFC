@@ -80,10 +80,10 @@ class RulesFilters():
 
 def getCardProp(card, prop):
    if prop == 'bp':
-      if getMarker(card, 'BP') > 0:
-         return getMarker(card, 'BP')
-      else:
-         return num(card.BP) / BPDivisor
+      bp = getMarker(card, 'BP')
+      if bp == 0:
+         bp = num(card.BP) / BPDivisor
+      return bp
    elif prop == 'sp':
       return num(card.SP)
        

@@ -137,7 +137,7 @@ def clearGlobalVar(name, player = None):
 
 def replaceVars(str):
    debug("-- replaceVars({})".format(str))
-   str = re.sub(Regexps['BP']      , r'hasattr(getParsedCard(\1), "BP") and getParsedCard(\1).BP', str)
+   str = re.sub(Regexps['BP']      , r'(hasattr(getParsedCard(\1), "BP") and getParsedCard(\1).BP)', str)
    str = re.sub(Regexps['LastBP']  , r'getParsedCard(\1).lastBP', str)
    str = re.sub(Regexps['Action']  , 'isAction(card)', str)
    str = re.sub(Regexps['Reaction'], 'isReaction(card)', str)
@@ -941,7 +941,7 @@ def payCostSP(amount = 1, obj = None, msg = 'play this card', type = None, ask =
    if type:
       newAmount = getCostMod(amount, type, obj)
       if amount != newAmount:
-         notify(u"The SP cost of {} has been modified by an ability ({} \u2192 {}).".format(obj, amount, newAmount))
+         notify(u"The SP cost of {} has been modified by an ability ({}  \u2192  {}).".format(obj, amount, newAmount))
          amount = newAmount
    
    if amount >= 0:

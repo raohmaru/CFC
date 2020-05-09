@@ -691,10 +691,9 @@ def cmd_unite(rc, targets, source, restr, *args):
          target = targets[0]
       for card in targets:
          if card != target:
-            remoteCall(getOpp(), "unitedAttackAuto", [card, [target], False])
+            remoteCall(getOpp(), "unitedAttackAuto", [card, [target], True])
             rnd(1, 100) # Wait until all animation is done
       notify("{} has forced {} to do an United Attack".format(me, cardsNamesStr(targets)))
-   rc.applyNext()
    rc.applyNext()
    
    

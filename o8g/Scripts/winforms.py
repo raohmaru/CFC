@@ -130,10 +130,10 @@ def messageBox(type, msg, title, icon = None):
       playSnd('win-{}'.format(type), True)
       showWinForm(form)
    else:
-      if type == 'warning':
-         notification(msg.replace("\n", " "), Colors.Red)
-      elif type == 'error':
+      if type == 'error':
          _extapi.warning(msg)
+      elif type == 'warning':
+         _extapi.whisper(msg, Colors.Red)
       else:
          whisper(msg)
    

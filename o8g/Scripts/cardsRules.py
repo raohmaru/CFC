@@ -1031,7 +1031,7 @@ action = {F}: damage(this.bp) to(character@infront); moveTo(hand) target(this)
 
 # Grant's UNBREKABLE BOND
 RulesDict['ae301f49-6e9d-4ca3-aba8-54bb5142e46d'] = """
-action = {S}: hp(this.bp)
+action = {S}: hp(this.lastBP)
 """
 
 # Griffon Mask's DAA!
@@ -2015,7 +2015,7 @@ action = sp(-5) to(opp)
 
 # Striker
 RulesDict['f9a93f64-d331-4aa8-b58d-c213c8dfd742'] = """
-action = {D(2)}: damage(+3) to(characters)
+action = {D(2)}: damage(3) to(characters)
 """
 
 # Super Art select
