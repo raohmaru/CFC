@@ -89,6 +89,7 @@ def onCardsMoved(args):
             if charIsInRing(card):
                freeSlot(card)
                ringChanged = True
+               card.filter = None
                triggerGameEvent([GameEvents.Removed, card._id])
             phaseIdx = currentPhase()[1]
             if MarkersDict['Attack'] in markers or MarkersDict['United Attack'] in markers:
@@ -205,9 +206,13 @@ def onMarkerChanged(args):
    elif marker in FiltersDict:
       if args.scripted or not settings['Play']:
          if card.controller == me and isCharacter(card):
-            if getMarker(card, marker) > 0:
-               card.filter = FiltersDict[marker]
-            elif hasFilter(card, FiltersDict[marker]):
+            removeFilter = True
+            for m,f in FiltersDict.iteritems():
+               if hasMarker(card, m):
+                  card.filter = f
+                  removeFilter = False
+                  break
+            if removeFilter:
                card.filter = None
    
    # Don't allow movement of markers
