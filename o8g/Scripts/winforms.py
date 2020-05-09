@@ -1,5 +1,4 @@
 ﻿# Python Scripts for the Card Fighters' Clash definition for OCTGN
-# Based in the Python Scripts for the Doomtown CCG definition for OCTGN, by Konstantine Thoukydides
 # Copyright (C) 2013  Raohmaru
 
 # This python script is free software: you can redistribute it and/or modify
