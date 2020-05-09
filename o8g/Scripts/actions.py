@@ -701,7 +701,7 @@ def changeSlot(card, x = 0, y = 0, targets = None):
 # --------------
 # Characters' BP
 # --------------
-def plusBP(cards, x = 0, y = 0, silent = False, count = 1):
+def plusBP(cards, x = 0, y = 0, silent = False, count = 100):
    mute()
    if count < BPMultiplier:
       count *= BPMultiplier
@@ -710,7 +710,7 @@ def plusBP(cards, x = 0, y = 0, silent = False, count = 1):
       if not silent:
          notify("{} raises {}'s BP by {} (new BP is {})".format(me, card, count, getMarker(card, 'BP')))
 
-def minusBP(cards, x = 0, y = 0, silent = False, count = 1):
+def minusBP(cards, x = 0, y = 0, silent = False, count = 100):
    mute()
    if count < BPMultiplier:
       count *= BPMultiplier
@@ -723,33 +723,33 @@ def minusBP(cards, x = 0, y = 0, silent = False, count = 1):
       if not silent:
          notify("{} lowers {}'s BP by {} (new BP is {}).".format(me, card, count, getMarker(card, 'BP')))
 
-def plusBP2(cards, x = 0, y = 0): plusBP(cards, count = 2)
-def plusBP3(cards, x = 0, y = 0): plusBP(cards, count = 3)
-def plusBP4(cards, x = 0, y = 0): plusBP(cards, count = 4)
-def plusBP5(cards, x = 0, y = 0): plusBP(cards, count = 5)
-def plusBP6(cards, x = 0, y = 0): plusBP(cards, count = 6)
-def plusBP7(cards, x = 0, y = 0): plusBP(cards, count = 7)
-def plusBP8(cards, x = 0, y = 0): plusBP(cards, count = 8)
-def plusBP9(cards, x = 0, y = 0): plusBP(cards, count = 9)
+def plusBP2(cards, x = 0, y = 0): plusBP(cards, count = 200)
+def plusBP3(cards, x = 0, y = 0): plusBP(cards, count = 300)
+def plusBP4(cards, x = 0, y = 0): plusBP(cards, count = 400)
+def plusBP5(cards, x = 0, y = 0): plusBP(cards, count = 500)
+def plusBP6(cards, x = 0, y = 0): plusBP(cards, count = 600)
+def plusBP7(cards, x = 0, y = 0): plusBP(cards, count = 700)
+def plusBP8(cards, x = 0, y = 0): plusBP(cards, count = 800)
+def plusBP9(cards, x = 0, y = 0): plusBP(cards, count = 900)
 
 def plusBPX(cards, x = 0, y = 0):
-   n = askInteger("Raise BP by...", 1)
+   n = askInteger("Raise BP by...", 100)
    if n == None: return
-   plusBP(cards, count = n)
+   plusBP(cards, count = fixBP(n))
 
-def minusBP2(cards, x = 0, y = 0): minusBP(cards, count = 2)
-def minusBP3(cards, x = 0, y = 0): minusBP(cards, count = 3)
-def minusBP4(cards, x = 0, y = 0): minusBP(cards, count = 4)
-def minusBP5(cards, x = 0, y = 0): minusBP(cards, count = 5)
-def minusBP6(cards, x = 0, y = 0): minusBP(cards, count = 6)
-def minusBP7(cards, x = 0, y = 0): minusBP(cards, count = 7)
-def minusBP8(cards, x = 0, y = 0): minusBP(cards, count = 8)
-def minusBP9(cards, x = 0, y = 0): minusBP(cards, count = 9)
+def minusBP2(cards, x = 0, y = 0): minusBP(cards, count = 200)
+def minusBP3(cards, x = 0, y = 0): minusBP(cards, count = 300)
+def minusBP4(cards, x = 0, y = 0): minusBP(cards, count = 400)
+def minusBP5(cards, x = 0, y = 0): minusBP(cards, count = 500)
+def minusBP6(cards, x = 0, y = 0): minusBP(cards, count = 600)
+def minusBP7(cards, x = 0, y = 0): minusBP(cards, count = 700)
+def minusBP8(cards, x = 0, y = 0): minusBP(cards, count = 800)
+def minusBP9(cards, x = 0, y = 0): minusBP(cards, count = 900)
 
 def minusBPX(cards, x = 0, y = 0):
-   n = askInteger("Lower BP by...", 1)
+   n = askInteger("Lower BP by...", 100)
    if n == None: return
-   minusBP(cards, count = n)
+   minusBP(cards, count = fixBP(n))
 
 def changeBP(cards, x = 0, y = 0):
    mute()

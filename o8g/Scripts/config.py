@@ -148,7 +148,7 @@ PlayAction   = 'play'
 BackupAction = 'backup'
 Author       = 'raohmaru'
 BPDivisor    = 1  # 100
-BPMultiplier = 100
+BPMultiplier = 1  # 100
 
 # Rules
 NumSlots        = 4

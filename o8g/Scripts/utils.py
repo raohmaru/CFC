@@ -835,11 +835,13 @@ def changeMarker(cards, marker, question = None, count = None):
       count = askInteger(question, n)
    if count == None:
       return
+   if marker == MarkersDict['BP']:
+      count = fixBP(count)
    for c in cards:
       n = c.markers[marker]
       c.markers[marker] = count
       diff = count-n
-      if diff >= 0: diff = "+" + str(diff)   
+      if diff >= 0: diff = "+" + str(diff)
       notify("{} sets {}'s {} to {}({}).".format(me, c, marker[0], count, diff))
 
 
@@ -871,6 +873,12 @@ def modBP(card, qty, mode = None):
    else:
       minusBP([card], count = -qty)
 
+
+def fixBP(n):
+   if n < 100:
+      return 100
+   else:
+      return int(round(n / 100.0)) * 100
 
 #---------------------------------------------------------------------------
 # Counter Manipulation
