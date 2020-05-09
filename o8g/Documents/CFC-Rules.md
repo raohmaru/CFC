@@ -4,7 +4,7 @@ This document is designed for people who want to start learning the rules and ga
 (To change the font size of the document, press <span class=kb>Ctrl</span>+<span class=kb>+</span> or <span class=kb>Ctrl</span>+<span class=kb>-</span> or <span class=kb>Ctrl</span>+Mouse Wheel.)
 
 ## Introduction
-Card Fighters' Clash (we will refer to it as CFC) is a card game for two players based on SNK Playmore’s video game [SNK vs. Capcom Card Fighters' Clash 2 Expand Edition](http://neogeo.freeplaytech.com/svc-2/). Players try to defeat each other in a battle playing powerful characters from Capcom and SNK Playmore video games. Characters have unique abilities that can dramatically change the course of the game, and their KI energy can be used to attack the opponent or to play Action cards and Reaction cards –they add exciting effects to the battle that can be played even in opponent’s turn.
+Card Fighters' Clash (we will refer to it as CFC) is a card game for two players based on SNK Playmore’s video game [SNK vs. Capcom Card Fighters' Clash 2 Expand Edition](http://neogeo.freeplaytech.com/svc-2/). Players try to defeat each other in a battle playing characters from Capcom and SNK Playmore video games. Characters have unique abilities that have impact in the game, and their KI energy can be used to play Action cards and Reaction cards to add more effects to the battle.
 
 Players start the game (in CFC every game is a battle!) with a deck of cards and an initial amount of **HP** (Hit Points or player's life). A deck may contain any number of Character, Action or Reaction cards, but it can't have more than three copies of any single card with the same name. Each player shuffles his deck and draws an initial hand of 5 cards, and then they are ready to fight.
 
@@ -131,6 +131,10 @@ Frozen characters and characters that just entered the ring cannot activate a <s
 
 Whenever a character with a <span class="ab ab-auto">●</span> ability takes part in a United Attack, that ability is nullified until the end of the turn.
 
+<blockquote>
+<h3>The Golden Rule of Battle</h3>
+<p>Whenever a card’s rule text directly contradicts the game rules, the card takes precedence.</p>
+</blockquote>
 
 ## Back-ups
 You can attach cards from your hand on characters in your ring to raise its power. By doing so you are **backing-up** the character in your ring.

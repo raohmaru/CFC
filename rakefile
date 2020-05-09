@@ -162,6 +162,11 @@ task :docs do
     top: 0.1em;
     font-size: 175%;
   }
+  blockquote {
+	margin: 40px 40px 14px;
+	padding: 10px 28px;
+	border: solid 6px #567c93;
+  }
 	</style>
 </head>
 <body>
