@@ -4,6 +4,7 @@
 Play priority control.
 Added a "Done" button for defending player in block phase.
 Bug fixes.
+Small improves on game performance.
 ## 0.8.2
 Character's BP and player's HP to thousands.  
 Simplified in-game contextual menu.  

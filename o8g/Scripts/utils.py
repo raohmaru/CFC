@@ -409,7 +409,7 @@ def getRingSize(player = me):
    return NumSlots - getGlobalVar('Ring', player).count(None)
 
 
-def moveToGroup(group, card, sourceGroup = None, pos = None, reveal = None, sourcePlayer = me):
+def moveToGroup(group, card, sourceGroup = None, pos = None, reveal = None, sourcePlayer = me, silent = False):
    if not sourceGroup:
       sourceGroup = card.group
    fromText = fromWhereStr(sourceGroup, sourcePlayer)
@@ -432,8 +432,12 @@ def moveToGroup(group, card, sourceGroup = None, pos = None, reveal = None, sour
             remoteCall(getOpp(), "cardPeek", [card])
          name = card.Name
    targetCtrl = 'its' if me == sourcePlayer else "{}'s".format(me)
-   notify("{} moved {} {} {} {} {}.".format(sourcePlayer, name, fromText, posText, targetCtrl, group.name))
+   msg = "{} moved {} {} {} {} {}.".format(sourcePlayer, name, fromText, posText, targetCtrl, group.name)
    card.moveTo(group, pos)
+   if not silent:
+      notify(msg)
+   else:
+      return msg
    
 
 def selectRing():
@@ -928,7 +932,7 @@ def modSP(count = 1, mode = None, silent = False, player = me):
       notify("{} {} {} SP. New total is {} SP (before was {}).".format(player, action, count, player.SP, initialSP))
 
 
-def payCostSP(amount = 1, obj = None, msg = 'play this card', type = None):
+def payCostSP(amount = 1, obj = None, msg = 'play this card', type = None, ask = True):
 # Pay an SP cost. However we also check if the cost can actually be paid.
    debug(">>> payCostSP({}, {})".format(amount, type))
    amount = num(amount)
@@ -945,9 +949,16 @@ def payCostSP(amount = 1, obj = None, msg = 'play this card', type = None):
    else:
       initialSP = me.SP
       if me.SP + amount < 0: # If we don't have enough SP, notify the player that they need to do things manually
-         if not confirm("You do not seem to have enough SP to {}.\nAre you sure you want to proceed?\nCost is {} SP. \
-         \n\n(If you do, your SP will go to the negative. You will need to increase it manually as required.)".format(msg, amount)):
-            return False
+         if ask:
+            if not confirm("You do not seem to have enough SP to {}. \
+            \nAre you sure you want to proceed? \
+            \nCost is {} SP. \
+            \n\n(If you do, your SP will go to the negative. You will need to increase it manually as required.)".format(msg, amount)):
+               return False
+         else:
+            warning("You do not seem to have enough SP to {}. \
+            \nCost is {} SP. \
+            \nYour SP will go to the negative. You will need to increase it manually as required.".format(msg, amount))
          _extapi.notify("{} was supposed to pay {} SP but only has {} SP.".format(me, amount, me.SP), Colors.Red)
       me.SP += amount
       notify("{} has spent {} SP. New total is {} SP (before was {}).".format(me, amount, me.SP, initialSP))

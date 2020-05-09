@@ -872,7 +872,7 @@ action = {F}: moveTo(hand) target(<r>action@myDeck) & shuffle()
 
 # Hsien-Ko's DARK WEAPON
 RulesDict['299377b4-f955-420b-b252-85ed6cf98c14'] = """
-action = {F}: moveTo(deck); moveTo(deck) target(all@hand) & shuffle() & draw(3)
+action = {F}: moveTo(deck) target(this); moveTo(deck) target(all@hand) & shuffle() & draw(3)
 """
 
 # J. Talbain's SEETHING BLOOD
@@ -1896,7 +1896,7 @@ action = destroy()
 
 # Evil eye
 RulesDict['ed5b10af-ad01-4d70-bdac-0a7dfbf9de3f'] = """
-action = {S(character@myRing)}: bp(=sacrificed[0].bp) target(character)
+action = {S(character@myRing)}: bp(=sacrificed[0].lastBP) target(character)
 """
 
 # Face off

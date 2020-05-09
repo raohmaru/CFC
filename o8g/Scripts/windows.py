@@ -71,5 +71,6 @@ def showChangelog():
 
 - Play priority control: Now attacking player must wait until defending player is done before he or she can continue to their next phase.
 - Added a "Done" button for defending player in block phase.
-- Bug fixes."""
+- Bug fixes.
+- Small improves on game performance."""
    askChoice(msg, [], [], ['Close'])

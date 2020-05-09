@@ -4,7 +4,7 @@
       name="Card Fighters' Clash"
       id="e3d56d9e-900d-49c6-b6ae-22cbb51be153"
       octgnVersion="3.4.217.0"
-      version="0.8.3.540"
+      version="0.8.3.545"
       markersize="20"
       tags="capcom snk fighter"
       description="Card game based on the SNK Playmore’s video game SNK vs. Capcom Card Fighters' Clash 2 Expand Edition.
@@ -279,7 +279,7 @@
 		<cardaction menu="Clear" shortcut="Esc" execute="clear" showIf="acsh_AutoPlayOff" />
 	</table>
 
-	<player summary="HP: {#HP} | SP: {#SP} | Hand: {#Hand}">
+	<player summary="| HP: {#HP} | SP: {#SP} | Hand: {#Hand} | Deck: {#Deck}">
 		<counter name="HP" icon="Resources/Counters/hp.png" default="3000" reset="True" />
 		<counter name="SP" icon="Resources/Counters/sp.png" default="0"  reset="True" />
 

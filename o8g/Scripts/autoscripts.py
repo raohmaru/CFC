@@ -114,7 +114,7 @@ def blockPhaseStart():
          chars = len(uattack) - 1
          uatype = ["Double", "Triple"][chars-1] + " United Attack"
          uacost = "ua{}".format(len(uattack))
-         payCostSP(-chars*UAttackCost, uatype, "do a {}".format(uatype), uacost)
+         payCostSP(-chars*UAttackCost, uatype, "do a {}".format(uatype), uacost, ask = False)
          notify("{} has paid the cost of the {}".format(me, uatype))
    triggerGameEvent(GameEvents.BlockPhase)
    for card in atkCards:
@@ -187,12 +187,12 @@ def endPhaseStart():
                   )
                ):               
                dealDamage(uadmg, players[1], card, isPiercing = True)
-            elif pdmg > 0:
+            elif pdmg > 0 and uadmg > 0:
                notify("{} points of piercing damage were prevented.".format(uadmg))
          # Unblocked attacker
          elif len(players) > 1:
             doDamage = True
-            if triggerHook([Hooks.BeforeDamage, card._id], card._id) != False:
+            if triggerHook([Hooks.BeforeDamage, card._id], card._id) == True:
                doDamage = False
             if doDamage:
                dealDamage(dmg + pdmg, players[1], card)

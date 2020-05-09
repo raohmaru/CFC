@@ -306,11 +306,13 @@ def cmd_moveTo(rc, targets, source, restr, zone, pos = None, reveal = None):
             pos = None
          if reveal is not None:
             reveal = True if reveal == 'true' else False
+         msgs = []
          for target in targets:
             pile = RulesUtils.getZoneByName(zone, target)
             debug("{}'s {} -> {}'s {}".format(target.controller, target, pile.controller, pile.name))
             if target.controller == me and pile.controller == me:
-               moveToGroup(pile, target, pos = pos, reveal = reveal)
+               msg = moveToGroup(pile, target, pos = pos, reveal = reveal, silent = True)
+               msgs.append(msg)
             elif target.controller == me and pile.controller != me:
                group = target.group
                target.moveToTable(0, 0, True)
@@ -320,9 +322,11 @@ def cmd_moveTo(rc, targets, source, restr, zone, pos = None, reveal = None):
                remoteCall(target.controller, "passControlTo", [me, [target], ["moveToGroup", [pile, target, target.group, pos, reveal, me]]])
             else:
                remoteCall(target.controller, "moveToGroup", [pile, target, None, pos, reveal, me])
-            rnd(1, 100) # Wait until all animation is done
-            # Add trashed card to action local variables
+            # rnd(1, 100) # Wait until all animation is done
+         # Add moved card to action local variables
          addActionTempVars('moved', targets)
+         if msgs:
+            notify('\n'.join(msgs))
    rc.applyNext()
 
 
@@ -479,7 +483,7 @@ def cmd_each(rc, targets, source, restr, args):
       for v in res:
          if v:
             subrc.applyAll(func, targets, None, source)
-            rnd(1, 100) # Wait between effects until all animation is done
+            # rnd(1, 100) # Wait between effects until all animation is done
       subrc.destroy()
    update()
    rc.applyNext()
