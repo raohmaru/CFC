@@ -5161,7 +5161,7 @@
 			<property name="Ability Name" value="PAKU PAKU" />
 			<property name="Rules"        value="Discard a reaction card. Draw three cards." />
 			<property name="BP"           value="400" />
-			<property name="SP"           value="3" />
+			<property name="SP"           value="1" />
 			<property name="Backup 1"     value="Warrior" />
 			<property name="Backup 2"     value="Beast" />
 			<property name="Backup 3"     value="Beast" />
