@@ -26,6 +26,8 @@ def buttonAction(btn):
       
       
 def addButton(name):
+   if name in buttons.values():
+      return
    cards = queryCard({"Name": name}, True)
    if cards:
       x = CardsCoords['Button'][0] * playerSide - _extapi.game.CardSizes["button"].Width/2
@@ -41,15 +43,13 @@ def addButton(name):
       
       
 def removeButton(name):
-   id = None
+   ids = []
    for key, v in buttons.iteritems():
       if name == v:
-         id = key
-         break
-   if id:
+         ids.append(key)
+   if ids:
       for c in table:
-         if c._id == id:
-            del buttons[id]
+         if c._id in ids:
+            del buttons[c._id]
             c.delete()
-            break
          
