@@ -37,7 +37,7 @@ def acsh_gameNotStarted(args, x = 0, y = 0):
 
 def acsh_isActivePlayerAttack(args, x = 0, y = 0):
    card = args[0]
-   return isCharacter(card) and me.isActive and currentPhase()[1] == AttackPhase and not (hasMarker(card, 'Attack') or hasMarker(card, 'United Attack'))
+   return isCharacter(card) and me.isActive and currentPhase()[1] == AttackPhase and not isAttacking(card)
 
 
 def acsh_hasAbility(args, x = 0, y = 0):

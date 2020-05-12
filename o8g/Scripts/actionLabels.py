@@ -31,7 +31,7 @@ def aclb_Default(args, x = 0, y = 0):
    phaseIdx = currentPhase()[1]
    if isCharacter(card):
       if me.isActive and phaseIdx == AttackPhase:
-         if hasMarker(card, 'Attack') or hasMarker(card, 'United Attack'):
+         if isAttacking(card):
             return "Remove from attack"
          else:
             return "Attack"
@@ -87,16 +87,16 @@ def aclb_PlayAutomation(group, x = 0, y = 0):
    return aclb_setting('Play automation', 'Play')
 
       
-def aclb_Sounds(group, x = 0, y = 0):
-   return aclb_setting('Game Sounds', 'Sounds')
+def aclb_AttackDamage(group, x = 0, y = 0):
+   return aclb_setting('Attack Damage automation', 'AttackDmg')
 
       
 def aclb_WinForms(group, x = 0, y = 0):
    return aclb_setting('Alert Messages', 'WinForms')
 
       
-def aclb_AttackDamage(group, x = 0, y = 0):
-   return aclb_setting('Attack Damage automation', 'AttackDmg')
+def aclb_Sounds(group, x = 0, y = 0):
+   return aclb_setting('Game Sounds', 'Sounds')
 
       
 def aclb_WelcomeScreen(group, x = 0, y = 0):
@@ -108,10 +108,6 @@ def aclb_NextOrPass(group, x = 0, y = 0):
       return "Next phase"
    else:
       return "Pass"
-
-def aclb_setting(label, setting):
-   return "{}{}".format(u'\u2714 ' if settings[setting] else u' \u2002 \u2002 ', label)
-
       
 def aclb_unitedAttack(group, x = 0, y = 0):
    if getGlobalVar('UnitedAttack'):
@@ -119,3 +115,9 @@ def aclb_unitedAttack(group, x = 0, y = 0):
    else:
       return "United Attack"
    
+#---------------------------------------------------------------------------
+# Helpers
+#---------------------------------------------------------------------------
+
+def aclb_setting(label, setting):
+   return "{}{}".format(u'\u2714 ' if settings[setting] else u' \u2002 \u2002 ', label)

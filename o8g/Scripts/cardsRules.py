@@ -1325,7 +1325,7 @@ action = bp(=prevTgt.BP) target(this)
 
 # Yuki's PRIESTESS SEAL
 RulesDict['48a553a1-fd40-482a-9161-86be2e29f246'] = """
-auto = modRule(play_char_bp_limit, 8)
+auto = modRule(play_char_bp_limit, 800)
 """
 
 # Zantetsu's BYOUMA

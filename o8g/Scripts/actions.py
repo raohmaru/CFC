@@ -338,6 +338,7 @@ def freeze(card, x = 0, y = 0, unfreeze = None, silent = False):
 
 
 def doesNotUnfreeze(card, x = 0, y = 0, restr = None):
+   debug("doesNotUnfreeze({}, {}, {}, {})".format(card, x, y, restr))
    mute()
    msg = "not unfreeze"
    when = ''
@@ -349,7 +350,7 @@ def doesNotUnfreeze(card, x = 0, y = 0, restr = None):
       removeMarker(card, "Cannot Unfreeze")
       msg = "unfreeze as normal"
 
-   notify("{0}'s {1} will {2} during {0}'s {3}Activate phase.".format(card.controller, card, msg, when))
+   notify("{0}'s {1} will {2} in {0}'s {3}Activate phase.".format(card.controller, card, msg, when))
 
 
 def clear(card, x = 0, y = 0):
@@ -503,11 +504,11 @@ def copyAbility(card, x = 0, y = 0, target = None):
             if p != me:
                remoteCall(p, "copyAlternateRules", [card, target])
          update()  # Trying this method to delay next actions until networked tasks are complete
-         ability = Ability(target, ruleId=model).name if isinstance(target, Card) else target.Ability
          if getParsedCard(card).ability.type != InstantAbility:
             if card.highlight == ActivatedColor:
                card.highlight = None
-         notify("{} copies ability {} to {}.".format(me, ability, card))
+         abilityName = Ability(target, ruleId=model).name if isinstance(target, Card) else target.Ability
+         notify("{} copies ability {} to {}.".format(me, abilityName, card))
          return target
       else:
          warning("Target character card doesn't have an ability to copy.")

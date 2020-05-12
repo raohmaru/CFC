@@ -700,7 +700,7 @@ def cmd_unite(rc, targets, source, restr, *args):
 def cmd_removeFromAttack(rc, targets, source, restr, *args):
    debug(">>> cmd_removeFromAttack({})".format(targets))
    for card in targets:
-      remoteCall(getOpp(), "attackAuto", [card, True])
+      remoteCall(getOpp(), "cancelAttack", [card])
       rnd(1, 100) # Wait until all animation is done
       notify("{} removes {} from attack.".format(me, card))
    rc.applyNext()

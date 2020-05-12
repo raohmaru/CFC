@@ -135,7 +135,7 @@ def endPhaseStart():
    for card in myCards:
       if isCharacter(card):
          alignCard(card)
-         if (hasMarker(card, 'Attack') or hasMarker(card, 'United Attack')) and not hasMarker(card, 'Unfreezable'):
+         if isAttacking(card) and not hasMarker(card, 'Unfreezable'):
             freeze(card, unfreeze = False, silent = True)
 
    # Calculates and applies attack damage
@@ -455,7 +455,7 @@ def attackAuto(card, force = False):
    if triggerHook([Hooks.BeforeAttack, card._id], card._id) == False:
       return
    # Cancels the character's attack if it's already attacking
-   if hasMarker(card, 'Attack') or hasMarker(card, 'United Attack'):
+   if isAttacking(card):
       cancelAttack(card)
       return
    # Char just entered the ring?
@@ -494,15 +494,18 @@ def unitedAttackAuto(card, targets = None, force = False):
    if hasMarker(card, 'Just Entered'):
       if not confirm(MSG_ERR_ATTACK_FRESH):
          return
+   # Triggers a hook to check if the character can attack
+   if triggerHook([Hooks.BeforeAttack, card._id], card._id) == False:
+      return
    # Cancels the character's attack if it's already attacking
-   if not force and (hasMarker(card, 'Attack') or hasMarker(card, 'United Attack')):
+   if not force and isAttacking(card):
       cancelAttack(card)
       return
    # Check if an attacking char has been selected
    myRing = getGlobalVar('Ring', me)
    if not targets:
       targets = getTargetedCards(card)
-   if len(targets) == 0 or not targets[0]._id in myRing or (not hasMarker(targets[0], 'Attack') and not hasMarker(targets[0], 'United Attack')):
+   if len(targets) == 0 or not targets[0]._id in myRing or not isAttacking(targets[0]):
       if not force:
          targets = getAttackingCards()
          if len(targets) > 1:
@@ -602,7 +605,7 @@ def blockAuto(card):
    enemyRing = getGlobalVar('Ring', players[1])
    targets = getTargetedCards(card, True, False)
    if len(targets) > 0:
-      if not targets[0]._id in enemyRing or not MarkersDict['Attack'] in targets[0].markers:
+      if not targets[0]._id in enemyRing or not isAttacking(targets[0]):
          warning("Please select an attacking enemy character (Shift key + Left click on a character).\nIf blocking an United Attack, then select the leading character.")
          return
    if len(targets) == 0:
@@ -680,7 +683,7 @@ def activateAuto(card):
             if not confirm("Can't activate {} abilities of characters that just entered the ring.\nProceed anyway?".format(TriggerUniChar)):
                return
          # Frozen or attacking?
-         if isFrozen(card) or hasMarker(card, 'Attack'):
+         if isFrozen(card) or isAttacking(card):
             warning("Can't activate {} abilities of frozen or attacking characters.".format(TriggerUniChar))
             return
       # () abilities

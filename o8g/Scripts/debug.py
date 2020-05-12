@@ -34,16 +34,18 @@ def debugScenario():
    if turnNumber() == 0: 
       nextTurn(me, True)
       
-   global debugVerbosity
-   debugVerbosity = DebugLevel.Debug
+   # global debugVerbosity
+   # debugVerbosity = DebugLevel.Debug
    
    me.SP = 50
    chooseSide()
    gotoMain()
    rnd(100, 10000)  # Delay the next action until all animation is done
    tableCards = [
-      'd5038a1d-55a1-4d85-a43e-52eb2b8d7b09' # Griffon Mask
-       ,'d14694b4-484c-4b45-962e-8cbb636d8a9a' # 200 BP
+       '7717e285-f824-4bfa-bd76-c0039c97190e' # Mega Man
+      ,'0f9e815a-d71a-4eba-9264-6e65c05fe8d7' # Seishiro
+      # ,'e0c2ac67-1925-4e63-b9ae-9dcbc7ff229f' # The Ump
+       # ,'d14694b4-484c-4b45-962e-8cbb636d8a9a' # 200 BP
       # ,'c7d128ea-a3b9-4b04-b8b2-a61153b5b2e6' # 400 BP
       # ,'24e99a13-cb42-4e16-9900-78dde12e1a4c' # 600 BP
       # ,'e6e46f83-d089-4762-8d8e-2a3252cfc9db' # 1000 BP
@@ -59,6 +61,10 @@ def debugScenario():
       rnd(1, 100)  # Delay the next action until all animation is done
       
    handCards = [
+       '5e2211a0-e52e-4b7b-b03d-f6ecb3660bb0' # Successor
+      ,'6504b1a3-e432-4c6c-845b-6ca72500b458' # Substitute
+      ,'e0c2ac67-1925-4e63-b9ae-9dcbc7ff229f' # The Ump
+      ,'0f9e815a-d71a-4eba-9264-6e65c05fe8d7' # Seishiro
       # ,'8bb477f9-5004-4018-8d5e-73c6a23e8912' # Char 300 BP
       # ,'e910f462-bea9-4262-b168-c7c512eb6511' # Char 500 BP
       # ,'0fdadc92-0864-46cc-a3ff-c20e2af8249c' # Char 700 BP
@@ -122,9 +128,8 @@ def debugScenario():
    
 def debugOpp():
    tableCards = [
-      '75e57026-e4fe-4470-88b2-22268ddd6b61' # Hokutomaru
-       # 'd14694b4-484c-4b45-962e-8cbb636d8a9a' # 200 BP
-      ,'c7d128ea-a3b9-4b04-b8b2-a61153b5b2e6' # 400 BP
+       'd14694b4-484c-4b45-962e-8cbb636d8a9a' # 200 BP
+      # ,'c7d128ea-a3b9-4b04-b8b2-a61153b5b2e6' # 400 BP
       # ,'24e99a13-cb42-4e16-9900-78dde12e1a4c' # 600 BP
       # 'e6e46f83-d089-4762-8d8e-2a3252cfc9db' # 1000 BP
    ]

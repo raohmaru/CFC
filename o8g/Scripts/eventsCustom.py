@@ -59,6 +59,10 @@ def removeGameEventListener(obj_id, eventName=None, callback=None):
                   del ge[e][i]
                   removed = True
                   debug("Removed listener for event {} {}".format(e, listener))
+                  # Maybe invoke the callback
+                  if e == Hooks.CallOnRemove:
+                     func = eval(listener['callback'])
+                     func(*listener['args'])
    setGlobalVar('GameEvents', ge)
    return removed
 
@@ -100,6 +104,7 @@ def triggerGameEvent(event, *args):
                elif listener['scope'] in RS_PREFIX_SCOPE or obj_id:
                   debug("-- Effect controlled by {}. Sending remote event.".format(card.controller))
                   remoteCall(card.controller, "remoteGameEvent", [listener['callback'], event]+list(params))
+                  rnd(10, 1000) # Wait until call has been executed
                   update()
                if listener['appliesto'] == RS_SUFFIX_ONCE:
                   removeGameEventListener(card._id)

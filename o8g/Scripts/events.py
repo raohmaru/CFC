@@ -66,9 +66,13 @@ def onDeckLoaded(args):
 def onCardsMoved(args):
    mute()
    cards = args.cards
-   transfCards = getGlobalVar('Transformed')
+   Transformed = getGlobalVar('Transformed')
+   CharsAbilities = getGlobalVar('CharsAbilities')
    handChanged = False
    ringChanged = False
+   transfChanged = False
+   abilitiesChanged = False
+   
    for i in range(len(cards)):
       card      = args.cards[i]
       fromGroup = args.fromGroups[i]
@@ -79,6 +83,9 @@ def onCardsMoved(args):
       faceup    = args.faceups[i]
       highlight = args.highlights[i]
       markers   = eval(args.markers[i])  # markers it's a string equivalent of the Marker object
+      # Because Python is dynamic, accessing variables is faster than attribute lookup
+      hand  = me.hand
+      piles = me.piles
       
       if card.controller != me:
          return
@@ -95,12 +102,10 @@ def onCardsMoved(args):
             if MarkersDict['Attack'] in markers or MarkersDict['United Attack'] in markers:
                if phaseIdx == AttackPhase or phaseIdx == BlockPhase:
                   rearrangeUAttack(card)
-            # removeParsedCard(card)
             removeGameEventListener(card._id)
-            CharsAbilities = getGlobalVar('CharsAbilities')
             if card._id in CharsAbilities:
                del CharsAbilities[card._id]
-            setGlobalVar('CharsAbilities', CharsAbilities)
+               abilitiesChanged = True
       # Move cards in the table
       elif fromGroup == table and toGroup == table:
          if isCharacter(card) and not MarkersDict['Backup'] in card.markers:
@@ -115,23 +120,32 @@ def onCardsMoved(args):
          playSnd('move-card')
       # Restore transformed card if it goes to a pile
       debug("onCardsMoved: {} ({}) from {} to {}".format(card, card._id, fromGroup._name, toGroup._name))
-      debug("{}".format(transfCards))
-      if toGroup._name in me.piles:
-         if card._id in transfCards:
-            newCard = toGroup.create(transfCards[card._id], quantity = 1)
+      if toGroup._name in piles:
+         if card._id in Transformed:
+            newCard = toGroup.create(Transformed[card._id], quantity = 1)
             newCard.moveTo(toGroup, card.index)
-            whisper("Transformed card {} is restored into {}".format(card, newCard))
-            del transfCards[card._id]
+            notify("Transformed card {} is restored into {}".format(card, newCard))
+            del Transformed[card._id]
             card.delete()
-      if not handChanged and (fromGroup == me.hand and toGroup != me.hand or fromGroup != me.hand and toGroup == me.hand):
+            transfChanged = True
+      if (
+         not handChanged
+         and (
+            (fromGroup == hand and toGroup != hand) or
+            (fromGroup != hand and toGroup == hand)
+         )
+      ):
          handChanged = True
          
-   setGlobalVar('Transformed', transfCards)
+   if transfChanged:
+      setGlobalVar('Transformed', Transformed)
    # Trigger events
    if handChanged:
       triggerGameEvent(GameEvents.HandChanges, len(me.hand))
    if ringChanged:
       triggerGameEvent(GameEvents.RingChanges, getRingSize())
+   if abilitiesChanged:
+      setGlobalVar('CharsAbilities', CharsAbilities)
 
    
 def onTurnPassed(args):
@@ -189,9 +203,11 @@ def onPhasePassed(args):
 def onMarkerChanged(args):
 # Invoked on all players
    card = args.card
+   if card.controller != me:
+      return
    marker = args.marker
    oldValue = args.value
-   debug(">>> onMarkerChanged: {}, {}, {}, {}".format(card, marker, args.id, oldValue))
+   debug(">>> onMarkerChanged: {}, {}, {}, {}".format(card, marker, oldValue, args.scripted))
    if marker == 'BP':
       qty = getMarker(card, 'BP')
       if args.scripted and settings['Play']:
@@ -233,7 +249,7 @@ def OnCounterChanged(args):
 def OnCardClicked(args):
    card = args.card
    mouseButton = args.mouseButton
-   debug(">>> OnCardClicked: {}, {}, {}".format(card, mouseButton, args.keysDown))
    if card and card.controller == me:
       if isButton(card) and mouseButton == 0:  # Left button
+         debug(">>> OnCardClicked: {}, {}, {}".format(card, mouseButton, args.keysDown))
          buttonAction(card)

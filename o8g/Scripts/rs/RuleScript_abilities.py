@@ -23,12 +23,13 @@ class RulesAbilities():
    items = {}
 
    @staticmethod
-   def register(name, event, checkFunc=None):
+   def register(name, event, checkFunc=None, onAdded=None):
       msg = MSG_AB[name] if name in MSG_AB else None
       RulesAbilities.items[name] = {
-         'event': event,
-         'msg': msg,
-         'checkFunc' : checkFunc
+         'event'    : event,
+         'msg'      : msg,
+         'checkFunc': checkFunc,
+         'onAdded'  : onAdded
       }
       
    
@@ -45,6 +46,8 @@ class RulesAbilities():
          obj = getPlayerOrCard(target_id)
          debug("-- adding ability '{}' to {}".format(abilityName, obj))
          abl_add(target_id, ability['event'], source_id, restr, ability['msg'], ability['checkFunc'])
+         if ability['onAdded']:
+            ability['onAdded'](obj, restr)
       else:
          debug("-- ability not found: {}".format(abilityName))
    
@@ -104,52 +107,18 @@ def notifyAbility(target_id, source_id=None, msg=None, restr='', isWarning=False
             name = getObjName(obj)
       func(msg.format(name, source.Name, source.properties['Ability Name'], restr))
 
+
 #---------------------------------------------------------------------------
 # Abilities functions
 #---------------------------------------------------------------------------
 
-def callback_false(obj_id):
-   return False
-   
-   
-def abl_unfreezable(obj_id):
-   setMarker(Card(obj_id), 'Unfreezable')
-   return False
-   
-   
-def abl_pierce(obj_id):
-   setMarker(Card(obj_id), 'Pierce')
-   return False
-   
-   
-def abl_frosted(obj_id, restr = None):
-   card = Card(obj_id)
-   if not hasMarker(card, 'Cannot Unfreeze'):
-      doesNotUnfreeze(card, restr = restr)
-   
-   
-def abl_removeFrost(obj_id):
-   card = Card(obj_id)
-   if hasMarker(card, 'Cannot Unfreeze'):
-      doesNotUnfreeze(card)
-   return False
-
-
-def abl_add(obj_id, eventOrFunc, source_id=None, restr=None, msg=None, checkFunc=None):
-   debug(">>> abl_add({}, {}, {}, {}, {}, {})".format(obj_id, eventOrFunc, source_id, restr, msg, checkFunc))
-   addEvent = True
+def abl_add(obj_id, event, source_id=None, restr=None, msg=None, checkFunc=None):
+   debug(">>> abl_add({}, {}, {}, {}, {}, {})".format(obj_id, event, source_id, restr, msg, checkFunc))
    
    if restr and msg and len(msg) > 1:
       restr = list(restr) + [msg[1]] # Show message when the effect has gone because of the restr cleanup
       
-   if callable(eventOrFunc):
-      eventOrFunc(obj_id, restr)
-      eventOrFunc = Hooks.CallOnRemove
-      addEvent = bool(restr)
-      
-   eventAdded = False
-   if addEvent:
-      eventAdded = addGameEventListener(eventOrFunc, 'abl_genericListener', obj_id, source_id, restr, [obj_id, source_id, msg, checkFunc])
+   eventAdded = addGameEventListener(event, 'abl_genericListener', obj_id, source_id, restr, [obj_id, source_id, msg, checkFunc])
    if eventAdded and msg:
       notifyAbility(obj_id, source_id if source_id else obj_id, msg[0], getTextualRestr(restr))
 
@@ -172,14 +141,51 @@ def abl_genericListener(target_id, obj_id, source_id=None, msgOrFunc=None, check
    return True
 
 
+def callback_false(obj_id):
+   return False
+   
+   
+def abl_unfreezable(obj_id):
+   setMarker(Card(obj_id), 'Unfreezable')
+   return False
+   
+   
+def abl_pierce(obj_id):
+   setMarker(Card(obj_id), 'Pierce')
+   return False
+   
+   
+def abl_frosted_added(card, restr = None):
+   if not hasMarker(card, 'Cannot Unfreeze'):
+      doesNotUnfreeze(card, restr = restr)
+   
+   
+def abl_removeFrost(obj_id):
+   debug('>>> abl_removeFrost()')
+   card = Card(obj_id)
+   if hasMarker(card, 'Cannot Unfreeze'):
+      doesNotUnfreeze(card)
+   return False
+
+
+def abl_cantattack_added(card, restr = None):
+   if isAttacking(card):
+      cancelAttack(card)
+
+
+def abl_rush_added(card, restr = None):
+   if hasMarker(card, 'Just Entered'):
+      removeMarker(card, 'Just Entered')
+
+
 RulesAbilities.register('unblockable',     Hooks.CanBlock)
-RulesAbilities.register('cantattack',      Hooks.BeforeAttack)
+RulesAbilities.register('cantattack',      Hooks.BeforeAttack, onAdded = abl_cantattack_added)
 RulesAbilities.register('cantblock',       Hooks.BeforeBlock)
 RulesAbilities.register('cantplayac',      Hooks.BeforePlayAC)
 RulesAbilities.register('cantplayre',      Hooks.BeforePlayRE)
 RulesAbilities.register('preventpierce',   Hooks.PreventPierce)
-RulesAbilities.register('rush',            Hooks.PlayAsFresh)
+RulesAbilities.register('rush',            Hooks.PlayAsFresh, onAdded = abl_rush_added)
 RulesAbilities.register('unlimitedbackup', Hooks.BackupLimit,  'callback_false')
 RulesAbilities.register('pierce',          GameEvents.Blocked, 'abl_pierce')
 RulesAbilities.register('unfreezable',     GameEvents.Attacks, 'abl_unfreezable')
-RulesAbilities.register('frosted',         abl_frosted,        'abl_removeFrost')
+RulesAbilities.register('frosted',         Hooks.CallOnRemove, 'abl_removeFrost', abl_frosted_added)

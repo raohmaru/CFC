@@ -218,6 +218,7 @@ def funcCall(player, func, args=[]):
 
 def unique(seq):
    seen = set()
+   # Because Python is dynamic, accessing variables is faster than attribute lookup
    seen_add = seen.add
    return [x for x in seq if not (x in seen or seen_add(x))]
 
@@ -426,9 +427,13 @@ def moveToGroup(group, card, sourceGroup = None, pos = None, reveal = None, sour
    name = 'a card'
    if reveal != False:
       if card.isFaceUp:
-         name = card
+         # If the group visibility is None, card will output "Card", so we get the name
+         if group.name == 'Deck':
+            name = card.Name
+         else:
+            name = card
       elif reveal:
-         if group.name in ['Hand']:
+         if group.name == 'Hand':
             remoteCall(getOpp(), "cardPeek", [card])
          name = card.Name
    targetCtrl = 'its' if me == sourcePlayer else "{}'s".format(me)
@@ -821,6 +826,17 @@ def getAttackingCards(player = me, getUA = False):
 # Markers functions
 #---------------------------------------------------------------------------
 
+def hasMarker(card, marker, include=True):
+   if not isCard(card):
+      return False
+      
+   res = MarkersDict[marker] in card.markers
+   if include:
+      return res
+   else:
+      return not res
+      
+      
 def getMarker(card, mkname):
    return card.markers[MarkersDict[mkname]]
 
@@ -1128,15 +1144,8 @@ def isFrozen(card):
    return card.orientation & Rot90 == Rot90
 
 
-def hasMarker(card, marker, include=True):
-   if not isCard(card):
-      return False
-      
-   res = MarkersDict[marker] in card.markers
-   if include:
-      return res
-   else:
-      return not res
+def isAttacking(card):
+   return hasMarker(card, 'Attack') or hasMarker(card, 'United Attack')
 
 
 def inUAttack(card):
