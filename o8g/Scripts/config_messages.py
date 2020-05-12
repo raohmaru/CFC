@@ -14,6 +14,8 @@
 # You should have received a copy of the GNU General Public License
 # along with this script.  If not, see <http://www.gnu.org/licenses/>.
 
+ERR_NO_EFFECT = 'err001'
+
 MSG_PHASES = [
    u'\u2E3B Pre-game setup phase: {} \u2E3B'
 ]
@@ -140,4 +142,6 @@ CMD_LABELS = {
    'shuffle'   : 'Shuffle the deck'
 }
 
-ERR_NO_EFFECT = 'err001'
+ASK_REPL = {
+   'opp': 'opponent'
+}

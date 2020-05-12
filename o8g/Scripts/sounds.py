@@ -24,8 +24,8 @@ def playSnd(name, isInternal=False):
       if (
          isInternal
          or debugging
-         or (me.name == Author and getOpp().name == 'dan')
-         or (me.name == 'dan' and getOpp().name == Author)
+         # or (me.name == Author and getOpp().name == 'dan')
+         # or (me.name == 'dan' and getOpp().name == Author)
       ):
          try:
             sound = Octgn.Program.GameEngine.Definition.Sounds[name]

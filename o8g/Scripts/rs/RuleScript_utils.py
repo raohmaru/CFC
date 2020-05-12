@@ -155,7 +155,8 @@ class RulesUtils():
          kw_types = set(RS_KW_TARGETS) & set(types)
          if len(kw_types) > 0:
             debug("-- found %s types, player must choose one. (%s)" % (len(kw_types), list(kw_types)))
-            t = askChoice("Select a target:", types)
+            options = [ASK_REPL[t].title() if t in ASK_REPL else t.title() for t in types]
+            t = askChoice("Select a target:", options)
             if t == 0:
                return False
             types = [types[t-1]]

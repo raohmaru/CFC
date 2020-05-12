@@ -154,12 +154,12 @@ BPMultiplier = 1  # 100
 NumSlots        = 4
 CharsPerTurn    = 1
 BackupsPerTurn  = 1
-BackupRaiseBP   = 3 * BPMultiplier
+BackupRaiseBP   = 300
 MaxCharsUAttack = 2
 UAttackCost     = 5
 MaxCardCopies   = 3
 HandSize        = 5
-StartingHP      = 30 * BPMultiplier
+StartingHP      = 3000
 
 GameRulesDefaults = {
    'ab_trigger_fresh'  : False, # Activate [] abilities of fresh characters
@@ -250,17 +250,17 @@ cleanedUpRing  = False  # Tracks if the user has run the Clean-up phase
 commander      = None  # RulesCommands instance
 turns          = 1  # The number of consecutive turns a player can play
 envVars        = None  # Global variables to be used in eval() expression
-buttons        = {}  # Holds the buttons created
+buttons        = {}  # Holds the UI buttons created
 
 settings = {
-   'Play'         : True, # Automatically trigger game effects and card effects when playing cards
-   'Phase'        : True, # Automatically trigger phase related events, and effects from cards in play
+   'Play'         : True, # Trigger game, event and card effects
+   # 'Phase'        : True, # Automatic phase control
    'WinForms'     : True, # Game will use the custom Windows Forms for displaying info pop-ups
    'AttackDmg'    : True, # Applies attack damage automatically
    'ExtAPI'       : True, # Make use of the extended API to access the C# API
    'Sounds'       : True, # Play sound effect
    'WelcomeScreen': True, # Show welcome screen
-   'GameVersion'  : '0.0.0',
+   'GameVersion'  : '0.0.0',  # Last version shown in the changelog window
 }
 
 # Default values used in dialogs that can be overridden by the user to remember his last input
