@@ -78,6 +78,7 @@ def resetAll():
    clearGlobalVar('Rules')
    clearGlobalVar('CharsAbilities')
    clearGlobalVar('Stack')
+   clearGlobalVar('GameEvents')
    debug("<<< resetAll()")
 
 
@@ -137,7 +138,7 @@ def clearGlobalVar(name, player = None):
 
 def replaceVars(str):
    debug("-- replaceVars({})".format(str))
-   str = re.sub(Regexps['BP']      , r'(hasattr(getParsedCard(\1), "BP") and getParsedCard(\1).BP)', str)
+   str = re.sub(Regexps['BP']      , r'getParsedCard(\1).BP', str)
    str = re.sub(Regexps['LastBP']  , r'getParsedCard(\1).lastBP', str)
    str = re.sub(Regexps['Action']  , 'isAction(card)', str)
    str = re.sub(Regexps['Reaction'], 'isReaction(card)', str)

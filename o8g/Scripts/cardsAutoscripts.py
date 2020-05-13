@@ -84,6 +84,10 @@ class GameCard(object):
       if not self.hasEffect():
          return
       return self.rules.activate()
+      
+   @property
+   def BP(self):
+      return float('nan')  # Compared to a number will return always False
 
 
 class CharCard(GameCard):
