@@ -139,13 +139,13 @@ def onCardsMoved(args):
          
    if transfChanged:
       setGlobalVar('Transformed', Transformed)
+   if abilitiesChanged:
+      setGlobalVar('CharsAbilities', CharsAbilities)
    # Trigger events
    if handChanged:
       triggerGameEvent(GameEvents.HandChanges, len(me.hand))
    if ringChanged:
       triggerGameEvent(GameEvents.RingChanges, getRingSize())
-   if abilitiesChanged:
-      setGlobalVar('CharsAbilities', CharsAbilities)
 
    
 def onTurnPassed(args):
@@ -178,11 +178,13 @@ def onPhasePassed(args):
    # elif idx == MainPhase:
    # elif idx == AttackPhase:
    if idx == BlockPhase:
-      if not me.isActive and len(getAttackingCards(getOpp(), True)) > 0:
+      if me.isActive and len(getAttackingCards()) > 0:
+         _extapi.whisper(MSG_HINT_BLOCK.format('defending player', 'he or she'), Colors.Blue)
+      elif not me.isActive and len(getAttackingCards(getOpp())) > 0:
          setStop(idx, True)
          addButton('BlockDone')
+         _extapi.whisper(MSG_HINT_BLOCK.format('you', 'you'), Colors.Blue)
          whisper("When done, press TAB key or click in the \"Done\" button to return priority to attacking player.")
-      _extapi.whisper(MSG_HINT_BLOCK.format(('You','defending player')[me.isActive], ('you ','')[me.isActive]), Colors.Blue)
    elif idx == EndPhase:
       if not me.isActive:
          setStop(BlockPhase, False)

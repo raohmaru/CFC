@@ -41,7 +41,7 @@ MSG_MAY_DEF                 = "Do you want to apply the effect of the card?"
 MSG_HINT_KOED               = "({} has been KOed. You should put it into your discard pile. In any case, KOed characters will be removed from the ring on phase change.)"
 MSG_HINT_ACTIVATE           = "(Now you must activate the card's effect by double-click on it.)"
 MSG_HINT_WIN                = "{} wins the game!"
-MSG_HINT_BLOCK              = "(Now {} can play Reaction cards and then {}may choose if block attackers)"
+MSG_HINT_BLOCK              = "(Now {} can play Reaction cards and then {} may choose if block attackers)"
 MSG_UA_MAX                  = "Can't be more than {} characters in a United Attack."
 MSG_PHASE_DONE              = "{} has finalized the {} phase. {} can go to the next phase."
 

@@ -349,7 +349,7 @@ Available variables:
    
    context: each()
       card
-      character
+      char
       action
       reaction
    

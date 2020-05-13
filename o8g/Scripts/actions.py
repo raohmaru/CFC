@@ -497,6 +497,8 @@ def copyAbility(card, x = 0, y = 0, target = None):
                model = CharsAbilities[target._id]
          CharsAbilities[card._id] = model
          setGlobalVar('CharsAbilities', CharsAbilities)
+         triggerGameEvent([GameEvents.Powerless, card._id])
+         removeGameEventListener(card._id)
          funcCall(card.controller, removeParsedCard, [card])
          funcCall(card.controller, parseCard, [card, model])
          # Updates proxy image for the other players
