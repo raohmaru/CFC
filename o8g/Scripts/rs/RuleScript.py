@@ -69,8 +69,6 @@ class Rules():
       eventName = event[0] + event[1]
       appliesto = event[2] if len(event) > 2 else None
       addGameEventListener(eventName, self.card_id, self.card_id, appliesto=appliesto)
-      if event[1] in GameEventsExecOnAdded:
-         self.execAuto(self.rules_tokens[RS_KEY_AUTO], eventName)
       self.has_events = True
          
          

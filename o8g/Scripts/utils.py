@@ -34,27 +34,24 @@ def checkTwoSidedTable():
    debug(">>> checkTwoSidedTable()")
    mute()
    if not table.isTwoSided():
-      warning("This game is designed to be played on a two-sided table.\nPlease start a new game and make sure the appropriate option is checked.")
+      warning("This game is designed to be played on a two-sided table.\nPlease start a new game and make sure the option 'Two Side Table' is checked.")
 
       
 def chooseSide():
-# Called from many functions to check if the player has chosen a side for this game.
-   mute()
-   global playerSide, playerAxis
-   if playerSide is not None:  # Has the player selected a side yet? If not, then...
-      return;
+# Checks if the player has chosen a side for this game.
+   global playerSide
+   if playerSide is not None:
+      return
    if Table.isTwoSided():
-      playerAxis = Yaxis
       if me.isInverted:
          playerSide = -1
       else:
          playerSide = 1
    else:
-      playerAxis = Yaxis
-      if confirm("Will you play on the bottom side?"): # Ask which side they want
-         playerSide = 1 # This is used to swap between the two halves of the X axis of the play field. Positive is on the right.
+      if confirm("Will you play on the bottom side?"):
+         playerSide = 1
       else:
-         playerSide = -1 # Negative is on the left.
+         playerSide = -1
 
 
 def resetAll():
@@ -513,8 +510,6 @@ def fixCardY(y):
    offsetY = 0
    if me.isInverted:
       offsetY = CardHeight
-   if not playerSide:
-      chooseSide()
    return (y + offsetY) * playerSide
    
    
@@ -527,7 +522,6 @@ def fixSlotIdx(slotIdx, player = me):
    
 def placeCard(card, type = None, action = None, target = None, faceDown = False):
 # This function automatically places a card on the table according to what type of card is being placed
-# It is called by one of the various custom types and each type has a different value depending on if the player is on the X or Y axis.
    debug(">>> placeCard()")
 
    if settings['Play']:
@@ -733,7 +727,7 @@ def transformCard(card, cardModel):
    else:
       newCard = group.create(cardModel, quantity = 1)
    if group == table and card.isFaceUp:
-      notify("{} transform {} into {}.".format(me, card, newCard))
+      notify("{} transforms {} into {}.".format(me, card, newCard))
    else:
       notify("{} transformed a card {}.".format(me, fromWhereStr(group)))
    model = card.model
@@ -745,6 +739,8 @@ def transformCard(card, cardModel):
    transfCards[newCard._id] = model
    setGlobalVar('Transformed', transfCards)
    debug("{}".format(transfCards))
+   triggerGameEvent([GameEvents.Removed, card._id])
+   removeGameEventListener(card._id)
    card.delete()
    
    

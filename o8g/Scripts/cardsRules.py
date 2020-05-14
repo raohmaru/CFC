@@ -363,7 +363,8 @@ RulesDict = {}
 
 # Nina's WINGS
 RulesDict['55b0c9ff-4b3a-4b08-adc1-f1b5e03adef9'] = """
-auto = [[if me.hand.size == 0]] +unblockable
+# auto = [[if me.hand.size == 0]] +unblockable
+auto = ~myHandChanges~ [[if me.hand.size == 0]] +unblockable
 """
 
 # Ryu no Senshi's DRAGON TRANSFORM
@@ -1533,7 +1534,7 @@ action = damage(300)
 
 # Crossover
 RulesDict['ab631979-20d8-4789-85be-149b414d1ef1'] = """
-action = moveTo(deck) target(*s@hand) & shuffle(); moveTo(hand) target(*s@discards)
+action = moveTo(deck) target?(*s@hand) & shuffle(); moveTo(hand) target(*s@discards)
 auto = ~myEndPhase:once~ discard(all)
 """
 

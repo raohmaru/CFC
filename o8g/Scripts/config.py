@@ -14,6 +14,9 @@
 # You should have received a copy of the GNU General Public License
 # along with this script.  If not, see <http://www.gnu.org/licenses/>.
 
+#---------------------------------------------------------------------------
+# Helpers
+#---------------------------------------------------------------------------
 
 # Helper class to convert a dict to an object (to be accesed with dot notation)
 # http://stackoverflow.com/questions/1305532/convert-python-dict-to-object
@@ -35,6 +38,7 @@ class Struct:
       return self.__dict__ == other
    def __nonzero__(self):
       return True
+
 
 #---------------------------------------------------------------------------
 # Constants
@@ -210,11 +214,6 @@ GameEvents = Struct(**{
    'BackedUp'           : 'backedup'
 })
 
-# When a listener to these events is added, trigger it automatically
-GameEventsExecOnAdded = [
-   GameEvents.HandChanges
-]
-
 # Maps variables to events
 GameEventsFromVars = {
    'hand.size': GameEvents.HandChanges
@@ -237,30 +236,29 @@ GameEventsCallOnHost = [
 # Global variables (for the current user)
 #---------------------------------------------------------------------------
 
-playerSide     = None  # Variable to keep track on which side each player is
-playerAxis     = None  # Variable to keep track on which axis the player is
+playerSide     = None  # The side of the player (top: -1, bottom: 1)
 handSize       = HandSize
-debugVerbosity = DebugLevel.Off
-debugging      = False
-# If I am alone debugging I want to know EVERYTHING
-# if me.name == Author and len(players) == 1:
-   # debugVerbosity = DebugLevel.Debug
 parsedCards    = {} # Dictionary holding all parsed cards
 cleanedUpRing  = False  # Tracks if the user has run the Clean-up phase
 commander      = None  # RulesCommands instance
 turns          = 1  # The number of consecutive turns a player can play
 envVars        = None  # Global variables to be used in eval() expression
 buttons        = {}  # Holds the UI buttons created
+debugVerbosity = DebugLevel.Off
+debugging      = False
+# If I am alone debugging I want to know EVERYTHING
+# if me.name == Author and len(players) == 1:
+   # debugVerbosity = DebugLevel.Debug
 
 settings = {
    'Play'         : True, # Trigger game, event and card effects
    # 'Phase'        : True, # Automatic phase control
-   'WinForms'     : True, # Game will use the custom Windows Forms for displaying info pop-ups
+   'WinForms'     : True, # Use custom Windows Forms for displaying info pop-ups
    'AttackDmg'    : True, # Applies attack damage automatically
    'ExtAPI'       : True, # Make use of the extended API to access the C# API
    'Sounds'       : True, # Play sound effect
    'WelcomeScreen': True, # Show welcome screen
-   'GameVersion'  : '0.0.0',  # Last version shown in the changelog window
+   'GameVersion'  : '0.0.0', # Last version shown in the changelog window
 }
 
 # Default values used in dialogs that can be overridden by the user to remember his last input

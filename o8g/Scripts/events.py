@@ -97,7 +97,7 @@ def onCardsMoved(args):
                freeSlot(card)
                ringChanged = True
                card.filter = None
-               triggerGameEvent([GameEvents.Removed, card._id])
+            triggerGameEvent([GameEvents.Removed, card._id])
             phaseIdx = currentPhase()[1]
             if MarkersDict['Attack'] in markers or MarkersDict['United Attack'] in markers:
                if phaseIdx == AttackPhase or phaseIdx == BlockPhase:

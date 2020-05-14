@@ -96,7 +96,7 @@ def setup(group = table, x = 0, y = 0, silent = False):
    # if not silent:
       # if not confirm("Are you sure you want to setup for a new game?"):
          # return
-   chooseSide() # The classic place where the players choose their side
+   chooseSide()
    # We ensure that player has loaded a deck
    if len(me.Deck) == 0:
       warning("Please load a deck first.")
@@ -433,6 +433,7 @@ def toggleAbility(card, x = 0, y = 0, remove = False):
    mute()
    if not isCharacter(card) or (card.alternate == '' and card.Rules == ''):
       return
+   # Restores ability
    if card.alternate == 'noability' and not remove:
       card.alternate = ''
       # Removes card from parsed list to parse it again with the new abilities
@@ -442,6 +443,7 @@ def toggleAbility(card, x = 0, y = 0, remove = False):
          notify("{} restores {}'s abilities".format(me, card))
       else:
          notify("{} tried to restore {}'s abilities, but it doesn't have any original ability".format(me, card))
+   # Removes ability
    else:
       triggerGameEvent([GameEvents.Powerless, card._id])
       funcCall(card.controller, removeParsedCard, [card])
@@ -498,7 +500,6 @@ def copyAbility(card, x = 0, y = 0, target = None):
          CharsAbilities[card._id] = model
          setGlobalVar('CharsAbilities', CharsAbilities)
          triggerGameEvent([GameEvents.Powerless, card._id])
-         removeGameEventListener(card._id)
          funcCall(card.controller, removeParsedCard, [card])
          funcCall(card.controller, parseCard, [card, model])
          # Updates proxy image for the other players
@@ -808,8 +809,6 @@ def play(card):  # This is the function to play cards from your hand.
    debug(">>> playing card {}".format(card))
 
    mute()
-   if not playerSide:
-      chooseSide()  # Just in case...
    slot = ""
    group = card.group
    if settings['Play']:
