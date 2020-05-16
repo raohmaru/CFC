@@ -125,8 +125,8 @@ def toggleRule(ruleName, value, id, restr = None):
 def getLocals(**kwargs): 
 # Adds action local variables defined in other places
    locals = {}
-   # Convert card IDs into Card objects
-   for key, value in getGlobalVar('ActionTempVars').iteritems():
+   vars = getGlobalVar('ActionTempVars')
+   for key, value in vars.iteritems():
       key = key.lower()
       if isinstance(value, list):
          locals[key] = [stringToObject(id) for id in value]
@@ -218,9 +218,11 @@ def cmd_destroy(rc, targets, source, restr, *args):
    for target in targets:
       if target.controller == me:
          destroy(target)
+         update()
       else:
          remoteCall(target.controller, "destroy", [target, 0, 0, me])
-      # Add destroyet card to action local variables
+         remoteCall(target.controller, "update", [])
+   # Add destroyed cards to action local variables
    addActionTempVars('destroyed', targets)
    rc.applyNext()
 

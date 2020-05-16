@@ -22,9 +22,8 @@
 def addGameEventListener(event, callback, obj_id, source_id=None, restr=None, args=[], appliesto=None):
    ge = getGlobalVar('GameEvents')
    prfx, eventName = RulesLexer.getPrefix(RS_PREFIX_EVENTS, event)
-   if not eventName in ge:
-      ge[eventName] = []
    listener = {
+      'event'     : eventName,
       'controller': me._id,
       'id'        : obj_id,
       'source'    : source_id,
@@ -34,35 +33,40 @@ def addGameEventListener(event, callback, obj_id, source_id=None, restr=None, ar
       'args'      : args,
       'appliesto' : appliesto
    }
-   for e in ge[eventName]:
-      if e['id'] == obj_id and e['callback'] == callback and e['restr'] == restr and e['scope'] == prfx:
+   for e in ge:
+      if (
+         e['event'] == eventName
+         and e['id'] == obj_id
+         and e['callback'] == callback
+         and e['restr'] == restr
+         and e['scope'] == prfx
+      ):
          return False
-   ge[eventName].append(listener)
+   ge.append(listener)
    setGlobalVar('GameEvents', ge)
    debug("Added listener to game event '{}' -> {}".format(eventName, listener))
    return True
 
 
 def removeGameEventListener(obj_id, eventName=None, callback=None):
-   debug(">>> removeGameEventListener({}, {})".format(obj_id, eventName))
+   debug(">>> removeGameEventListener({}, {}, {})".format(obj_id, eventName, callback))
    ge = getGlobalVar('GameEvents')
    removed = False
-   for e in ge:
-      if not eventName or e == eventName:
-         for i, listener in reversed(list(enumerate(ge[e]))):
-            if(
-               (listener['id'] == obj_id or listener['source'] == obj_id) and
-               (not callback or callback == listener['callback'])
-            ):
-               # Events with restrictions will eventually be removed in due time
-               if listener['restr'] is None:
-                  del ge[e][i]
-                  removed = True
-                  debug("Removed listener for event {} {}".format(e, listener))
-                  # Maybe invoke the callback
-                  if e == Hooks.CallOnRemove:
-                     func = eval(listener['callback'])
-                     func(*listener['args'])
+   for i, listener in reversed(list(enumerate(ge))):
+      if not eventName or eventName == listener['event']:
+         if(
+            (listener['id'] == obj_id or listener['source'] == obj_id) and
+            (not callback or callback == listener['callback'])
+         ):
+            # Events with restrictions will be removed eventually
+            if listener['restr'] is None:
+               del ge[i]
+               removed = True
+               debug("Removed listener for event {} ({})".format(listener['event'], listener))
+               # Maybe invoke the callback
+               if listener['event'] == Hooks.CallOnRemove:
+                  func = eval(listener['callback'])
+                  func(*listener['args'])
    setGlobalVar('GameEvents', ge)
    return removed
 
@@ -76,8 +80,8 @@ def triggerGameEvent(event, *args):
       event, obj_id = event
    ge = getGlobalVar('GameEvents')
    res = (None, None)
-   if event in ge:
-      for listener in ge[event]:
+   for listener in ge:
+      if event == listener['event']:
          params = list(args) + listener['args']
          if (
             (not obj_id and (not listener['appliesto'] or listener['appliesto'] == RS_SUFFIX_ONCE))
@@ -115,7 +119,7 @@ def triggerGameEvent(event, *args):
                except:
                   debug("Callback function {} is not defined".format(listener['callback']))
                   continue
-               res = (func(*params), listener['source'] if listener['source'] else listener['id'])
+               res = (func(*params), listener['source'] or listener['id'])
    return res
 
 
@@ -141,29 +145,28 @@ def remoteGameEvent(cardID, eventName, *args):
 def cleanupGameEvents(restr):
    debug(">>> cleanupGameEvents({})".format(restr))
    ge = getGlobalVar('GameEvents')
-   for e in ge:
-      for i, listener in reversed(list(enumerate(ge[e]))):
-         if listener['restr'] is None:
-            continue
-         evRestrTarget = listener['restr'][0]
-         evRestr       = listener['restr'][1]
-         restrMsg      = listener['restr'][2] if len(listener['restr']) > 2 else None
-         if evRestr == restr:
-            # Remove event added by me that affects me, or added by the opp that affects me as well
-            if (
-               (listener['controller'] == me._id and evRestrTarget != RS_PREFIX_OPP) or
-               (listener['controller'] != me._id and evRestrTarget == RS_PREFIX_OPP)
-            ):
-               # Removed message
-               if restrMsg:
-                  notify(restrMsg.format(getObjName(listener['id'])))
-               del ge[e][i]
-               debug("Removed listener for event {} -> {}".format(e, listener))
-               
-               # Maybe invoke the callback
-               if e == Hooks.CallOnRemove:
-                  func = eval(listener['callback'])
-                  func(*listener['args'])
+   for i, listener in reversed(list(enumerate(ge))):
+      if listener['restr'] is None:
+         continue
+      evRestrTarget = listener['restr'][0]
+      evRestr       = listener['restr'][1]
+      restrMsg      = listener['restr'][2] if len(listener['restr']) > 2 else None
+      if evRestr == restr:
+         # Remove event added by me that affects me, or added by the opp that affects me as well
+         if (
+            (listener['controller'] == me._id and evRestrTarget != RS_PREFIX_OPP) or
+            (listener['controller'] != me._id and evRestrTarget == RS_PREFIX_OPP)
+         ):
+            # Removed message
+            if restrMsg:
+               notify(restrMsg.format(getObjName(listener['id'])))
+            del ge[i]
+            debug("Removed listener for event {} -> {}".format(listener['event'], listener))
+            
+            # Maybe invoke the callback
+            if listener['event'] == Hooks.CallOnRemove:
+               func = eval(listener['callback'])
+               func(*listener['args'])
                   
    setGlobalVar('GameEvents', ge)
 
@@ -171,10 +174,9 @@ def cleanupGameEvents(restr):
 def getTargetofSourceEvent(source):
    targets = []
    ge = getGlobalVar('GameEvents')
-   for e in ge:
-      for listener in ge[e]:
-         if listener['source'] == source:
-            targets.append(Card(listener['id']))
+   for listener in ge:
+      if listener['source'] == source:
+         targets.append(Card(listener['id']))
    debug(">>> getTargetofSourceEvent({}) -> {}".format(source, targets))
    return targets
    

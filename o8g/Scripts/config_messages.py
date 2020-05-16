@@ -126,8 +126,12 @@ MSG_RULES = {
       'Character cards with BP {} or greater cannot be played.'
    ),
    'dmg_combat_deal': (
-      'Characters deal no combat damage{1}',
-      'Characters deal combat damage as normal'
+      'Characters deal no combat damage{1}.',
+      'Characters deal combat damage as normal.'
+   ),
+   'attack_freeze': (
+      'Characters don\'t freeze after a solo or united attack{1}.',
+      'Characters freeze after a solo or united attack.'
    )
 }
 

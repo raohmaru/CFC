@@ -66,68 +66,69 @@ def onDeckLoaded(args):
 def onCardsMoved(args):
    mute()
    cards = args.cards
-   Transformed = getGlobalVar('Transformed')
+   hand  = me.hand
+   piles = me.piles
    CharsAbilities = getGlobalVar('CharsAbilities')
+   MyRing = getGlobalVar('Ring', me)
    handChanged = False
+   ringSlotFreed = False
    ringChanged = False
-   transfChanged = False
    abilitiesChanged = False
    
    for i in range(len(cards)):
+      # Because Python is dynamic, accessing variables is faster than attribute lookup
       card      = args.cards[i]
+      card_id   = card._id
       fromGroup = args.fromGroups[i]
       toGroup   = args.toGroups[i]
-      index     = args.indexs[i]
-      x         = args.xs[i]
-      y         = args.ys[i]
-      faceup    = args.faceups[i]
-      highlight = args.highlights[i]
-      markers   = eval(args.markers[i])  # markers it's a string equivalent of the Marker object
-      # Because Python is dynamic, accessing variables is faster than attribute lookup
-      hand  = me.hand
-      piles = me.piles
+      markers   = args.markers[i]  # markers it's a string equivalent of the Marker object
       
       if card.controller != me:
-         return
-      # From the table to anywhere else
-      if fromGroup == table and toGroup != table:
-         if isCharacter(card):
+         continue
+      
+      debug("onCardsMoved: {} ({}) from {} to {}".format(card, card_id, fromGroup._name, toGroup._name))
+      
+      if isCharacter(card):
+         # From the table to anywhere else
+         if fromGroup == table and toGroup != table:
             clearAttachLinks(card)
             if charIsInRing(card):
-               freeSlot(card)
+               # Frees a slot of the ring
+               MyRing[MyRing.index(card_id)] = None
+               ringSlotFreed = True
                ringChanged = True
                card.filter = None
-            triggerGameEvent([GameEvents.Removed, card._id])
-            phaseIdx = currentPhase()[1]
-            if MarkersDict['Attack'] in markers or MarkersDict['United Attack'] in markers:
+            triggerGameEvent([GameEvents.Removed, card_id])
+            removeGameEventListener(card_id)
+            if 'Attack' in markers:
+               phaseIdx = currentPhase()[1]
                if phaseIdx == AttackPhase or phaseIdx == BlockPhase:
                   rearrangeUAttack(card)
-            removeGameEventListener(card._id)
-            if card._id in CharsAbilities:
-               del CharsAbilities[card._id]
+            if card_id in CharsAbilities:
+               del CharsAbilities[card_id]
                abilitiesChanged = True
-      # Move cards in the table
-      elif fromGroup == table and toGroup == table:
-         if isCharacter(card) and not MarkersDict['Backup'] in card.markers:
-            alignBackups(card, *card.position)
-      # From anywhere else to the table
-      elif fromGroup != table and toGroup == table:
-         if charIsInRing(card):
-            ringChanged = True
+         # Moved cards in the table
+         elif fromGroup == table and toGroup == table:
+            if not hasMarker(card, 'Backup'):
+               alignBackups(card, *card.position)
+         # From anywhere else to the table
+         elif fromGroup != table and toGroup == table:
+            if charIsInRing(card):
+               ringChanged = True
+      
       if toGroup._name == 'Hand':
          playSnd('to-hand')
       elif toGroup != table:
          playSnd('move-card')
+      
       # Restore transformed card if it goes to a pile
-      debug("onCardsMoved: {} ({}) from {} to {}".format(card, card._id, fromGroup._name, toGroup._name))
       if toGroup._name in piles:
-         if card._id in Transformed:
-            newCard = toGroup.create(Transformed[card._id], quantity = 1)
+         if card_id in transformed:
+            newCard = toGroup.create(transformed[card_id], quantity = 1)
             newCard.moveTo(toGroup, card.index)
-            notify("Transformed card {} is restored into {}".format(card, newCard))
-            del Transformed[card._id]
+            notify("transformed card {} is restored into {}".format(card, newCard))
+            del transformed[card_id]
             card.delete()
-            transfChanged = True
       if (
          not handChanged
          and (
@@ -137,15 +138,15 @@ def onCardsMoved(args):
       ):
          handChanged = True
          
-   if transfChanged:
-      setGlobalVar('Transformed', Transformed)
    if abilitiesChanged:
       setGlobalVar('CharsAbilities', CharsAbilities)
+   if ringSlotFreed:
+      setGlobalVar('Ring', MyRing, me)
    # Trigger events
    if handChanged:
       triggerGameEvent(GameEvents.HandChanges, len(me.hand))
    if ringChanged:
-      triggerGameEvent(GameEvents.RingChanges, getRingSize())
+      triggerGameEvent(GameEvents.RingChanges, getRingSize(ring=MyRing))
 
    
 def onTurnPassed(args):
@@ -245,6 +246,7 @@ def OnCounterChanged(args):
    counterName = args.counter._name
    setState(player, counterName, player.counters[counterName].value)
    if args.scripted:
+      # After the game state is sync, we can trigger events that modify the counters
       popStack()
 
 

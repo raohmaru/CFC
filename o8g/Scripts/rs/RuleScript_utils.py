@@ -192,8 +192,7 @@ class RulesUtils():
             targets += ftargets
       
       if not targets and not pick:
-         ActionTempVars = getGlobalVar('ActionTempVars')
-         debug("-- maybe it's an expression? ({})".format(ActionTempVars))
+         debug("-- maybe it's an expression?")
          res = evalExpression(types[0], True, getLocals())
          if res:
             return [res]

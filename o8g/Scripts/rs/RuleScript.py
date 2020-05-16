@@ -256,10 +256,7 @@ class Rules():
                   if isCard(obj) and obj.targetedBy:
                      obj.target(False)
          rnd(10, 1000) # Wait between effects until all animation is done
-      
-      # Reset action local variables
-      clearGlobalVar('ActionTempVars')
-      
+            
       # if not targets:
          # notify(MSG_AB_NO_EFFECT.format(thisCard, getParsedCard(thisCard).ability))
          

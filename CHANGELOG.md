@@ -3,8 +3,9 @@
 ## 0.8.3
 Play priority control.
 Added a "Done" button for defending player in block phase.
-Bug fixes.
+Card automation bug fixes.
 Small improves on game performance.
+Fix networking issues.
 ## 0.8.2
 Character's BP and player's HP to thousands.  
 Simplified in-game contextual menu.  

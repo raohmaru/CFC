@@ -399,7 +399,7 @@ action = {S}: destroy() target(character@oppRing)
 
 # Zero Akuma's GIGA CRUSH
 RulesDict['fd1a3f1c-7df1-443e-97b1-f093d66e74c9'] = """
-action = reveal(hand) & discard(actions) & discard(reactions)
+action = reveal(hand); discard(actions) & discard(reactions)
 """
 
 # Regina's RADIO TRANSMITTER
@@ -495,7 +495,7 @@ auto = ~myDrawPhase~ draw() target(me)
 
 # Samanosuke's DEMON GAUNTLET
 RulesDict['a68dc591-6976-4341-b8b9-1a7dc1c71775'] = """
-action = reveal(hand) & each(card.bp <= 300 in me.hand -> bp(+200)) target(this)
+action = reveal(hand); each(card.bp <= 300 in me.hand -> bp(+200)) target(this)
 """
 
 # Ayame's BUTTERFLY ILLUSION
@@ -801,7 +801,7 @@ action = {D}{F}: damage(300) to(character)
 # Sagat's TRUE POWER
 RulesDict['2981e9ad-11e1-4f14-a707-2120bfc0cc2f'] = """
 target = players
-action = reveal(hand) & discard(actions)
+action = reveal(hand); discard(actions)
 """
 
 # Sakura's FIGHTING SPIRIT
@@ -822,7 +822,7 @@ auto = ~blocks:this~ bp(=uaBP)
 # Urien's DESPOT
 RulesDict['79239cad-fd51-4557-9534-af96bd1302bc'] = """
 target = opp
-action = {F}: reveal(hand) & discard(reactions)
+action = {F}: reveal(hand); discard(reactions)
 """
 
 # Option's SUPPORT
@@ -838,12 +838,12 @@ action = {F}: destroy() target(character[backedup])
 # Kikaioh's FAIR PLAY
 RulesDict['99081829-e898-4766-8727-b0a2918df49f'] = """
 target = players
-action = reveal(hand) & discard(reactions)
+action = reveal(hand); discard(reactions)
 """
 
 # Anakaris's J.O.T.P.
 RulesDict['9ec88c6c-dc57-41fd-bb90-cf2822a735aa'] = """
-action = loseAbility() target(characters)
+action = loseAbility() target(characters[powerful])
 """
 
 # B. B. Hood's APPLE FOR YOU
@@ -1022,7 +1022,7 @@ action = {F}: loseAbility() & bp(+300)
 
 # Geese's COMPOSURE
 RulesDict['59253bbd-0dbd-4d43-9a2b-7f01b4bc1f76'] = """
-action = reveal(hand) & discard(actions) & discard(reactions)
+action = reveal(hand); discard(actions) & discard(reactions)
 """
 
 # Geese Howard's REPPU KEN
@@ -1648,7 +1648,7 @@ action = target(all@discards) moveTo(deck) & shuffle()
 
 # Lightning
 RulesDict['b7f9fdff-641d-4c16-b9fb-c7429b990fff'] = """
-action = +unfreezable to(characters@myRing) ueot
+action = disableRule(attack_freeze) ueot
 """
 
 # Lucky kitty
@@ -1694,7 +1694,7 @@ action = reveal() target(_card); [[if isChar(_card)]] bp(=_card.bp) to(_char) [[
 # No tricks
 RulesDict['69cf51ab-090c-4c60-8b58-b71d6455f0a2'] = """
 target = players
-action = reveal(hand) & discard(!characters)
+action = reveal(hand); discard(!characters)
 """
 
 # Nothingness
@@ -1811,7 +1811,7 @@ action = discard(<1>*)
 # Storm rush
 RulesDict['4d7fd45a-aa2a-48e3-856b-cfb04e203e3b'] = """
 target = players
-action = reveal(hand) & discard(characters)
+action = reveal(hand); discard(characters)
 """
 
 # Study
@@ -2027,7 +2027,7 @@ action = swapAbilities() target(<2>character[powerful])
 # Suspicious
 RulesDict['3507e173-6329-4541-99fb-f4b81a482308'] = """
 target = opp
-action = reveal(hand) & discard(!characters)
+action = reveal(hand); discard(!characters)
 """
 
 # Three sisters

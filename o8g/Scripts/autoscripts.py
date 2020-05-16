@@ -93,8 +93,8 @@ def drawPhaseStart():
 
 
 def attackPhaseStart():
+   prepare()
    clearKOedChars()
-   clearGlobalVar('Stack')
    for card in table:
       if card.controller == me:
          # Discard action cards I have played
@@ -126,16 +126,17 @@ def blockPhaseStart():
 
 
 def endPhaseStart():
+   prepare()
    clearKOedChars()
-   clearGlobalVar('Stack')
 
    # Freeze attacking characters
+   freezeAtk = getRule('attack_freeze')   
    myCards = (card for card in table
       if card.controller == me)
    for card in myCards:
       if isCharacter(card):
          alignCard(card)
-         if isAttacking(card) and not hasMarker(card, 'Unfreezable'):
+         if freezeAtk and isAttacking(card) and not hasMarker(card, 'Unfreezable'):
             freeze(card, unfreeze = False, silent = True)
 
    # Calculates and applies attack damage
@@ -156,6 +157,7 @@ def endPhaseStart():
             # Add attacking cards to action local variables & trigger game event
             addActionTempVars('attacker', [card])
             addActionTempVars('uaBP', dmg + pdmg)
+            update()
             triggerGameEvent([GameEvents.Blocks, blocker._id], blocker._id)
             # Trigger blocked event if not in UA
             if pdmg == 0:
@@ -197,6 +199,7 @@ def endPhaseStart():
             if doDamage:
                dealDamage(dmg + pdmg, players[1], card)
             triggerGameEvent([GameEvents.PlayerCombatDamaged, card._id], card._id)
+         update() # Syncs the game state along players. Also delays animations.
    
    # Trigger event
    triggerGameEvent(GameEvents.EndPhase)
@@ -213,8 +216,9 @@ def endPhaseStart():
 
 
 def cleanupPhaseStart():
-   triggerGameEvent(GameEvents.CleanupPhase)
+   prepare()
    clearKOedChars()
+   triggerGameEvent(GameEvents.CleanupPhase)
    # Clean up my ring
    myCards = [card for card in table
       if card.controller == me]
@@ -233,29 +237,84 @@ def cleanupPhaseStart():
       # Discard any Action or Reaction card left in the table (just in case player forgot to remove them)
       else:
          discard(card)
-   # Ensure there aren't any "ghost" id
-   # It happened at least once
-   ring = getGlobalVar('Ring', me)
-   for id in ring:
-      if id != None:
-         c = Card(id)
-         if c not in myCards:
-            freeSlot(c)
    clearAll()
 
 
 def clearKOedChars():
    # KOs characters with 0 BP
-   if settings['AttackDmg']:
-      charCards = (card for card in table
-         if isCharacter(card) and not isAttached(card))
-      for card in charCards:
-         if getMarker(card, 'BP') == 0:
-            notify("{}'s {} BP is 0. It will be KOed from the ring.".format(card.controller, card))
-            if card.controller == me:
-               destroy(card)
-            else:
-               remoteCall(card.controller, "destroy", [card])
+   for card in getRing():
+      if getMarker(card, 'BP') == 0:
+         notify("{}'s {} BP is 0. It will be KOed from the ring.".format(card.controller, card))
+         if card.controller == me:
+            destroy(card)
+            update()  # Syncs the game state along players. Also delays animations.
+         else:
+            remoteCall(card.controller, "destroy", [card, 0, 0, card.controller])
+            remoteCall(card.controller, "update", [])
+
+
+def prepare():
+# In multiplayer games global variables are not sync if players simultaneously modify them.
+   clearGlobalVar('Stack')
+   clearGlobalVar('ActionTempVars') # Reset action local variables
+   
+   cards = [c._id for c in table
+            if isCharacter(c)]
+   
+   # Ensure there aren't any "ghost" id in the ring
+   ring = getGlobalVar('Ring', me)
+   changed = False
+   for id in ring:
+      if id != None and id not in cards:
+         ring[ring.index(id)] = None
+         changed = True
+   if changed:
+      setGlobalVar('Ring', ring, me)
+   
+   if len(players) > 1:
+      ring = getGlobalVar('Ring', players[1])
+      changed = False
+      for id in ring:
+         if id != None and id not in cards:
+            ring[ring.index(id)] = None
+            changed = True
+      if changed:
+         setGlobalVar('Ring', ring, players[1])
+      
+   # Events
+   ge = getGlobalVar('GameEvents')
+   changed = False
+   for e in list(reversed(ge)):
+      if e['restr'] is None:
+         if e['id'] not in cards and e['source'] not in cards:
+            ge.remove(e)
+            changed = True
+   if changed:
+      setGlobalVar('GameEvents', ge)
+   
+   # Modifiers
+   Modifiers = getGlobalVar('Modifiers')
+   changed = False
+   for t in Modifiers:
+      for m in list(reversed(Modifiers[t])):
+         if not m[0] in cards:
+            Modifiers[t].remove(m)
+            changed = True
+   if changed:
+      setGlobalVar('Modifiers', Modifiers)
+   
+   # Rules
+   Rules = getGlobalVar('Rules')
+   changed = False
+   for r in Rules:
+      for id in Rules[r].keys():
+         if not id in cards:
+            del Rules[r][id]
+            changed = True
+   if changed:
+      setGlobalVar('Rules', Rules)
+   
+   update()
 
 
 #------------------------------------------------------------------------------
@@ -264,6 +323,7 @@ def clearKOedChars():
 
 def playAuto(card, slotIdx=None, force=False):
    debug(">>> playAuto({})".format(card))
+   prepare()
    phaseIdx = currentPhase()[1]
 
    # Player plays a Character card
@@ -616,7 +676,7 @@ def blockAuto(card):
          targets = atkCards
       elif len(atkCards) > 1:
          # ...or show card dialog to choose
-         targets = showCardDlg(atkCards, 'Select an attacking character to counter-attack.')
+         targets = showCardDlg(atkCards, 'Select an attacking character to counter-attack with {}.'.format(card.Name))
       else:
          whisper('There are not available attacking characters to block.')
          whisper("({})".format(MSG_ERR_BLOCK_ONE))
@@ -647,6 +707,8 @@ def blockAuto(card):
 
 def activateAuto(card):
    debug(">>> activateAuto()")
+   
+   prepare()
 
    if card.highlight == ActivatedColor:
       notify("{}'s ability or effect has already been activated".format(card))
@@ -727,7 +789,7 @@ def rearrangeUAttack(card):
       else:
          for cid in uattack[1:]:
             alignCard(Card(cid))
-      debug("UnitedAttack: {}".format(getGlobalVar('UnitedAttack')))
+      debug("UnitedAttack: {}".format(uattack))
       
 
 def cancelAttack(card):

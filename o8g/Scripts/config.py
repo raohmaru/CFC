@@ -109,7 +109,8 @@ CardsCoords = dict(
    Attack3       = ( 221, 29),
    BackupOffset  = ( 0,   13),
    UAttackOffset = ( 43,  0),
-   Button        = ( 415, 29)
+   Button        = ( 415, 29),
+   Action        = ( 0,   29)
 )
 
 # Card types
@@ -172,7 +173,8 @@ GameRulesDefaults = {
    'piercing'          : True,  # Allow piercing damage
    'backup_fresh'      : False, # Backup fresh characters
    'play_char_bp_limit': None,  # BP limit to play chars
-   'dmg_combat_deal'   : True   # Deal combat damage
+   'dmg_combat_deal'   : True,  # Deal combat damage
+   'attack_freeze'     : True   # Characters freeze after a attack
 }
 
 # Debug
@@ -244,6 +246,7 @@ commander      = None  # RulesCommands instance
 turns          = 1  # The number of consecutive turns a player can play
 envVars        = None  # Global variables to be used in eval() expression
 buttons        = {}  # Holds the UI buttons created
+transformed    = {}  # Transformed cards
 debugVerbosity = DebugLevel.Off
 debugging      = False
 # If I am alone debugging I want to know EVERYTHING

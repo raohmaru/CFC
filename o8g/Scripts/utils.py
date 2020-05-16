@@ -58,10 +58,11 @@ def resetAll():
 # Clears all the global variables in order to start a new game.
    debug(">>> resetAll()")
    # Import all our global variables and reset them.
-   global playerSide, handSize, parsedCards, turns
+   global playerSide, handSize, parsedCards, turns, transformed
    playerSide = None
    handSize = HandSize
    parsedCards = {}
+   transformed = {}
    resetState()
    turns = 1
    me.HP = StartingHP
@@ -69,11 +70,11 @@ def resetAll():
    clearGlobalVar('Backups')
    clearGlobalVar('UnitedAttack')
    clearGlobalVar('Blockers')
-   clearGlobalVar('Transformed')
    clearGlobalVar('GameEvents')
    clearGlobalVar('Modifiers')
    clearGlobalVar('Rules')
-   clearGlobalVar('CharsAbilities')
+   clearGlobalVar('Rules')
+   clearGlobalVar('ActionTempVars')
    clearGlobalVar('Stack')
    clearGlobalVar('GameEvents')
    debug("<<< resetAll()")
@@ -226,11 +227,11 @@ def unique(seq):
 #---------------------------------------------------------------------------
 
 def getRule(rule):
-   rules = getGlobalVar('Rules')
-   if rule in rules and rules[rule]:  # Not an empty list []
-      for key, v in rules[rule].iteritems():
+   Rules = getGlobalVar('Rules')
+   if rule in Rules and Rules[rule]:  # Not an empty list []
+      for key, v in Rules[rule].iteritems():
          if not isinstance(v, bool):
-            return rules[rule].values()
+            return Rules[rule].values()
          if not v:
             return False
       return True
@@ -242,7 +243,6 @@ def addActionTempVars(name, value):
    debug(">>> addActionTempVars({}, {})".format(name, value))
    vars = getGlobalVar('ActionTempVars')
    if isinstance(value, list):
-      value = objToString(value)
       value = [objToString(c) for c in value]
    else:
       value = objToString(value)
@@ -404,8 +404,10 @@ def getRing(player = None):
       if c._id in ring]
 
 
-def getRingSize(player = me):
-   return NumSlots - getGlobalVar('Ring', player).count(None)
+def getRingSize(player = me, ring = None):
+   if not ring:
+      getGlobalVar('Ring', player)
+   return NumSlots - ring.count(None)
 
 
 def moveToGroup(group, card, sourceGroup = None, pos = None, reveal = None, sourcePlayer = me, silent = False):
@@ -436,7 +438,11 @@ def moveToGroup(group, card, sourceGroup = None, pos = None, reveal = None, sour
          name = card.Name
    targetCtrl = 'its' if me == sourcePlayer else "{}'s".format(me)
    msg = "{} moved {} {} {} {} {}.".format(sourcePlayer, name, fromText, posText, targetCtrl, group.name)
+   # Buy some time for onCardsMoved() to complete and sync
+   doUpdate = sourceGroup == table and group != table and isCharacter(card) and charIsInRing(card)
    card.moveTo(group, pos)
+   if doUpdate:
+      update()
    if not silent:
       notify(msg)
    else:
@@ -521,7 +527,7 @@ def fixSlotIdx(slotIdx, player = me):
 
    
 def placeCard(card, type = None, action = None, target = None, faceDown = False):
-# This function automatically places a card on the table according to what type of card is being placed
+# This function automatically places a card on the table according to the type of card
    debug(">>> placeCard()")
 
    if settings['Play']:
@@ -536,21 +542,18 @@ def placeCard(card, type = None, action = None, target = None, faceDown = False)
             numBkps = len([id for id in backups if backups[id] == target._id])
             coords = (cx+CardsCoords['BackupOffset'][0]*numBkps, cy+CardsCoords['BackupOffset'][1]*numBkps)
          card.moveToTable(coords[0], coords[1], faceDown)
-      # Place action and reaction card at the right side of any card placed previoulsy
-      elif type == ActionType or type == ReactionType:
-         posY = fixCardY(0)
-         posX = -CardWidth/2
+      # Place action and reaction cards
+      elif type != CharType:
          cards = [c for c in table
             if c.controller == me
-            and not isCharacter(c)]
-         for c in cards:
-            pos = c.position
-            if pos[1] == posY:
-               if playerSide == 1:
-                  posX = max(posX, pos[0]+CardWidth)
-               else:
-                  posX = min(posX, pos[0]-CardWidth)
-         card.moveToTable(posX, posY, faceDown)
+            and isAction(c) or isReaction(c)]
+         posX = -((len(cards) + 1) * CardWidth) / 2 * playerSide
+         if playerSide == -1:
+            posX -= CardWidth
+         posY = fixCardY(CardsCoords['Action'][1])
+         for i,c in enumerate(cards):
+            c.moveToTable(posX + CardWidth * i * playerSide, posY)
+         card.moveToTable(posX + CardWidth * len(cards) * playerSide, posY, faceDown)
       else:
          card.moveToTable(-CardWidth/2, fixCardY(0), faceDown)
    else:
@@ -558,21 +561,7 @@ def placeCard(card, type = None, action = None, target = None, faceDown = False)
 
    debug("<<< placeCard()")
 
-
-def freeSlot(card):
-# Frees a slot of the ring. It normally happens when a character leaves the ring
-   debug(">>> freeSlot({})".format(card))
-   
-   myRing = getGlobalVar('Ring', me)
-   if card._id in myRing:
-      myRing[myRing.index(card._id)] = None
-   
-   debug("{}'s ring: {}".format(me, myRing))
-   setGlobalVar('Ring', myRing, me)
-   
-   debug("<<< freeSlot()")
-
-   
+  
 def getSlotIdx(card, player = me):
    debug(">>> getSlotIdx({})".format(card))
    
@@ -732,13 +721,11 @@ def transformCard(card, cardModel):
       notify("{} transformed a card {}.".format(me, fromWhereStr(group)))
    model = card.model
    update()
-   transfCards = getGlobalVar('Transformed')
-   if card._id in transfCards:
-      model = transfCards[card._id]
-      del transfCards[card._id]
-   transfCards[newCard._id] = model
-   setGlobalVar('Transformed', transfCards)
-   debug("{}".format(transfCards))
+   if card._id in transformed:
+      model = transformed[card._id]
+      del transformed[card._id]
+   transformed[newCard._id] = model
+   debug("{}".format(transformed))
    triggerGameEvent([GameEvents.Removed, card._id])
    removeGameEventListener(card._id)
    card.delete()
@@ -916,11 +903,14 @@ def dealDamage(dmg, target, source, isPiercing = False):
    # Damage to a player
    else:
       if not isCharacter(source):
+         # Cannot trigger the event yet because counters won't be synchronized and any
+         # modification done to the counters will be lost.
+         # Next event will trigger once the player's HP counters is updated.
          pushStack(GameEvents.PlayerDamaged, [source._id], damagedPlayer=target, card=source)
       oldHP = getState(target, 'HP')
       newHP = oldHP - dmg
       target.HP = newHP
-      setState(target, 'HP', newHP)  # Update game state      
+      setState(target, 'HP', newHP)  # Update game state
       piercing = "piercing " if isPiercing else ""
       notify("{} deals {} {}damage to {}. New HP is {} (before was {}).".format(source, dmg, piercing, target, target.HP, oldHP))
       if newHP <= 0:
@@ -1026,20 +1016,18 @@ def dettach(card):
    debug(">>> dettach()")
    mute()
    card.target(False)
+   card_id = card._id
    backups = getGlobalVar('Backups')
-   # Next line causes an error
-   # attachements = [att_id for att_id in backups if backups[att_id] == card._id]
-   attach_len = len([id for id in backups if backups[id] == card._id])
    # Delete links of cards that were attached to the card
-   if attach_len > 0:
+   if card_id in backups.values():
       for id in backups:
-         if backups[id] == card._id:
+         if backups[id] == card_id:
             del backups[id]
             notify("{} unattaches {} from {}.".format(me, Card(id), card))
    # Or, if the card was an attachment, delete the link
-   elif card._id in backups:
-      del backups[card._id]
-      notify("Unattaching {} from {}".format(card, Card(backups[card._id])))
+   elif card_id in backups:
+      del backups[card_id]
+      notify("Unattaching {} from {}".format(card, Card(backups[card_id])))
    else:
       return
    setGlobalVar('Backups', backups)
@@ -1048,28 +1036,26 @@ def dettach(card):
 
 
 def clearAttachLinks(card):
-# This function takes care to discard any attachments of a card that left play
-# It also clear the card from the attach dictionary, if it was itself attached to another card
+# This function takes care to discard any attachments of a card that left play.
+# It also clear the card from the attach dictionary, if it was itself attached to another card.
    debug(">>> clearAttachLinks({})".format(card))
    
    backups = getGlobalVar('Backups')
-   # Next line causes an error
-   # attachements = [k for k, v in backups.iteritems() if v == card._id]
-   attach_len = len([id for id in backups if backups[id] == card._id])
+   card_id = card._id
    # Dettach cards that were attached to the card
-   if attach_len > 0:
+   if card_id in backups.values():
       notify("{} clears all backups of {}.".format(me, card))
       for id in backups:
-         if backups[id] == card._id:
+         if backups[id] == card_id:
             attcard = Card(id)
             debug("Unattaching {} from {}.".format(attcard, card))
             if attcard in table:
                discard(attcard)
             del backups[id]
    # If the card was an attachment, delete the link
-   if backups.has_key(card._id):
-      debug("{} is attached to {}. Unattaching.".format(card, Card(backups[card._id])))
-      del backups[card._id] # If the card was an attachment, delete the link
+   elif backups.has_key(card_id):
+      debug("{} is attached to {}. Unattaching.".format(card, Card(backups[card_id])))
+      del backups[card_id] # If the card was an attachment, delete the link
    setGlobalVar('Backups', backups)
    
    debugBackups()   
@@ -1081,9 +1067,10 @@ def getAttachmets(card):
    
    # Returns a list with all the cards attached to this card
    backups = getGlobalVar('Backups')
+   card_id = card._id
    attachs = []
    for id in backups:
-      if backups[id] == card._id:
+      if backups[id] == card_id:
          attachs.append(Card(id))
          
    debug("{} has {} cards attached".format(card, len(attachs)))

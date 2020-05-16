@@ -383,6 +383,8 @@ def askCardBackups(card, x = 0, y = 0):
       acceptedBackups = getAcceptedBackups(card)
       charsBackup = []
       res = False
+      msg1 = ''
+      msg2 = "{} can be backed-up with the following character types:\n  - {}".format(card.Name, '\n  - '.join(filter(None, acceptedBackups)))
       for c in me.hand:
          if isCharacter(c):
             if c != card and c.Subtype in acceptedBackups:
@@ -398,11 +400,10 @@ def askCardBackups(card, x = 0, y = 0):
          whisper("Highlighting compatible back-ups cards in your hand: {}.".format(cardsNamesStr(charsBackup)))
       else:
          if charIsInRing(card):
-            whisper("You don't have compatible character cards in your hand to backup {}.".format(card))
-      msg = "{} can be backed-up with the following character types:\n  - {}".format(card.Name, '\n  - '.join(filter(None, acceptedBackups)))
-      whisper(msg)
+            msg1 = "You don't have compatible character cards in your hand to backup {}.\n\n".format(card.Name)
+      whisper(msg2)
       if not res:
-         information(msg)
+         information(msg1 + msg2)
    else:
       information("Only character cards can be backed-up.")
 

@@ -53,11 +53,11 @@ def getParsedCard(card):
 
 def removeParsedCard(card):
    debug("Removed parsed card for ID {} ({})".format(card._id, card))
+   removeGameEventListener(card._id)
    gc = parsedCards.pop(card._id, None)
    if gc:
       del gc.card
       del gc
-   removeGameEventListener(card._id)
 
 
 class GameCard(object):
