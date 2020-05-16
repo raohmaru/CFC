@@ -155,8 +155,8 @@ def endPhaseStart():
          if card._id in blockers:
             blocker = Card(blockers[card._id])
             # Add attacking cards to action local variables & trigger game event
-            addActionTempVars('attacker', [card])
-            addActionTempVars('uaBP', dmg + pdmg)
+            addTempVar('attacker', [card])
+            addTempVar('uaBP', dmg + pdmg)
             update()
             triggerGameEvent([GameEvents.Blocks, blocker._id], blocker._id)
             # Trigger blocked event if not in UA
@@ -194,7 +194,7 @@ def endPhaseStart():
          # Unblocked attacker
          elif len(players) > 1:
             doDamage = True
-            if triggerHook([Hooks.BeforeDamage, card._id], card._id) == True:
+            if triggerHook([Hooks.CancelCombatDamage, card._id], card._id) == True:
                doDamage = False
             if doDamage:
                dealDamage(dmg + pdmg, players[1], card)
@@ -254,10 +254,11 @@ def clearKOedChars():
 
 
 def prepare():
-# In multiplayer games global variables are not sync if players simultaneously modify them.
-   clearGlobalVar('Stack')
-   clearGlobalVar('ActionTempVars') # Reset action local variables
+   clearGlobalVar('TempVars') # Reset action local variables
    
+   # In multiplayer games global variables could not be sync if players simultaneously modify them.
+   # Nevertheless, needs more testing to ensure that this is absolutely necessary.
+
    cards = [c._id for c in table
             if isCharacter(c)]
    
@@ -689,8 +690,8 @@ def blockAuto(card):
       return
 
    # Triggers a hook to check if block is possible
-   addActionTempVars('attacker', [target])
-   addActionTempVars('blocker', [card])
+   addTempVar('attacker', [target])
+   addTempVar('blocker', [card])
    if triggerHook([Hooks.CanBlock, target._id], target._id) == False:
       return
 

@@ -39,16 +39,10 @@ def debugScenario():
    gotoMain()
    rnd(100, 10000)  # Delay the next action until all animation is done
    tableCards = [
-       '4bd333d6-f063-424e-8cf9-3512f96f23b4' # Batsu
-      # ,'4bd333d6-f063-424e-8cf9-3512f96f23b4' # Batsu
-      # ,'7f5099da-4bcf-4895-9493-e83a993118b7' # Sean
-      # ,'1d07a01b-e099-44a8-87eb-71fb2f3fa762' # Jedah
-      # '7abee6d7-1831-4090-b882-eee2fd3aa246' # Kyouske
-      # ,'7abee6d7-1831-4090-b882-eee2fd3aa246' # Kyouske
-      # ,'7abee6d7-1831-4090-b882-eee2fd3aa246' # Kyouske
-      ,'e81e9366-b3e1-45a6-b010-bd02934b2efd' # Kain
-      ,'e81e9366-b3e1-45a6-b010-bd02934b2efd' # Kain
-      ,'e81e9366-b3e1-45a6-b010-bd02934b2efd' # Kain
+       'e81e9366-b3e1-45a6-b010-bd02934b2efd' # Kain
+      ,'aa591fb7-0136-4af8-9229-9b6da2e02aca' # Heidern
+      ,'7abee6d7-1831-4090-b882-eee2fd3aa246' # Kyosuke
+      ,'3a0e4fbc-6895-43e0-97d1-e1f667aca271' # J. Talbain
        # 'd14694b4-484c-4b45-962e-8cbb636d8a9a' # 200 BP
       # ,'c7d128ea-a3b9-4b04-b8b2-a61153b5b2e6' # 400 BP
       # ,'24e99a13-cb42-4e16-9900-78dde12e1a4c' # 600 BP
@@ -67,7 +61,8 @@ def debugScenario():
    handCards = [
        '62a6c4e0-51d0-4a23-9854-9ba0a25bc751' # Slaughter
       ,'26fa7e0e-eb86-40d5-b5ab-39723fd67e43' # Grenade
-      ,'0d7b5186-92db-4d61-8309-bfbd593df160' # # School's out
+      ,'0d7b5186-92db-4d61-8309-bfbd593df160' # School's out
+      ,'e1fb17f3-c4bf-4993-9b2f-91706cccf448' # Curse
       # ,'8bb477f9-5004-4018-8d5e-73c6a23e8912' # Char 300 BP
       # ,'e910f462-bea9-4262-b168-c7c512eb6511' # Char 500 BP
       # ,'0fdadc92-0864-46cc-a3ff-c20e2af8249c' # Char 700 BP
@@ -133,10 +128,10 @@ def debugOpp():
    chooseSide()
    
    tableCards = [
-      '4bd333d6-f063-424e-8cf9-3512f96f23b4' # Batsu
+       'e81e9366-b3e1-45a6-b010-bd02934b2efd' # Kain
       ,'e81e9366-b3e1-45a6-b010-bd02934b2efd' # Kain
-      ,'e81e9366-b3e1-45a6-b010-bd02934b2efd' # Kain
-      ,'e81e9366-b3e1-45a6-b010-bd02934b2efd' # Kain
+      ,'7abee6d7-1831-4090-b882-eee2fd3aa246' # Kyosuke
+      ,'7abee6d7-1831-4090-b882-eee2fd3aa246' # Kyosuke
        # 'd14694b4-484c-4b45-962e-8cbb636d8a9a' # 200 BP
       # ,'c7d128ea-a3b9-4b04-b8b2-a61153b5b2e6' # 400 BP
       # ,'24e99a13-cb42-4e16-9900-78dde12e1a4c' # 600 BP
@@ -231,15 +226,15 @@ def debugGameState():
       print("{}: {} ({})".format(e['event'], Card(e['id']).Name, Player(e['controller'])))
         
    print('\n== Modifiers ==')
-   Modifiers = getGlobalVar('Modifiers')
-   for t in Modifiers:
-      for m in Modifiers[t]:
+   mods = getGlobalVar('Modifiers')
+   for t in mods:
+      for m in mods[t]:
          print("{}: {} {}".format(t, Card(m[0]).Name, m[1:]))
          
    print('\n== Rules ==')
-   Rules = getGlobalVar('Rules')
-   for r in Rules:
-      for key, v in Rules[r].iteritems():
+   rules = getGlobalVar('Rules')
+   for r in rules:
+      for key, v in rules[r].iteritems():
          print("{}: {} ({})".format(r, Card(key).Name, v))
         
    print('\n== Transformed ==')
@@ -247,11 +242,19 @@ def debugGameState():
       print("{} ({})".format(Card(id).Name, transformed[id]))
         
    print('\n== Backups ==')
-   Backups = getGlobalVar('Backups')
-   for key, v in Backups.iteritems():
+   backups = getGlobalVar('Backups')
+   for key, v in backups.iteritems():
       print("{} -> {}".format(Card(key).Name, Card(v).Name))
         
    print('\n== Ring ==')
    print("Mine: {}".format(', '.join(map(lambda id: Card(id).Name if id else '-', getGlobalVar('Ring', me)))))
    print("Enemy: {}".format(', '.join(map(lambda id: Card(id).Name if id else '-', getGlobalVar('Ring', players[1])))))
       
+   print('\n== CharsAbilities ==')
+   abls = getGlobalVar('CharsAbilities')
+   for key, v in abls.iteritems():
+      print("{}: {}".format(Card(key).Name, v))
+      
+   print('\n== TempVars ==')
+   print(getGlobalVar('TempVars'))
+   

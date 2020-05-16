@@ -130,18 +130,20 @@ AutoUniChar    = u'\u25CF'
 
 # A dictionary which holds the regex used in other scripts
 Regexps = dict(
-   Ability  = re.compile(r'(.)\s+([^\r]+)'),
-   LeftCond = re.compile(r'^[\w.]+'),
-   BP       = re.compile(r'([\w\d\[\]]+)\.bp'),
-   LastBP   = re.compile(r'([\w\d\[\]]+)\.lastbp'),
-   Action   = re.compile(r'\baction\b'),
-   Reaction = re.compile(r'\breaction\b'),
-   Char     = re.compile(r'\bchar\b'),
-   Size     = re.compile(r'([\w.]+)\.size'),
-   Ring     = re.compile(r'(\w+)\.ring'),
-   Chars    = re.compile(r'(\w+)\.chars'),
-   Opp      = re.compile(r'\bopp\b'),
-   State    = re.compile(r'(\w+)\.(damaged|lostsp)')
+   ability    = re.compile(r'(.)\s+([^\r]+)'),
+   leftcond   = re.compile(r'^[\w.]+'),
+   bp         = re.compile(r'([\w\d\[\]]+)\.bp'),
+   lastbp     = re.compile(r'([\w\d\[\]]+)\.lastbp'),
+   action     = re.compile(r'\baction\b'),
+   reaction   = re.compile(r'\breaction\b'),
+   char       = re.compile(r'\bchar\b'),
+   size       = re.compile(r'([\w.]+)\.size'),
+   ring       = re.compile(r'(\w+)\.ring'),
+   chars      = re.compile(r'(\w+)\.chars'),
+   damaged    = re.compile(r'(\w+)\.damaged'),
+   lostsp     = re.compile(r'(\w+)\.lostsp'),
+   opp        = re.compile(r'\bopp\b'),
+   fromaction = re.compile(r'\bfromaction\b')
 )
 
 # Misc
@@ -185,16 +187,16 @@ DebugLevel = Struct(**{
 
 # Hooks
 Hooks = Struct(**{
-   'BeforeAttack' : 'beforeattack',
-   'BeforeBlock'  : 'beforeblock',
-   'BeforePlayAC' : 'beforeplayac',
-   'BeforePlayRE' : 'beforeplayre',
-   'BackupLimit'  : 'backuplimit',
-   'PreventPierce': 'preventpierce',
-   'CallOnRemove' : 'callonremove',
-   'PlayAsFresh'  : 'playasfresh',
-   'CanBlock'     : 'canblock',
-   'BeforeDamage' : 'beforedamage'
+   'BeforeAttack'      : 'beforeattack',
+   'BeforeBlock'       : 'beforeblock',
+   'BeforePlayAC'      : 'beforeplayac',
+   'BeforePlayRE'      : 'beforeplayre',
+   'BackupLimit'       : 'backuplimit',
+   'PreventPierce'     : 'preventpierce',
+   'CallOnRemove'      : 'callonremove',
+   'PlayAsFresh'       : 'playasfresh',
+   'CanBlock'          : 'canblock',
+   'CancelCombatDamage': 'cancelcombatdamage'
 })
 
 # Game Events
@@ -208,8 +210,8 @@ GameEvents = Struct(**{
    'RingChanges'        : 'ringchanges',
    'Removed'            : 'removed',
    'Powerless'          : 'powerless',
+   'BeforeDamage'       : 'beforedamage',
    'PlayerCombatDamaged': 'playercombatdamaged',
-   'PlayerDamaged'      : 'playerdamaged',
    'Attacks'            : 'attacks',
    'Blocks'             : 'blocks',
    'Blocked'            : 'blocked',
@@ -221,17 +223,10 @@ GameEventsFromVars = {
    'hand.size': GameEvents.HandChanges
 }
 
-# Events that should not trigger for chars in a UA
-GameEventsDisabledUA = [
-   GameEvents.EndPhase,
-   GameEvents.CleanupPhase,
-   GameEvents.PlayerCombatDamaged,
-   Hooks.BeforeDamage
-]
-
 # Events which callback can be executed on the player that does not own the card
 GameEventsCallOnHost = [
-   Hooks.CanBlock
+   Hooks.CanBlock,
+   GameEvents.BeforeDamage
 ]
 
 #---------------------------------------------------------------------------

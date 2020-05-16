@@ -80,7 +80,7 @@ class Rules():
          if effect[0]:
             cond = effect[0]
             if cond[0] == RS_KW_COND_IF:
-               leftCond = Regexps['LeftCond'].match(cond[1])
+               leftCond = Regexps['leftcond'].match(cond[1])
                if leftCond:
                   event = RulesLexer.getPrefix(RS_PREFIX_EVENTS, leftCond.group())
                   if event[1] in GameEventsFromVars:
@@ -155,7 +155,7 @@ class Rules():
          action = action[t-1]
             
       thisCard = Card(self.card_id)
-      addActionTempVars('tgt', target)
+      addTempVar('tgt', target)
       
       global commander
       if commander is None:
@@ -170,7 +170,7 @@ class Rules():
                res = evalExpression(var[1], True, getLocals(source=thisCard))
                if res is not None:
                   debug("-- {} := {}".format(var[0], res))
-                  addActionTempVars(var[0], res)
+                  addTempVar(var[0], res)
                
          # The player must pay the cost, or we cancel
          if action['cost']:
@@ -295,7 +295,7 @@ class Rules():
                if len(args) > 0 and isNumber(args[0]):
                   trigger = Card(args[0])
                   if hasattr(trigger, 'model'):  # It's an actual card
-                     addActionTempVars('trigger', trigger)
+                     addTempVar('trigger', trigger)
                
                return self.execAction(auto, targets, True)
             else:
@@ -346,7 +346,7 @@ class Rules():
             for card in cards:
                discard(card, isRandom = isRandom)
             # Add discarded cards to action local variables
-            addActionTempVars('discarded', cards)
+            addTempVar('discarded', cards)
             
          elif type == RS_KW_COST_SACRIFICE:
             if target:
@@ -357,10 +357,10 @@ class Rules():
                   return False
                for card in cards:
                   destroy(card)
-               addActionTempVars('sacrificed', cards)
+               addTempVar('sacrificed', cards)
             else:
                destroy(thisCard)
-               addActionTempVars('sacrificed', [thisCard])
+               addTempVar('sacrificed', [thisCard])
             
          # elif type == RS_KW_COST_EXILE:
          

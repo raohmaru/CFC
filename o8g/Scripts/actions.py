@@ -51,6 +51,13 @@ def nextPhase(group = table, x = 0, y = 0):
       notification(MSG_PHASE_DONE.format(me, Phases[phaseIdx], 'you'), player = getOpp())
       removeButton('BlockDone')
       playSnd('notification')
+      
+      
+def prevPhase(group = table, x = 0, y = 0):
+   if me.isActive:
+      phaseIdx = currentPhase()[1]
+      if phaseIdx > 1:
+         setPhase(phaseIdx-1)
 
 
 def gotoPhase(idx, oldIdx = 0):
@@ -468,7 +475,7 @@ def copyAbility(card, x = 0, y = 0, target = None):
    debug(">>> copyAbility({}, {})".format(card, target))
    mute()
    if not isCharacter(card):
-      whisper("Abilities can only be copied to character cards.")
+      warning('Abilities can only be copied to character cards.')
       return
    if target == None:
       targets =  [c for c in table   if c.targetedBy == me]
@@ -477,15 +484,20 @@ def copyAbility(card, x = 0, y = 0, target = None):
       if len(targets) > 0 and isCharacter(targets[0]) and targets[0] != card:
          target = targets[0]
       else:
-         choice = askChoice("From where do you want to copy an ability?", ['Arena', 'My discard pile'])
+         choice = askChoice('From where do you want to copy an ability?', ['Arena', 'Hand', 'My discard pile'])
          if choice == 0:
             return
          if choice == 1:
-            cards = getRing(me)
+            pile = getRing()
          elif choice == 2:
-            cards = [c for c in me.piles['Discard Pile'] if isCharacter(c)]
-         cards = [c for c in cards if c.Rules != "" and c != card]
-         choosenCards = showCardDlg(cards, "Choose a character with an ability")
+            pile = me.hand
+         else:
+            pile = me.piles['Discard Pile']
+         cards = [c for c in pile
+                  if c.Rules != ""
+                  and isCharacter(c)
+                  and c != card]
+         choosenCards = showCardDlg(cards, 'Choose a character with an ability to copy')
          if choosenCards:
             target = choosenCards[0]
          else:
@@ -515,7 +527,7 @@ def copyAbility(card, x = 0, y = 0, target = None):
          notify("{} copies ability {} to {}.".format(me, abilityName, card))
          return target
       else:
-         warning("Target character card doesn't have an ability to copy.")
+         warning("Target card doesn't have an ability to copy.")
    else:
       warning("Please select a valid character card.")
    debug("<<< copyAbility()")
@@ -953,7 +965,7 @@ def trash(group, x = 0, y = 0, silent = False, count = None):
       card.moveTo(discards)
       cards.append(card)
    # Add trashed card to action local variables
-   addActionTempVars('trashed', cards)
+   addTempVar('trashed', cards)
    if len(players) > 1: rnd(1, 100)  # Wait a bit more, as in multiplayer games, things are slower.
    if not silent:
       notify("{} trashes top {} cards {}.".format(me, count, fromWhereStr(group)))

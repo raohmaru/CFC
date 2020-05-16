@@ -136,6 +136,7 @@ effect:
       Effect command (followed by () or ?() with 0 or more parameters):
       ?() marks the command as optional:
          damage(#|expr)
+         modDamage(#)
          swapPiles(pile1, pile2)
          shuffle([myDeck])
          destroy()
@@ -235,12 +236,12 @@ event:
       removed
       powerless
       backedUp
+      beforeDamage:[suffix]
+      cancelCombatDamage:[suffix]
       playerCombatDamaged:[suffix]
-      playerDamaged:[suffix]
       attacks:[suffix]
       blocks:[suffix]
       blocked:[suffix]
-      beforeDamage:[suffix]
    Prefixes:
       my (default)
       opp
@@ -249,7 +250,7 @@ event:
       fromThis
       this
       any
-      action
+      fromAction
       once
       
 hook:
@@ -1067,7 +1068,7 @@ action = {F}: trash(2) target(opp)
 
 # Kain's RISOU
 RulesDict['e81e9366-b3e1-45a6-b010-bd02934b2efd'] = """
-auto = ~anyPlayerDamaged:action~ damage(100) to(damagedPlayer)
+auto = ~anyBeforeDamage:fromAction~ modDamage(+100)
 """
 
 # Kim's TRAINING!
@@ -1486,7 +1487,7 @@ abilities = cantblock, cantattack
 
 # Athena's FIRE SWORD
 RulesDict['2f8ecb64-d513-4e67-b537-5acef9de6c68'] = """
-auto = ~beforeDamage:this~ damage(600) to(opp)
+auto = ~cancelCombatDamage:this~ damage(600) to(opp)
 """
 
 # Abduction

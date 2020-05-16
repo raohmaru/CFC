@@ -71,7 +71,6 @@ def onCardsMoved(args):
    CharsAbilities = getGlobalVar('CharsAbilities')
    MyRing = getGlobalVar('Ring', me)
    handChanged = False
-   ringSlotFreed = False
    ringChanged = False
    abilitiesChanged = False
    
@@ -95,7 +94,7 @@ def onCardsMoved(args):
             if charIsInRing(card):
                # Frees a slot of the ring
                MyRing[MyRing.index(card_id)] = None
-               ringSlotFreed = True
+               setGlobalVar('Ring', MyRing, me)
                ringChanged = True
                card.filter = None
             triggerGameEvent([GameEvents.Removed, card_id])
@@ -140,8 +139,6 @@ def onCardsMoved(args):
          
    if abilitiesChanged:
       setGlobalVar('CharsAbilities', CharsAbilities)
-   if ringSlotFreed:
-      setGlobalVar('Ring', MyRing, me)
    # Trigger events
    if handChanged:
       triggerGameEvent(GameEvents.HandChanges, len(me.hand))
@@ -245,9 +242,6 @@ def OnCounterChanged(args):
    player = args.counter._player
    counterName = args.counter._name
    setState(player, counterName, player.counters[counterName].value)
-   if args.scripted:
-      # After the game state is sync, we can trigger events that modify the counters
-      popStack()
 
 
 def OnCardClicked(args):

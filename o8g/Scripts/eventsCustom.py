@@ -94,7 +94,7 @@ def triggerGameEvent(event, *args):
             if isinstance(listener['callback'], (int, long)):
                card = Card(listener['callback'])
                # Don't trigger auto ability for chars in a UA
-               if event in GameEventsDisabledUA and inUAttack(card):
+               if inUAttack(card):
                   notify("{}'s ability cannot be activated because it joined an United Attack".format(card))
                   res = (False, listener['callback'])
                   continue

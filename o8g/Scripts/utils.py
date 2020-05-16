@@ -14,7 +14,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this script.  If not, see <http://www.gnu.org/licenses/>.
 
-import re, time
+import re
 
 #---------------------------------------------------------------------------
 # General functions
@@ -74,8 +74,7 @@ def resetAll():
    clearGlobalVar('Modifiers')
    clearGlobalVar('Rules')
    clearGlobalVar('Rules')
-   clearGlobalVar('ActionTempVars')
-   clearGlobalVar('Stack')
+   clearGlobalVar('TempVars')
    clearGlobalVar('GameEvents')
    debug("<<< resetAll()")
 
@@ -136,24 +135,41 @@ def clearGlobalVar(name, player = None):
 
 def replaceVars(str):
    debug("-- replaceVars({})".format(str))
-   str = re.sub(Regexps['BP']      , r'getParsedCard(\1).BP', str)
-   str = re.sub(Regexps['LastBP']  , r'getParsedCard(\1).lastBP', str)
-   str = re.sub(Regexps['Action']  , 'isAction(card)', str)
-   str = re.sub(Regexps['Reaction'], 'isReaction(card)', str)
-   str = re.sub(Regexps['Char']    , 'isCharacter(card)', str)
-   str = re.sub(Regexps['Size']    , r'len(\1)', str)
-   str = re.sub(Regexps['Ring']    , r'getRingSize(\1)', str)
-   str = re.sub(Regexps['Chars']   , r'getRing(\1)', str)
-   str = re.sub(Regexps['State']   , r'getState(\1, "\2")', str)
-   str = re.sub(Regexps['Opp']     , r'getOpp()', str)
-   str = str.replace('.sp'         , '.SP')
-   str = str.replace('.hp'         , '.HP')
-   str = str.replace('alone'       , 'getRingSize() == 1')
-   str = str.replace('attacker'    , 'attacker[0]')
-   str = str.replace('blocker'     , 'blocker[0]')
-   str = str.replace('soloattack'  , 'len(getAttackingCards()) == 1')
-   str = str.replace('.discards'   , '.piles["Discard Pile"]')
+   # Order is important
+   str = replaceIfRgx (str, 'bp'        , r'getParsedCard(\1).BP')
+   str = replaceIfRgx (str, 'lastbp'    , r'getParsedCard(\1).lastBP')
+   str = replaceIfRgx (str, 'action'    , 'isAction(card)')
+   str = replaceIfRgx (str, 'reaction'  , 'isReaction(card)')
+   str = replaceIfRgx (str, 'char'      , 'isCharacter(card)')
+   str = replaceIfRgx (str, 'size'      , r'len(\1)')
+   str = replaceIfRgx (str, 'ring'      , r'getRingSize(\1)')
+   str = replaceIfRgx (str, 'chars'     , r'getRing(\1)')
+   str = replaceIfRgx (str, 'damaged'   , r'getState(\1, "damaged")')
+   str = replaceIfRgx (str, 'lostsp'    , r'getState(\1, "lostsp")')
+   str = replaceIfRgx (str, 'opp'       , r'getOpp()')
+   str = replaceIfRgx (str, 'fromaction', 'isAction(trigger)')
+   str = replaceIf    (str, '.sp'       , '.SP')
+   str = replaceIf    (str, '.hp'       , '.HP')
+   str = replaceIf    (str, 'alone'     , 'getRingSize() == 1')
+   str = replaceIf    (str, 'attacker'  , 'attacker[0]')
+   str = replaceIf    (str, 'blocker'   , 'blocker[0]')
+   str = replaceIf    (str, 'soloattack', 'len(getAttackingCards()) == 1')
+   str = replaceIf    (str, '.discards' , '.piles["Discard Pile"]')
    debug("---- {}".format(str))
+   return str
+
+   
+def replaceIfRgx(str, name, repl):
+# Optimization is evil, but it works
+   if name in str:
+      str = re.sub(Regexps[name], repl, str)
+   return str
+   
+   
+def replaceIf(str, name, repl, isRgx=True):
+# Optimization is evil, but it works
+   if name in str:
+      str = str.replace(name, repl)
    return str
    
    
@@ -239,15 +255,27 @@ def getRule(rule):
       return GameRulesDefaults[rule]
 
 
-def addActionTempVars(name, value):
-   debug(">>> addActionTempVars({}, {})".format(name, value))
-   vars = getGlobalVar('ActionTempVars')
+def addTempVar(name, value, merge = False):
+   debug(">>> addTempVar({}, {})".format(name, value))
+   name = name.lower()
+   vars = getGlobalVar('TempVars')
    if isinstance(value, list):
       value = [objToString(c) for c in value]
    else:
       value = objToString(value)
-   vars[name.lower()] = value
-   setGlobalVar('ActionTempVars', vars)
+   if merge and name in vars:
+      vars[name] += value
+   else:
+      vars[name] = value
+   setGlobalVar('TempVars', vars)
+   
+   
+def getTempVar(name, default = None):
+   vars = getGlobalVar('TempVars')
+   name = name.lower()
+   if not name in vars:
+      return default
+   return stringToObject(vars[name])
 
 
 def getState(player = None, name = None):
@@ -319,27 +347,6 @@ def removeGameMod(id, msg = False):
    if msg:
       notify(msg)
    
-
-def pushStack(event, params, **tempVars):
-   debug(">>> pushStack({}, {}, {})".format(event, params, tempVars))
-   Stack = getGlobalVar('Stack')
-   for key, value in tempVars.iteritems():
-      tempVars[key] = objToString(value)
-   Stack.append([[event] + params, tempVars])
-   setGlobalVar('Stack', Stack)
-   
-
-def popStack():
-   Stack = getGlobalVar('Stack')
-   debug(">>> popStack() --> {}".format(Stack))
-   if len(Stack) > 0:
-      item = Stack.pop(0)
-      setGlobalVar('Stack', Stack)
-      event, tempVars = item
-      for key, value in tempVars.iteritems():
-         addActionTempVars(key, value)
-      triggerGameEvent(*event)
-
 
 def objToString(obj):
    if isCard(obj):
@@ -735,7 +742,7 @@ def copyAlternateRules(card, target):
    debug(">>> copyAlternateRules({}, {})".format(card, target))
    
    if not settings['ExtAPI']:
-      return None
+      return False
    if isinstance(target, dict):
       target = Struct(**target)
    rules = target.Rules
@@ -743,7 +750,7 @@ def copyAlternateRules(card, target):
    if rules:
       debug("Found rule '{} {}'".format(ability, rules))
       return addAlternateRules(card, ability, rules)
-   return None
+   return False
    
    
 def addAlternateRules(card, ability, rules, altname=None):
@@ -899,14 +906,12 @@ def dealDamage(dmg, target, source, isPiercing = False):
       else:
          playSnd('damage-char-2')
       if newBP <= 0:
-         remoteCall(target.controller, 'whisper', [MSG_HINT_KOED.format(target)])
+         funcCall(target.controller, whisper, [MSG_HINT_KOED.format(target)])
    # Damage to a player
    else:
       if not isCharacter(source):
-         # Cannot trigger the event yet because counters won't be synchronized and any
-         # modification done to the counters will be lost.
-         # Next event will trigger once the player's HP counters is updated.
-         pushStack(GameEvents.PlayerDamaged, [source._id], damagedPlayer=target, card=source)
+         triggerGameEvent(GameEvents.BeforeDamage, source._id)
+      dmg += getTempVar('damageMod', 0)
       oldHP = getState(target, 'HP')
       newHP = oldHP - dmg
       target.HP = newHP
@@ -924,6 +929,7 @@ def dealDamage(dmg, target, source, isPiercing = False):
          playSnd('damage-player-2')
       else:
          playSnd('damage-player-1')
+      update()
 
 
 def modSP(count = 1, mode = None, silent = False, player = me):

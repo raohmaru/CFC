@@ -4,7 +4,7 @@
       name="Card Fighters' Clash"
       id="e3d56d9e-900d-49c6-b6ae-22cbb51be153"
       octgnVersion="3.4.217.0"
-      version="0.8.3.575"
+      version="0.8.3.578"
       markersize="20"
       tags="capcom snk fighter"
       description="Card game based on the SNK Playmore’s video game SNK vs. Capcom Card Fighters' Clash 2 Expand Edition.
@@ -131,9 +131,8 @@
 		<globalvariable name="GameEvents" value="[]" />
 		<globalvariable name="Modifiers" value="{}" />
 		<globalvariable name="Rules" value="{}" />
-		<globalvariable name="ActionTempVars" value="{}" />
+		<globalvariable name="TempVars" value="{}" />
 		<globalvariable name="CharsAbilities" value="{}" />
-		<globalvariable name="Stack" value="[]" />
 		<globalvariable name="GameState" value="{}" />
 	</globalvariables>
 
@@ -164,7 +163,8 @@
 	<table name="Table" visibility="undefined" ordered="False" width="1250" height="750" background="Resources/Background/background.jpg" backgroundStyle="uniformToFill">
 		<groupaction menu="Setup game" shortcut="Ctrl+Shift+S" execute="setup" showIf="acsh_gameNotStarted" />
 		<groupaction menu="Next phase" shortcut="Tab" execute="nextPhase" showIf="acsh_gameStarted" getName="aclb_NextOrPass" />
-		<groupactions menu="Phases..." showIf="acsh_gameStarted">
+		<groupaction menu="Previous phase" shortcut="Shift+Tab" execute="prevPhase" showIf="acsh_gameStartedAutoPlay" />
+		<groupactions menu="Phases..." showIf="acsh_gameStartedAutoPlayOff">
 			<groupaction menu="Go to Activate phase"      shortcut="F1" execute="gotoActivate" />
 			<groupaction menu="Go to Draw phase"          shortcut="F2" execute="gotoDraw" />
 			<groupaction menu="Go to Main phase"          shortcut="F3" execute="gotoMain" />

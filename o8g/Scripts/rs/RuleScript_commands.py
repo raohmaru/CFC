@@ -125,7 +125,7 @@ def toggleRule(ruleName, value, id, restr = None):
 def getLocals(**kwargs): 
 # Adds action local variables defined in other places
    locals = {}
-   vars = getGlobalVar('ActionTempVars')
+   vars = getGlobalVar('TempVars')
    for key, value in vars.iteritems():
       key = key.lower()
       if isinstance(value, list):
@@ -161,11 +161,11 @@ def getEnvVars():
          # aliases
          'ischar': isCharacter
       }
-      # To use in eval()
+      # To use in evalExpression(), case sensitive
       globalFuncs = [getParsedCard, isAction, isReaction, isCharacter, getRingSize, getRing, getState, getOpp, getAttackingCards]
       for f in globalFuncs:
          envVars[f.__name__] = f
-      # Used in cardRules
+      # Used in cardRules, case insensitive
       globalFuncs = [flipCoin, isCharacter]
       for f in globalFuncs:
          envVars[f.__name__.lower()] = f
@@ -223,7 +223,7 @@ def cmd_destroy(rc, targets, source, restr, *args):
          remoteCall(target.controller, "destroy", [target, 0, 0, me])
          remoteCall(target.controller, "update", [])
    # Add destroyed cards to action local variables
-   addActionTempVars('destroyed', targets)
+   addTempVar('destroyed', targets)
    rc.applyNext()
 
 
@@ -266,7 +266,7 @@ def cmd_discard(rc, targets, source, restr, whichCards=''):
       reveal = 'all' if len(targets) == 1 and player != me else False
       cards = RulesUtils.getTargets(cardsTokens, reveal=reveal)
       if cards:
-         addActionTempVars('discarded', cards)
+         addTempVar('discarded', cards)
          for card in cards:
             if player == me:
                discard(card)
@@ -326,7 +326,7 @@ def cmd_moveTo(rc, targets, source, restr, zone, pos = None, reveal = None):
                remoteCall(target.controller, "moveToGroup", [pile, target, None, pos, reveal, me])
             # rnd(1, 100) # Wait until all animation is done
          # Add moved card to action local variables
-         addActionTempVars('moved', targets)
+         addTempVar('moved', targets)
          if msgs:
             notify('\n'.join(msgs))
    rc.applyNext()
@@ -705,6 +705,13 @@ def cmd_removeFromAttack(rc, targets, source, restr, *args):
       remoteCall(getOpp(), "cancelAttack", [card])
       rnd(1, 100) # Wait until all animation is done
       notify("{} removes {} from attack.".format(me, card))
+   rc.applyNext()   
+
+
+def cmd_modDamage(rc, targets, source, restr, qty):
+   debug(">>> cmd_modDamage({})".format(qty))
+   addTempVar('damageMod', int(qty), True)
+   notify('Damage has been increased by {}.'.format(qty))
    rc.applyNext()
    
 
@@ -744,3 +751,4 @@ RulesCommands.register('turns',            cmd_turns)
 RulesCommands.register('skip',             cmd_skip)
 RulesCommands.register('unite',            cmd_unite)
 RulesCommands.register('removefromattack', cmd_removeFromAttack)
+RulesCommands.register('moddamage',        cmd_modDamage)

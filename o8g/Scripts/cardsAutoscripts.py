@@ -132,7 +132,7 @@ class Ability:
    
    def __init__(self, obj, rules = None, ruleId = None):
       if isinstance(obj, basestring):
-         ability = Regexps['Ability'].match(obj)
+         ability = Regexps['ability'].match(obj)
          if ability:
             self.ability = ability.group(0)
             self.type    = ability.group(1)

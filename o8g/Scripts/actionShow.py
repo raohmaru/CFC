@@ -65,3 +65,11 @@ def acsh_hidden(args, x = 0, y = 0):
       
 def acsh_notButton(args, x = 0, y = 0):
    return not isButton(args[0])
+
+      
+def acsh_gameStartedAutoPlayOff(args, x = 0, y = 0):
+   return acsh_gameStarted(args) and acsh_AutoPlayOff(args)
+
+      
+def acsh_gameStartedAutoPlay(args, x = 0, y = 0):
+   return acsh_gameStarted(args) and not acsh_AutoPlayOff(args) and me.isActive
