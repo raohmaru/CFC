@@ -112,7 +112,7 @@ class CharCard(GameCard):
    def BP(self):
       _BP = getMarker(self.card, 'BP')
       if _BP == 0 and self.card.group != table:
-         _BP = int(self.card.BP) / BPDivisor
+         _BP = int(self.card.BP)
       return _BP
 
 

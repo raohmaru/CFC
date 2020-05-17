@@ -4,7 +4,7 @@
       name="Card Fighters' Clash"
       id="e3d56d9e-900d-49c6-b6ae-22cbb51be153"
       octgnVersion="3.4.217.0"
-      version="0.8.3.578"
+      version="0.8.3.585"
       markersize="20"
       tags="capcom snk fighter"
       description="Card game based on the SNK Playmore’s video game SNK vs. Capcom Card Fighters' Clash 2 Expand Edition.
@@ -283,13 +283,14 @@
 		<counter name="SP" icon="Resources/Counters/sp.png" default="0"  reset="True" />
 
 		<globalvariable name="Ring" value="[None,None,None,None]" />
+		<globalvariable name="Rules" value="{}" />
 
 		<hand name="Hand" visibility="me" icon="Resources/Groups/hand.png">
 			<groupaction menu="Random discard" shortcut="Ctrl+Del" execute="randomDiscard" />
+			<groupaction menu="Discard all" shortcut="Ctrl+Shift+Del" execute="discardAll" />
 			<groupactions menu="Move all cards to...">
 				<groupaction menu="Deck (Top)" shortcut="Ctrl+D" execute="toDeckTopAll" />
 				<groupaction menu="Deck (Bottom)" shortcut="Ctrl+Shift+D" execute="toDeckBottomAll" />
-				<groupaction menu="Discard pile" shortcut="Ctrl+Shift+Del" execute="discardAll" />
 				<groupaction menu="Shuffle into Deck" shortcut="Ctrl+S" execute="shuffleIntoDeck" />
 			</groupactions>
 			<cardaction menu="Play card" default="True" shortcut="Ctrl+P" execute="play" />
@@ -324,8 +325,6 @@
 			</groupactions>
 			<cardaction menu="Put card into Hand" shortcut="Ctrl+H" execute="toHand" />
 			<cardaction menu="Put card into Discard pile" shortcut="Del" execute="discard" />
-			<cardaction menu="Put into Deck (Top)" shortcut="Ctrl+D" execute="toDeckTop" />
-			<cardaction menu="Put into Deck (Bottom)" shortcut="Ctrl+Shift+D" execute="toDeckBottom" />
 		</group>
 		<group name="Discard pile" visibility="all" icon="Resources/Groups/discards.png">
 			<groupaction menu="Shuffle" shortcut="Ctrl+S" execute="shuffle" />
@@ -336,7 +335,7 @@
 				<groupaction menu="All Reaction cards" execute="reshuffleRE" />
 			</groupactions>
 			<groupaction menu="Swap with Deck" shortcut="Ctrl+Alt+S" execute="swapWithDeck" />
-			<groupaction menu="Pick a random card" shortcut="Ctrl+Alt+R" execute="randomPick" />
+			<groupaction menu="Pick a random card" shortcut="Ctrl+Alt+R" execute="randomPick" showIf="acsh_AutoPlayOff" />
 			<groupactions menu="Move all cards to...">
 				<groupaction menu="Hand" shortcut="Ctrl+Shift+H" execute="toHandAll" />
 				<groupaction menu="Deck (Top)" shortcut="Ctrl+Shift+D" execute="toDeckTopAll" />

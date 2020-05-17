@@ -39,10 +39,10 @@ def debugScenario():
    gotoMain()
    rnd(100, 10000)  # Delay the next action until all animation is done
    tableCards = [
-       'e81e9366-b3e1-45a6-b010-bd02934b2efd' # Kain
-      ,'aa591fb7-0136-4af8-9229-9b6da2e02aca' # Heidern
-      ,'7abee6d7-1831-4090-b882-eee2fd3aa246' # Kyosuke
-      ,'3a0e4fbc-6895-43e0-97d1-e1f667aca271' # J. Talbain
+      '7abee6d7-1831-4090-b882-eee2fd3aa246'
+      ,'e81e9366-b3e1-45a6-b010-bd02934b2efd'
+      ,'e81e9366-b3e1-45a6-b010-bd02934b2efd'
+      ,'4bd333d6-f063-424e-8cf9-3512f96f23b4'
        # 'd14694b4-484c-4b45-962e-8cbb636d8a9a' # 200 BP
       # ,'c7d128ea-a3b9-4b04-b8b2-a61153b5b2e6' # 400 BP
       # ,'24e99a13-cb42-4e16-9900-78dde12e1a4c' # 600 BP
@@ -59,16 +59,13 @@ def debugScenario():
       rnd(1, 100)  # Delay the next action until all animation is done
       
    handCards = [
-       '62a6c4e0-51d0-4a23-9854-9ba0a25bc751' # Slaughter
-      ,'26fa7e0e-eb86-40d5-b5ab-39723fd67e43' # Grenade
-      ,'0d7b5186-92db-4d61-8309-bfbd593df160' # School's out
-      ,'e1fb17f3-c4bf-4993-9b2f-91706cccf448' # Curse
+      '26fa7e0e-eb86-40d5-b5ab-39723fd67e43'
       # ,'8bb477f9-5004-4018-8d5e-73c6a23e8912' # Char 300 BP
       # ,'e910f462-bea9-4262-b168-c7c512eb6511' # Char 500 BP
       # ,'0fdadc92-0864-46cc-a3ff-c20e2af8249c' # Char 700 BP
       # ,'af43872e-e47d-4fe0-9b55-aedd8a0d0fc7' # Char 800 BP
-      # ,'5e2211a0-e52e-4b7b-b03d-f6ecb3660bb0' # Action 0 SP
-      # ,'83c33aa8-5981-4352-8107-cbb7e05547ec' # Action -1 SP
+      ,'5e2211a0-e52e-4b7b-b03d-f6ecb3660bb0' # Action 0 SP
+      ,'83c33aa8-5981-4352-8107-cbb7e05547ec' # Action -1 SP
       # ,'80692723-3895-435f-bf8f-e94507704af5' # Action -3 SP
       # ,'ac01bbbe-583e-46ae-b26c-3c25eb8f0779' # Action -6 SP
       # ,'556b3359-e642-419a-ab5c-67f70de1bb4f' # Reaction 0 SP
@@ -128,10 +125,10 @@ def debugOpp():
    chooseSide()
    
    tableCards = [
-       'e81e9366-b3e1-45a6-b010-bd02934b2efd' # Kain
-      ,'e81e9366-b3e1-45a6-b010-bd02934b2efd' # Kain
-      ,'7abee6d7-1831-4090-b882-eee2fd3aa246' # Kyosuke
-      ,'7abee6d7-1831-4090-b882-eee2fd3aa246' # Kyosuke
+      '7abee6d7-1831-4090-b882-eee2fd3aa246'
+      ,'e81e9366-b3e1-45a6-b010-bd02934b2efd'
+      ,'e81e9366-b3e1-45a6-b010-bd02934b2efd'
+      ,'4bd333d6-f063-424e-8cf9-3512f96f23b4'
        # 'd14694b4-484c-4b45-962e-8cbb636d8a9a' # 200 BP
       # ,'c7d128ea-a3b9-4b04-b8b2-a61153b5b2e6' # 400 BP
       # ,'24e99a13-cb42-4e16-9900-78dde12e1a4c' # 600 BP
@@ -144,8 +141,8 @@ def debugOpp():
       rnd(1, 100)  # Delay the next action until all animation is done
       
    handCards = [
-       '26fa7e0e-eb86-40d5-b5ab-39723fd67e43' # Grenade
-      # ,'8bb477f9-5004-4018-8d5e-73c6a23e8912' # Char 300 BP
+      '26fa7e0e-eb86-40d5-b5ab-39723fd67e43'
+       # '8bb477f9-5004-4018-8d5e-73c6a23e8912' # Char 300 BP
       # ,'e910f462-bea9-4262-b168-c7c512eb6511' # Char 500 BP
       # ,'0fdadc92-0864-46cc-a3ff-c20e2af8249c' # Char 700 BP
       # ,'af43872e-e47d-4fe0-9b55-aedd8a0d0fc7' # Char 800 BP
@@ -236,6 +233,19 @@ def debugGameState():
    for r in rules:
       for key, v in rules[r].iteritems():
          print("{}: {} ({})".format(r, Card(key).Name, v))
+         
+   print('\n== My Rules ==')
+   rules = getGlobalVar('Rules', me)
+   for r in rules:
+      for key, v in rules[r].iteritems():
+         print("{}: {} ({})".format(r, Card(key).Name, v))
+   
+   if len(players) > 1:
+      print('\n== Enemy Rules ==')
+      rules = getGlobalVar('Rules', players[1])
+      for r in rules:
+         for key, v in rules[r].iteritems():
+            print("{}: {} ({})".format(r, Card(key).Name, v))
         
    print('\n== Transformed ==')
    for id in transformed:

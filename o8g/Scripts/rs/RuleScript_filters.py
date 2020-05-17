@@ -82,7 +82,7 @@ def getCardProp(card, prop):
    if prop == 'bp':
       bp = getMarker(card, 'BP')
       if bp == 0:
-         bp = num(card.BP) / BPDivisor
+         bp = num(card.BP)
       return bp
    elif prop == 'sp':
       return num(card.SP)
@@ -111,10 +111,10 @@ def filterBP(card, include, cmd, *args):
    # Get additional parameters
    try:
       op, value = args
-   except:
+   except ValueError:
       return False
    if op != RS_OP_FUNC:
-      value = num(value) * BPMultiplier
+      value = num(value)
 
    bp = getCardProp(card, 'bp')
       
@@ -132,7 +132,7 @@ def filterSP(card, include, cmd, *args):
    # Get additional parameters
    try:
       op, value = args
-   except:
+   except ValueError:
       return False
    if op != RS_OP_FUNC:
       value = num(value)

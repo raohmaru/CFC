@@ -1231,7 +1231,7 @@ action = damage(200) to(opp)
 
 # Shermie's GO EASY ON ME
 RulesDict['672ac290-d6f2-4579-b5ae-1067add14601'] = """
-action = +cantattack target(characters@oppRing) oppueot
+action = disableRule(attack) target(opp) oppueot
 """
 
 # Shingo's BURNING SHINGO!
@@ -1497,8 +1497,7 @@ action = {S(<**>character@myRing)}: each(card in sacrificed -> sp(+5))
 
 # Activate!
 RulesDict['e2597326-5639-435f-ae33-3303b181527c'] = """
-target = characters@myRing
-action = +unlimitedbackup & enableRule(backup_fresh) ueot
+action = disableRule(backup_limit) & enableRule(backup_fresh) ueot
 """
 
 # Awakening
@@ -1605,7 +1604,7 @@ action = unfreeze() target(characters[frozen]@ring)
 
 # Glare off
 RulesDict['faea0028-c313-438e-b9f0-8536e494ddb1'] = """
-action = +cantattack target(characters) uynt
+action = disableRule(attack) uynt
 """
 
 # Grace

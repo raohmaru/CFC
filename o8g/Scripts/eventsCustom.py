@@ -40,6 +40,7 @@ def addGameEventListener(event, callback, obj_id, source_id=None, restr=None, ar
          and e['callback'] == callback
          and e['restr'] == restr
          and e['scope'] == prfx
+         and e['args'] == args
       ):
          return False
    ge.append(listener)

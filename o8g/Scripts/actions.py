@@ -61,7 +61,7 @@ def prevPhase(group = table, x = 0, y = 0):
 
 
 def gotoPhase(idx, oldIdx = 0):
-   triggerPhaseEvent(idx)
+   triggerPhaseEvent(idx, oldIdx)
 
 
 def gotoActivate(group = table, x = 0, y = 0):
@@ -388,8 +388,8 @@ def alignCardAction(card, x = 0, y = 0):
 def askCardBackups(card, x = 0, y = 0):
    if isCharacter(card):
       acceptedBackups = getAcceptedBackups(card)
+      inRing = charIsInRing(card)
       charsBackup = []
-      res = False
       msg1 = ''
       msg2 = "{} can be backed-up with the following character types:\n  - {}".format(card.Name, '\n  - '.join(filter(None, acceptedBackups)))
       for c in me.hand:
@@ -400,16 +400,16 @@ def askCardBackups(card, x = 0, y = 0):
             elif c.highlight == InfoColor:
                c.highlight = None
       if len(charsBackup) > 0:
-         if charIsInRing(card):
+         if inRing:
             targets = showCardDlg(charsBackup, 'Select a character card from your hand to back-up {}'.format(card.Name))
             if targets:
-               res = backup(targets[0], target=card)
+               backup(targets[0], target=card)
          whisper("Highlighting compatible back-ups cards in your hand: {}.".format(cardsNamesStr(charsBackup)))
       else:
-         if charIsInRing(card):
+         if inRing:
             msg1 = "You don't have compatible character cards in your hand to backup {}.\n\n".format(card.Name)
       whisper(msg2)
-      if not res:
+      if not inRing or len(charsBackup) == 0:
          information(msg1 + msg2)
    else:
       information("Only character cards can be backed-up.")
@@ -720,8 +720,6 @@ def changeSlot(card, x = 0, y = 0, targets = None):
 # --------------
 def plusBP(cards, x = 0, y = 0, silent = False, count = 100):
    mute()
-   if count < BPMultiplier:
-      count *= BPMultiplier
    for card in cards:
       addMarker(card, 'BP', count)
       if not silent:
@@ -729,8 +727,6 @@ def plusBP(cards, x = 0, y = 0, silent = False, count = 100):
 
 def minusBP(cards, x = 0, y = 0, silent = False, count = 100):
    mute()
-   if count < BPMultiplier:
-      count *= BPMultiplier
    for card in cards:
       c = count
       bp = getMarker(card, 'BP')
@@ -822,6 +818,7 @@ def play(card):  # This is the function to play cards from your hand.
    debug(">>> playing card {}".format(card))
 
    mute()
+   chooseSide()
    slot = ""
    group = card.group
    if settings['Play']:

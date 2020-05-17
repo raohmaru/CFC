@@ -99,9 +99,11 @@ class RulesCommands():
 # Related functions
 #---------------------------------------------------------------------------
 
-def toggleRule(ruleName, value, id, restr = None):
-   debug(">>> toggleRule({}, {}, {})".format(ruleName, value, id))
-   Rules = getGlobalVar('Rules')
+def toggleRule(ruleName, value, id, restr = None, player = None):
+   debug(">>> toggleRule({}, {}, {}, {})".format(ruleName, value, id, player))
+   if player:
+      player = Player(player)
+   Rules = getGlobalVar('Rules', player)
    if not ruleName in Rules:
       Rules[ruleName] = {}
    rule = Rules[ruleName]
@@ -110,16 +112,15 @@ def toggleRule(ruleName, value, id, restr = None):
    else:
       if isNumber(value):
          value = int(value)
-         if ruleName == 'play_char_bp_limit':
-            value *= BPMultiplier
       rule[id] = value
-   setGlobalVar('Rules', Rules)
+   setGlobalVar('Rules', Rules, player)
    debug("Rule {} has been {} ({})".format(ruleName, ('disabled','enabled')[bool(value)], Rules[ruleName]))
-   ruleValue = getRule(ruleName)
+   ruleValue = getRule(ruleName, Rules)
    if (bool(value) and ruleValue) or (value == False and not ruleValue):
       if ruleName in MSG_RULES:
          restr = getTextualRestr(restr)
-         notify(MSG_RULES[ruleName][bool(value)].format(value, restr))
+         ctrl = "{}'s ".format(player) if player else ''
+         notify(MSG_RULES[ruleName][bool(value)].format(value, restr, ctrl))
 
 
 def getLocals(**kwargs): 
@@ -179,7 +180,7 @@ def getEnvVars():
 def cmd_damage(rc, targets, source, restr, dmg):
    debug(">>> cmd_damage({}, {})".format(targets, dmg))
    if isNumber(dmg):
-      dmg = int(dmg) * BPMultiplier
+      dmg = int(dmg)
    else:
       dmg = evalExpression(dmg, True, getLocals(rc=rc, targets=targets, source=source))
    for target in targets:
@@ -351,13 +352,11 @@ def cmd_bp(rc, targets, source, restr, qty):
    mode = None
    amount = None
    if isNumber(qty):
-      amount = num(qty) * BPMultiplier
+      amount = num(qty)
    elif qty[0] in RS_MODES:
       mode = qty[0]
       if isNumber(qty[1:]):
          amount = num(qty[1:])
-         if mode != RS_MODE_MULT:
-            amount *= BPMultiplier
       else:
          qty = qty[1:]
    if amount == None:
@@ -393,7 +392,7 @@ def cmd_sp(rc, targets, source, restr, qty):
 
 def cmd_hp(rc, targets, source, restr, qtyExpr):
    if isNumber(qtyExpr):
-      qty = int(qtyExpr) * BPMultiplier
+      qty = int(qtyExpr)
    else:
       qty = evalExpression(qtyExpr, True, getLocals(rc=rc, targets=targets, source=source))
    if not targets or isCard(targets[0]):
@@ -533,25 +532,31 @@ def cmd_moveRestTo(rc, targets, source, restr, zone, pos = None):
   
 def cmd_disableRule(rc, targets, source, restr, rule):
    debug(">>> cmd_disableRule({})".format(rule))
-   toggleRule(rule, False, source._id, restr)
-   args = ['toggleRule', source._id, None, restr, [rule, True, source._id, restr]]
-   if isCharacter(Card(source._id)):
+   player = None
+   if targets and isPlayer(targets[0]):
+      player = targets[0]._id
+   toggleRule(rule, False, source._id, restr, player)
+   args = ['toggleRule', source._id, None, restr, [rule, True, source._id, restr, player]]
+   if isCharacter(Card(source._id)) and not restr:
       addGameEventListener(GameEvents.Removed,   *args)
       addGameEventListener(GameEvents.Powerless, *args)
    if restr:
-      addGameEventListener(GameEvents.EndPhase, *args)
+      addGameEventListener(Hooks.CallOnRemove, *args)
    rc.applyNext()
    
    
 def cmd_enableRule(rc, targets, source, restr, rule, value = True):
-   debug(">>> cmd_enableRule({})".format(rule))
-   toggleRule(rule, value, source._id, restr)
-   args = ['toggleRule', source._id, None, restr, [rule, False, source._id, restr]]
-   if isCharacter(Card(source._id)):
+   debug(">>> cmd_enableRule({}, {})".format(rule, value))
+   player = None
+   if targets and isPlayer(targets[0]):
+      player = targets[0]._id
+   toggleRule(rule, value, source._id, restr, player)
+   args = ['toggleRule', source._id, None, restr, [rule, False, source._id, restr, player]]
+   if isCharacter(Card(source._id)) and not restr:
       addGameEventListener(GameEvents.Removed,   *args)
       addGameEventListener(GameEvents.Powerless, *args)
    if restr:
-      addGameEventListener(GameEvents.EndPhase, *args)
+      addGameEventListener(Hooks.CallOnRemove, *args)
    rc.applyNext()
 
 

@@ -115,7 +115,10 @@ def getGlobalVar(name, player = None):
 def setGlobalVar(name, value, player = None):
 # Writes a game global variable or a player global variable
    if player:
-      player.setGlobalVariable(name, str(value))
+      if player == me:
+         player.setGlobalVariable(name, str(value))
+      else:
+         remoteCall(player, 'setGlobalVar', [name, value, player])
    else:
       setGlobalVariable(name, str(value))
 
@@ -242,8 +245,11 @@ def unique(seq):
 # Game mods
 #---------------------------------------------------------------------------
 
-def getRule(rule):
-   Rules = getGlobalVar('Rules')
+def getRule(rule, Rules = None):
+   if not Rules:
+      Rules = getGlobalVar('Rules', me)
+      if not rule in Rules or not Rules[rule]:  # It could be an empty list []
+         Rules = getGlobalVar('Rules')
    if rule in Rules and Rules[rule]:  # Not an empty list []
       for key, v in Rules[rule].iteritems():
          if not isinstance(v, bool):
@@ -413,7 +419,7 @@ def getRing(player = None):
 
 def getRingSize(player = me, ring = None):
    if not ring:
-      getGlobalVar('Ring', player)
+      ring = getGlobalVar('Ring', player)
    return NumSlots - ring.count(None)
 
 
@@ -710,7 +716,7 @@ def transformCard(card, cardModel):
       clearAttachLinks(card)
       slotIdx = getSlotIdx(card)
       if slotIdx != -1:
-         setMarker(newCard, 'BP', num(newCard.BP) / BPDivisor)
+         setMarker(newCard, 'BP', num(newCard.BP))
          putAtSlot(newCard, slotIdx)
          newCard.orientation = card.orientation
          if settings['Play']:

@@ -53,6 +53,7 @@ MSG_ERR_NO_FILTERED_PLAYERS = "No player match the requirements of this card's e
 MSG_ERR_TARGET_OTHER        = "{}'s ability cannot select itself, therefore it has been removed from selection."
 MSG_ERR_ATTACK_CHAR_RING    = "Please attack with a character in your ring."
 MSG_ERR_ATTACK_FRESH        = "Characters that just entered the ring can't attack this turn.\nProceed anyway?"
+MSG_ERR_CANNOT_ATTACK       = "{} cannot attack due to an ability or effect."
 MSG_ERR_BLOCK_ONE           = "An attacking character can only be blocked by exactly one character."
 MSG_HOOKS_ERR = {
    Hooks.BeforeAttack: "{} cannot attack due to {}'s {} ability{}.",
@@ -131,7 +132,15 @@ MSG_RULES = {
    ),
    'attack_freeze': (
       'Characters don\'t freeze after a solo or united attack{1}.',
-      'Characters freeze after a solo or united attack.'
+      'Characters will freeze after a solo or united attack.'
+   ),
+   'attack': (
+      '{2}Characters cannot attack{1}.',
+      '{2}Characters can attack as normal.'
+   ),
+   'backup_limit': (
+      'Players can only do any number of back-ups{1}.',
+      'Players can only do {} back-up per turn.'.format(BackupsPerTurn)
    )
 }
 

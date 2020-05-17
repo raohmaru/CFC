@@ -38,8 +38,7 @@ try:
    # clr.AddReference("Octgn.DataNew")
    import Octgn
    import System
-
-except:
+except (IOError, ImportError):
    settings['ExtAPI'] = False
    
 class ExtendedApi(object):

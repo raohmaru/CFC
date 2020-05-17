@@ -25,7 +25,7 @@ try:
 
    from System.Windows.Forms import *
    from System.Drawing import *
-except:
+except (IOError, ImportError):
    settings['WinForms'] = False
 
 

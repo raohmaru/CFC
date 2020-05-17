@@ -18,11 +18,14 @@
 # Start/End of Turn/Phase triggers
 #------------------------------------------------------------------------------
 
-def triggerPhaseEvent(phase):
+def triggerPhaseEvent(phase, oldPhase = 0):
    # Function which triggers effects at the start or end of the phase
    debug(">>> triggerPhaseEvent({})".format(phase))
    mute()
    if not settings['Play']: return
+   
+   # Going backwards?
+   if phase < oldPhase: return
    
    skipPhases = getState(me, 'skip')
    if phase in skipPhases:
@@ -130,7 +133,7 @@ def endPhaseStart():
    clearKOedChars()
 
    # Freeze attacking characters
-   freezeAtk = getRule('attack_freeze')   
+   freezeAtk = getRule('attack_freeze')
    myCards = (card for card in table
       if card.controller == me)
    for card in myCards:
@@ -157,8 +160,8 @@ def endPhaseStart():
             # Add attacking cards to action local variables & trigger game event
             addTempVar('attacker', [card])
             addTempVar('uaBP', dmg + pdmg)
-            update()
             triggerGameEvent([GameEvents.Blocks, blocker._id], blocker._id)
+            update()
             # Trigger blocked event if not in UA
             if pdmg == 0:
                triggerGameEvent([GameEvents.Blocked, card._id], card._id)
@@ -287,7 +290,12 @@ def prepare():
    changed = False
    for e in list(reversed(ge)):
       if e['restr'] is None:
-         if e['id'] not in cards and e['source'] not in cards:
+         source = e['source']
+         id = e['id']
+         if (
+            (source and source not in cards and isCharacter(Card(source)))
+            or (id not in cards and isCharacter(Card(id)))
+         ):
             ge.remove(e)
             changed = True
    if changed:
@@ -298,7 +306,7 @@ def prepare():
    changed = False
    for t in Modifiers:
       for m in list(reversed(Modifiers[t])):
-         if not m[0] in cards:
+         if not m[0] in cards and isCharacter(Card(m[0])):
             Modifiers[t].remove(m)
             changed = True
    if changed:
@@ -309,7 +317,7 @@ def prepare():
    changed = False
    for r in Rules:
       for id in Rules[r].keys():
-         if not id in cards:
+         if not id in cards and isCharacter(Card(id)):
             del Rules[r][id]
             changed = True
    if changed:
@@ -348,7 +356,7 @@ def playAuto(card, slotIdx=None, force=False):
       bplimit = getRule('play_char_bp_limit')
       if bplimit:
          bplimit = reduce(lambda a,b: min(a,b), bplimit)
-         if num(card.BP) / BPDivisor >= bplimit:
+         if num(card.BP) >= bplimit:
             warning(MSG_RULES['play_char_bp_limit'][True].format(bplimit))
             return
       # Player has any empty slot in his ring?
@@ -374,7 +382,7 @@ def playAuto(card, slotIdx=None, force=False):
       # Parse the card to enable card autoscripts
       removeParsedCard(card)
       pcard = parseCard(card)
-      setMarker(card, 'BP', num(card.BP) / BPDivisor)
+      setMarker(card, 'BP', num(card.BP))
       # Triggers a hook whether the character can have the "just entered" marker
       if triggerHook(Hooks.PlayAsFresh, card._id) != False:
          setMarker(card, 'Just Entered')
@@ -454,20 +462,20 @@ def backupAuto(card, target = None):
             warning('There are not compatible characters to back-up in the ring.')
             return
       target = targets[0]
-   # Backup limit
-   backupsPlayed = getState(me, 'backupsPlayed')
-   if backupsPlayed >= BackupsPerTurn:
-      if triggerHook([Hooks.BackupLimit, target._id]) != False:
-         if not confirm("Can't backup more than {} character per turn.\nProceed anyway?".format(BackupsPerTurn)):
-            return
-   # Target just entered the ring?
-   if MarkersDict['Just Entered'] in target.markers and not getRule('backup_fresh'):
-      if not confirm("Characters that just entered the ring this turn can't be backed-up.\nProceed anyway?"):
-         return
    # Target is frozen?
    if isFrozen(target):
       warning("Frozen characters can't be backed-up.")
       return
+   # Target just entered the ring?
+   if MarkersDict['Just Entered'] in target.markers and not getRule('backup_fresh'):
+      if not confirm("Characters that just entered the ring this turn can't be backed-up.\nProceed anyway?"):
+         return
+   # Backup limit
+   backupsPlayed = getState(me, 'backupsPlayed')
+   if backupsPlayed >= BackupsPerTurn:
+      if getRule('backup_limit') and triggerHook([Hooks.BackupLimit, target._id]) != False:
+         if not confirm("Can't backup more than {} character per turn.\nProceed anyway?".format(BackupsPerTurn)):
+            return
    # Check compatible backups
    acceptedBackups = getAcceptedBackups(target)
    if not card.Subtype in acceptedBackups:
@@ -512,6 +520,10 @@ def attackAuto(card, force = False):
    if slotIdx == -1:
       warning(MSG_ERR_ATTACK_CHAR_RING)
       return
+   # Check if attack is allowed
+   if not getRule('attack'):
+      warning(MSG_ERR_CANNOT_ATTACK.format(card.Name))
+      return
    # Triggers a hook to check if the character can attack
    if triggerHook([Hooks.BeforeAttack, card._id], card._id) == False:
       return
@@ -550,6 +562,10 @@ def unitedAttackAuto(card, targets = None, force = False):
    # If is the only attacker, do a regular attack
    if len(getAttackingCards(me)) == 0:
       attack(card)
+      return
+   # Check if attack is allowed
+   if not getRule('attack'):
+      warning(MSG_ERR_CANNOT_ATTACK.format(card.Name))
       return
    # Char just entered the ring?
    if hasMarker(card, 'Just Entered'):

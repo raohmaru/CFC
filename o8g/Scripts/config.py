@@ -154,8 +154,6 @@ Yaxis        = 'y'
 PlayAction   = 'play'
 BackupAction = 'backup'
 Author       = 'raohmaru'
-BPDivisor    = 1  # 100
-BPMultiplier = 1  # 100
 
 # Rules
 NumSlots        = 4
@@ -176,7 +174,9 @@ GameRulesDefaults = {
    'backup_fresh'      : False, # Backup fresh characters
    'play_char_bp_limit': None,  # BP limit to play chars
    'dmg_combat_deal'   : True,  # Deal combat damage
-   'attack_freeze'     : True   # Characters freeze after a attack
+   'attack_freeze'     : True,  # Characters freeze after a attack
+   'attack'            : True,  # Characters can attack
+   'backup_limit'      : True   # Limit the number of backups per turn
 }
 
 # Debug
