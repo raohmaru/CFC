@@ -402,8 +402,9 @@ def reveal(group):
       cards = [card for card in group]
       notify("{} shows his {}".format(group.controller, group.name))
       showCardDlg(cards, "Cards in {}'s {}".format(group.controller, group.name), 0, min=0)
-      for card in cards:
-         card.peek()
+      if group.name == 'Hand':
+         for card in cards:
+            card.peek()
    
    
 def getRing(player = None):

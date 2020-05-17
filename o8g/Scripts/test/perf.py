@@ -21,15 +21,17 @@
 import sys
 sys.path.append('..')
 from time import time
+import timeit
 import re
-from config import Regexps
+from config import Regexps, Struct
    
-def test(fun, p):
+def test(fun, args=[], r=1000):
    t = time()
-   for x in range(1000):
-      fun(p)
+   for x in range(r):
+      fun(*args)
    print 'duration:', time()-t
 
+#---------------------------------------------------------------------------
 
 def replaceVars(str):
    str = re.sub(Regexps['bp']        , r'getParsedCard(\1).BP', str)
@@ -124,6 +126,34 @@ s = 'card.bp <= 300 and action and not opp.damaged and opp.hp > 1000'
 # test(replaceVars, s)
 # test(replaceVarsIf, s)
 
+# test(replaceVarsIf, [s])
+# test(replaceVarsIf2, [s])
 
-test(replaceVarsIf, s)
-test(replaceVarsIf2, s)
+#---------------------------------------------------------------------------
+
+n = 0
+d = {
+   'a': 1,
+   'b': 2
+}
+s = Struct(**{
+   'a': 1,
+   'b': 2
+})
+
+def testDict(n, d):
+   d = {
+      'a': 1,
+      'b': 2
+   }
+   n += d['a'] + d['b']
+   
+def testStruct(n, s):
+   s = Struct(**{
+      'a': 1,
+      'b': 2
+   })
+   n += s.a + s.b
+   
+print timeit.timeit('testDict(n, d)',    'from __main__ import testDict, n, d',    number=1000)
+print timeit.timeit('testStruct(n, s)',  'from __main__ import testStruct, n, s',  number=1000)

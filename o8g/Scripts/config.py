@@ -180,10 +180,10 @@ GameRulesDefaults = {
 }
 
 # Debug
-DebugLevel = Struct(**{
+DebugLevel = {
    'Off'    : 0,
    'Debug'  : 1
-})
+}
 
 # Hooks
 Hooks = Struct(**{
@@ -242,11 +242,11 @@ turns          = 1  # The number of consecutive turns a player can play
 envVars        = None  # Global variables to be used in eval() expression
 buttons        = {}  # Holds the UI buttons created
 transformed    = {}  # Transformed cards
-debugVerbosity = DebugLevel.Off
+debugVerbosity = DebugLevel['Off']
 debugging      = False
 # If I am alone debugging I want to know EVERYTHING
 # if me.name == Author and len(players) == 1:
-   # debugVerbosity = DebugLevel.Debug
+   # debugVerbosity = DebugLevel['Debug']
 
 settings = {
    'Play'         : True, # Trigger game, event and card effects

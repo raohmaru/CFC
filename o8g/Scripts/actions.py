@@ -907,6 +907,7 @@ def drawMany(group, count = None, silent = False):  # This function draws a vari
       count = askInteger("How many cards do you want to draw?", handSize) # Ask the player how many cards they want.
    if count == None:
       return
+   i = 0
    for i in range(0, count):
       if len(group) > 0:  # If the deck is not empty...
          group.top().moveTo(me.hand)  # ...then move them one by one into their play hand.
@@ -987,6 +988,7 @@ def prophecy(group = me.Deck, x = 0, y = 0, count = None, deckPos = 0):
       if card == None:
          return
       card = card[0]
+      # Allow the player to first see the cards, and then choose where to put them
       if not deckPos:
          deckPos = askChoice("Where to put the card?", ['Top of deck', 'Bottom of deck'])
          if deckPos == 0:
@@ -1079,7 +1081,7 @@ def setupDebug(group, x=0, y=0):
 def setDebugVerbosity(group=None, x=0, y=0):
    global debugVerbosity
    mute()
-   levels = DebugLevel.__dict__.keys()
+   levels = DebugLevel.keys()
    choice = askChoice("Set debug verbosity to: (current is {})".format(levels[debugVerbosity]), levels)
    if choice == 0:
       return

@@ -293,8 +293,8 @@ def prepare():
          source = e['source']
          id = e['id']
          if (
-            (source and source not in cards and isCharacter(Card(source)))
-            or (id not in cards and isCharacter(Card(id)))
+            (source and (source not in cards and isCharacter(Card(source)) or not Card(source).Rules))
+            or (id not in cards and isCharacter(Card(id)) or not Card(id).Rules)
          ):
             ge.remove(e)
             changed = True

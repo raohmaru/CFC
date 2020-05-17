@@ -1098,8 +1098,8 @@ auto = ~anyBackedUp~ draw() to(trigger.controller)
 
 # Rock Howard's NEO DEADLY RAVE
 RulesDict['b1082f22-34d1-4ecf-b972-261ace7b2a68'] = """
-action = {S}: each(card in opp.hand -> damage(100)) to(opp)
-# action = {S}: damage(opp.hand.size) to(opp)
+# action = {S}: each(card in opp.hand -> damage(100)) to(opp)
+action = {S}: damage(opp.hand.size * 100) to(opp)
 """
 
 # Terry's TERRY RUSH
@@ -1288,7 +1288,8 @@ auto = ~activatephase~ sp(-2) to(players)
 
 # Kagami's PHOENIX
 RulesDict['57de9ee8-5791-4696-96a1-057bf866ed9f'] = """
-action = {S}: each(card in me.hand -> hp(+100))
+# action = {S}: each(card in me.hand -> hp(+100))
+action = {S}: hp(me.hand.size * 100)
 """
 
 # Kojiroh's SHUNJIN
@@ -1342,7 +1343,8 @@ action = [[if me.ring > 1]] moveTo(hand) target(this)
 
 # Marco's ENEMY CHASER
 RulesDict['fa585a56-2a8f-48ff-9cc5-1234fecb4b09'] = """
-action = {D(all)}{F}: each(card in discarded -> damage(100)) to(^characters)
+# action = {D(all)}{F}: each(card in discarded -> damage(100)) to(^characters)
+action = {D(all)}{F}: damage(discarded.size * 100) to(^characters)
 """
 
 # Amakusa's GIVE YOURSELF
@@ -1372,7 +1374,7 @@ action = draw()
 
 # Genan's PEEPING KAY!
 RulesDict['1c7bc861-c4e0-4127-9fc8-fd56d06ec965'] = """
-action = reveal(hand) target(opp)
+action = {F}: reveal(hand) target(opp)
 """
 
 # Genjuro's I KNEW IT!
@@ -1865,7 +1867,8 @@ action = each(characters[backedup] -> damage(300))
 
 # Bamboo shoots
 RulesDict['826a8255-ed98-4c13-bb8c-96502837df52'] = """
-action = each(card in opp.hand -> hp(+100))
+# action = each(card in opp.hand -> hp(+100))
+action = hp(+opp.hand.size * 100)
 """
 
 # Banquet
@@ -1912,7 +1915,8 @@ action = trash(10) & each(char in trashed -> sp(+1))
 
 # Ferocity
 RulesDict['55dd552f-0c26-4bc1-819a-92cf32f285ae'] = """
-action = {S(<**>character@myRing)}: each(card in sacrificed -> damage(300)) to(characters)
+# action = {S(<**>character@myRing)}: each(card in sacrificed -> damage(300)) to(characters)
+action = {S(<**>character@myRing)}: damage(sacrificed.size * 300) to(characters)
 """
 
 # Galactica phantom

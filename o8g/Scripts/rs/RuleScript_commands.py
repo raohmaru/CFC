@@ -326,10 +326,12 @@ def cmd_moveTo(rc, targets, source, restr, zone, pos = None, reveal = None):
             else:
                remoteCall(target.controller, "moveToGroup", [pile, target, None, pos, reveal, me])
             # rnd(1, 100) # Wait until all animation is done
-         # Add moved card to action local variables
-         addTempVar('moved', targets)
          if msgs:
             notify('\n'.join(msgs))
+      else:
+         targets = []
+   # Add moved card to action local variables
+   addTempVar('moved', targets)
    rc.applyNext()
 
 
