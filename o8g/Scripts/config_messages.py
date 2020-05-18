@@ -139,7 +139,7 @@ MSG_RULES = {
       '{2}Characters can attack as normal.'
    ),
    'backup_limit': (
-      'Players can only do any number of back-ups{1}.',
+      'Players can do any number of back-ups{1}.',
       'Players can only do {} back-up per turn.'.format(BackupsPerTurn)
    )
 }

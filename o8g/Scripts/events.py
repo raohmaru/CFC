@@ -44,7 +44,7 @@ def onDeckLoaded(args):
    if player != me:  # We only want the owner of the deck to run this script
       return
    debug(">>> onDeckLoaded({})".format(player))
-   notify("{} has loaded a deck. Now his deck has {} cards.".format(player, len(me.Deck)))
+   notify("{} has loaded a deck of {} cards.".format(player, len(me.Deck)))
    mute()
    cards = {}
    for card in me.Deck:

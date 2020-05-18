@@ -165,7 +165,7 @@ class Rules():
          # Add temp variables
          if RS_KEY_VARS in self.rules_tokens:
             vars = self.rules_tokens[RS_KEY_VARS]
-            debug("Adding temp vars: {}".format(vars))
+            debug("Adding custom vars: {}".format(vars))
             for var in vars:
                res = evalExpression(var[1], True, getLocals(source=thisCard))
                if res is not None:

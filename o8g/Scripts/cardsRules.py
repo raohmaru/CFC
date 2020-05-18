@@ -954,7 +954,8 @@ action = {F}: moveTo(deck) & shuffle() target(this)
 
 # Ryo's SPIRIT SURGE
 RulesDict['952dc83f-9f22-4993-a824-707b0682753e'] = """
-action = {D(action)}{F}: each(card in me.hand -> sp(+1))
+# action = {D(action)}{F}: each(card in me.hand -> sp(+1))
+action = {D(action)}{F}: sp(+me.hand.size)
 """
 
 # Ryo Sakazaki's KOUKEN
@@ -1017,7 +1018,7 @@ action = bp(+300) target(character)
 
 # Gato's LOBOTOMY
 RulesDict['f3557575-c61e-42fd-9442-9413cea64bdf'] = """
-target = character
+target = character[powerful]
 action = {F}: loseAbility() & bp(+300)
 """
 
@@ -1140,7 +1141,7 @@ action = {F}: damage(500) to(character@oppRing); damage(500) to(this)
 
 # Chizuru's CONTAIN!
 RulesDict['55ab2891-c99e-4647-8a9d-b01fbce3009f'] = """
-action = {D(action)}{F}: loseAbility() & bp(=100) target(character)
+action = {D(action)}{F}: loseAbility() & bp(=100) target(character[powerful])
 """
 
 # Choi's I'LL CUT YOU GOOD!
@@ -1304,7 +1305,7 @@ auto = ~activatephase~ damage(100) to(opp)
 
 # Mukuro's LIVING CORPSE
 RulesDict['34f11eff-b3e2-4ac9-b505-a274eb5291c9'] = """
-action = loseAbility() target(characters)
+action = loseAbility() target(characters[powerful])
 """
 
 # Setsuna's LIFE SIGN
@@ -1349,7 +1350,8 @@ action = {D(all)}{F}: damage(discarded.size * 100) to(^characters)
 
 # Amakusa's GIVE YOURSELF
 RulesDict['e590d588-84af-4c26-8dbe-e28d5b626747'] = """
-action = destroy() target(^characters@myRing); each(card in destroyed -> sp(+5))
+# action = destroy() target(^characters@myRing); each(card in destroyed -> sp(+5))
+action = destroy() target(^characters@myRing); sp(destroyed.size * 5)
 """
 
 # Asura's RISING EVIL
@@ -1494,7 +1496,8 @@ auto = ~cancelCombatDamage:this~ damage(600) to(opp)
 
 # Abduction
 RulesDict['f7a00823-d37b-48eb-b2f6-c530623a2a9c'] = """
-action = {S(<**>character@myRing)}: each(card in sacrificed -> sp(+5))
+# action = {S(<**>character@myRing)}: each(card in sacrificed -> sp(+5))
+action = {S(<**>character@myRing)}: sp(sacrificed.size * 5)
 """
 
 # Activate!
@@ -1850,7 +1853,7 @@ action = bp(+200) to(characters@myRing)
 
 # Amnesia
 RulesDict['b9023490-790e-4e5f-a495-c196f6672dff'] = """
-target = characters
+target = characters[powerful]
 action = loseAbility()
 """
 
