@@ -41,8 +41,8 @@ def debugScenario():
    tableCards = [
        '9a52f604-bf68-4ef4-934b-1c984877d484' # Genjuro
       ,'7abee6d7-1831-4090-b882-eee2fd3aa246' # Kyosuke
-      ,'48a553a1-fd40-482a-9161-86be2e29f246' # Yuki
-      ,'e81e9366-b3e1-45a6-b010-bd02934b2efd' # Kain
+      ,'0a8f39ff-6b21-4805-bafb-27c3f38d1986' # Regina
+      ,'d646ffc5-bec9-4e98-b799-510b4e1ea464' # Pyron
        # 'd14694b4-484c-4b45-962e-8cbb636d8a9a' # 200 BP
       # ,'c7d128ea-a3b9-4b04-b8b2-a61153b5b2e6' # 400 BP
       # ,'24e99a13-cb42-4e16-9900-78dde12e1a4c' # 600 BP
@@ -124,6 +124,11 @@ def debugOpp():
    chooseSide()
    
    tableCards = [
+       '8bb3dd10-bb0f-4380-9772-c97ba0428378' # Ukyo
+      ,'7abee6d7-1831-4090-b882-eee2fd3aa246' # Kyosuke
+      ,'0a8f39ff-6b21-4805-bafb-27c3f38d1986' # Regina
+      ,'d646ffc5-bec9-4e98-b799-510b4e1ea464' # Pyron
+      # ,'e81e9366-b3e1-45a6-b010-bd02934b2efd' # Kain
        # 'd14694b4-484c-4b45-962e-8cbb636d8a9a' # 200 BP
       # ,'c7d128ea-a3b9-4b04-b8b2-a61153b5b2e6' # 400 BP
       # ,'24e99a13-cb42-4e16-9900-78dde12e1a4c' # 600 BP
@@ -144,9 +149,9 @@ def debugOpp():
       # ,'83c33aa8-5981-4352-8107-cbb7e05547ec' # Action -1 SP
       # ,'80692723-3895-435f-bf8f-e94507704af5' # Action -3 SP
       # ,'ac01bbbe-583e-46ae-b26c-3c25eb8f0779' # Action -6 SP
-      # ,'556b3359-e642-419a-ab5c-67f70de1bb4f' # Reaction 0 SP
-      # ,'46deecf5-7f7b-42b5-b6fa-e3162dce2013' # Reaction -1 SP
-      # ,'91e441cc-0f1f-4b01-a2b0-94678d6f0b56' # Reaction -4 SP
+      '556b3359-e642-419a-ab5c-67f70de1bb4f' # Reaction 0 SP
+      ,'46deecf5-7f7b-42b5-b6fa-e3162dce2013' # Reaction -1 SP
+      ,'91e441cc-0f1f-4b01-a2b0-94678d6f0b56' # Reaction -4 SP
    ]
    for id in handCards:
       card = table.create(id, 0, 0, quantity=1, persist=True)

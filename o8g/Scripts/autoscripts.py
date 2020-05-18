@@ -221,7 +221,9 @@ def endPhaseStart():
 def cleanupPhaseStart():
    prepare()
    clearKOedChars()
+   rnd(10, 1000)  # Delay until all animation is done
    triggerGameEvent(GameEvents.CleanupPhase)
+   rnd(10, 1000)  # Delay until all animation is done
    # Clean up my ring
    myCards = [card for card in table
       if card.controller == me]
