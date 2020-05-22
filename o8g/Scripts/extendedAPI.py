@@ -119,7 +119,7 @@ class ExtendedApi(object):
       """Gets all properties from a card data given the property set name (aka alternate).
       Returns: dict
       """
-      cardPropertySet = cardData.Properties[propset]
+      cardPropertySet = cardData.PropertySets[propset]
       props = {}
       # Keys are objects Octgn.DataNew.Entities.PropertyDef
       for k in cardPropertySet.Properties.Keys:
@@ -131,7 +131,7 @@ class ExtendedApi(object):
       """Gets a value of a property from a card data given the property set name (aka alternate).
       Returns: str
       """
-      cardPropertySet = cardData.Properties[propset]
+      cardPropertySet = cardData.PropertySets[propset]
       # Keys are objects Octgn.DataNew.Entities.PropertyDef
       prop = [p for p in cardPropertySet.Properties.Keys if p.Name == propName]
       if len(prop) > 0:
@@ -142,7 +142,7 @@ class ExtendedApi(object):
    def setCardProperty(self, cardData, propName, value, propset=''):
       """Sets the value of a property of a card data given the property set name (aka alternate).
       """
-      cardPropertySet = cardData.Properties[propset]
+      cardPropertySet = cardData.PropertySets[propset]
       # Keys are objects Octgn.DataNew.Entities.PropertyDef
       prop = [p for p in cardPropertySet.Properties.Keys if p.Name == propName]
       if len(prop) > 0:

@@ -129,22 +129,23 @@ TriggerUniChar = u'\u2588'
 AutoUniChar    = u'\u25CF'
 
 # A dictionary which holds the regex used in other scripts
-Regexps = dict(
-   ability    = re.compile(r'(.)\s+([^\r]+)'),
-   leftcond   = re.compile(r'^[\w.]+'),
-   bp         = re.compile(r'([\w\d\[\]]+)\.bp'),
-   lastbp     = re.compile(r'([\w\d\[\]]+)\.lastbp'),
-   action     = re.compile(r'\baction\b'),
-   reaction   = re.compile(r'\breaction\b'),
-   char       = re.compile(r'\bchar\b'),
-   size       = re.compile(r'([\w.]+)\.size'),
-   ring       = re.compile(r'(\w+)\.ring'),
-   chars      = re.compile(r'(\w+)\.chars'),
-   damaged    = re.compile(r'(\w+)\.damaged'),
-   lostsp     = re.compile(r'(\w+)\.lostsp'),
-   opp        = re.compile(r'\bopp\b'),
-   fromaction = re.compile(r'\bfromaction\b')
-)
+Regexps = {
+   'ability'   : re.compile(r'(.)\s+([^\r]+)'),
+   'leftcond'  : re.compile(r'^[\w.]+'),
+   '.bp'       : re.compile(r'([\w\d\[\]]+)\.bp'),
+   '.sp'       : re.compile(r'([\w\d\[\]]+)\.sp'),
+   '.lastbp'   : re.compile(r'([\w\d\[\]]+)\.lastbp'),
+   'action'    : re.compile(r'\baction\b'),
+   'reaction'  : re.compile(r'\breaction\b'),
+   'char'      : re.compile(r'\bchar\b'),
+   '.size'     : re.compile(r'([\w.]+)\.size'),
+   '.ring'     : re.compile(r'(\w+)\.ring'),
+   '.chars'    : re.compile(r'(\w+)\.chars'),
+   '.damaged'  : re.compile(r'(\w+)\.damaged'),
+   '.lostsp'   : re.compile(r'(\w+)\.lostsp'),
+   'opp'       : re.compile(r'\bopp\b'),
+   'fromaction': re.compile(r'\bfromaction\b')
+}
 
 # Misc
 CardWidth    = 90

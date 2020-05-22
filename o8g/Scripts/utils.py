@@ -40,8 +40,9 @@ def checkTwoSidedTable():
 def chooseSide():
 # Checks if the player has chosen a side for this game.
    global playerSide
-   if playerSide is not None:
-      return
+   # Once in a multiplayer game both players were playing in the sam side
+   # if playerSide is not None:
+      # return
    if Table.isTwoSided():
       if me.isInverted:
          playerSide = -1
@@ -139,19 +140,19 @@ def clearGlobalVar(name, player = None):
 def replaceVars(str):
    debug("-- replaceVars({})".format(str))
    # Order is important
-   str = replaceIfRgx (str, 'bp'        , r'getParsedCard(\1).BP')
-   str = replaceIfRgx (str, 'lastbp'    , r'getParsedCard(\1).lastBP')
+   str = replaceIfRgx (str, '.bp'       , r'getParsedCard(\1).BP')
+   str = replaceIfRgx (str, '.sp'       , r'num(\1.SP)')
+   str = replaceIfRgx (str, '.lastbp'   , r'getParsedCard(\1).lastBP')
    str = replaceIfRgx (str, 'action'    , 'isAction(card)')
    str = replaceIfRgx (str, 'reaction'  , 'isReaction(card)')
    str = replaceIfRgx (str, 'char'      , 'isCharacter(card)')
-   str = replaceIfRgx (str, 'size'      , r'len(\1)')
-   str = replaceIfRgx (str, 'ring'      , r'getRingSize(\1)')
-   str = replaceIfRgx (str, 'chars'     , r'getRing(\1)')
-   str = replaceIfRgx (str, 'damaged'   , r'getState(\1, "damaged")')
-   str = replaceIfRgx (str, 'lostsp'    , r'getState(\1, "lostsp")')
+   str = replaceIfRgx (str, '.size'      , r'len(\1)')
+   str = replaceIfRgx (str, '.ring'      , r'getRingSize(\1)')
+   str = replaceIfRgx (str, '.chars'     , r'getRing(\1)')
+   str = replaceIfRgx (str, '.damaged'   , r'getState(\1, "damaged")')
+   str = replaceIfRgx (str, '.lostsp'    , r'getState(\1, "lostsp")')
    str = replaceIfRgx (str, 'opp'       , r'getOpp()')
    str = replaceIfRgx (str, 'fromaction', 'isAction(trigger)')
-   str = replaceIf    (str, '.sp'       , '.SP')
    str = replaceIf    (str, '.hp'       , '.HP')
    str = replaceIf    (str, 'alone'     , 'getRingSize() == 1')
    str = replaceIf    (str, 'attacker'  , 'attacker[0]')
@@ -472,8 +473,11 @@ def selectRing():
    return players[t-1]
    
    
-def cardPeek(card):
-   card.peek()
+def cardPeek(cards):
+   if isinstance(cards, Card):
+      cards = [cards]
+   for card in cards:
+      card.peek()
 
 
 #---------------------------------------------------------------------------
@@ -769,7 +773,7 @@ def addAlternateRules(card, ability, rules, altname=None):
    if not altname:
       altname = sanitizeStr(ability.name)
    cardData = _extapi.getCardDataById(card._id)
-   cardData.Properties[altname] = cardData.Properties[''].Clone()
+   cardData.PropertySets[altname] = cardData.PropertySets[''].Clone()
    _extapi.setCardProperty(cardData, "Rules", rules, altname)
    _extapi.setCardProperty(cardData, "Ability Type", ability.type, altname)
    _extapi.setCardProperty(cardData, "Ability Name", ability.name, altname)
