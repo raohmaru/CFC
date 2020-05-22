@@ -6,11 +6,11 @@ This document is designed for people who want to start learning the rules and ga
 ## Introduction
 Card Fighters' Clash (we will refer to it as CFC) is a card game for two players based on SNK Playmore’s video game [SNK vs. Capcom Card Fighters' Clash 2 Expand Edition](http://neogeo.freeplaytech.com/svc-2/). Players try to defeat each other in a battle playing characters from Capcom and SNK Playmore video games. Characters have unique abilities that have impact in the game, and their KI energy can be used to play Action cards and Reaction cards to add more effects to the battle.
 
-Players start the game (in CFC every game is a battle!) with a deck of cards and an initial amount of **HP** (Hit Points or player's life). A deck may contain any number of Character, Action or Reaction cards, but it can't have more than three copies of any single card with the same name. Each player shuffles his deck and draws an initial hand of 5 cards, and then they are ready to fight.
+Players start the game (in CFC every game is a battle!) with a deck of 50 cards and an initial amount of 3000 **HP** (Hit Points or player's life). A deck may contain any number of Character, Action or Reaction cards, but it can't have more than three copies of any single card with the same name. Each player shuffles his deck and draws an initial hand of 5 cards, and then they are ready to fight.
 
 In their respective turn, players draw cards from his deck, play cards from his hand and attack the opponent (in CFC we refer to an opponent as an *enemy*) with the characters he has in play. Then the enemy has the opportunity to counter-attack with his characters or by playing Reaction cards.
 
-The battle ends when a player's HP (Hit Points or player's life) drops to 0 or less, that is when dealt damage by a character or by the effect of a card. But also a player can lose the battle if he runs out of cards in his deck. So be ready to strike hard and block enemy's attacks, and you will have a chance to win the battle!
+The battle ends when a player's HP (Hit Points or player's life) drops to 0 or less —that is when dealt damage by a character or by the effect of a card. But also a player can lose the battle if he runs out of cards in his deck. So be ready to strike hard and block enemy's attacks, and you will have a chance to win the battle!
 
 Round 1, start!
 
@@ -29,7 +29,7 @@ When a player attacks with their characters, these cards are placed in the Attac
 At the end of a turn, character cards are moved back to their corresponding slot.
 
 ### Deck
-Players need a deck of at least 50 cards to play CFC. A deck can contain any type of card but with the following limitation: it can't have more than three copies of any single card with the same name (*for example, a deck can contain three cards named "Akuma" and another three cards named "Shinjin Akuma"*).
+Players need a deck of at least 50 cards to play CFC. A deck can contain any type of card but with the following limitation: **it can't have more than three copies of any single card with the same name** (*for example, a deck can contain three cards named "Akuma" and another three cards named "Shinjin Akuma"*).
 
 When a player draws a card, he must draw from the top of his deck (unless an effect says the opposite).
 

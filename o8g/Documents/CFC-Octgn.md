@@ -5,11 +5,12 @@ The game expects you to be playing on a two sided table. When you host a game of
 
 The game can be played with 2 players.
 
-Once the game is started you will need to load your deck. Unless you have turned off Play automation, when you load a deck the game will automate player setup. If you have turned automation off you can activate this function manually using the "Setup game" option from the table menu or by using the <span class=kb>Ctrl</span>+<span class=kb>Shift</span>+<span class=kb>S</span> shortcut. This will
+Once the game is started you will need to load your deck. Unless you have turned off Play automation, when you load a deck the game will automate player setup. If you have turned Play automation off you can activate this function manually using the "Setup game" option from the table menu or by using the <span class=kb>Ctrl</span>+<span class=kb>Shift</span>+<span class=kb>S</span> shortcut. This will
 - Check your deck
 - Shuffle your deck
 - Draw 5 cards
-- Start the game
+
+After the setup is complete, you can start the game by clicking on the green play button next to your name. This will start the first turn of the game.
 
 ## Playing the Game
 The best way to learn how to play CFC is by playing the videogame [SNK vs. Capcom Card Fighters' Clash 2 Expand Edition](http://neogeo.freeplaytech.com/svc-2/). If you don't have a Neo Geo Pocket Color, or you aren't one of the lucky owners of a Card Fighters' Clash 2 cartridge, you can try the [CFC2 English patch](http://cfc2english.blogspot.com.es/).

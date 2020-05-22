@@ -304,7 +304,7 @@ class RulesUtils():
             # Current card can't be selected
             card = source
             if card in cards_f1:
-               whisper(MSG_ERR_TARGET_OTHER.format(card))
+               debug(MSG_ERR_TARGET_OTHER.format(card))
                cards_f1.remove(card)
             
       # Type is a card name?

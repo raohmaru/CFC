@@ -461,7 +461,7 @@ def backupAuto(card, target = None):
             if targets == None:
                return
          else:
-            warning('There are not compatible characters to back-up in the ring.')
+            warning('There are not compatible characters to back-up in your ring.')
             return
       target = targets[0]
    # Target is frozen?

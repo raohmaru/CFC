@@ -163,7 +163,7 @@ def getEnvVars():
          'ischar': isCharacter
       }
       # To use in evalExpression(), case sensitive
-      globalFuncs = [getParsedCard, isAction, isReaction, isCharacter, getRingSize, getRing, getState, getOpp, getAttackingCards]
+      globalFuncs = [getParsedCard, isAction, isReaction, isCharacter, getRingSize, getRing, getState, getOpp, getAttackingCards, num]
       for f in globalFuncs:
          envVars[f.__name__] = f
       # Used in cardRules, case insensitive
@@ -275,6 +275,11 @@ def cmd_discard(rc, targets, source, restr, whichCards=''):
                remoteCall(player, "discard", [card])
       else:
          notify(MSG_ERR_NO_CARDS_DISCARD.format(player))
+      # Peek cards
+      if player == me:
+         remoteCall(getOpp(), "cardPeek", [player.hand])
+      else:
+         cardPeek(player.hand)
    rc.applyNext()
 
 
@@ -721,6 +726,12 @@ def cmd_modDamage(rc, targets, source, restr, qty):
    notify('Damage has been increased by {}.'.format(qty))
    rc.applyNext()
    
+   
+def cmd_peek(rc, targets, source, restr):
+   debug(">>> cmd_peek()")
+   cardPeek(getOpp().hand)
+   rc.applyNext()
+   
 
 RulesCommands.register('damage',           cmd_damage)
 RulesCommands.register('swappiles',        cmd_swapPiles)
@@ -759,3 +770,4 @@ RulesCommands.register('skip',             cmd_skip)
 RulesCommands.register('unite',            cmd_unite)
 RulesCommands.register('removefromattack', cmd_removeFromAttack)
 RulesCommands.register('moddamage',        cmd_modDamage)
+RulesCommands.register('peek',             cmd_peek)

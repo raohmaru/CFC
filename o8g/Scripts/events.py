@@ -20,7 +20,7 @@
 #---------------------------------------------------------------------------
 
 def onTableLoaded():
-# Happens when the table first loads, and never again
+# Happens when the table first loads, and never again.
    global settings
    try:
       strSettings = getSetting('settings', str(settings))
@@ -33,6 +33,7 @@ def onTableLoaded():
 
 
 def onGameStarted():
+# Triggers when the table initially loads, and after each game restart.
    resetAll()
    if debugging:
       debugScenario()
