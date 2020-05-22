@@ -425,7 +425,8 @@ def getRingSize(player = me, ring = None):
    return NumSlots - ring.count(None)
 
 
-def moveToGroup(group, card, sourceGroup = None, pos = None, reveal = None, sourcePlayer = me, silent = False):
+def moveToGroup(toGroup, card, sourceGroup = None, pos = None, reveal = None, sourcePlayer = me, silent = False):
+   mute()
    if not sourceGroup:
       sourceGroup = card.group
    fromText = fromWhereStr(sourceGroup, sourcePlayer)
@@ -435,27 +436,35 @@ def moveToGroup(group, card, sourceGroup = None, pos = None, reveal = None, sour
          posText = "to the bottom of"
       elif pos > 0:
          posText = "to position {} from the top of".format(pos)
-   if sourceGroup.name == 'Hand':
-      card.isFaceUp = False
-   if group.name == 'Hand':
+   if toGroup.name == 'Hand':
       posText = "into"
    name = 'a card'
+   isFaceUp = card.isFaceUp
    if reveal != False:
       if card.isFaceUp:
          # If the group visibility is None, card will output "Card", so we get the name
-         if group.name == 'Deck':
+         if toGroup.name == 'Deck' or toGroup.name == 'Hand':
             name = card.Name
          else:
             name = card
       elif reveal:
-         if group.name == 'Hand':
+         if toGroup.name == 'Hand':
             remoteCall(getOpp(), "cardPeek", [card])
-         name = card.Name
+         if toGroup.name == 'Deck' or toGroup.name == 'Hand':
+            card.isFaceUp = True
+            name = card.Name
+         else:
+            name = card
+   # My hand card are faced up
+   if sourceGroup.name == 'Hand':
+      card.isFaceUp = False
+   elif card.isFaceUp != isFaceUp:
+      card.isFaceUp = isFaceUp
    targetCtrl = 'its' if me == sourcePlayer else "{}'s".format(me)
-   msg = "{} moved {} {} {} {} {}.".format(sourcePlayer, name, fromText, posText, targetCtrl, group.name)
+   msg = "{} moved {} {} {} {} {}.".format(sourcePlayer, name, fromText, posText, targetCtrl, toGroup.name)
    # Buy some time for onCardsMoved() to complete and sync
-   doUpdate = sourceGroup == table and group != table and isCharacter(card) and charIsInRing(card)
-   card.moveTo(group, pos)
+   doUpdate = sourceGroup == table and toGroup != table and isCharacter(card) and charIsInRing(card)
+   card.moveTo(toGroup, pos)
    if doUpdate:
       update()
    if not silent:
