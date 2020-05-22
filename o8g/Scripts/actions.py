@@ -114,8 +114,8 @@ def setup(group = table, x = 0, y = 0, silent = False):
    refill() # We fill the player's play hand to their hand size
    notify("Setup for player {} completed.".format(me))
    # Start the turn of the first player to do the setup
-   if settings['Play'] and not getActivePlayer():
-      me.setActive()
+   # if settings['Play'] and not getActivePlayer():
+      # me.setActive()
 
 
 def scoop(group, x=0, y=0):
@@ -187,6 +187,7 @@ def clearAll(group = None, x = 0, y = 0):
    for card in table:
       if card.controller == me:
          clear(card, group)
+   clearSelection()
 
 
 def alignCards(group = None, x = 0, y = 0):
