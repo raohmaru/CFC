@@ -301,6 +301,7 @@ def cmd_randomDiscard(rc, targets, source, restr, numCards=1):
 
 def cmd_moveTo(rc, targets, source, restr, zone, pos = None, reveal = None):
    debug(">>> cmd_moveTo({}, {}, {}, {})".format(targets, zone, pos, reveal))
+   mute()
    zonePrefix, zoneName = RulesLexer.getPrefix(RS_PREFIX_ZONES, zone, RS_PREFIX_CTRL)
    if targets:
       if zoneName in RS_KW_ZONES_PILES:

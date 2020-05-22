@@ -439,9 +439,10 @@ def moveToGroup(toGroup, card, sourceGroup = None, pos = None, reveal = None, so
    if toGroup.name == 'Hand':
       posText = "into"
    name = 'a card'
-   isFaceUp = card.isFaceUp
+   # My hand card are faced up
+   isFaceUp = False if sourceGroup.name == 'Hand' else card.isFaceUp
    if reveal != False:
-      if card.isFaceUp:
+      if isFaceUp:
          # If the group visibility is None, card will output "Card", so we get the name
          if toGroup.name == 'Deck' or toGroup.name == 'Hand':
             name = card.Name
@@ -450,15 +451,16 @@ def moveToGroup(toGroup, card, sourceGroup = None, pos = None, reveal = None, so
       elif reveal:
          if toGroup.name == 'Hand':
             remoteCall(getOpp(), "cardPeek", [card])
+         # If the group visibility is None, card will output "Card", so we get the name
          if toGroup.name == 'Deck' or toGroup.name == 'Hand':
             card.isFaceUp = True
             name = card.Name
          else:
             name = card
-   # My hand card are faced up
-   if sourceGroup.name == 'Hand':
-      card.isFaceUp = False
-   elif card.isFaceUp != isFaceUp:
+      if toGroup.name == 'Discard pile':
+         card.isFaceUp = True
+         name = card
+   if card.isFaceUp != isFaceUp:
       card.isFaceUp = isFaceUp
    targetCtrl = 'its' if me == sourcePlayer else "{}'s".format(me)
    msg = "{} moved {} {} {} {} {}.".format(sourcePlayer, name, fromText, posText, targetCtrl, toGroup.name)
@@ -499,9 +501,9 @@ def fromWhereStr(src, srcPlayer = me):
    else:
       ctrl = 'its'
       if srcPlayer != me:
-         ctrl = "{}'s".format(me)
+         ctrl = "{}'s".format(srcPlayer)
       elif src.controller != me:
-         ctrl = "opponent's"
+         ctrl = "{}'s".format(src.controller)
          
       return "from {} {}".format(ctrl, src.name)
 
