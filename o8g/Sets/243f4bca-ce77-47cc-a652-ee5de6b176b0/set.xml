@@ -3,19 +3,8 @@
 	 id="243f4bca-ce77-47cc-a652-ee5de6b176b0"
 	 version="1.2.0.0" 
      gameId="e3d56d9e-900d-49c6-b6ae-22cbb51be153"
-	 gameVersion="0.8.3"
+	 gameVersion="0.8.4"
 	 hidden="true">
-	<markers>
-		<marker name="BP" id="b86fc644-d084-43d3-99d2-5b11457321cc"/>
-		<marker name="Just Entered" id="9a52c42c-543f-48bb-9a48-d7599d6c8fae"/>
-		<marker name="Attack" id="023406a3-417c-473d-bc23-481290755a4a"/>
-		<marker name="United Attack" id="88036e2b-6a1f-40be-a941-988b27c405ba"/>
-		<marker name="Counter-attack" id="2fd7dc74-4149-469d-9bde-53e94b99b934"/>
-		<marker name="Cannot Unfreeze" id="5231f83b-b78e-48b3-8bce-62031c022bf4"/>
-		<marker name="Unfreezable" id="fec1976b-9ce5-4b32-8c07-76eadc5607f6"/>
-		<marker name="Backup" id="efd3208d-2ec3-44ca-be1d-858e91628da4"/>
-		<marker name="Pierce" id="3131facc-3fe4-4dd5-95ff-afc08570d869"/>
-	</markers>
 	<cards>
 		<card name="BlockDone" id="a7694a83-7743-4c44-8fed-43142102cd62" size="button">
 			<property name="Publisher"    value="" />

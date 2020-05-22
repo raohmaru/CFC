@@ -1,5 +1,9 @@
 # Card Fighters' Clash Changelog
 
+## 0.8.5
+Weakened Urien's ability.
+Updated SP of all characters.
+Fixed compatibility issues with OCTGN 3.4.256.0.
 ## 0.8.3
 Play priority control.
 Added a "Done" button for defending player in block phase.

@@ -67,11 +67,9 @@ Good battle!"""
 
 def showChangelog():
    switchSetting('GameVersion', getGameVersion())
-   msg = """What's new in version 0.8.3
+   msg = """What's new in version 0.8.5
 
-- Play priority control: Now attacking player must wait until defending player is done before he or she can continue to their next phase.
-- Added a "Done" button for defending player in block phase.
-- Card automation bug fixes.
-- Small improves on game performance.
-- Fix networking issues."""
+- Weakened Urien's ability.
+- Re-balance of the SP of all characters.
+- Fixed compatibility issues with OCTGN 3.4.256.0."""
    askChoice(msg, [], [], ['Close'])

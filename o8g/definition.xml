@@ -3,8 +3,8 @@
       xmlns:xsd="http://www.w3.org/2001/XMLSchema"
       name="Card Fighters' Clash"
       id="e3d56d9e-900d-49c6-b6ae-22cbb51be153"
-      octgnVersion="3.4.217.0"
-      version="0.8.3.591"
+      octgnVersion="3.4.256.0"
+      version="0.8.5.604"
       markersize="20"
       tags="capcom snk fighter"
       description="Card game based on the SNK Playmore’s video game SNK vs. Capcom Card Fighters' Clash 2 Expand Edition.
@@ -100,6 +100,18 @@
 		<!-- <font src="Resources/Fonts/SourceSansPro-Regular_CFC.ttf" size="12" target="notes" /> -->
 	</fonts>
 
+	<markers>
+		<marker name="BP"              id="b86fc644-d084-43d3-99d2-5b11457321cc" src="Resources/Markers/bp.png"/>
+		<marker name="Just Entered"    id="9a52c42c-543f-48bb-9a48-d7599d6c8fae" src="Resources/Markers/fresh.png"/>
+		<marker name="Attack"          id="023406a3-417c-473d-bc23-481290755a4a" src="Resources/Markers/attack.png"/>
+		<marker name="United Attack"   id="88036e2b-6a1f-40be-a941-988b27c405ba" src="Resources/Markers/united-attack.png"/>
+		<marker name="Counter-attack"  id="2fd7dc74-4149-469d-9bde-53e94b99b934" src="Resources/Markers/counter-attack.png"/>
+		<marker name="Cannot Unfreeze" id="5231f83b-b78e-48b3-8bce-62031c022bf4" src="Resources/Markers/cannot-unfreeze.png"/>
+		<marker name="Unfreezable"     id="fec1976b-9ce5-4b32-8c07-76eadc5607f6" src="Resources/Markers/unfreezable.png"/>
+		<marker name="Backup"          id="efd3208d-2ec3-44ca-be1d-858e91628da4" src="Resources/Markers/backup.png"/>
+		<marker name="Pierce"          id="3131facc-3fe4-4dd5-95ff-afc08570d869" src="Resources/Markers/pierce.png"/>
+	</markers>
+	
 	<proxygen definitionsrc="Proxy/proxydef.xml">
 	</proxygen>
 
@@ -285,7 +297,7 @@
 		<globalvariable name="Ring" value="[None,None,None,None]" />
 		<globalvariable name="Rules" value="{}" />
 
-		<hand name="Hand" visibility="me" icon="Resources/Groups/hand.png">
+		<group name="Hand" visibility="me" viewState="expanded" icon="Resources/Groups/hand.png">
 			<groupaction menu="Random discard" shortcut="Ctrl+Del" execute="randomDiscard" />
 			<groupaction menu="Discard all" shortcut="Ctrl+Shift+Del" execute="discardAll" />
 			<groupactions menu="Move all cards to...">
@@ -305,8 +317,8 @@
 			<cardaction menu="Transform" shortcut="Ctrl+Shift+T" batchExecute="transformCards" showIf="acsh_AutoPlayOff" />
 			<cardaction menu="Show backups" shortcut="Ctrl+Alt+B" execute="askCardBackups" showIf="acsh_isChar" />
 			<cardaction menu="Clear" shortcut="Esc" execute="clear" showIf="acsh_AutoPlayOff" />
-		</hand>
-		<group name="Deck" visibility="none" icon="Resources/Groups/deck.png">
+		</group>
+		<group name="Deck" visibility="none" viewState="pile" icon="Resources/Groups/deck.png">
 			<groupaction menu="Draw" shortcut="Ctrl+D" default="True" execute="draw" />
 			<groupaction menu="Draw X cards" shortcut="Ctrl+Shift+D" execute="drawMany" />
 			<groupactions menu="Random draw...">
@@ -326,8 +338,8 @@
 			<cardaction menu="Put card into Hand" shortcut="Ctrl+H" execute="toHand" />
 			<cardaction menu="Put card into Discard pile" shortcut="Del" execute="discard" />
 		</group>
-		<group name="Discard pile" visibility="all" icon="Resources/Groups/discards.png">
-			<groupaction menu="Shuffle" shortcut="Ctrl+S" execute="shuffle" />
+		<group name="Discard pile" visibility="all" viewState="pile" icon="Resources/Groups/discards.png">
+			<!-- <groupaction menu="Shuffle" shortcut="Ctrl+S" execute="shuffle" /> -->
 			<groupactions menu="Shuffle into Deck...">
 				<groupaction menu="All cards" shortcut="Ctrl+Shift+S" execute="reshuffle" />
 				<groupaction menu="All Character cards" execute="reshuffleCHA" />
