@@ -67,7 +67,7 @@ Good battle!"""
 
 def showChangelog():
    switchSetting('GameVersion', getGameVersion())
-   msg = """What's new in version 0.8.5
+   msg = """What's new in version 0.9.0
 
 - Weakened Urien's ability.
 - Re-balance of the SP of all characters.

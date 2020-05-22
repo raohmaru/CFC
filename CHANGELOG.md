@@ -1,6 +1,6 @@
 # Card Fighters' Clash Changelog
 
-## 0.8.5
+## 0.9.0
 Weakened Urien's ability.
 Updated SP of all characters.
 Fixed compatibility issues with OCTGN 3.4.256.0.

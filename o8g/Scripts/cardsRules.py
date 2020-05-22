@@ -172,6 +172,7 @@ effect:
          skip(phase)
          unite()
          removeFromAttack()
+         peek()
       Ability:
          Keywords:
             @see abilities
@@ -400,7 +401,7 @@ action = {S}: destroy() target(character@oppRing)
 
 # Zero Akuma's GIGA CRUSH
 RulesDict['fd1a3f1c-7df1-443e-97b1-f093d66e74c9'] = """
-action = reveal(hand); discard(actions) & discard(reactions)
+# action = reveal(hand); discard(actions) & discard(reactions)
 """
 
 # Regina's RADIO TRANSMITTER
@@ -636,7 +637,7 @@ action = rndDiscard()
 
 # Zaki's SUKEBAN
 RulesDict['faa72b01-cf50-4cff-8b70-13245a7fa5df'] = """
-action = [[if me.sp == 0]] sp(+11)
+action = [[if me.sp == 0]] sp(+12)
 """
 
 # Bilstein's PLASMA POWER
@@ -677,7 +678,7 @@ action = trash(5)
 
 # Cammy (Alpha)'s SPY
 RulesDict['de28f9bf-d995-4743-afcd-a28065beb39d'] = """
-action = moveTo(oppDeck, ?, true) target(*@oppHand)
+action = moveTo(oppDeck, ?, true) target(*@oppHand) & peek()
 """
 
 # Chun-Li's S.B. KICK
@@ -745,7 +746,7 @@ action = {F}: bp(+300) target(character@oppRing); bp(+300) target(character@myRi
 
 # Juli's PSYCHO CHARGE ALPHA
 RulesDict['a2536791-c173-4228-84ce-4d2dec036ac3'] = """
-action = {D(character)}{F}: sp(discarded[0].SP)
+action = {D(character)}{F}: sp(abs(discarded[0].SP))
 """
 
 # Karin's COMPENSATION
@@ -822,8 +823,9 @@ auto = ~blocks:this~ bp(=uaBP)
 
 # Urien's DESPOT
 RulesDict['79239cad-fd51-4557-9534-af96bd1302bc'] = """
-target = opp
-action = {F}: reveal(hand); discard(reactions)
+# target = opp
+# action = {F}: reveal(hand); discard(reactions)
+action = {F}: discard(<1>reaction) target(opp)
 """
 
 # Option's SUPPORT
@@ -991,8 +993,7 @@ abilities = rush
 
 # Andy's SHADOW SLICER
 RulesDict['299685df-122c-4fbe-a8dd-05ceaaf41055'] = """
-target = opp
-action = discard(<r>)
+action = discard(<r>) target(opp)
 """
 
 # B. Jenet's LILIEN KNIGHTS
@@ -1024,7 +1025,7 @@ action = {F}: loseAbility() & bp(+300)
 
 # Geese's COMPOSURE
 RulesDict['59253bbd-0dbd-4d43-9a2b-7f01b4bc1f76'] = """
-action = reveal(hand); discard(actions) & discard(reactions)
+# action = reveal(hand); discard(actions) & discard(reactions)
 """
 
 # Geese Howard's REPPU KEN
@@ -1130,7 +1131,7 @@ action = moveTo(hand) target(character@myRing)
 
 # Athena Asamiya's PSYCHO CHARGE
 RulesDict['08b229e2-6af7-478a-bda5-774dd66af9f9'] = """
-action = {F}: sp(+3)
+action = {F}: sp(+4)
 """
 
 # Benimaru's THUNDERGOD FIST
@@ -1990,7 +1991,7 @@ action = unfreeze()
 
 # Rest
 RulesDict['2c9000df-e21a-4482-9dfc-8df3f702e29e'] = """
-action = {D(character)}: sp(discarded[0].SP)
+action = {D(character)}: sp(abs(discarded[0].SP))
 """
 
 # Robber
