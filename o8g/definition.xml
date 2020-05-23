@@ -4,7 +4,7 @@
       name="Card Fighters' Clash"
       id="e3d56d9e-900d-49c6-b6ae-22cbb51be153"
       octgnVersion="3.4.256.0"
-      version="0.9.0.609"
+      version="0.9.0.612"
       markersize="20"
       tags="capcom snk fighter"
       description="Card game based on the SNK Playmore’s video game SNK vs. Capcom Card Fighters' Clash 2 Expand Edition.
@@ -149,21 +149,21 @@
 	</globalvariables>
 
 	<card back="Resources/Card/card-back.jpg" front="Resources/Card/card-front.png" width="90" height="126" cornerRadius="3">
-		<property name="Publisher" type="String" ignoreText="True" textKind="Enum" />
-		<property name="Team" type="String" ignoreText="True" textKind="Enum" />
 		<property name="Type" type="String" textKind="Enum" />
 		<property name="Subtype" type="String" textKind="Tokens" />
 		<property name="Rarity" type="String" ignoreText="True" textKind="Enum" />
-		<property name="Ability" type="String" />
-		<property name="Ability Type" type="String" ignoreText="True" textKind="Enum" hidden="True" />
-		<property name="Ability Name" type="String" ignoreText="True" hidden="True" />
-		<property name="Rules" type="String" />
 		<property name="BP" type="String" textKind="Enum" />
 		<property name="SP" type="String" textKind="Enum" />
+		<property name="Ability" type="String" hidden="True" />
+		<property name="Ability Type" type="String" ignoreText="True" textKind="Enum" />
+		<property name="Ability Name" type="String" ignoreText="True" />
+		<property name="Rules" type="String" />
 		<property name="Backup 1" type="String" textKind="Enum" />
 		<property name="Backup 2" type="String" textKind="Enum" />
 		<property name="Backup 3" type="String" textKind="Enum" />
 		<property name="Number" type="String" ignoreText="True" />
+		<property name="Publisher" type="String" ignoreText="True" textKind="Enum" hidden="True" />
+		<property name="Team" type="String" ignoreText="True" textKind="Enum" />
 		<property name="Illustrator" type="String" ignoreText="True" />
 		
 		<size name="button" width="110" height="110" front="Resources/Card/button-back.png" back="Resources/Card/button-front.png"/>
