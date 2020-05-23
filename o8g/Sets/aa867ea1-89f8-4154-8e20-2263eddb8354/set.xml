@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8" standalone="yes"?>
-<set name="Core Set" id="aa867ea1-89f8-4154-8e20-2263eddb8354" version="1.4.1.1" gameId="e3d56d9e-900d-49c6-b6ae-22cbb51be153" gameVersion="0.8.4">
+<set name="Core Set" id="aa867ea1-89f8-4154-8e20-2263eddb8354" version="1.4.1.1" gameId="e3d56d9e-900d-49c6-b6ae-22cbb51be153" gameVersion="0.9.0">
 	<packaging>
 		<pack name="Booster" id="800ab974-9fee-45c6-8d15-3c995c732cdc">
 			<options>
@@ -174,7 +174,7 @@
 			<property name="SP"           value="0" />
 			<property name="Backup 1"     value="Robot" />
 			<property name="Backup 2"     value="Robot" />
-			<property name="Backup 3"     value="Robot" />
+			<property name="Backup 3"     value="" />
 			<property name="Number"       value="C009" />
 			<property name="Illustrator"  value="Art by the-hary" />
 		</card>
@@ -801,7 +801,7 @@
 			<property name="Ability Name" value="STAND-BY" />
 			<property name="Rules"        value="Search your deck for a character card, reveal it, then shuffle your deck and put that card on top of it." />
 			<property name="BP"           value="600" />
-			<property name="SP"           value="0" />
+			<property name="SP"           value="1" />
 			<property name="Backup 1"     value="Robot" />
 			<property name="Backup 2"     value="Robot" />
 			<property name="Backup 3"     value="Robot" />
@@ -999,7 +999,7 @@
 			<property name="Ability Name" value="FINISH IT!" />
 			<property name="Rules"        value="If an enemy has three or more characters in his ring, double this character&apos;s BP." />
 			<property name="BP"           value="800" />
-			<property name="SP"           value="0" />
+			<property name="SP"           value="-1" />
 			<property name="Backup 1"     value="Pilot" />
 			<property name="Backup 2"     value="Swordsman" />
 			<property name="Backup 3"     value="" />
@@ -1071,7 +1071,7 @@
 			<property name="Ability Name" value="GO FOR IT!" />
 			<property name="Rules"        value="Raise the BP of a character 300 points." />
 			<property name="BP"           value="300" />
-			<property name="SP"           value="4" />
+			<property name="SP"           value="3" />
 			<property name="Backup 1"     value="Student" />
 			<property name="Backup 2"     value="Psychic" />
 			<property name="Backup 3"     value="Sumotori" />
@@ -1449,7 +1449,7 @@
 			<property name="Ability Name" value="BACK OFF!" />
 			<property name="Rules"        value="Return a character in your ring to your hand." />
 			<property name="BP"           value="600" />
-			<property name="SP"           value="3" />
+			<property name="SP"           value="2" />
 			<property name="Backup 1"     value="Student" />
 			<property name="Backup 2"     value="Kickboxer" />
 			<property name="Backup 3"     value="Swordsman" />
@@ -1917,7 +1917,7 @@
 			<property name="Ability Name" value="PSYCHO CHARGE ALPHA" />
 			<property name="Rules"        value="Discard a character card. Gain SP equal to that card&apos;s absolute SP." />
 			<property name="BP"           value="400" />
-			<property name="SP"           value="3" />
+			<property name="SP"           value="2" />
 			<property name="Backup 1"     value="Boss" />
 			<property name="Backup 2"     value="Guardian" />
 			<property name="Backup 3"     value="Avatar" />
@@ -2709,7 +2709,7 @@
 			<property name="Ability Name" value="GOODNIGHT KISS" />
 			<property name="Rules"        value="KO a character in your ring. Gain 8 SP." />
 			<property name="BP"           value="700" />
-			<property name="SP"           value="1" />
+			<property name="SP"           value="0" />
 			<property name="Backup 1"     value="Brute" />
 			<property name="Backup 2"     value="" />
 			<property name="Backup 3"     value="" />
@@ -2835,7 +2835,7 @@
 			<property name="Ability Name" value="MITTEI" />
 			<property name="Rules"        value="Draw a card from an enemy&apos;s deck, then put a card from your hand into that enemy&apos;s discard pile." />
 			<property name="BP"           value="400" />
-			<property name="SP"           value="3" />
+			<property name="SP"           value="4" />
 			<property name="Backup 1"     value="Ninja" />
 			<property name="Backup 2"     value="Ninja" />
 			<property name="Backup 3"     value="Mentor" />
@@ -2961,7 +2961,7 @@
 			<property name="Ability Name" value="DEALER" />
 			<property name="Rules"        value="Discard your hand. Select a card from your deck and put it into your hand. Then shuffle your deck." />
 			<property name="BP"           value="600" />
-			<property name="SP"           value="2" />
+			<property name="SP"           value="1" />
 			<property name="Backup 1"     value="Karateka" />
 			<property name="Backup 2"     value="Kickboxer" />
 			<property name="Backup 3"     value="Kickboxer" />
@@ -3069,7 +3069,7 @@
 			<property name="Ability Name" value="KOUKEN" />
 			<property name="Rules"        value="Return a character with a &#162; ability to its controller&apos;s hand.&#xD;&#xA;" />
 			<property name="BP"           value="500" />
-			<property name="SP"           value="3" />
+			<property name="SP"           value="2" />
 			<property name="Backup 1"     value="Fighter" />
 			<property name="Backup 2"     value="Aikido" />
 			<property name="Backup 3"     value="Fighter" />
@@ -3141,7 +3141,7 @@
 			<property name="Ability Name" value="LONELY RING" />
 			<property name="Rules"        value="Whenever this character attacks alone, raise its BP 200 points." />
 			<property name="BP"           value="300" />
-			<property name="SP"           value="5" />
+			<property name="SP"           value="4" />
 			<property name="Backup 1"     value="Aikido" />
 			<property name="Backup 2"     value="Karateka" />
 			<property name="Backup 3"     value="" />
@@ -3231,7 +3231,7 @@
 			<property name="Ability Name" value="SHADOW SLICER" />
 			<property name="Rules"        value="An enemy discards a card at random." />
 			<property name="BP"           value="800" />
-			<property name="SP"           value="0" />
+			<property name="SP"           value="-1" />
 			<property name="Backup 1"     value="Ninja" />
 			<property name="Backup 2"     value="Student" />
 			<property name="Backup 3"     value="" />
@@ -3267,7 +3267,7 @@
 			<property name="Ability Name" value="SHRIKE DROP" />
 			<property name="Rules"        value="Look at enemy&apos;s hand and select an action card from it. That enemy discards that card." />
 			<property name="BP"           value="700" />
-			<property name="SP"           value="1" />
+			<property name="SP"           value="0" />
 			<property name="Backup 1"     value="Boss" />
 			<property name="Backup 2"     value="Deity" />
 			<property name="Backup 3"     value="" />
@@ -3339,7 +3339,7 @@
 			<property name="Ability Name" value="DUCK DANCE" />
 			<property name="Rules"        value="Raise the BP of a character 300 points." />
 			<property name="BP"           value="300" />
-			<property name="SP"           value="4" />
+			<property name="SP"           value="3" />
 			<property name="Backup 1"     value="Capoeira" />
 			<property name="Backup 2"     value="Artist" />
 			<property name="Backup 3"     value="Kickboxer" />
@@ -3483,7 +3483,7 @@
 			<property name="Ability Name" value="KUURON NO YOMI" />
 			<property name="Rules"        value="Whenever this character is countered, draw a card." />
 			<property name="BP"           value="500" />
-			<property name="SP"           value="2" />
+			<property name="SP"           value="3" />
 			<property name="Backup 1"     value="Magician" />
 			<property name="Backup 2"     value="Kung-fu" />
 			<property name="Backup 3"     value="Kung-fu" />
@@ -3679,7 +3679,7 @@
 			<property name="Ability"      value="&#163; MORPH" />
 			<property name="Ability Type" value="&#163;" />
 			<property name="Ability Name" value="MORPH" />
-			<property name="Rules"        value="Discard all the cards in your hand, then draw the same number of cards plus one." />
+			<property name="Rules"        value="Discard all cards in your hand, then draw the same number of cards plus one." />
 			<property name="BP"           value="600" />
 			<property name="SP"           value="2" />
 			<property name="Backup 1"     value="Ninja" />
@@ -3699,7 +3699,7 @@
 			<property name="Ability Name" value="WAKE UP!" />
 			<property name="Rules"        value="At the end of each turn, unfreeze all characters." />
 			<property name="BP"           value="500" />
-			<property name="SP"           value="3" />
+			<property name="SP"           value="4" />
 			<property name="Backup 1"     value="Karateka" />
 			<property name="Backup 2"     value="Mentor" />
 			<property name="Backup 3"     value="Karateka" />
@@ -3933,7 +3933,7 @@
 			<property name="Ability Name" value="GET BACK!" />
 			<property name="Rules"        value="Return a character in your ring to your hand." />
 			<property name="BP"           value="600" />
-			<property name="SP"           value="3" />
+			<property name="SP"           value="2" />
 			<property name="Backup 1"     value="Fighter" />
 			<property name="Backup 2"     value="Aikido" />
 			<property name="Backup 3"     value="Brute" />
@@ -4689,7 +4689,7 @@
 			<property name="Ability Name" value="100 DEMON NIGHT" />
 			<property name="Rules"        value="KO all characters." />
 			<property name="BP"           value="500" />
-			<property name="SP"           value="3" />
+			<property name="SP"           value="2" />
 			<property name="Backup 1"     value="Brute" />
 			<property name="Backup 2"     value="Psychic" />
 			<property name="Backup 3"     value="" />
@@ -4725,7 +4725,7 @@
 			<property name="Ability Name" value="LET&apos;S GAMBLE!" />
 			<property name="Rules"        value="Select a character, then flip a coin. If you win the flip, raise that character&apos;s BP 500 points. Otherwise, lower this character&apos;s BP 300 points." />
 			<property name="BP"           value="600" />
-			<property name="SP"           value="3" />
+			<property name="SP"           value="2" />
 			<property name="Backup 1"     value="Magician" />
 			<property name="Backup 2"     value="Magician" />
 			<property name="Backup 3"     value="Magician" />
@@ -5067,7 +5067,7 @@
 			<property name="Ability Name" value="ENEMY CHASER" />
 			<property name="Rules"        value="Discard your hand. Deals 100 damage points to each other character for each card discarded this way." />
 			<property name="BP"           value="400" />
-			<property name="SP"           value="4" />
+			<property name="SP"           value="3" />
 			<property name="Backup 1"     value="Soldier" />
 			<property name="Backup 2"     value="Soldier" />
 			<property name="Backup 3"     value="Soldier" />
@@ -5409,7 +5409,7 @@
 			<property name="Ability Name" value="SHIKURO&apos;S FANG" />
 			<property name="Rules"        value="At the end of your turn, it deals 200 damage points to each frozen enemy character." />
 			<property name="BP"           value="600" />
-			<property name="SP"           value="2" />
+			<property name="SP"           value="1" />
 			<property name="Backup 1"     value="Ninja" />
 			<property name="Backup 2"     value="Beast" />
 			<property name="Backup 3"     value="" />
@@ -5895,7 +5895,7 @@
 			<property name="Ability Name" value="" />
 			<property name="Rules"        value="KO a character in your ring. Deals 300 damage points to all characters." />
 			<property name="BP"           value="" />
-			<property name="SP"           value="-5" />
+			<property name="SP"           value="-4" />
 			<property name="Backup 1"     value="" />
 			<property name="Backup 2"     value="" />
 			<property name="Backup 3"     value="" />
@@ -6343,9 +6343,9 @@
 			<property name="Ability"      value="" />
 			<property name="Ability Type" value="" />
 			<property name="Ability Name" value="" />
-			<property name="Rules"        value="Shuffle all the cards in your hand into your deck, then draw the same number of cards plus one." />
+			<property name="Rules"        value="Shuffle your hand into your deck, then draw the same number of cards plus one." />
 			<property name="BP"           value="" />
-			<property name="SP"           value="-3" />
+			<property name="SP"           value="-4" />
 			<property name="Backup 1"     value="" />
 			<property name="Backup 2"     value="" />
 			<property name="Backup 3"     value="" />
@@ -6415,7 +6415,7 @@
 			<property name="Ability"      value="" />
 			<property name="Ability Type" value="" />
 			<property name="Ability Name" value="" />
-			<property name="Rules"        value="Select a character and reveal the top card of an enemy&apos;s deck. If that card is a character card, that character&apos;s BP become the same as that card. Otherwise, KO that character. Put that card on the top of that enemy&apos;s deck." />
+			<property name="Rules"        value="Select a character and reveal the top card of an enemy&apos;s deck. If that card is a character card, selected character&apos;s BP become the same as that card. Otherwise, KO selected character. Put that card on the top of that enemy&apos;s deck." />
 			<property name="BP"           value="" />
 			<property name="SP"           value="-5" />
 			<property name="Backup 1"     value="" />
@@ -6489,7 +6489,7 @@
 			<property name="Ability Name" value="" />
 			<property name="Rules"        value="Trash three cards from an enemy&apos;s deck." />
 			<property name="BP"           value="" />
-			<property name="SP"           value="-4" />
+			<property name="SP"           value="-3" />
 			<property name="Backup 1"     value="" />
 			<property name="Backup 2"     value="" />
 			<property name="Backup 3"     value="" />
@@ -6775,7 +6775,7 @@
 			<property name="Ability"      value="" />
 			<property name="Ability Type" value="" />
 			<property name="Ability Name" value="" />
-			<property name="Rules"        value="You may play an additional character." />
+			<property name="Rules"        value="You may play an additional character this turn." />
 			<property name="BP"           value="" />
 			<property name="SP"           value="-7" />
 			<property name="Backup 1"     value="" />
@@ -7515,7 +7515,7 @@
 			<property name="Ability Name" value="" />
 			<property name="Rules"        value="Swap the abilities of two characters." />
 			<property name="BP"           value="" />
-			<property name="SP"           value="-3" />
+			<property name="SP"           value="-4" />
 			<property name="Backup 1"     value="" />
 			<property name="Backup 2"     value="" />
 			<property name="Backup 3"     value="" />
