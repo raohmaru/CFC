@@ -29,7 +29,7 @@ When a player attacks with their characters, these cards are placed in the Attac
 At the end of a turn, character cards are moved back to their corresponding slot.
 
 ### Deck
-Players need a deck of at least 50 cards to play CFC. A deck can contain any type of card but with the following limitation: **it can't have more than three copies of any single card with the same name** (*for example, a deck can contain three cards named "Akuma" and another three cards named "Shinjin Akuma"*).
+Players need a deck of 50 cards to play CFC. A deck can contain any type of card but with the following limitation: **it can't have more than three copies of any single card with the same name** (*for example, a deck can contain three cards named "Akuma" and another three cards named "Shinjin Akuma"*).
 
 When a player draws a card, he must draw from the top of his deck (unless an effect says the opposite).
 
@@ -259,6 +259,9 @@ If a transformed card goes to a pile (deck, discard pile or removed pile), it is
 
 __Copy Ability__
 To copy an ability from a character and give it to another character. Any existing abilities of the target character are replaced with the copied ability.
+
+__Draw a Card at Random__
+Shuffle your deck, then look through the top of it until you reveal a card of the selected type. If you do, put that card into your hand. Then shuffle your deck again.
 
 __Give Ability__
 See *Steal Ability*.
