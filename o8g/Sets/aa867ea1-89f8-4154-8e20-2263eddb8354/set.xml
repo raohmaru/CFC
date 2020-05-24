@@ -171,10 +171,10 @@
 			<property name="Ability Name" value="SAOTOME DYNAMITE" />
 			<property name="Rules"        value="KO this character and an enemy character." />
 			<property name="BP"           value="800" />
-			<property name="SP"           value="0" />
+			<property name="SP"           value="-1" />
 			<property name="Backup 1"     value="Robot" />
 			<property name="Backup 2"     value="Robot" />
-			<property name="Backup 3"     value="" />
+			<property name="Backup 3"     value="Robot" />
 			<property name="Number"       value="C009" />
 			<property name="Illustrator"  value="Art by the-hary" />
 		</card>
