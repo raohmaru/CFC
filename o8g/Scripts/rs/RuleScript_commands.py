@@ -276,10 +276,11 @@ def cmd_discard(rc, targets, source, restr, whichCards=''):
       else:
          notify(MSG_ERR_NO_CARDS_DISCARD.format(player))
       # Peek cards
-      if player == me:
-         remoteCall(getOpp(), "cardPeek", [player.hand])
-      else:
-         cardPeek(player.hand)
+      if reveal or len(targets) > 1:
+         if player == me:
+            remoteCall(getOpp(), "cardPeek", [player.hand])
+         else:
+            cardPeek(player.hand)
    rc.applyNext()
 
 
