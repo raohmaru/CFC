@@ -40,25 +40,29 @@ def onGameStarted():
 
 
 def onDeckLoaded(args):
+   mute()
    player = args.player
    groups = args.groups
    if player != me:  # We only want the owner of the deck to run this script
       return
    debug(">>> onDeckLoaded({})".format(player))
-   notify("{} has loaded a deck of {} cards.".format(player, len(me.Deck)))
-   mute()
+   notify("{} has loaded a deck.")
+   if len(player.Deck) != DeckSize:
+      msg = "INVALID DECK: {}'s deck has {} cards (it must have exactly {} cards).".format(player, len(player.Deck), DeckSize)
+      _extapi.notify(msg, Colors.Red)
+      notification(msg, Colors.Red, True)  # Big notification for all players
+      # return
    cards = {}
-   for card in me.Deck:
+   for card in player.Deck:
       if card.Name in cards:
          cards[card.Name] += 1
       else:
          cards[card.Name] = 1
       if cards[card.Name] > MaxCardCopies:
-         msg = "INVALID DECK: {0}'s deck has more than {1} copies of a card (only {1} copies are allowed)".format(player, MaxCardCopies)
+         msg = "INVALID DECK: {0}'s deck has more than {1} copies of a card (only {1} copies are allowed).".format(player, MaxCardCopies)
          _extapi.notify(msg, Colors.Red)
-         # A more visible notification for all players
-         notification(msg, Colors.Red, True)
-         return
+         notification(msg, Colors.Red, True)  # Big notification for all players
+         # return
    if settings['Play']:
       setup(silent=True)
    playSnd('load-deck')
@@ -148,7 +152,8 @@ def onCardsMoved(args):
 
    
 def onTurnPassed(args):
-   # Reset some player variables at the start of each turn
+# Triggers when the player passes the turn to another player.
+# Reset some player variables at the start of each turn
    debug(">>> onTurnPassed({}, {})".format(args.player, turnNumber()))
    global cleanedUpRing, turns
    # That was my old turn
@@ -180,13 +185,11 @@ def onPhasePassed(args):
       if me.isActive and len(getAttackingCards()) > 0:
          _extapi.whisper(MSG_HINT_BLOCK.format('defending player', 'he or she'), Colors.Blue)
       elif not me.isActive and len(getAttackingCards(getOpp())) > 0:
-         setStop(idx, True)
+         setStop(BlockPhase, True)
          addButton('BlockDone')
          _extapi.whisper(MSG_HINT_BLOCK.format('you', 'you'), Colors.Blue)
          whisper("When done, press TAB key or click in the \"Done\" button to return priority to attacking player.")
-   elif idx == EndPhase:
-      if not me.isActive:
-         setStop(BlockPhase, False)
+   # elif idx == EndPhase:
    elif idx == CleanupPhase:
       if me.isActive:
          _extapi.whisper("(This is the last phase of your turn)", Colors.Blue)
@@ -235,7 +238,9 @@ def onMarkerChanged(args):
    # Don't allow movement of markers
    if settings['Play']:
       if not args.scripted and card.controller == me:
-         setMarker(card, marker, oldValue)
+         qty = oldValue - getMarker(card, marker)
+         if qty < 100 and qty > -100:
+            setMarker(card, marker, oldValue)
 
 
 def OnCounterChanged(args):
