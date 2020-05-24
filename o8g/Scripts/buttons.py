@@ -22,7 +22,7 @@
 def buttonAction(btn):
    if btn._id in buttons:
       if buttons[btn._id] == 'BlockDone':
-         nextPhase()
+         nextPhase(False)
       
       
 def addButton(name):

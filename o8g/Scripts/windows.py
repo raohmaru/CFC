@@ -67,9 +67,7 @@ Good battle!"""
 
 def showChangelog():
    switchSetting('GameVersion', getGameVersion())
-   msg = """What's new in version 0.9.0
+   msg = """What's new in version 0.9.1
 
-- Weakened Urien's ability.
-- Re-balance of the SP of all characters.
-- Fixed compatibility issues with OCTGN 3.4.256.0."""
+"""
    askChoice(msg, [], [], ['Close'])

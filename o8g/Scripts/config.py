@@ -166,6 +166,7 @@ UAttackCost     = 5
 MaxCardCopies   = 3
 HandSize        = 5
 StartingHP      = 3000
+DeckSize        = 50
 
 GameRulesDefaults = {
    'ab_trigger_fresh'  : False, # Activate [] abilities of fresh characters
@@ -243,6 +244,7 @@ turns          = 1  # The number of consecutive turns a player can play
 envVars        = None  # Global variables to be used in eval() expression
 buttons        = {}  # Holds the UI buttons created
 transformed    = {}  # Transformed cards
+phaseOngoing   = False  # True while running phase automation tasks
 debugVerbosity = DebugLevel['Off']
 debugging      = False
 # If I am alone debugging I want to know EVERYTHING

@@ -32,25 +32,29 @@ def triggerPhaseEvent(phase, oldPhase = 0):
       notify("{} skips his {} phase due to an ability.".format(me, Phases[phase]))
       skipPhases.remove(phase)  # remove by value
       setState(me, 'skip', skipPhases)
-      nextPhase()
+      nextPhase(False)
       return
 
    if   phase == ActivatePhase: activatePhaseStart()
    elif phase == DrawPhase:
       if turnNumber() == 1:
          notify("{} skips their {} phase (the first player must skip it during their first turn).".format(me, Phases[phase]))
-         nextPhase()
+         nextPhase(False)
       else:
          drawPhaseStart()
    elif phase == AttackPhase:   attackPhaseStart()
    elif phase == BlockPhase:
       if len(getAttackingCards(me, True)) == 0:
          notify("{} skips their {} phase because there are no attacking characters.".format(me, Phases[phase]))
-         nextPhase()
+         nextPhase(False)
+         return
       else:
          blockPhaseStart()
    elif phase == EndPhase:      endPhaseStart()
    elif phase == CleanupPhase:  cleanupPhaseStart()
+   
+   global phaseOngoing
+   phaseOngoing = False
 
 
 def activatePhaseStart():
@@ -117,7 +121,7 @@ def blockPhaseStart():
          chars = len(uattack) - 1
          uatype = ["Double", "Triple"][chars-1] + " United Attack"
          uacost = "ua{}".format(len(uattack))
-         payCostSP(-chars*UAttackCost, uatype, "do a {}".format(uatype), uacost, ask = False)
+         payCostSP(-chars*UAttackCost, uatype, "do a {}".format(uatype), uacost)
          notify("{} has paid the cost of the {}".format(me, uatype))
    triggerGameEvent(GameEvents.BlockPhase)
    for card in atkCards:
@@ -352,8 +356,8 @@ def playAuto(card, slotIdx=None, force=False):
       charsPlayed = getState(me, 'charsPlayed')
       charsPerTurn = getState(me, 'charsPerTurn')
       if charsPlayed >= charsPerTurn:
-         if not confirm("Only {} character card{} per turn can be played\n(you have played {} character{}).\nProceed anyway?".format(charsPerTurn, plural(charsPerTurn), charsPlayed, plural(charsPlayed))):
-            return
+         warning("Only {} character card{} per turn can be played.\n(You have played {} character{}.)".format(charsPerTurn, plural(charsPerTurn), charsPlayed, plural(charsPlayed)))
+         return
       # BP limit?
       bplimit = getRule('play_char_bp_limit')
       if bplimit:
@@ -470,14 +474,14 @@ def backupAuto(card, target = None):
       return
    # Target just entered the ring?
    if MarkersDict['Just Entered'] in target.markers and not getRule('backup_fresh'):
-      if not confirm("Characters that just entered the ring this turn can't be backed-up.\nProceed anyway?"):
-         return
+      warning("Characters that just entered the ring this turn can't be backed-up.")
+      return
    # Backup limit
    backupsPlayed = getState(me, 'backupsPlayed')
    if backupsPlayed >= BackupsPerTurn:
       if getRule('backup_limit') and triggerHook([Hooks.BackupLimit, target._id]) != False:
-         if not confirm("Can't backup more than {} character per turn.\nProceed anyway?".format(BackupsPerTurn)):
-            return
+         warning("Can't backup more than {} character per turn.".format(BackupsPerTurn))
+         return
    # Check compatible backups
    acceptedBackups = getAcceptedBackups(target)
    if not card.Subtype in acceptedBackups:
@@ -535,8 +539,8 @@ def attackAuto(card, force = False):
       return
    # Char just entered the ring?
    if hasMarker(card, 'Just Entered'):
-      if not confirm(MSG_ERR_ATTACK_FRESH):
-         return
+      warning(MSG_ERR_ATTACK_FRESH)
+      return
    # Frozen char?
    if isFrozen(card):
       warning("Frozen characters can't attack this turn.")
@@ -571,8 +575,8 @@ def unitedAttackAuto(card, targets = None, force = False):
       return
    # Char just entered the ring?
    if hasMarker(card, 'Just Entered'):
-      if not confirm(MSG_ERR_ATTACK_FRESH):
-         return
+      warning(MSG_ERR_ATTACK_FRESH)
+      return
    # Triggers a hook to check if the character can attack
    if triggerHook([Hooks.BeforeAttack, card._id], card._id) == False:
       return
@@ -622,8 +626,8 @@ def unitedAttackAuto(card, targets = None, force = False):
       cost = getCostMod(cost, "ua" + str(totalUnited+1))
       if cost > me.SP:
          type = ["Double", "Triple"][totalUnited-1]
-         if not confirm("You do not seem to have enough SP to do a {} United Attack (it costs {} SP).\nProceed anyway?".format(type, cost)):
-            return
+         warning("You do not have enough SP to do a {} United Attack (it costs {} SP).".format(type, cost))
+         return
 
    # Update UnitedAttack list
    uattack = getGlobalVar('UnitedAttack')
@@ -761,8 +765,8 @@ def activateAuto(card):
             return
          # Just entered?
          if not getRule('ab_trigger_fresh') and hasMarker(card, 'Just Entered'):
-            if not confirm("Can't activate {} abilities of characters that just entered the ring.\nProceed anyway?".format(TriggerUniChar)):
-               return
+            warning("Can't activate {} abilities of characters that just entered the ring.".format(TriggerUniChar))
+            return
          # Frozen or attacking?
          if isFrozen(card) or isAttacking(card):
             warning("Can't activate {} abilities of frozen or attacking characters.".format(TriggerUniChar))

@@ -685,15 +685,14 @@ def alignBackups(card, x=0, y=0):
    attachs = getAttachmets(card)
    if len(attachs) > 0:
       ox, oy = CardsCoords['BackupOffset']
-      z = card.index
-      debug("{}'s index: {}".format(card, z))
+      card.index = len(attachs)
       for i, c in enumerate(attachs):
          nx = x + ox * (i + 1)
          ny = y + oy * (i + 1)
          cx, cy = c.position
          if nx != cx or ny != cy:
             c.moveToTable(nx, ny)
-         c.index = max(z-i-1, 0)
+         c.index = 0
 
 
 def getTargetedCards(card=None, targetedByMe=True, controlledByMe=True, type=CharType):
@@ -971,7 +970,7 @@ def modSP(count = 1, mode = None, silent = False, player = me):
       notify("{} {} {} SP. New total is {} SP (before was {}).".format(player, action, count, player.SP, initialSP))
 
 
-def payCostSP(amount = 1, obj = None, msg = 'play this card', type = None, ask = True):
+def payCostSP(amount = 1, obj = None, msg = 'play this card', type = None):
 # Pay an SP cost. However we also check if the cost can actually be paid.
    debug(">>> payCostSP({}, {})".format(amount, type))
    amount = num(amount)
@@ -988,17 +987,8 @@ def payCostSP(amount = 1, obj = None, msg = 'play this card', type = None, ask =
    else:
       initialSP = me.SP
       if me.SP + amount < 0: # If we don't have enough SP, notify the player that they need to do things manually
-         if ask:
-            if not confirm("You do not seem to have enough SP to {}. \
-            \nAre you sure you want to proceed? \
-            \nCost is {} SP. \
-            \n\n(If you do, your SP will go to the negative. You will need to increase it manually as required.)".format(msg, amount)):
-               return False
-         else:
-            warning("You do not seem to have enough SP to {}. \
-            \nCost is {} SP. \
-            \nYour SP will go to the negative. You will need to increase it manually as required.".format(msg, amount))
-         _extapi.notify("{} was supposed to pay {} SP but only has {} SP.".format(me, amount, me.SP), Colors.Red)
+         warning("You do not have enough SP to {}.\n(Cost is {} SP.)".format(msg, amount))
+         return False
       me.SP += amount
       notify("{} has spent {} SP. New total is {} SP (before was {}).".format(me, amount, me.SP, initialSP))
    return True

@@ -20,7 +20,12 @@ import re
 # Phases
 #---------------------------------------------------------------------------
 
-def nextPhase(group = table, x = 0, y = 0):
+def nextPhase(fromKeyStroke = True, x = 0, y = 0):
+   global phaseOngoing
+   if fromKeyStroke and phaseOngoing and settings['Play']:
+      return
+   phaseOngoing = True
+   
    phaseIdx = currentPhase()[1]
    if me.isActive:
       if phaseIdx == BlockPhase and getState(None, 'priority') != me._id:
@@ -32,10 +37,10 @@ def nextPhase(group = table, x = 0, y = 0):
          setState(None, 'priority', me._id)
       
       global turns
-      if phaseIdx >= len(Phases) - 1:
+      if phaseIdx >= CleanupPhase:
          phaseIdx = ActivatePhase
          turns -= 1
-         if turns == 0:
+         if turns <= 0:
             nextTurn(getNextActivePlayer())
          else:
             nextTurn(me)
@@ -44,7 +49,7 @@ def nextPhase(group = table, x = 0, y = 0):
          phaseIdx += 1
       setPhase(phaseIdx)
    elif phaseIdx == BlockPhase and getState(None, 'priority') == me._id:
-      setStop(phaseIdx, False)
+      setStop(BlockPhase, False)
       # Pass priority to opponent
       setState(None, 'priority', getOpp()._id)
       notify(MSG_PHASE_DONE.format(me, Phases[phaseIdx], getOpp()))
