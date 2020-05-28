@@ -116,8 +116,9 @@ def onCardsMoved(args):
                abilitiesChanged = True
          # Moved cards in the table
          elif fromGroup == table and toGroup == table:
-            if not hasMarker(card, 'Backup'):
-               alignBackups(card, *card.position)
+            if card.position != (args.xs[i], args.ys[i]):
+               if not hasMarker(card, 'Backup'):
+                  alignBackups(card, *card.position)
          # From anywhere else to the table
          elif fromGroup != table and toGroup == table:
             if charIsInRing(card):
