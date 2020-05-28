@@ -22,14 +22,14 @@ import re
 
 def nextPhase(fromKeyStroke = True, x = 0, y = 0):
    global phaseOngoing
-   if fromKeyStroke and phaseOngoing and settings['Play']:
+   if fromKeyStroke and phaseOngoing and settings['Play'] and me.isActive:
       return
    phaseOngoing = True
    
    phaseIdx = currentPhase()[1]
    if me.isActive:
       if phaseIdx == BlockPhase and getState(None, 'priority') != me._id:
-         whisper('You cannot pass the phase until {} is done.'.format(getOpp()))
+         whisper('You cannot go to the next phase until {} is done.'.format(getOpp()))
          playSnd('win-warning')
          return
       # Priority back to me
@@ -42,6 +42,7 @@ def nextPhase(fromKeyStroke = True, x = 0, y = 0):
          turns -= 1
          if turns <= 0:
             nextTurn(getNextActivePlayer())
+            removeButtons()
          else:
             nextTurn(me)
             notify("{} takes another turn".format(me))
@@ -54,7 +55,8 @@ def nextPhase(fromKeyStroke = True, x = 0, y = 0):
       setState(None, 'priority', getOpp()._id)
       notify(MSG_PHASE_DONE.format(me, Phases[phaseIdx], getOpp()))
       notification(MSG_PHASE_DONE.format(me, Phases[phaseIdx], 'you'), player = getOpp())
-      removeButton('BlockDone')
+      removeButton('BlockButton')
+      remoteCall(players[1], 'addButton', ['NextButton'])
       playSnd('notification')
       
       
@@ -123,11 +125,11 @@ def setup(group = table, x = 0, y = 0, silent = False):
       # me.setActive()
 
 
-def scoop(group, x=0, y=0):
+def scoop(group=None, x=0, y=0):
 # Reset the game
    debug(">>> reset()")
    mute()
-   if not confirm("Are you sure you want to reset the game?"):
+   if group != None and not confirm("Are you sure you want to reset the game?"):
       return
    resetAll()
    myCards = (card for card in table
@@ -137,7 +139,11 @@ def scoop(group, x=0, y=0):
    toOwnerDeck(me.hand)
    toOwnerDeck(me.piles['Discard Pile'])
    # toOwnerDeck(me.piles['Removed Pile'])
+   rnd(100, 10000) # Delays the next action until all animation is done
+   setup()
    notify("{} resets the game.".format(me))
+   if group != None and len(players) > 1:
+      remoteCall(players[1], 'scoop', [])
 
 
 def flipCoin(group = None, x = 0, y = 0):
@@ -863,6 +869,8 @@ def backup(card, x = 0, y = 0, target = None):  # Play a card as backup attached
 
 
 def discard(card, x = 0, y = 0, isRandom = False):
+   if isButton(card):
+      return
    mute()
    group = card.group
    card.moveTo(me.piles['Discard Pile'])
@@ -913,12 +921,13 @@ def drawMany(group, count = None, silent = False):  # This function draws a vari
       count = askInteger("How many cards do you want to draw?", handSize) # Ask the player how many cards they want.
    if count == None:
       return
-   i = 0
+   drawn = 0
    for i in range(0, count):
       if len(group) > 0:  # If the deck is not empty...
          group.top().moveTo(me.hand)  # ...then move them one by one into their play hand.
+         drawn += 1
    if not silent:
-      notify("{} draws {} card{}.".format(me, i+1, plural(i+1)))
+      notify("{} draws {} card{}.".format(me, drawn, plural(drawn)))
 
 
 def randomDraw(group = me.Deck, type = None):

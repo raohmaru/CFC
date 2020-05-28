@@ -35,8 +35,11 @@ def onTableLoaded():
 def onGameStarted():
 # Triggers when the table initially loads, and after each game restart.
    resetAll()
+   chooseSide()
    if debugging:
       debugScenario()
+   elif settings['Play']:
+      addButton('StartButton')
 
 
 def onDeckLoaded(args):
@@ -164,10 +167,14 @@ def onTurnPassed(args):
       if not cleanedUpRing:
          triggerPhaseEvent(CleanupPhase)  # Force cleanup
    # I start my turn
-   elif args.player is not None:
+   elif me.isActive:
       cleanedUpRing = False
       turns = 1
       playSnd('turn-change')
+      if turnNumber() == 1 and not debugging:
+         nextPhase(False)
+   if turnNumber() == 1:
+      removeButton('StartButton')
    debug("<<< onTurnPassed()")
 
 
@@ -186,9 +193,9 @@ def onPhasePassed(args):
          _extapi.whisper(MSG_HINT_BLOCK.format('defending player', 'he or she'), Colors.Blue)
       elif not me.isActive and len(getAttackingCards(getOpp())) > 0:
          setStop(BlockPhase, True)
-         addButton('BlockDone')
+         addButton('BlockButton')
          _extapi.whisper(MSG_HINT_BLOCK.format('you', 'you'), Colors.Blue)
-         whisper("When done, press TAB key or click in the \"Done\" button to return priority to attacking player.")
+         whisper("When done, press TAB key or click in the \"Block Done\" button to return priority to attacking player.")
    # elif idx == EndPhase:
    elif idx == CleanupPhase:
       if me.isActive:
@@ -238,9 +245,11 @@ def onMarkerChanged(args):
    # Don't allow movement of markers
    if settings['Play']:
       if not args.scripted and card.controller == me:
-         qty = oldValue - getMarker(card, marker)
-         if qty < 100 and qty > -100:
-            setMarker(card, marker, oldValue)
+         if marker == 'BP':
+            bp = getMarker(card, 'BP')
+            fixedBP = fixBP(bp)
+            if bp != fixedBP:
+               setMarker(card, 'BP', fixedBP)
 
 
 def OnCounterChanged(args):

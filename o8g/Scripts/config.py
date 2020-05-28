@@ -98,19 +98,21 @@ MarkersDict = {
 
 # A table holding tuples with the location for the cards according its states
 CardsCoords = dict(
-   #                x     y
-   Slot0         = (-311, 198),
-   Slot1         = (-134, 198),
-   Slot2         = ( 44,  198),
-   Slot3         = ( 221, 198),
-   Attack0       = (-311, 29),
-   Attack1       = (-134, 29),
-   Attack2       = ( 44,  29),
-   Attack3       = ( 221, 29),
-   BackupOffset  = ( 0,   13),
-   UAttackOffset = ( 43,  0),
-   Button        = ( 415, 29),
-   Action        = ( 0,   29)
+   #                x      y
+   Slot0         = (-311,  208),
+   Slot1         = (-134,  208),
+   Slot2         = ( 44,   208),
+   Slot3         = ( 221,  208),
+   Attack0       = (-311,  39),
+   Attack1       = (-134,  39),
+   Attack2       = ( 44,   39),
+   Attack3       = ( 221,  39),
+   BackupOffset  = ( 0,    13),
+   UAttackOffset = ( 43,   0),
+   Action        = ( 0,    -49),
+   StartButton   = ( -395, 15),
+   BlockButton   = ( -376, 243),
+   NextButton    = ( 376,  243),
 )
 
 # Card types
@@ -155,6 +157,9 @@ Yaxis        = 'y'
 PlayAction   = 'play'
 BackupAction = 'backup'
 Author       = 'raohmaru'
+# _extapi is not ready yet
+# ButtonSize = _extapi.game.CardSizes["button"].Width
+ButtonSize   = 58
 
 # Rules
 NumSlots        = 4

@@ -1,28 +1,19 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
-<set name="Markers"
+<set name="Buttons"
 	 id="243f4bca-ce77-47cc-a652-ee5de6b176b0"
 	 version="1.3.0.0" 
      gameId="e3d56d9e-900d-49c6-b6ae-22cbb51be153"
-	 gameVersion="0.8.4"
+	 gameVersion="0.9.1"
 	 hidden="true">
 	<cards>
-		<card name="BlockDone" id="a7694a83-7743-4c44-8fed-43142102cd62" size="button">
-			<property name="Publisher"    value="" />
-			<property name="Team"         value="" />
+		<card name="BlockButton" id="a7694a83-7743-4c44-8fed-43142102cd62" size="button">
 			<property name="Type"         value="Button" />
-			<property name="Subtype"      value="" />
-			<property name="Rarity"       value="" />
-			<property name="Ability"      value="" />
-			<property name="Ability Type" value="" />
-			<property name="Ability Name" value="" />
-			<property name="Rules"        value="" />
-			<property name="BP"           value="" />
-			<property name="SP"           value="" />
-			<property name="Backup 1"     value="" />
-			<property name="Backup 2"     value="" />
-			<property name="Backup 3"     value="" />
-			<property name="Number"       value="" />
-			<property name="Illustrator"  value="" />
+		</card>
+		<card name="StartButton" id="81918f9c-83cc-4589-8b86-19a238a0623b" size="button">
+			<property name="Type"         value="Button" />
+		</card>
+		<card name="NextButton" id="1d0c798b-b785-4bb6-b160-14c71db6af47" size="button">
+			<property name="Type"         value="Button" />
 		</card>
 	</cards>
 </set>

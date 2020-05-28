@@ -59,11 +59,12 @@ def resetAll():
 # Clears all the global variables in order to start a new game.
    debug(">>> resetAll()")
    # Import all our global variables and reset them.
-   global playerSide, handSize, parsedCards, turns, transformed
+   global playerSide, handSize, parsedCards, turns, transformed, buttons
    playerSide = None
    handSize = HandSize
    parsedCards = {}
    transformed = {}
+   buttons = {}
    resetState()
    turns = 1
    me.HP = StartingHP
@@ -538,13 +539,13 @@ def cardsNamesStr(cards):
 # Card functions
 #---------------------------------------------------------------------------
 
-def fixCardY(y):
+def fixCardY(y, h = CardHeight):
 # Variable to move the cards played by player 2 on a 2-sided table, more towards their own side. 
 # Player's 2 axis will fall one extra card length towards their side.
 # This is because of bug #146 (https://github.com/kellyelton/OCTGN/issues/146)
    offsetY = 0
    if me.isInverted:
-      offsetY = CardHeight
+      offsetY = h
    return (y + offsetY) * playerSide
    
    
@@ -657,6 +658,7 @@ def alignCard(card, x=None, y=None, slotIdx=None):
          idx = uattack.index(card._id)
          ox, oy = CardsCoords['UAttackOffset']
          lead = Card(uattack[0])
+         lead.index = MaxCharsUAttack
          x, y = lead.position
          x += ox * idx * playerSide
          y += oy * idx

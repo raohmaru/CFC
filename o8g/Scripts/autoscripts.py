@@ -42,7 +42,7 @@ def triggerPhaseEvent(phase, oldPhase = 0):
          nextPhase(False)
       else:
          drawPhaseStart()
-   elif phase == AttackPhase:   attackPhaseStart()
+   elif phase == AttackPhase: attackPhaseStart()
    elif phase == BlockPhase:
       if len(getAttackingCards(me, True)) == 0:
          notify("{} skips their {} phase because there are no attacking characters.".format(me, Phases[phase]))
@@ -82,6 +82,7 @@ def activatePhaseStart():
    # Trigger event
    triggerGameEvent(GameEvents.ActivatePhase)
    cleanupGameEvents(RS_KW_RESTR_UYNT)
+   addButton('NextButton')
 
 
 def drawPhaseStart():
@@ -128,6 +129,7 @@ def blockPhaseStart():
       if len(uattack) == 0 or uattack[0] != card._id:
          triggerGameEvent([GameEvents.Attacks, card._id], card._id)
    alignCards()
+   removeButton('NextButton')
    # Pass priority to opponent
    setState(None, 'priority', getOpp()._id)
 
@@ -145,6 +147,8 @@ def endPhaseStart():
          alignCard(card)
          if freezeAtk and isAttacking(card) and not hasMarker(card, 'Unfreezable'):
             freeze(card, unfreeze = False, silent = True)
+      else:
+         discard(card)
 
    # Calculates and applies attack damage
    if settings['AttackDmg']:

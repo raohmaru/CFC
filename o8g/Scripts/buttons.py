@@ -21,7 +21,16 @@
 
 def buttonAction(btn):
    if btn._id in buttons:
-      if buttons[btn._id] == 'BlockDone':
+      if buttons[btn._id] == 'BlockButton':
+         nextPhase(False)
+         
+      elif buttons[btn._id] == 'StartButton':
+         if len(me.Deck) == 0:
+            warning("Please load a deck first.")
+            return
+         me.setActive()
+         
+      elif buttons[btn._id] == 'NextButton':
          nextPhase(False)
       
       
@@ -30,8 +39,8 @@ def addButton(name):
       return
    cards = queryCard({"Name": name}, True)
    if cards:
-      x = CardsCoords['Button'][0] * playerSide - _extapi.game.CardSizes["button"].Width/2
-      y = fixCardY(CardsCoords['Button'][1])
+      x = CardsCoords[name][0] * playerSide - ButtonSize/2
+      y = fixCardY(CardsCoords[name][1], ButtonSize)
       btn = table.create(cards[0], x, y, quantity=1, persist=False)
       btn.anchor = True
       buttons[btn._id] = btn.Name
@@ -53,3 +62,9 @@ def removeButton(name):
             del buttons[c._id]
             c.delete()
          
+def removeButtons():
+   for c in table:
+      if isButton(c):
+         del buttons[c._id]
+         c.delete()
+   
