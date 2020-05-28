@@ -69,5 +69,9 @@ def showChangelog():
    switchSetting('GameVersion', getGameVersion())
    msg = """What's new in version 0.9.1
 
-"""
+- Bug fixes.
+- Players are not longer allowed do illegal actions (like playing a second character).
+- SP updated: Chaos, Makeover and Pester.
+- Ring updated with a new design.
+- Added buttons to improve gameplay."""
    askChoice(msg, [], [], ['Close'])

@@ -1764,6 +1764,7 @@ action = moveTo(hand) target(<r>*@discards)
 
 # Round 2
 RulesDict['5ed66b91-2f3a-4fae-a1ba-ceb59040ea8c'] = """
+target = players
 action = discard(all) & draw(5)
 """
 

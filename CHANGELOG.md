@@ -5,7 +5,9 @@ Bug fixes.
 Warning if deck does not have exactly 50 cards.
 Do not allow players to do illegal actions (replaced confirmation dialog with warning).
 Allow changing manually BP markers.
-SP changed: Chaos, Makeover and Pester.
+SP updated: Chaos, Makeover and Pester.
+Ring updated with a new design.
+Added buttons to improve gameplay.
 ## 0.9.0
 Weakened Urien's ability.
 Updated SP of all characters.

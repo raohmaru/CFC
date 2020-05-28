@@ -389,7 +389,7 @@
 			<property name="BP"           value="300" />
 			<property name="SP"           value="6" />
 			<property name="Backup 1"     value="Warrior" />
-			<property name="Backup 2"     value="Deity" />
+			<property name="Backup 2"     value="Kami" />
 			<property name="Backup 3"     value="Fighter" />
 			<property name="Number"       value="C021" />
 			<property name="Illustrator"  value="Art by Terese Nielsen" />
@@ -408,7 +408,7 @@
 			<property name="SP"           value="5" />
 			<property name="Backup 1"     value="Kickboxer" />
 			<property name="Backup 2"     value="Captain" />
-			<property name="Backup 3"     value="Deity" />
+			<property name="Backup 3"     value="Kami" />
 			<property name="Number"       value="C022" />
 			<property name="Illustrator"  value="Art by Bengus" />
 		</card>
@@ -452,7 +452,7 @@
 			<property name="Publisher"    value="Capcom" />
 			<property name="Team"         value="Marvel VS" />
 			<property name="Type"         value="Character" />
-			<property name="Subtype"      value="Deity" />
+			<property name="Subtype"      value="Kami" />
 			<property name="Rarity"       value="B" />
 			<property name="Ability"      value="&#162; BUNSHIN" />
 			<property name="Ability Type" value="&#162;" />
@@ -1775,7 +1775,7 @@
 			<property name="BP"           value="400" />
 			<property name="SP"           value="4" />
 			<property name="Backup 1"     value="Fighter" />
-			<property name="Backup 2"     value="Deity" />
+			<property name="Backup 2"     value="Kami" />
 			<property name="Backup 3"     value="Monk" />
 			<property name="Number"       value="C098" />
 			<property name="Illustrator"  value="Art by Gonzalo Ordóñez Arias" />
@@ -1792,7 +1792,7 @@
 			<property name="Rules"        value="KO a frozen character." />
 			<property name="BP"           value="700" />
 			<property name="SP"           value="0" />
-			<property name="Backup 1"     value="Deity" />
+			<property name="Backup 1"     value="Kami" />
 			<property name="Backup 2"     value="" />
 			<property name="Backup 3"     value="" />
 			<property name="Number"       value="C099" />
@@ -1838,7 +1838,7 @@
 			<property name="Publisher"    value="Capcom" />
 			<property name="Team"         value="Street Fighter" />
 			<property name="Type"         value="Character" />
-			<property name="Subtype"      value="Deity" />
+			<property name="Subtype"      value="Kami" />
 			<property name="Rarity"       value="B" />
 			<property name="Ability"      value="&#163; ARAHITOGAMI" />
 			<property name="Ability Type" value="&#163;" />
@@ -1846,9 +1846,9 @@
 			<property name="Rules"        value="Discard an action card. KO a character with no abilities." />
 			<property name="BP"           value="700" />
 			<property name="SP"           value="1" />
-			<property name="Backup 1"     value="Deity" />
+			<property name="Backup 1"     value="Kami" />
 			<property name="Backup 2"     value="Fighter" />
-			<property name="Backup 3"     value="Deity" />
+			<property name="Backup 3"     value="Kami" />
 			<property name="Number"       value="C102" />
 			<property name="Illustrator"  value="Art by Lucio López Iñiguez" />
 		</card>
@@ -2477,7 +2477,7 @@
 			<property name="BP"           value="600" />
 			<property name="SP"           value="2" />
 			<property name="Backup 1"     value="Monster" />
-			<property name="Backup 2"     value="Deity" />
+			<property name="Backup 2"     value="Kami" />
 			<property name="Backup 3"     value="" />
 			<property name="Number"       value="C137" />
 			<property name="Illustrator"  value="Art by Stanley Lau" />
@@ -2873,7 +2873,7 @@
 			<property name="BP"           value="300" />
 			<property name="SP"           value="6" />
 			<property name="Backup 1"     value="Soldier" />
-			<property name="Backup 2"     value="Deity" />
+			<property name="Backup 2"     value="Kami" />
 			<property name="Backup 3"     value="Captain" />
 			<property name="Number"       value="C159" />
 			<property name="Illustrator"  value="Art by Tsukinowa" />
@@ -3188,7 +3188,7 @@
 			<property name="Publisher"    value="SNK" />
 			<property name="Team"         value="CVS2" />
 			<property name="Type"         value="Character" />
-			<property name="Subtype"      value="Deity" />
+			<property name="Subtype"      value="Kami" />
 			<property name="Rarity"       value="A" />
 			<property name="Ability"      value="&#163; YUUGOU POWER" />
 			<property name="Ability Type" value="&#163;" />
@@ -3269,7 +3269,7 @@
 			<property name="BP"           value="700" />
 			<property name="SP"           value="0" />
 			<property name="Backup 1"     value="Boss" />
-			<property name="Backup 2"     value="Deity" />
+			<property name="Backup 2"     value="Kami" />
 			<property name="Backup 3"     value="" />
 			<property name="Number"       value="C181" />
 			<property name="Illustrator"  value="Art by Yorozu" />
@@ -3468,7 +3468,7 @@
 			<property name="SP"           value="4" />
 			<property name="Backup 1"     value="Ninja" />
 			<property name="Backup 2"     value="Ninja" />
-			<property name="Backup 3"     value="Deity" />
+			<property name="Backup 3"     value="Kami" />
 			<property name="Number"       value="C192" />
 			<property name="Illustrator"  value="Art by Takkun" />
 		</card>
@@ -4412,7 +4412,7 @@
 			<property name="Publisher"    value="SNK" />
 			<property name="Team"         value="KOF" />
 			<property name="Type"         value="Character" />
-			<property name="Subtype"      value="Deity" />
+			<property name="Subtype"      value="Kami" />
 			<property name="Rarity"       value="A" />
 			<property name="Ability"      value="&#162; SANITY" />
 			<property name="Ability Type" value="&#162;" />
@@ -5105,7 +5105,7 @@
 			<property name="BP"           value="600" />
 			<property name="SP"           value="2" />
 			<property name="Backup 1"     value="Demon" />
-			<property name="Backup 2"     value="Deity" />
+			<property name="Backup 2"     value="Kami" />
 			<property name="Backup 3"     value="" />
 			<property name="Number"       value="C283" />
 			<property name="Illustrator"  value="Art by rodv" />
@@ -5366,7 +5366,7 @@
 			<property name="Publisher"    value="SNK" />
 			<property name="Team"         value="Samurai Shodown" />
 			<property name="Type"         value="Character" />
-			<property name="Subtype"      value="Deity" />
+			<property name="Subtype"      value="Kami" />
 			<property name="Rarity"       value="C" />
 			<property name="Ability"      value="&#164; RED EYES" />
 			<property name="Ability Type" value="&#164;" />
@@ -5537,7 +5537,7 @@
 			<property name="BP"           value="300" />
 			<property name="SP"           value="5" />
 			<property name="Backup 1"     value="Demon" />
-			<property name="Backup 2"     value="Deity" />
+			<property name="Backup 2"     value="Kami" />
 			<property name="Backup 3"     value="Assassin" />
 			<property name="Number"       value="C307" />
 			<property name="Illustrator"  value="Art by Senri Kita" />
@@ -5662,7 +5662,7 @@
 			<property name="Rules"        value="" />
 			<property name="BP"           value="600" />
 			<property name="SP"           value="3" />
-			<property name="Backup 1"     value="Deity" />
+			<property name="Backup 1"     value="Kami" />
 			<property name="Backup 2"     value="Samurai" />
 			<property name="Backup 3"     value="Samurai" />
 			<property name="Number"       value="C314" />
@@ -6649,7 +6649,7 @@
 			<property name="Ability"      value="" />
 			<property name="Ability Type" value="" />
 			<property name="Ability Name" value="" />
-			<property name="Rules"        value="Discard your hand, then draw 5 cards." />
+			<property name="Rules"        value="Each player discards their hand, then draws 5 cards." />
 			<property name="BP"           value="" />
 			<property name="SP"           value="-5" />
 			<property name="Backup 1"     value="" />

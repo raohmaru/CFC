@@ -64,7 +64,7 @@
 		<block type="overlay" id="subtype_cyborg" src="Proxy/Subtypes/Cyborg.png">
 			<location x="316" y="447" />
 		</block>
-		<block type="overlay" id="subtype_deity" src="Proxy/Subtypes/Deity.png">
+		<block type="overlay" id="subtype_kami" src="Proxy/Subtypes/Kami.png">
 			<location x="316" y="447" />
 		</block>
 		<block type="overlay" id="subtype_demon" src="Proxy/Subtypes/Demon.png">
@@ -238,7 +238,7 @@
 		<block type="overlay" id="backup1_cyborg" src="Proxy/Subtypes/Cyborg.png">
 			<location x="33" y="547" />
 		</block>
-		<block type="overlay" id="backup1_deity" src="Proxy/Subtypes/Deity.png">
+		<block type="overlay" id="backup1_deity" src="Proxy/Subtypes/Kami.png">
 			<location x="33" y="547" />
 		</block>
 		<block type="overlay" id="backup1_demon" src="Proxy/Subtypes/Demon.png">
@@ -386,7 +386,7 @@
 		<block type="overlay" id="backup2_cyborg" src="Proxy/Subtypes/Cyborg.png">
 			<location x="33" y="589" />
 		</block>
-		<block type="overlay" id="backup2_deity" src="Proxy/Subtypes/Deity.png">
+		<block type="overlay" id="backup2_deity" src="Proxy/Subtypes/Kami.png">
 			<location x="33" y="589" />
 		</block>
 		<block type="overlay" id="backup2_demon" src="Proxy/Subtypes/Demon.png">
@@ -534,7 +534,7 @@
 		<block type="overlay" id="backup3_cyborg" src="Proxy/Subtypes/Cyborg.png">
 			<location x="33" y="631" />
 		</block>
-		<block type="overlay" id="backup3_deity" src="Proxy/Subtypes/Deity.png">
+		<block type="overlay" id="backup3_deity" src="Proxy/Subtypes/Kami.png">
 			<location x="33" y="631" />
 		</block>
 		<block type="overlay" id="backup3_demon" src="Proxy/Subtypes/Demon.png">
@@ -898,8 +898,8 @@
 					<case value="Cyborg" break="True">
 						<link block="subtype_cyborg" />
 					</case>
-					<case value="Deity" break="True">
-						<link block="subtype_deity" />
+					<case value="Kami" break="True">
+						<link block="subtype_kami" />
 					</case>
 					<case value="Demon" break="True">
 						<link block="subtype_demon" />
@@ -1070,7 +1070,7 @@
 					<case value="Cyborg" break="True">
 						<link block="backup1_cyborg" />
 					</case>
-					<case value="Deity" break="True">
+					<case value="Kami" break="True">
 						<link block="backup1_deity" />
 					</case>
 					<case value="Demon" break="True">
@@ -1225,7 +1225,7 @@
 					<case value="Cyborg" break="True">
 						<link block="backup2_cyborg" />
 					</case>
-					<case value="Deity" break="True">
+					<case value="Kami" break="True">
 						<link block="backup2_deity" />
 					</case>
 					<case value="Demon" break="True">
@@ -1380,7 +1380,7 @@
 					<case value="Cyborg" break="True">
 						<link block="backup3_cyborg" />
 					</case>
-					<case value="Deity" break="True">
+					<case value="Kami" break="True">
 						<link block="backup3_deity" />
 					</case>
 					<case value="Demon" break="True">
