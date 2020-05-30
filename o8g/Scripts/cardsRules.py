@@ -99,7 +99,7 @@ zone: (optional)
       hand
       deck
       discards
-      kill
+      removed
    Prefixes:
       my (default)
       opp
@@ -173,6 +173,7 @@ effect:
          unite()
          removeFromAttack()
          peek()
+         pileView(pile, state)  # state: collapsed, pile, expanded
       Ability:
          Keywords:
             @see abilities
@@ -1540,8 +1541,10 @@ action = damage(300)
 
 # Crossover
 RulesDict['ab631979-20d8-4789-85be-149b414d1ef1'] = """
-action = moveTo(deck) target?(*s@hand) & shuffle(); moveTo(hand) target(*s@discards)
-auto = ~myEndPhase:once~ discard(all)
+# action = moveTo(deck) target?(*s@hand) & shuffle(); moveTo(hand) target(*s@discards)
+# auto = ~myEndPhase:once~ discard(all)
+action = moveTo(removed) target?(*s@discards) & pileView(removed, pile); enableRule(play_removed) target(me) ueot
+auto = ~myEndPhase:once~ moveTo(discards) target?(*s@removed) & pileView(removed, collapsed)
 """
 
 # Curse
@@ -1749,7 +1752,8 @@ action = moveTo(ctrlHand)
 
 # Reset button
 RulesDict['85d84ab1-dede-4fc7-b80d-00778f73c905'] = """
-action = freeze() target(characters@myRing) & turns(+1)
+# action = freeze() target(characters@myRing) & turns(+1)
+action = turns(+1)
 """
 
 # Revive

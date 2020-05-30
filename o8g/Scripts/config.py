@@ -69,7 +69,7 @@ CleanupPhase  = 7
 AttackColor         = "#ff0000"
 AttackNoFreezeColor = "#ff8000"
 UnitedAttackColor   = "#ff42de"
-BlockColor          = "#11aa43"
+BlockColor          = "#25750f"
 ActivatedColor      = "#0000ff"
 InfoColor           = "#00ff00"
 
@@ -99,10 +99,10 @@ MarkersDict = {
 # A table holding tuples with the location for the cards according its states
 CardsCoords = dict(
    #                x      y
-   Slot0         = (-311,  208),
-   Slot1         = (-134,  208),
-   Slot2         = ( 44,   208),
-   Slot3         = ( 221,  208),
+   Slot0         = (-311,  209),
+   Slot1         = (-134,  209),
+   Slot2         = ( 44,   209),
+   Slot3         = ( 221,  209),
    Attack0       = (-311,  39),
    Attack1       = (-134,  39),
    Attack2       = ( 44,   39),
@@ -110,9 +110,9 @@ CardsCoords = dict(
    BackupOffset  = ( 0,    13),
    UAttackOffset = ( 43,   0),
    Action        = ( 0,    -49),
-   StartButton   = ( -395, 15),
-   BlockButton   = ( -376, 243),
-   NextButton    = ( 376,  243),
+   StartButton   = ( -385, 30),
+   BlockButton   = ( -385, 244),
+   NextButton    = ( 387,  244),
 )
 
 # Card types
@@ -183,7 +183,8 @@ GameRulesDefaults = {
    'dmg_combat_deal'   : True,  # Deal combat damage
    'attack_freeze'     : True,  # Characters freeze after a attack
    'attack'            : True,  # Characters can attack
-   'backup_limit'      : True   # Limit the number of backups per turn
+   'backup_limit'      : True,  # Limit the number of backups per turn
+   'play_removed'      : False  # Play cards from removed pile
 }
 
 # Debug

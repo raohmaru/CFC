@@ -5929,9 +5929,9 @@
 			<property name="Ability"      value="" />
 			<property name="Ability Type" value="" />
 			<property name="Ability Name" value="" />
-			<property name="Rules"        value="Shuffle your hand into your deck, then put your discards into your hand. At the end of your turn, discard your hand." />
+			<property name="Rules"        value="Put your discard pile into your removed pile.&#xD;&#xA;Until end of turn, you may play any card in your removed pile.&#xD;&#xA;At the end of turn, put your removed pile into your discard pile." />
 			<property name="BP"           value="" />
-			<property name="SP"           value="-12" />
+			<property name="SP"           value="-15" />
 			<property name="Backup 1"     value="" />
 			<property name="Backup 2"     value="" />
 			<property name="Backup 3"     value="" />
@@ -6489,7 +6489,7 @@
 			<property name="Ability Name" value="" />
 			<property name="Rules"        value="Trash three cards from an enemy&apos;s deck." />
 			<property name="BP"           value="" />
-			<property name="SP"           value="-3" />
+			<property name="SP"           value="-4" />
 			<property name="Backup 1"     value="" />
 			<property name="Backup 2"     value="" />
 			<property name="Backup 3"     value="" />
@@ -6595,9 +6595,9 @@
 			<property name="Ability"      value="" />
 			<property name="Ability Type" value="" />
 			<property name="Ability Name" value="" />
-			<property name="Rules"        value="Freeze all characters in your ring.&#xD;&#xA;Take another turn after this one." />
+			<property name="Rules"        value="Take another turn after this one." />
 			<property name="BP"           value="" />
-			<property name="SP"           value="-15" />
+			<property name="SP"           value="-20" />
 			<property name="Backup 1"     value="" />
 			<property name="Backup 2"     value="" />
 			<property name="Backup 3"     value="" />

@@ -110,7 +110,7 @@ def toggleRule(ruleName, value, id, restr = None, player = None):
    if id in rule:
       del rule[id]
    else:
-      if isNumber(value):
+      if not isinstance(value, bool) and isNumber(value):
          value = int(value)
       rule[id] = value
    setGlobalVar('Rules', Rules, player)
@@ -118,9 +118,15 @@ def toggleRule(ruleName, value, id, restr = None, player = None):
    ruleValue = getRule(ruleName, Rules)
    if (bool(value) and ruleValue) or (value == False and not ruleValue):
       if ruleName in MSG_RULES:
+         msg = MSG_RULES[ruleName]
+         idx = int(bool(value))
+         # Select messsage for a player
+         if player and len(msg) - 1 >= idx + 2:
+            idx += 2
+         msg = msg[idx]
          restr = getTextualRestr(restr)
-         ctrl = "{}'s ".format(player) if player else ''
-         notify(MSG_RULES[ruleName][bool(value)].format(value, restr, ctrl))
+         ctrl = player if player else ''
+         notify(msg.format(value, restr, ctrl))
 
 
 def getLocals(**kwargs): 
@@ -728,10 +734,18 @@ def cmd_modDamage(rc, targets, source, restr, qty):
    notify('Damage has been increased by {}.'.format(qty))
    rc.applyNext()
    
-   
+
 def cmd_peek(rc, targets, source, restr):
    debug(">>> cmd_peek()")
    cardPeek(getOpp().hand)
+   rc.applyNext()   
+
+
+def cmd_pileView(rc, targets, source, restr, pileName, viewState):
+   debug(">>> cmd_pileView({}, {})".format(pileName, viewState))
+   if pileName in RS_KW_ZONES_PILES:
+      pile = RulesUtils.getZoneByName(pileName)
+      pile.viewState = viewState
    rc.applyNext()
    
 
@@ -773,3 +787,4 @@ RulesCommands.register('unite',            cmd_unite)
 RulesCommands.register('removefromattack', cmd_removeFromAttack)
 RulesCommands.register('moddamage',        cmd_modDamage)
 RulesCommands.register('peek',             cmd_peek)
+RulesCommands.register('pileview',         cmd_pileView)

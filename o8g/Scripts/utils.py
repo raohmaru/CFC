@@ -658,7 +658,7 @@ def alignCard(card, x=None, y=None, slotIdx=None):
          idx = uattack.index(card._id)
          ox, oy = CardsCoords['UAttackOffset']
          lead = Card(uattack[0])
-         lead.index = MaxCharsUAttack
+         lead.index = MaxCharsUAttack + 1
          x, y = lead.position
          x += ox * idx * playerSide
          y += oy * idx

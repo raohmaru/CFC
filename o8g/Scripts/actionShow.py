@@ -73,3 +73,7 @@ def acsh_gameStartedAutoPlayOff(args, x = 0, y = 0):
       
 def acsh_gameStartedAutoPlay(args, x = 0, y = 0):
    return acsh_gameStarted(args) and not acsh_AutoPlayOff(args) and me.isActive
+   
+   
+def acsh_isCharAndPlayRemoved(args, x = 0, y = 0):
+   return getRule('play_removed') and acsh_isChar(args)

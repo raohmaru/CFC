@@ -17,7 +17,7 @@
 ERR_NO_EFFECT = 'err001'
 
 MSG_PHASES = [
-   u'\u2E3B Pre-game setup phase: {} \u2E3B'
+   u'\u2E3B Setup Phase: {} \u2E3B'
 ]
 
 MSG_SEL_CHAR_RING           = "Please select a character in your ring.\n(Shift key + Left click on a character)."
@@ -135,12 +135,18 @@ MSG_RULES = {
       'Characters will freeze after a solo or united attack.'
    ),
    'attack': (
-      '{2}Characters cannot attack{1}.',
-      '{2}Characters can attack as normal.'
+      'Characters cannot attack{1}.',
+      'Characters can attack as normal.',
+      '{2}\'s characters cannot attack{1}.',
+      '{2}\'s characters can attack as normal.'
    ),
    'backup_limit': (
       'Players can do any number of back-ups{1}.',
       'Players can only do {} back-up per turn.'.format(BackupsPerTurn)
+   ),
+   'play_removed': (
+      '{2} cannot play cards from its removed pile.',
+      '{2} may play any card from its removed pile{1}.'
    )
 }
 

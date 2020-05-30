@@ -60,7 +60,7 @@ class RulesUtils():
       elif name == RS_KW_ZONE_DISCARDS:
          zone = player.piles['Discard Pile']
 
-      elif name == RS_KW_ZONE_KILL:
+      elif name == RS_KW_ZONE_REMOVED:
          zone = player.piles['Removed Pile']
 
       debug("getZoneByName({}) => {}".format(name, zone))
@@ -101,7 +101,7 @@ class RulesUtils():
       elif zone == RS_KW_ZONE_DISCARDS:
          cards = [c for c in player.piles['Discard Pile']]
 
-      elif zone == RS_KW_ZONE_KILL:
+      elif zone == RS_KW_ZONE_REMOVED:
          cards = [c for c in player.piles['Removed Pile']]
 
       return cards

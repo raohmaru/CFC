@@ -24,7 +24,6 @@ def nextPhase(fromKeyStroke = True, x = 0, y = 0):
    global phaseOngoing
    if fromKeyStroke and phaseOngoing and settings['Play'] and me.isActive:
       return
-   phaseOngoing = True
    
    phaseIdx = currentPhase()[1]
    if me.isActive:
@@ -49,6 +48,7 @@ def nextPhase(fromKeyStroke = True, x = 0, y = 0):
       else:
          phaseIdx += 1
       setPhase(phaseIdx)
+      phaseOngoing = True
    elif phaseIdx == BlockPhase and getState(None, 'priority') == me._id:
       setStop(BlockPhase, False)
       # Pass priority to opponent
@@ -680,7 +680,16 @@ def discardAll(group, x = 0, y = 0):
    for card in group:
       card.moveTo(discards)
    if len(players) > 1: rnd(1, 100) # Wait a bit more, as in multiplayer games, things are slower.
-   notify("{} moves all cards from their {} to his discard Pile.".format(me, group.name))
+   notify("{} moved all cards from their {} to its discard pile.".format(me, group.name))
+
+
+def removeAll(group, x = 0, y = 0):
+   mute()
+   pile = me.piles['Removed Pile']
+   for card in group:
+      card.moveTo(pile)
+   if len(players) > 1: rnd(1, 100) # Wait a bit more, as in multiplayer games, things are slower.
+   notify("{} moved all cards from their {} to its removed pile.".format(me, group.name))
 
 
 def toTableFaceDown(card, x = 0, y = 0):
@@ -928,6 +937,7 @@ def drawMany(group, count = None, silent = False):  # This function draws a vari
          drawn += 1
    if not silent:
       notify("{} draws {} card{}.".format(me, drawn, plural(drawn)))
+   playSnd('draw')
 
 
 def randomDraw(group = me.Deck, type = None):
@@ -1081,6 +1091,13 @@ def revealTopDeck(group, x = 0, y = 0):
 def swapWithDeck(group = me.piles['Discard Pile']):
    swapPiles(me.Deck, group)
 
+
+def removedDefaultAction(card, x = 0, y = 0):
+   if me.isActive and currentPhase()[1] == MainPhase and getRule('play_removed'):
+      play(card)
+   else:
+      toHand(card)
+      
 
 #---------------------------------------------------------------------------
 # Debug actions

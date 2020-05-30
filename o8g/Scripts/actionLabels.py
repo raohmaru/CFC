@@ -109,11 +109,18 @@ def aclb_NextOrPass(group, x = 0, y = 0):
    else:
       return "Pass"
       
+      
 def aclb_unitedAttack(group, x = 0, y = 0):
    if getGlobalVar('UnitedAttack'):
       return "Join United Attack"
    else:
       return "United Attack"
+      
+      
+def aclb_RemovedDefault(group, x = 0, y = 0):
+   if me.isActive and currentPhase()[1] == MainPhase and getRule('play_removed'):
+      return 'Play card'
+      
    
 #---------------------------------------------------------------------------
 # Helpers

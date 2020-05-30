@@ -1,13 +1,14 @@
 # Card Fighters' Clash Changelog
 
 ## 0.9.1
-Bug fixes.
 Warning if deck does not have exactly 50 cards.
 Do not allow players to do illegal actions (replaced confirmation dialog with warning).
 Allow changing manually BP markers.
-SP updated: Chaos, Makeover and Pester.
+SP updated: Chaos, Makeover.
+Rules updated: Crossover, Reset button, Round 2.
 Ring updated with a new design.
-Added buttons to improve gameplay.
+Added more buttons to improve gameplay.
+Bug fixes.
 ## 0.9.0
 Weakened Urien's ability.
 Updated SP of all characters.

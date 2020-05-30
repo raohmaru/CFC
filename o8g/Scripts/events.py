@@ -171,9 +171,11 @@ def onTurnPassed(args):
    elif me.isActive:
       cleanedUpRing = False
       turns = 1
-      playSnd('turn-change')
+      # Jump to first phase
       if turnNumber() == 1 and not debugging:
          nextPhase(False)
+   if me.isActive:
+      playSnd('turn-change')
    if turnNumber() == 1:
       removeButton('StartButton')
    debug("<<< onTurnPassed()")
