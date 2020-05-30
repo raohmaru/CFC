@@ -7,13 +7,13 @@
 	 hidden="true">
 	<cards>
 		<card name="BlockButton" id="a7694a83-7743-4c44-8fed-43142102cd62" size="button">
-			<property name="Type"         value="Button" />
+			<property name="Type" value="Button" />
 		</card>
 		<card name="StartButton" id="81918f9c-83cc-4589-8b86-19a238a0623b" size="button">
-			<property name="Type"         value="Button" />
+			<property name="Type" value="Button" />
 		</card>
 		<card name="NextButton" id="1d0c798b-b785-4bb6-b160-14c71db6af47" size="button">
-			<property name="Type"         value="Button" />
+			<property name="Type" value="Button" />
 		</card>
 	</cards>
 </set>
