@@ -42,6 +42,7 @@ def triggerPhaseEvent(phase, oldPhase = 0):
          nextPhase(False)
       else:
          drawPhaseStart()
+   elif phase == MainPhase:   mainPhaseStart()
    elif phase == AttackPhase: attackPhaseStart()
    elif phase == BlockPhase:
       if len(getAttackingCards(me, True)) == 0:
@@ -97,6 +98,10 @@ def drawPhaseStart():
          draw()
    # Trigger event
    triggerGameEvent(GameEvents.DrawPhase)
+   alignCards()
+
+
+def mainPhaseStart():
    alignCards()
 
 
@@ -382,7 +387,7 @@ def playAuto(card, slotIdx=None, force=False):
       # Is really empty that slot?
       debug("Selected slot: {} ({})".format(slotIdx, myRing[slotIdx]))
       if myRing[slotIdx] != None:
-         warning("Character card can't be played.\nThe selected slot is not empty (it's taken up by {}).\nIf you want to backup, please first target a character in your ring.".format(Card(myRing[slotIdx]).Name))
+         warning("Character card can't be played, the slot is not empty (it's taken up by {}).\nIf you want to backup, please first target a character in your ring.".format(Card(myRing[slotIdx]).Name))
          return
       # Pay SP cost
       if not payCostSP(card.SP, card, type = CharType):
@@ -651,7 +656,7 @@ def unitedAttackAuto(card, targets = None, force = False):
    return target
 
 
-def blockAuto(card):
+def blockAuto(card, targets = None):
    debug(">>> blockAuto()")
 
    # Check if the card can be legally played
@@ -674,26 +679,20 @@ def blockAuto(card):
    if triggerHook([Hooks.BeforeBlock, card._id], card._id) == False:
       return
    # Cancels the character's counter-attack if it's already blocking
-   blockers = getGlobalVar('Blockers')
    if MarkersDict['Counter-attack'] in card.markers:
-      removeMarker(card, 'Counter-attack')
-      clear(card)
-      alignCard(card)
-      for i in blockers:
-         if blockers[i] == card._id:
-            del blockers[i]
-            debug("Removed blocker {}".format(blockers))
-            setGlobalVar('Blockers', blockers)
-            break
-      notify('{} cancels the counter-attack with {}'.format(me, card))
-      playSnd('cancel-1')
+      cancelBlock(card)
       return
    # Check if an attacking enemy char has been selected
+   blockers = getGlobalVar('Blockers')
    enemyRing = getGlobalVar('Ring', players[1])
-   targets = getTargetedCards(card, True, False)
+   targeted = False
+   if not targets:
+      targets = getTargetedCards(card, True, False)
+      targeted = True
    if len(targets) > 0:
-      if not targets[0]._id in enemyRing or not isAttacking(targets[0]):
-         warning("Please select an attacking enemy character (Shift key + Left click on a character).\nIf blocking an United Attack, then select the leading character.")
+      if not targets[0]._id in enemyRing or not isAttacking(targets[0], False):
+         if targeted:
+            warning("Please select an attacking character (Shift key + Left click on a character card).\nIf blocking an United Attack, then select the leading character.")
          return
    if len(targets) == 0:
       # Automatically select an attacking character if there is only one...
@@ -792,6 +791,10 @@ def activateAuto(card):
       return pcard.activateEffect()
 
 
+#---------------------------------------------------------------------------
+# Related functions
+#---------------------------------------------------------------------------
+
 def rearrangeUAttack(card):
    # Rearrange or cancels a uattack if the card was part of it
    debug(">>> rearrangeUAttack()")
@@ -819,12 +822,29 @@ def rearrangeUAttack(card):
       debug("UnitedAttack: {}".format(uattack))
       
 
-def cancelAttack(card):
+def cancelAttack(card, silent = False):
    removeMarker(card, 'Attack')
    removeMarker(card, 'United Attack')
    removeMarker(card, 'Unfreezable')
    clear(card)
    alignCard(card)
-   notify('{} cancels the attack with {}'.format(me, card))
    rearrangeUAttack(card)
-   playSnd('cancel-1')
+   if not silent:
+      notify('{} cancels the attack with {}'.format(me, card))
+      playSnd('cancel-1')
+   
+
+def cancelBlock(card, silent = False):
+   removeMarker(card, 'Counter-attack')
+   clear(card)
+   alignCard(card)
+   blockers = getGlobalVar('Blockers')
+   for i in blockers:
+      if blockers[i] == card._id:
+         del blockers[i]
+         debug("Removed blocker {}".format(blockers))
+         setGlobalVar('Blockers', blockers)
+         break
+   if not silent:
+      notify('{} cancels the counter-attack with {}'.format(me, card))
+      playSnd('cancel-1')

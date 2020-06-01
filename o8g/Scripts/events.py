@@ -84,7 +84,7 @@ def onCardsMoved(args):
    
    for i in range(len(cards)):
       # Because Python is dynamic, accessing variables is faster than attribute lookup
-      card      = args.cards[i]
+      card      = cards[i]
       card_id   = card._id
       fromGroup = args.fromGroups[i]
       toGroup   = args.toGroups[i]
@@ -93,7 +93,7 @@ def onCardsMoved(args):
       if card.controller != me:
          continue
       
-      debug("onCardsMoved: {} ({}) from {} to {}".format(card, card_id, fromGroup._name, toGroup._name))
+      # debug("onCardsMoved: {} ({}) from {} to {}".format(card, card_id, fromGroup._name, toGroup._name))
       
       if isCharacter(card):
          # From the table to anywhere else
@@ -121,8 +121,11 @@ def onCardsMoved(args):
                   alignBackups(card, *card.position)
          # From anywhere else to the table
          elif fromGroup != table and toGroup == table:
-            if charIsInRing(card):
+            if not ringChanged and charIsInRing(card):
                ringChanged = True
+         # Movements in the same pile
+         elif fromGroup == toGroup:
+            continue
       
       if toGroup._name == 'Hand':
          playSnd('to-hand')
@@ -158,7 +161,7 @@ def onCardsMoved(args):
 def onTurnPassed(args):
 # Triggers when the player passes the turn to another player.
 # Reset some player variables at the start of each turn
-   debug(">>> onTurnPassed({}, {})".format(args.player, turnNumber()))
+   debug(">>> onTurnPassed: #{}, {} -> {}".format(turnNumber(), args.player, getActivePlayer()))
    global cleanedUpRing, turns
    # That was my old turn
    if args.player == me:
@@ -167,12 +170,14 @@ def onTurnPassed(args):
       clearGlobalVar('Blockers')
       if not cleanedUpRing:
          triggerPhaseEvent(CleanupPhase)  # Force cleanup
+      if not me.isActive:  # Not repeating turn
+         removeButtons()
    # I start my turn
-   elif me.isActive:
+   if me.isActive:
       cleanedUpRing = False
       turns = 1
       # Jump to first phase
-      if turnNumber() == 1 and not debugging:
+      if not debugging or turnNumber() > 1:
          nextPhase(False)
    if me.isActive:
       playSnd('turn-change')
@@ -253,6 +258,8 @@ def onMarkerChanged(args):
             fixedBP = fixBP(bp)
             if bp != fixedBP:
                setMarker(card, 'BP', fixedBP)
+         else:
+            setMarker(card, marker, oldValue)
 
 
 def OnCounterChanged(args):
@@ -269,3 +276,106 @@ def OnCardClicked(args):
       if isButton(card) and mouseButton == 0:  # Left button
          debug(">>> OnCardClicked: {}, {}, {}".format(card, mouseButton, args.keysDown))
          buttonAction(card)
+
+
+def overrideCardsMoved(args):
+   cards     = args.cards
+   toGroups  = args.toGroups
+   indexs    = args.indexs
+   xs        = args.xs
+   ys        = args.ys
+   faceups   = args.faceups
+   phaseIdx  = currentPhase()[1]
+   
+   for i in range(len(cards)):
+      card      = args.cards[i]
+      fromGroup = card.group
+      toGroup   = toGroups[i]
+      index     = indexs[i]
+      x         = xs[i]
+      y         = ys[i]
+      faceup    = faceups[i]
+      # debug("overrideCardsMoved: {}: {} -> {}, [{}, {}] ({}) {}".format(card, fromGroup.name, toGroup.name, x, y, index, faceup))
+      
+      if toGroup == table:
+         if settings['Play']:
+            # Play from hand
+            if fromGroup == me.hand or (getRule('play_removed') and fromGroup.name == 'Removed pile'):
+               # Play a character card
+               if isCharacter(card):
+                  slotIdx = getDropSlotIndex(x)
+                  myRing = getGlobalVar('Ring', me)
+                  if myRing[slotIdx] == None:
+                     play(card, slotIdx=slotIdx)
+                  else:
+                     backup(card, target=Card(myRing[slotIdx]))
+               # Play other type of card
+               else:
+                  play(card)
+               continue
+            # Move cards in table
+            elif fromGroup == table:
+               cy = card.position[1]
+               # Attack
+               if me.isActive and phaseIdx == AttackPhase and charIsInRing(card):
+                  if (y>cy-60, y<cy+60)[bool(playerSide+1)]:
+                     slotIdx = getDropSlotIndex(x)
+                     myRing = getGlobalVar('Ring', me)
+                     # United Attack
+                     if myRing[slotIdx] != None:
+                        atkCard = Card(myRing[slotIdx])
+                        if isAttacking(atkCard, False):
+                           if isAttacking(card):
+                              cancelAttack(card, True)
+                           unitedAttack(card, targets=[atkCard])
+                           continue
+                     if hasMarker(card, 'Attack'):
+                        alignCard(card)
+                     else:
+                        if hasMarker(card, 'United Attack'):
+                           cancelAttack(card, True)
+                        attack(card)
+                     continue
+                  # Cancel attack
+                  elif isAttacking(card):
+                     cancelAttack(card)
+                     continue
+               # Block
+               elif not me.isActive and phaseIdx == BlockPhase and charIsInRing(card):
+                  if (y>cy-60, y<cy+60)[bool(playerSide+1)]:
+                     slotIdx = fixSlotIdx(getDropSlotIndex(x), fix=True)
+                     targets = None
+                     oppRing = getGlobalVar('Ring', getOpp())
+                     if oppRing[slotIdx] != None:
+                        targets = [Card(oppRing[slotIdx])]
+                     if hasMarker(card, 'Counter-attack'):
+                        cancelBlock(card, True)
+                     block(card, targets=targets)
+                     continue
+                  # Cancel block
+                  elif hasMarker(card, 'Counter-attack'):
+                     cancelBlock(card)
+                     continue
+         card.moveToTable(x, y, not faceup)
+         card.index = index
+      # Move cards to piles
+      else:
+         card.moveTo(toGroup, index)
+
+
+#---------------------------------------------------------------------------
+# Related functions
+#---------------------------------------------------------------------------
+
+def getDropSlotIndex(x):
+   idx = None
+   ox = 200
+   cx = x + CardWidth/2
+   for j in range(NumSlots):
+      coordsX = CardsCoords['Slot'+`fixSlotIdx(j)`][0] + CardWidth/2
+      diff = abs(coordsX - cx)
+      if diff < ox:
+         idx = j
+         ox = diff
+   return idx
+   

@@ -5929,7 +5929,7 @@
 			<property name="Ability"      value="" />
 			<property name="Ability Type" value="" />
 			<property name="Ability Name" value="" />
-			<property name="Rules"        value="Put your discard pile into your removed pile.&#xD;&#xA;Until end of turn, you may play any card in your removed pile.&#xD;&#xA;At the end of turn, put your removed pile into your discard pile." />
+			<property name="Rules"        value="Put your discard pile into your removed pile.&#xD;&#xA;Until end of turn, you may play any card from your removed pile.&#xD;&#xA;At the end of turn, put your removed pile into your discard pile." />
 			<property name="BP"           value="" />
 			<property name="SP"           value="-15" />
 			<property name="Backup 1"     value="" />

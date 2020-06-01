@@ -37,14 +37,13 @@ def nextPhase(fromKeyStroke = True, x = 0, y = 0):
       
       global turns
       if phaseIdx >= CleanupPhase:
-         phaseIdx = ActivatePhase
          turns -= 1
          if turns <= 0:
             nextTurn(getNextActivePlayer())
-            removeButtons()
          else:
-            nextTurn(me)
             notify("{} takes another turn".format(me))
+            nextTurn(me)
+         return
       else:
          phaseIdx += 1
       setPhase(phaseIdx)
@@ -137,8 +136,8 @@ def scoop(group=None, x=0, y=0):
    toOwnerDeck(myCards)
    toOwnerDeck(me.Deck)
    toOwnerDeck(me.hand)
-   toOwnerDeck(me.piles['Discard Pile'])
-   # toOwnerDeck(me.piles['Removed Pile'])
+   toOwnerDeck(me.piles['Discard pile'])
+   # toOwnerDeck(me.piles['Removed pile'])
    rnd(100, 10000) # Delays the next action until all animation is done
    setup()
    notify("{} resets the game.".format(me))
@@ -277,12 +276,12 @@ def attackNoFreeze(card, x = 0, y = 0):
    notify('{} attacks with {} (character will not freeze).'.format(me, card))
 
 
-def unitedAttack(card, x = 0, y = 0):
+def unitedAttack(card, x = 0, y = 0, targets = None):
    debug(">>> unitedAttack()")
    mute()
    cardsnames = card
    if settings['Play']:
-      target = unitedAttackAuto(card)
+      target = unitedAttackAuto(card, targets)
       if target:
          cardsnames = '{} and {}'.format(card, target)
       else:
@@ -292,11 +291,11 @@ def unitedAttack(card, x = 0, y = 0):
    notify('{} does an United Attack with {}.'.format(me, cardsnames))
 
 
-def block(card, x = 0, y = 0):
+def block(card, x = 0, y = 0, targets = None):
    mute()
    text = 'with {}'.format(card)
    if settings['Play']:
-      target = blockAuto(card)
+      target = blockAuto(card, targets)
       if target:
          text = '{} '.format(target) + text
       else:
@@ -432,9 +431,9 @@ def transformCards(cards, x = 0, y = 0):
    cardModel = None
    targets =  [c for c in table   if c.targetedBy == me]
    targets += [c for c in me.hand if c.targetedBy == me]
-   targets += [c for c in me.piles['Discard Pile'] if c.targetedBy == me]
+   targets += [c for c in me.piles['Discard pile'] if c.targetedBy == me]
    if len(players) > 1:
-      targets += [c for c in players[1].piles['Discard Pile'] if c.targetedBy == me]
+      targets += [c for c in players[1].piles['Discard pile'] if c.targetedBy == me]
    if len(targets) > 0:
       cardModel = targets[0].model
    else:
@@ -492,7 +491,7 @@ def copyAbility(card, x = 0, y = 0, target = None):
    if target == None:
       targets =  [c for c in table   if c.targetedBy == me]
       targets += [c for c in me.hand if c.targetedBy == me]
-      targets += [c for c in me.piles['Discard Pile'] if c.targetedBy == me]
+      targets += [c for c in me.piles['Discard pile'] if c.targetedBy == me]
       if len(targets) > 0 and isCharacter(targets[0]) and targets[0] != card:
          target = targets[0]
       else:
@@ -504,7 +503,7 @@ def copyAbility(card, x = 0, y = 0, target = None):
          elif choice == 2:
             pile = me.hand
          else:
-            pile = me.piles['Discard Pile']
+            pile = me.piles['Discard pile']
          cards = [c for c in pile
                   if c.Rules != ""
                   and isCharacter(c)
@@ -590,7 +589,7 @@ def destroy(card, x = 0, y = 0, controller=me):
       return
    fromText = fromWhereStr(card.group)
    action = "discards"
-   card.moveTo(me.piles['Discard Pile'])
+   card.moveTo(me.piles['Discard pile'])
    if isCharacter(card):
       action = "KOs"
       playSnd('ko-1')
@@ -604,7 +603,7 @@ def destroy(card, x = 0, y = 0, controller=me):
 def remove(card, x = 0, y = 0):
    mute()
    fromText = fromWhereStr(card.group)
-   card.moveTo(me.piles['Removed Pile'])
+   card.moveTo(me.piles['Removed pile'])
    notify("{} removes {} {}.".format(me, card, fromText))
 
 
@@ -676,7 +675,7 @@ def shuffleIntoDeck(cards, x = 0, y = 0):
 
 def discardAll(group, x = 0, y = 0):
    mute()
-   discards = me.piles['Discard Pile']
+   discards = me.piles['Discard pile']
    for card in group:
       card.moveTo(discards)
    if len(players) > 1: rnd(1, 100) # Wait a bit more, as in multiplayer games, things are slower.
@@ -685,7 +684,7 @@ def discardAll(group, x = 0, y = 0):
 
 def removeAll(group, x = 0, y = 0):
    mute()
-   pile = me.piles['Removed Pile']
+   pile = me.piles['Removed pile']
    for card in group:
       card.moveTo(pile)
    if len(players) > 1: rnd(1, 100) # Wait a bit more, as in multiplayer games, things are slower.
@@ -835,15 +834,16 @@ def minusSPX(group, x = 0, y = 0):
 # Hand actions
 #---------------------------------------------------------------------------
 
-def play(card):  # This is the function to play cards from your hand.
-   debug(">>> playing card {}".format(card))
+def play(card, x = 0, y = 0, slotIdx=None):  # This is the function to play cards from your hand.
+   debug(">>> playing card {} at {}".format(card, slotIdx))
 
    mute()
    chooseSide()
    slot = ""
    group = card.group
    if settings['Play']:
-      if not playAuto(card): return
+      if not playAuto(card, slotIdx):
+         return False
       slot = " in slot {}".format(getSlotIdx(card)+1)
    else:
       placeCard(card, card.Type)
@@ -882,7 +882,7 @@ def discard(card, x = 0, y = 0, isRandom = False):
       return
    mute()
    group = card.group
-   card.moveTo(me.piles['Discard Pile'])
+   card.moveTo(me.piles['Discard pile'])
    msg = "{} has discarded {} from their {}."
    if group != me.hand:
       msg = "{} puts {} into his discard pile."
@@ -897,7 +897,7 @@ def randomDiscard(group = me.hand, x = 0, y = 0):
     card = group.random()
     if card == None:
         return
-    card.moveTo(me.piles['Discard Pile'])
+    card.moveTo(me.piles['Discard pile'])
     notify(MSG_DISCARD_RANDOM.format(me, card, group.name))
 
 
@@ -982,7 +982,7 @@ def trash(group, x = 0, y = 0, silent = False, count = None):
    if count == None:
       return
    defTrashCount = count
-   discards = me.piles['Discard Pile']
+   discards = me.piles['Discard pile']
    cards = []
    for card in group.top(count):
       card.moveTo(discards)
@@ -1040,7 +1040,7 @@ def shuffle(group):
    notify("{} shuffled its {}".format(me, group.name))
 
 
-def reshuffle(group = me.piles['Discard Pile']):
+def reshuffle(group = me.piles['Discard pile']):
 # This function reshuffles the player's discard pile into its deck.
    mute()
    Deck = me.Deck
@@ -1065,15 +1065,15 @@ def reshuffleCards(group, cardType):
    notify("{} shuffles all {} cards from his {} into its Deck.".format(me, cardType, group.name)) # And inform everyone.
 
 
-def reshuffleCHA(group = me.piles['Discard Pile']):
+def reshuffleCHA(group = me.piles['Discard pile']):
    mute()
    reshuffleCards(group, CharType)
 
-def reshuffleAC(group = me.piles['Discard Pile']):
+def reshuffleAC(group = me.piles['Discard pile']):
    mute()
    reshuffleCards(group, ActionType)
 
-def reshuffleRE(group = me.piles['Discard Pile']):
+def reshuffleRE(group = me.piles['Discard pile']):
    mute()
    reshuffleCards(group, ReactionType)
 
@@ -1088,7 +1088,7 @@ def revealTopDeck(group, x = 0, y = 0):
       notify("{} reveals {} from the top of their Deck.".format(me, group[0]))
 
 
-def swapWithDeck(group = me.piles['Discard Pile']):
+def swapWithDeck(group = me.piles['Discard pile']):
    swapPiles(me.Deck, group)
 
 

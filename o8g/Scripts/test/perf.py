@@ -52,7 +52,7 @@ def replaceVars(str):
    str = str.replace('attacker'      , 'attacker[0]')
    str = str.replace('blocker'       , 'blocker[0]')
    str = str.replace('soloattack'    , 'len(getAttackingCards()) == 1')
-   str = str.replace('.discards'     , '.piles["Discard Pile"]')
+   str = str.replace('.discards'     , '.piles["Discard pile"]')
    return str
 
 
@@ -76,7 +76,7 @@ def replaceVarsIf(str):
    str = replaceCond(str, 'attacker'  , 'attacker[0]', False)
    str = replaceCond(str, 'blocker'   , 'blocker[0]', False)
    str = replaceCond(str, 'soloattack', 'len(getAttackingCards()) == 1', False)
-   str = replaceCond(str, '.discards' , '.piles["Discard Pile"]', False)
+   str = replaceCond(str, '.discards' , '.piles["Discard pile"]', False)
    return str
 
 R = {
@@ -110,7 +110,7 @@ def replaceVarsIf2(str):
    str = replaceCond(str, 'attacker'  , 'attacker[0]', False)
    str = replaceCond(str, 'blocker'   , 'blocker[0]', False)
    str = replaceCond(str, 'soloattack', 'len(getAttackingCards()) == 1', False)
-   str = replaceCond(str, '.discards' , '.piles["Discard Pile"]', False)
+   str = replaceCond(str, '.discards' , '.piles["Discard pile"]', False)
    return str
 
    

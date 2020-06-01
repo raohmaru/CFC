@@ -58,10 +58,10 @@ class RulesUtils():
          zone = player.Deck
 
       elif name == RS_KW_ZONE_DISCARDS:
-         zone = player.piles['Discard Pile']
+         zone = player.piles['Discard pile']
 
       elif name == RS_KW_ZONE_REMOVED:
-         zone = player.piles['Removed Pile']
+         zone = player.piles['Removed pile']
 
       debug("getZoneByName({}) => {}".format(name, zone))
 
@@ -72,11 +72,11 @@ class RulesUtils():
    def getCardsFromZone(zone, source=None):
    # Get all the cards from the given zone
       if isinstance(zone, basestring):
-         prefix  = ''
+         prefix = ''
       else:
-         prefix  = zone[0]
-         zone    = zone[1]
-      player  = RulesUtils.getObjFromPrefix(prefix) or me
+         prefix = zone[0]
+         zone   = zone[1]
+      player = RulesUtils.getObjFromPrefix(prefix) or me
       cards = []
 
       if zone == RS_KW_ZONE_ARENA or prefix == RS_PREFIX_SAME:
@@ -99,10 +99,10 @@ class RulesUtils():
          cards = [c for c in player.Deck]
 
       elif zone == RS_KW_ZONE_DISCARDS:
-         cards = [c for c in player.piles['Discard Pile']]
+         cards = [c for c in player.piles['Discard pile']]
 
       elif zone == RS_KW_ZONE_REMOVED:
-         cards = [c for c in player.piles['Removed Pile']]
+         cards = [c for c in player.piles['Removed pile']]
 
       return cards
 

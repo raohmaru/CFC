@@ -159,7 +159,7 @@ def replaceVars(str):
    str = replaceIf    (str, 'attacker'  , 'attacker[0]')
    str = replaceIf    (str, 'blocker'   , 'blocker[0]')
    str = replaceIf    (str, 'soloattack', 'len(getAttackingCards()) == 1')
-   str = replaceIf    (str, '.discards' , '.piles["Discard Pile"]')
+   str = replaceIf    (str, '.discards' , '.piles["Discard pile"]')
    debug("---- {}".format(str))
    return str
 
@@ -549,9 +549,9 @@ def fixCardY(y, h = CardHeight):
    return (y + offsetY) * playerSide
    
    
-def fixSlotIdx(slotIdx, player = me):
+def fixSlotIdx(slotIdx, player = me, fix = False):
 # Fixes the slot index for players playing with the inverted table
-   if player.isInverted:
+   if player.isInverted or fix:
       slotIdx = abs(slotIdx - (NumSlots-1))
    return slotIdx
 
@@ -1148,8 +1148,8 @@ def isFrozen(card):
    return card.orientation & Rot90 == Rot90
 
 
-def isAttacking(card):
-   return hasMarker(card, 'Attack') or hasMarker(card, 'United Attack')
+def isAttacking(card, inUA = True):
+   return hasMarker(card, 'Attack') or inUA and hasMarker(card, 'United Attack')
 
 
 def inUAttack(card):
