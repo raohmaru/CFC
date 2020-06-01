@@ -360,6 +360,7 @@ Available functions:
    all group: expr   # context = group item
    isChar()
    flipCoin()
+   inUAttack()
 """
 
 RulesDict = {}
@@ -412,7 +413,7 @@ auto = ~myEndPhase~ moveTo(ctrlHand) target(characters[bp>=800])
 
 # Cody (Alpha)'s BAD STONE
 RulesDict['525d8365-c90e-491f-9811-1f23efbafccb'] = """
-auto = ?oppCanBlock:any? [[if attacker.bp > 300]]
+auto = ?oppCanBlock:any? [[if attacker.bp > 300 or inUAttack(attacker)]]
 """
 
 # Damn D's WHISTLE
@@ -428,7 +429,7 @@ auto = ?oppCanBlock:this? [[if me.ring > 1]] # me.ring is opp.ring
 
 # Haggar's SPINNING LARIAT
 RulesDict['be2728eb-0a2d-4f27-8cc5-3208d103b888'] = """
-action = {F}: moveTo(ctrlDeck) target(characters[-backup]) & shuffle(myDeck) & shuffle(oppDeck)
+action = {F}: moveTo(ctrlDeck) target(characters) & shuffle(myDeck) & shuffle(oppDeck)
 """
 
 # Maki's FIGHTING SPIRIT
