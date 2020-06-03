@@ -163,9 +163,9 @@ def onTurnPassed(args):
 # Reset some player variables at the start of each turn
    debug(">>> onTurnPassed: #{}, {} -> {}".format(turnNumber(), args.player, getActivePlayer()))
    global cleanedUpRing, turns
+   resetState()
    # That was my old turn
    if args.player == me:
-      resetState()
       clearGlobalVar('UnitedAttack')
       clearGlobalVar('Blockers')
       if not cleanedUpRing:
@@ -189,6 +189,8 @@ def onTurnPassed(args):
 def onPhasePassed(args):
    name, idx = currentPhase()
    debug(">>> onPhasePassed: {} => {}".format(args.id, idx))
+   if args.id == idx:
+      return
    
    # if idx == ActivatePhase:
    # elif idx == DrawPhase:

@@ -55,7 +55,8 @@ def nextPhase(fromKeyStroke = True, x = 0, y = 0):
       notify(MSG_PHASE_DONE.format(me, Phases[phaseIdx], getOpp()))
       notification(MSG_PHASE_DONE.format(me, Phases[phaseIdx], 'you'), player = getOpp())
       removeButton('BlockButton')
-      remoteCall(players[1], 'addButton', ['NextButton'])
+      # remoteCall(players[1], 'addButton', ['NextButton'])
+      remoteCall(players[1], 'nextPhase', [False])
       playSnd('notification')
       
       
@@ -208,20 +209,16 @@ def alignCards(group = None, x = 0, y = 0):
       alignCard(card)
 
 
-def switchPlayAutomation(group, x = 0, y = 0):
+def switchPlayAuto(group, x = 0, y = 0):
    switchSetting('Play')
 
 
-def switchPhaseAutomation(group, x = 0, y = 0):
+def switchPhaseAuto(group, x = 0, y = 0):
    switchSetting('Phase')
 
 
 def switchWinForms(group, x = 0, y = 0):
    switchSetting('WinForms')
-
-
-def switchAttackDamage(group, x = 0, y = 0):
-   switchSetting('AttackDmg')
    
    
 def switchSounds(group, x = 0, y = 0):

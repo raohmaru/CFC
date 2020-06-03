@@ -259,12 +259,11 @@ debugging      = False
 
 settings = {
    'Play'         : True, # Trigger game, event and card effects
-   # 'Phase'        : True, # Automatic phase control
+   'Phase'        : True, # Automatic phase advancement
    'WinForms'     : True, # Use custom Windows Forms for displaying info pop-ups
-   'AttackDmg'    : True, # Applies attack damage automatically
-   'ExtAPI'       : True, # Make use of the extended API to access the C# API
    'Sounds'       : True, # Play sound effect
    'WelcomeScreen': True, # Show welcome screen
+   'ExtAPI'       : True, # Make use of the extended API to access the C# API
    'GameVersion'  : '0.0.0', # Last version shown in the changelog window
 }
 

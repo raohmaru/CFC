@@ -83,12 +83,12 @@ def aclb_RevealTopDeck(group, x = 0, y = 0):
          return "Discard"
 
       
-def aclb_PlayAutomation(group, x = 0, y = 0):
-   return aclb_setting('Play automation', 'Play')
+def aclb_PlayAuto(group, x = 0, y = 0):
+   return aclb_setting('Play Automation', 'Play')
 
       
-def aclb_AttackDamage(group, x = 0, y = 0):
-   return aclb_setting('Attack Damage automation', 'AttackDmg')
+def aclb_PhaseAuto(group, x = 0, y = 0):
+   return aclb_setting('Phase Auto Advance', 'Phase')
 
       
 def aclb_WinForms(group, x = 0, y = 0):

@@ -56,7 +56,16 @@ def triggerPhaseEvent(phase, oldPhase = 0):
    
    global phaseOngoing
    phaseOngoing = False
-
+   
+   # Automatic phase change
+   if settings['Phase']:
+      if not getStop(phase) and (
+            phase not in [MainPhase, AttackPhase, BlockPhase, EndPhase]
+            or phase == EndPhase and len(getAttackingCards()) == 0
+      ):
+         # time.sleep(0.1)  # Blocks main thread
+         update()
+         nextPhase(False)
 
 def activatePhaseStart():
    # Unfreeze characters in the player's ring, clear colors and remove script markers
@@ -83,7 +92,9 @@ def activatePhaseStart():
    # Trigger event
    triggerGameEvent(GameEvents.ActivatePhase)
    cleanupGameEvents(RS_KW_RESTR_UYNT)
-   addButton('NextButton')
+   # Add buttons
+   if not settings['Phase']:
+      addButton('NextButton')
 
 
 def drawPhaseStart():
@@ -103,6 +114,8 @@ def drawPhaseStart():
 
 def mainPhaseStart():
    alignCards()
+   if settings['Phase']:
+      addButton('NextButton')
 
 
 def attackPhaseStart():
@@ -156,67 +169,66 @@ def endPhaseStart():
          discard(card)
 
    # Calculates and applies attack damage
-   if settings['AttackDmg']:
-      blockers = getGlobalVar('Blockers')
-      uattack = getGlobalVar('UnitedAttack')
-      atkCards = getAttackingCards()
-      for card in atkCards:
-         dmg = getMarker(card, 'BP')
-         pdmg = 0  # Piercing damage
-         isUA = len(uattack) > 0 and uattack[0] == card._id
-         if isUA:
+   blockers = getGlobalVar('Blockers')
+   uattack = getGlobalVar('UnitedAttack')
+   atkCards = getAttackingCards()
+   for card in atkCards:
+      dmg = getMarker(card, 'BP')
+      pdmg = 0  # Piercing damage
+      isUA = len(uattack) > 0 and uattack[0] == card._id
+      if isUA:
+         for x in range(1, len(uattack)):
+            pdmg += getMarker(Card(uattack[x]), 'BP')
+      # Attacker is blocked
+      if card._id in blockers:
+         blocker = Card(blockers[card._id])
+         # Add attacking cards to action local variables & trigger game event
+         addTempVar('attacker', [card])
+         addTempVar('uaBP', dmg + pdmg)
+         triggerGameEvent([GameEvents.Blocks, blocker._id], blocker._id)
+         update()
+         # Trigger blocked event if not in UA
+         if pdmg == 0:
+            triggerGameEvent([GameEvents.Blocked, card._id], card._id)
+         blocker_bp = getMarker(blocker, 'BP')
+         dealDamage(dmg + pdmg, blocker, card)
+         dealDamage(blocker_bp, card, blocker)
+         # Blocker damages to chars in United Attack
+         if isUA and blocker_bp > dmg:
+            new_bp = blocker_bp - dmg
             for x in range(1, len(uattack)):
-               pdmg += getMarker(Card(uattack[x]), 'BP')
-         # Attacker is blocked
-         if card._id in blockers:
-            blocker = Card(blockers[card._id])
-            # Add attacking cards to action local variables & trigger game event
-            addTempVar('attacker', [card])
-            addTempVar('uaBP', dmg + pdmg)
-            triggerGameEvent([GameEvents.Blocks, blocker._id], blocker._id)
-            update()
-            # Trigger blocked event if not in UA
-            if pdmg == 0:
-               triggerGameEvent([GameEvents.Blocked, card._id], card._id)
-            blocker_bp = getMarker(blocker, 'BP')
-            dealDamage(dmg + pdmg, blocker, card)
-            dealDamage(blocker_bp, card, blocker)
-            # Blocker damages to chars in United Attack
-            if isUA and blocker_bp > dmg:
-               new_bp = blocker_bp - dmg
-               for x in range(1, len(uattack)):
-                  uacard = Card(uattack[x])
-                  rest_bp = getMarker(uacard, 'BP') - new_bp
-                  dealDamage(new_bp, uacard, blocker)
-                  if rest_bp < 0:
-                     new_bp = abs(rest_bp)
-                  else:
-                     break
-            # Piercing damage of United Attack
-            uadmg = dmg + pdmg - blocker_bp
-            if (
-                  len(players) > 1 and
-                  getRule('piercing') and
-                  uadmg > 0 and
-                  (
-                     (isUA and triggerHook([Hooks.PreventPierce, blocker._id], blocker._id) != False)
-                     # One does not simply stop Haohmaru
-                     or hasMarker(card, 'Pierce')
-                  )
-               ):               
-               dealDamage(uadmg, players[1], card, isPiercing = True)
-            elif pdmg > 0 and uadmg > 0:
-               notify("{} points of piercing damage were prevented.".format(uadmg))
-         # Unblocked attacker
-         elif len(players) > 1:
-            doDamage = True
-            if triggerHook([Hooks.CancelCombatDamage, card._id], card._id) == True:
-               doDamage = False
-            if doDamage:
-               dealDamage(dmg + pdmg, players[1], card)
-            triggerGameEvent([GameEvents.PlayerCombatDamaged, card._id], card._id)
-         update() # Syncs the game state along players. Also delays animations.
-   
+               uacard = Card(uattack[x])
+               rest_bp = getMarker(uacard, 'BP') - new_bp
+               dealDamage(new_bp, uacard, blocker)
+               if rest_bp < 0:
+                  new_bp = abs(rest_bp)
+               else:
+                  break
+         # Piercing damage of United Attack
+         uadmg = dmg + pdmg - blocker_bp
+         if (
+               len(players) > 1 and
+               getRule('piercing') and
+               uadmg > 0 and
+               (
+                  (isUA and triggerHook([Hooks.PreventPierce, blocker._id], blocker._id) != False)
+                  # One does not simply stop Haohmaru
+                  or hasMarker(card, 'Pierce')
+               )
+            ):               
+            dealDamage(uadmg, players[1], card, isPiercing = True)
+         elif pdmg > 0 and uadmg > 0:
+            notify("{} points of piercing damage were prevented.".format(uadmg))
+      # Unblocked attacker
+      elif len(players) > 1:
+         doDamage = True
+         if triggerHook([Hooks.CancelCombatDamage, card._id], card._id) == True:
+            doDamage = False
+         if doDamage:
+            dealDamage(dmg + pdmg, players[1], card)
+         triggerGameEvent([GameEvents.PlayerCombatDamaged, card._id], card._id)
+      update() # Syncs the game state along players. Also delays animations.
+
    # Trigger event
    triggerGameEvent(GameEvents.EndPhase)
    # Remove events that should end when the turns finishes
@@ -229,12 +241,19 @@ def endPhaseStart():
       and isReaction(card))
    for card in oppReactionCards:
       remoteCall(card.controller, 'discard', [card])
+   
+   # Remove buttons?
+   if settings['Phase'] and not atkCards:
+      removeButton('NextButton')
+   else:
+      addButton('NextButton')
 
 
 def cleanupPhaseStart():
    prepare()
    clearKOedChars()
    rnd(10, 1000)  # Delay until all animation is done
+   clearAll()
    triggerGameEvent(GameEvents.CleanupPhase)
    rnd(10, 1000)  # Delay until all animation is done
    # Clean up my ring
@@ -242,20 +261,19 @@ def cleanupPhaseStart():
       if card.controller == me]
    for card in myCards:
       if isCharacter(card):
-         # Remove script makers
+         # Remove scripted makers
          removeMarker(card, 'Attack')
          removeMarker(card, 'United Attack')
          removeMarker(card, 'Counter-attack')
          removeMarker(card, 'Unfreezable')
          removeMarker(card, 'Pierce')
-         # Clears targets, colors, freezes characters and resets position
+         # Clears targets, colors and resets position
          alignCard(card)
          if card.highlight == ActivatedColor:
             card.highlight = None
       # Discard any Action or Reaction card left in the table (just in case player forgot to remove them)
       else:
          discard(card)
-   clearAll()
 
 
 def clearKOedChars():
