@@ -40,6 +40,7 @@ def triggerPhaseEvent(phase, oldPhase = 0):
       if turnNumber() == 1:
          notify("{} skips their {} phase (the first player must skip it during their first turn).".format(me, Phases[phase]))
          nextPhase(False)
+         return
       else:
          drawPhaseStart()
    elif phase == MainPhase:   mainPhaseStart()
@@ -64,8 +65,10 @@ def triggerPhaseEvent(phase, oldPhase = 0):
             or phase == EndPhase and len(getAttackingCards()) == 0
       ):
          # time.sleep(0.1)  # Blocks main thread
+         rnd(1, 100)  # Trying to delay nextPhase
          update()
          nextPhase(False)
+
 
 def activatePhaseStart():
    # Unfreeze characters in the player's ring, clear colors and remove script markers
@@ -119,7 +122,7 @@ def mainPhaseStart():
 
 
 def attackPhaseStart():
-   prepare()
+   preparePhase()
    clearKOedChars()
    for card in table:
       if card.controller == me:
@@ -153,7 +156,7 @@ def blockPhaseStart():
 
 
 def endPhaseStart():
-   prepare()
+   preparePhase()
    clearKOedChars()
 
    # Freeze attacking characters
@@ -250,7 +253,7 @@ def endPhaseStart():
 
 
 def cleanupPhaseStart():
-   prepare()
+   preparePhase()
    clearKOedChars()
    rnd(10, 1000)  # Delay until all animation is done
    clearAll()
@@ -289,7 +292,7 @@ def clearKOedChars():
             remoteCall(card.controller, "update", [])
 
 
-def prepare():
+def preparePhase():
    clearGlobalVar('TempVars') # Reset action local variables
    
    # In multiplayer games global variables could not be sync if players simultaneously modify them.
@@ -365,7 +368,7 @@ def prepare():
 
 def playAuto(card, slotIdx=None, force=False):
    debug(">>> playAuto({})".format(card))
-   prepare()
+   preparePhase()
    phaseIdx = currentPhase()[1]
 
    # Player plays a Character card
@@ -421,8 +424,6 @@ def playAuto(card, slotIdx=None, force=False):
          setMarker(card, 'Just Entered')
       putAtSlot(card, slotIdx)
       setState(me, 'charsPlayed', charsPlayed + 1)
-      if pcard.hasEffect() and pcard.ability.type == InstantAbility:
-         whisper(MSG_HINT_ACTIVATE)
 
    # Player plays an Action card
    elif isAction(card):
@@ -440,7 +441,6 @@ def playAuto(card, slotIdx=None, force=False):
       # Parse the card to enable card autoscripts
       removeParsedCard(card)
       parseCard(card)
-      whisper(MSG_HINT_ACTIVATE)
       # Remove "until next action card" events
       cleanupGameEvents(RS_KW_RESTR_UNAC)
 
@@ -460,7 +460,6 @@ def playAuto(card, slotIdx=None, force=False):
       # Parse the card to enable card autoscripts
       removeParsedCard(card)
       parseCard(card)
-      whisper(MSG_HINT_ACTIVATE)
 
    return True
 
@@ -752,7 +751,7 @@ def blockAuto(card, targets = None):
 def activateAuto(card):
    debug(">>> activateAuto()")
    
-   prepare()
+   preparePhase()
 
    if card.highlight == ActivatedColor:
       notify("{}'s ability or effect has already been activated".format(card))

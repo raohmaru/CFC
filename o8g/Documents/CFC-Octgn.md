@@ -20,7 +20,7 @@ Additionally, the guy from [Card Fighters Project](https://www.cardfighterprojec
 ### Turns
 CFC is a turn-based game. Each player takes turns alternatively.
 
-Each turn is divided in seven phases. To move to the next phase you can click on the "next" blue button, press <span class=kb>Tab</span> key or press function keys <span class=kb>F1</span> to <span class=kb>F7</span>.
+Each turn is divided in seven phases. To move to the next phase you can click on the "next" button, press <span class=kb>Tab</span> key or press function keys <span class=kb>F1</span> to <span class=kb>F7</span>.
 
 Once you are in the last phase of your turn (the Cleanup phase), moving to the next phase will pass automatically the turn to your opponent.
 

@@ -4,7 +4,7 @@
       name="Card Fighters' Clash"
       id="e3d56d9e-900d-49c6-b6ae-22cbb51be153"
       octgnVersion="3.4.256.0"
-      version="0.9.2.662"
+      version="0.9.2.667"
       markersize="20"
       tags="capcom snk fighter"
       description="Card game based on the SNK Playmore’s video game SNK vs. Capcom Card Fighters' Clash 2 Expand Edition.
@@ -224,6 +224,7 @@
 		<groupactions menu="Settings...">
 			<groupaction menu="Switch Play automation ON/OFF" execute="switchPlayAuto" getName="aclb_PlayAuto" />
 			<groupaction menu="Switch Phase automation ON/OFF" execute="switchPhaseAuto" getName="aclb_PhaseAuto" />
+			<groupaction menu="Switch Activate automation ON/OFF" execute="switchActivateAuto" getName="aclb_ActivateAuto" />
 			<groupaction menu="Switch Alert Messages ON/OFF" execute="switchWinForms" getName="aclb_WinForms" />
 			<groupaction menu="Switch Game Sounds ON/OFF" execute="switchSounds" getName="aclb_Sounds" />
 			<groupaction menu="Switch Show Welcome Screen ON/OFF" execute="switchWelcomeScreen" getName="aclb_WelcomeScreen" />

@@ -209,7 +209,8 @@ def onPhasePassed(args):
    # elif idx == EndPhase:
    elif idx == CleanupPhase:
       if me.isActive:
-         _extapi.whisper("(This is the last phase of your turn)", Colors.Blue)
+         if not settings['Phase']:
+            _extapi.whisper("(This is the last phase of your turn)", Colors.Blue)
          global cleanedUpRing
          cleanedUpRing = True
       

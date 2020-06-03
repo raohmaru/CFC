@@ -32,25 +32,25 @@ def showWelcomeScreen():
    choiceList = ['How to play', 'Rulebook', 'Download card images', 'Help us improve', 'What\'s new?'] #, 'Tutorial']
    colorsList = ['#004d99'] * len(choiceList)
    buttons = ['Close', 'Do not show again']
-   msg = """         Welcome to Card Fighters' Clash!\n
+   msg = """        Welcome to Card Fighters' Clash!\n
 Here you will find useful information to get started with the game.
 Good battle!"""
    choice = askChoice(msg, choiceList, colorsList, buttons)
    
    if choice == 1:
-      openUrl('https://cardfightersclash.wordpress.com/how-to-play/')
+      openUrl(Website + '/how-to-play/')
       showWelcomeScreen()
       
    elif choice == 2:
-      openUrl('https://cardfightersclash.wordpress.com/rulebook/')
+      openUrl(Website + '/rulebook/')
       showWelcomeScreen()
       
    elif choice == 3:
-      openUrl('https://cardfightersclash.wordpress.com/image-packs/')
+      openUrl(Website + '/image-packs/')
       showWelcomeScreen()
       
    elif choice == 4:
-      openUrl('https://cardfightersclash.wordpress.com/feedback/')
+      openUrl(Website + '/feedback/')
       showWelcomeScreen()
       
    elif choice == 5:

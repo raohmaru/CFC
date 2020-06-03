@@ -217,6 +217,10 @@ def switchPhaseAuto(group, x = 0, y = 0):
    switchSetting('Phase')
 
 
+def switchActivateAuto(group, x = 0, y = 0):
+   switchSetting('Activate')
+
+
 def switchWinForms(group, x = 0, y = 0):
    switchSetting('WinForms')
    
@@ -844,7 +848,8 @@ def play(card, x = 0, y = 0, slotIdx=None):  # This is the function to play card
       slot = " in slot {}".format(getSlotIdx(card)+1)
    else:
       placeCard(card, card.Type)
-   if isCharacter(card):
+   isChar = isCharacter(card)
+   if isChar:
       notify("{} plays {} from their {}{}.".format(me, card, group.name, slot))
       charsPlayed = getState(me, 'charsPlayed')
       playSnd('card-play-1')
@@ -852,6 +857,18 @@ def play(card, x = 0, y = 0, slotIdx=None):  # This is the function to play card
    else:
       playSnd('card-play-2')
       notify("{} plays {} from their {}.".format(me, card, group.name))
+      
+   if settings['Play']:
+      pcard = getParsedCard(card)
+      if isChar and pcard.hasEffect() and pcard.ability.type == InstantAbility or not isChar:
+         if settings['Activate']:
+            rnd(10, 1000)  # Trying to delay activation
+            update()
+            rnd(10, 1000)
+            update()
+            activate(card)
+         else:
+            whisper(MSG_HINT_ACTIVATE)
 
    debug("<<< playing card end")
 

@@ -2,6 +2,8 @@
 
 ## 0.9.2
 Dragging cards now trigger automation actions.
+Automatic phase control option: game will move to the next phase when required.
+Option to activate automatically /\ abilities and effects of Action and Reaction cards after being played.
 ## 0.9.1
 Warning if deck does not have exactly 50 cards.
 Do not allow players to do illegal actions (replaced confirmation dialog with warning).

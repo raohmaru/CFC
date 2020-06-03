@@ -976,12 +976,13 @@ def payCostSP(amount = 1, obj = None, msg = 'play this card', type = None):
 # Pay an SP cost. However we also check if the cost can actually be paid.
    debug(">>> payCostSP({}, {})".format(amount, type))
    amount = num(amount)
+   costModMsg = None
    
    # Cost modifiers
    if type:
       newAmount = getCostMod(amount, type, obj)
       if amount != newAmount:
-         notify(u"The SP cost of {} has been modified by an ability ({}  \u2192  {}).".format(obj, amount, newAmount))
+         costModMsg = u"The SP cost of {} has been modified by an ability ({}  \u2192  {}).".format(obj, amount, newAmount)
          amount = newAmount
    
    if amount >= 0:
@@ -992,6 +993,8 @@ def payCostSP(amount = 1, obj = None, msg = 'play this card', type = None):
          warning("You do not have enough SP to {}.\n(Cost is {} SP.)".format(msg, amount))
          return False
       me.SP += amount
+      if costModMsg:
+         notify(costModMsg)
       notify("{} has spent {} SP. New total is {} SP (before was {}).".format(me, amount, me.SP, initialSP))
    return True
    

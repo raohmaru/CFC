@@ -157,6 +157,7 @@ Yaxis        = 'y'
 PlayAction   = 'play'
 BackupAction = 'backup'
 Author       = 'raohmaru'
+Website      = 'https://cardfightersclash.wordpress.com'
 # _extapi is not ready yet
 # ButtonSize = _extapi.game.CardSizes["button"].Width
 ButtonSize   = 58
@@ -260,6 +261,7 @@ debugging      = False
 settings = {
    'Play'         : True, # Trigger game, event and card effects
    'Phase'        : True, # Automatic phase advancement
+   'Activate'     : True, # Automatic activate /\ abilites and Action and Reaction
    'WinForms'     : True, # Use custom Windows Forms for displaying info pop-ups
    'Sounds'       : True, # Play sound effect
    'WelcomeScreen': True, # Show welcome screen

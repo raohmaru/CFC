@@ -84,23 +84,27 @@ def aclb_RevealTopDeck(group, x = 0, y = 0):
 
       
 def aclb_PlayAuto(group, x = 0, y = 0):
-   return aclb_setting('Play Automation', 'Play')
+   return aclb_setting('Play automation', 'Play')
 
       
 def aclb_PhaseAuto(group, x = 0, y = 0):
-   return aclb_setting('Phase Auto Advance', 'Phase')
+   return aclb_setting('Phase auto advance', 'Phase')
+
+      
+def aclb_ActivateAuto(group, x = 0, y = 0):
+   return aclb_setting(u'Activate {} abilites and effects'.format(InstantUniChar), 'Activate')
 
       
 def aclb_WinForms(group, x = 0, y = 0):
-   return aclb_setting('Alert Messages', 'WinForms')
+   return aclb_setting('Show alert messages', 'WinForms')
 
       
 def aclb_Sounds(group, x = 0, y = 0):
-   return aclb_setting('Game Sounds', 'Sounds')
+   return aclb_setting('Game sounds', 'Sounds')
 
       
 def aclb_WelcomeScreen(group, x = 0, y = 0):
-   return aclb_setting('Show Welcome Screen', 'WelcomeScreen')
+   return aclb_setting('Show welcome screen', 'WelcomeScreen')
 
       
 def aclb_NextOrPass(group, x = 0, y = 0):
