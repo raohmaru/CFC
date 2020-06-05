@@ -23,7 +23,15 @@ def debug(msg):
       # msg = "{}".format(msg)
       msg = '[#]=> ' + msg
       whisper(msg)
-   
+
+
+def debugSetup():
+   settings.update(eval(getSetting('settings', '')))
+   settings['Phase'] = False
+   settings['Activate'] = False
+   chooseSide()
+   addAvatar()
+
 
 def debugScenario():
    debug(">>> debugScenario()")
@@ -35,15 +43,13 @@ def debugScenario():
       nextTurn(me, True)
    
    me.SP = 50
-   onTableLoaded()
-   chooseSide()
-   settings['Phase'] = False
-   settings['Activate'] = False
+   debugSetup()
    gotoMain()
    rnd(10, 1000)  # Delay the next action until all animation is done
    tableCards = [
-      # 'd14694b4-484c-4b45-962e-8cbb636d8a9a' # 200 BP
-      # ,'c7d128ea-a3b9-4b04-b8b2-a61153b5b2e6' # 400 BP
+       'e4ae5562-a510-4a1d-98e8-59a91dc1cb8c' # Twelve
+      ,'d14694b4-484c-4b45-962e-8cbb636d8a9a' # 200 BP
+      ,'c7d128ea-a3b9-4b04-b8b2-a61153b5b2e6' # 400 BP
       # ,'24e99a13-cb42-4e16-9900-78dde12e1a4c' # 600 BP
       # ,'e6e46f83-d089-4762-8d8e-2a3252cfc9db' # 800 BP
    ]
@@ -58,15 +64,6 @@ def debugScenario():
       rnd(1, 100)  # Delay the next action until all animation is done
       
    handCards = [
-       '2e6f329d-9a1e-45b7-864d-67feeb5eade2' # Billy
-      ,'e6e46f83-d089-4762-8d8e-2a3252cfc9db' # Daigo
-      ,'299685df-122c-4fbe-a8dd-05ceaaf41055' # Andy
-      ,'510c1217-5b95-467e-ae49-93fd5e726797' # Duck King
-      ,'62a6c4e0-51d0-4a23-9854-9ba0a25bc751' # Slaughter
-      ,'7302a3d9-0ee7-4a5e-93aa-b93cc44b6463' # Showtime!
-      ,'77792408-ba0f-4e5f-a079-f7eca5955543' # Stifler
-      ,'26fa7e0e-eb86-40d5-b5ab-39723fd67e43' # Grenade
-      ,'fd8db3d4-7df1-45fb-8712-5c35bb5acb3f' # Management
        # '8bb477f9-5004-4018-8d5e-73c6a23e8912' # Char 300 BP
       # ,'e910f462-bea9-4262-b168-c7c512eb6511' # Char 500 BP
       # ,'0fdadc92-0864-46cc-a3ff-c20e2af8249c' # Char 700 BP
@@ -85,15 +82,15 @@ def debugScenario():
       card.moveTo(me.hand)
    
    deckCards = [
-       '55ab2891-c99e-4647-8a9d-b01fbce3009f' # Char 300 BP
+       # '55ab2891-c99e-4647-8a9d-b01fbce3009f' # Char 300 BP
       # ,'248517e9-d7a0-450d-9281-df91d20f68ab' # Char 500 BP
       # ,'eb648ee7-aa4e-41ce-a7fc-04af31349ca9' # Char 700 BP
       # ,'4d7520b9-9ced-43e0-a2e7-974d76d8eb82' # Char 1000 BP
-      ,'5e2211a0-e52e-4b7b-b03d-f6ecb3660bb0' # Action 0 SP
-      ,'83c33aa8-5981-4352-8107-cbb7e05547ec' # Action -1 SP
+      # ,'5e2211a0-e52e-4b7b-b03d-f6ecb3660bb0' # Action 0 SP
+      # ,'83c33aa8-5981-4352-8107-cbb7e05547ec' # Action -1 SP
       # ,'80692723-3895-435f-bf8f-e94507704af5' # Action -3 SP
       # ,'ac01bbbe-583e-46ae-b26c-3c25eb8f0779' # Action -6 SP
-      ,'556b3359-e642-419a-ab5c-67f70de1bb4f' # Reaction 0 SP
+      # ,'556b3359-e642-419a-ab5c-67f70de1bb4f' # Reaction 0 SP
       # ,'46deecf5-7f7b-42b5-b6fa-e3162dce2013' # Reaction -1 SP
       # ,'91e441cc-0f1f-4b01-a2b0-94678d6f0b56' # Reaction -4 SP
    ]
@@ -131,14 +128,12 @@ def debugScenario():
    
    
 def debugOpp():
-   onTableLoaded()
-   chooseSide()
-   settings['Phase'] = False
-   settings['Activate'] = False
+   debugSetup()
    
    tableCards = [
-       # '8bb477f9-5004-4018-8d5e-73c6a23e8912' # Char 300 BP
-      # ,'e910f462-bea9-4262-b168-c7c512eb6511' # Char 500 BP
+       'e4ae5562-a510-4a1d-98e8-59a91dc1cb8c' # Twelve
+      ,'8bb477f9-5004-4018-8d5e-73c6a23e8912' # Char 300 BP
+      ,'e910f462-bea9-4262-b168-c7c512eb6511' # Char 500 BP
       # ,'0fdadc92-0864-46cc-a3ff-c20e2af8249c' # Char 700 BP
       # ,'af43872e-e47d-4fe0-9b55-aedd8a0d0fc7' # Char 800 BP
    ]
@@ -149,17 +144,16 @@ def debugOpp():
       rnd(1, 100)  # Delay the next action until all animation is done
       
    handCards = [
-       '672ac290-d6f2-4579-b5ae-1067add14601' # Shermie
        # '8bb477f9-5004-4018-8d5e-73c6a23e8912' # Char 300 BP
       # ,'e910f462-bea9-4262-b168-c7c512eb6511' # Char 500 BP
       # ,'0fdadc92-0864-46cc-a3ff-c20e2af8249c' # Char 700 BP
-      ,'3e38ee5c-2421-4267-b0da-86035060fcc0' # Char 1000 BP
-      ,'5e2211a0-e52e-4b7b-b03d-f6ecb3660bb0' # Action 0 SP
+      # ,'3e38ee5c-2421-4267-b0da-86035060fcc0' # Char 1000 BP
+      # ,'5e2211a0-e52e-4b7b-b03d-f6ecb3660bb0' # Action 0 SP
       # ,'83c33aa8-5981-4352-8107-cbb7e05547ec' # Action -1 SP
-      ,'80692723-3895-435f-bf8f-e94507704af5' # Action -3 SP
+      # ,'80692723-3895-435f-bf8f-e94507704af5' # Action -3 SP
       # ,'ac01bbbe-583e-46ae-b26c-3c25eb8f0779' # Action -6 SP
       # ,'556b3359-e642-419a-ab5c-67f70de1bb4f' # Reaction 0 SP
-      ,'46deecf5-7f7b-42b5-b6fa-e3162dce2013' # Reaction -1 SP
+      # ,'46deecf5-7f7b-42b5-b6fa-e3162dce2013' # Reaction -1 SP
       # ,'91e441cc-0f1f-4b01-a2b0-94678d6f0b56' # Reaction -4 SP
    ]
    for id in handCards:

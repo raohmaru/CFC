@@ -133,12 +133,13 @@ def scoop(group=None, x=0, y=0):
       return
    resetAll()
    myCards = (card for card in table
-      if card.controller == me)
+      if card.controller == me
+      and not isUI(card))
    toOwnerDeck(myCards)
    toOwnerDeck(me.Deck)
    toOwnerDeck(me.hand)
    toOwnerDeck(me.piles['Discard pile'])
-   # toOwnerDeck(me.piles['Removed pile'])
+   toOwnerDeck(me.piles['Removed pile'])
    rnd(100, 10000) # Delays the next action until all animation is done
    setup()
    notify("{} resets the game.".format(me))
@@ -202,10 +203,7 @@ def clearAll(group = None, x = 0, y = 0):
 
 
 def alignCards(group = None, x = 0, y = 0):
-   myCards = (card for card in table
-      if card.controller == me
-      and isCharacter(card))
-   for card in myCards:
+   for card in getRing():
       alignCard(card)
 
 
@@ -244,6 +242,9 @@ def defaultAction(card, x = 0, y = 0):
    # Button
    if isButton(card):
       buttonAction(card)
+   # Avatar
+   elif isAvatar(card):
+      avatarAction(card)
    # Char Attack
    elif me.isActive and phaseIdx == AttackPhase and isCharacter(card):
       attack(card, x, y)
@@ -586,7 +587,7 @@ def stealAbility(card, x = 0, y = 0, target = None):
 
 def destroy(card, x = 0, y = 0, controller=me):
    mute()
-   if isButton(card) and not debugging:
+   if isUI(card) and not debugging:
       return
    fromText = fromWhereStr(card.group)
    action = "discards"
@@ -892,7 +893,7 @@ def backup(card, x = 0, y = 0, target = None):  # Play a card as backup attached
 
 
 def discard(card, x = 0, y = 0, isRandom = False):
-   if isButton(card):
+   if isUI(card):
       return
    mute()
    group = card.group

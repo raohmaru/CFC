@@ -45,6 +45,8 @@ def aclb_Default(args, x = 0, y = 0):
       return "Use ability"
    elif isButton(card):
       return "Activate"
+   elif isAvatar(card):
+      return "Change avatar"
    else:
       return "Resolve"
 

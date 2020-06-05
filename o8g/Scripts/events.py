@@ -40,6 +40,7 @@ def onGameStarted():
       debugScenario()
    elif settings['Play']:
       addButton('StartButton')
+      addAvatar()
 
 
 def onDeckLoaded(args):
@@ -279,7 +280,19 @@ def OnCardClicked(args):
       if isButton(card) and mouseButton == 0:  # Left button
          debug(">>> OnCardClicked: {}, {}, {}".format(card, mouseButton, args.keysDown))
          buttonAction(card)
+         
 
+def onCardTargeted(args):
+   card = args.card
+   targeted = args.targeted
+   debug(">>> onCardTargeted: {} by {} ({})".format(card, args.player, targeted))
+   if isUI(card) and targeted:
+      card.target(False)
+
+
+#---------------------------------------------------------------------------
+# Overrides
+#---------------------------------------------------------------------------
 
 def overrideCardsMoved(args):
    cards     = args.cards
@@ -299,6 +312,9 @@ def overrideCardsMoved(args):
       y         = ys[i]
       faceup    = faceups[i]
       # debug("overrideCardsMoved: {}: {} -> {}, [{}, {}] ({}) {}".format(card, fromGroup.name, toGroup.name, x, y, index, faceup))
+      
+      if isUI(card):
+         continue
       
       if toGroup == table:
          if settings['Play']:

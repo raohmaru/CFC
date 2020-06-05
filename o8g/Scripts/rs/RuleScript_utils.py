@@ -215,7 +215,12 @@ class RulesUtils():
       # Draw an arrow between the source card and the targets
       elif source and isCard(source):
          for c in targets:
-            if isCard(c):
+            # if isCard(c):
+               # source.arrow(c)
+               # update()
+            if isPlayer(c):
+               c = getAvatar(c)
+            if c:
                source.arrow(c)
                update()
 

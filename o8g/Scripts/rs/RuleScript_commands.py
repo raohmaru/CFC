@@ -190,7 +190,7 @@ def cmd_damage(rc, targets, source, restr, dmg):
    else:
       dmg = evalExpression(dmg, True, getLocals(rc=rc, targets=targets, source=source))
    for target in targets:
-      dealDamage(dmg, target, source)
+      dealDamage(dmg, target, source, combatDmg = False)
    rc.applyNext()
 
 

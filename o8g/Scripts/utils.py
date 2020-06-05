@@ -914,7 +914,7 @@ def fixBP(n):
 # Counter Manipulation
 #---------------------------------------------------------------------------
 
-def dealDamage(dmg, target, source, isPiercing = False):
+def dealDamage(dmg, target, source, combatDmg = True, isPiercing = False):
    if not getRule('dmg_combat_deal') and isCharacter(source) and (hasMarker(source, 'Attack') or hasMarker(source, 'Counter-attack')):
       notify("{} deals no combat damage due to an abilty or effect.".format(source))
       return
@@ -926,6 +926,8 @@ def dealDamage(dmg, target, source, isPiercing = False):
       notify("{} deals {} damage to {}. New BP is {} (before was {}).".format(source, dmg, target, newBP, oldBP))
       if isCharacter(source):
          playSnd('damage-char-1')
+         if combatDmg:
+            source.arrow(target)
       else:
          playSnd('damage-char-2')
       if newBP <= 0:
@@ -952,6 +954,10 @@ def dealDamage(dmg, target, source, isPiercing = False):
          playSnd('damage-player-2')
       else:
          playSnd('damage-player-1')
+      if combatDmg:
+         avatar = getAvatar(target)
+         if avatar:
+            source.arrow(avatar)
       update()
 
 
@@ -1139,7 +1145,16 @@ def isReaction(card):
 
 
 def isButton(card):
-   return card._id in buttons
+   # return card._id in buttons
+   return card.Type == ButtonType
+
+
+def isAvatar(card):
+   return card.Type == AvatarType
+
+
+def isUI(card):
+   return card.Type in [ButtonType, AvatarType]
 
 
 def isAttached(card):

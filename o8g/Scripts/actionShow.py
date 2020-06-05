@@ -63,8 +63,8 @@ def acsh_hidden(args, x = 0, y = 0):
    return False
 
       
-def acsh_notButton(args, x = 0, y = 0):
-   return not isButton(args[0])
+def acsh_notUI(args, x = 0, y = 0):
+   return not isUI(args[0])
 
       
 def acsh_gameStartedAutoPlayOff(args, x = 0, y = 0):

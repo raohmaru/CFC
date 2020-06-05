@@ -22,7 +22,7 @@
 def buttonAction(btn):
    if btn._id in buttons:
       if buttons[btn._id] == 'BlockButton':
-         nextPhase(False)
+         nextPhase(True)
          
       elif buttons[btn._id] == 'StartButton':
          if len(me.Deck) == 0:
@@ -31,7 +31,7 @@ def buttonAction(btn):
          me.setActive()
          
       elif buttons[btn._id] == 'NextButton':
-         nextPhase(False)
+         nextPhase(True)
       
       
 def addButton(name):
@@ -62,7 +62,8 @@ def removeButton(name):
          if c._id in ids:
             del buttons[c._id]
             c.delete()
-         
+
+
 def removeButtons():
    for c in table:
       if isButton(c):

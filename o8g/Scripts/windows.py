@@ -67,7 +67,7 @@ Good battle!"""
 
 def showChangelog():
    switchSetting('GameVersion', getGameVersion())
-   msg = """What's new in version 0.9.2
+   msg = """What's new in version 0.9.3
 
-"""
+- """
    askChoice(msg, [], [], ['Close'])

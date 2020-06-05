@@ -4,7 +4,7 @@
       name="Card Fighters' Clash"
       id="e3d56d9e-900d-49c6-b6ae-22cbb51be153"
       octgnVersion="3.4.256.0"
-      version="0.9.2.667"
+      version="0.9.3.676"
       markersize="20"
       tags="capcom snk fighter"
       description="Card game based on the SNK Playmore’s video game SNK vs. Capcom Card Fighters' Clash 2 Expand Edition.
@@ -33,6 +33,7 @@
 		<script src="Scripts/windows.py" />
 		<script src="Scripts/sounds.py" />
 		<script src="Scripts/buttons.py" />
+		<script src="Scripts/avatar.py" />
 		<script src="Scripts/extendedAPI.py" />
 		<script src="Scripts/actionLabels.py" />
 		<script src="Scripts/actionShow.py" />
@@ -58,6 +59,7 @@
 		<event name="OnMarkerChanged"      action="onMarkerChanged" />
 		<event name="OnCounterChanged"     action="OnCounterChanged" />
 		<event name="OnCardClicked"        action="OnCardClicked" />
+		<event name="OnCardTargeted"       action="onCardTargeted" />
 		<event name="OverrideCardsMoved"   action="overrideCardsMoved" />
 	</events>
 
@@ -163,11 +165,12 @@
 		<property name="Backup 2" type="String" textKind="Enum" />
 		<property name="Backup 3" type="String" textKind="Enum" />
 		<property name="Number" type="String" ignoreText="True" />
-		<property name="Publisher" type="String" ignoreText="True" textKind="Enum" hidden="True" />
+		<property name="Publisher" type="String" ignoreText="True" textKind="Enum" />
 		<property name="Team" type="String" ignoreText="True" textKind="Enum" />
-		<property name="Illustrator" type="String" ignoreText="True" />
+		<property name="Illustrator" type="String" ignoreText="True" hidden="True" />
 		
-		<size name="button" width="58" height="58" front="Resources/Card/button-back.png" back="Resources/Card/button-front.png"/>
+		<size name="button" width="58" height="58" front="Resources/Card/empty.png" back="Resources/Card/empty.png"/>
+		<size name="avatar" width="292" height="40" front="Resources/Card/empty.png" back="Resources/Card/empty.png"/>
 	</card>
 
 	<gameboards src="Resources/Background/ring.png" x="-468" y="-398" width="936" height="796">
@@ -244,7 +247,7 @@
 			<cardaction menu="United Attack" shortcut="Ctrl+Alt+A" execute="unitedAttack" getName="aclb_unitedAttack" />
 			<cardaction menu="Counter-attack" shortcut="Ctrl+B" execute="block" getName="aclb_Block" showIf="acsh_hidden" />
 		</cardactions>
-		<cardactions menu="Move..." showIf="acsh_notButton">
+		<cardactions menu="Move..." showIf="acsh_notUI">
 			<cardaction menu="KO" shortcut="Del" execute="destroy" getName="aclb_Destroy" />
 			<!-- <cardaction menu="Remove" shortcut="Shift+Del" execute="remove" /> -->
 			<cardaction menu="Return to Hand" shortcut="Ctrl+H" execute="toHand" />

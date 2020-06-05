@@ -113,6 +113,7 @@ CardsCoords = dict(
    StartButton   = ( -385, 30),
    BlockButton   = ( -385, 244),
    NextButton    = ( 387,  244),
+   Avatar        = ( 0,    375),
 )
 
 # Card types
@@ -120,6 +121,7 @@ CharType     = 'Character'
 ActionType   = 'Action'
 ReactionType = 'Reaction'
 ButtonType   = 'Button'
+AvatarType   = 'Avatar'
 
 # Card abilities
 InstantAbility = u'\xa2'
@@ -161,6 +163,8 @@ Website      = 'https://cardfightersclash.wordpress.com'
 # _extapi is not ready yet
 # ButtonSize = _extapi.game.CardSizes["button"].Width
 ButtonSize   = 58
+AvatarWidth  = 292
+AvatarHeight = 40
 
 # Rules
 NumSlots        = 4
@@ -267,6 +271,7 @@ settings = {
    'WelcomeScreen': True, # Show welcome screen
    'ExtAPI'       : True, # Make use of the extended API to access the C# API
    'GameVersion'  : '0.0.0', # Last version shown in the changelog window
+   'Avatar'       : None,  # Player's avatar
 }
 
 # Default values used in dialogs that can be overridden by the user to remember his last input

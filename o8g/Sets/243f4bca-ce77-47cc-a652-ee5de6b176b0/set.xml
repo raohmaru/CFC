@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
-<set name="Buttons"
+<set name="UI"
 	 id="243f4bca-ce77-47cc-a652-ee5de6b176b0"
 	 version="1.3.0.0" 
      gameId="e3d56d9e-900d-49c6-b6ae-22cbb51be153"
 	 gameVersion="0.9.1"
 	 hidden="true">
 	<cards>
+		<!-- Buttons -->
 		<card name="BlockButton" id="a7694a83-7743-4c44-8fed-43142102cd62" size="button">
 			<property name="Type" value="Button" />
 		</card>
@@ -14,6 +15,155 @@
 		</card>
 		<card name="NextButton" id="1d0c798b-b785-4bb6-b160-14c71db6af47" size="button">
 			<property name="Type" value="Button" />
+		</card>
+		<!-- Avatars -->
+		<card name="Rikuto" id="a2ea8f62-cf21-42b7-8f08-c181a069b87b" size="avatar">
+			<property name="Type" value="Avatar" />
+		</card>
+		<card name="Haruna" id="2c63c589-4410-43b6-8830-d8a7a25fa19a" size="avatar">
+			<property name="Type" value="Avatar" />
+		</card>
+		<card name="NeoMask" id="8e08cf96-2889-4727-aea5-c1f1fbf00c48" size="avatar">
+			<property name="Type" value="Avatar" />
+		</card>
+		<card name="Kei" id="c69a0c89-144a-4112-9948-4ff967a85de6" size="avatar">
+			<property name="Type" value="Avatar" />
+		</card>
+		<card name="Sys" id="ef433bbc-889f-4599-b00f-b627922f4744" size="avatar">
+			<property name="Type" value="Avatar" />
+		</card>
+		
+		<card name="Ryo" id="35063371-b08c-4668-9c49-dd6e96a65602" size="avatar">
+			<property name="Type" value="Avatar" />
+		</card>
+		<card name="Roll" id="c5ad1d3f-2970-4f76-a414-027847277e40" size="avatar">
+			<property name="Type" value="Avatar" />
+		</card>
+		<card name="Megaman" id="2a37818f-5442-40a8-a91e-685aa7a6dc0e" size="avatar">
+			<property name="Type" value="Avatar" />
+		</card>
+		<card name="Mr. Karate" id="424bf386-ab76-44be-b2ce-83b97b6df743" size="avatar">
+			<property name="Type" value="Avatar" />
+		</card>
+		<card name="Ryu no Senshi" id="e03cca0a-ad48-45e8-94e6-745255c834cf" size="avatar">
+			<property name="Type" value="Avatar" />
+		</card>
+		<card name="Guy Tendo" id="3e10ca50-4e6e-4fd3-80b5-df89e61e3594" size="avatar">
+			<property name="Type" value="Avatar" />
+		</card>
+		<card name="Cap. Commando" id="b0d06af7-47d4-49f0-9808-ad6a77c9a712" size="avatar">
+			<property name="Type" value="Avatar" />
+		</card>
+		<card name="Shinjin Akuma" id="e4b8b7b6-775f-4335-8bd2-dfaa945b5bc8" size="avatar">
+			<property name="Type" value="Avatar" />
+		</card>
+		<card name="Jin Saotome" id="6a002e52-d0b0-41d6-be5d-f78947af3806" size="avatar">
+			<property name="Type" value="Avatar" />
+		</card>
+		<card name="Regina" id="945ae02a-c1e8-493e-ad09-d68d3887b36c" size="avatar">
+			<property name="Type" value="Avatar" />
+		</card>
+		<card name="Terry Bogard" id="60a369d1-ed51-4f57-8785-ddfbd7b013ef" size="avatar">
+			<property name="Type" value="Avatar" />
+		</card>
+		<card name="Mai" id="6da5e50b-f13c-43ca-a050-0ada65b8389a" size="avatar">
+			<property name="Type" value="Avatar" />
+		</card>
+		<card name="Geese Howard" id="41a76aab-0b81-4336-874c-03fdafe558e5" size="avatar">
+			<property name="Type" value="Avatar" />
+		</card>
+		<card name="Cody" id="3d0be3f5-7107-4ce2-b23d-d2d07081bdf0" size="avatar">
+			<property name="Type" value="Avatar" />
+		</card>
+		<card name="Ryu" id="3ea31f11-a1d9-4cd5-b7f7-883e276cef3c" size="avatar">
+			<property name="Type" value="Avatar" />
+		</card>
+		<card name="Chun-Li" id="d3bfbcff-1384-4870-8102-7be003dea059" size="avatar">
+			<property name="Type" value="Avatar" />
+		</card>
+		<card name="Zangief" id="710ce4e7-9b6f-4fc9-af28-fcc6d77c5a3d" size="avatar">
+			<property name="Type" value="Avatar" />
+		</card>
+		<card name="Red Arremer" id="b7fc66e9-18df-456b-93d2-cde59eb990b6" size="avatar">
+			<property name="Type" value="Avatar" />
+		</card>
+		<card name="Arthur" id="66037c79-5e1c-4e8a-9037-6d4f37b6e0d2" size="avatar">
+			<property name="Type" value="Avatar" />
+		</card>
+		<card name="Hayate" id="edd8cd72-e6d7-4c28-9d98-95fbb293ec7b" size="avatar">
+			<property name="Type" value="Avatar" />
+		</card>
+		<card name="Athena" id="d23a5d24-0a46-48aa-8388-201b91194f8f" size="avatar">
+			<property name="Type" value="Avatar" />
+		</card>
+		<card name="Kyo Kusanagi" id="8dfa600a-a133-49a6-b401-60a206f0eb7f" size="avatar">
+			<property name="Type" value="Avatar" />
+		</card>
+		<card name="Orochi" id="2faf8483-3c97-4fd2-b4d9-bbe96b292a1b" size="avatar">
+			<property name="Type" value="Avatar" />
+		</card>
+		<card name="Wild Leona" id="44e0d9a8-06e2-4f6c-822b-ef43e2968a76" size="avatar">
+			<property name="Type" value="Avatar" />
+		</card>
+		<card name="Akari" id="8a3f63e1-5d70-4b84-848f-1f57bb745350" size="avatar">
+			<property name="Type" value="Avatar" />
+		</card>
+		<card name="Moriya" id="89361fca-61c9-4c89-b054-148e768d05e9" size="avatar">
+			<property name="Type" value="Avatar" />
+		</card>
+		<card name="Amingo" id="fc5651d5-cda5-4de0-8124-ab34a86bd8a0" size="avatar">
+			<property name="Type" value="Avatar" />
+		</card>
+		<card name="Metal Slug" id="b8bff414-800e-42cf-a2f5-321b0b8539a4" size="avatar">
+			<property name="Type" value="Avatar" />
+		</card>
+		<card name="Kaede" id="3bf8cbe3-8ba2-4c4c-973b-9ce0a36aa5a4" size="avatar">
+			<property name="Type" value="Avatar" />
+		</card>
+		<card name="Falcon" id="2cdcdc0f-f31f-458d-916e-0f5551a3f213" size="avatar">
+			<property name="Type" value="Avatar" />
+		</card>
+		<card name="Jill Valentine" id="dc260b39-6221-45e3-912d-a5f108678688" size="avatar">
+			<property name="Type" value="Avatar" />
+		</card>
+		<card name="Nemesis" id="9039d10a-073c-45db-a2a9-c64c15ce59e1" size="avatar">
+			<property name="Type" value="Avatar" />
+		</card>
+		<card name="Akira" id="9f027567-9158-4a0f-b446-b77a931727ec" size="avatar">
+			<property name="Type" value="Avatar" />
+		</card>
+		<card name="Batsu" id="71376d1e-1f55-4e26-999f-952d9b5bb8f2" size="avatar">
+			<property name="Type" value="Avatar" />
+		</card>
+		<card name="Nakoruru" id="cd907bcf-8cb1-4118-9633-bedb2ec98c25" size="avatar">
+			<property name="Type" value="Avatar" />
+		</card>
+		<card name="Haohmaru" id="1a93dab6-3819-4ccd-a431-5be6b333592b" size="avatar">
+			<property name="Type" value="Avatar" />
+		</card>
+		<card name="Hayato" id="d58666f2-4c54-46bf-a1cd-58016898c6c3" size="avatar">
+			<property name="Type" value="Avatar" />
+		</card>
+		<card name="Strider Hiryu" id="1491b90a-a4da-479f-8dde-8ffedd477c5f" size="avatar">
+			<property name="Type" value="Avatar" />
+		</card>
+		<card name="Kikaioh" id="67a17560-e00d-4169-9ecf-9411c9085b97" size="avatar">
+			<property name="Type" value="Avatar" />
+		</card>
+		<card name="Cathy &amp; Roddy" id="9afaac1f-8d55-4991-bd8a-7409ad0d738c" size="avatar">
+			<property name="Type" value="Avatar" />
+		</card>
+		<card name="Jedah" id="7c59d46a-414a-4906-b919-fef07e91b47d" size="avatar">
+			<property name="Type" value="Avatar" />
+		</card>
+		<card name="Morrigan" id="6b2821f2-f4d0-4610-9cd6-22dbb05e0f86" size="avatar">
+			<property name="Type" value="Avatar" />
+		</card>
+		<card name="Tessa" id="11d88df2-0b63-4819-b5fc-22867f380a6e" size="avatar">
+			<property name="Type" value="Avatar" />
+		</card>
+		<card name="Leo" id="762e11c0-6814-4cf7-add3-f30bcc4e753b" size="avatar">
+			<property name="Type" value="Avatar" />
 		</card>
 	</cards>
 </set>

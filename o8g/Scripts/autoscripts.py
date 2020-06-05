@@ -129,12 +129,13 @@ def attackPhaseStart():
          # Discard action cards I have played
          if isAction(card):
             discard(card)
-         else:
+         elif isCharacter(card):
             card.target(False)
             alignCard(card)
 
 
 def blockPhaseStart():
+   removeButton('NextButton')
    uattack = getGlobalVar('UnitedAttack')
    # Attacking chars event not in UA
    atkCards = getAttackingCards()
@@ -150,7 +151,6 @@ def blockPhaseStart():
       if len(uattack) == 0 or uattack[0] != card._id:
          triggerGameEvent([GameEvents.Attacks, card._id], card._id)
    alignCards()
-   removeButton('NextButton')
    # Pass priority to opponent
    setState(None, 'priority', getOpp()._id)
 
@@ -253,6 +253,8 @@ def endPhaseStart():
 
 
 def cleanupPhaseStart():
+   if settings['Phase']:
+      removeButton('NextButton')
    preparePhase()
    clearKOedChars()
    rnd(10, 1000)  # Delay until all animation is done
