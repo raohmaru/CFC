@@ -65,8 +65,10 @@ def triggerPhaseEvent(phase, oldPhase = 0):
             or phase == EndPhase and len(getAttackingCards()) == 0
       ):
          # time.sleep(0.1)  # Blocks main thread
-         rnd(1, 100)  # Trying to delay nextPhase
-         update()
+         # Waiting for opponent's ping does not seems a good idea. Eitherway, in online games
+         # there is a delay before moving to next phase.
+         # rnd(1, 100)  # Trying to delay nextPhase
+         # update()
          nextPhase(False)
 
 
@@ -736,7 +738,7 @@ def blockAuto(card, targets = None):
    # Triggers a hook to check if block is possible
    addTempVar('attacker', [target])
    addTempVar('blocker', [card])
-   if triggerHook([Hooks.CanBlock, target._id], target._id) == False:
+   if triggerHook([Hooks.CanBeBlocked, target._id], target._id) == False:
       return
 
    setMarker(card, 'Counter-attack')

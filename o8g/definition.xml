@@ -4,7 +4,7 @@
       name="Card Fighters' Clash"
       id="e3d56d9e-900d-49c6-b6ae-22cbb51be153"
       octgnVersion="3.4.256.0"
-      version="0.9.3.676"
+      version="0.9.3.683"
       markersize="20"
       tags="capcom snk fighter"
       description="Card game based on the SNK Playmore’s video game SNK vs. Capcom Card Fighters' Clash 2 Expand Edition.
@@ -328,10 +328,10 @@
 			<groupaction menu="Draw" shortcut="Ctrl+D" default="True" execute="draw" />
 			<groupaction menu="Draw X cards" shortcut="Ctrl+Shift+D" execute="drawMany" />
 			<groupactions menu="Random draw...">
-				<groupaction menu="Draw a random card" shortcut="Ctrl+Alt+R" execute="randomDraw" />
-				<groupaction menu="Draw a random Character card" shortcut="Ctrl+Alt+C" execute="randomDrawCHA" />
-				<groupaction menu="Draw a random Action card" shortcut="Ctrl+Alt+A" execute="randomDrawAC" />
-				<groupaction menu="Draw a random Reaction card" shortcut="Ctrl+Alt+E" execute="randomDrawRE" />
+				<groupaction menu="Card" shortcut="Ctrl+Alt+R" execute="randomDraw" />
+				<groupaction menu="Character card" shortcut="Ctrl+Alt+C" execute="randomDrawCHA" />
+				<groupaction menu="Action card" shortcut="Ctrl+Alt+A" execute="randomDrawAC" />
+				<groupaction menu="Reaction card" shortcut="Ctrl+Alt+E" execute="randomDrawRE" />
 			</groupactions>
 			<groupaction menu="Shuffle" shortcut="Ctrl+S" execute="shuffle" />
 			<groupaction menu="Trash X cards" shortcut="Ctrl+Shift+T" execute="trash" />

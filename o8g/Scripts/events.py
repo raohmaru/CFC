@@ -339,6 +339,8 @@ def overrideCardsMoved(args):
                if me.isActive and phaseIdx == AttackPhase and charIsInRing(card):
                   if (y>cy-60, y<cy+60)[bool(playerSide+1)]:
                      slotIdx = getDropSlotIndex(x)
+                     if slotIdx == None:
+                        continue
                      myRing = getGlobalVar('Ring', me)
                      # United Attack
                      if myRing[slotIdx] != None:
@@ -362,7 +364,10 @@ def overrideCardsMoved(args):
                # Block
                elif not me.isActive and phaseIdx == BlockPhase and charIsInRing(card):
                   if (y>cy-60, y<cy+60)[bool(playerSide+1)]:
-                     slotIdx = fixSlotIdx(getDropSlotIndex(x), fix=True)
+                     slotIdx = getDropSlotIndex(x)
+                     if slotIdx == None:
+                        continue
+                     slotIdx = fixSlotIdx(slotIdx, fix=True)
                      targets = None
                      oppRing = getGlobalVar('Ring', getOpp())
                      if oppRing[slotIdx] != None:

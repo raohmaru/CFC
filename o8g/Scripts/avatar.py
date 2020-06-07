@@ -25,6 +25,7 @@ def avatarAction(card):
       
       
 def addAvatar(model = None):
+   mute()
    if not model:
       if settings['Avatar']:
          cards = queryCard({'name': settings['Avatar']}, True)

@@ -101,9 +101,9 @@ abilities = [
 ]
 autos = [
    # "auto = destroy()",
-   # "auto = ~my HandChanges~ destroy()",
+   "auto = ~my HandChanges~ destroy()",
    # "auto = ~HandChanges~ destroy() & draw(1)",
-   # "auto = ~opp HandChanges~ [[if oppRing<2]] destroy()",
+   "auto = ~opp HandChanges~ [[if oppRing<2]] destroy()",
    # "auto = ~ myHandChanges ~ destroy() to(character@myRing)",
    # "auto = ~myHandChanges~ destroy() ueot",
    # "auto = ~handChanges~ +unblockable",
@@ -116,7 +116,7 @@ autos = [
    # "auto = ?oppCanBeBlocked:any? [[if blocker.bp > this.bp]]",
    "auto = ~anyPlayerDamaged:action~ damage(1) to(damagedPlayer)",
    # "auto = ~anyPlayerDamaged:action~ [[if me.hp < 10]] hp(+1)",
-   # "auto = ~myEndPhase:once~ discard(all)",
+   "auto = ~myEndPhase:once~ discard(all)",
 ]
 evals = [
    "action in me.hand => bp(+2)"

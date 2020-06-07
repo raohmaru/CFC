@@ -97,20 +97,27 @@ def triggerGameEvent(event, *args):
                # Don't trigger auto ability for chars in a UA
                if inUAttack(card):
                   notify("{}'s ability cannot be activated because it joined an United Attack".format(card))
-                  res = (False, listener['callback'])
+                  res = (None, listener['callback'])
                   continue
                # Call callback
-               if card.controller == me or event in GameEventsCallOnHost:
+               # if card.controller == me or event in GameEventsCallOnHost:
+               scope = listener['scope']
+               if (
+                  (not scope and me.isActive and listener['controller'] == me._id)  # default is me
+                  or scope == RS_PREFIX_ANY
+                  or (scope == RS_PREFIX_OPP and listener['controller'] != me._id)
+                  or obj_id  # needed?
+               ):
                   pcard = getParsedCard(card)
-                  if card.controller != me and not pcard.rules.parsed:
+                  if not pcard.rules.parsed:
                      pcard.init()
                   if not pcard.rules.execAuto(None, event, *params):
                      res = (False, listener['callback'])
-               elif listener['scope'] in RS_PREFIX_SCOPE or obj_id:
-                  debug("-- Effect controlled by {}. Sending remote event.".format(card.controller))
-                  remoteCall(card.controller, "remoteGameEvent", [listener['callback'], event]+list(params))
-                  rnd(10, 1000) # Wait until call has been executed
-                  update()
+               # elif listener['scope'] in RS_PREFIX_SCOPE or obj_id:
+                  # debug("-- Effect controlled by {}. Sending remote event.".format(card.controller))
+                  # remoteCall(card.controller, "remoteGameEvent", [listener['callback'], event]+list(params))
+                  # rnd(10, 1000) # Wait until call has been executed
+                  # update()
                if listener['appliesto'] == RS_SUFFIX_ONCE:
                   removeGameEventListener(card._id)
             # ... or the name of a global function
@@ -127,7 +134,7 @@ def triggerGameEvent(event, *args):
 def triggerHook(event, *args):
    res, source = triggerGameEvent(event, *args)
    debug(">>> triggerHook({}, {}) => {}, {}".format(event, args, res, source))
-   if not res and source:
+   if res == False and source:
       ability = event
       if isinstance(event, list):
          ability = event[0]
@@ -136,11 +143,11 @@ def triggerHook(event, *args):
    return res
    
 
-def remoteGameEvent(cardID, eventName, *args):
-   debug(">>> remoteGameEvent({}, {}, {})".format(cardID, eventName, args))
-   card = Card(cardID)
-   pcard = getParsedCard(card)
-   pcard.rules.execAuto(None, eventName, *args)
+# def remoteGameEvent(cardID, eventName, *args):
+   # debug(">>> remoteGameEvent({}, {}, {})".format(cardID, eventName, args))
+   # card = Card(cardID)
+   # pcard = getParsedCard(card)
+   # pcard.rules.execAuto(None, eventName, *args)
    
    
 def cleanupGameEvents(restr):

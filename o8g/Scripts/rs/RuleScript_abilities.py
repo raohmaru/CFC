@@ -178,7 +178,7 @@ def abl_rush_added(card, restr = None):
       removeMarker(card, 'Just Entered')
 
 
-RulesAbilities.register('unblockable',     Hooks.CanBlock)
+RulesAbilities.register('unblockable',     Hooks.CanBeBlocked)
 RulesAbilities.register('cantattack',      Hooks.BeforeAttack, onAdded = abl_cantattack_added)
 RulesAbilities.register('cantblock',       Hooks.BeforeBlock)
 RulesAbilities.register('cantplayac',      Hooks.BeforePlayAC)

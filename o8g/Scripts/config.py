@@ -147,8 +147,7 @@ Regexps = {
    '.chars'    : re.compile(r'(\w+)\.chars'),
    '.damaged'  : re.compile(r'(\w+)\.damaged'),
    '.lostsp'   : re.compile(r'(\w+)\.lostsp'),
-   'opp'       : re.compile(r'\bopp\b'),
-   'fromaction': re.compile(r'\bfromaction\b')
+   'opp'       : re.compile(r'\bopp\b')
 }
 
 # Misc
@@ -208,7 +207,7 @@ Hooks = Struct(**{
    'PreventPierce'     : 'preventpierce',
    'CallOnRemove'      : 'callonremove',
    'PlayAsFresh'       : 'playasfresh',
-   'CanBlock'          : 'canblock',
+   'CanBeBlocked'      : 'canblock',
    'CancelCombatDamage': 'cancelcombatdamage'
 })
 
@@ -228,19 +227,14 @@ GameEvents = Struct(**{
    'Attacks'            : 'attacks',
    'Blocks'             : 'blocks',
    'Blocked'            : 'blocked',
-   'BackedUp'           : 'backedup'
+   'BackedUp'           : 'backedup',
+   'BeforePayCost'      : 'beforepaycost'  # Used with suffixes 'action' or 'reaction'
 })
 
 # Maps variables to events
 GameEventsFromVars = {
    'hand.size': GameEvents.HandChanges
 }
-
-# Events which callback can be executed on the player that does not own the card
-GameEventsCallOnHost = [
-   Hooks.CanBlock,
-   GameEvents.BeforeDamage
-]
 
 #---------------------------------------------------------------------------
 # Global variables (for the current user)

@@ -58,7 +58,7 @@ MSG_ERR_BLOCK_ONE           = "An attacking character can only be blocked by exa
 MSG_HOOKS_ERR = {
    Hooks.BeforeAttack: "{} cannot attack due to {}'s {} ability{}.",
    Hooks.BeforeBlock : "{} cannot counter-attack due to {}'s {} ability{}.",
-   Hooks.CanBlock: "{} cannot be blocked due to {}'s {} ability{}.",
+   Hooks.CanBeBlocked: "{} cannot be blocked due to {}'s {} ability{}.",
    Hooks.BeforePlayAC: "{} cannot play action cards due to {}'s {} ability{}.",
    Hooks.BeforePlayRE: "{} cannot play reaction cards due to {}'s {} ability{}."
 }
@@ -73,7 +73,7 @@ MSG_AB = {
       "{} can counter-attack again."
    ],
    'unblockable': [
-      MSG_HOOKS_ERR[Hooks.CanBlock],
+      MSG_HOOKS_ERR[Hooks.CanBeBlocked],
       "{} can be blocked as normal."
    ],
    'cantplayac': [
@@ -111,7 +111,7 @@ MSG_RULES = {
       InstantUniChar + " abilites cannot be activated.",
       InstantUniChar + " abilites can be activated again."
    ),
-   'card_cost': '{} cards now cost {} SP {}to play{}.',
+   'card_cost': '{} cards cost {} SP {}to play{}.',
    'cost_ua2': 'Double united attacks now cost {1} SP{3}.',
    'cost_ua3': 'Triple united attacks now cost {1} SP{3}.',
    'piercing': (

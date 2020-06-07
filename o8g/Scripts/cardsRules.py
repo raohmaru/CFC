@@ -158,11 +158,12 @@ effect:
          transform(card name|expr)
          moveRestTo(zone)
          enableRule(rule)
-         modRule(rule, arg)
          disableRule(rule)
+         modRule(rule, arg)
          freeze([toggle])
          unfreeze()
-         alterCost(cardtype, #)
+         alterCost(cardtype, #)  # permanent
+         modCost(cardtype, #)  # for auto keys
          swapChars()
          moveToSlot()
          trash([#])     # default: 1
@@ -238,6 +239,8 @@ event:
       removed
       powerless
       backedUp
+      beforePayCostAction
+      beforePayCostReaction
       beforeDamage:[suffix]
       cancelCombatDamage:[suffix]
       playerCombatDamaged:[suffix]
@@ -252,8 +255,8 @@ event:
       fromThis
       this
       any
-      fromAction
       once
+      action
       
 hook:
    Keywords:
@@ -596,7 +599,8 @@ action = unfreeze() target(characters[frozen]@ring)
 
 # Kyosuke's COOL
 RulesDict['7abee6d7-1831-4090-b882-eee2fd3aa246'] = """
-auto = alterCost(action, +2)
+# auto = ~anyBeforePayCost:action~ modCost(action, +2)  # It triggers when paying the cost of any card type
+auto = ~anyBeforePayCostAction~ modCost(action, +2)
 """
 
 # Momo's DADAKKO
@@ -611,7 +615,7 @@ auto = ~activatephase~ bp(+200) to(characters[backedup])
 
 # Raizou's MEDDLER
 RulesDict['c553b9d0-946a-4c61-bc9b-a4b074c49045'] = """
-auto = alterCost(reaction, -3)
+auto = ~anyBeforePayCostReaction~ modCost(reaction, -3)
 """
 
 # Roberto's GOAL KEEPER
@@ -628,7 +632,7 @@ action = +unlimitedbackup ueot
 
 # Shoma's RI-RI-RI!
 RulesDict['a7b36a01-dbb4-4442-aaf8-e415611581a9'] = """
-auto = ~anyCleanupPhase~ moveTo(hand) target(this[block,blocked])
+auto = ~anyCleanupPhase~ moveTo(ctrlHand) target(this[block,blocked])
 """
 
 # Tiffany's GROOVY KNUCKLES
@@ -1072,7 +1076,7 @@ action = {F}: trash(2) target(opp)
 
 # Kain's RISOU
 RulesDict['e81e9366-b3e1-45a6-b010-bd02934b2efd'] = """
-auto = ~anyBeforeDamage:fromAction~ modDamage(+100)
+auto = ~anyBeforeDamage:action~ modDamage(+100)
 """
 
 # Kim's TRAINING!
@@ -1246,7 +1250,7 @@ action = {F}: damage(300) to(character@oppRing); damage(300) to(this)
 
 # Vanessa's FOOTWORK
 RulesDict['0fdadc92-0864-46cc-a3ff-c20e2af8249c'] = """
-auto = alterCost(reaction, +2)
+auto = ~anyBeforePayCostReaction~ modCost(reaction, +2)
 """
 
 # Wild Iori's KURF
@@ -1464,7 +1468,7 @@ action = bp(+300) to(characters[bp<=300])
 
 # Shiki (Bust)'s YUGA'S SPELL
 RulesDict['9d836743-0d5e-4b4e-951a-cbe216558e6f'] = """
-auto = alterCost(action, -3)
+auto = ~anyBeforePayCostAction~ modCost(action, -3)
 """
 
 # Shiki (Slash)'s NRG SYPHON

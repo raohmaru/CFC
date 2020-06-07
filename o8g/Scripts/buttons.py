@@ -35,6 +35,7 @@ def buttonAction(btn):
       
       
 def addButton(name):
+   mute()
    if name in buttons.values():
       return
    cards = queryCard({"Name": name}, True)
@@ -53,6 +54,7 @@ def addButton(name):
       
       
 def removeButton(name):
+   mute()
    ids = []
    for key, v in buttons.iteritems():
       if name == v:
@@ -65,8 +67,8 @@ def removeButton(name):
 
 
 def removeButtons():
+   mute()
    for c in table:
-      if isButton(c):
+      if c._id in buttons:
          del buttons[c._id]
          c.delete()
-   

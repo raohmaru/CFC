@@ -133,11 +133,6 @@ RS_PREFIX_RESTR = [
    RS_PREFIX_OPP
 ]
 
-RS_PREFIX_SCOPE = [
-   RS_PREFIX_OPP,
-   RS_PREFIX_ANY
-]
-
 # Sufixes
 RS_SUFFIX_PLURAL    = 's'
 RS_SUFFIX_FROM_THIS = 'fromthis'

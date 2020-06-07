@@ -116,7 +116,7 @@ def toggleRule(ruleName, value, id, restr = None, player = None):
    setGlobalVar('Rules', Rules, player)
    debug("Rule {} has been {} ({})".format(ruleName, ('disabled','enabled')[bool(value)], Rules[ruleName]))
    ruleValue = getRule(ruleName, Rules)
-   if (bool(value) and ruleValue) or (value == False and not ruleValue):
+   if (bool(value) and ruleValue) or (value == False and not ruleValue) or ruleValue == None:
       if ruleName in MSG_RULES:
          msg = MSG_RULES[ruleName]
          idx = int(bool(value))
@@ -169,7 +169,7 @@ def getEnvVars():
          'ischar': isCharacter
       }
       # To use in evalExpression(), case sensitive
-      globalFuncs = [getParsedCard, isAction, isReaction, isCharacter, getRingSize, getRing, getState, getOpp, getAttackingCards, num]
+      globalFuncs = [getParsedCard, isAction, isReaction, isCharacter, getRingSize, getRing, getState, getOpp, getAttackingCards, num, getCardByContext]
       for f in globalFuncs:
          envVars[f.__name__] = f
       # Used in cardRules, case insensitive
@@ -177,6 +177,12 @@ def getEnvVars():
       for f in globalFuncs:
          envVars[f.__name__.lower()] = f
    return envVars
+
+
+def getSourcePlayer():
+   if commander and commander.cmdsArgs:
+      return commander.cmdsArgs[2].controller
+   return me
 
 
 #---------------------------------------------------------------------------
@@ -244,7 +250,7 @@ def cmd_reveal(rc, targets, source, restr, pileName=None):
             remoteCall(getOpp(), "reveal", [targets])
    elif pileName in RS_KW_ZONES_PILES:
       if not targets or isCard(targets[0]):
-         targets = [me]
+         targets = [source.controller]
       for player in targets:
          pile = RulesUtils.getZoneByName(pileName, player)
          if pile.controller == me:
@@ -260,7 +266,7 @@ def cmd_discard(rc, targets, source, restr, whichCards=''):
       whichCards = '<{}>*'.format(whichCards)
    cardsTokens = RulesLexer.parseTarget(whichCards)
    if not targets or isCard(targets[0]):
-      targets = [me]
+      targets = [source.controller]
    # Is a random discard?
    if cardsTokens['qty'] and cardsTokens['qty'][0] == RS_KW_RANDOM:
       cmd_randomDiscard(rc, targets, source, restr, RulesUtils.getTargetQty(cardsTokens['qty']).samples)
@@ -295,7 +301,7 @@ def cmd_randomDiscard(rc, targets, source, restr, numCards=1):
    if not isNumber(numCards):
       numCards = int(numCards)
    if not targets:
-      targets = [me]
+      targets = [source.controller]
    if numCards > 0:
       for player in targets:
          for i in range(0, numCards):
@@ -333,11 +339,11 @@ def cmd_moveTo(rc, targets, source, restr, zone, pos = None, reveal = None):
                group = target.group
                target.moveToTable(0, 0, True)
                target.controller = pile.controller
-               remoteCall(target.controller, "moveToGroup", [pile, target, group, pos, reveal, me])
+               remoteCall(target.controller, "moveToGroup", [pile, target, group, pos, reveal, source.controller])
             elif target.controller != me and pile.controller == me:
-               remoteCall(target.controller, "passControlTo", [me, [target], ["moveToGroup", [pile, target, target.group, pos, reveal, me]]])
+               remoteCall(target.controller, "passControlTo", [me, [target], ["moveToGroup", [pile, target, target.group, pos, reveal, source.controller]]])
             else:
-               remoteCall(target.controller, "moveToGroup", [pile, target, None, pos, reveal, me])
+               remoteCall(target.controller, "moveToGroup", [pile, target, None, pos, reveal, source.controller])
             # rnd(1, 100) # Wait until all animation is done
          if msgs:
             notify('\n'.join(msgs))
@@ -398,7 +404,7 @@ def cmd_sp(rc, targets, source, restr, qty):
    else:
       amount = num(evalExpression(qty, True, getLocals(rc=rc, targets=targets, source=source)))
    if not targets or isCard(targets[0]):
-      targets = [me]
+      targets = [source.controller]
    debug(">>> cmd_sp({}, {}, {})".format(targets, amount, mode))
    for player in targets:
       modSP(amount, mode, player=player)
@@ -411,7 +417,7 @@ def cmd_hp(rc, targets, source, restr, qtyExpr):
    else:
       qty = evalExpression(qtyExpr, True, getLocals(rc=rc, targets=targets, source=source))
    if not targets or isCard(targets[0]):
-      targets = [me]
+      targets = [source.controller]
    debug(">>> cmd_hp({}, {}) => {}".format(targets, qtyExpr, qty))
    for player in targets:
       player.HP += qty
@@ -436,7 +442,7 @@ def cmd_draw(rc, targets, source, restr, qty = None):
    else:
       amount = num(evalExpression(qty, True, getLocals(rc=rc, targets=targets, source=source)))
    if not targets or isCard(targets[0]):
-      targets = [me]
+      targets = [source.controller]
    debug(">>> cmd_draw({}, {}, {})".format(targets, qty, amount))
    for target in targets:
       if target == me:
@@ -544,21 +550,6 @@ def cmd_moveRestTo(rc, targets, source, restr, zone, pos = None):
       rnd(1, 100) # Wait between effects until all animation is done
    rc.applyNext()
    
-  
-def cmd_disableRule(rc, targets, source, restr, rule):
-   debug(">>> cmd_disableRule({})".format(rule))
-   player = None
-   if targets and isPlayer(targets[0]):
-      player = targets[0]._id
-   toggleRule(rule, False, source._id, restr, player)
-   args = ['toggleRule', source._id, None, restr, [rule, True, source._id, restr, player]]
-   if isCharacter(Card(source._id)) and not restr:
-      addGameEventListener(GameEvents.Removed,   *args)
-      addGameEventListener(GameEvents.Powerless, *args)
-   if restr:
-      addGameEventListener(Hooks.CallOnRemove, *args)
-   rc.applyNext()
-   
    
 def cmd_enableRule(rc, targets, source, restr, rule, value = True):
    debug(">>> cmd_enableRule({}, {})".format(rule, value))
@@ -566,13 +557,18 @@ def cmd_enableRule(rc, targets, source, restr, rule, value = True):
    if targets and isPlayer(targets[0]):
       player = targets[0]._id
    toggleRule(rule, value, source._id, restr, player)
-   args = ['toggleRule', source._id, None, restr, [rule, False, source._id, restr, player]]
+   args = ['toggleRule', source._id, None, restr, [rule, GameRulesDefaults[rule], source._id, restr, player]]
    if isCharacter(Card(source._id)) and not restr:
       addGameEventListener(GameEvents.Removed,   *args)
       addGameEventListener(GameEvents.Powerless, *args)
    if restr:
       addGameEventListener(Hooks.CallOnRemove, *args)
    rc.applyNext()
+   
+  
+def cmd_disableRule(rc, targets, source, restr, rule):
+   debug(">>> cmd_disableRule({})".format(rule))
+   cmd_enableRule(rc, targets, source, restr, rule, False)
 
 
 def cmd_freeze(rc, targets, source, restr, unfreeze=False):
@@ -622,6 +618,14 @@ def cmd_alterCost(rc, targets, source, restr, type, mod):
    rc.applyNext()
 
 
+def cmd_modCost(rc, targets, source, restr, type, mod):
+   debug(">>> cmd_modCost({}, {})".format(type, mod))
+   mod = int(mod)
+   addTempVar('costMod'+type, mod, True)
+   notify(MSG_RULES['card_cost'].format(type.title(), abs(mod), 'less ' if mod >= 0 else 'more ', getTextualRestr(restr)))
+   rc.applyNext()
+
+
 def cmd_swapChars(rc, targets, source, restr, *args):
    debug(">>> cmd_swapChars({})".format(targets))
    if len(targets) >= 2:
@@ -645,7 +649,7 @@ def cmd_trash(rc, targets, source, restr, numCards=1):
    debug(">>> cmd_trash({}, {})".format(targets, numCards))
    numCards = int(numCards)
    if not targets or isCard(targets[0]):
-      targets = [me]
+      targets = [source.controller]
    for player in targets:
       if player == me:
          trash(me.Deck, count=numCards)
@@ -655,7 +659,7 @@ def cmd_trash(rc, targets, source, restr, numCards=1):
 
 
 def cmd_prophecy(rc, targets, source, restr, numCards=1, deckPos=0):
-   pile = me.Deck
+   pile = source.controller.Deck
    if targets:
       pile = targets[0].group
    if deckPos != 0:
@@ -725,7 +729,7 @@ def cmd_removeFromAttack(rc, targets, source, restr, *args):
       remoteCall(getOpp(), "cancelAttack", [card])
       rnd(1, 100) # Wait until all animation is done
       notify("{} removes {} from attack.".format(me, card))
-   rc.applyNext()   
+   rc.applyNext()
 
 
 def cmd_modDamage(rc, targets, source, restr, qty):
@@ -770,12 +774,13 @@ RulesCommands.register('swapabilities',    cmd_swapAbilities)
 RulesCommands.register('each',             cmd_each)
 RulesCommands.register('transform',        cmd_transform)
 RulesCommands.register('moverestto',       cmd_moveRestTo)
-RulesCommands.register('disablerule',      cmd_disableRule)
 RulesCommands.register('enablerule',       cmd_enableRule)
+RulesCommands.register('disablerule',      cmd_disableRule)
 RulesCommands.register('modrule',          cmd_enableRule)  # alias
 RulesCommands.register('freeze',           cmd_freeze)
 RulesCommands.register('unfreeze',         cmd_unfreeze)
 RulesCommands.register('altercost',        cmd_alterCost)
+RulesCommands.register('modcost',          cmd_modCost)
 RulesCommands.register('swapchars',        cmd_swapChars)
 RulesCommands.register('movetoslot',       cmd_moveToSlot)
 RulesCommands.register('trash',            cmd_trash)

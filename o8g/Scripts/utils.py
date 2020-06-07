@@ -144,8 +144,8 @@ def replaceVars(str):
    str = replaceIfRgx (str, '.bp'       , r'getParsedCard(\1).BP')
    str = replaceIfRgx (str, '.sp'       , r'num(\1.SP)')
    str = replaceIfRgx (str, '.lastbp'   , r'getParsedCard(\1).lastBP')
-   str = replaceIfRgx (str, 'action'    , 'isAction(card)')
-   str = replaceIfRgx (str, 'reaction'  , 'isReaction(card)')
+   str = replaceIfRgx (str, 'action'    , 'isAction(getCardByContext(locals()))')
+   str = replaceIfRgx (str, 'reaction'  , 'isReaction(getCardByContext(locals()))')
    str = replaceIfRgx (str, 'char'      , 'isCharacter(card)')
    str = replaceIfRgx (str, '.size'      , r'len(\1)')
    str = replaceIfRgx (str, '.ring'      , r'getRingSize(\1)')
@@ -153,7 +153,6 @@ def replaceVars(str):
    str = replaceIfRgx (str, '.damaged'   , r'getState(\1, "damaged")')
    str = replaceIfRgx (str, '.lostsp'    , r'getState(\1, "lostsp")')
    str = replaceIfRgx (str, 'opp'       , r'getOpp()')
-   str = replaceIfRgx (str, 'fromaction', 'isAction(trigger)')
    str = replaceIf    (str, '.hp'       , '.HP')
    str = replaceIf    (str, 'alone'     , 'getRingSize() == 1')
    str = replaceIf    (str, 'attacker'  , 'attacker[0]')
@@ -178,6 +177,13 @@ def replaceIf(str, name, repl, isRgx=True):
    return str
    
    
+def getCardByContext(l):
+   if 'card' in l:
+      return l['card']
+   elif 'trigger' in l:
+      return l['trigger']
+
+
 def evalExpression(expr, retValue = False, locals = None):
    debug("evalExpression({})\nLocals: {}".format(expr, locals))
    expr = replaceVars(expr)
@@ -872,7 +878,7 @@ def changeMarker(cards, marker, question = None, count = None):
       c.markers[marker] = count
       diff = count-n
       if diff >= 0: diff = "+" + str(diff)
-      notify("{} sets {}'s {} to {}({}).".format(me, c, marker[0], count, diff))
+      notify("{} sets {}'s {} to {} ({}).".format(getSourcePlayer(), c, marker[0], count, diff))
 
 
 def setMarker(card, mkname, qty=1):
@@ -991,7 +997,7 @@ def payCostSP(amount = 1, obj = None, msg = 'play this card', type = None):
          costModMsg = u"The SP cost of {} has been modified by an ability ({}  \u2192  {}).".format(obj, amount, newAmount)
          amount = newAmount
    
-   if amount >= 0:
+   if amount >= 0 and type == CharType:
       modSP(amount)
    else:
       initialSP = me.SP
@@ -1008,22 +1014,27 @@ def payCostSP(amount = 1, obj = None, msg = 'play this card', type = None):
 def getCostMod(initialAmount, type, obj=None):
    debug(">>> getCostMod({}, {})".format(obj, type))
    newAmount = initialAmount
+   costMod = 0
    type = type.lower()
    Modifiers = getGlobalVar('Modifiers')
    if 'cost' in Modifiers:
-      costMod = 0
       for mod in Modifiers['cost']:
          if mod[1] == type:
             debug("-- Found cost modifier: {}".format(mod))
             if mod[3] == RS_MODE_EQUAL:  # mode
                newAmount = mod[2]
+               initialAmount = mod[2]
             else:
                costMod += mod[2]
-      if costMod != 0:
-         newAmount += costMod
-         # If initial cost is less than 0, then new cost cannot be less than -1 (Kyosuke rule)
-         if newAmount >= 0 and isCard(obj):
-            newAmount = max(initialAmount, -1)
+   # Cost modified by events
+   triggerGameEvent(GameEvents.BeforePayCost+type, obj._id if isCard(obj) else None)
+   costMod += getTempVar('costMod'+type, 0)
+   # Fix final value
+   if costMod != 0:
+      newAmount += costMod
+      # If initial cost is less than 0, then new cost cannot be less than -1 (Kyosuke rule)
+      if newAmount >= 0 and isCard(obj):
+         newAmount = max(initialAmount, -1)
    return newAmount
 
 
