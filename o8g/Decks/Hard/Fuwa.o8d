@@ -1,35 +1,38 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?>
-<deck game="e3d56d9e-900d-49c6-b6ae-22cbb51be153" sleeveid="0">
+﻿<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<deck game="e3d56d9e-900d-49c6-b6ae-22cbb51be153">
   <section name="Main" shared="False">
-    <card qty="1" id="299685df-122c-4fbe-a8dd-05ceaaf41055">Andy</card>
+    <card qty="2" id="299685df-122c-4fbe-a8dd-05ceaaf41055">Andy</card>
     <card qty="2" id="a33974af-3d8e-41d6-8f90-fd6c8d525e18">Mai</card>
-    <card qty="3" id="62067a74-53f9-4bb0-872c-f77e735fc826">Eiji</card>
+    <card qty="2" id="62067a74-53f9-4bb0-872c-f77e735fc826">Eiji</card>
     <card qty="1" id="90c1ccf4-999a-4567-92e4-0f7602b7799e">Hanzo</card>
     <card qty="3" id="494cb024-ef21-4019-98fe-9afc4355e424">Galford</card>
     <card qty="1" id="54c61d60-d68a-4ce8-8c2f-65bd0192c26a">Kazuki</card>
-    <card qty="1" id="ce62aaad-d114-4ce6-842f-7f6ed39f1afa">Sougetsu</card>
+    <card qty="2" id="ce62aaad-d114-4ce6-842f-7f6ed39f1afa">Sougetsu</card>
     <card qty="2" id="5ccdb31f-f7f8-4f89-916f-74e9db9130cb">Zantetsu</card>
     <card qty="3" id="75e57026-e4fe-4470-88b2-22268ddd6b61">Hokutomaru</card>
-    <card qty="2" id="322adae9-8502-4605-a903-abf1310ff8c5">Vega</card>
-    <card qty="1" id="2c1d8c60-0858-4524-adc1-e7596a4d08e0">Guy</card>
-    <card qty="3" id="fd549399-59de-4b2c-8aca-5454f7862e50">Ibuki</card>
-    <card qty="3" id="487f66ee-c717-41a1-ad2e-31d3fe0dd424">Kenji</card>
+    <card qty="1" id="322adae9-8502-4605-a903-abf1310ff8c5">Vega</card>
+    <card qty="2" id="2c1d8c60-0858-4524-adc1-e7596a4d08e0">Guy</card>
+    <card qty="2" id="fd549399-59de-4b2c-8aca-5454f7862e50">Ibuki</card>
+    <card qty="2" id="487f66ee-c717-41a1-ad2e-31d3fe0dd424">Kenji</card>
     <card qty="1" id="4bd333d6-f063-424e-8cf9-3512f96f23b4">Batsu</card>
-    <card qty="1" id="7abee6d7-1831-4090-b882-eee2fd3aa246">Kyosuke</card>
     <card qty="2" id="33796f5f-c699-42e8-a084-fd28663f08ae">Ayame</card>
-    <card qty="1" id="c09e1c30-468b-4173-8aa8-3e6ba31cd3e8">Strider Hiryu</card>
+    <card qty="2" id="c09e1c30-468b-4173-8aa8-3e6ba31cd3e8">Strider Hiryu</card>
     <card qty="2" id="61ef9ecd-980b-46b8-83fc-12399ce044f1">Ginzu Ninja</card>
     <card qty="1" id="c553b9d0-946a-4c61-bc9b-a4b074c49045">Raizou</card>
     <card qty="1" id="fb3d3a49-a1de-4887-9ea4-ec761426471e">Hyo</card>
     <card qty="3" id="8bb477f9-5004-4018-8d5e-73c6a23e8912">Kaede (OM)</card>
     <card qty="1" id="b7f9fdff-641d-4c16-b9fb-c7429b990fff">Lightning</card>
-    <card qty="2" id="c50f1a40-87e9-41b9-a69c-600b36b68077">Bopper</card>
+    <card qty="1" id="c50f1a40-87e9-41b9-a69c-600b36b68077">Bopper</card>
+    <card qty="1" id="e22264db-d58f-48ce-9be7-608bdfdd4299">Double KO</card>
+    <card qty="1" id="62a6c4e0-51d0-4a23-9854-9ba0a25bc751">Slaughter</card>
     <card qty="1" id="f215a022-c742-4c96-95d1-40c202f8d104">Chaos</card>
-    <card qty="2" id="50afc361-3dd7-4847-ae4c-d9ed84f1d991">Raw shield</card>
+    <card qty="1" id="50afc361-3dd7-4847-ae4c-d9ed84f1d991">Raw shield</card>
+    <card qty="1" id="14a057f5-be46-4ec0-abee-a6c573f4711e">Heritage</card>
     <card qty="1" id="f7a00823-d37b-48eb-b2f6-c530623a2a9c">Abduction</card>
     <card qty="2" id="e038ebfd-6c19-4b1c-bf38-a2fd9f5ffbfd">Ancestry</card>
-    <card qty="2" id="eaf346c3-d2e6-4066-adae-e1678746673d">Robber</card>
-    <card qty="1" id="76c3d3b5-b3bc-41b1-8fef-d9c005269646">Three sisters</card>
+    <card qty="1" id="be84124e-5057-4511-a181-7492451db5b2">Aura spark</card>
+    <card qty="1" id="b9023490-790e-4e5f-a495-c196f6672dff">Amnesia</card>
+    <card qty="1" id="21db37a5-3483-41d4-9c6a-529071fce7ba">Lucky card</card>
   </section>
   <notes><![CDATA[]]></notes>
 </deck>

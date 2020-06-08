@@ -1,11 +1,12 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?>
-<deck game="e3d56d9e-900d-49c6-b6ae-22cbb51be153" sleeveid="0">
+﻿<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<deck game="e3d56d9e-900d-49c6-b6ae-22cbb51be153">
   <section name="Main" shared="False">
     <card qty="3" id="8cb08852-491e-4a34-9589-79bf3959ba63">Joe</card>
-    <card qty="3" id="d231ed6e-8f7c-417e-8826-64f9297b395f">Nakoruru (Slash)</card>
-    <card qty="1" id="672ac290-d6f2-4579-b5ae-1067add14601">Shermie</card>
+    <card qty="2" id="d231ed6e-8f7c-417e-8826-64f9297b395f">Nakoruru (Slash)</card>
+    <card qty="2" id="672ac290-d6f2-4579-b5ae-1067add14601">Shermie</card>
+    <card qty="1" id="ab45b64f-e231-44ca-83ad-bd4d89bcb851">Clone Zero</card>
     <card qty="1" id="b1082f22-34d1-4ecf-b972-261ace7b2a68">Rock Howard</card>
-    <card qty="1" id="eba4b6d7-1b14-4112-8e1e-6bee2017d338">Jhun Hoon</card>
+    <card qty="2" id="eba4b6d7-1b14-4112-8e1e-6bee2017d338">Jhun Hoon</card>
     <card qty="2" id="a124cd33-4427-4584-8216-885bbb97baa8">Chun-Li</card>
     <card qty="2" id="3036ebcc-7b49-42a5-89f3-118399f34d47">E. Honda</card>
     <card qty="3" id="70df22cd-ebe5-461e-a017-26879f2cb71f">Blanka</card>
@@ -16,19 +17,17 @@
     <card qty="2" id="4bd333d6-f063-424e-8cf9-3512f96f23b4">Batsu</card>
     <card qty="2" id="7abee6d7-1831-4090-b882-eee2fd3aa246">Kyosuke</card>
     <card qty="2" id="09dfc071-ce3a-448f-86fe-502bd5d1392b">Kyoko</card>
-    <card qty="1" id="faa72b01-cf50-4cff-8b70-13245a7fa5df">Zaki</card>
     <card qty="1" id="9da88c0d-7915-43e2-a555-23ffbcf11226">Shinjin Akuma</card>
     <card qty="1" id="b95b2104-d184-43cc-bb04-b3eb096c6fca">Fight!</card>
     <card qty="1" id="96c5cd74-a898-42f3-a169-9f98e1ce8945">Escape</card>
     <card qty="1" id="0d7b5186-92db-4d61-8309-bfbd593df160">School's out</card>
-    <card qty="2" id="6597d835-666b-4056-8cae-dbf3a3bdc3df">Grace</card>
+    <card qty="1" id="faea0028-c313-438e-b9f0-8536e494ddb1">Glare off</card>
     <card qty="1" id="7b7ffef2-2790-46ed-8407-e7395c26b4a0">ESP</card>
     <card qty="3" id="e8c43fc9-a217-49e6-9847-9c9ced63b0ac">Pester</card>
     <card qty="1" id="0035d193-fe4b-4927-9dc1-6124b26768bc">Shopping</card>
     <card qty="1" id="96f72173-528d-4a3a-a85c-9cf92439435a">Laundry</card>
     <card qty="1" id="c977a855-1358-4dab-870f-dee886f929c3">Study</card>
-    <card qty="1" id="826a8255-ed98-4c13-bb8c-96502837df52">Bamboo shoots</card>
-    <card qty="1" id="f4df6ee6-2fcd-4ba1-b86f-59d5028eb96b">Vacation</card>
+    <card qty="2" id="826a8255-ed98-4c13-bb8c-96502837df52">Bamboo shoots</card>
     <card qty="3" id="130c068d-bf62-4013-8b17-32af4a3f6994">Face off</card>
   </section>
   <notes><![CDATA[]]></notes>

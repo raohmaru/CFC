@@ -1,5 +1,5 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?>
-<deck game="e3d56d9e-900d-49c6-b6ae-22cbb51be153" sleeveid="0">
+﻿<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<deck game="e3d56d9e-900d-49c6-b6ae-22cbb51be153">
   <section name="Main" shared="False">
     <card qty="2" id="782a8773-1837-4d7a-8629-30ff08ccddca">Hon Fu</card>
     <card qty="1" id="69cdd0d9-371a-4477-9319-8e9faf208c4b">Rick</card>
@@ -7,7 +7,6 @@
     <card qty="1" id="ebce697e-c49f-4a1d-b111-bbc4df796dd3">Takuma</card>
     <card qty="1" id="06c4b88f-8634-4b67-87d0-c0406fa268f1">Mr. Karate</card>
     <card qty="1" id="b4f7bb46-c3d5-4957-86d8-f73e64c3c176">Tam Tam</card>
-    <card qty="1" id="9a52f604-bf68-4ef4-934b-1c984877d484">Genjuro</card>
     <card qty="2" id="3ba61626-3c2e-48e6-a497-ba5814b8e137">Zankuro</card>
     <card qty="1" id="becdbe18-0d59-47fd-8f94-177359dfdc56">Daimon</card>
     <card qty="2" id="ae491a2c-fb67-4e1e-aac2-abc968dd0938">Maxima</card>
@@ -28,17 +27,19 @@
     <card qty="1" id="3b05eb6f-d20f-433f-9ceb-4d6bb31d0328">Hugo</card>
     <card qty="1" id="79239cad-fd51-4557-9534-af96bd1302bc">Urien</card>
     <card qty="1" id="298bd386-e304-4739-95c6-78c9de4c17e4">Gill</card>
+    <card qty="1" id="c6ee2630-7f1a-4ac1-95f3-be8db970e855">Omokane Saki</card>
     <card qty="1" id="b7f9fdff-641d-4c16-b9fb-c7429b990fff">Lightning</card>
     <card qty="2" id="c50f1a40-87e9-41b9-a69c-600b36b68077">Bopper</card>
     <card qty="2" id="f215a022-c742-4c96-95d1-40c202f8d104">Chaos</card>
-    <card qty="2" id="26fa7e0e-eb86-40d5-b5ab-39723fd67e43">Grenade</card>
     <card qty="1" id="5d3bc1c3-692b-4d7c-9781-68fcdc0bd96e">Mega crush</card>
-    <card qty="1" id="11fa47f0-9573-48ca-9a4a-7aa16a4ec76e">Psyche up!</card>
+    <card qty="1" id="a89ae46c-bbbe-4780-9a7f-3d68857047ac">Reparation</card>
+    <card qty="1" id="5f19902c-60fb-44b8-9e64-eab4b31c9d3d">Revive</card>
     <card qty="1" id="f9a93f64-d331-4aa8-b58d-c213c8dfd742">Striker</card>
     <card qty="1" id="dd49c2e2-3455-481d-b8a7-5f813796b3f4">Galactica phantom</card>
     <card qty="2" id="559a71aa-0d14-44b0-bfb9-557d08ae0e0b">Power mode</card>
     <card qty="2" id="0a5179dd-e5a0-499e-90ac-8d62391743b8">Cash profits</card>
-    <card qty="1" id="130c068d-bf62-4013-8b17-32af4a3f6994">Face off</card>
+    <card qty="1" id="fef1b38c-a055-4cd7-9436-34e220c30d52">Cruel hunt</card>
+    <card qty="1" id="c6acfab6-c7cb-442e-87f0-432779af5ad9">Wanna gimme</card>
   </section>
   <notes><![CDATA[]]></notes>
 </deck>

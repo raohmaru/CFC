@@ -1,12 +1,14 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?>
-<deck game="e3d56d9e-900d-49c6-b6ae-22cbb51be153" sleeveid="0">
+﻿<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<deck game="e3d56d9e-900d-49c6-b6ae-22cbb51be153">
   <section name="Main" shared="False">
     <card qty="2" id="d14dd0ed-cba6-404d-b7d1-e25c9b5c78ed">Mr. Big</card>
     <card qty="1" id="55ab2891-c99e-4647-8a9d-b01fbce3009f">Chizuru</card>
+    <card qty="1" id="4d7520b9-9ced-43e0-a2e7-974d76d8eb82">Iori</card>
     <card qty="1" id="f71ccccf-4c2e-4adf-a409-b8ab8e17c8f1">Wanderer</card>
-    <card qty="1" id="9c405677-1d42-4eb7-bb44-7b21c1d84859">Akari</card>
-    <card qty="1" id="f3557575-c61e-42fd-9442-9413cea64bdf">Gato</card>
+    <card qty="1" id="299c01d7-37f0-41de-81f3-712b8dd63f11">Akari (Speed)</card>
+    <card qty="2" id="f3557575-c61e-42fd-9442-9413cea64bdf">Gato</card>
     <card qty="2" id="bfb737c0-4dcf-4b0c-b201-45857c83016b">Haohmaru (WR)</card>
+    <card qty="1" id="9a52f604-bf68-4ef4-934b-1c984877d484">Genjuro</card>
     <card qty="2" id="c0f1e98e-4233-446a-af2d-6e50eb8e6177">Rugal</card>
     <card qty="1" id="2ba9556c-59b0-4154-8325-f9793a8eacb5">Krizalid</card>
     <card qty="2" id="1f11dc82-0581-49c2-ae93-35688c6acb7a">Kula</card>
@@ -18,11 +20,8 @@
     <card qty="2" id="af43872e-e47d-4fe0-9b55-aedd8a0d0fc7">Jin Saotome</card>
     <card qty="2" id="be2728eb-0a2d-4f27-8cc5-3208d103b888">Haggar</card>
     <card qty="1" id="7717e285-f824-4bfa-bd76-c0039c97190e">Mega Man</card>
-    <card qty="2" id="48a07b48-7415-42e7-a3cd-6bae37c56489">Ryu no Senshi</card>
     <card qty="2" id="298bd386-e304-4739-95c6-78c9de4c17e4">Gill</card>
     <card qty="1" id="e9c8e4ca-7d41-43c5-b427-f7e47125052e">Edge</card>
-    <card qty="1" id="fb3d3a49-a1de-4887-9ea4-ec761426471e">Hyo</card>
-    <card qty="1" id="9da88c0d-7915-43e2-a555-23ffbcf11226">Shinjin Akuma</card>
     <card qty="2" id="b95b2104-d184-43cc-bb04-b3eb096c6fca">Fight!</card>
     <card qty="1" id="0d7b5186-92db-4d61-8309-bfbd593df160">School's out</card>
     <card qty="1" id="11fa47f0-9573-48ca-9a4a-7aa16a4ec76e">Psyche up!</card>
@@ -31,11 +30,11 @@
     <card qty="1" id="053ba349-515d-4293-898b-625f837f62b6">Emulate</card>
     <card qty="1" id="0e1b4f81-93e9-44be-ab31-7aed8cb354d0">Shadow</card>
     <card qty="1" id="5e2211a0-e52e-4b7b-b03d-f6ecb3660bb0">Successor</card>
-    <card qty="1" id="016a06d3-e739-4862-848a-d40ba0ec12ee">Reliable warrior</card>
-    <card qty="1" id="372525df-1345-47cc-ae2f-2fe34a226ac9">Held back</card>
+    <card qty="1" id="7a394ff3-727d-48d9-91a9-b9cba90510b6">Mischief</card>
     <card qty="1" id="dd49c2e2-3455-481d-b8a7-5f813796b3f4">Galactica phantom</card>
     <card qty="2" id="74def9a7-0898-4ed4-93eb-33e57cf3a215">Clone</card>
     <card qty="2" id="0a951ced-4508-40b9-8350-5dafb6b7e8aa">Super Art select</card>
+    <card qty="2" id="eaf346c3-d2e6-4066-adae-e1678746673d">Robber</card>
   </section>
   <notes><![CDATA[]]></notes>
 </deck>

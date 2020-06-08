@@ -1,9 +1,10 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?>
-<deck game="e3d56d9e-900d-49c6-b6ae-22cbb51be153" sleeveid="0">
+﻿<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<deck game="e3d56d9e-900d-49c6-b6ae-22cbb51be153">
   <section name="Main" shared="False">
     <card qty="3" id="bfb5d6cd-afca-4aeb-a1da-8204eb4b2eed">Raiden</card>
-    <card qty="3" id="2981e9ad-11e1-4f14-a707-2120bfc0cc2f">Sagat</card>
-    <card qty="3" id="7f5099da-4bcf-4895-9493-e83a993118b7">Sean</card>
+    <card qty="2" id="7f5099da-4bcf-4895-9493-e83a993118b7">Sean</card>
+    <card qty="1" id="8e8e0107-db05-4cb3-a912-af2b2dea92d9">Tron Bonne</card>
+    <card qty="1" id="66d424bb-e5da-4f61-b063-61efd1fc61a6">Damn D</card>
     <card qty="3" id="65c91e9d-761c-4978-ba3e-6e05026f080e">Q-Bee</card>
     <card qty="3" id="c09e1c30-468b-4173-8aa8-3e6ba31cd3e8">Strider Hiryu</card>
     <card qty="3" id="c3a432e3-3642-46a2-a1e2-e2d5d5f698ab">Option</card>
@@ -13,11 +14,13 @@
     <card qty="3" id="770a55b0-f68d-46ce-bb52-23ec3372b92a">Roy</card>
     <card qty="3" id="40ef0410-798f-4d60-865b-9af14ed4e355">Tiffany</card>
     <card qty="3" id="5ac04e26-4811-4064-8386-0e25beb8f974">Boman</card>
-    <card qty="3" id="99081829-e898-4766-8727-b0a2918df49f">Kikaioh</card>
+    <card qty="2" id="2e6f329d-9a1e-45b7-864d-67feeb5eade2">Billy</card>
+    <card qty="2" id="99081829-e898-4766-8727-b0a2918df49f">Kikaioh</card>
     <card qty="3" id="9610668a-18c9-4448-8216-f40119a03269">Lucky kitty</card>
     <card qty="3" id="e2597326-5639-435f-ae33-3303b181527c">Activate!</card>
     <card qty="2" id="f4df6ee6-2fcd-4ba1-b86f-59d5028eb96b">Vacation</card>
-    <card qty="3" id="130c068d-bf62-4013-8b17-32af4a3f6994">Face off</card>
+    <card qty="2" id="130c068d-bf62-4013-8b17-32af4a3f6994">Face off</card>
+    <card qty="2" id="be84124e-5057-4511-a181-7492451db5b2">Aura spark</card>
   </section>
   <notes><![CDATA[]]></notes>
 </deck>

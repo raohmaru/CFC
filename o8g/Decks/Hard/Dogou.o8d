@@ -1,7 +1,7 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?>
-<deck game="e3d56d9e-900d-49c6-b6ae-22cbb51be153" sleeveid="0">
+﻿<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<deck game="e3d56d9e-900d-49c6-b6ae-22cbb51be153">
   <section name="Main" shared="False">
-    <card qty="2" id="48aba37c-374b-4362-b30a-d41fa9727b2c">Asura</card>
+    <card qty="2" id="7b2a974c-de9b-4f42-a8da-f15b68dbc41c">Kyoshiro</card>
     <card qty="1" id="e590d588-84af-4c26-8dbe-e28d5b626747">Amakusa</card>
     <card qty="1" id="e9c7f532-89ff-4f69-a885-bc09b549d989">Orochi</card>
     <card qty="1" id="3e38ee5c-2421-4267-b0da-86035060fcc0">Wild Iori</card>
@@ -29,11 +29,11 @@
     <card qty="1" id="c3bb69f7-4b77-469f-a9ff-79cca1e52574">Bilstein</card>
     <card qty="2" id="a0811f0c-0915-4556-97b4-5d61a25ee4ca">Amingo</card>
     <card qty="1" id="6c6fd560-017e-4819-accf-a66faef84218">Nothingness</card>
+    <card qty="1" id="fa4ee219-8264-41bc-b8a3-23a24df61d9a">Tooptadon</card>
     <card qty="2" id="c8284885-2ab1-4020-afc7-faae4e196e74">Hey! Hey!</card>
     <card qty="1" id="f215a022-c742-4c96-95d1-40c202f8d104">Chaos</card>
     <card qty="1" id="ac01bbbe-583e-46ae-b26c-3c25eb8f0779">Seraphic wing</card>
     <card qty="1" id="51a47b27-abf3-4219-a241-c72bd23b178b">Morph</card>
-    <card qty="1" id="6504b1a3-e432-4c6c-845b-6ca72500b458">Substitute</card>
     <card qty="1" id="e1fb17f3-c4bf-4993-9b2f-91706cccf448">Curse</card>
     <card qty="1" id="0e1b4f81-93e9-44be-ab31-7aed8cb354d0">Shadow</card>
     <card qty="1" id="f9a93f64-d331-4aa8-b58d-c213c8dfd742">Striker</card>

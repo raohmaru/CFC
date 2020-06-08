@@ -1,5 +1,5 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?>
-<deck game="e3d56d9e-900d-49c6-b6ae-22cbb51be153" sleeveid="0">
+﻿<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<deck game="e3d56d9e-900d-49c6-b6ae-22cbb51be153">
   <section name="Main" shared="False">
     <card qty="1" id="02157c40-3b96-480d-99c5-083613d8eb45">Terry</card>
     <card qty="1" id="299685df-122c-4fbe-a8dd-05ceaaf41055">Andy</card>
@@ -20,11 +20,11 @@
     <card qty="1" id="e492017d-58da-4098-87aa-14e05b6c938f">Mature</card>
     <card qty="1" id="57de9ee8-5791-4696-96a1-057bf866ed9f">Kagami</card>
     <card qty="1" id="f71ccccf-4c2e-4adf-a409-b8ab8e17c8f1">Wanderer</card>
-    <card qty="1" id="9c405677-1d42-4eb7-bb44-7b21c1d84859">Akari</card>
-    <card qty="2" id="2f8ecb64-d513-4e67-b537-5acef9de6c68">Athena</card>
+    <card qty="2" id="ddbfda17-0ba7-422e-9ed3-376a0ba64644">Shigen</card>
+    <card qty="1" id="2f8ecb64-d513-4e67-b537-5acef9de6c68">Athena</card>
+    <card qty="1" id="08b229e2-6af7-478a-bda5-774dd66af9f9">Athena Asamiya</card>
     <card qty="1" id="928b8c60-483a-467c-9c11-e858009ff362">Hotaru</card>
     <card qty="1" id="ae301f49-6e9d-4ca3-aba8-54bb5142e46d">Grant</card>
-    <card qty="1" id="e81e9366-b3e1-45a6-b010-bd02934b2efd">Kain</card>
     <card qty="1" id="bfb5d6cd-afca-4aeb-a1da-8204eb4b2eed">Raiden</card>
     <card qty="1" id="bfb737c0-4dcf-4b0c-b201-45857c83016b">Haohmaru (WR)</card>
     <card qty="1" id="c0f1e98e-4233-446a-af2d-6e50eb8e6177">Rugal</card>
@@ -32,17 +32,18 @@
     <card qty="2" id="1f11dc82-0581-49c2-ae93-35688c6acb7a">Kula</card>
     <card qty="1" id="ab45b64f-e231-44ca-83ad-bd4d89bcb851">Clone Zero</card>
     <card qty="1" id="0d1f3d2d-72ef-42e4-9c24-d0b36371b230">Puppet</card>
-    <card qty="1" id="98e1e7ed-8c66-4105-a2fc-1290036c0f70">Earth's pike</card>
+    <card qty="1" id="26fa7e0e-eb86-40d5-b5ab-39723fd67e43">Grenade</card>
+    <card qty="1" id="f7a00823-d37b-48eb-b2f6-c530623a2a9c">Abduction</card>
     <card qty="1" id="c8284885-2ab1-4020-afc7-faae4e196e74">Hey! Hey!</card>
+    <card qty="1" id="b0346de5-63b8-4443-8ea4-8155d889a0fc">Best shot</card>
     <card qty="1" id="9610668a-18c9-4448-8216-f40119a03269">Lucky kitty</card>
     <card qty="1" id="4d7fd45a-aa2a-48e3-856b-cfb04e203e3b">Storm rush</card>
-    <card qty="1" id="a8b949ff-7def-4c0a-8d79-49ad2a1d02d8">Pride</card>
     <card qty="1" id="faea0028-c313-438e-b9f0-8536e494ddb1">Glare off</card>
-    <card qty="2" id="f9a93f64-d331-4aa8-b58d-c213c8dfd742">Striker</card>
+    <card qty="1" id="f9a93f64-d331-4aa8-b58d-c213c8dfd742">Striker</card>
     <card qty="1" id="b9023490-790e-4e5f-a495-c196f6672dff">Amnesia</card>
-    <card qty="2" id="36450a2c-321b-4697-a37e-1563b16faf0e">Charm</card>
+    <card qty="1" id="36450a2c-321b-4697-a37e-1563b16faf0e">Charm</card>
+    <card qty="2" id="f4df6ee6-2fcd-4ba1-b86f-59d5028eb96b">Vacation</card>
     <card qty="1" id="1e54d73a-4795-4eae-b1d1-c0ca5d075fcf">Waiting in vain</card>
-    <card qty="1" id="2298624c-1eeb-4f71-b028-b0118ea614ac">Who's taller</card>
   </section>
   <notes><![CDATA[]]></notes>
 </deck>
