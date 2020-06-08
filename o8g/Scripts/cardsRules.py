@@ -2055,7 +2055,7 @@ action = {D(reaction)}: draw(3)
 
 # Time bomb
 RulesDict['48a11103-e08d-4237-952e-bf4cdc2868f7'] = """
-action = {D(character)}: damage(discarded[0].BP) to(character[attack])
+action = {D(character)}: damage(discarded[0].BP) to(character[attack,uattack])
 """
 
 # Vacation
