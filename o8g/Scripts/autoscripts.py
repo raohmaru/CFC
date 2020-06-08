@@ -70,6 +70,8 @@ def triggerPhaseEvent(phase, oldPhase = 0):
          # rnd(1, 100)  # Trying to delay nextPhase
          # update()
          nextPhase(False)
+      elif getStop(phase):
+         addButton('NextButton')
 
 
 def activatePhaseStart():
