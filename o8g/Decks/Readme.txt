@@ -1,5 +1,5 @@
 Collections of decks from SNK's game SNK vs. Capcom Card Fighters' Clash 2 Expand Edition.
-These are the decks used by the enemies in Story Mode (easy) and Free Battle Mode (stronger, only avaliable after completing the game).
+These are the decks used by the enemies in Free Battle Mode after completing the game (this is, they are stronger than the decks you play against in Story Mode).
 
 
 Below is a short explanation for each available deck.
