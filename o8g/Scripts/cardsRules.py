@@ -1852,7 +1852,7 @@ action = moveTo(hand) target(*<1>@oppDeck); moveTo(oppHand) target(*<1>@deck)
 
 # Tooptadon
 RulesDict['fa4ee219-8264-41bc-b8a3-23a24df61d9a'] = """
-action = alterCost(ua2, =0) & alterCost(ua3, =5) ueot
+action = alterCost(ua2, =0) & alterCost(ua3, =-5) ueot
 """
 
 # Tri-Quiz
@@ -1946,8 +1946,11 @@ action = moveTo(deck) target?(reactions@discards) & shuffle() & draw()
 
 # Grandmaster
 RulesDict['5972ea54-137c-41a7-a1eb-b9d9cd0ecfe5'] = """
-action = moveTo(hand) target(reactions@discards)
-auto = ~anyEndPhase:once~ discard(reactions)
+# action = moveTo(hand) target(reactions@discards)
+# auto = ~anyEndPhase:once~ discard(reactions)
+action = moveTo(removed) target?(reactions@discards) & pileView(removed, pile); enableRule(play_removed) target(me) oppueot
+# Activated in opponent's turn, so target prefix opp == me
+auto = ~oppEndPhase:once~ moveTo(oppDiscards) target?(*s@oppRemoved) & pileView(oppRemoved, collapsed)
 """
 
 # Held back

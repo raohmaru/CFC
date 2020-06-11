@@ -69,7 +69,9 @@ def showChangelog():
    switchSetting('GameVersion', getGameVersion())
    msg = """What's new in version 0.9.3
 
-- Cards effects are applied as if they were activated by active the player (Twelve bugfix).
+- Fixed Twelve's ability.
 - Kyosuke and friends' auto abilities are disabled in United Attack.
-- Balanced pre-build decks. """
+- Updated Grandmaster rules (as it should have been).
+- Balanced pre-build decks.
+- Improved online play."""
    askChoice(msg, [], [], ['Close'])

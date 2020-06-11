@@ -4,6 +4,8 @@
 Cards effects are applied as if they were activated by active the player (Twelve bugfix).
 Kyosuke and friends' auto abilities are disabled in UA.
 Balanced pre-build decks.
+Improved online play. Game state between players is better synchronized.
+Updated Grandmaster rules (as it should have been).
 ## 0.9.2
 Dragging cards now trigger automation actions.
 Automatic phase control option: game will move to the next phase when required.
