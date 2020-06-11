@@ -250,6 +250,8 @@ envVars        = None  # Global variables to be used in eval() expression
 buttons        = {}  # Holds the UI buttons created
 transformed    = {}  # Transformed cards
 phaseOngoing   = False  # True while running phase automation tasks
+Globals        = {}  # Replaces OCTGN global variables
+PlayerGlobals  = {}  # Replaces OCTGN player global variables
 debugVerbosity = DebugLevel['Off']
 debugging      = False
 # If I am alone debugging I want to know EVERYTHING

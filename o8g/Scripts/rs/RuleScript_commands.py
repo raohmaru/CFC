@@ -231,10 +231,9 @@ def cmd_destroy(rc, targets, source, restr, *args):
    for target in targets:
       if target.controller == me:
          destroy(target)
-         update()
       else:
          remoteCall(target.controller, "destroy", [target, 0, 0, me])
-         remoteCall(target.controller, "update", [])
+      update()
    # Add destroyed cards to action local variables
    addTempVar('destroyed', targets)
    rc.applyNext()
@@ -467,7 +466,7 @@ def cmd_loseAbility(rc, targets, source, restr, *args):
    debug(">>> cmd_loseAbility({})".format(targets))
    for target in targets:
       toggleAbility(target, remove=True)
-      rnd(1, 100) # Wait until all animation is done
+      update()
    rc.applyNext()
    
 
@@ -478,7 +477,9 @@ def cmd_copyAbility(rc, targets, source, restr, expr):
       targets = [source]
    if card:
       for target in targets:
-         copyAbility(target, target = card)
+         # copyAbility(target, target = card)
+         funcCall(target.controller, copyAbility, [target, 0, 0, card])
+         update()
    rc.applyNext()
 
 
@@ -747,9 +748,14 @@ def cmd_peek(rc, targets, source, restr):
 
 def cmd_pileView(rc, targets, source, restr, pileName, viewState):
    debug(">>> cmd_pileView({}, {})".format(pileName, viewState))
-   if pileName in RS_KW_ZONES_PILES:
+   prefix, name = RulesLexer.getPrefix(RS_PREFIX_ZONES, pileName)
+   if name in RS_KW_ZONES_PILES:
       pile = RulesUtils.getZoneByName(pileName)
-      pile.viewState = viewState
+      if pile.controller == me:
+         pile.viewState = viewState
+      else:
+         # This is diabolic
+         remoteCall(getOpp(), 'exec', ["me.piles['{}'].viewState = '{}'".format(pile.name, viewState)])
    rc.applyNext()
    
 

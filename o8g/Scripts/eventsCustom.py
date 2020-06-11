@@ -22,9 +22,10 @@
 def addGameEventListener(event, callback, obj_id, source_id=None, restr=None, args=[], appliesto=None):
    ge = getGlobalVar('GameEvents')
    prfx, eventName = RulesLexer.getPrefix(RS_PREFIX_EVENTS, event)
+   controller = Card(source_id).controller._id if source_id else me._id
    listener = {
       'event'     : eventName,
-      'controller': me._id,
+      'controller': controller,
       'id'        : obj_id,
       'source'    : source_id,
       'callback'  : callback,
@@ -68,7 +69,8 @@ def removeGameEventListener(obj_id, eventName=None, callback=None):
                if listener['event'] == Hooks.CallOnRemove:
                   func = eval(listener['callback'])
                   func(*listener['args'])
-   setGlobalVar('GameEvents', ge)
+   if removed:
+      setGlobalVar('GameEvents', ge)
    return removed
 
 

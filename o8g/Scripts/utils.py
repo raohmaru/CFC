@@ -59,25 +59,27 @@ def resetAll():
 # Clears all the global variables in order to start a new game.
    debug(">>> resetAll()")
    # Import all our global variables and reset them.
-   global playerSide, handSize, parsedCards, turns, transformed, buttons
+   global playerSide, handSize, parsedCards, turns, transformed, buttons, PlayerGlobals, Globals
    playerSide = None
    handSize = HandSize
    parsedCards = {}
    transformed = {}
    buttons = {}
-   resetState()
    turns = 1
    me.HP = StartingHP
    me.SP = 0
-   clearGlobalVar('Backups')
-   clearGlobalVar('UnitedAttack')
-   clearGlobalVar('Blockers')
-   clearGlobalVar('GameEvents')
-   clearGlobalVar('Modifiers')
-   clearGlobalVar('Rules')
-   clearGlobalVar('Rules')
-   clearGlobalVar('TempVars')
-   clearGlobalVar('GameEvents')
+   PlayerGlobals = {}
+   Globals = {}
+   resetState()
+   # clearGlobalVar('Backups')
+   # clearGlobalVar('UnitedAttack')
+   # clearGlobalVar('Blockers')
+   # clearGlobalVar('GameEvents')
+   # clearGlobalVar('Modifiers')
+   # clearGlobalVar('Rules')
+   # clearGlobalVar('TempVars')
+   # clearGlobalVar('CharsAbilities')
+   # clearGlobalVar('GameState')  # Do not reset!
    debug("<<< resetAll()")
 
 
@@ -108,21 +110,55 @@ def rollDie(num):
 
 def getGlobalVar(name, player = None):
 # Reads a game global variable or a player global variable
+   # if player:
+      # return eval(player.getGlobalVariable(name))
+   # else:
+      # return eval(getGlobalVariable(name))
    if player:
-      return eval(player.getGlobalVariable(name))
+      id = player._id
+      if not id in PlayerGlobals:
+         PlayerGlobals[id] = {}
+      if not name in PlayerGlobals[id]:
+         PlayerGlobals[id][name] = eval(player.getGlobalVariable(name))
+      return eval(str(PlayerGlobals[id][name]))  # Returns a copy so it cannot be modified
    else:
-      return eval(getGlobalVariable(name))
+      if not name in Globals:
+         Globals[name] = eval(getGlobalVariable(name))
+      return eval(str(Globals[name]))  # Returns a copy so it cannot be modified
 
 
 def setGlobalVar(name, value, player = None):
 # Writes a game global variable or a player global variable
+   # if player:
+      # if player == me:
+         # player.setGlobalVariable(name, str(value))
+      # else:
+         # remoteCall(player, 'setGlobalVar', [name, value, player])
+   # else:
+      # setGlobalVariable(name, str(value))
+   mute()
+   gvar = getGlobalVar(name, player)
    if player:
-      if player == me:
-         player.setGlobalVariable(name, str(value))
-      else:
-         remoteCall(player, 'setGlobalVar', [name, value, player])
+      PlayerGlobals[player._id][name] = value
    else:
-      setGlobalVariable(name, str(value))
+      Globals[name] = value
+   if len(players) > 1:
+      if isinstance(gvar, list):
+         # Changes in a list variable that contains dicts
+         if len(gvar) > 0 and isinstance(gvar[0], dict) or len(value) > 0 and isinstance(value[0], dict):
+            remov = [v for v in gvar if v not in value]
+            added = [v for v in value if v not in gvar]
+            value = (remov, added)
+      # Changes in a dict variable
+      elif isinstance(gvar, dict):
+         diff = set(gvar) ^ set(value)
+         remov = [k for k in diff if k not in value]
+         added = [{k:value[k]} for k in diff if k not in gvar]
+         # Possible updated fields
+         diff = set(gvar) & set(value)
+         added += [{k:value[k]} for k in diff if gvar[k] != value[k]]
+         value = (remov, added)
+      remoteCall(players[1], 'updateSharedGlobals', [name, value, player])
 
 
 def clearGlobalVar(name, player = None):
@@ -136,6 +172,32 @@ def clearGlobalVar(name, player = None):
    elif isinstance(gvar, (int, long)):
       gvar = 0
    setGlobalVar(name, gvar, player)
+         
+         
+def updateSharedGlobals(name, value, player = None):
+# Replacement for OCTGN global variables, because when simultaneous requests are sent from different players to update a global variable, the server does not merge the data and keeps only the last updated version.
+   mute()
+   # Merge current variable with the changes from the other player
+   if isinstance(value, tuple):
+      remov, added = value
+      gvar = getGlobalVar(name, player)
+      # list
+      if isinstance(gvar, list):
+         gvar = [v for v in gvar if v not in remov]
+         value = gvar + added
+      # dict
+      elif isinstance(gvar, dict):
+         for k in remov:
+            del gvar[k]
+         for d in added:
+            gvar.update(d)
+         value = gvar
+   if player:
+      if not player._id in PlayerGlobals:
+         PlayerGlobals[player._id] = {}
+      PlayerGlobals[player._id][name] = value
+   else:
+      Globals[name] = value
    
 
 def replaceVars(str):
@@ -330,7 +392,7 @@ def resetState():
          'damaged'      : False,  # Player damaged by non-character card
          'lostsp'       : 0,
          'skip'         : gs['skip'] if 'skip' in gs else [], # Skip phases, don't reset
-          # You cannot trust player properties in online games, so we keep track of them
+          # It seems that OCTGN counters are not updated among players fast enough, so we relay on these
          'hp'           : p.HP,
          'sp'           : p.SP
       }

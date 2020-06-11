@@ -116,7 +116,7 @@ autos = [
    # "auto = ?oppCanBeBlocked:any? [[if blocker.bp > this.bp]]",
    "auto = ~anyPlayerDamaged:action~ damage(1) to(damagedPlayer)",
    # "auto = ~anyPlayerDamaged:action~ [[if me.hp < 10]] hp(+1)",
-   "auto = ~myEndPhase:once~ discard(all)",
+   "auto = ~oppEndPhase:once~ discard(all)",
 ]
 evals = [
    "action in me.hand => bp(+2)"

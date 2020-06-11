@@ -458,7 +458,8 @@ def toggleAbility(card, x = 0, y = 0, remove = False):
    if card.alternate == 'noability' and not remove:
       card.alternate = ''
       # Removes card from parsed list to parse it again with the new abilities
-      funcCall(card.controller, removeParsedCard, [card])
+      for p in players:
+         funcCall(p, removeParsedCard, [card])
       funcCall(card.controller, parseCard, [card])
       if card.Rules != '':
          notify("{} restores {}'s abilities".format(me, card))
@@ -467,7 +468,8 @@ def toggleAbility(card, x = 0, y = 0, remove = False):
    # Removes ability
    else:
       triggerGameEvent([GameEvents.Powerless, card._id])
-      funcCall(card.controller, removeParsedCard, [card])
+      for p in players:
+         funcCall(p, removeParsedCard, [card])
       CharsAbilities = getGlobalVar('CharsAbilities')
       if card._id in CharsAbilities:
          del CharsAbilities[card._id]
@@ -479,8 +481,7 @@ def toggleAbility(card, x = 0, y = 0, remove = False):
       else:
          # Updates proxy image for all players
          for p in players:
-            remoteCall(p, "addAlternateRules", [card, '', '', 'noability'])
-            update()
+            funcCall(p, addAlternateRules, [card, '', '', 'noability'])
       notify("{} removes {}'s abilities".format(me, card))
 
 
@@ -526,18 +527,17 @@ def copyAbility(card, x = 0, y = 0, target = None):
          CharsAbilities[card._id] = model
          setGlobalVar('CharsAbilities', CharsAbilities)
          triggerGameEvent([GameEvents.Powerless, card._id])
-         funcCall(card.controller, removeParsedCard, [card])
-         funcCall(card.controller, parseCard, [card, model])
          # Updates proxy image for the other players
-         for p in players:
-            if p != me:
-               remoteCall(p, "copyAlternateRules", [card, target])
+         if len(players) > 1:
+            remoteCall(players[1], "copyAlternateRules", [card, target])
          update()  # Trying this method to delay next actions until networked tasks are complete
-         if getParsedCard(card).ability.type != InstantAbility:
+         for p in players:
+            funcCall(p, removeParsedCard, [card])
+         funcCall(card.controller, parseCard, [card, model])
+         if target.Ability.split(' ')[0] != InstantAbility:
             if card.highlight == ActivatedColor:
                card.highlight = None
-         abilityName = Ability(target, ruleId=model).name if isinstance(target, Card) else target.Ability
-         notify("{} copies ability {} to {}.".format(me, abilityName, card))
+         notify("{} copies ability {} to {}.".format(me, target.Ability, card))
          return target
       else:
          warning("Target card doesn't have an ability to copy.")
