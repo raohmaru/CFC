@@ -4,7 +4,7 @@
       name="Card Fighters' Clash"
       id="e3d56d9e-900d-49c6-b6ae-22cbb51be153"
       octgnVersion="3.4.256.0"
-      version="0.9.3.694"
+      version="0.9.3.697"
       markersize="20"
       tags="capcom snk fighter"
       description="Card game based on the SNK Playmore’s video game SNK vs. Capcom Card Fighters' Clash 2 Expand Edition.
@@ -61,6 +61,7 @@
 		<event name="OnCardClicked"        action="OnCardClicked" />
 		<event name="OnCardTargeted"       action="onCardTargeted" />
 		<event name="OverrideCardsMoved"   action="overrideCardsMoved" />
+		<event name="OverrideTurnPassed"   action="overrideTurnPassed" />
 	</events>
 
 	<sounds>
@@ -215,7 +216,7 @@
 				<groupaction menu="-X" shortcut="Ctrl+Shift+0" execute="minusSPX" />
 			</groupactions>
 		</groupactions>
-		<groupaction menu="Realign cards" shortcut="Ctrl+I" execute="alignCards" showIf="acsh_AutoPlayOff" />
+		<groupaction menu="Realign cards" shortcut="Ctrl+R" execute="alignCards" showIf="acsh_AutoPlayOff" />
 		<groupaction menu="Clear cards" shortcut="esc" execute="clearAll" showIf="acsh_AutoPlayOff" />
 		<groupactions menu="Random..." showIf="acsh_AutoPlayOff">
 			<groupaction menu="Flip a coin" shortcut="Ctrl+Alt+2" execute="flipCoin" />
@@ -291,9 +292,10 @@
 		</cardactions>
 		<cardaction menu="Add markers..." shortcut="Ctrl+M" batchExecute="addMarkerAction" showIf="acsh_AutoPlayOff" />
 		<cardaction menu="Transform" shortcut="Ctrl+Shift+T" batchExecute="transformCards" showIf="acsh_AutoPlayOff" />
-		<cardaction menu="Realign card" shortcut="Ctrl+I" execute="alignCardAction" showIf="acsh_AutoPlayOff" />
+		<cardaction menu="Realign card" shortcut="Ctrl+R" execute="alignCardAction" showIf="acsh_AutoPlayOff" />
 		<cardaction menu="Backup" shortcut="Ctrl+Alt+B" execute="askCardBackups" showIf="acsh_canBackup" />
 		<cardaction menu="Clear" shortcut="Esc" execute="clear" showIf="acsh_AutoPlayOff" />
+		<cardaction menu="Card info" shortcut="Ctrl+I" execute="cardInfo" showIf="acsh_notUI" />
 	</table>
 
 	<player summary="| HP: {#HP} | SP: {#SP} | Hand: {#Hand} | Deck: {#Deck}">
@@ -323,6 +325,7 @@
 			<cardaction menu="Transform" shortcut="Ctrl+Shift+T" batchExecute="transformCards" showIf="acsh_AutoPlayOff" />
 			<cardaction menu="Show backups" shortcut="Ctrl+Alt+B" execute="askCardBackups" showIf="acsh_isChar" />
 			<cardaction menu="Clear" shortcut="Esc" execute="clear" showIf="acsh_AutoPlayOff" />
+			<cardaction menu="Card info" shortcut="Ctrl+I" execute="cardInfo" showIf="acsh_notUI" />
 		</group>
 		<group name="Deck" visibility="none" viewState="pile" icon="Resources/Groups/deck.png">
 			<groupaction menu="Draw" shortcut="Ctrl+D" default="True" execute="draw" />

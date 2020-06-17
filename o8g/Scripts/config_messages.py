@@ -164,3 +164,9 @@ CMD_LABELS = {
 ASK_REPL = {
    'opp': 'opponent'
 }
+
+MSG_HELP_AB = {
+   InstantAbility: 'It is activated when the character enters the ring.',
+   TriggerAbility: 'It can be activated only in your Main phase. When it is activated the character enters the freeze state.\nCannot be activated on frozen characters or characters that just entered the ring.',
+   AutoAbility   : 'It is always active as long as that character is on the ring. If the character takes part in a United Attack, the ability is nullified until the end of the turn.'
+}
