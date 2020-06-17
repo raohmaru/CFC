@@ -639,13 +639,13 @@
 		<!-- Text blocks -->
 		<block type="text" id="bp">
 			<location x="340" y="44" />
-			<text color="#fdeaea" size="29" font="Resources/Fonts/m04b_CFC.ttf" />
+			<text color="#ffffff" size="29" font="Resources/Fonts/m04b_CFC.ttf" />
 			<border color="#691e1e" size="6" />
 			<wordwrap width="124" height="32" align="far" shrinktofit="True" />
 		</block>
 		<block type="text" id="sp">
 			<location x="398" y="96" />
-			<text color="#e7ecfa" size="23" font="Resources/Fonts/m04b_CFC.ttf" />
+			<text color="#ffffff" size="23" font="Resources/Fonts/m04b_CFC.ttf" />
 			<border color="#102267" size="6" />
 			<wordwrap width="65" height="25" align="far" shrinktofit="True" />
 		</block>
