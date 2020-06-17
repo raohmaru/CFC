@@ -253,7 +253,7 @@ When this phase ends, your turn ends and next player's turn begins.
 __Become Another Card__
 When a card becomes another card (this is, it is transformed), all of the card's properties are replaced by the other card's properties. If the card is a character, the BP is replaced by the other card BP (even if that character has received damage). Any back-up on the card is discarded.
 
-The current state of the transformed card does not change (fresh, freeze, etc), but all effects applied on the card are terminated.
+The current state of the transformed card does not change (fresh, freeze, etc.), but all effects applied on the card are terminated.
 
 If a transformed card goes to a pile (deck, discard pile or removed pile), it is transformed back to its original card.
 
@@ -275,6 +275,9 @@ A character that has just entered the ring in your turn.
 __KO__
 Whenever a character's BP lowers to zero, that character is KO'ed and it is placed into the discard pile.
 
+__To KO__
+To move a character from the arena to its controller's discard pile.
+
 __Lose Ability__
 To remove an ability from a character.
 
@@ -288,7 +291,7 @@ __Piercing Damage__
 If the total BP of the attacking character(s) is higher than the BP of the character that counters, this BP difference is dealt as damage to the enemy.
 
 __Steal Ability__
-To remove an ability from a character in the arena and give it to another character. Any existing abilities of the target character are replaced with the new one.
+To remove an ability from a character and give it to another character. Any existing abilities of the target character are replaced with the new one.
 
 __Steal SP__
 When you steal SP from an enemy, that enemy loses an amount of SP and you gain that same amount.

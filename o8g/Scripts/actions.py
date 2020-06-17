@@ -26,7 +26,8 @@ def nextPhase(fromKeyStroke = True, x = 0, y = 0):
       return
    
    phaseIdx = currentPhase()[1]
-   if me.isActive:
+   # if me.isActive:
+   if getState(None, 'activePlayer') == me._id:
       if phaseIdx == BlockPhase and getState(None, 'priority') != me._id:
          whisper('You cannot go to the next phase until {} is done.'.format(getOpp()))
          playSnd('win-warning')
@@ -39,9 +40,11 @@ def nextPhase(fromKeyStroke = True, x = 0, y = 0):
       if phaseIdx >= CleanupPhase:
          turns -= 1
          if turns <= 0:
-            nextTurn(getNextActivePlayer())
+            setState(None, 'activePlayer', getOpp()._id)
+            nextTurn(getOpp())
          else:
             notify("{} takes another turn".format(me))
+            setState(None, 'activePlayer', me._id)
             nextTurn(me)
          return
       else:
@@ -529,7 +532,9 @@ def copyAbility(card, x = 0, y = 0, target = None):
          triggerGameEvent([GameEvents.Powerless, card._id])
          # Updates proxy image for the other players
          if len(players) > 1:
-            remoteCall(players[1], "copyAlternateRules", [card, target])
+            for p in players:
+               if p != me:
+                  remoteCall(p, "copyAlternateRules", [card, target])
          update()  # Trying this method to delay next actions until networked tasks are complete
          for p in players:
             funcCall(p, removeParsedCard, [card])

@@ -291,10 +291,6 @@ def getOpp(player = None):
          return players[1] if player == me else me
       return players[1]
    return me
-            
-
-def getNextActivePlayer():
-   return players[1] if len(players) > 1 and me.isActive else me
 
 
 def funcCall(player, func, args=[]):
@@ -357,11 +353,11 @@ def getTempVar(name, default = None):
 def getState(player = None, name = None):
    debug(">>> getState({}, {})".format(player, name))
    GameState = getGlobalVar('GameState')
+   name = name.lower()
    if not player:
       return GameState[name] if name in GameState else None
    if not name:
       return GameState[player._id]
-   name = name.lower()
    debug("GameState: {}".format(GameState))
    if name in GameState[player._id]:
       debug(" -- {}".format(GameState[player._id][name]))
@@ -383,6 +379,7 @@ def setState(player, name, value):
 def resetState():
    GameState = getGlobalVar('GameState')
    GameState['priority'] = getActivePlayer()._id if getActivePlayer() else 0  # Player with the priority
+   GameState['activeplayer'] = GameState['activeplayer'] if getActivePlayer() else None  # Active player
    for p in players:
       gs = GameState[p._id] if p._id in GameState else {}
       GameState[p._id] = {

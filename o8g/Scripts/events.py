@@ -161,7 +161,6 @@ def onCardsMoved(args):
    
 def onTurnPassed(args):
 # Triggers when the player passes the turn to another player.
-# Reset some player variables at the start of each turn
    debug(">>> onTurnPassed: #{}, {} -> {}".format(turnNumber(), args.player, getActivePlayer()))
    global cleanedUpRing, turns
    resetState()
@@ -178,9 +177,10 @@ def onTurnPassed(args):
       cleanedUpRing = False
       turns = 1
       # Jump to first phase
-      if not debugging or turnNumber() > 1:
+      if turnNumber() == 1:
+         setState(None, 'activePlayer', me._id)
+      if not debugging and currentPhase()[1] <= ActivatePhase or turnNumber() > 1:
          nextPhase(False)
-   if me.isActive:
       playSnd('turn-change')
    if turnNumber() == 1:
       removeButton('StartButton')
@@ -385,6 +385,13 @@ def overrideCardsMoved(args):
       # Move cards to piles
       else:
          card.moveTo(toGroup, index)
+         
+         
+def overrideTurnPassed(args):
+# Triggers when the player clicks the green "Pass Turn" button on the player tabs.
+   player = args.player  # The player the turn is being passed to
+   setState(None, 'activePlayer', player._id)
+   nextTurn(player)
 
 
 #---------------------------------------------------------------------------
