@@ -21,10 +21,7 @@
 
 def buttonAction(btn):
    if btn._id in buttons:
-      if buttons[btn._id] == 'BlockButton':
-         nextPhase(True)
-         
-      elif buttons[btn._id] == 'StartButton':
+      if buttons[btn._id] == 'StartButton':
          if len(me.Deck) == 0:
             warning("Please load a deck first.")
             return

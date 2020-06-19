@@ -111,7 +111,6 @@ CardsCoords = dict(
    UAttackOffset = ( 43,   0),
    Action        = ( 0,    -49),
    StartButton   = ( -385, 30),
-   BlockButton   = ( -385, 244),
    NextButton    = ( 387,  244),
    Avatar        = ( 0,    375),
 )
@@ -130,9 +129,9 @@ AutoAbility    = u'\xa4'
 
 InstantUniChar = u'\u25B2'
 TriggerUniChar = u'\u2588'
-AutoUniChar    = u'\u25CF'
+AutoUniChar    = u'\u26AB'
 
-# A dictionary which holds the regex used in other scripts
+# A dictionary that holds the regex used in other scripts
 Regexps = {
    'ability'   : re.compile(r'(.)\s+([^\r]+)'),
    'leftcond'  : re.compile(r'^[\w.]+'),

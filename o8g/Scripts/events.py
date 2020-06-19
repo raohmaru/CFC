@@ -14,7 +14,6 @@
 # You should have received a copy of the GNU General Public License
 # along with this script.  If not, see <http://www.gnu.org/licenses/>.
 
-
 #---------------------------------------------------------------------------
 # Event handlers
 #---------------------------------------------------------------------------
@@ -204,7 +203,7 @@ def onPhasePassed(args):
          _extapi.whisper(MSG_HINT_BLOCK.format('defending player', 'he or she'), Colors.Blue)
       elif not me.isActive and len(getAttackingCards(getOpp())) > 0:
          setStop(BlockPhase, True)
-         addButton('BlockButton')
+         addButton('NextButton')
          _extapi.whisper(MSG_HINT_BLOCK.format('you', 'you'), Colors.Blue)
          whisper("When done, press TAB key or click in the \"Block Done\" button to return priority to attacking player.")
    # elif idx == EndPhase:
