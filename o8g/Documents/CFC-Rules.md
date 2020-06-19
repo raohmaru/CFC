@@ -95,7 +95,7 @@ When you play a character, the turn it enters the ring it cannot attack and you 
 #### Action
 ![Action card](imgs/card-action.jpg)
 
-Action cards offers a variety of effects, like special powers or events that can help in a battle. You can play them only in your turn.
+Action cards offers a variety of effects, like special powers or events that can help in a battle. You can play them only in the Main phase of your turn.
 
 Action cards have a cost: a number of SP (usually negative) a player must spend to play the card. After it has been played, its effects are applied immediately and the card is put into the discard pile.
 

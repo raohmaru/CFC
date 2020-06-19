@@ -278,10 +278,11 @@ def debugGameState():
          for k, v in state.iteritems():
             print("   {}: {}".format(k, v))
    
-   print('\n== Attacking Chars ({}) =='.format(getActivePlayer().name))
-   ua = getGlobalVar('UnitedAttack')
-   for c in getAttackingCards(getActivePlayer()):
-      if c._id not in ua:
-         print("{}".format(c.Name))
-   ua = [Card(id).Name for id in ua]
-   print(' + '.join(ua))
+   if getActivePlayer():
+      print('\n== Attacking Chars ({}) =='.format(getActivePlayer().name))
+      ua = getGlobalVar('UnitedAttack')
+      for c in getAttackingCards(getActivePlayer()):
+         if c._id not in ua:
+            print("{}".format(c.Name))
+      ua = [Card(id).Name for id in ua]
+      print(' + '.join(ua))

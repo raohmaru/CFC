@@ -24,8 +24,13 @@ def nextPhase(fromKeyStroke = True, x = 0, y = 0):
    global phaseOngoing
    if fromKeyStroke and phaseOngoing and settings['Play'] and me.isActive:
       return
-   
+      
    phaseIdx = currentPhase()[1]
+      
+   if tutorial and tutorial.validate == phaseIdx and fromKeyStroke:
+      tutorial.goNext()
+      return
+   
    # if me.isActive:
    if getState(None, 'activePlayer') == me._id:
       if phaseIdx == BlockPhase and getState(None, 'priority') != me._id:
@@ -57,7 +62,7 @@ def nextPhase(fromKeyStroke = True, x = 0, y = 0):
       setState(None, 'priority', getOpp()._id)
       notify(MSG_PHASE_DONE.format(me, Phases[phaseIdx], getOpp()))
       notification(MSG_PHASE_DONE.format(me, Phases[phaseIdx], 'you'), player = getOpp())
-      removeButton('BlockButton')
+      removeButton('NextButton')
       # remoteCall(players[1], 'addButton', ['NextButton'])
       remoteCall(players[1], 'nextPhase', [False])
       playSnd('notification')
@@ -252,12 +257,12 @@ def defaultAction(card, x = 0, y = 0):
    elif me.isActive and phaseIdx == AttackPhase and isCharacter(card):
       attack(card, x, y)
    # Char block
-   elif not me.isActive and phaseIdx == BlockPhase and isCharacter(card):
+   elif (not me.isActive or tutorial) and phaseIdx == BlockPhase and isCharacter(card):
       block(card, x, y)
    # Activate ability/effect
    elif (
          (me.isActive and (isCharacter(card) or isAction(card)))
-         or (isReaction(card) and ((not me.isActive and phaseIdx == BlockPhase) or debugging))
+         or (isReaction(card) and ((not me.isActive and phaseIdx == BlockPhase) or debugging or tutorial))
       ):
       activate(card, x, y)
 

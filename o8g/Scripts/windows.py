@@ -15,7 +15,7 @@
 # along with this script.  If not, see <http://www.gnu.org/licenses/>.
 
 def getGameVersion():
-# Returns game version in the format  x.x.x
+# Returns game version in the format x.x.x
    return '.'.join(gameVersion.split('.')[:3])
 
 
@@ -29,7 +29,7 @@ def showWelcomeScreen():
          showChangelog()
       return
       
-   choiceList = ['How to play', 'Rulebook', 'Download card images', 'Help us improve', 'What\'s new?'] #, 'Tutorial']
+   choiceList = ['NEW! Tutorial', 'Rulebook', 'Download card images', 'Help us improve', 'What\'s new?']
    colorsList = ['#004d99'] * len(choiceList)
    buttons = ['Close', 'Do not show again']
    msg = """        Welcome to Card Fighters' Clash!\n
@@ -38,8 +38,7 @@ Good battle!"""
    choice = askChoice(msg, choiceList, colorsList, buttons)
    
    if choice == 1:
-      openUrl(Website + '/how-to-play/')
-      showWelcomeScreen()
+      startTutorial()
       
    elif choice == 2:
       openUrl(Website + '/rulebook/')
@@ -67,13 +66,13 @@ Good battle!"""
 
 def showChangelog():
    switchSetting('GameVersion', getGameVersion())
-   msg = """What's new in version 0.9.3
+   msg = """What's new in version 0.9.4
 
-- Fixed Twelve's ability.
-- Kyosuke and friends' auto abilities are disabled in United Attack.
-- Updated Grandmaster rules (as it should have been).
-- Balanced pre-build decks.
-- Improved online play."""
+- Added a new Tutorial mode to learn how to play the game. To access it, right-click on the game board and select "Settings > Play Tutorial".
+- Replaced "Block" button with "Next" button to simplify UI.
+- New option to display card information and rules: right-click on a card and select "Card info".
+- Online play improvements.
+"""
    askChoice(msg, [], [], ['Close'])
    
 

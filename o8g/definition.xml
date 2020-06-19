@@ -4,7 +4,7 @@
       name="Card Fighters' Clash"
       id="e3d56d9e-900d-49c6-b6ae-22cbb51be153"
       octgnVersion="3.4.256.0"
-      version="0.9.3.697"
+      version="0.9.4.709"
       markersize="20"
       tags="capcom snk fighter"
       description="Card game based on the SNK Playmore’s video game SNK vs. Capcom Card Fighters' Clash 2 Expand Edition.
@@ -38,6 +38,7 @@
 		<script src="Scripts/actionLabels.py" />
 		<script src="Scripts/actionShow.py" />
 		<script src="Scripts/cardsRules.py" />
+		<script src="Scripts/tutorial.py" />
 		<script src="Scripts/rs/RuleScript.py" />
 		<script src="Scripts/rs/RuleScript_config.py" />
 		<script src="Scripts/rs/RuleScript_lexer.py" />
@@ -136,9 +137,11 @@
 		<!-- <document name="Comprehensive Rules" icon="Documents/manual-comp.png" src="Documents/CFC-CompRules.html" /> -->
 	</documents>
 
-	<gameModes>
+	<!-- Not supported -->
+	<!-- <gameModes>
 		<gameMode name="Standard" shortDescription="Regular game where Player's ring has 4 slots for characters" image="Resources/Art/standard.jpg" playerCount="2" />
-	</gameModes>
+		<gameMode name="Tutorial" shortDescription="Play a tutorial game to learn the basics of Card Fighters' Clash" image="Resources/Art/standard.jpg" playerCount="1" />
+	</gameModes> -->
 
 	<globalvariables>
 		<globalvariable name="Backups" value="{}" />
@@ -232,6 +235,7 @@
 			<groupaction menu="Switch Alert Messages ON/OFF" execute="switchWinForms" getName="aclb_WinForms" />
 			<groupaction menu="Switch Game Sounds ON/OFF" execute="switchSounds" getName="aclb_Sounds" />
 			<groupaction menu="Switch Show Welcome Screen ON/OFF" execute="switchWelcomeScreen" getName="aclb_WelcomeScreen" />
+			<groupaction menu="Play Tutorial" execute="startTutorial" />
 		</groupactions>
 		<groupactions menu="Debug..." showIf="acsh_Debug">
 			<groupaction menu="Setup" execute="setupDebug" />
@@ -295,7 +299,7 @@
 		<cardaction menu="Realign card" shortcut="Ctrl+R" execute="alignCardAction" showIf="acsh_AutoPlayOff" />
 		<cardaction menu="Backup" shortcut="Ctrl+Alt+B" execute="askCardBackups" showIf="acsh_canBackup" />
 		<cardaction menu="Clear" shortcut="Esc" execute="clear" showIf="acsh_AutoPlayOff" />
-		<cardaction menu="Card info" shortcut="Ctrl+I" execute="cardInfo" showIf="acsh_notUI" />
+		<cardaction menu="&#x1f6c8; Card info" shortcut="Ctrl+I" execute="cardInfo" showIf="acsh_notUI" />
 	</table>
 
 	<player summary="| HP: {#HP} | SP: {#SP} | Hand: {#Hand} | Deck: {#Deck}">
@@ -382,6 +386,16 @@
 			<cardaction menu="Put into Deck (Bottom)" shortcut="Ctrl+Shift+D" execute="toDeckBottom" />
 		</group>
 	</player>
+
+	<!-- <shared summary="| HP: {#HP} | SP: {#SP} | Hand: {#Hand} | Deck: {#Deck}">
+		<counter name="HP" icon="Resources/Counters/hp.png" default="3000" reset="True" />
+		<counter name="SP" icon="Resources/Counters/sp.png" default="0"  reset="True" />
+
+		<group name="Hand" visibility="me" viewState="expanded" icon="Resources/Groups/hand.png"/>
+		<group name="Deck" visibility="none" viewState="pile" icon="Resources/Groups/deck.png"/>
+		<group name="Discard pile" visibility="all" viewState="pile" icon="Resources/Groups/discards.png"/>
+		<group name="Removed pile" visibility="all"  viewState="pile" icon="Resources/Groups/removed.png" collapsed="True"/>
+	</shared> -->
 
 	<deck>
 		<section name="Main" group="Deck" />

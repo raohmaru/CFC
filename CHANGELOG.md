@@ -1,5 +1,10 @@
 # Card Fighters' Clash Changelog
 
+## 0.9.4
+New Tutorial mode.
+Replaced "Block" button with "Next" button to simplify UI.
+Display card info.
+Online play improvements.
 ## 0.9.3
 Cards effects are applied as if they were activated by active the player (Twelve bugfix).
 Kyosuke and friends' auto abilities are disabled in UA.

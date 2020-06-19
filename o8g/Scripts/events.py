@@ -361,7 +361,7 @@ def overrideCardsMoved(args):
                      cancelAttack(card)
                      continue
                # Block
-               elif not me.isActive and phaseIdx == BlockPhase and charIsInRing(card):
+               elif (not me.isActive or tutorial) and phaseIdx == BlockPhase and charIsInRing(card):
                   if (y>cy-60, y<cy+60)[bool(playerSide+1)]:
                      slotIdx = getDropSlotIndex(x)
                      if slotIdx == None:

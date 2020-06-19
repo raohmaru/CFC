@@ -106,7 +106,7 @@ def activatePhaseStart():
 
 def drawPhaseStart():
    if settings['Play']:
-      if len(me.Deck) == 0 and len(players) > 1:
+      if len(me.Deck) == 0 and len(players) > 1 and not tutorial:
          notify("{} has no cards in their deck and therefore can't draw.".format(me))
          msg = MSG_HINT_WIN.format(players[1])
          _extapi.notify(msg, Colors.Black, True)
@@ -139,7 +139,8 @@ def attackPhaseStart():
 
 
 def blockPhaseStart():
-   removeButton('NextButton')
+   if not tutorial:
+      removeButton('NextButton')
    uattack = getGlobalVar('UnitedAttack')
    # Attacking chars event not in UA
    atkCards = getAttackingCards()
@@ -453,7 +454,7 @@ def playAuto(card, slotIdx=None, force=False):
    # Player plays a Reaction card
    elif isReaction(card):
       # Check if the card can be legally played
-      if (me.isActive or phaseIdx != BlockPhase) and not debugging:
+      if (me.isActive or phaseIdx != BlockPhase) and not debugging and not tutorial:
          information("Reaction cards can only be played in enemy's Counter-attack Phase.")
          return
       # Triggers a hook to check if the player can play reaction cards
@@ -683,7 +684,7 @@ def blockAuto(card, targets = None):
    debug(">>> blockAuto()")
 
    # Check if the card can be legally played
-   if me.isActive or currentPhase()[1] != BlockPhase:
+   if (me.isActive or currentPhase()[1] != BlockPhase) and not tutorial:
       information("You can only counter-attack in enemy's Counter-attack Phase.")
       return
    # Only for character cards...

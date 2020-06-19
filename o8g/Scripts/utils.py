@@ -59,7 +59,7 @@ def resetAll():
 # Clears all the global variables in order to start a new game.
    debug(">>> resetAll()")
    # Import all our global variables and reset them.
-   global playerSide, handSize, parsedCards, turns, transformed, buttons, PlayerGlobals, Globals
+   global playerSide, handSize, parsedCards, turns, transformed, buttons, PlayerGlobals, Globals, tutorial
    playerSide = None
    handSize = HandSize
    parsedCards = {}
@@ -71,6 +71,8 @@ def resetAll():
    PlayerGlobals = {}
    Globals = {}
    resetState()
+   if tutorial and tutorial.step > 0:
+      tutorial = None
    # clearGlobalVar('Backups')
    # clearGlobalVar('UnitedAttack')
    # clearGlobalVar('Blockers')
@@ -158,7 +160,8 @@ def setGlobalVar(name, value, player = None):
          diff = set(gvar) & set(value)
          added += [{k:value[k]} for k in diff if gvar[k] != value[k]]
          value = (remov, added)
-      remoteCall(players[1], 'updateSharedGlobals', [name, value, player])
+      if players[1]._id != 0:  # 0 is the fake player of the tutorial
+         remoteCall(players[1], 'updateSharedGlobals', [name, value, player])
 
 
 def clearGlobalVar(name, player = None):
@@ -378,8 +381,9 @@ def setState(player, name, value):
 
 def resetState():
    GameState = getGlobalVar('GameState')
-   GameState['priority'] = getActivePlayer()._id if getActivePlayer() else 0  # Player with the priority
-   GameState['activeplayer'] = GameState['activeplayer'] if getActivePlayer() else None  # Active player
+   if not 'activeplayer' in GameState:
+      GameState['activeplayer'] = getActivePlayer()._id if getActivePlayer() else None
+   GameState['priority'] = GameState['activeplayer'] if GameState['activeplayer'] is not None else 0  # Player with the priority
    for p in players:
       gs = GameState[p._id] if p._id in GameState else {}
       GameState[p._id] = {
@@ -604,14 +608,17 @@ def cardsNamesStr(cards):
 # Card functions
 #---------------------------------------------------------------------------
 
-def fixCardY(y, h = CardHeight):
+def fixCardY(y, h = CardHeight, inverted = False):
 # Variable to move the cards played by player 2 on a 2-sided table, more towards their own side. 
 # Player's 2 axis will fall one extra card length towards their side.
 # This is because of bug #146 (https://github.com/kellyelton/OCTGN/issues/146)
    offsetY = 0
-   if me.isInverted:
+   if me.isInverted or inverted:
       offsetY = h
-   return (y + offsetY) * playerSide
+   side = playerSide
+   if inverted:
+      side = -1
+   return (y + offsetY) * side
    
    
 def fixSlotIdx(slotIdx, player = me, fix = False):
@@ -663,7 +670,7 @@ def getSlotIdx(card, player = me):
    ring = getGlobalVar('Ring', player)
    for i, id in enumerate(ring):
       if id == card._id:
-         if card.controller != me:
+         if card.controller != me or (tutorial and card.position[1] < 0):
             i = fixSlotIdx(i, player)
          debug("Slot idx: {}".format(i))
          return i
@@ -894,6 +901,8 @@ def passControlTo(player, cards, cb = None):
    
 
 def getAttackingCards(player = me, getUA = False):
+   if tutorial and player._id == 0:  # Fake player
+      player = me
    return [card for card in table
       if card.controller == player
       and isCharacter(card)
