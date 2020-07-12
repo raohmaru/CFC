@@ -255,16 +255,16 @@ def defaultAction(card, x = 0, y = 0):
       avatarAction(card)
    # Char Attack
    elif me.isActive and phaseIdx == AttackPhase and isCharacter(card):
-      attack(card, x, y)
+      attack(card)
    # Char block
    elif (not me.isActive or tutorial) and phaseIdx == BlockPhase and isCharacter(card):
-      block(card, x, y)
+      block(card)
    # Activate ability/effect
    elif (
          (me.isActive and (isCharacter(card) or isAction(card)))
          or (isReaction(card) and ((not me.isActive and phaseIdx == BlockPhase) or debugging or tutorial))
       ):
-      activate(card, x, y)
+      activate(card)
 
 
 def attack(card, x = 0, y = 0):

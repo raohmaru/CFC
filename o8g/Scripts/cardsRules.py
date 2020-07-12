@@ -534,7 +534,7 @@ action = [[if opp.ring >= 3]] damage(200) to(characters@oppRing)
 
 # Claire's DECOY
 RulesDict['a25d74b5-8774-4729-8ac2-b820878241b9'] = """
-action = {S}: moveTo(hand) target(<r>character@myDeck) & shuffle()
+action = {S}: moveTo(hand) target?(<r>character@myDeck) & shuffle()
 """
 
 # Jill's BERETTA
@@ -727,7 +727,7 @@ action = destroy() target(character[frozen])
 
 # Gen's CHANGE SCHOOL
 RulesDict['137d17e0-7c5a-4216-9085-21f05a744fd8'] = """
-action = moveTo(deck) target(actions@discards) & shuffle()
+action = moveTo(deck) target?(actions@discards) & shuffle()
 """
 
 # Gill's ARAHITOGAMI
@@ -878,12 +878,12 @@ action = {D}{F}: bp(+300)
 
 # Felicia's SIDEKICK ART
 RulesDict['53eafaec-68bc-4fe8-88ee-be578a785f5c'] = """
-action = {F}: moveTo(hand) target(<r>action@myDeck) & shuffle()
+action = {F}: moveTo(hand) target?(<r>action@myDeck) & shuffle()
 """
 
 # Hsien-Ko's DARK WEAPON
 RulesDict['299377b4-f955-420b-b252-85ed6cf98c14'] = """
-action = {F}: moveTo(deck) target(this); moveTo(deck) target(all@hand) & shuffle() & draw(3)
+action = {F}: moveTo(deck) target(this); moveTo(deck) target?(all@hand) & shuffle() & draw(3)
 """
 
 # J. Talbain's SEETHING BLOOD
@@ -898,7 +898,7 @@ auto = ~playerCombatDamaged:fromThis~ draw()
 
 # Lilith's BECOMING ONE
 RulesDict['60b0d429-c2bf-482d-84f1-10c78f424cc6'] = """
-action = moveTo(deck) target(characters@discards) & shuffle()
+action = moveTo(deck) target?(characters@discards) & shuffle()
 """
 
 # Morrigan's LIFE SUCKER
@@ -1658,7 +1658,7 @@ action = discard(all) & movePile(deck, discards) & moveTo(deck, false) & shuffle
 
 # Laundry
 RulesDict['96f72173-528d-4a3a-a85c-9cf92439435a'] = """
-action = target(all@discards) moveTo(deck) & shuffle()
+action = target?(all@discards) moveTo(deck) & shuffle()
 """
 
 # Lightning
@@ -1799,7 +1799,7 @@ action = moveRestTo(ctrlDeck, -1) & moveTo(ctrlDeck, -1, true) target(_card); tr
 
 # Shopping
 RulesDict['0035d193-fe4b-4927-9dc1-6124b26768bc'] = """
-action = moveTo(deck) target(<,3>*@discards) & shuffle() & draw()
+action = moveTo(deck) target?(<,3>*@discards) & shuffle() & draw()
 """
 
 # Showtime!
