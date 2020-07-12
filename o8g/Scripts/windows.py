@@ -69,6 +69,7 @@ def showChangelog():
    msg = u"""What's new in version 0.9.5
 
 - Fix Clone Zero not being able to activate a copied {} ability if ab_trigger_fresh is true.
+- Game improvements.
 """.format(TriggerUniChar)
    askChoice(msg, [], [], ['Close'])
    
