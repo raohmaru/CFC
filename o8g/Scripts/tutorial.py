@@ -119,7 +119,7 @@ To play a card form you hand you can:
       self.msg("""
 Well done!
 
-You have played a Character with which you can attack your enemy. Note that you cannot yet attack with it until your next turn.
+You have played a Character with which you can attack your enemy. Note that you cannot attack yet with it until your next turn.
 
 Your Ring has four slots, which means that you cannot have more than four characters at once, so you need to think carefully which character to play.
 """)

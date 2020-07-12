@@ -197,15 +197,17 @@ def onPhasePassed(args):
       # if turnNumber() == 1:
          # _extapi.whisper("(The player who goes first must skip his Draw phase during their first turn.)", Colors.Blue)
    # elif idx == MainPhase:
-   # elif idx == AttackPhase:
+   if idx == AttackPhase:
+      if me.isActive:
+         _extapi.whisper(MSG_HINT_ATTACK, Colors.Blue)
    if idx == BlockPhase:
       if me.isActive and len(getAttackingCards()) > 0:
-         _extapi.whisper(MSG_HINT_BLOCK.format('defending player', 'he or she'), Colors.Blue)
+         _extapi.whisper(MSG_HINT_BLOCK1.format('defending player', 'he or she'), Colors.Blue)
       elif not me.isActive and len(getAttackingCards(getOpp())) > 0:
          setStop(BlockPhase, True)
          addButton('NextButton')
-         _extapi.whisper(MSG_HINT_BLOCK.format('you', 'you'), Colors.Blue)
-         whisper("When done, press TAB key or click in the \"Block Done\" button to return priority to attacking player.")
+         _extapi.whisper(MSG_HINT_BLOCK1.format('you', 'you'), Colors.Blue)
+         _extapi.whisper(MSG_HINT_BLOCK2, Colors.Blue)
    # elif idx == EndPhase:
    elif idx == CleanupPhase:
       if me.isActive:

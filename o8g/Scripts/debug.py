@@ -47,9 +47,9 @@ def debugScenario():
    gotoMain()
    rnd(10, 1000)  # Delay the next action until all animation is done
    tableCards = [
-       '2ba9556c-59b0-4154-8325-f9793a8eacb5' # Krizalid
-       # 'd14694b4-484c-4b45-962e-8cbb636d8a9a' # 200 BP
-      ,'c7d128ea-a3b9-4b04-b8b2-a61153b5b2e6' # 400 BP
+       '1f11dc82-0581-49c2-ae93-35688c6acb7a' # Kula
+      # 'd14694b4-484c-4b45-962e-8cbb636d8a9a' # 200 BP
+      # ,'c7d128ea-a3b9-4b04-b8b2-a61153b5b2e6' # 400 BP
       # ,'24e99a13-cb42-4e16-9900-78dde12e1a4c' # 600 BP
       # ,'e6e46f83-d089-4762-8d8e-2a3252cfc9db' # 800 BP
    ]
@@ -64,6 +64,7 @@ def debugScenario():
       rnd(1, 100)  # Delay the next action until all animation is done
       
    handCards = [
+       'ab45b64f-e231-44ca-83ad-bd4d89bcb851' # Clone Zero
        # '8bb477f9-5004-4018-8d5e-73c6a23e8912' # Char 300 BP
       # ,'e910f462-bea9-4262-b168-c7c512eb6511' # Char 500 BP
       # ,'0fdadc92-0864-46cc-a3ff-c20e2af8249c' # Char 700 BP
@@ -131,6 +132,7 @@ def debugOpp():
    debugSetup()
    
    tableCards = [
+       'f0163d6b-bd20-4737-a40b-c84ca19da681' # Shingo
        # 'd14694b4-484c-4b45-962e-8cbb636d8a9a' # 200 BP
       # ,'c7d128ea-a3b9-4b04-b8b2-a61153b5b2e6' # 400 BP
       # ,'24e99a13-cb42-4e16-9900-78dde12e1a4c' # 600 BP
@@ -199,7 +201,7 @@ def debugOpp():
    
 def debugSetupDone():
    global debugVerbosity
-   # debugVerbosity = DebugLevel['Debug']
+   debugVerbosity = DebugLevel['Debug']
       
 
 def debugBackups():

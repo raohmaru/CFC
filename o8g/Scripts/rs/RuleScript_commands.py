@@ -757,6 +757,23 @@ def cmd_pileView(rc, targets, source, restr, pileName, viewState):
          # This is diabolic
          remoteCall(getOpp(), 'exec', ["me.piles['{}'].viewState = '{}'".format(pile.name, viewState)])
    rc.applyNext()
+
+
+def cmd_clear(rc, targets, source, restr, abl=None):
+   debug(">>> cmd_clear({})".format(abl))
+   if abl:
+      abls = {
+         'instant': InstantAbility,
+         'trigger': TriggerAbility,
+         'auto'   : AutoAbility
+      }
+      pcard = getParsedCard(source)
+      if abl in abls and pcard.ability.type == abls[abl]:
+         abl = False
+      else:
+         abl = True
+   pcard.setState('highlight', abl)
+   rc.applyNext()
    
 
 RulesCommands.register('damage',           cmd_damage)
@@ -799,3 +816,4 @@ RulesCommands.register('removefromattack', cmd_removeFromAttack)
 RulesCommands.register('moddamage',        cmd_modDamage)
 RulesCommands.register('peek',             cmd_peek)
 RulesCommands.register('pileview',         cmd_pileView)
+RulesCommands.register('clear',            cmd_clear)

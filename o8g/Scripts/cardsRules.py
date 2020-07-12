@@ -175,6 +175,7 @@ effect:
          removeFromAttack()
          peek()
          pileView(pile, state)  # state: collapsed, pile, expanded
+         clear([ability])
       Ability:
          Keywords:
             @see abilities
@@ -1159,7 +1160,7 @@ action = discard(<1>reaction) target(opp)
 # Clone Zero's MIMIC
 RulesDict['ab45b64f-e231-44ca-83ad-bd4d89bcb851'] = """
 target = ^character[powerful]
-action = copyAbility(prevTgt) to(this)
+action = copyAbility(prevTgt) to(this) & clear(trigger)
 """
 
 # Heidern's STORM BRINGER

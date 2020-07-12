@@ -341,7 +341,11 @@ def activate(card, x = 0, y = 0):
    elif isCharacter(card) and pcard.ability.type == TriggerAbility:
       freeze(card, silent = True)
    if card.group == table:
-      card.highlight = ActivatedColor
+      willHighlight = pcard.getState('highlight')
+      if willHighlight != False:
+         card.highlight = ActivatedColor
+      if willHighlight != None:
+         pcard.setState('highlight', None)
    if isCharacter(card):
       playSnd('activate-1')
    else:
@@ -873,10 +877,12 @@ def play(card, x = 0, y = 0, slotIdx=None):  # This is the function to play card
       pcard = getParsedCard(card)
       if isChar and pcard.hasEffect() and pcard.ability.type == InstantAbility or not isChar:
          if settings['Activate']:
-            rnd(10, 1000)  # Trying to delay activation
+            # Trying to delay activation {
+            rnd(10, 1000)
             update()
             rnd(10, 1000)
             update()
+            # }
             activate(card)
          else:
             whisper(MSG_HINT_ACTIVATE)

@@ -29,7 +29,7 @@ def showWelcomeScreen():
          showChangelog()
       return
       
-   choiceList = ['NEW! Tutorial', 'Rulebook', 'Download card images', 'Help us improve', 'What\'s new?']
+   choiceList = ['Tutorial', 'Rulebook', 'Download card images', 'Help us improve', 'What\'s new?']
    colorsList = ['#004d99'] * len(choiceList)
    buttons = ['Close', 'Do not show again']
    msg = """        Welcome to Card Fighters' Clash!\n
@@ -66,13 +66,10 @@ Good battle!"""
 
 def showChangelog():
    switchSetting('GameVersion', getGameVersion())
-   msg = """What's new in version 0.9.4
+   msg = u"""What's new in version 0.9.5
 
-- Added a new Tutorial mode to learn how to play the game. To access it, right-click on the game board and select "Settings > Play Tutorial".
-- Replaced "Block" button with "Next" button to simplify UI.
-- New option to display card information and rules: right-click on a card and select "Card info".
-- Online play improvements.
-"""
+- Fix Clone Zero not being able to activate a copied {} ability if ab_trigger_fresh is true.
+""".format(TriggerUniChar)
    askChoice(msg, [], [], ['Close'])
    
 

@@ -1,5 +1,7 @@
 # Card Fighters' Clash Changelog
 
+## 0.9.5
+Fix Clone Zero not being able to activate a copied [] ability if ab_trigger_fresh is true.
 ## 0.9.4
 New Tutorial mode.
 Replaced "Block" button with "Next" button to simplify UI.

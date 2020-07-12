@@ -67,6 +67,7 @@ class GameCard(object):
    card_id = None
    rule_id = None
    rules   = None
+   state   = {}
    
    def __init__(self, card, ruleId = None):
       self.card = card
@@ -85,6 +86,13 @@ class GameCard(object):
       if not self.hasEffect():
          return
       return self.rules.activate()
+      
+   def getState(self, name):
+      if name in self.state:
+         return self.state[name]
+      
+   def setState(self, name, value):
+      self.state[name] = value
       
    @property
    def BP(self):
