@@ -1,4 +1,4 @@
-﻿# Python Scripts for the Card Fighters' Clash definition for OCTGN
+# Python Scripts for the Card Fighters' Clash definition for OCTGN
 # Copyright (C) 2013  Raohmaru
 
 # This python script is free software: you can redistribute it and/or modify
@@ -71,6 +71,9 @@ def showChangelog():
 - Changed Blodia rule text from
   "It deals 300 points damage to you"
   to "You lose 300 HP".
+- Revised Three sisters rule text (now
+  player loses 300 HP instead of discarding
+  a reaction card).
 """.format(TriggerUniChar)
    askChoice(msg, [], [], ['Close'])
    

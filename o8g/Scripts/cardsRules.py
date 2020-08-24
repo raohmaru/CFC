@@ -791,7 +791,8 @@ auto = ~myEndPhase~ trash(2)
 
 # Remy's REVENGE
 RulesDict['63df795b-236c-4449-aa96-287a836ed648'] = """
-auto = ~activatephase~ each(card in me.hand -> sp(-1)); each(card in opp.hand -> sp(-1)) to(opp)
+# auto = ~activatephase~ each(card in me.hand -> sp(-1)); each(card in opp.hand -> sp(-1)) to(opp)
+auto = ~activatephase~ sp(-me.hand.size); sp(-opp.hand.size) to(opp)
 """
 
 # Rose's TAROT CARD
@@ -2056,7 +2057,9 @@ action = reveal(hand); discard(!characters)
 
 # Three sisters
 RulesDict['76c3d3b5-b3bc-41b1-8fef-d9c005269646'] = """
-action = {D(reaction)}: draw(3)
+# action = {D(reaction)}: draw(3)
+target = me
+action = loseLife(300) & draw(3)
 """
 
 # Time bomb

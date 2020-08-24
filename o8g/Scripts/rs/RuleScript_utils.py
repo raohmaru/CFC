@@ -402,7 +402,7 @@ class RulesUtils():
             # Info message
             owner = article.replace('your', 'their')
             if pick:
-               pickMsg = " the {} {} card{} of ".format('top' if pick > 0 else 'bottom', abs(pick), plural(abs(pick)))
+               pickMsg = "the {} {} card{} of ".format('top' if pick > 0 else 'bottom', abs(pick), plural(abs(pick)))
                owner = pickMsg + owner
             notify(MSG_PLAYER_LOOKS.format(me, owner, zone[1]))
             title = msg.format(qtyMsg, qtyPlural, article, zone[1], sourceName)

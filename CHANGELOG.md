@@ -2,6 +2,7 @@
 
 ## 0.9.6
 Changed Blodia rule text (new command "lose HP").
+Revised Three sisters rule text.
 ## 0.9.5
 Fix Clone Zero not being able to activate a copied [] ability if ab_trigger_fresh is true.
 Optional target for Claire, Gen, Felicia. Hsien-Ko, Lilith, Laundry, Shopping.

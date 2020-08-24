@@ -7549,7 +7549,7 @@
 			<property name="Ability"      value="" />
 			<property name="Ability Type" value="" />
 			<property name="Ability Name" value="" />
-			<property name="Rules"        value="Discard a reaction card. Draw three cards." />
+			<property name="Rules"        value="Draw three cards, then lose 300 HP." />
 			<property name="BP"           value="" />
 			<property name="SP"           value="0" />
 			<property name="Backup 1"     value="" />

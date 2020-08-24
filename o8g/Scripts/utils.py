@@ -1038,6 +1038,7 @@ def dealDamage(dmg, target, source, combatDmg = True, isPiercing = False):
             source.arrow(avatar)
       update()
 
+
 def loseLife(qty, target, source):
    oldHP = getState(target, 'HP')
    newHP = oldHP - qty

@@ -199,6 +199,7 @@ def cmd_damage(rc, targets, source, restr, dmg):
       dealDamage(dmg, target, source, combatDmg = False)
    rc.applyNext()
 
+
 def cmd_loseLife(rc, targets, source, restr, qty):
    debug(">>> cmd_loseLife({}, {})".format(targets, qty))
    if not targets or isCard(targets[0]):
