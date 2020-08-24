@@ -1065,6 +1065,7 @@ def modSP(count = 1, mode = None, silent = False, player = me):
       action = "gains" if count >= 0 else "loses"
       if count < 0:
          setState(player, 'lostSP', -count)
+         playSnd('lose-sp')
       notify("{} {} {} SP. New total is {} SP (before was {}).".format(player, action, count, player.SP, initialSP))
 
 

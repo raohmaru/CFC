@@ -4,7 +4,7 @@
       name="Card Fighters' Clash"
       id="e3d56d9e-900d-49c6-b6ae-22cbb51be153"
       octgnVersion="3.4.256.0"
-      version="0.9.6.720"
+      version="0.9.6.722"
       markersize="20"
       tags="capcom snk fighter"
       description="Card game based on SNK Playmore’s video game SNK vs. Capcom Card Fighters' Clash 2 Expand Edition.
@@ -85,6 +85,7 @@
 		<sound name="ko-2" src="Resources/Sounds/ko-2.mp3"/>
 		<sound name="load-deck" src="Resources/Sounds/load-deck.mp3"/>
 		<sound name="lose-life" src="Resources/Sounds/lose-life.mp3"/>
+		<sound name="lose-sp" src="Resources/Sounds/lose-sp.mp3"/>
 		<sound name="move-card" src="Resources/Sounds/move-card.mp3"/>
 		<sound name="notification" src="Resources/Sounds/notification.mp3"/>
 		<sound name="phase-change" src="Resources/Sounds/phase-change.mp3"/>
