@@ -66,10 +66,11 @@ Good battle!"""
 
 def showChangelog():
    switchSetting('GameVersion', getGameVersion())
-   msg = u"""What's new in version 0.9.5
+   msg = u"""What's new in version 0.9.6
 
-- Fix Clone Zero not being able to activate a copied {} ability if ab_trigger_fresh is true.
-- Game improvements.
+- Changed Blodia rule text from
+  "It deals 300 points damage to you"
+  to "You lose 300 HP".
 """.format(TriggerUniChar)
    askChoice(msg, [], [], ['Close'])
    

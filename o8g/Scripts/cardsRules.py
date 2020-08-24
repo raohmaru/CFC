@@ -137,6 +137,7 @@ effect:
       ?() marks the command as optional:
          damage(#|expr)
          modDamage(#)
+         loseLife(#)
          swapPiles(pile1, pile2)
          shuffle([myDeck])
          destroy()
@@ -397,7 +398,8 @@ action = swapPiles(deck,discards) & shuffle()
 
 # Blodia's ENERGY COST
 RulesDict['b8a8653c-0286-4b05-a255-c436fd23132d'] = """
-action = damage(300) to(me)
+# action = damage(300) to(me)
+action = loseLife(300) to(me)
 """
 
 # Jin Saotome's SAOTOME DYNAMITE

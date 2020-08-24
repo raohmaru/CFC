@@ -603,7 +603,14 @@ def cardsNamesStr(cards):
    str += " and {}".format(cards[-1])
    return str
    
-   
+
+def notifyWin(player):
+   msg = MSG_HINT_WIN.format(player)
+   _extapi.notify(msg.upper(), Colors.Orange, True)
+   if not debugging:
+      notification(msg, Colors.Black, True)
+      
+
 #---------------------------------------------------------------------------
 # Card functions
 #---------------------------------------------------------------------------
@@ -990,7 +997,7 @@ def fixBP(n):
 
 def dealDamage(dmg, target, source, combatDmg = True, isPiercing = False):
    if not getRule('dmg_combat_deal') and isCharacter(source) and (hasMarker(source, 'Attack') or hasMarker(source, 'Counter-attack')):
-      notify("{} deals no combat damage due to an abilty or effect.".format(source))
+      notify("{} deals no combat damage due to an ability or effect.".format(source))
       return
    if isinstance(target, Card):
       oldBP = getMarker(target, 'BP')
@@ -1018,10 +1025,7 @@ def dealDamage(dmg, target, source, combatDmg = True, isPiercing = False):
       piercing = "piercing " if isPiercing else ""
       notify("{} deals {} {}damage to {}. New HP is {} (before was {}).".format(source, dmg, piercing, target, target.HP, oldHP))
       if newHP <= 0:
-         msg = MSG_HINT_WIN.format(getOpp(target))
-         _extapi.notify(msg, Colors.Black, True)
-         if not debugging:
-            notification(msg, Colors.Black, True)
+         notifyWin(getOpp(target))
       # Change game state: non-combat damage
       if not isCharacter(source) or not hasMarker(source, 'Attack'):
          setState(target, 'damaged', True)
@@ -1033,6 +1037,17 @@ def dealDamage(dmg, target, source, combatDmg = True, isPiercing = False):
          if avatar:
             source.arrow(avatar)
       update()
+
+def loseLife(qty, target, source):
+   oldHP = getState(target, 'HP')
+   newHP = oldHP - qty
+   target.HP = newHP
+   setState(target, 'HP', newHP)  # Update game state
+   effect = "ability".format(source) if isCharacter(source) else "effect"
+   notify("{} loses {} HP due to {}'s {}. New HP is {} (before was {}).".format(target, qty, source, effect, target.HP, oldHP))
+   if newHP <= 0:
+      notifyWin(getOpp(target))
+   playSnd('lose-life')
 
 
 def modSP(count = 1, mode = None, silent = False, player = me):

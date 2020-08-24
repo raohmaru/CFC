@@ -108,10 +108,7 @@ def drawPhaseStart():
    if settings['Play']:
       if len(me.Deck) == 0 and len(players) > 1 and not tutorial:
          notify("{} has no cards in their deck and therefore can't draw.".format(me))
-         msg = MSG_HINT_WIN.format(players[1])
-         _extapi.notify(msg, Colors.Black, True)
-         if not debugging:
-            notification(msg, Colors.Black, True)
+         notifyWin(getOpp())
       else:
          draw()
    # Trigger event

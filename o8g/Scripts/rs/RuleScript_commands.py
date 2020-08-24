@@ -199,6 +199,14 @@ def cmd_damage(rc, targets, source, restr, dmg):
       dealDamage(dmg, target, source, combatDmg = False)
    rc.applyNext()
 
+def cmd_loseLife(rc, targets, source, restr, qty):
+   debug(">>> cmd_loseLife({}, {})".format(targets, qty))
+   if not targets or isCard(targets[0]):
+      targets = [source.controller]
+   for target in targets:
+      loseLife(int(qty), target, source)
+   rc.applyNext()
+
 
 def cmd_swapPiles(rc, targets, source, restr, pile1, pile2):
    debug(">>> cmd_swapPiles({}, {}, {})".format(source, pile1, pile2))
@@ -777,6 +785,7 @@ def cmd_clear(rc, targets, source, restr, abl=None):
    
 
 RulesCommands.register('damage',           cmd_damage)
+RulesCommands.register('loselife',         cmd_loseLife)
 RulesCommands.register('swappiles',        cmd_swapPiles)
 RulesCommands.register('shuffle',          cmd_shuffle)
 RulesCommands.register('destroy',          cmd_destroy)

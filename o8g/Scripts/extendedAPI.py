@@ -22,7 +22,8 @@ Colors = Struct(**{
    'Black'    : '#000000',
    'Red'      : '#CC0000',
    'Blue'     : '#2C6798',
-   'LightBlue': '#5A9ACF'
+   'LightBlue': '#5A9ACF',
+   'Orange'   : '#b35900'
 })
 
 

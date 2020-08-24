@@ -47,8 +47,7 @@ def debugScenario():
    gotoMain()
    rnd(10, 1000)  # Delay the next action until all animation is done
    tableCards = [
-       '137d17e0-7c5a-4216-9085-21f05a744fd8' # Gen
-      ,'f3ddafb5-e6b5-4d07-b883-23cfe6ea6782' # Kojiroh
+      'b8a8653c-0286-4b05-a255-c436fd23132d' # Blodia
       # 'd14694b4-484c-4b45-962e-8cbb636d8a9a' # 200 BP
       # ,'c7d128ea-a3b9-4b04-b8b2-a61153b5b2e6' # 400 BP
       # ,'24e99a13-cb42-4e16-9900-78dde12e1a4c' # 600 BP
@@ -105,7 +104,7 @@ def debugScenario():
       # ,'e910f462-bea9-4262-b168-c7c512eb6511' # Char 500 BP
       # ,'0fdadc92-0864-46cc-a3ff-c20e2af8249c' # Char 700 BP
       # ,'af43872e-e47d-4fe0-9b55-aedd8a0d0fc7' # Char 800 BP
-      '5e2211a0-e52e-4b7b-b03d-f6ecb3660bb0' # Action 0 SP
+      # '5e2211a0-e52e-4b7b-b03d-f6ecb3660bb0' # Action 0 SP
       # ,'83c33aa8-5981-4352-8107-cbb7e05547ec' # Action -1 SP
       # ,'80692723-3895-435f-bf8f-e94507704af5' # Action -3 SP
       # ,'ac01bbbe-583e-46ae-b26c-3c25eb8f0779' # Action -6 SP
@@ -132,8 +131,7 @@ def debugOpp():
    debugSetup()
    
    tableCards = [
-       'f0163d6b-bd20-4737-a40b-c84ca19da681' # Shingo
-       # 'd14694b4-484c-4b45-962e-8cbb636d8a9a' # 200 BP
+       'd14694b4-484c-4b45-962e-8cbb636d8a9a' # 200 BP
       # ,'c7d128ea-a3b9-4b04-b8b2-a61153b5b2e6' # 400 BP
       # ,'24e99a13-cb42-4e16-9900-78dde12e1a4c' # 600 BP
       # ,'e6e46f83-d089-4762-8d8e-2a3252cfc9db' # 800 BP

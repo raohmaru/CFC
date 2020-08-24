@@ -151,7 +151,7 @@
 			<property name="Ability"      value="&#162; ENERGY COST" />
 			<property name="Ability Type" value="&#162;" />
 			<property name="Ability Name" value="ENERGY COST" />
-			<property name="Rules"        value="Deals 300 points damage to you." />
+			<property name="Rules"        value="You lose 300 HP." />
 			<property name="BP"           value="1000" />
 			<property name="SP"           value="2" />
 			<property name="Backup 1"     value="Pilot" />
