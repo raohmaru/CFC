@@ -641,19 +641,19 @@
 			<location x="340" y="44" />
 			<text color="#ffffff" size="29" font="Resources/Fonts/m04b_CFC.ttf" />
 			<border color="#691e1e" size="6" />
-			<wordwrap width="124" height="32" align="far" shrinktofit="True" />
+			<wordwrap width="124" height="32" align="far" shrinktofit="False" />
 		</block>
 		<block type="text" id="sp">
-			<location x="398" y="96" />
+			<location x="398" y="95" />
 			<text color="#ffffff" size="23" font="Resources/Fonts/m04b_CFC.ttf" />
 			<border color="#102267" size="6" />
-			<wordwrap width="65" height="25" align="far" shrinktofit="True" />
+			<wordwrap width="65" height="25" align="far" shrinktofit="False" />
 		</block>
 		<block type="text" id="sp2">
-			<location x="398" y="44" />
+			<location x="398" y="43" />
 			<text color="#e7ecfa" size="23" font="Resources/Fonts/m04b_CFC.ttf" />
 			<border color="#102267" size="6" />
-			<wordwrap width="65" height="25" align="far" shrinktofit="True" />
+			<wordwrap width="65" height="25" align="far" shrinktofit="False" />
 		</block>
 		<block type="text" id="team">
 			<location x="208" y="407" />
@@ -667,33 +667,33 @@
 			<wordwrap width="295" height="52" shrinktofit="True" />
 		</block>
 		<block type="text" id="type">
-			<location x="358" y="446" />
+			<location x="358" y="444" />
 			<text color="#ffffff" size="24" font="Resources/Fonts/ArchivoNarrow-Bold.ttf" />
 			<wordwrap width="92" height="26" shrinktofit="True" />
 		</block>
 		<block type="text" id="subtype">
 			<location x="360" y="469" />
 			<text color="#ffffff" size="18" font="Resources/Fonts/ArchivoNarrow-Bold.ttf" />
-			<wordwrap width="92" height="21" shrinktofit="True" />
+			<wordwrap width="92" height="22" shrinktofit="True" />
 		</block>
 		<block type="text" id="ability_type">
 			<location x="95" y="505" />
-			<text color="#dd0000" size="22" font="Resources/Fonts/ArchivoNarrow-Regular_CFC.ttf" />
+			<text color="#dd0000" size="24" font="Resources/Fonts/ArchivoNarrow-Regular_CFC.ttf" />
 			<wordwrap width="25" height="25" />
 		</block>		
 		<block type="text" id="ability_name">
 			<location x="122" y="504" />
-			<text color="#000000" size="22" font="Resources/Fonts/ArchivoNarrow-Bold.ttf" />
+			<text color="#000000" size="24" font="Resources/Fonts/ArchivoNarrow-Bold.ttf" />
 			<wordwrap width="363" height="26" />
 		</block>		
 		<block type="text" id="rules_char">
-			<location x="95" y="531" />
-			<text color="#000000" size="22" font="Resources/Fonts/ArchivoNarrow-Regular_CFC.ttf" />
+			<location x="95" y="536" />
+			<text color="#000000" size="24" font="Resources/Fonts/ArchivoNarrow-Regular_CFC.ttf" />
 			<wordwrap width="380" height="145" shrinktofit="True" />
 		</block>
 		<block type="text" id="rules">
-			<location x="95" y="505" />
-			<text color="#000000" size="22" font="Resources/Fonts/ArchivoNarrow-Regular_CFC.ttf" />
+			<location x="95" y="503" />
+			<text color="#000000" size="24" font="Resources/Fonts/ArchivoNarrow-Regular_CFC.ttf" />
 			<wordwrap width="380" height="160" shrinktofit="True" />
 		</block>
 		<block type="text" id="illustrator">
