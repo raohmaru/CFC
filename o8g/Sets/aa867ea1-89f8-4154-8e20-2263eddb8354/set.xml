@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8" standalone="yes"?>
-<set name="Core Set" id="aa867ea1-89f8-4154-8e20-2263eddb8354" version="1.4.3.0" gameId="e3d56d9e-900d-49c6-b6ae-22cbb51be153" gameVersion="0.9.3">
+<set name="Core Set" id="aa867ea1-89f8-4154-8e20-2263eddb8354" version="1.5.0" gameId="e3d56d9e-900d-49c6-b6ae-22cbb51be153" gameVersion="0.9.7">
 	<packaging>
 		<pack name="Booster" id="800ab974-9fee-45c6-8d15-3c995c732cdc">
 			<options>
@@ -824,7 +824,7 @@
 			<property name="Backup 2"     value="Agent" />
 			<property name="Backup 3"     value="" />
 			<property name="Number"       value="C045" />
-			<property name="Illustrator"  value="Art by Demokun54" />
+			<property name="Illustrator"  value="Art by Sergey Gurskiy" />
 		</card>
 		<card name="Claire" id="a25d74b5-8774-4729-8ac2-b820878241b9">
 			<property name="Publisher"    value="Capcom" />
@@ -1627,7 +1627,7 @@
 			<property name="Ability"      value="&#162; S.B. KICK" />
 			<property name="Ability Type" value="&#162;" />
 			<property name="Ability Name" value="S.B. KICK" />
-			<property name="Rules"        value="Reduce your SP to 0. The BP of each other character become 100." />
+			<property name="Rules"        value="Reduce your SP to 0. The BP of each other character becomes 100." />
 			<property name="BP"           value="500" />
 			<property name="SP"           value="0" />
 			<property name="Backup 1"     value="Gymnast" />
@@ -1879,7 +1879,7 @@
 			<property name="Ability"      value="&#164; TOUGHNESS" />
 			<property name="Ability Type" value="&#164;" />
 			<property name="Ability Name" value="TOUGHNESS" />
-			<property name="Rules"        value="At the beginning of your turn, this character&apos;s BP become 500." />
+			<property name="Rules"        value="At the beginning of your turn, this character&apos;s BP becomes 500." />
 			<property name="BP"           value="1000" />
 			<property name="SP"           value="0" />
 			<property name="Backup 1"     value="Wrestler" />
@@ -2311,7 +2311,7 @@
 			<property name="Ability"      value="&#164; X.C.O.P.Y." />
 			<property name="Ability Type" value="&#164;" />
 			<property name="Ability Name" value="X.C.O.P.Y." />
-			<property name="Rules"        value="Whenever this character counter-attacks, its BP become same as the BP of the countered attacker(s)." />
+			<property name="Rules"        value="Whenever this character counter-attacks, its BP becomes same as the BP of the countered attacker(s)." />
 			<property name="BP"           value="100" />
 			<property name="SP"           value="3" />
 			<property name="Backup 1"     value="Guardian" />
@@ -2588,7 +2588,7 @@
 			<property name="Backup 2"     value="Brute" />
 			<property name="Backup 3"     value="Kung-fu" />
 			<property name="Number"       value="C143" />
-			<property name="Illustrator"  value="Art by Pio Paulo Santana" />
+			<property name="Illustrator"  value="Art by Gonzalo Ordóñez Arias" />
 		</card>
 		<card name="Huitzil" id="4c777de9-09f0-4d60-a412-1c98e5386ca9">
 			<property name="Publisher"    value="Capcom" />
@@ -2876,7 +2876,7 @@
 			<property name="Backup 2"     value="Kami" />
 			<property name="Backup 3"     value="Captain" />
 			<property name="Number"       value="C159" />
-			<property name="Illustrator"  value="Art by Tsukinowa" />
+			<property name="Illustrator"  value="Art by polarityplus" />
 		</card>
 		<card name="Tessa" id="559c6131-7a72-47c7-9669-6a6c23a48cb7">
 			<property name="Publisher"    value="Capcom" />
@@ -3130,7 +3130,7 @@
 			<property name="Number"       value="C173" />
 			<property name="Illustrator"  value="Art by UnknownTico" />
 		</card>
-		<card name="Guy Tendo" id="9aa78672-8e22-488a-ae4a-ce6c433f3216">
+		<card name="Gai Tendo" id="9aa78672-8e22-488a-ae4a-ce6c433f3216">
 			<property name="Publisher"    value="SNK" />
 			<property name="Team"         value="Buriki-One" />
 			<property name="Type"         value="Character" />
@@ -3236,7 +3236,7 @@
 			<property name="Backup 2"     value="Student" />
 			<property name="Backup 3"     value="" />
 			<property name="Number"       value="C179" />
-			<property name="Illustrator"  value="Art by Jonathan BN" />
+			<property name="Illustrator"  value="Art by Hiroaki" />
 		</card>
 		<card name="B. Jenet" id="5ca6f345-403b-4ad9-973a-673b8cd1cdb8">
 			<property name="Publisher"    value="SNK" />
@@ -3290,7 +3290,7 @@
 			<property name="Backup 2"     value="Mercenary" />
 			<property name="Backup 3"     value="Mercenary" />
 			<property name="Number"       value="C182" />
-			<property name="Illustrator"  value="Art by Opiu" />
+			<property name="Illustrator"  value="Art by Eisuke Ogura" />
 		</card>
 		<card name="Bob" id="0cc81206-ad63-4ea9-b74c-57947b531f11">
 			<property name="Publisher"    value="SNK" />
@@ -3866,7 +3866,7 @@
 			<property name="Backup 2"     value="Detective" />
 			<property name="Backup 3"     value="Gymnast" />
 			<property name="Number"       value="C214" />
-			<property name="Illustrator"  value="Art by Unkown artist" />
+			<property name="Illustrator"  value="Art by SNK Playmore" />
 		</card>
 		<card name="Hayate" id="2be82da3-6d73-4502-bb02-eea20d6eaac4">
 			<property name="Publisher"    value="SNK" />
@@ -3974,7 +3974,7 @@
 			<property name="Backup 2"     value="Psychic" />
 			<property name="Backup 3"     value="Psychic" />
 			<property name="Number"       value="C220" />
-			<property name="Illustrator"  value="Art by Jonathan22Z" />
+			<property name="Illustrator"  value="Art by Hiroaki" />
 		</card>
 		<card name="Benimaru" id="4f3dd284-fc50-4d11-8771-3154d2010845">
 			<property name="Publisher"    value="SNK" />
@@ -4039,14 +4039,14 @@
 			<property name="Ability"      value="&#163; CONTAIN!" />
 			<property name="Ability Type" value="&#163;" />
 			<property name="Ability Name" value="CONTAIN!" />
-			<property name="Rules"        value="Discard an action card. A character loses its abilities and its BP become 100." />
+			<property name="Rules"        value="Discard an action card. A character loses its abilities and its BP becomes 100." />
 			<property name="BP"           value="300" />
 			<property name="SP"           value="4" />
 			<property name="Backup 1"     value="Priest" />
 			<property name="Backup 2"     value="" />
 			<property name="Backup 3"     value="" />
 			<property name="Number"       value="C224" />
-			<property name="Illustrator"  value="Art by Kouno Yuki" />
+			<property name="Illustrator"  value="Art by Eisuke Ogura" />
 		</card>
 		<card name="Choi" id="0d76ceeb-f809-464f-9954-240de260a132">
 			<property name="Publisher"    value="SNK" />
@@ -4208,7 +4208,7 @@
 			<property name="Backup 2"     value="" />
 			<property name="Backup 3"     value="" />
 			<property name="Number"       value="C233" />
-			<property name="Illustrator"  value="Art by Dan Howard" />
+			<property name="Illustrator"  value="Art by studiorex" />
 		</card>
 		<card name="Jhun Hoon" id="eba4b6d7-1b14-4112-8e1e-6bee2017d338">
 			<property name="Publisher"    value="SNK" />
@@ -4622,7 +4622,7 @@
 			<property name="Backup 2"     value="" />
 			<property name="Backup 3"     value="" />
 			<property name="Number"       value="C256" />
-			<property name="Illustrator"  value="Art by Leon JO" />
+			<property name="Illustrator"  value="Art by Nona" />
 		</card>
 		<card name="Wild Leona" id="ba027d6e-4bc2-4c0d-8e97-4ad1c3baf24c">
 			<property name="Publisher"    value="SNK" />
@@ -4669,7 +4669,7 @@
 			<property name="Ability"      value="&#163; PONTA LEAF" />
 			<property name="Ability Type" value="&#163;" />
 			<property name="Ability Name" value="PONTA LEAF" />
-			<property name="Rules"        value="Discard a character card. This character&apos;s BP become same as discarded card&apos;s BP." />
+			<property name="Rules"        value="Discard a character card. This character&apos;s BP becomes same as discarded card&apos;s BP." />
 			<property name="BP"           value="500" />
 			<property name="SP"           value="3" />
 			<property name="Backup 1"     value="Guardian" />
@@ -4766,7 +4766,7 @@
 			<property name="Backup 2"     value="Magician" />
 			<property name="Backup 3"     value="Priest" />
 			<property name="Number"       value="C264" />
-			<property name="Illustrator"  value="Art by Ying" />
+			<property name="Illustrator"  value="Art by Eisuke Ogura" />
 		</card>
 		<card name="Hibiki" id="0769534f-9679-4025-bf49-4a5ce026cbd3">
 			<property name="Publisher"    value="SNK" />
@@ -4784,7 +4784,7 @@
 			<property name="Backup 2"     value="Kung-fu" />
 			<property name="Backup 3"     value="Kung-fu" />
 			<property name="Number"       value="C265" />
-			<property name="Illustrator"  value="Art by Aestus" />
+			<property name="Illustrator"  value="Art by Bengus" />
 		</card>
 		<card name="Juzoh" id="98d446a1-2968-4007-b727-9de0410ecd27">
 			<property name="Publisher"    value="SNK" />
@@ -4874,7 +4874,7 @@
 			<property name="Backup 2"     value="Kung-fu" />
 			<property name="Backup 3"     value="Kung-fu" />
 			<property name="Number"       value="C270" />
-			<property name="Illustrator"  value="Art by Niko Robin" />
+			<property name="Illustrator"  value="Art by SNK Playmore" />
 		</card>
 		<card name="Moriya" id="9aac7225-cffe-452c-8b8f-e2382ff7219c">
 			<property name="Publisher"    value="SNK" />
@@ -4957,7 +4957,7 @@
 			<property name="Ability"      value="&#162; CHANGE!" />
 			<property name="Ability Type" value="&#162;" />
 			<property name="Ability Name" value="CHANGE!" />
-			<property name="Rules"        value="This character&apos;s BP become same as an enemy character&apos;s BP." />
+			<property name="Rules"        value="This character&apos;s BP becomes same as an enemy character&apos;s BP." />
 			<property name="BP"           value="100" />
 			<property name="SP"           value="2" />
 			<property name="Backup 1"     value="Guardian" />
@@ -5000,7 +5000,7 @@
 			<property name="Backup 2"     value="Samurai" />
 			<property name="Backup 3"     value="Psychic" />
 			<property name="Number"       value="C277" />
-			<property name="Illustrator"  value="Art by Pio Paulo Santana" />
+			<property name="Illustrator"  value="Art by SNK Playmore" />
 		</card>
 		<card name="Zantetsu" id="5ccdb31f-f7f8-4f89-916f-74e9db9130cb">
 			<property name="Publisher"    value="SNK" />
@@ -5054,7 +5054,7 @@
 			<property name="Backup 2"     value="Soldier" />
 			<property name="Backup 3"     value="Soldier" />
 			<property name="Number"       value="C280" />
-			<property name="Illustrator"  value="Art by Yi Yang" />
+			<property name="Illustrator"  value="Art by SNK Playmore" />
 		</card>
 		<card name="Marco" id="fa585a56-2a8f-48ff-9cc5-1234fecb4b09">
 			<property name="Publisher"    value="SNK" />
@@ -5108,7 +5108,7 @@
 			<property name="Backup 2"     value="Kami" />
 			<property name="Backup 3"     value="" />
 			<property name="Number"       value="C283" />
-			<property name="Illustrator"  value="Art by rodv" />
+			<property name="Illustrator"  value="Art by Takkun" />
 		</card>
 		<card name="Asura" id="48aba37c-374b-4362-b30a-d41fa9727b2c">
 			<property name="Publisher"    value="SNK" />
@@ -5216,7 +5216,7 @@
 			<property name="Backup 2"     value="Beast" />
 			<property name="Backup 3"     value="Beast" />
 			<property name="Number"       value="C289" />
-			<property name="Illustrator"  value="Art by rizal82" />
+			<property name="Illustrator"  value="Art by Yumi Saji" />
 		</card>
 		<card name="Genan" id="1c7bc861-c4e0-4127-9fc8-fd56d06ec965">
 			<property name="Publisher"    value="SNK" />
@@ -5342,7 +5342,7 @@
 			<property name="Backup 2"     value="Karateka" />
 			<property name="Backup 3"     value="" />
 			<property name="Number"       value="C296" />
-			<property name="Illustrator"  value="Art by Mike Nesbitt" />
+			<property name="Illustrator"  value="Art by Senri Kita" />
 		</card>
 		<card name="Kyoshiro" id="7b2a974c-de9b-4f42-a8da-f15b68dbc41c">
 			<property name="Publisher"    value="SNK" />
@@ -5360,7 +5360,7 @@
 			<property name="Backup 2"     value="Kickboxer" />
 			<property name="Backup 3"     value="Monster" />
 			<property name="Number"       value="C297" />
-			<property name="Illustrator"  value="Art by Fadly Romdhani" />
+			<property name="Illustrator"  value="Art by Yumi Saji" />
 		</card>
 		<card name="Mikoto" id="ae20ea05-0df7-4360-99a5-11a7dfe44b9f">
 			<property name="Publisher"    value="SNK" />
@@ -5558,7 +5558,7 @@
 			<property name="Backup 2"     value="Assassin" />
 			<property name="Backup 3"     value="" />
 			<property name="Number"       value="C308" />
-			<property name="Illustrator"  value="Art by R4s3tsu" />
+			<property name="Illustrator"  value="Art by Yumi Saji" />
 		</card>
 		<card name="Shiki (Slash)" id="de04d64c-9d97-490f-a8c3-7469416bfc85">
 			<property name="Publisher"    value="SNK" />
@@ -5594,7 +5594,7 @@
 			<property name="Backup 2"     value="Soldier" />
 			<property name="Backup 3"     value="" />
 			<property name="Number"       value="C310" />
-			<property name="Illustrator"  value="Art by Nico Araya Carreño" />
+			<property name="Illustrator"  value="Art by wickedalucard" />
 		</card>
 		<card name="Sougetsu" id="ce62aaad-d114-4ce6-842f-7f6ed39f1afa">
 			<property name="Publisher"    value="SNK" />
@@ -5612,7 +5612,7 @@
 			<property name="Backup 2"     value="Monster" />
 			<property name="Backup 3"     value="" />
 			<property name="Number"       value="C311" />
-			<property name="Illustrator"  value="Art by clvago" />
+			<property name="Illustrator"  value="Art by Senri Kita" />
 		</card>
 		<card name="Taizan" id="c1dc9fa1-f6f5-45af-8c09-18d68861ec4d">
 			<property name="Publisher"    value="SNK" />
@@ -5720,7 +5720,7 @@
 			<property name="Backup 2"     value="Samurai" />
 			<property name="Backup 3"     value="" />
 			<property name="Number"       value="C317" />
-			<property name="Illustrator"  value="Art by Pepe09" />
+			<property name="Illustrator"  value="Art by Senri Kita" />
 		</card>
 		<card name="Athena" id="2f8ecb64-d513-4e67-b537-5acef9de6c68">
 			<property name="Publisher"    value="SNK" />
@@ -5900,7 +5900,7 @@
 			<property name="Backup 2"     value="" />
 			<property name="Backup 3"     value="" />
 			<property name="Number"       value="A007" />
-			<property name="Illustrator"  value="Art by Hiroaki" />
+			<property name="Illustrator"  value="Art by studiorex" />
 		</card>
 		<card name="Cover fire" id="713207f3-e051-43f8-9953-0a78e295122b">
 			<property name="Publisher"    value="" />
@@ -6415,7 +6415,7 @@
 			<property name="Ability"      value="" />
 			<property name="Ability Type" value="" />
 			<property name="Ability Name" value="" />
-			<property name="Rules"        value="Select a character and reveal the top card of an enemy&apos;s deck. If that card is a character card, selected character&apos;s BP become the same as that card. Otherwise, KO selected character. Put that card on the top of that enemy&apos;s deck." />
+			<property name="Rules"        value="Select a character and reveal the top card of an enemy&apos;s deck. If that card is a character card, selected character&apos;s BP becomes the same as that card. Otherwise, KO selected character. Put that card on the top of that enemy&apos;s deck." />
 			<property name="BP"           value="" />
 			<property name="SP"           value="-5" />
 			<property name="Backup 1"     value="" />
@@ -6818,7 +6818,7 @@
 			<property name="Backup 2"     value="" />
 			<property name="Backup 3"     value="" />
 			<property name="Number"       value="A058" />
-			<property name="Illustrator"  value="Art by Tuan HollaBack" />
+			<property name="Illustrator"  value="Art by hakubaikou" />
 		</card>
 		<card name="Study" id="c977a855-1358-4dab-870f-dee886f929c3">
 			<property name="Publisher"    value="" />
@@ -7099,7 +7099,7 @@
 			<property name="Ability"      value="" />
 			<property name="Ability Type" value="" />
 			<property name="Ability Name" value="" />
-			<property name="Rules"        value="KO a character in your ring. A character&apos;s BP become same as KOed character&apos;s BP." />
+			<property name="Rules"        value="KO a character in your ring.&#xD;&#xA;A character&apos;s BP becomes same as KOed character&apos;s BP." />
 			<property name="BP"           value="" />
 			<property name="SP"           value="-2" />
 			<property name="Backup 1"     value="" />
@@ -7178,7 +7178,7 @@
 			<property name="Backup 2"     value="" />
 			<property name="Backup 3"     value="" />
 			<property name="Number"       value="R014" />
-			<property name="Illustrator"  value="Art by Mathieu VS" />
+			<property name="Illustrator"  value="Art by Unknown artist" />
 		</card>
 		<card name="Go home" id="46deecf5-7f7b-42b5-b6fa-e3162dce2013">
 			<property name="Publisher"    value="" />
@@ -7412,7 +7412,7 @@
 			<property name="Backup 2"     value="" />
 			<property name="Backup 3"     value="" />
 			<property name="Number"       value="R027" />
-			<property name="Illustrator"  value="Art by Sean Nicholes" />
+			<property name="Illustrator"  value="Art by Yumi Saji" />
 		</card>
 		<card name="Robot punch" id="91e441cc-0f1f-4b01-a2b0-94678d6f0b56">
 			<property name="Publisher"    value="" />

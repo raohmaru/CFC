@@ -393,7 +393,7 @@ Please play the card "Revive" from your hand.
       self.msg("""
 Well done! Baby Head is back into your hand thanks to a powerful Action card.
 
-Don't worry if Revive does not goes immediately to your Discard pile. It will be moved automatically in the next phase, or you can put it manually or by pressing Del key while hovering the mouse over the card.
+Don't worry if Revive does not goes immediately to your Discard pile, it will be removed automatically in the next phase. In any case, you can manually put it into your Discard pile with the mouse or by pressing Del key while hovering the mouse over the card.
 """)
 
       self.addCard('f4df6ee6-2fcd-4ba1-b86f-59d5028eb96b', me.hand)  # Vacation

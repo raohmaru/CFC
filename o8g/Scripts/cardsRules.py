@@ -980,7 +980,7 @@ RulesDict['3e1736d4-354b-4a5b-962a-4aea0a9e1a4b'] = """
 action = {F}: sp(-3) target(opp)
 """
 
-# Guy Tendo's LONELY RING
+# Gai Tendo's LONELY RING
 RulesDict['9aa78672-8e22-488a-ae4a-ce6c433f3216'] = """
 auto = ~blockPhase~ [[if soloAttack]] bp(+200) target(this[attack])
 """
