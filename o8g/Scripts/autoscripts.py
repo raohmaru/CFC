@@ -120,6 +120,9 @@ def mainPhaseStart():
    alignCards()
    if settings['Phase']:
       addButton('NextButton')
+      
+   for card in table:
+      card.target(False)
 
 
 def attackPhaseStart():

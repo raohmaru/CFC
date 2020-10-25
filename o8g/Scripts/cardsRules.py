@@ -794,7 +794,7 @@ auto = ~myEndPhase~ trash(2)
 # Remy's REVENGE
 RulesDict['63df795b-236c-4449-aa96-287a836ed648'] = """
 # auto = ~activatephase~ each(card in me.hand -> sp(-1)); each(card in opp.hand -> sp(-1)) to(opp)
-auto = ~activatephase~ sp(-me.hand.size); sp(-opp.hand.size) to(opp)
+auto = ~activatephase~ sp(-me.hand.size) to(me); sp(-opp.hand.size) to(opp)
 """
 
 # Rose's TAROT CARD
