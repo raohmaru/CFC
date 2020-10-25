@@ -404,6 +404,7 @@ action = loseLife(300) to(me)
 
 # Jin Saotome's SAOTOME DYNAMITE
 RulesDict['af43872e-e47d-4fe0-9b55-aedd8a0d0fc7'] = """
+requisite = character<1>@oppRing
 action = {S}: destroy() target(character@oppRing)
 """
 
@@ -445,6 +446,7 @@ action = [[if alone]] bp(x2) target(this)
 
 # Lucifer's SACRIFICE
 RulesDict['39b7d042-d2c5-4ff3-aad5-231bd3ccc9e7'] = """
+requisite = ^character<1>@myRing
 action = {F}: destroy() target(^character@myRing); damage(prevTgt.lastBP) to(character)
 """
 

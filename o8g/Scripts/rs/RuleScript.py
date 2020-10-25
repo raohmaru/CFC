@@ -105,8 +105,10 @@ class Rules():
       if not self.parsed:
          self.init()
          
+      thisCard = Card(self.card_id)
+         
       if not self.rules_tokens:
-         whisper("{}'s ability has not been scripted yet. You need to apply manually its effects.".format(Card(self.card_id)))
+         whisper("{}'s ability has not been scripted yet. You need to apply manually its effects.".format(thisCard))
          return True
    
       debug("Executing rules")
@@ -117,8 +119,8 @@ class Rules():
          debug("Checking requisites: {}".format(requisite))
          for req in requisite:
             reqTarget = RulesLexer.parseTarget(req)
-            if not RulesUtils.getTargets(reqTarget, reveal=False):
-               notify(MSG_AB_MISS_REQ.format(Card(self.card_id)))
+            if not RulesUtils.getTargets(reqTarget, thisCard, reveal=False):
+               notify(MSG_AB_MISS_REQ.format(thisCard))
                playSnd('cancel-2')
                return False
             debug("-- Requisites are met")

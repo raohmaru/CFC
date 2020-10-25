@@ -213,7 +213,7 @@ class RulesUtils():
       if not targets:
          whisper(MSG_ERR_NO_FILTERED_CARDS)
       # Draw an arrow between the source card and the targets
-      elif source and isCard(source):
+      elif reveal and source and isCard(source):
          for c in targets:
             # if isCard(c):
                # source.arrow(c)
