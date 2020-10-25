@@ -237,7 +237,10 @@
 			<groupaction menu="Switch Alert Messages ON/OFF" execute="switchWinForms" getName="aclb_WinForms" />
 			<groupaction menu="Switch Game Sounds ON/OFF" execute="switchSounds" getName="aclb_Sounds" />
 			<groupaction menu="Switch Show Welcome Screen ON/OFF" execute="switchWelcomeScreen" getName="aclb_WelcomeScreen" />
+			<groupseparator />
 			<groupaction menu="Play Tutorial" execute="startTutorial" />
+			<groupaction menu="Show Welcome Screen" execute="showWelcomeScreen" />
+			<groupaction menu="Download Image Pack" execute="downloadImagePack" />
 		</groupactions>
 		<groupactions menu="Debug..." showIf="acsh_Debug">
 			<groupaction menu="Setup" execute="setupDebug" />

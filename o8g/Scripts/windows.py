@@ -23,7 +23,7 @@ def getGameVersion():
 # Welcome screen
 #---------------------------------------------------------------------------
 
-def showWelcomeScreen():
+def showWelcomeScreen(group=table, x=0, y=0):
    if not settings['WelcomeScreen']:
       if settings['GameVersion'] != getGameVersion():
          showChangelog()
@@ -45,7 +45,7 @@ Good battle!"""
       showWelcomeScreen()
       
    elif choice == 3:
-      openUrl(Website + '/image-packs/')
+      downloadImagePack()
       showWelcomeScreen()
       
    elif choice == 4:
@@ -58,6 +58,10 @@ Good battle!"""
       
    elif choice == -2:
       switchSetting('WelcomeScreen', False)
+      
+      
+def downloadImagePack(group=table, x=0, y=0):
+   openUrl(Website + '/image-packs/')
 
 
 #---------------------------------------------------------------------------
@@ -66,14 +70,14 @@ Good battle!"""
 
 def showChangelog():
    switchSetting('GameVersion', getGameVersion())
-   msg = u"""What's new in version 0.9.6
+   msg = u"""What's new in version 0.9.7
 
-- Changed Blodia rule text from
-  "It deals 300 points damage to you"
-  to "You lose 300 HP".
-- Revised Three sisters rule text (now
-  player loses 300 HP instead of discarding
-  a reaction card).
+- Improved card design for a better reading of
+  BP, SP and rarity icons.
+- Updated illustration of some cards.
+  Please download the new Image Pack from
+  cardfightersclash.wordpress.com/image-packs
+- Fixed bug in Cruel hunt card.
 """.format(TriggerUniChar)
    askChoice(msg, [], [], ['Close'])
    
