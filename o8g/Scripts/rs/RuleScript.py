@@ -119,6 +119,7 @@ class Rules():
             reqTarget = RulesLexer.parseTarget(req)
             if not RulesUtils.getTargets(reqTarget, reveal=False):
                notify(MSG_AB_MISS_REQ.format(Card(self.card_id)))
+               playSnd('cancel-2')
                return False
             debug("-- Requisites are met")
             
@@ -176,6 +177,7 @@ class Rules():
          if action['cost']:
             if not self.payCost(action['cost']):
                notify(MSG_COST_NOT_PAYED.format(me, thisCard, ('effect', 'ability')[isCharacter(thisCard)]))
+               playSnd('cancel-2')
                return False
             
       # Apply the effects
@@ -224,6 +226,7 @@ class Rules():
             if newTarget == False and not effect[2]['opt']:
                if not isAuto:
                   notify(MSG_ERR_NO_CARDS)
+                  playSnd('cancel-2')
                return False
             # Save original target
             if currTarget:
@@ -313,6 +316,7 @@ class Rules():
          else:
             type, target = cost
          debug("-- Cost to pay: {}, {}".format(type, target))
+         
          if type == RS_KW_COST_FREEZE:
             freeze(thisCard, silent = True)
             

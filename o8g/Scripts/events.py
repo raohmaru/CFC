@@ -40,6 +40,7 @@ def onGameStarted():
    elif settings['Play']:
       addButton('StartButton')
       addAvatar()
+   playSnd('new-game')
 
 
 def onDeckLoaded(args):

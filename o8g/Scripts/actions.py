@@ -336,6 +336,7 @@ def activate(card, x = 0, y = 0):
       if not res or res != True:
          if res == ERR_NO_EFFECT:
             notify("{}'s {} has no effect.".format(card, ability))
+            playSnd('cancel-2')
          if (isCharacter(card) and pcard.ability.type == TriggerAbility) or res != ERR_NO_EFFECT:
             return
    elif isCharacter(card) and pcard.ability.type == TriggerAbility:

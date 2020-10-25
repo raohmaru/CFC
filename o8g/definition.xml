@@ -4,7 +4,7 @@
       name="Card Fighters' Clash"
       id="e3d56d9e-900d-49c6-b6ae-22cbb51be153"
       octgnVersion="3.4.256.0"
-      version="0.9.7.733"
+      version="0.9.7.738"
       markersize="20"
       tags="capcom snk fighter"
       description="Card game based on SNK Playmore’s video game SNK vs. Capcom Card Fighters' Clash 2 Expand Edition.
@@ -68,11 +68,13 @@
 	<sounds>
 		<sound name="activate-1" src="Resources/Sounds/activate-1.mp3"/>
 		<sound name="activate-2" src="Resources/Sounds/activate-2.mp3"/>
+		<sound name="activate-3" src="Resources/Sounds/activate-3.mp3"/>
 		<sound name="attack-1" src="Resources/Sounds/attack-1.mp3"/>
 		<sound name="attack-2" src="Resources/Sounds/attack-2.mp3"/>
 		<sound name="backup" src="Resources/Sounds/backup.mp3"/>
 		<sound name="block" src="Resources/Sounds/block.mp3"/>
 		<sound name="cancel-1" src="Resources/Sounds/cancel-1.mp3"/>
+		<sound name="cancel-2" src="Resources/Sounds/cancel-2.mp3"/>
 		<sound name="card-play-1" src="Resources/Sounds/card-play-1.mp3"/>
 		<sound name="card-play-2" src="Resources/Sounds/card-play-2.mp3"/>
 		<sound name="damage-char-1" src="Resources/Sounds/damage-char-1.mp3"/>
@@ -81,12 +83,15 @@
 		<sound name="damage-player-2" src="Resources/Sounds/damage-player-2.mp3"/>
 		<sound name="discard" src="Resources/Sounds/discard.mp3"/>
 		<sound name="draw" src="Resources/Sounds/draw.mp3"/>
+		<sound name="gain-life" src="Resources/Sounds/gain-life.mp3"/>
+		<sound name="gain-sp" src="Resources/Sounds/gain-sp.mp3"/>
 		<sound name="ko-1" src="Resources/Sounds/ko-1.mp3"/>
 		<sound name="ko-2" src="Resources/Sounds/ko-2.mp3"/>
 		<sound name="load-deck" src="Resources/Sounds/load-deck.mp3"/>
 		<sound name="lose-life" src="Resources/Sounds/lose-life.mp3"/>
 		<sound name="lose-sp" src="Resources/Sounds/lose-sp.mp3"/>
 		<sound name="move-card" src="Resources/Sounds/move-card.mp3"/>
+		<sound name="new-game" src="Resources/Sounds/new-game.mp3"/>
 		<sound name="notification" src="Resources/Sounds/notification.mp3"/>
 		<sound name="phase-change" src="Resources/Sounds/phase-change.mp3"/>
 		<sound name="shuffle" src="Resources/Sounds/shuffle.mp3"/>
@@ -94,10 +99,12 @@
 		<sound name="to-hand" src="Resources/Sounds/to-hand.mp3"/>
 		<sound name="turn-change" src="Resources/Sounds/turn-change.mp3"/>
 		<sound name="untap" src="Resources/Sounds/untap.mp3"/>
-		<sound name="win-info" src="Resources/Sounds/win-info.mp3"/>
-		<sound name="win-warning" src="Resources/Sounds/win-warning.mp3"/>
+		<sound name="win-ask" src="Resources/Sounds/win-ask.mp3"/>
 		<sound name="win-confirm" src="Resources/Sounds/win-confirm.mp3"/>
 		<sound name="win-error" src="Resources/Sounds/win-error.mp3"/>
+		<sound name="win-info" src="Resources/Sounds/win-info.mp3"/>
+		<sound name="win-warning" src="Resources/Sounds/win-warning.mp3"/>
+		<sound name="transform" src="Resources/Sounds/transform.mp3"/>
 	</sounds>
 
 	<fonts>
@@ -236,7 +243,7 @@
 			<groupaction menu="Switch Activate automation ON/OFF" execute="switchActivateAuto" getName="aclb_ActivateAuto" />
 			<groupaction menu="Switch Alert Messages ON/OFF" execute="switchWinForms" getName="aclb_WinForms" />
 			<groupaction menu="Switch Game Sounds ON/OFF" execute="switchSounds" getName="aclb_Sounds" />
-			<groupaction menu="Switch Show Welcome Screen ON/OFF" execute="switchWelcomeScreen" getName="aclb_WelcomeScreen" />
+			<groupaction menu="Switch Show Welcome Screen on start ON/OFF" execute="switchWelcomeScreen" getName="aclb_WelcomeScreen" />
 			<groupseparator />
 			<groupaction menu="Play Tutorial" execute="startTutorial" />
 			<groupaction menu="Show Welcome Screen" execute="showWelcomeScreen" />

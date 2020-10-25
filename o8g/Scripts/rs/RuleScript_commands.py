@@ -431,6 +431,8 @@ def cmd_hp(rc, targets, source, restr, qtyExpr):
       player.HP += qty
       sign = '+' if qty >= 0 else ''
       notify("{} sets {}'s HP to {} ({}{})".format(me, player, player.HP, sign, qty))
+      if qty > 0:
+         playSnd('gain-life')
    rc.applyNext()
 
 

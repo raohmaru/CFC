@@ -285,6 +285,7 @@ def showCardDlg(list, title, max=1, text="Card Selection", min=1, bottomList=Non
    dlg.max = max
    dlg.label = label
    dlg.bottomLabel = bottomLabel
+   playSnd('win-ask')
    return dlg.show()
             
 
@@ -838,6 +839,7 @@ def transformCard(card, cardModel):
    triggerGameEvent([GameEvents.Removed, card._id])
    removeGameEventListener(card._id)
    card.delete()
+   playSnd('transform')
    
    
 def copyAlternateRules(card, target):
@@ -1051,7 +1053,7 @@ def loseLife(qty, target, source):
    playSnd('lose-life')
 
 
-def modSP(count = 1, mode = None, silent = False, player = me):
+def modSP(count = 1, mode = None, silent = False, player = me, silentSnd = False):
 # A function to modify the players SP counter. Can also notify.
    initialSP = player.SP
    if mode == RS_MODE_EQUAL:
@@ -1066,6 +1068,8 @@ def modSP(count = 1, mode = None, silent = False, player = me):
       if count < 0:
          setState(player, 'lostSP', -count)
          playSnd('lose-sp')
+      elif not silentSnd:
+         playSnd('gain-sp')
       notify("{} {} {} SP. New total is {} SP (before was {}).".format(player, action, count, player.SP, initialSP))
 
 
@@ -1083,7 +1087,7 @@ def payCostSP(amount = 1, obj = None, msg = 'play this card', type = None):
          amount = newAmount
    
    if amount >= 0 and type == CharType:
-      modSP(amount)
+      modSP(amount, silentSnd = True)
    else:
       initialSP = me.SP
       if me.SP + amount < 0: # If we don't have enough SP, notify the player that they need to do things manually

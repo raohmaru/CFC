@@ -15,22 +15,30 @@
 # along with this script.  If not, see <http://www.gnu.org/licenses/>.
 
 
+import time 
+
 #---------------------------------------------------------------------------
 # Sound interface
 #---------------------------------------------------------------------------
 
+soundsPlayings = {}
+
 def playSnd(name, isInternal=False):
-   # if settings['Sounds']:
-      if (
-         isInternal
-         or debugging
-         or (me.name == Author and getOpp().name == 'dand')
-         or (me.name == 'dand' and getOpp().name == Author)
-      ):
-         try:
-            sound = Octgn.Program.GameEngine.Definition.Sounds[name]
-            Octgn.Utils.Sounds.PlayGameSound(sound)
-         except KeyError:
-            debug("Sound {} does not exist".format(name))
-      else:
-         playSound(name)
+   if name in soundsPlayings:
+      if time.time() - soundsPlayings[name] < 0.3: # in seconds
+         return   
+   soundsPlayings[name] = time.time()
+
+   if (
+      isInternal
+      or debugging
+      or (me.name == Author and getOpp().name == 'dand')
+      or (me.name == 'dand' and getOpp().name == Author)
+   ):
+      try:
+         sound = Octgn.Program.GameEngine.Definition.Sounds[name]
+         Octgn.Utils.Sounds.PlayGameSound(sound)
+      except KeyError:
+         debug("Sound {} does not exist".format(name))
+   else:
+      playSound(name)

@@ -115,6 +115,8 @@ def triggerGameEvent(event, *args):
                      pcard.init()
                   if not pcard.rules.execAuto(None, event, *params):
                      res = (False, listener['callback'])
+                  else:
+                     playSnd('activate-3')
                # elif listener['scope'] in RS_PREFIX_SCOPE or obj_id:
                   # debug("-- Effect controlled by {}. Sending remote event.".format(card.controller))
                   # remoteCall(card.controller, "remoteGameEvent", [listener['callback'], event]+list(params))
