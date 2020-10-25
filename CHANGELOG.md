@@ -1,5 +1,10 @@
 # Card Fighters' Clash Changelog
 
+## 0.9.7
+Improved card design for a better reading of BP, SP and rarity icons.
+Updated subtypes icons: Aikido, Demon, Spirit and Taekwondo.
+Updated illustration of some cards.
+Fixed bug in Cruel hunt card when a 800 BP char attacks alone and a 800 BP char joins an united attack. 
 ## 0.9.6
 Changed Blodia rule text (new command "lose HP").
 Revised Three sisters rule text.

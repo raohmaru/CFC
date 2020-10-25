@@ -1912,7 +1912,7 @@ action = {D(character[powerful])}: copyAbility(discarded[0]) to(character@myRing
 
 # Cruel hunt
 RulesDict['fef1b38c-a055-4cd7-9436-34e220c30d52'] = """
-target = characters[bp>=800 & attack]
+target = characters[bp>=800 & attack, bp>=800 & uattack]
 action = destroy()
 """
 

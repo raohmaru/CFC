@@ -34,9 +34,10 @@ class RulesFilters():
          for filter in filters:
             # filter could be a list of chained filters (&)
             if isinstance(filter[0], list):
-               arr2 = arr
+               arr3 = arr
                for f in filter:
-                  arr2 = RulesFilters.applyFilter(f, arr2)
+                  arr3 = RulesFilters.applyFilter(f, arr3)
+               arr2 += arr3
             # optional filter (,)
             else:
                arr2 += RulesFilters.applyFilter(filter, arr)
@@ -65,11 +66,11 @@ class RulesFilters():
                value = reduce(lambda a,b: min(a,b), [getCardProp(c, cmd) for c in arr])
                args = ('=', value)
    
-      debug("-- applying filter %s to %s objects" % (filter, len(arr)))
+      debug("-- applying filter %s to %s object(s)" % (filter, len(arr)))
       arr = [c for c in arr
          if func(c, include, cmd, *args)
       ]      
-      debug("-- %s objects match the filter" % len(arr))
+      debug("-- %s object(s) match(es) the filter" % len(arr))
          
       return arr
       
