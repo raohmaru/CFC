@@ -648,7 +648,7 @@ action = rndDiscard()
 
 # Zaki's SUKEBAN
 RulesDict['faa72b01-cf50-4cff-8b70-13245a7fa5df'] = """
-action = [[if me.sp == 0]] sp(+12)
+action = [[if me.sp == 0]] sp(+10)
 """
 
 # Bilstein's PLASMA POWER

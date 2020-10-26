@@ -1339,7 +1339,7 @@
 			<property name="Ability"      value="&#162; SUKEBAN" />
 			<property name="Ability Type" value="&#162;" />
 			<property name="Ability Name" value="SUKEBAN" />
-			<property name="Rules"        value="If you have 0 SP, gain 12 SP." />
+			<property name="Rules"        value="If you have 0 SP, gain 10 SP." />
 			<property name="BP"           value="300" />
 			<property name="SP"           value="0" />
 			<property name="Backup 1"     value="Gangster" />
