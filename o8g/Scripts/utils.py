@@ -279,11 +279,30 @@ def evalExpression(expr, retValue = False, locals = None):
 def showCardDlg(list, title, max=1, text="Card Selection", min=1, bottomList=None, label=None, bottomLabel=None):
    debug("showCardDlg({}, {}, {}, {}, {}, {}, {}, {})".format(list, title, max, text, min, bottomList, label, bottomLabel))
    newList = []
-   # Removes KOed chars in the ring
+   groups = {}
+   
    for c in list:
+      # Removes KOed chars in the ring
       if c.group == table and getMarker(c, 'BP') == 0:
          continue
-      newList.append(c)
+      # Organizes chars by group
+      if not c.group.name in groups:
+         groups[c.group.name] = []
+      groups[c.group.name].append(c)
+   
+   # Sort cards in table according to its slot index
+   if "Table" in groups:
+      charsRing = getRing()
+      for c in charsRing:
+         if c in groups["Table"]:
+            newList.append(c)
+      del groups["Table"]
+   
+   # Sort cards according to its index in the group
+   for k, v in groups.iteritems():
+      sign = -1 if k == 'Hand' else 1 # hand has index reversed
+      newList += sorted(v, key=lambda r: sign * r.index)
+   
    dlg = cardDlg(newList, bottomList)
    dlg.title = text
    dlg.text = title
@@ -492,8 +511,8 @@ def getRing(player = None):
       ring = getGlobalVar('Ring', me)
       if len(players) > 1:
          ring += getGlobalVar('Ring', players[1])
-   return [c for c in table
-      if c._id in ring]
+   return [Card(c) for c in ring
+      if Card(c) in table]
 
 
 def getRingSize(player = me, ring = None):
