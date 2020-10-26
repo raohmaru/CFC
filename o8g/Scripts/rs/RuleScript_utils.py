@@ -413,6 +413,8 @@ class RulesUtils():
                while True:
                   cards_sel = showCardDlg(cards if reveal == 'all' else cards_f1, title, min=minQty, max=maxQty)
                   if cards_sel == None or minQty == 0 or not reveal or len(set(cards_sel) & set(cards_f1)) >= 1:
+                     if cards_sel == None:
+                        notify(MSG_PLAYER_SELECTS_NONE.format(me, owner, zone[1]))
                      cards_f1 = cards_sel
                      break
                   title = 'Please ' + title[0].lower() + title[1:]

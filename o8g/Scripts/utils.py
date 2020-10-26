@@ -278,7 +278,13 @@ def evalExpression(expr, retValue = False, locals = None):
    
 def showCardDlg(list, title, max=1, text="Card Selection", min=1, bottomList=None, label=None, bottomLabel=None):
    debug("showCardDlg({}, {}, {}, {}, {}, {}, {}, {})".format(list, title, max, text, min, bottomList, label, bottomLabel))
-   dlg = cardDlg(list, bottomList)
+   newList = []
+   # Removes KOed chars in the ring
+   for c in list:
+      if c.group == table and getMarker(c, 'BP') == 0:
+         continue
+      newList.append(c)
+   dlg = cardDlg(newList, bottomList)
    dlg.title = text
    dlg.text = title
    dlg.min = min
