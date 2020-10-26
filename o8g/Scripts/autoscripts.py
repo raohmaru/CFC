@@ -778,7 +778,8 @@ def activateAuto(card):
       if pcard.ability.type == InstantAbility:
          # Check if [] abilites can be activated
          if not getRule('ab_instant_act'):
-            warning(MSG_RULES['ab_instant_act'][False])
+            if not settings['Activate']:
+               warning(MSG_RULES['ab_instant_act'][False])
             notify(MSG_RULES['ab_instant_act'][False])
             return
          # Activate only once

@@ -1,5 +1,12 @@
 # Card Fighters' Clash Changelog
 
+## 0.9.8
+Re-balanced Zaki ability: now it adds 10 SP again.
+`askCardBackups()` now allows to backup only the available backup types in the card.
+Removes KOed chars in the ring from the selection shown by `showCardDlg()`.
+`showCardDlg()` now shows cards in the same order as they are in their groups.
+Improved tutorial.
+Improved game play.
 ## 0.9.7
 Improved card design for a better reading of BP, SP and rarity icons.
 Updated subtypes icons: Aikido, Demon, Spirit and Taekwondo.

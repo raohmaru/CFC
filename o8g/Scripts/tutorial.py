@@ -25,6 +25,9 @@ class Tutorial(object):
       self.msgOnDone = u'When done, please click on the \u25B6 button or press the Tab key.'
       self.validate = None
       self.step = 0
+      settings['Play'] = True
+      settings['Phase'] = True
+      settings['Activate'] = True
       self.start()
       
       
@@ -378,6 +381,8 @@ You can play any number of Action cards as long as you have enough SP, but only 
       self.msg(u"""
 Please play the card "Revive" from your hand.
 
+(You can target Baby Head from the Discard pile with Shift + Left Click as the target of the action card.)
+
 {}
 """.format(self.msgOnDone), 'OK')
 
@@ -386,7 +391,7 @@ Please play the card "Revive" from your hand.
       
       
    def part9(self):
-      if 'Revive' not in [c.Name for c in table]:
+      if 'Revive' in [c.Name for c in me.hand]:
          warning('Please play the card "Revive" from your hand.')
          return False
       
@@ -411,6 +416,8 @@ You can play Reaction cards before or after blocking with your characters, or ev
       
       self.msg(u"""
 Play the card "Vacation" in response of the enemy attack.
+
+(You can target a character in the Ring with Shift + Left Click as the target of the reaction card.)
 
 {}
 """.format(self.msgOnDone), 'OK')

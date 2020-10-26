@@ -51,4 +51,4 @@ To activate a card action, move the cursor to a card and then right click to sho
 
 The game keyboard shortcuts are shown along to the option in the contextual menu.
 
-For more information, check out [Octgn keyboard shortcuts](https://github.com/kellyelton/OCTGN/wiki/Octgn-Keyboard-Shortcuts).
+For more information, please check out [Octgn keyboard shortcuts](https://github.com/kellyelton/OCTGN/wiki/Octgn-Keyboard-Shortcuts).
