@@ -418,9 +418,18 @@ def askCardBackups(card, x = 0, y = 0):
       charsBackup = []
       msg1 = ''
       msg2 = "{} can be backed-up with the following character types:\n  - {}".format(card.Name, '\n  - '.join(filter(None, acceptedBackups)))
+      # Check remaining backups
+      avlBackups = list(acceptedBackups) # Copy array
+      backups = getGlobalVar('Backups')
+      for id in backups:
+         if backups[id] == card._id:
+            avlBackups.remove(Card(id).Subtype)
+      if inRing and len(avlBackups) < len(acceptedBackups):
+         msg2 += "\n\nRemaining backups: {}.".format(", ".join(avlBackups))
+      # Candidates to back-up in the hand
       for c in me.hand:
          if isCharacter(c):
-            if c != card and c.Subtype in acceptedBackups:
+            if c != card and c.Subtype in avlBackups:
                c.highlight = InfoColor
                charsBackup.append(c)
             elif c.highlight == InfoColor:
