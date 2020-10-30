@@ -356,6 +356,8 @@ def activate(card, x = 0, y = 0):
 
 def freeze(card, x = 0, y = 0, unfreeze = None, silent = False):
    mute()
+   if card.group != table:
+      return
    initialRot = card.orientation
    if unfreeze != None:
       card.orientation = Rot0 if unfreeze else Rot90
