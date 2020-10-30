@@ -365,6 +365,11 @@ def preparePhase():
             changed = True
    if changed:
       setGlobalVar('Rules', Rules)
+      
+   # Unhighlight avaible backup cards in hand
+   for c in me.hand:
+      if c.highlight == InfoColor:
+         c.highlight = None
    
    update()
 
@@ -780,6 +785,8 @@ def activateAuto(card):
          if not getRule('ab_instant_act'):
             if not settings['Activate']:
                warning(MSG_RULES['ab_instant_act'][False])
+            else:
+               playSnd('cancel-2')
             notify(MSG_RULES['ab_instant_act'][False])
             return
          # Activate only once
