@@ -373,7 +373,7 @@ def cmd_movePile(rc, targets, source, restr, zone1, zone2):
       for card in pile1:
          card.moveTo(pile2)
       if len(players) > 1: rnd(1, 100) # Wait a bit more, as in multiplayer games, things are slower.
-      notify("{} moves all cards from their {} to its {}.".format(me, pile1.name, pile2.name))      
+      notify("{} moves all cards from their {} to their {}.".format(me, pile1.name, pile2.name))      
    rc.applyNext()
 
 

@@ -1674,7 +1674,8 @@ action = discard(all) & movePile(deck, discards) & moveTo(deck, false) & shuffle
 
 # Laundry
 RulesDict['96f72173-528d-4a3a-a85c-9cf92439435a'] = """
-action = target?(all@discards) moveTo(deck) & shuffle() & draw()
+# action = target?(all@discards) moveTo(deck) & shuffle() & draw()
+action = movePile(discards, deck) & shuffle() & draw()
 """
 
 # Lightning
@@ -1753,6 +1754,7 @@ action = [[if me.hand.size > opp.hand.size]] discard(all) & draw(opp.hand.size) 
 
 # Psyche up!
 RulesDict['11fa47f0-9573-48ca-9a4a-7aa16a4ec76e'] = """
+target = me
 action = sp(+5)
 """
 
