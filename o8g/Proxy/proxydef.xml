@@ -650,10 +650,10 @@
 			<wordwrap width="65" height="25" align="far" shrinktofit="False" />
 		</block>
 		<block type="text" id="sp2">
-			<location x="398" y="43" />
+			<location x="394" y="43" />
 			<text color="#e7ecfa" size="23" font="Resources/Fonts/m04b_CFC.ttf" />
 			<border color="#102267" size="6" />
-			<wordwrap width="65" height="25" align="far" shrinktofit="False" />
+			<wordwrap width="69" height="25" align="far" shrinktofit="False" />
 		</block>
 		<block type="text" id="team">
 			<location x="208" y="407" />
