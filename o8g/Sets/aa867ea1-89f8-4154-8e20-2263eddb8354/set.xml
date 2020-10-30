@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8" standalone="yes"?>
-<set name="Core Set" id="aa867ea1-89f8-4154-8e20-2263eddb8354" version="1.5.0" gameId="e3d56d9e-900d-49c6-b6ae-22cbb51be153" gameVersion="0.9.7">
+<set name="Core Set" id="aa867ea1-89f8-4154-8e20-2263eddb8354" version="1.5.0" gameId="e3d56d9e-900d-49c6-b6ae-22cbb51be153" gameVersion="0.9.8">
 	<packaging>
 		<pack name="Booster" id="800ab974-9fee-45c6-8d15-3c995c732cdc">
 			<options>
@@ -6055,7 +6055,7 @@
 			<property name="Ability"      value="" />
 			<property name="Ability Type" value="" />
 			<property name="Ability Name" value="" />
-			<property name="Rules"        value="Deals 100 damage points to an enemy." />
+			<property name="Rules"        value="Deals 100 damage points plus 100 damage points for each card named Engokogeki in your discard pile to an enemy." />
 			<property name="BP"           value="" />
 			<property name="SP"           value="-2" />
 			<property name="Backup 1"     value="" />
@@ -6271,7 +6271,7 @@
 			<property name="Ability"      value="" />
 			<property name="Ability Type" value="" />
 			<property name="Ability Name" value="" />
-			<property name="Rules"        value="Shuffle your discard pile into your deck." />
+			<property name="Rules"        value="Shuffle your discard pile into your deck.&#xD;&#xA;Draw a card." />
 			<property name="BP"           value="" />
 			<property name="SP"           value="-4" />
 			<property name="Backup 1"     value="" />
@@ -6325,7 +6325,7 @@
 			<property name="Ability"      value="" />
 			<property name="Ability Type" value="" />
 			<property name="Ability Name" value="" />
-			<property name="Rules"        value="Each player reveals his hand, then draws a card for each action card revealed this way." />
+			<property name="Rules"        value="Each player draws a card for each character in their ring." />
 			<property name="BP"           value="" />
 			<property name="SP"           value="-3" />
 			<property name="Backup 1"     value="" />
@@ -7317,7 +7317,7 @@
 			<property name="Ability Name" value="" />
 			<property name="Rules"        value="Attacking enemy discards two card at random." />
 			<property name="BP"           value="" />
-			<property name="SP"           value="-2" />
+			<property name="SP"           value="-3" />
 			<property name="Backup 1"     value="" />
 			<property name="Backup 2"     value="" />
 			<property name="Backup 3"     value="" />
@@ -7371,7 +7371,7 @@
 			<property name="Ability Name" value="" />
 			<property name="Rules"        value="Unfreeze all characters in your ring." />
 			<property name="BP"           value="" />
-			<property name="SP"           value="-3" />
+			<property name="SP"           value="-2" />
 			<property name="Backup 1"     value="" />
 			<property name="Backup 2"     value="" />
 			<property name="Backup 3"     value="" />

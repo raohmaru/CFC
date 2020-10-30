@@ -143,6 +143,7 @@ Regexps = {
    'char'      : re.compile(r'\bchar\b'),
    '.size'     : re.compile(r'([\w.]+)\.size'),
    '.ring'     : re.compile(r'(\w+)\.ring'),
+   '.ring.size': re.compile(r'(\w+)\.ring\.size'),
    '.chars'    : re.compile(r'(\w+)\.chars'),
    '.damaged'  : re.compile(r'(\w+)\.damaged'),
    '.lostsp'   : re.compile(r'(\w+)\.lostsp'),

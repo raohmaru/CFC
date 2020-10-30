@@ -334,7 +334,7 @@ Available variables:
          .size
       .discards
       .ring
-      .chars
+         .size
       .damaged
       .lostSP
    -- piles --
@@ -431,7 +431,7 @@ action = {F}: reveal() & moveTo(hand, true) & shuffle()
 
 # Guy's HAYA-GAKE
 RulesDict['2c1d8c60-0858-4524-adc1-e7596a4d08e0'] = """
-auto = ?oppCanBlock:this? [[if me.ring > 1]] # me.ring is opp.ring
+auto = ?oppCanBlock:this? [[if me.ring.size > 1]] # me.ring is opp.ring because it is triggered when the opponent blocks
 """
 
 # Haggar's SPINNING LARIAT
@@ -457,7 +457,7 @@ action = destroy() target(^character@myRing)
 
 # Ruby Heart's TAG ALONG
 RulesDict['ee979882-67cc-4549-881c-8e158df495ce'] = """
-action = [[if all card.bp <= 300 in me.chars]] playExtraChar()
+action = [[if all card.bp <= 300 in me.ring]] playExtraChar()
 """
 
 # Son Son's BUNSHIN
@@ -533,7 +533,7 @@ action = reveal() & shuffle() & moveTo(deck, true)
 
 # Chris Redfield's DISORDER
 RulesDict['38d6c7a8-7463-4aa6-88c4-13f725ada0be'] = """
-action = [[if opp.ring >= 3]] damage(200) to(characters@oppRing)
+action = [[if opp.ring.size >= 3]] damage(200) to(characters@oppRing)
 """
 
 # Claire's DECOY
@@ -574,7 +574,7 @@ auto = enableRule(ab_trigger_fresh)
 
 # Daigo's FINISH IT!
 RulesDict['e6e46f83-d089-4762-8d8e-2a3252cfc9db'] = """
-action = [[if opp.ring >= 3]] bp(x2) target(this)
+action = [[if opp.ring.size >= 3]] bp(x2) target(this)
 """
 
 # Edge's MANIPULATION
@@ -847,6 +847,7 @@ auto = enableRule(backup_fresh)
 
 # Strider Hiryu's CYPHER
 RulesDict['c09e1c30-468b-4173-8aa8-3e6ba31cd3e8'] = """
+requisite = character[backedup]
 action = {F}: destroy() target(character[backedup])
 """
 
@@ -1352,7 +1353,7 @@ auto = ~myEndPhase~ damage(200) to(characters)
 
 # Eri's HOTHEAD
 RulesDict['04660547-18c8-4eb4-96b5-2a977dda0dcb'] = """
-action = [[if me.ring > 1]] moveTo(hand) target(this)
+action = [[if me.ring.size > 1]] moveTo(hand) target(this)
 """
 
 # Marco's ENEMY CHASER
@@ -1594,8 +1595,11 @@ action = activate(tgt)
 
 # Engokogeki
 RulesDict['1ef4cecb-c096-47e0-995f-a20b6b75325a'] = """
-target = opp
-action = damage(100)
+# target = opp
+# action = damage(100)
+target? = "Engokogeki"s@myDiscards
+vars = _cards := tgt
+action = damage(100) to(opp); each(card in _cards -> damage(100)) to(opp)
 """
 
 # Escape
@@ -1663,7 +1667,7 @@ action = discard(all) & movePile(deck, discards) & moveTo(deck, false) & shuffle
 
 # Laundry
 RulesDict['96f72173-528d-4a3a-a85c-9cf92439435a'] = """
-action = target?(all@discards) moveTo(deck) & shuffle()
+action = target?(all@discards) moveTo(deck) & shuffle() & draw()
 """
 
 # Lightning
@@ -1678,7 +1682,8 @@ action = draw(2)
 
 # Lunch rush
 RulesDict['58580e2e-1f48-4210-a68f-57cd900b1036'] = """
-action = reveal(hand) target(players); each(action in me.hand -> draw()); each(action in opp.hand -> draw()) target(opp)
+# action = reveal(hand) target(players); each(action in me.hand -> draw()); each(action in opp.hand -> draw()) target(opp)
+action = each(char in me.ring -> draw()) target(me); each(char in opp.ring -> draw()) target(opp)
 """
 
 # Makeover
@@ -1976,7 +1981,7 @@ action = draw(3); moveTo(myDeck) target(<2>*@hand)
 
 # Manari's song
 RulesDict['2b3ad6cd-61d8-4786-9268-5963491a1ffa'] = """
-action = [[if me.ring == 0]] disableRule(dmg_combat_deal) oppueot
+action = [[if me.ring.size == 0]] disableRule(dmg_combat_deal) oppueot
 """
 
 # Overdoing it
