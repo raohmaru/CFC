@@ -206,6 +206,7 @@ def updateSharedGlobals(name, value, player = None):
 def replaceVars(str):
    debug("-- replaceVars({})".format(str))
    # Order is important
+   str = replaceIfRgx (str, 'listIdx'   , r'\1[\2]', False)
    str = replaceIfRgx (str, '.bp'       , r'getParsedCard(\1).BP')
    str = replaceIfRgx (str, '.sp'       , r'num(\1.SP)')
    str = replaceIfRgx (str, '.lastbp'   , r'getParsedCard(\1).lastBP')
@@ -228,9 +229,9 @@ def replaceVars(str):
    return str
 
    
-def replaceIfRgx(str, name, repl):
+def replaceIfRgx(str, name, repl, opt = True):
 # Optimization is evil, but it works
-   if name in str:
+   if not opt or name in str:
       str = re.sub(Regexps[name], repl, str)
    return str
    

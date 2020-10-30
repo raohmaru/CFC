@@ -141,21 +141,21 @@ effect:
          swapPiles(pile1, pile2)
          shuffle([myDeck])
          destroy()
-         reveal([pile])     # default: target
-         discard([#|target])  # default: 1, zone: myHand
+         reveal([pile])        // default: target
+         discard([#|target])   // default: 1, zone: myHand
          rndDiscard([#])
-         moveTo(zone [, pos] [, reveal])  # pos = signed int or '?'
+         moveTo(zone [, pos] [, reveal])    // pos = signed int or '?'
          movePile(pile1, pile2)
-         bp(#|x#|=#|expr)    # default target = this
-         sp(#|=#|expr)  # default target = me
-         hp(#|expr)     # default target = me
+         bp(#|x#|=#|expr)       // default target = this
+         sp(#|=#|expr)          // default target = me
+         hp(#|expr)             // default target = me
          playExtraChar()
-         draw([#|expression])  # Default: 1
-         steal([copyToTarget]) # default = this card
+         draw([#|expression])   // default: 1
+         steal([copyToTarget])  // default = this card
          loseAbility()
          copyAbility(expr)
          swapAbilities()
-         each(expr in group -> effect)  # effect context: group item
+         each(expr in group -> effect)    // effect context: group item
          transform(card name|expr)
          moveRestTo(zone)
          enableRule(rule)
@@ -163,19 +163,19 @@ effect:
          modRule(rule, arg)
          freeze([toggle])
          unfreeze()
-         alterCost(cardtype, #)  # permanent
-         modCost(cardtype, #)  # for auto keys
+         alterCost(cardtype, #)   // permanent
+         modCost(cardtype, #)     // for auto keys
          swapChars()
          moveToSlot()
-         trash([#])     # default: 1
-         prophecy([#])  # default: 1
+         trash([#])       // default: 1
+         prophecy([#])    // default: 1
          activate(expr)
-         turns(#)  # unsiged int, target = current player
+         turns(#)     // unsiged int, target = current player
          skip(phase)
          unite()
          removeFromAttack()
          peek()
-         pileView(pile, state)  # state: collapsed, pile, expanded
+         pileView(pile, state)    // state: collapsed, pile, expanded
          clear([ability])
       Ability:
          Keywords:
@@ -317,12 +317,13 @@ Value can be quoted or not. Case-sensitive.
 @see action
 
 ---------------------------------------------------
-Expressions:
+Expressions
 
 A valid Python expression.
+
 Available variables:
-   tgt (current target)
-   prevTgt
+   tgt (type: list)      // current target
+   prevTgt (type: list)
    uaBP
    -- players --
    me
@@ -337,13 +338,12 @@ Available variables:
          .size
       .damaged
       .lostSP
-   -- piles --
+   -- piles (type: list) --
    discarded
    trashed
    destroyed
    moved
    sacrificed
-      .size
    -- cards --
    this
    attacker
@@ -362,10 +362,18 @@ Available variables:
       reaction
    
 Available functions:
-   all group: expr   # context = group item
+   all group: expr   // context = group item
    isChar()
    flipCoin()
    inUAttack()
+   
+---------------------------------------------------
+Scripting
+
+Types:
+   list:
+      .size
+      .#     // gets an item by its index
 """
 
 RulesDict = {}
@@ -447,7 +455,7 @@ action = [[if alone]] bp(x2) target(this)
 # Lucifer's SACRIFICE
 RulesDict['39b7d042-d2c5-4ff3-aad5-231bd3ccc9e7'] = """
 requisite = ^character<1>@myRing
-action = {F}: destroy() target(^character@myRing); damage(prevTgt.lastBP) to(character)
+action = {F}: destroy() target(^character@myRing); damage(prevTgt.0.lastBP) to(character)
 """
 
 # Mech Zangief's ANTISOCIAL
@@ -757,7 +765,7 @@ action = {F}: bp(+300) target(character@oppRing); bp(+300) target(character@myRi
 
 # Juli's PSYCHO CHARGE ALPHA
 RulesDict['a2536791-c173-4228-84ce-4d2dec036ac3'] = """
-action = {D(character)}{F}: sp(abs(discarded[0].SP))
+action = {D(character)}{F}: sp(abs(discarded.0.SP))
 """
 
 # Karin's COMPENSATION
@@ -959,7 +967,7 @@ action = discard(all); moveTo(hand) target(*@deck) & shuffle()
 
 # Mr. Big's BIG FREEBIE
 RulesDict['d14dd0ed-cba6-404d-b7d1-e25c9b5c78ed'] = """
-action = {D(character[powerful])}{F}: copyAbility(discarded[0]) to(character@myRing)
+action = {D(character[powerful])}{F}: copyAbility(discarded.0) to(character@myRing)
 """
 
 # Mr. Karate's M.I.A.
@@ -996,7 +1004,7 @@ auto = ~blocks:this~ draw(2)
 # God Rugal's YUUGOU POWER
 RulesDict['067d592e-2ddf-43f5-82cc-25c70d29a996'] = """
 target = character<1>[powerful]@anyDeck
-action = {F}: moveRestTo(ctrlDeck, -1) & moveTo(ctrlDeck, -1, true); copyAbility(prevTgt) to(character)
+action = {F}: moveRestTo(ctrlDeck, -1) & moveTo(ctrlDeck, -1, true); copyAbility(prevTgt.0) to(character)
 """
 
 # Alfred's WAVE RIDER
@@ -1073,7 +1081,7 @@ action = moveTo(deck) target(action@discards)
 
 # Jin Chonshu's FOGEY FISTS
 RulesDict['b77da717-47d7-4dc1-bb79-cddecf0c5af5'] = """
-action = {S(^character)}{F}: bp(+sacrificed[0].lastBP)
+action = {S(^character)}{F}: bp(+sacrificed.0.lastBP)
 """
 
 # Joe's SCREW UPPER
@@ -1166,7 +1174,7 @@ action = discard(<1>reaction) target(opp)
 # Clone Zero's MIMIC
 RulesDict['ab45b64f-e231-44ca-83ad-bd4d89bcb851'] = """
 target = ^character[powerful]
-action = copyAbility(prevTgt) to(this) & clear(trigger)
+action = copyAbility(prevTgt.0) to(this) & clear(trigger)
 """
 
 # Heidern's STORM BRINGER
@@ -1277,7 +1285,7 @@ action = moveTo(oppHand) target(character@infront)
 
 # Akari's PONTA LEAF
 RulesDict['9c405677-1d42-4eb7-bb44-7b21c1d84859'] = """
-action = {D(character)}{F}: bp(=discarded[0].bp)
+action = {D(character)}{F}: bp(=discarded.0.bp)
 """
 
 # Akari (Power)'s 100 DEMON NIGHT
@@ -1287,7 +1295,7 @@ action = {F}: destroy() target(characters)
 
 # Akari (Speed)'s ONE-WAY MORPH
 RulesDict['299c01d7-37f0-41de-81f3-712b8dd63f11'] = """
-action = {D(character[abinstant])}{F}: activate(discarded[0])
+action = {D(character[abinstant])}{F}: activate(discarded.0)
 """
 
 # Akari Ichijou's LET'S GAMBLE!
@@ -1338,7 +1346,7 @@ abilities = preventpierce
 # Wanderer's CHANGE!
 RulesDict['f71ccccf-4c2e-4adf-a409-b8ab8e17c8f1'] = """
 target = character@oppRing
-action = bp(=prevTgt.BP) target(this)
+action = bp(=prevTgt.0.BP) target(this)
 """
 
 # Yuki's PRIESTESS SEAL
@@ -1532,7 +1540,7 @@ action = moveTo(hand) target(<1>*<3>@deck); moveTo(discards) target(*<2>@deck)
 
 # Bopper
 RulesDict['c50f1a40-87e9-41b9-a69c-600b36b68077'] = """
-action = destroy() target(character@myRing); damage(prevTgt.lastBP) to(character)
+action = destroy() target(character@myRing); damage(prevTgt.0.lastBP) to(character)
 """
 
 # Break up
@@ -1562,12 +1570,12 @@ auto = ~myEndPhase:once~ moveTo(discards) target?(*s@removed) & pileView(removed
 # Curse
 RulesDict['e1fb17f3-c4bf-4993-9b2f-91706cccf448'] = """
 target = character<1>[powerful]@anyDeck
-action = moveRestTo(ctrlDeck, -1) & moveTo(ctrlDeck, -1, true); copyAbility(prevTgt) to(characters)
+action = moveRestTo(ctrlDeck, -1) & moveTo(ctrlDeck, -1, true); copyAbility(prevTgt.0) to(characters)
 """
 
 # Domination
 RulesDict['e5fa3d6f-3368-4450-8327-3f7672c78834'] = """
-action = {D(action)}: transform(discarded[0]) target(*s@hand)
+action = {D(action)}: transform(discarded.0) target(*s@hand)
 """
 
 # Double
@@ -1598,8 +1606,7 @@ RulesDict['1ef4cecb-c096-47e0-995f-a20b6b75325a'] = """
 # target = opp
 # action = damage(100)
 target? = "Engokogeki"s@myDiscards
-vars = _cards := tgt
-action = damage(100) to(opp); each(card in _cards -> damage(100)) to(opp)
+action = damage(100) & each(card in prevTgt -> damage(100)) to(opp)
 """
 
 # Escape
@@ -1611,7 +1618,7 @@ action = moveTo(hand)
 # ESP
 RulesDict['7b7ffef2-2790-46ed-8407-e7395c26b4a0'] = """
 target = character[abtrigger]
-action = copyAbility(prevTgt) to(character@myRing)
+action = copyAbility(prevTgt.0) to(character@myRing)
 """
 
 # Fate duel
@@ -1712,7 +1719,7 @@ action = prophecy(3, top) & shuffle?(ctrlDeck)
 # Morph
 RulesDict['51a47b27-abf3-4219-a241-c72bd23b178b'] = """
 target = character; *<1>@oppDeck
-vars = _char := tgt[0]; _card := tgt[1]
+vars = _char := tgt.0; _card := tgt.1
 action = reveal() target(_card); [[if isChar(_card)]] bp(=_card.bp) to(_char) [[else]] destroy() target(_char)
 """
 
@@ -1757,7 +1764,7 @@ action = freeze(toggle)
 
 # Raw shield
 RulesDict['50afc361-3dd7-4847-ae4c-d9ed84f1d991'] = """
-action = destroy() target(character@myRing); hp(prevTgt.lastBP)
+action = destroy() target(character@myRing); hp(prevTgt.0.lastBP)
 """
 
 # Reparation
@@ -1803,7 +1810,7 @@ action = destroy()
 # Shadow
 RulesDict['0e1b4f81-93e9-44be-ab31-7aed8cb354d0'] = """
 target = character; character<1>@anyDeck
-vars = _char := tgt[0]; _card := tgt[1]
+vars = _char := tgt.0; _card := tgt.1
 action = moveRestTo(ctrlDeck, -1) & moveTo(ctrlDeck, -1, true) target(_card); transform(_card) to(_char)
 """
 
@@ -1853,7 +1860,7 @@ action = swapAbilities() target(<2>character[powerful])
 
 # Successor
 RulesDict['5e2211a0-e52e-4b7b-b03d-f6ecb3660bb0'] = """
-action = {D(character[powerful])}: copyAbility(discarded[0]) to(character@myRing)
+action = {D(character[powerful])}: copyAbility(discarded.0) to(character@myRing)
 """
 
 # Synchro
@@ -1914,7 +1921,7 @@ action = disableRule(piercing) oppueot
 
 # Clone
 RulesDict['74def9a7-0898-4ed4-93eb-33e57cf3a215'] = """
-action = {D(character[powerful])}: copyAbility(discarded[0]) to(character@myRing)
+action = {D(character[powerful])}: copyAbility(discarded.0) to(character@myRing)
 """
 
 # Cruel hunt
@@ -1925,7 +1932,7 @@ action = destroy()
 
 # Evil eye
 RulesDict['ed5b10af-ad01-4d70-bdac-0a7dfbf9de3f'] = """
-action = {S(character@myRing)}: bp(=sacrificed[0].lastBP) target(character)
+action = {S(character@myRing)}: bp(=sacrificed.0.lastBP) target(character)
 """
 
 # Face off
@@ -2015,7 +2022,7 @@ action = unfreeze()
 
 # Rest
 RulesDict['2c9000df-e21a-4482-9dfc-8df3f702e29e'] = """
-action = {D(character)}: sp(abs(discarded[0].SP))
+action = {D(character)}: sp(abs(discarded.0.SP))
 """
 
 # Robber
@@ -2071,7 +2078,7 @@ action = loseLife(300) & draw(3)
 
 # Time bomb
 RulesDict['48a11103-e08d-4237-952e-bf4cdc2868f7'] = """
-action = {D(character)}: damage(discarded[0].BP) to(character[attack,uattack])
+action = {D(character)}: damage(discarded.0.BP) to(character[attack,uattack])
 """
 
 # Vacation

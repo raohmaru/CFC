@@ -147,7 +147,8 @@ Regexps = {
    '.chars'    : re.compile(r'(\w+)\.chars'),
    '.damaged'  : re.compile(r'(\w+)\.damaged'),
    '.lostsp'   : re.compile(r'(\w+)\.lostsp'),
-   'opp'       : re.compile(r'\bopp\b')
+   'opp'       : re.compile(r'\bopp\b'),
+   'listIdx'   : re.compile(r'([\w\d])\.(\d)\b')
 }
 
 # Misc

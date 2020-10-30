@@ -150,7 +150,7 @@ def getLocals(**kwargs):
          rc = kwargs['rc']
       
    if rc and rc.prevTargets != None and len(rc.prevTargets) > 0:
-      locals['prevtgt'] = rc.prevTargets[0]
+      locals['prevtgt'] = rc.prevTargets
       
    # Add some default variables
    if not 'discarded' in locals:
