@@ -311,7 +311,7 @@ def showCardDlg(list, title, max=1, text="Card Selection", min=1, bottomList=Non
    dlg.max = max
    dlg.label = label
    dlg.bottomLabel = bottomLabel
-   playSnd('win-ask')
+   playSnd('win-ask', True)
    return dlg.show()
             
 

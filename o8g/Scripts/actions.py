@@ -35,7 +35,7 @@ def nextPhase(fromKeyStroke = True, x = 0, y = 0):
    if getState(None, 'activePlayer') == me._id:
       if phaseIdx == BlockPhase and getState(None, 'priority') != me._id:
          whisper('You cannot go to the next phase until {} is done.'.format(getOpp()))
-         playSnd('win-warning')
+         playSnd('win-warning', True)
          return
       # Priority back to me
       if getState(None, 'priority') != me._id:

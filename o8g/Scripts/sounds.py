@@ -31,9 +31,7 @@ def playSnd(name, isInternal=False):
 
    if (
       isInternal
-      or debugging
-      or (me.name == Author and getOpp().name == 'dand')
-      or (me.name == 'dand' and getOpp().name == Author)
+      or Octgn.Program.DeveloperMode
    ):
       try:
          sound = Octgn.Program.GameEngine.Definition.Sounds[name]
