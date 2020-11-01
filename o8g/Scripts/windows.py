@@ -70,14 +70,16 @@ def downloadImagePack(group=table, x=0, y=0):
 
 def showChangelog():
    switchSetting('GameVersion', getGameVersion())
-   msg = u"""What's new in version 0.9.7
+   msg = u"""What's new in version 0.9.8
 
-- Improved card design for a better reading of
-  BP, SP and rarity icons.
-- Updated illustration of some cards.
-  Please download the new Image Pack from
-  cardfightersclash.wordpress.com/image-packs
-- Fixed bug in Cruel hunt card.
+- Re-balanced Zaki ability: now it adds 10 SP
+  again.
+- Updated rules for Marco, Engokogeki, Laundry
+  and Lunch rush.
+- Updated SP cost of Overheat and Reliable
+  warrior.
+- Improved tutorial and game play.
+- Several bug fixes.
 """.format(TriggerUniChar)
    askChoice(msg, [], [], ['Close'])
    

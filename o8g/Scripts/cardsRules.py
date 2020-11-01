@@ -35,7 +35,7 @@ qty:
       [min],max
    Keywords:
       r[#]
-      ** (any number of cards)
+      ** (any number of cards, min: 1)
 
 type:
    Operators:
@@ -1367,7 +1367,8 @@ action = [[if me.ring.size > 1]] moveTo(hand) target(this)
 # Marco's ENEMY CHASER
 RulesDict['fa585a56-2a8f-48ff-9cc5-1234fecb4b09'] = """
 # action = {D(all)}{F}: each(card in discarded -> damage(100)) to(^characters)
-action = {D(all)}{F}: damage(discarded.size * 100) to(^characters)
+# action = {D(all)}{F}: damage(discarded.size * 100) to(^characters)
+action = {D(<**>)}{F}: damage(discarded.size * 100) to(^characters)
 """
 
 # Amakusa's GIVE YOURSELF

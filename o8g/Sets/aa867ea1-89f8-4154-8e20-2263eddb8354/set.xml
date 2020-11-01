@@ -5065,7 +5065,7 @@
 			<property name="Ability"      value="&#163; ENEMY CHASER" />
 			<property name="Ability Type" value="&#163;" />
 			<property name="Ability Name" value="ENEMY CHASER" />
-			<property name="Rules"        value="Discard your hand. Deals 100 damage points to each other character for each card discarded this way." />
+			<property name="Rules"        value="Discard any number of cards. Deals 100 damage points to each other character for each card discarded this way." />
 			<property name="BP"           value="400" />
 			<property name="SP"           value="3" />
 			<property name="Backup 1"     value="Soldier" />
