@@ -693,7 +693,7 @@
 			<property name="Ability Name" value="DEMON GAUNTLET" />
 			<property name="Rules"        value="Reveal your hand. Raise this character&apos;s BP 200 points for each character with BP 300 or less in your hand." />
 			<property name="BP"           value="300" />
-			<property name="SP"           value="4" />
+			<property name="SP"           value="3" />
 			<property name="Backup 1"     value="Samurai" />
 			<property name="Backup 2"     value="Ninja" />
 			<property name="Backup 3"     value="Samurai" />
@@ -943,7 +943,7 @@
 			<property name="Ability"      value="&#162; BROTHER SEARCH" />
 			<property name="Ability Type" value="&#162;" />
 			<property name="Ability Name" value="BROTHER SEARCH" />
-			<property name="Rules"        value="Look through the top of your deck until you reveal an action card. If you do, put that card into your hand. Put the other cards revealed this way into your discard pile." />
+			<property name="Rules"        value="Look through the top of your deck until you reveal an action card. Put that card into your hand. Put the other cards revealed this way into your discard pile." />
 			<property name="BP"           value="500" />
 			<property name="SP"           value="3" />
 			<property name="Backup 1"     value="Brute" />
@@ -3193,7 +3193,7 @@
 			<property name="Ability"      value="&#163; YUUGOU POWER" />
 			<property name="Ability Type" value="&#163;" />
 			<property name="Ability Name" value="YUUGOU POWER" />
-			<property name="Rules"        value="Select a character. Look through the top of any deck until you reveal a character card with an ability. If you do, selected character gets a copy of that ability. Put the cards revealed this way on the bottom of that deck." />
+			<property name="Rules"        value="Select a character. Look through the top of any deck until you reveal a character card with an ability. Selected character gets a copy of that ability. Put the cards revealed this way on the bottom of that deck." />
 			<property name="BP"           value="900" />
 			<property name="SP"           value="-1" />
 			<property name="Backup 1"     value="Boss" />
@@ -5947,7 +5947,7 @@
 			<property name="Ability"      value="" />
 			<property name="Ability Type" value="" />
 			<property name="Ability Name" value="" />
-			<property name="Rules"        value="Look through the top of any deck until you reveal a character card with an ability. If you do, all characters get a copy of that ability. Put the cards revealed this way on the bottom of that deck." />
+			<property name="Rules"        value="Look through the top of any deck until you reveal a character card with an ability. All characters get a copy of that ability. Put the cards revealed this way on the bottom of that deck." />
 			<property name="BP"           value="" />
 			<property name="SP"           value="-4" />
 			<property name="Backup 1"     value="" />
@@ -6703,7 +6703,7 @@
 			<property name="Ability"      value="" />
 			<property name="Ability Type" value="" />
 			<property name="Ability Name" value="" />
-			<property name="Rules"        value="Select a character. Look through the top of any deck until you reveal a character card. If you do, selected character becomes that card. (It loses its back-ups.) Put the cards revealed this way on the bottom of that deck." />
+			<property name="Rules"        value="Select a character. Look through the top of any deck until you reveal a character card. Selected character becomes that card. (It loses its back-ups.) Put the cards revealed this way on the bottom of that deck." />
 			<property name="BP"           value="" />
 			<property name="SP"           value="-4" />
 			<property name="Backup 1"     value="" />
@@ -6919,7 +6919,7 @@
 			<property name="Ability"      value="" />
 			<property name="Ability Type" value="" />
 			<property name="Ability Name" value="" />
-			<property name="Rules"        value="Choose one:&#xD;&#xA;— Deal 300 damage points to an enemy.&#xD;&#xA;— Gain 500 HP.&#xD;&#xA;— Raise the BP of all characters in your ring&#xD;&#xA;     200 points." />
+			<property name="Rules"        value="Choose one:&#xD;&#xA;— Deal 300 damage points to an&#xD;&#xA;     enemy.&#xD;&#xA;— Gain 500 HP.&#xD;&#xA;— Raise the BP of all characters in your&#xD;&#xA;     ring 200 points." />
 			<property name="BP"           value="" />
 			<property name="SP"           value="-7" />
 			<property name="Backup 1"     value="" />

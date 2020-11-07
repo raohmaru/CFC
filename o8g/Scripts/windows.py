@@ -78,8 +78,8 @@ def showChangelog():
   3 SP again.
 - Updated rules for Marco, Engokogeki, Laundry
   and Lunch rush.
-- Updated SP cost of Overheat and Reliable
-  warrior.
+- Updated SP cost of Samanosuke, Overheat and
+  Reliable warrior.
 - Improved tutorial and game play.
 - Several bug fixes.
 """.format(TriggerUniChar)
