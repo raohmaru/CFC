@@ -74,6 +74,8 @@ def showChangelog():
 
 - Re-balanced Zaki ability: now it adds 10 SP
   again.
+- Re-balanced Athena Asamiya, it generates
+  3 SP again.
 - Updated rules for Marco, Engokogeki, Laundry
   and Lunch rush.
 - Updated SP cost of Overheat and Reliable

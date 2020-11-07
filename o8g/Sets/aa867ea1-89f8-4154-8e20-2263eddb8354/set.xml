@@ -3949,7 +3949,7 @@
 			<property name="Ability"      value="&#163; PSYCHO CHARGE" />
 			<property name="Ability Type" value="&#163;" />
 			<property name="Ability Name" value="PSYCHO CHARGE" />
-			<property name="Rules"        value="Gain 4 SP." />
+			<property name="Rules"        value="Gain 3 SP." />
 			<property name="BP"           value="600" />
 			<property name="SP"           value="1" />
 			<property name="Backup 1"     value="Psychic" />

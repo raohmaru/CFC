@@ -2,6 +2,7 @@
 
 ## 0.9.8
 Re-balanced Zaki ability: now it adds 10 SP again.
+Re-balanced Athena Asamiya, it generates 3 SP again.
 Updated rules for Marco, Engokogeki, Laundry and Lunch rush.
 Updated SP cost of Overheat and Reliable warrior.
 `askCardBackups()` now allows to backup only the available backup types in the card.

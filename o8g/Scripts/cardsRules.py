@@ -1152,7 +1152,7 @@ action = moveTo(hand) target(character@myRing)
 
 # Athena Asamiya's PSYCHO CHARGE
 RulesDict['08b229e2-6af7-478a-bda5-774dd66af9f9'] = """
-action = {F}: sp(+4)
+action = {F}: sp(+3)
 """
 
 # Benimaru's THUNDERGOD FIST
