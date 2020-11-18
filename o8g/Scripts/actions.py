@@ -426,6 +426,7 @@ def askCardBackups(card, x = 0, y = 0):
       for id in backups:
          if backups[id] == card._id:
             avlBackups.remove(Card(id).Subtype)
+      avlBackups = filter(None, avlBackups)
       if inRing and len(avlBackups) < len(acceptedBackups):
          msg2 += "\n\nRemaining backups: {}.".format(", ".join(avlBackups))
       # Candidates to back-up in the hand
@@ -444,7 +445,10 @@ def askCardBackups(card, x = 0, y = 0):
          whisper("Highlighting compatible back-ups cards in your hand: {}.".format(cardsNamesStr(charsBackup)))
       else:
          if inRing:
-            msg1 = "You don't have compatible character cards in your hand to backup {}.\n\n".format(card.Name)
+            if len(avlBackups) > 0:
+               msg1 = "You don't have compatible character cards in your hand to backup {}.\n\n".format(card.Name)
+            else:
+               msg2 = "{} cannot be backed-up, maximum number of back-ups reached for this character.".format(card.Name)
       whisper(msg2)
       if not inRing or len(charsBackup) == 0:
          information(msg1 + msg2)

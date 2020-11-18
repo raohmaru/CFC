@@ -855,7 +855,7 @@ auto = enableRule(backup_fresh)
 
 # Strider Hiryu's CYPHER
 RulesDict['c09e1c30-468b-4173-8aa8-3e6ba31cd3e8'] = """
-requisite = character[backedup]
+requisite = character<1>[backedup]
 action = {F}: destroy() target(character[backedup])
 """
 

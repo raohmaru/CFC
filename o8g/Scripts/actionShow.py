@@ -24,7 +24,7 @@ def acsh_Debug(args, x = 0, y = 0):
       
 def acsh_isChar(args, x = 0, y = 0):
    card = args[0]
-   return isCharacter(card)
+   return isCharacter(card) and charIsInRing(card)
 
       
 def acsh_gameStarted(args, x = 0, y = 0):
@@ -37,7 +37,7 @@ def acsh_gameNotStarted(args, x = 0, y = 0):
 
 def acsh_isActivePlayerAttack(args, x = 0, y = 0):
    card = args[0]
-   return isCharacter(card) and me.isActive and currentPhase()[1] == AttackPhase and not isAttacking(card)
+   return isCharacter(card) and me.isActive and currentPhase()[1] == AttackPhase and not isAttacking(card) and charIsInRing(card)
 
 
 def acsh_hasAbility(args, x = 0, y = 0):
@@ -56,7 +56,7 @@ def acsh_isCharAndAutoPlayOff(args, x = 0, y = 0):
       
 def acsh_canBackup(args, x = 0, y = 0):
    card = args[0]
-   return isCharacter(card) and me.isActive and currentPhase()[1] == MainPhase
+   return isCharacter(card) and me.isActive and currentPhase()[1] == MainPhase and charIsInRing(card)
 
       
 def acsh_hidden(args, x = 0, y = 0):
@@ -77,3 +77,8 @@ def acsh_gameStartedAutoPlay(args, x = 0, y = 0):
    
 def acsh_isCharAndPlayRemoved(args, x = 0, y = 0):
    return getRule('play_removed') and acsh_isChar(args)
+
+      
+def acsh_isNotBackup(args, x = 0, y = 0):
+   card = args[0]
+   return not isCharacter(card) or charIsInRing(card)

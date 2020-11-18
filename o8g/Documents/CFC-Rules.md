@@ -139,7 +139,7 @@ Whenever a character with a <span class="ab ab-auto">●</span> ability takes pa
 ## Back-ups
 You can attach cards from your hand on characters in your ring to raise its power. By doing so you are **backing-up** the character in your ring.
 
-To back-up a character, choose a card in your hand which subtype matches one those listed in the character. Then place the card below that character.
+To back-up a character, choose a card in your hand which subtype matches one those listed in the back-up section of the character card. Then place the card below that character.
 
 Each character has a maximum number of back-ups, equal to the number of subtypes icons in its Back-ups list. Subtype icons indicate the compatible cards that can be used to back-up that character, and only one subtype per icon.  
 *__Example:__ Red Arremer's back-ups list shows one Vampire icon and two Zombie icons. That means that Red Arremer can be backed-up exactly by one Vampire card and two Zombie cards.*
@@ -150,7 +150,7 @@ Characters that just entered the ring and frozen characters can't receive back-u
 
 Players can only back-up once per turn.
 
-Characters used for back-up are not in the ring. If a backed-up character leaves the ring, all their back-ups cards are discarded.
+Characters used for back-up are not considered to be in the ring. If a backed-up character leaves the ring, all their back-ups cards are discarded.
 
 
 ## Attacking and Blocking

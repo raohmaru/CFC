@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8" standalone="yes"?>
-<set name="Core Set" id="aa867ea1-89f8-4154-8e20-2263eddb8354" version="1.5.0" gameId="e3d56d9e-900d-49c6-b6ae-22cbb51be153" gameVersion="0.9.8">
+<set name="Core Set" id="aa867ea1-89f8-4154-8e20-2263eddb8354" version="1.5.1" gameId="e3d56d9e-900d-49c6-b6ae-22cbb51be153" gameVersion="0.9.8">
 	<packaging>
 		<pack name="Booster" id="800ab974-9fee-45c6-8d15-3c995c732cdc">
 			<options>
@@ -274,9 +274,9 @@
 			<property name="Type"         value="Character" />
 			<property name="Subtype"      value="Ninja" />
 			<property name="Rarity"       value="B" />
-			<property name="Ability"      value="&#164; HAYA-GAKE" />
+			<property name="Ability"      value="&#164; DASH" />
 			<property name="Ability Type" value="&#164;" />
-			<property name="Ability Name" value="HAYA-GAKE" />
+			<property name="Ability Name" value="DASH" />
 			<property name="Rules"        value="This character cannot be countered unless defending enemy has two or more characters in their ring." />
 			<property name="BP"           value="500" />
 			<property name="SP"           value="3" />
@@ -454,9 +454,9 @@
 			<property name="Type"         value="Character" />
 			<property name="Subtype"      value="Kami" />
 			<property name="Rarity"       value="B" />
-			<property name="Ability"      value="&#162; BUNSHIN" />
+			<property name="Ability"      value="&#162; ALTER EGOS" />
 			<property name="Ability Type" value="&#162;" />
-			<property name="Ability Name" value="BUNSHIN" />
+			<property name="Ability Name" value="ALTER EGOS" />
 			<property name="Rules"        value="If an enemy has more cards in hand than you, draw cards until you have the same number." />
 			<property name="BP"           value="300" />
 			<property name="SP"           value="4" />
@@ -526,9 +526,9 @@
 			<property name="Type"         value="Character" />
 			<property name="Subtype"      value="Android" />
 			<property name="Rarity"       value="C" />
-			<property name="Ability"      value="&#163; BOUKEN" />
+			<property name="Ability"      value="&#163; EXPLOIT" />
 			<property name="Ability Type" value="&#163;" />
-			<property name="Ability Name" value="BOUKEN" />
+			<property name="Ability Name" value="EXPLOIT" />
 			<property name="Rules"        value="Put a card from your hand on top of an enemy&apos;s deck. Put the bottom card of their deck into your hand." />
 			<property name="BP"           value="600" />
 			<property name="SP"           value="2" />
@@ -1174,9 +1174,9 @@
 			<property name="Type"         value="Character" />
 			<property name="Subtype"      value="Gymnast" />
 			<property name="Rarity"       value="D" />
-			<property name="Ability"      value="&#162; DADAKKO" />
+			<property name="Ability"      value="&#162; TANTRUM" />
 			<property name="Ability Type" value="&#162;" />
-			<property name="Ability Name" value="DADAKKO" />
+			<property name="Ability Name" value="TANTRUM" />
 			<property name="Rules"        value="An enemy cannot play reaction cards this turn." />
 			<property name="BP"           value="300" />
 			<property name="SP"           value="5" />
@@ -1336,9 +1336,9 @@
 			<property name="Type"         value="Character" />
 			<property name="Subtype"      value="Gangster" />
 			<property name="Rarity"       value="B" />
-			<property name="Ability"      value="&#162; SUKEBAN" />
+			<property name="Ability"      value="&#162; LONESOME PRIDE" />
 			<property name="Ability Type" value="&#162;" />
-			<property name="Ability Name" value="SUKEBAN" />
+			<property name="Ability Name" value="LONESOME PRIDE" />
 			<property name="Rules"        value="If you have 0 SP, gain 10 SP." />
 			<property name="BP"           value="300" />
 			<property name="SP"           value="0" />
@@ -1624,9 +1624,9 @@
 			<property name="Type"         value="Character" />
 			<property name="Subtype"      value="Kung-fu" />
 			<property name="Rarity"       value="A" />
-			<property name="Ability"      value="&#162; S.B. KICK" />
+			<property name="Ability"      value="&#162; SPINNING BIRD KICK" />
 			<property name="Ability Type" value="&#162;" />
-			<property name="Ability Name" value="S.B. KICK" />
+			<property name="Ability Name" value="SPINNING BIRD KICK" />
 			<property name="Rules"        value="Reduce your SP to 0. The BP of each other character becomes 100." />
 			<property name="BP"           value="500" />
 			<property name="SP"           value="0" />
@@ -1732,9 +1732,9 @@
 			<property name="Type"         value="Character" />
 			<property name="Subtype"      value="Sumotori" />
 			<property name="Rarity"       value="D" />
-			<property name="Ability"      value="&#162; KAMIZU" />
+			<property name="Ability"      value="&#162; STRENGTH WATER" />
 			<property name="Ability Type" value="&#162;" />
-			<property name="Ability Name" value="KAMIZU" />
+			<property name="Ability Name" value="STRENGTH WATER" />
 			<property name="Rules"        value="Each player draws 2 cards." />
 			<property name="BP"           value="500" />
 			<property name="SP"           value="4" />
@@ -1894,9 +1894,9 @@
 			<property name="Type"         value="Character" />
 			<property name="Subtype"      value="Ninja" />
 			<property name="Rarity"       value="D" />
-			<property name="Ability"      value="&#163; HANA UTA" />
+			<property name="Ability"      value="&#163; FLOWER SONG" />
 			<property name="Ability Type" value="&#163;" />
-			<property name="Ability Name" value="HANA UTA" />
+			<property name="Ability Name" value="FLOWER SONG" />
 			<property name="Rules"        value="Raise 300 points the BP of an enemy character and a character in your ring." />
 			<property name="BP"           value="400" />
 			<property name="SP"           value="4" />
@@ -1912,9 +1912,9 @@
 			<property name="Type"         value="Character" />
 			<property name="Subtype"      value="Guardian" />
 			<property name="Rarity"       value="D" />
-			<property name="Ability"      value="&#163; PSYCHO CHARGE ALPHA" />
+			<property name="Ability"      value="&#163; PSYCHO CHARGE BETA" />
 			<property name="Ability Type" value="&#163;" />
-			<property name="Ability Name" value="PSYCHO CHARGE ALPHA" />
+			<property name="Ability Name" value="PSYCHO CHARGE BETA" />
 			<property name="Rules"        value="Discard a character card. Gain SP equal to that card&apos;s absolute SP." />
 			<property name="BP"           value="400" />
 			<property name="SP"           value="2" />
@@ -1922,7 +1922,7 @@
 			<property name="Backup 2"     value="Guardian" />
 			<property name="Backup 3"     value="Avatar" />
 			<property name="Number"       value="C106" />
-			<property name="Illustrator"  value="Art by Carg" />
+			<property name="Illustrator"  value="Art by Gonzalo Ordóñez Arias" />
 		</card>
 		<card name="Juni" id="87e0bd7f-d86e-4455-8f05-292bb16d4949">
 			<property name="Publisher"    value="Capcom" />
@@ -2236,9 +2236,9 @@
 			<property name="Type"         value="Character" />
 			<property name="Subtype"      value="Student" />
 			<property name="Rarity"       value="C" />
-			<property name="Ability"      value="&#162; FIGHTING SPIRIT" />
+			<property name="Ability"      value="&#162; I WILL DO MY BEST!" />
 			<property name="Ability Type" value="&#162;" />
-			<property name="Ability Name" value="FIGHTING SPIRIT" />
+			<property name="Ability Name" value="I WILL DO MY BEST!" />
 			<property name="Rules"        value="If you have 1000 or less HP, double this character&apos;s BP." />
 			<property name="BP"           value="500" />
 			<property name="SP"           value="3" />
@@ -2830,9 +2830,9 @@
 			<property name="Type"         value="Character" />
 			<property name="Subtype"      value="Ninja" />
 			<property name="Rarity"       value="D" />
-			<property name="Ability"      value="&#162; MITTEI" />
+			<property name="Ability"      value="&#162; ESPIONAGE" />
 			<property name="Ability Type" value="&#162;" />
-			<property name="Ability Name" value="MITTEI" />
+			<property name="Ability Name" value="ESPIONAGE" />
 			<property name="Rules"        value="Draw a card from an enemy&apos;s deck, then put a card from your hand into that enemy&apos;s discard pile." />
 			<property name="BP"           value="400" />
 			<property name="SP"           value="4" />
@@ -2961,7 +2961,7 @@
 			<property name="Ability Name" value="DEALER" />
 			<property name="Rules"        value="Discard your hand. Select a card from your deck and put it into your hand. Then shuffle your deck." />
 			<property name="BP"           value="600" />
-			<property name="SP"           value="1" />
+			<property name="SP"           value="2" />
 			<property name="Backup 1"     value="Karateka" />
 			<property name="Backup 2"     value="Kickboxer" />
 			<property name="Backup 3"     value="Kickboxer" />
@@ -3190,9 +3190,9 @@
 			<property name="Type"         value="Character" />
 			<property name="Subtype"      value="Kami" />
 			<property name="Rarity"       value="A" />
-			<property name="Ability"      value="&#163; YUUGOU POWER" />
+			<property name="Ability"      value="&#163; SUPREME POWER" />
 			<property name="Ability Type" value="&#163;" />
-			<property name="Ability Name" value="YUUGOU POWER" />
+			<property name="Ability Name" value="SUPREME POWER" />
 			<property name="Rules"        value="Select a character. Look through the top of any deck until you reveal a character card with an ability. Selected character gets a copy of that ability. Put the cards revealed this way on the bottom of that deck." />
 			<property name="BP"           value="900" />
 			<property name="SP"           value="-1" />
@@ -3406,9 +3406,9 @@
 			<property name="Type"         value="Character" />
 			<property name="Subtype"      value="Boss" />
 			<property name="Rarity"       value="S" />
-			<property name="Ability"      value="&#163; REPPU KEN" />
+			<property name="Ability"      value="&#163; REPPUKEN" />
 			<property name="Ability Type" value="&#163;" />
-			<property name="Ability Name" value="REPPU KEN" />
+			<property name="Ability Name" value="REPPUKEN" />
 			<property name="Rules"        value="Deals damage equal to its BP to the character in front of it. Return this character to your hand." />
 			<property name="BP"           value="500" />
 			<property name="SP"           value="3" />
@@ -3478,9 +3478,9 @@
 			<property name="Type"         value="Character" />
 			<property name="Subtype"      value="Detective" />
 			<property name="Rarity"       value="D" />
-			<property name="Ability"      value="&#164; KUURON NO YOMI" />
+			<property name="Ability"      value="&#164; NINE DRAGON FORESIGHT" />
 			<property name="Ability Type" value="&#164;" />
-			<property name="Ability Name" value="KUURON NO YOMI" />
+			<property name="Ability Name" value="NINE DRAGON FORESIGHT" />
 			<property name="Rules"        value="Whenever this character is countered, draw a card." />
 			<property name="BP"           value="500" />
 			<property name="SP"           value="3" />
@@ -3506,7 +3506,7 @@
 			<property name="Backup 2"     value="Cursed" />
 			<property name="Backup 3"     value="Kung-fu" />
 			<property name="Number"       value="C194" />
-			<property name="Illustrator"  value="Art by Hiroaki" />
+			<property name="Illustrator"  value="Art by Eisuke Ogura" />
 		</card>
 		<card name="Jae Hoon" id="302c6abd-2245-4b4e-b82d-e4f438f35f15">
 			<property name="Publisher"    value="SNK" />
@@ -3586,9 +3586,9 @@
 			<property name="Type"         value="Character" />
 			<property name="Subtype"      value="Boss" />
 			<property name="Rarity"       value="B" />
-			<property name="Ability"      value="&#164; RISOU" />
+			<property name="Ability"      value="&#164; IDEALIST" />
 			<property name="Ability Type" value="&#164;" />
-			<property name="Ability Name" value="RISOU" />
+			<property name="Ability Name" value="IDEALIST" />
 			<property name="Rules"        value="If an action card would deal damage to a player, it deals that much damage plus 100 to that player." />
 			<property name="BP"           value="700" />
 			<property name="SP"           value="2" />
@@ -4360,9 +4360,9 @@
 			<property name="Type"         value="Character" />
 			<property name="Subtype"      value="Assassin" />
 			<property name="Rarity"       value="C" />
-			<property name="Ability"      value="&#164; DOKUSHU" />
+			<property name="Ability"      value="&#164; POISON BLOOD" />
 			<property name="Ability Type" value="&#164;" />
-			<property name="Ability Name" value="DOKUSHU" />
+			<property name="Ability Name" value="POISON BLOOD" />
 			<property name="Rules"        value="Whenever this character is countered, defending enemy loses 3 SP." />
 			<property name="BP"           value="500" />
 			<property name="SP"           value="3" />
@@ -4612,9 +4612,9 @@
 			<property name="Type"         value="Character" />
 			<property name="Subtype"      value="Cursed" />
 			<property name="Rarity"       value="A" />
-			<property name="Ability"      value="&#162; KURF" />
+			<property name="Ability"      value="&#162; INSANITY" />
 			<property name="Ability Type" value="&#162;" />
-			<property name="Ability Name" value="KURF" />
+			<property name="Ability Name" value="INSANITY" />
 			<property name="Rules"        value="KO a character with BP 800 or greater." />
 			<property name="BP"           value="1000" />
 			<property name="SP"           value="-1" />
@@ -4666,9 +4666,9 @@
 			<property name="Type"         value="Character" />
 			<property name="Subtype"      value="Magician" />
 			<property name="Rarity"       value="B" />
-			<property name="Ability"      value="&#163; PONTA LEAF" />
+			<property name="Ability"      value="&#163; TRANSFORMING LEAF" />
 			<property name="Ability Type" value="&#163;" />
-			<property name="Ability Name" value="PONTA LEAF" />
+			<property name="Ability Name" value="TRANSFORMING LEAF" />
 			<property name="Rules"        value="Discard a character card. This character&apos;s BP becomes same as discarded card&apos;s BP." />
 			<property name="BP"           value="500" />
 			<property name="SP"           value="3" />
@@ -4846,9 +4846,9 @@
 			<property name="Type"         value="Character" />
 			<property name="Subtype"      value="Captain" />
 			<property name="Rarity"       value="C" />
-			<property name="Ability"      value="&#164; SHUNJIN" />
+			<property name="Ability"      value="&#164; SPRING DUST" />
 			<property name="Ability Type" value="&#164;" />
-			<property name="Ability Name" value="SHUNJIN" />
+			<property name="Ability Name" value="SPRING DUST" />
 			<property name="Rules"        value="Nullifies &#162; abilities." />
 			<property name="BP"           value="400" />
 			<property name="SP"           value="4" />
@@ -4882,9 +4882,9 @@
 			<property name="Type"         value="Character" />
 			<property name="Subtype"      value="Samurai" />
 			<property name="Rarity"       value="C" />
-			<property name="Ability"      value="&#164; OBORO" />
+			<property name="Ability"      value="&#164; GLANCING BLADE" />
 			<property name="Ability Type" value="&#164;" />
-			<property name="Ability Name" value="OBORO" />
+			<property name="Ability Name" value="GLANCING BLADE" />
 			<property name="Rules"        value="At the beginning of your turn, it deals 100 damage points to an enemy." />
 			<property name="BP"           value="500" />
 			<property name="SP"           value="3" />
@@ -5008,9 +5008,9 @@
 			<property name="Type"         value="Character" />
 			<property name="Subtype"      value="Mentor" />
 			<property name="Rarity"       value="D" />
-			<property name="Ability"      value="&#164; BYOUMA" />
+			<property name="Ability"      value="&#164; DEMON OF ILL HEALTH" />
 			<property name="Ability Type" value="&#164;" />
-			<property name="Ability Name" value="BYOUMA" />
+			<property name="Ability Name" value="DEMON OF ILL HEALTH" />
 			<property name="Rules"        value="At the end of your turn, it deals 200 damage points to each character." />
 			<property name="BP"           value="200" />
 			<property name="SP"           value="6" />
@@ -5296,9 +5296,9 @@
 			<property name="Type"         value="Character" />
 			<property name="Subtype"      value="Samurai" />
 			<property name="Rarity"       value="B" />
-			<property name="Ability"      value="&#164; GANKOU" />
+			<property name="Ability"      value="&#164; PIERCING EYES" />
 			<property name="Ability Type" value="&#164;" />
-			<property name="Ability Name" value="GANKOU" />
+			<property name="Ability Name" value="PIERCING EYES" />
 			<property name="Rules"        value="At the end of your turn, the character in front of it loses its abilities." />
 			<property name="BP"           value="800" />
 			<property name="SP"           value="0" />
@@ -5324,7 +5324,7 @@
 			<property name="Backup 2"     value="Wrestler" />
 			<property name="Backup 3"     value="Kickboxer" />
 			<property name="Number"       value="C295" />
-			<property name="Illustrator"  value="Art by Jae Hong Kim &amp; eL-HiNO" />
+			<property name="Illustrator"  value="Art by Bossama" />
 		</card>
 		<card name="Kazuki" id="54c61d60-d68a-4ce8-8c2f-65bd0192c26a">
 			<property name="Publisher"    value="SNK" />
@@ -5452,7 +5452,7 @@
 			<property name="Number"       value="C302" />
 			<property name="Illustrator"  value="Art by Senri Kita" />
 		</card>
-		<card name="Rimoruru" id="b428a15e-adf3-4fd1-897e-8dea39b8d9ca">
+		<card name="Rimururu" id="b428a15e-adf3-4fd1-897e-8dea39b8d9ca">
 			<property name="Publisher"    value="SNK" />
 			<property name="Team"         value="Samurai Shodown" />
 			<property name="Type"         value="Character" />
@@ -5470,15 +5470,15 @@
 			<property name="Number"       value="C303" />
 			<property name="Illustrator"  value="Art by Senri Kita" />
 		</card>
-		<card name="Rimoruru (Bust)" id="537aa0e6-9231-423a-8aaa-3b9722cef6ec">
+		<card name="Rimururu (Bust)" id="537aa0e6-9231-423a-8aaa-3b9722cef6ec">
 			<property name="Publisher"    value="SNK" />
 			<property name="Team"         value="Samurai Shodown" />
 			<property name="Type"         value="Character" />
 			<property name="Subtype"      value="Priest" />
 			<property name="Rarity"       value="B" />
-			<property name="Ability"      value="&#163; KONRIL" />
+			<property name="Ability"      value="&#163; ICE SPIRIT" />
 			<property name="Ability Type" value="&#163;" />
-			<property name="Ability Name" value="KONRIL" />
+			<property name="Ability Name" value="ICE SPIRIT" />
 			<property name="Rules"        value="Freeze an enemy character." />
 			<property name="BP"           value="500" />
 			<property name="SP"           value="3" />
@@ -5488,7 +5488,7 @@
 			<property name="Number"       value="C304" />
 			<property name="Illustrator"  value="Art by Shuuhei Kita" />
 		</card>
-		<card name="Rimoruru (Slash)" id="e3c021d7-8ba2-471e-b74e-b5129da32f62">
+		<card name="Rimururu (Slash)" id="e3c021d7-8ba2-471e-b74e-b5129da32f62">
 			<property name="Publisher"    value="SNK" />
 			<property name="Team"         value="Samurai Shodown" />
 			<property name="Type"         value="Character" />
@@ -5512,9 +5512,9 @@
 			<property name="Type"         value="Character" />
 			<property name="Subtype"      value="Samurai" />
 			<property name="Rarity"       value="D" />
-			<property name="Ability"      value="&#164; INEMURI" />
+			<property name="Ability"      value="&#164; NODDING OFF" />
 			<property name="Ability Type" value="&#164;" />
-			<property name="Ability Name" value="INEMURI" />
+			<property name="Ability Name" value="NODDING OFF" />
 			<property name="Rules"        value="This character doesn&apos;t unfreeze during your Activate phase." />
 			<property name="BP"           value="700" />
 			<property name="SP"           value="3" />
@@ -5566,9 +5566,9 @@
 			<property name="Type"         value="Character" />
 			<property name="Subtype"      value="Cursed" />
 			<property name="Rarity"       value="C" />
-			<property name="Ability"      value="&#163; NRG SYPHON" />
+			<property name="Ability"      value="&#163; SNAKE STRIKE" />
 			<property name="Ability Type" value="&#163;" />
-			<property name="Ability Name" value="NRG SYPHON" />
+			<property name="Ability Name" value="SNAKE STRIKE" />
 			<property name="Rules"        value="KO a character in your ring. Gain 200 HP." />
 			<property name="BP"           value="500" />
 			<property name="SP"           value="3" />
@@ -7376,7 +7376,7 @@
 			<property name="Backup 2"     value="" />
 			<property name="Backup 3"     value="" />
 			<property name="Number"       value="R025" />
-			<property name="Illustrator"  value="Art by Bossama" />
+			<property name="Illustrator"  value="Art by L.G" />
 		</card>
 		<card name="Rest" id="2c9000df-e21a-4482-9dfc-8df3f702e29e">
 			<property name="Publisher"    value="" />
