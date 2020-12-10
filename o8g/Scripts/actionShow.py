@@ -24,6 +24,11 @@ def acsh_Debug(args, x = 0, y = 0):
       
 def acsh_isChar(args, x = 0, y = 0):
    card = args[0]
+   return isCharacter(card)
+
+      
+def acsh_charIsInRing(args, x = 0, y = 0):
+   card = args[0]
    return isCharacter(card) and charIsInRing(card)
 
       
@@ -51,7 +56,7 @@ def acsh_AutoPlayOff(args, x = 0, y = 0):
 
       
 def acsh_isCharAndAutoPlayOff(args, x = 0, y = 0):
-   return acsh_isChar(args) and acsh_AutoPlayOff(args)
+   return acsh_charIsInRing(args) and acsh_AutoPlayOff(args)
 
       
 def acsh_canBackup(args, x = 0, y = 0):

@@ -4,7 +4,7 @@
       name="Card Fighters' Clash"
       id="e3d56d9e-900d-49c6-b6ae-22cbb51be153"
       octgnVersion="3.4.256.0"
-      version="0.9.8.762"
+      version="0.9.8.764"
       markersize="20"
       tags="capcom snk fighter"
       description="Card game based on SNK Playmore’s video game SNK vs. Capcom Card Fighters' Clash 2 Expand Edition.
@@ -236,7 +236,7 @@
 			<groupaction menu="Pick a random card (Mine)"  execute="randomPickMine" />
 			<groupaction menu="Pick a random card (Enemy)" execute="randomPickEnemy" />
 		</groupactions>
-		<groupaction menu="Restart game" execute="scoop" showIf="acsh_Debug"/>
+		<groupaction menu="Restart game" execute="restart"/>
 		<groupactions menu="Settings...">
 			<groupaction menu="Switch Play automation ON/OFF" execute="switchPlayAuto" getName="aclb_PlayAuto" />
 			<groupaction menu="Switch Phase automation ON/OFF" execute="switchPhaseAuto" getName="aclb_PhaseAuto" />
@@ -257,7 +257,7 @@
 
 		<cardaction menu="Default action" default="True" execute="defaultAction" getName="aclb_Default" showIf="acsh_isNotBackup" />
 		<cardaction menu="United Attack" execute="unitedAttack" getName="aclb_unitedAttack" showIf="acsh_isActivePlayerAttack" />
-		<cardaction menu="(Un)Freeze" shortcut="Ctrl+F" execute="freeze" getName="aclb_Freeze" showIf="acsh_isChar" />
+		<cardaction menu="(Un)Freeze" shortcut="Ctrl+F" execute="freeze" getName="aclb_Freeze" showIf="acsh_charIsInRing" />
 		<cardactions menu="Combat..." showIf="acsh_AutoPlayOff">
 			<cardaction menu="Attack" shortcut="Ctrl+A" execute="attack" />
 			<cardaction menu="Attack without freezing" shortcut="Ctrl+Shift+A" execute="attackNoFreeze" />
@@ -269,9 +269,9 @@
 			<!-- <cardaction menu="Remove" shortcut="Shift+Del" execute="remove" /> -->
 			<cardaction menu="Return to Hand" shortcut="Ctrl+H" execute="toHand" />
 			<cardaction menu="Put into Deck (Top)" shortcut="Ctrl+D" execute="toDeckTop" />
-			<cardaction menu="Put into Deck (Bottom)" shortcut="Ctrl+Shift+D" execute="toDeckBottom" />
+			<cardaction menu="Put into Deck (Bottom)" shortcut="Ctrl+Alt+D" execute="toDeckBottom" />
 			<cardaction menu="Shuffle into Deck" shortcut="Ctrl+S" batchExecute="shuffleIntoDeck" />
-			<cardaction menu="Change/Swap slot" execute="changeSlot" getName="aclb_ChangeSlot" showIf="acsh_isChar" />
+			<cardaction menu="Change/Swap slot" execute="changeSlot" getName="aclb_ChangeSlot" showIf="acsh_charIsInRing" />
 		</cardactions>
 		<cardactions menu="Abilities..." showIf="acsh_isCharAndAutoPlayOff">
 			<cardaction menu="Lose/Restore abilities" shortcut="Ctrl+X" execute="toggleAbility" getName="aclb_Ability" />
@@ -279,7 +279,7 @@
 			<cardaction menu="Swap abilities" shortcut="Ctrl+Shift+C" execute="swapAbilities" showIf="acsh_hasAbility" />
 			<cardaction menu="Steal ability" execute="stealAbility" />
 		</cardactions>
-		<cardactions menu="BP..." showIf="acsh_isChar">
+		<cardactions menu="BP..." showIf="acsh_charIsInRing">
 			<cardactions menu="Raise BP...">
 				<cardaction menu="+100" shortcut="Ctrl+1" batchExecute="plusBP" />
 				<cardaction menu="+200" shortcut="Ctrl+2" batchExecute="plusBP2" />
@@ -304,7 +304,7 @@
 				<cardaction menu="-900" shortcut="Ctrl+Shift+9" batchExecute="minusBP9" />
 				<cardaction menu="-X" shortcut="Ctrl+Shift+0" batchExecute="minusBPX" />
 			</cardactions>
-			<cardaction menu="Change BP..." shortcut="Ctrl+Alt+0" batchExecute="changeBP" showIf="acsh_isChar" />
+			<cardaction menu="Change BP..." shortcut="Ctrl+Alt+0" batchExecute="changeBP" />
 		</cardactions>
 		<cardaction menu="Add markers..." shortcut="Ctrl+M" batchExecute="addMarkerAction" showIf="acsh_AutoPlayOff" />
 		<cardaction menu="Transform" shortcut="Ctrl+Shift+T" batchExecute="transformCards" showIf="acsh_AutoPlayOff" />
@@ -326,7 +326,7 @@
 			<groupaction menu="Discard all" shortcut="Ctrl+Shift+Del" execute="discardAll" />
 			<groupactions menu="Move all cards to...">
 				<groupaction menu="Deck (Top)" shortcut="Ctrl+D" execute="toDeckTopAll" />
-				<groupaction menu="Deck (Bottom)" shortcut="Ctrl+Shift+D" execute="toDeckBottomAll" />
+				<groupaction menu="Deck (Bottom)" shortcut="Ctrl+Alt+D" execute="toDeckBottomAll" />
 				<groupaction menu="Shuffle into Deck" shortcut="Ctrl+S" execute="shuffleIntoDeck" />
 			</groupactions>
 			<cardaction menu="Play card" default="True" shortcut="Ctrl+P" execute="play" />
@@ -335,7 +335,7 @@
 			<cardactions menu="Move...">
 				<cardaction menu="Put into Arena face down" shortcut="Ctrl+F" execute="toTableFaceDown" />
 				<cardaction menu="Put into Deck (Top)" shortcut="Ctrl+D" execute="toDeckTop" />
-				<cardaction menu="Put into Deck (Bottom)" shortcut="Ctrl+Shift+D" execute="toDeckBottom" />
+				<cardaction menu="Put into Deck (Bottom)" shortcut="Ctrl+Alt+D" execute="toDeckBottom" />
 				<cardaction menu="Shuffle into Deck" shortcut="Ctrl+S" batchExecute="shuffleIntoDeck" />
 			</cardactions>
 			<cardaction menu="Transform" shortcut="Ctrl+Shift+T" batchExecute="transformCards" showIf="acsh_AutoPlayOff" />
@@ -374,28 +374,28 @@
 			<groupaction menu="Swap with Deck" shortcut="Ctrl+Alt+S" execute="swapWithDeck" />
 			<groupaction menu="Pick a random card" shortcut="Ctrl+Alt+R" execute="randomPick" showIf="acsh_AutoPlayOff" />
 			<groupactions menu="Move all cards to...">
-				<groupaction menu="Hand" shortcut="Ctrl+Shift+H" execute="toHandAll" />
-				<groupaction menu="Deck (Top)" shortcut="Ctrl+Shift+D" execute="toDeckTopAll" />
-				<groupaction menu="Deck (Bottom)" shortcut="Ctrl+Alt+Shift+D" execute="toDeckBottomAll" />
-				<groupaction menu="Removed pile" shortcut="Shift+Del" execute="removeAll" />
+				<groupaction menu="Hand" execute="toHandAll" />
+				<groupaction menu="Deck (Top)" execute="toDeckTopAll" />
+				<groupaction menu="Deck (Bottom)" execute="toDeckBottomAll" />
+				<groupaction menu="Removed pile" execute="removeAll" />
 			</groupactions>
 			<cardaction menu="Return card to Hand" shortcut="Ctrl+H" default="True" execute="toHand" />
 			<cardaction menu="Put into Deck (Top)" shortcut="Ctrl+D" execute="toDeckTop" />
-			<cardaction menu="Put into Deck (Bottom)" shortcut="Ctrl+Shift+D" execute="toDeckBottom" />
+			<cardaction menu="Put into Deck (Bottom)" shortcut="Ctrl+Alt+D" execute="toDeckBottom" />
 			<cardaction menu="Put into Removed Pile" shortcut="Shift+Del" execute="remove" />
 		</group>
 		<group name="Removed pile" visibility="all"  viewState="pile" icon="Resources/Groups/removed.png" collapsed="True">
 			<groupactions menu="Move All Cards To...">
-				<groupaction menu="Hand" shortcut="Ctrl+Shift+H" execute="toHandAll" />
-				<groupaction menu="Deck (Top)" shortcut="Ctrl+Shift+D" execute="toDeckTopAll" />
-				<groupaction menu="Deck (Bottom)" shortcut="Ctrl+Alt+Shift+D" execute="toDeckBottomAll" />
-				<groupaction menu="Discard pile" shortcut="Ctrl+Shift+Del" execute="discardAll" />
+				<groupaction menu="Hand" execute="toHandAll" />
+				<groupaction menu="Deck (Top)" execute="toDeckTopAll" />
+				<groupaction menu="Deck (Bottom)" execute="toDeckBottomAll" />
+				<groupaction menu="Discard pile" execute="discardAll" />
 			</groupactions>
 			<cardaction menu="Return card to Hand" shortcut="Ctrl+H" default="True" execute="removedDefaultAction" getName="aclb_RemovedDefault" />
 			<cardaction menu="Play as backup" execute="backup" showIf="acsh_isCharAndPlayRemoved" />
 			<cardaction menu="Put card into Discard pile" shortcut="Del" execute="discard" />
 			<cardaction menu="Put into Deck (Top)" shortcut="Ctrl+D" execute="toDeckTop" />
-			<cardaction menu="Put into Deck (Bottom)" shortcut="Ctrl+Shift+D" execute="toDeckBottom" />
+			<cardaction menu="Put into Deck (Bottom)" shortcut="Ctrl+Alt+D" execute="toDeckBottom" />
 		</group>
 	</player>
 
