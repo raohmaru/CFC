@@ -173,6 +173,11 @@ def abl_cantattack_added(card, restr = None):
       cancelAttack(card)
 
 
+def abl_cantblock_added(card, restr = None):
+   if isBlocking(card):
+      cancelBlock(card)
+
+
 def abl_rush_added(card, restr = None):
    if hasMarker(card, 'Just Entered'):
       removeMarker(card, 'Just Entered')
@@ -180,7 +185,7 @@ def abl_rush_added(card, restr = None):
 
 RulesAbilities.register('unblockable',     Hooks.CanBeBlocked)
 RulesAbilities.register('cantattack',      Hooks.BeforeAttack, onAdded = abl_cantattack_added)
-RulesAbilities.register('cantblock',       Hooks.BeforeBlock)
+RulesAbilities.register('cantblock',       Hooks.BeforeBlock, onAdded = abl_cantblock_added)
 RulesAbilities.register('cantplayac',      Hooks.BeforePlayAC)
 RulesAbilities.register('cantplayre',      Hooks.BeforePlayRE)
 RulesAbilities.register('preventpierce',   Hooks.PreventPierce)
