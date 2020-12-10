@@ -770,7 +770,7 @@ def alignCard(card, x=None, y=None, slotIdx=None):
          y += oy * idx
          z = lead.index - 1 * idx
       # Align blockers
-      elif hasMarker(card, 'Counter-attack'):
+      elif isBlocking(card):
          blockers = getGlobalVar('Blockers')         
          for i in blockers:
             if blockers[i] == card._id:
@@ -1294,6 +1294,10 @@ def isFrozen(card):
 
 def isAttacking(card, inUA = True):
    return hasMarker(card, 'Attack') or inUA and hasMarker(card, 'United Attack')
+
+
+def isBlocking(card):
+   return hasMarker(card, 'Counter-attack')
 
 
 def inUAttack(card):

@@ -325,6 +325,8 @@ def overrideCardsMoved(args):
                # Play a character card
                if isCharacter(card):
                   slotIdx = getDropSlotIndex(x)
+                  if slotIdx == None:
+                     continue
                   myRing = getGlobalVar('Ring', me)
                   if myRing[slotIdx] == None:
                      play(card, slotIdx=slotIdx)
@@ -374,12 +376,12 @@ def overrideCardsMoved(args):
                      oppRing = getGlobalVar('Ring', getOpp())
                      if oppRing[slotIdx] != None:
                         targets = [Card(oppRing[slotIdx])]
-                     if hasMarker(card, 'Counter-attack'):
+                     if isBlocking(card):
                         cancelBlock(card, True)
                      block(card, targets=targets)
                      continue
                   # Cancel block
-                  elif hasMarker(card, 'Counter-attack'):
+                  elif isBlocking(card):
                      cancelBlock(card)
                      continue
          card.moveToTable(x, y, not faceup)

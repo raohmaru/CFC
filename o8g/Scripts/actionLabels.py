@@ -37,7 +37,7 @@ def aclb_Default(args, x = 0, y = 0):
             return "Attack"
          
       if (not me.isActive or tutorial) and phaseIdx == BlockPhase:
-         if hasMarker(card, 'Counter-attack'):
+         if isBlocking(card):
             return "Remove from combat"
          else:
             return "Counter-attack"
