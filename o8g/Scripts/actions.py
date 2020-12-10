@@ -133,11 +133,11 @@ def setup(group = table, x = 0, y = 0, silent = False):
       # me.setActive()
 
 
-def scoop(group=None, x=0, y=0):
+def restart(group=None, x=0, y=0):
 # Reset the game
    debug(">>> reset()")
    mute()
-   if group != None and not confirm("Are you sure you want to reset the game?"):
+   if group != None and not confirm("Are you sure you want to restart the game?"):
       return
    resetAll()
    myCards = (card for card in table
@@ -150,9 +150,9 @@ def scoop(group=None, x=0, y=0):
    toOwnerDeck(me.piles['Removed pile'])
    rnd(100, 10000) # Delays the next action until all animation is done
    setup()
-   notify("{} resets the game.".format(me))
+   notify("{} restarts the game.".format(me))
    if group != None and len(players) > 1:
-      remoteCall(players[1], 'scoop', [])
+      remoteCall(players[1], 'restart', [])
 
 
 def flipCoin(group = None, x = 0, y = 0):
