@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<deck game="e3d56d9e-900d-49c6-b6ae-22cbb51be153" sleeveid="0">
+  <section name="Main" shared="False">
+	<card qty="1" id="d646ffc5-bec9-4e98-b799-510b4e1ea464">Pyron</card>
+	<card qty="1" id="65c91e9d-761c-4978-ba3e-6e05026f080e">Q-Bee</card>
+	<card qty="1" id="6c8ec7ed-2442-4847-8f38-8c8f5967b2ba">Rikuo</card>
+	<card qty="1" id="487f66ee-c717-41a1-ad2e-31d3fe0dd424">Kenji</card>
+	<card qty="1" id="559c6131-7a72-47c7-9669-6a6c23a48cb7">Tessa</card>
+	<card qty="1" id="62067a74-53f9-4bb0-872c-f77e735fc826">Eiji</card>
+	<card qty="1" id="fc2e9e7c-98dc-4d46-b3ad-0f3ede2fd166">Kasumi</card>
+	<card qty="1" id="513f441d-fcec-4064-bbe6-152967cf38b8">King</card>
+	<card qty="1" id="d14dd0ed-cba6-404d-b7d1-e25c9b5c78ed">Mr. Big</card>
+	<card qty="1" id="06c4b88f-8634-4b67-87d0-c0406fa268f1">Mr. Karate</card>
+	<card qty="1" id="952dc83f-9f22-4993-a824-707b0682753e">Ryo</card>
+	<card qty="1" id="d66622dd-27e3-4e3b-bb1f-245907ee3b66">Ryo Sakazaki</card>
+	<card qty="1" id="3e1736d4-354b-4a5b-962a-4aea0a9e1a4b">Yuri</card>
+	<card qty="1" id="9aa78672-8e22-488a-ae4a-ce6c433f3216">Gai Tendo</card>
+	<card qty="1" id="d5f9a649-cae0-46dc-b22c-139128ac8d52">Takato</card>
+	<card qty="1" id="067d592e-2ddf-43f5-82cc-25c70d29a996">God Rugal</card>
+	<card qty="1" id="3d044b8c-bac6-4b9a-bcf5-4868538de313">Alfred</card>
+	<card qty="1" id="299685df-122c-4fbe-a8dd-05ceaaf41055">Andy</card>
+	<card qty="1" id="5ca6f345-403b-4ad9-973a-673b8cd1cdb8">B. Jenet</card>
+	<card qty="1" id="2e6f329d-9a1e-45b7-864d-67feeb5eade2">Billy</card>
+	<card qty="1" id="6814ab83-c21d-4df9-8d07-e977ee27f131">Blue Mary</card>
+	<card qty="1" id="510c1217-5b95-467e-ae49-93fd5e726797">Duck King</card>
+	<card qty="1" id="f3557575-c61e-42fd-9442-9413cea64bdf">Gato</card>
+	<card qty="1" id="59253bbd-0dbd-4d43-9a2b-7f01b4bc1f76">Geese</card>
+	<card qty="1" id="526c4102-b6da-4880-91dc-1b9b007d4cc5">Geese Howard</card>
+	<card qty="1" id="ae301f49-6e9d-4ca3-aba8-54bb5142e46d">Grant</card>
+	<card qty="1" id="d5038a1d-55a1-4d85-a43e-52eb2b8d7b09">Griffon Mask</card>
+	<card qty="1" id="75e57026-e4fe-4470-88b2-22268ddd6b61">Hokutomaru</card>
+	<card qty="1" id="782a8773-1837-4d7a-8629-30ff08ccddca">Hon Fu</card>
+	<card qty="1" id="928b8c60-483a-467c-9c11-e858009ff362">Hotaru</card>
+	<card qty="1" id="b77da717-47d7-4dc1-bb79-cddecf0c5af5">Jin Chonshu</card>
+	<card qty="1" id="8cb08852-491e-4a34-9589-79bf3959ba63">Joe</card>
+	<card qty="1" id="e81e9366-b3e1-45a6-b010-bd02934b2efd">Kain</card>
+	<card qty="1" id="38fcbdaf-0025-4692-adac-be99aa1be750">Kim</card>
+	<card qty="1" id="f286cc08-ae18-4a40-bd66-17aedcfd9267">Krauser</card>
+	
+	<card qty="1" id="26fa7e0e-eb86-40d5-b5ab-39723fd67e43">Grenade</card>
+	<card qty="1" id="f6a32199-62df-49b5-8544-ae7a86915cbe">Makeover</card>
+	<card qty="1" id="fd8db3d4-7df1-45fb-8712-5c35bb5acb3f">Management</card>
+	<card qty="1" id="5d3bc1c3-692b-4d7c-9781-68fcdc0bd96e">Mega crush</card>
+	<card qty="1" id="7a394ff3-727d-48d9-91a9-b9cba90510b6">Mischief</card>
+	<card qty="1" id="51a47b27-abf3-4219-a241-c72bd23b178b">Morph</card>
+	<card qty="1" id="69cf51ab-090c-4c60-8b58-b71d6455f0a2">No tricks</card>
+	<card qty="1" id="6c6fd560-017e-4819-accf-a66faef84218">Nothingness</card>
+	<card qty="1" id="153e2c26-7329-4a5e-a405-43191f75a2ac">Peacemaker</card>
+	<card qty="1" id="e8c43fc9-a217-49e6-9847-9c9ced63b0ac">Pester</card>
+	
+    <card qty="1" id="5972ea54-137c-41a7-a1eb-b9d9cd0ecfe5">Grandmaster</card>
+	<card qty="1" id="372525df-1345-47cc-ae2f-2fe34a226ac9">Held back</card>
+	<card qty="1" id="fd8b647c-9fc7-4c3a-bc91-ac5266e50a55">Lend a hand</card>
+	<card qty="1" id="21db37a5-3483-41d4-9c6a-529071fce7ba">Lucky card</card>
+	<card qty="1" id="2b3ad6cd-61d8-4786-9268-5963491a1ffa">Manari's song</card>
+  </section>
+  <notes><![CDATA[]]></notes>
+</deck>

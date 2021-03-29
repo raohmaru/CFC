@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<deck game="e3d56d9e-900d-49c6-b6ae-22cbb51be153" sleeveid="0">
+  <section name="Main" shared="False">
+	<card qty="1" id="e3c021d7-8ba2-471e-b74e-b5129da32f62">Rimoruru (Slash)</card>
+	<card qty="1" id="0f9e815a-d71a-4eba-9264-6e65c05fe8d7">Seishiro</card>
+	<card qty="1" id="235b8800-ad31-4224-93c2-4713ae4c45ec">Shiki</card>
+	<card qty="1" id="9d836743-0d5e-4b4e-951a-cbe216558e6f">Shiki (Bust)</card>
+	<card qty="1" id="de04d64c-9d97-490f-a8c3-7469416bfc85">Shiki (Slash)</card>
+	<card qty="1" id="07fb9dba-ef83-4a69-a700-11cff3e313f3">Shizumaru</card>
+	<card qty="1" id="ce62aaad-d114-4ce6-842f-7f6ed39f1afa">Sougetsu</card>
+	<card qty="1" id="8bb3dd10-bb0f-4380-9772-c97ba0428378">Ukyo</card>
+	<card qty="1" id="e0c2ac67-1925-4e63-b9ae-9dcbc7ff229f">The Ump</card>
+	<card qty="1" id="2f8ecb64-d513-4e67-b537-5acef9de6c68">Athena</card>
+	<card qty="1" id="0a8f39ff-6b21-4805-bafb-27c3f38d1986">Regina</card>
+	<card qty="1" id="525d8365-c90e-491f-9811-1f23efbafccb">Cody (Alpha)</card>
+	<card qty="1" id="e9c8e4ca-7d41-43c5-b427-f7e47125052e">Edge</card>
+	<card qty="1" id="c6ee2630-7f1a-4ac1-95f3-be8db970e855">Omokane Saki</card>
+	<card qty="1" id="faa72b01-cf50-4cff-8b70-13245a7fa5df">Zaki</card>
+	<card qty="1" id="9c383f6b-2813-407f-be87-f9746fbb6d18">Dhalsim</card>
+	<card qty="1" id="63df795b-236c-4449-aa96-287a836ed648">Remy</card>
+	<card qty="1" id="e4ae5562-a510-4a1d-98e8-59a91dc1cb8c">Twelve</card>
+    <card qty="1" id="3a0e4fbc-6895-43e0-97d1-e1f667aca271">J. Talbain</card>
+	<card qty="1" id="d646ffc5-bec9-4e98-b799-510b4e1ea464">Pyron</card>
+	<card qty="1" id="513f441d-fcec-4064-bbe6-152967cf38b8">King</card>
+	<card qty="1" id="6814ab83-c21d-4df9-8d07-e977ee27f131">Blue Mary</card>
+	<card qty="1" id="e81e9366-b3e1-45a6-b010-bd02934b2efd">Kain</card>
+	<card qty="1" id="8b6c2617-7c58-459c-b09f-63c86556d17e">Yamazaki</card>
+	<card qty="1" id="eba4b6d7-1b14-4112-8e1e-6bee2017d338">Jhun Hoon</card>
+	<card qty="1" id="b25a11ac-1166-4868-990a-5113350f1502">Saishu</card>
+	<card qty="1" id="ba027d6e-4bc2-4c0d-8e97-4ad1c3baf24c">Wild Leona</card>
+	<card qty="1" id="0eeaf712-f3c6-4696-93cc-615c081b6cdd">Yashiro</card>
+	<card qty="1" id="03416225-8ed1-48fc-8178-c82559f61dcd">Akari (Power)</card>
+	<card qty="1" id="48aba37c-374b-4362-b30a-d41fa9727b2c">Asura</card>
+	<card qty="1" id="bfb737c0-4dcf-4b0c-b201-45857c83016b">Haohmaru (WR)</card>
+	<card qty="1" id="537aa0e6-9231-423a-8aaa-3b9722cef6ec">Rimoruru (Bust)</card>
+	<card qty="1" id="e367c942-342e-4434-a2d1-dd7188b2d15a">Mega Man X</card>
+	<card qty="1" id="fb3d3a49-a1de-4887-9ea4-ec761426471e">Hyo</card>
+	<card qty="1" id="a7b36a01-dbb4-4442-aaf8-e415611581a9">Shoma</card>
+	
+	<card qty="1" id="4d7fd45a-aa2a-48e3-856b-cfb04e203e3b">Storm rush</card>
+	<card qty="1" id="c977a855-1358-4dab-870f-dee886f929c3">Study</card>
+	<card qty="1" id="6504b1a3-e432-4c6c-845b-6ca72500b458">Substitute</card>
+	<card qty="1" id="5e2211a0-e52e-4b7b-b03d-f6ecb3660bb0">Successor</card>
+	<card qty="1" id="83c33aa8-5981-4352-8107-cbb7e05547ec">Synchro</card>
+	<card qty="1" id="fa4ee219-8264-41bc-b8a3-23a24df61d9a">Tooptadon</card>
+	<card qty="1" id="2d3891a7-6fc0-4793-9122-5abfc0bb3e22">Tri-Quiz</card>
+
+	<card qty="1" id="0a951ced-4508-40b9-8350-5dafb6b7e8aa">Super Art select</card>
+	<card qty="1" id="3507e173-6329-4541-99fb-f4b81a482308">Suspicious</card>
+	<card qty="1" id="76c3d3b5-b3bc-41b1-8fef-d9c005269646">Three sisters</card>
+	<card qty="1" id="48a11103-e08d-4237-952e-bf4cdc2868f7">Time bomb</card>
+	<card qty="1" id="f4df6ee6-2fcd-4ba1-b86f-59d5028eb96b">Vacation</card>
+	<card qty="1" id="1e54d73a-4795-4eae-b1d1-c0ca5d075fcf">Waiting in vain</card>
+	<card qty="1" id="c6acfab6-c7cb-442e-87f0-432779af5ad9">Wanna gimme</card>
+	<card qty="1" id="2298624c-1eeb-4f71-b028-b0118ea614ac">Who's taller</card>
+  </section>
+  <notes><![CDATA[]]></notes>
+</deck>

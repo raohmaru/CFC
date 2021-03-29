@@ -1,0 +1,33 @@
+﻿<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<deck game="e3d56d9e-900d-49c6-b6ae-22cbb51be153">
+  <section name="Main" shared="False">
+    <card qty="1" id="ab631979-20d8-4789-85be-149b414d1ef1">Crossover</card>
+    <card qty="3" id="e8c43fc9-a217-49e6-9847-9c9ced63b0ac">Pester</card>
+    <card qty="2" id="5ed66b91-2f3a-4fae-a1ba-ceb59040ea8c">Round 2</card>
+    <card qty="1" id="0035d193-fe4b-4927-9dc1-6124b26768bc">Shopping</card>
+    <card qty="3" id="b95b2104-d184-43cc-bb04-b3eb096c6fca">Fight!</card>
+    <card qty="1" id="5972ea54-137c-41a7-a1eb-b9d9cd0ecfe5">Grandmaster</card>
+    <card qty="3" id="27befc33-c2be-40d2-8839-bb8ee41f8d95">Overheat</card>
+    <card qty="3" id="130c068d-bf62-4013-8b17-32af4a3f6994">Face off</card>
+    <card qty="1" id="af43872e-e47d-4fe0-9b55-aedd8a0d0fc7">Jin Saotome</card>
+    <card qty="2" id="66d424bb-e5da-4f61-b063-61efd1fc61a6">Damn D</card>
+    <card qty="1" id="7717e285-f824-4bfa-bd76-c0039c97190e">Mega Man</card>
+    <card qty="2" id="53eafaec-68bc-4fe8-88ee-be578a785f5c">Felicia</card>
+    <card qty="2" id="929afc04-8fc6-4419-80ec-0c9ead5ea105">Q</card>
+    <card qty="2" id="8cb08852-491e-4a34-9589-79bf3959ba63">Joe</card>
+    <card qty="3" id="3036ebcc-7b49-42a5-89f3-118399f34d47">E. Honda</card>
+    <card qty="3" id="70df22cd-ebe5-461e-a017-26879f2cb71f">Blanka</card>
+    <card qty="2" id="09dfc071-ce3a-448f-86fe-502bd5d1392b">Kyoko</card>
+    <card qty="3" id="eba4b6d7-1b14-4112-8e1e-6bee2017d338">Jhun Hoon</card>
+    <card qty="1" id="9600fa0f-7974-400d-850e-4590dce548e3">Al &amp; Ivan</card>
+    <card qty="2" id="cb1440e1-42f7-47e5-92d5-2246d399bd64">Rain</card>
+    <card qty="1" id="51ad9363-8ba8-447b-bed5-b6e0e5f85ce8">Rosa</card>
+    <card qty="2" id="38fcbdaf-0025-4692-adac-be99aa1be750">Kim</card>
+    <card qty="1" id="f7a00823-d37b-48eb-b2f6-c530623a2a9c">Abduction</card>
+    <card qty="1" id="14a057f5-be46-4ec0-abee-a6c573f4711e">Heritage</card>
+    <card qty="2" id="ab45b64f-e231-44ca-83ad-bd4d89bcb851">Clone Zero</card>
+    <card qty="1" id="e590d588-84af-4c26-8dbe-e28d5b626747">Amakusa</card>
+    <card qty="1" id="e778bf71-2f0f-4094-b096-b443fdbac8de">Bishamon</card>
+  </section>
+  <notes><![CDATA[]]></notes>
+</deck>

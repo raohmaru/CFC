@@ -1,0 +1,34 @@
+﻿<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<deck game="e3d56d9e-900d-49c6-b6ae-22cbb51be153">
+  <section name="Main" shared="False">
+    <card qty="3" id="1ef4cecb-c096-47e0-995f-a20b6b75325a">Engokogeki</card>
+    <card qty="2" id="26fa7e0e-eb86-40d5-b5ab-39723fd67e43">Grenade</card>
+    <card qty="1" id="98e1e7ed-8c66-4105-a2fc-1290036c0f70">Earth's pike</card>
+    <card qty="2" id="11fa47f0-9573-48ca-9a4a-7aa16a4ec76e">Psyche up!</card>
+    <card qty="1" id="0035d193-fe4b-4927-9dc1-6124b26768bc">Shopping</card>
+    <card qty="2" id="58580e2e-1f48-4210-a68f-57cd900b1036">Lunch rush</card>
+    <card qty="1" id="9610668a-18c9-4448-8216-f40119a03269">Lucky kitty</card>
+    <card qty="1" id="b95b2104-d184-43cc-bb04-b3eb096c6fca">Fight!</card>
+    <card qty="1" id="0d7b5186-92db-4d61-8309-bfbd593df160">School's out</card>
+    <card qty="2" id="27befc33-c2be-40d2-8839-bb8ee41f8d95">Overheat</card>
+    <card qty="2" id="76c3d3b5-b3bc-41b1-8fef-d9c005269646">Three sisters</card>
+    <card qty="1" id="55dd552f-0c26-4bc1-819a-92cf32f285ae">Ferocity</card>
+    <card qty="3" id="0fa9c81d-eee6-47e9-9c9b-d4d802bca0c4">Kyo</card>
+    <card qty="2" id="37af4395-3d1c-470a-b8e4-cefc39eaa27a">Kyo Kusanagi</card>
+    <card qty="3" id="b25a11ac-1166-4868-990a-5113350f1502">Saishu</card>
+    <card qty="1" id="137d17e0-7c5a-4216-9085-21f05a744fd8">Gen</card>
+    <card qty="2" id="9aac7225-cffe-452c-8b8f-e2382ff7219c">Moriya</card>
+    <card qty="2" id="0b2c9e8a-5f9b-4ab5-a9b3-414f1154ce24">Jill</card>
+    <card qty="1" id="163c9ec0-61d2-45ae-842b-15aba8cc61f8">Jill Valentine</card>
+    <card qty="2" id="fc2e9e7c-98dc-4d46-b3ad-0f3ede2fd166">Kasumi</card>
+    <card qty="2" id="e81e9366-b3e1-45a6-b010-bd02934b2efd">Kain</card>
+    <card qty="2" id="b428a15e-adf3-4fd1-897e-8dea39b8d9ca">Rimoruru</card>
+    <card qty="2" id="51ad9363-8ba8-447b-bed5-b6e0e5f85ce8">Rosa</card>
+    <card qty="1" id="cb1440e1-42f7-47e5-92d5-2246d399bd64">Rain</card>
+    <card qty="1" id="928b8c60-483a-467c-9c11-e858009ff362">Hotaru</card>
+    <card qty="3" id="09dfc071-ce3a-448f-86fe-502bd5d1392b">Kyoko</card>
+    <card qty="2" id="38fcbdaf-0025-4692-adac-be99aa1be750">Kim</card>
+    <card qty="2" id="38d6c7a8-7463-4aa6-88c4-13f725ada0be">Chris Redfield</card>
+  </section>
+  <notes><![CDATA[]]></notes>
+</deck>

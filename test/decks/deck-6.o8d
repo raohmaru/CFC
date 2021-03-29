@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<deck game="e3d56d9e-900d-49c6-b6ae-22cbb51be153" sleeveid="0">
+  <section name="Main" shared="False">
+	<card qty="1" id="9c405677-1d42-4eb7-bb44-7b21c1d84859">Akari</card>
+	<card qty="1" id="03416225-8ed1-48fc-8178-c82559f61dcd">Akari (Power)</card>
+	<card qty="1" id="299c01d7-37f0-41de-81f3-712b8dd63f11">Akari (Speed)</card>
+	<card qty="1" id="95675af9-956c-4b27-b7e1-a59b10a0cb7c">Akari Ichijou</card>
+	<card qty="1" id="da18d80a-ffa3-4df4-a3a7-7779bb5ad577">Awakened Kaede</card>
+	<card qty="1" id="57de9ee8-5791-4696-96a1-057bf866ed9f">Kagami</card>
+	<card qty="1" id="f3ddafb5-e6b5-4d07-b883-23cfe6ea6782">Kojiroh</card>
+	<card qty="1" id="9aac7225-cffe-452c-8b8f-e2382ff7219c">Moriya</card>
+	<card qty="1" id="34f11eff-b3e2-4ac9-b505-a274eb5291c9">Mukuro</card>
+	<card qty="1" id="781bd288-e9bf-4cf1-b630-0883a2834d0b">Setsuna</card>
+	<card qty="1" id="ddbfda17-0ba7-422e-9ed3-376a0ba64644">Shigen</card>
+	<card qty="1" id="f71ccccf-4c2e-4adf-a409-b8ab8e17c8f1">Wanderer</card>
+	<card qty="1" id="48a553a1-fd40-482a-9161-86be2e29f246">Yuki</card>
+	<card qty="1" id="5ccdb31f-f7f8-4f89-916f-74e9db9130cb">Zantetsu</card>
+	<card qty="1" id="04660547-18c8-4eb4-96b5-2a977dda0dcb">Eri</card>
+	<card qty="1" id="fa585a56-2a8f-48ff-9cc5-1234fecb4b09">Marco</card>
+	<card qty="1" id="e590d588-84af-4c26-8dbe-e28d5b626747">Amakusa</card>
+	<card qty="1" id="48aba37c-374b-4362-b30a-d41fa9727b2c">Asura</card>
+	<card qty="1" id="483b9441-d435-43a3-beb7-61e41c9e4045">Cham Cham</card>
+	<card qty="1" id="40ece65c-0c59-4000-ab13-d948c4012f84">Gaira</card>
+	<card qty="1" id="494cb024-ef21-4019-98fe-9afc4355e424">Galford</card>
+	<card qty="1" id="1c7bc861-c4e0-4127-9fc8-fd56d06ec965">Genan</card>
+	<card qty="1" id="9a52f604-bf68-4ef4-934b-1c984877d484">Genjuro</card>
+	<card qty="1" id="90c1ccf4-999a-4567-92e4-0f7602b7799e">Hanzo</card>
+    <card qty="1" id="30eaa33f-ca59-4233-81b8-8fe3f0db94dd">Haohmaru</card>
+	<card qty="1" id="bfb737c0-4dcf-4b0c-b201-45857c83016b">Haohmaru (WR)</card>
+	<card qty="1" id="54c61d60-d68a-4ce8-8c2f-65bd0192c26a">Kazuki</card>
+	<card qty="1" id="7b2a974c-de9b-4f42-a8da-f15b68dbc41c">Kyoshiro</card>
+	<card qty="1" id="ae20ea05-0df7-4360-99a5-11a7dfe44b9f">Mikoto</card>
+	<card qty="1" id="248517e9-d7a0-450d-9281-df91d20f68ab">Nakoruru</card>
+	<card qty="1" id="f3f105e5-a0b1-4b4b-9f88-5932182d3ace">Nakoruru (Bust)</card>
+	<card qty="1" id="d231ed6e-8f7c-417e-8826-64f9297b395f">Nakoruru (Slash)</card>
+	<card qty="1" id="37ccd6b2-dadc-48e2-91fa-da6c823293e9">Nicotine</card>
+	<card qty="1" id="b428a15e-adf3-4fd1-897e-8dea39b8d9ca">Rimoruru</card>
+	<card qty="1" id="537aa0e6-9231-423a-8aaa-3b9722cef6ec">Rimoruru (Bust)</card>
+	<card qty="1" id="faa72b01-cf50-4cff-8b70-13245a7fa5df">Zaki</card>
+
+	<card qty="1" id="ac01bbbe-583e-46ae-b26c-3c25eb8f0779">Seraphic wing</card>
+	<card qty="1" id="0e1b4f81-93e9-44be-ab31-7aed8cb354d0">Shadow</card>
+	<card qty="1" id="0035d193-fe4b-4927-9dc1-6124b26768bc">Shopping</card>
+	<card qty="1" id="7302a3d9-0ee7-4a5e-93aa-b93cc44b6463">Showtime!</card>
+	<card qty="1" id="62a6c4e0-51d0-4a23-9854-9ba0a25bc751">Slaughter</card>
+	<card qty="1" id="37b88c5f-026b-40e4-bfd2-e5b7b83a7394">SP partner</card>
+	<card qty="1" id="77792408-ba0f-4e5f-a079-f7eca5955543">Stifler</card>
+	
+	<card qty="1" id="2c9000df-e21a-4482-9dfc-8df3f702e29e">Rest</card>
+	<card qty="1" id="eaf346c3-d2e6-4066-adae-e1678746673d">Robber</card>
+	<card qty="1" id="91e441cc-0f1f-4b01-a2b0-94678d6f0b56">Robot punch</card>
+	<card qty="1" id="1722e9d6-30e1-4355-9aa3-9b80b765754a">Scan</card>
+	<card qty="1" id="30fdfea5-4781-40b8-a8e7-7830fba3bcd6">Snared</card>
+	<card qty="1" id="68eaee28-a00a-480f-b8e5-e14d2a8f102c">SP leak</card>
+	<card qty="1" id="f9a93f64-d331-4aa8-b58d-c213c8dfd742">Striker</card>
+  </section>
+  <notes><![CDATA[]]></notes>
+</deck>

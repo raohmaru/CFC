@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<deck game="e3d56d9e-900d-49c6-b6ae-22cbb51be153" sleeveid="0">
+  <section name="Main" shared="False">
+    <card qty="1" id="55b0c9ff-4b3a-4b08-adc1-f1b5e03adef9">Nina</card>
+	<card qty="1" id="48a07b48-7415-42e7-a3cd-6bae37c56489">Ryu no Senshi</card>
+	<card qty="1" id="8ce9a56f-8c0c-49e7-879c-12179c63f288">Cap. Commando</card>
+	<card qty="1" id="9c6b99fa-ff60-4d70-aee8-7e1eae6f29b7">Mack Knife</card>
+	<card qty="1" id="9da88c0d-7915-43e2-a555-23ffbcf11226">Shinjin Akuma</card>
+	<card qty="1" id="b8a8653c-0286-4b05-a255-c436fd23132d">Blodia</card>
+	<card qty="1" id="af43872e-e47d-4fe0-9b55-aedd8a0d0fc7">Jin Saotome</card>
+	<card qty="1" id="fd1a3f1c-7df1-443e-97b1-f093d66e74c9">Zero Akuma</card>
+	<card qty="1" id="0a8f39ff-6b21-4805-bafb-27c3f38d1986">Regina</card>
+	<card qty="1" id="525d8365-c90e-491f-9811-1f23efbafccb">Cody (Alpha)</card>
+	<card qty="1" id="66d424bb-e5da-4f61-b063-61efd1fc61a6">Damn D</card>
+	<card qty="1" id="2c1d8c60-0858-4524-adc1-e7596a4d08e0">Guy</card>
+	<card qty="1" id="be2728eb-0a2d-4f27-8cc5-3208d103b888">Haggar</card>
+	<card qty="1" id="a9478fcd-e1e2-403b-b1e4-5076b342fd50">Maki</card>
+	<card qty="1" id="39b7d042-d2c5-4ff3-aad5-231bd3ccc9e7">Lucifer</card>
+	<card qty="1" id="365cddf9-f741-4a3e-bf07-de4b3eecc6d2">Mech Zangief</card>
+	<card qty="1" id="ee979882-67cc-4549-881c-8e158df495ce">Ruby Heart</card>
+	<card qty="1" id="b8325eaa-1687-4d18-b1e7-6bf335e447c2">Son Son</card>
+	<card qty="1" id="7717e285-f824-4bfa-bd76-c0039c97190e">Mega Man</card>
+	<card qty="1" id="e367c942-342e-4434-a2d1-dd7188b2d15a">Mega Man X</card>
+	<card qty="1" id="aaf18dab-973f-4126-a47a-78798ec5058b">Rock</card>
+	<card qty="1" id="1c986de3-bec5-430b-a661-ebbe9b20c20f">Rock Man</card>
+	<card qty="1" id="91cb59bd-1e5a-472d-a410-8fa0e1698eb5">Roll</card>
+	<card qty="1" id="81ec2067-daec-4678-b5fd-9ab13e410551">Roll Caskett</card>
+	<card qty="1" id="47804cd4-2cc5-4aba-a4f8-393da73a5758">Roll-chan</card>
+	<card qty="1" id="8e8e0107-db05-4cb3-a912-af2b2dea92d9">Tron Bonne</card>
+	<card qty="1" id="a68dc591-6976-4341-b8b9-1a7dc1c71775">Samanosuke</card>
+	<card qty="1" id="33796f5f-c699-42e8-a084-fd28663f08ae">Ayame</card>
+	<card qty="1" id="6f733db6-883b-41f5-a657-4e19784d183c">Falcon</card>
+	<card qty="1" id="3d5fb82c-2ad5-44e3-83e1-ef00f370c604">Ryoma</card>
+	<card qty="1" id="e9c8e4ca-7d41-43c5-b427-f7e47125052e">Edge</card>
+	<card qty="1" id="514717b1-432b-4da7-aa84-a751b996416f">Hinata</card>
+	<card qty="1" id="fb3d3a49-a1de-4887-9ea4-ec761426471e">Hyo</card>
+	<card qty="1" id="d38dc1f6-4586-44f2-bacc-adb649f4d38f">Kurow</card>
+	<card qty="1" id="09dfc071-ce3a-448f-86fe-502bd5d1392b">Kyoko</card>
+
+	<card qty="1" id="f7a00823-d37b-48eb-b2f6-c530623a2a9c">Abduction</card>
+	<card qty="1" id="e2597326-5639-435f-ae33-3303b181527c">Activate!</card>
+	<card qty="1" id="80692723-3895-435f-bf8f-e94507704af5">Awakening</card>
+	<card qty="1" id="b0346de5-63b8-4443-8ea4-8155d889a0fc">Best shot</card>
+	<card qty="1" id="c50f1a40-87e9-41b9-a69c-600b36b68077">Bopper</card>
+	<card qty="1" id="4e493533-2d51-4af6-8a8e-ec55cb1b7ca5">Break up</card>
+	<card qty="1" id="f215a022-c742-4c96-95d1-40c202f8d104">Chaos</card>
+	<card qty="1" id="713207f3-e051-43f8-9953-0a78e295122b">Cover fire</card>
+	<card qty="1" id="ab631979-20d8-4789-85be-149b414d1ef1">Crossover</card>
+	<card qty="1" id="e1fb17f3-c4bf-4993-9b2f-91706cccf448">Curse</card>
+	
+	<card qty="1" id="b9023490-790e-4e5f-a495-c196f6672dff">Amnesia</card>
+	<card qty="1" id="e038ebfd-6c19-4b1c-bf38-a2fd9f5ffbfd">Ancestry</card>
+	<card qty="1" id="be84124e-5057-4511-a181-7492451db5b2">Aura spark</card>
+	<card qty="1" id="826a8255-ed98-4c13-bb8c-96502837df52">Bamboo shoots</card>
+	<card qty="1" id="bc59a360-18f6-4c79-8305-77d0975d4106">Banquet</card>
+  </section>
+  <notes><![CDATA[]]></notes>
+</deck>
