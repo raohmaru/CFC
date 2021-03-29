@@ -34,7 +34,7 @@ def showWelcomeScreen(group=table, x=0, y=0):
    buttons = ['Close', 'Do not show again']
    msg = """        Welcome to Card Fighters' Clash!\n
 Here you will find useful information to get started with the game.
-Good battle!"""
+Have a good battle and thanks for playing!"""
    choice = askChoice(msg, choiceList, colorsList, buttons)
    
    if choice == 1:
@@ -61,7 +61,7 @@ Good battle!"""
       
       
 def downloadImagePack(group=table, x=0, y=0):
-   openUrl(Website + '/image-packs/')
+   openUrl(Website + '/image-packs#installation')
 
 
 #---------------------------------------------------------------------------
@@ -93,6 +93,12 @@ def showChangelog():
 def cardInfo(card, x = 0, y = 0):
    offset = (60 - len(card.Name)) / 2
    msg = '{}{}\n\n{} card'.format(' ' * offset, card.Name, card.Type)
+   
+   if isCharacter(card):
+      msg += ' ({0})'.format(card.Subtype)
+      msg += '\nBP: {0}   SP: {0}'.format(card.BP, card.SP)
+   else:
+      msg += '\nSP: {0}'.format(card.SP)
    
    if isCharacter(card):
       pcard = getParsedCard(card)
@@ -169,6 +175,12 @@ If the total BP of the attacking character(s) is higher than the BP of the chara
 
 STEAL SP
 An enemy loses an amount of SP and you gain that same amount."""
+
+      if re.search('swap the abilities', rules, re.IGNORECASE):
+         msg += """
+
+SWAP ABILITIES
+The abilities between two character are interchanged. Both abilities are copied from one character and given to the other character at the same time."""
 
       if re.search('trash', rules, re.IGNORECASE):
          msg += """

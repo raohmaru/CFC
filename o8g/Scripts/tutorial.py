@@ -81,7 +81,7 @@ class Tutorial(object):
       self.msg("""
 Welcome to the tutorial of Card Fighters' Clash!
 
-Card Fighters' Clash is a card game for two players, where you try to defeat your enemy (this is, your opponent) by playing Characters cards from Capcom and SNK Playmore video games, plus Action cards and Reaction cards.
+Card Fighters' Clash is a card game for two players, where you try to defeat your enemy (this is, your opponent) by playing Characters cards from Capcom and SNK Playmore video games, Action cards and Reaction cards.
 """)
 
       self.msg("""
@@ -122,40 +122,40 @@ To play a card form you hand you can:
       self.msg("""
 Well done!
 
-You have played a Character with which you can attack your enemy. Note that you cannot attack yet with it until your next turn.
+You have played a Character with which you can attack your enemy. Note that you cannot attack yet with this character until your next turn.
 
-Your Ring has four slots, which means that you cannot have more than four characters at once, so you need to think carefully which character to play.
+Your Ring has four slots, which means that you cannot have more than four characters at once. Therefore you need to think carefully which character to play.
 """)
 
       self.msg("""
-Playing a Character card adds their SP value to your SP. You can use your SP to play other type of cards or stronger characters with negative SP value.
+Playing a Character card adds or subtracts their SP value to your SP. You can use your SP to play other type of cards or stronger characters with negative SP value.
 
-You can only play one character card per turn.
+Additionally, you can only play one character card per turn.
 """)
 
       self.msg("""
-The strength of the characters is represented by its BP value. When it attacks, it deals damage equals to it. When it is dealt damage, its BP is reduced permanently by that number of damage points.
+The strength of the characters is represented by its BP value. When it attacks, it deals damage equals to its BP. When it is dealt damage, its BP is reduced permanently by that number of damage points.
 """)
 
       self.msg(u"""
 Characters also have Abilities, which are effects that are applied to the game. An Ability has a type ({0}, {1} and {2}), a name and a rule text.
 
 {0} ABILITY
-It is activated when the character enters the ring.
+It is activated when the character enters the Ring.
 
 {1} ABILITY
 It can be activated only in your Main phase. When it is activated the character is frozen.
-Frozen characters and characters that just entered the ring cannot activate {1} ability in that turn.
+Frozen characters and characters that just entered the Ring cannot activate {1} abilities in that turn.
 
 {2} ABILITY
-It is always active as long as that character is on the ring.
+It is always active as long as that character is on the Ring.
 Whenever a character with a {2} ability takes part in a United Attack, the ability is nullified until the end of the turn.
 """.format(InstantUniChar, TriggerUniChar, AutoUniChar))
       
       self.msg(u"""
 Now play Krauser from your hand.
 
-Note that it has a {} ability, and it will be activated automatically.
+(Note that it has a {} ability, and it will be activated automatically.)
 
 {}
 """.format(InstantUniChar, self.msgOnDone), 'OK')
@@ -174,7 +174,7 @@ Poor Baby Head! But don't worry too much because he will come later again.
 
 When one of your characters is KOed, it goes from your Ring to your Discard pile.
 
-Note also how your SP lowered by 2 after playing Krauser.
+Note also how your SP lowered by 2 after playing Krauser because of the negative SP cost of the card.
 """)
    
       self.msg("""
@@ -184,7 +184,7 @@ Now let's advance to the next turn and play another character with a {} ability.
       self.addCard('4bd333d6-f063-424e-8cf9-3512f96f23b4', me.hand)  # Batsu
    
       self.msg("""
-Batsu's {} BOILING BLOOD ability will allow you to activate characters with {} abilities the same turn you play them.
+I have added Batsu to your hand. Batsu's {} BOILING BLOOD ability will allow you to activate characters with {} abilities the same turn you play them.
 
 Please play Batsu from your hand.
 
@@ -201,7 +201,7 @@ Please play Batsu from your hand.
          return False
    
       self.msg(u"""
-Batsu's ability will be active until he leaves the Ring, so now it is time to play a character with a {} ability, like Gato.
+Batsu's ability will be active until he leaves the Ring, so now it is time to play a character with a {} ability, like Gato. I will add it to your hand.
 """.format(TriggerUniChar))
 
       self.addCard('f3557575-c61e-42fd-9442-9413cea64bdf', me.hand)  # Gato
@@ -230,15 +230,15 @@ To activate a {} ability you can:
          return False
       
       self.msg("""
-Do you remember Batsu's ability? You were able to activate Gato's {} ability because of Batsu's {} ability.
+Do you remember Batsu's ability? You were able to activate Gato's {} ability because of Batsu's {} BOILING BLOOD ability.
 
-You also learned that abilities can be removed from a character! They can also be copied or stolen from other characters.
+You also have learned that abilities can be removed from a character! Abilities can also be copied between characters or given to other character(s).
 """.format(TriggerUniChar, AutoUniChar))
       
       self.msg("""
 And now it is time to learn how to attack!
 
-After the Main phase it comes the Attack phase, where you can attack your enemy with the characters in you Ring that weren't played this turn and are not frozen.
+After the Main phase it comes the Attack phase, where you can attack your enemy with the characters in you Ring that hasn't been played this turn and are not frozen.
 """)
       
       self.msg(u"""
@@ -266,7 +266,7 @@ To attack with a character you can:
       self.msg("""
 Nice!
 
-Attacking characters deal damage equals to its BP to the enemy. But if it is blocked by another character, they will deal damage to each other instead.
+Attacking characters deal damage equals to its BP to the enemy, reducing their HP. But if it is blocked by another character, they will deal damage to each other instead.
 
 After the attack is done, attacking characters are frozen until your next Activate phase.
 """)
@@ -276,14 +276,19 @@ You can use your SP to do more powerful attacks and hit the enemy even if you ch
 
 This attacks are called "United Attack", where two or three characters attack together as a single entity that does one single attack.
 
-If two characters join an United Attack, it cost 5 SP. If three join, then it cost 10 SP.
+If two characters join an United Attack, it cost 5 SP. If three characters do join, then it cost 10 SP.
 """)
      
       self.msg("""
-The most critical feature of United Attacks is that the sum of the BP of the characters is considered when dealing damage. If the United Attack is blocked, and if the total BP of the attack is greater than the BP of the blocking character, the remaining BP is dealt as damage to the enemy (called "Piercing Damage").
+The most critical feature of United Attacks is that the sum of the BP of the characters involved in the United Attack is considered when dealing damage.
 
-It's a very effective way of hitting the enemy even if he blocks!
+Furthermore, if the United Attack is blocked, and if the total BP of the attack is greater than the BP of the blocking character, the remaining BP is dealt as damage to the enemy (called "Piercing Damage").
+
+It's a very effective way of hitting the enemy even if he blocks with a character!
 """)
+
+      for c in getAttackingCards():
+         cancelAttack(c, True)
       
       self.msg(u"""
 Attack the enemy with a United Attack.
@@ -307,7 +312,7 @@ To do an United Attack:
       me.SP -= UAttackCost
       
       self.msg("""
-Did you noticed how your SP lowered from 11 to 6? That's because of the cost of the United Attack.
+Did you noticed how your SP lowered from 11 to 6? That's because of the cost of the Double United Attack.
 
 Also take into account that {} abilities are nullified (cancelled) until the end of your turn if the character joins an United Attack.
 """.format(AutoUniChar))
@@ -317,23 +322,10 @@ Also take into account that {} abilities are nullified (cancelled) until the end
       self.msg("""
 Now that you know how to attack, it is about time to learn how to Counter-attack.
 
-You can counter-attack (or block) an attacking character with a non-frozen character in your Ring.
+You can counter-attack (this is, to block) an attacking character with a non-frozen character in your Ring.
 
 A character can only counter-attack one attack, and an attack can only be countered by one single character (even if it is a United Attack).
 """)
-      
-      self.msg(u"""
-Block the attacking character with one character in your Ring.
-
-{}
-
-\u2E3B
-To do a counter-attack:
-- Drag and drop a character in front of the attacking character
-- Double-click on a Character card,
-- Press Ctrl+B while hovering the card with the mouse,
-- Right click on the mouse while hovering the card and then click "Counter-attack" in the contextual menu.
-""".format(self.msgOnDone), 'OK')
          
       self.setNext(self.part8, BlockPhase)
       gotoCounterattack()
@@ -350,7 +342,21 @@ To do a counter-attack:
       global players
       players.append(self.fakePlayer)
       card = self.addCard('d6441760-574a-447d-bf1e-f900cb39535e')  # Lee Reeka
+      setMarker(card, 'BP', 300)
       self.attack(card)
+      
+      self.msg(u"""
+Block the attacking character with one character in your Ring.
+
+{}
+
+\u2E3B
+To do a counter-attack:
+- Drag and drop a character in front of the attacking character
+- Double-click on a Character card,
+- Press Ctrl+B while hovering the card with the mouse,
+- Right click on the mouse while hovering the card and then click "Counter-attack" in the contextual menu.
+""".format(self.msgOnDone), 'OK')
       
       
    def part8(self):
@@ -360,7 +366,7 @@ To do a counter-attack:
          
       for card in table:
          if card.Name == 'Lee Rekka':
-            card.delete()
+            setMarker(card, 'BP', 0)
          
       
       self.msg("""
@@ -368,12 +374,17 @@ Great! Now you know how to attack and counter-attack.
 
 Let's see the other type of cards of the game.
 """)
+         
+      for card in table:
+         if card.Name == 'Lee Rekka':
+            card.delete()
+            
       self.addCard('5f19902c-60fb-44b8-9e64-eab4b31c9d3d', me.hand)  # Revive
       
       self.msg("""
 Action cards add more effects to the battle and can help you to win the game!
 
-To play an action card you must pay its SP cost from your SP. After you play it, its effects are applied immediately and the card is put into your Discard pile.
+To play an Action card you must pay its SP cost from your SP pool. After you play it, its effects are applied immediately and the card is put into your Discard pile.
 
 You can play any number of Action cards as long as you have enough SP, but only in your Main phase.
 """)
@@ -381,9 +392,10 @@ You can play any number of Action cards as long as you have enough SP, but only 
       self.msg(u"""
 Please play the card "Revive" from your hand.
 
-(You can target Baby Head from the Discard pile with Shift + Left Click as the target of the action card.)
-
 {}
+
+\u2E3B
+Hint: You can target Baby Head from the Discard pile with Shift + Left Click as the target of the Action card. Otherwise, the Card Selection dialog will pop-up with the available targets.
 """.format(self.msgOnDone), 'OK')
 
       self.setNext(self.part9, MainPhase)
@@ -411,15 +423,16 @@ The third type of card available in the game are Reaction cards.
 
 Reaction cards are like Action cards but that can be only played during enemy's Counter-attack phase, and only if that enemy is attacking you.
 
-You can play Reaction cards before or after blocking with your characters, or even if you don't have characters in your ring.
+You can play Reaction cards before or after blocking with your characters, or even if you don't have any character in your Ring.
 """)
       
       self.msg(u"""
-Play the card "Vacation" in response of the enemy attack.
-
-(You can target a character in the Ring with Shift + Left Click as the target of the reaction card.)
+Play the card "Vacation" from your hand in response of the enemy attack.
 
 {}
+
+\u2E3B
+Hint: Please remember that you can target a character in the Ring with Shift + Left Click as the target of the reaction card.
 """.format(self.msgOnDone), 'OK')
          
       self.setNext(self.part10, BlockPhase)
@@ -428,6 +441,7 @@ Play the card "Vacation" in response of the enemy attack.
       me.SP += 3
       
       card = self.addCard('fd1a3f1c-7df1-443e-97b1-f093d66e74c9')  # Zero Akuma
+      setMarker(card, 'BP', 1500)
       self.attack(card)
       
       
@@ -439,10 +453,12 @@ Play the card "Vacation" in response of the enemy attack.
       self.msg("""
 Congratulations! You have completed the training!
 
-You will find more information about the game rules at the menu option "Game > Documents", and information about any card by right-clicking on that card and selecting "Card info".
+You will find more information about the game rules at the menu option "Game > Documents" and at our website https://cardfightersclash.wordpress.com/.
 
-Now you are ready to face any opponent in the online arena. Good luck!
-""", 'Close')
+At any time, you can get information about any card by right-clicking on that card and selecting "Card info".
+""", 'OK')
+         
+      self.msg('Now you are ready to face any opponent in the online arena! Good luck!', 'Close')
 
       del self.fakePlayer
       players.pop()

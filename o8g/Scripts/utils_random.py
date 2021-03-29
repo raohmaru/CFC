@@ -20,6 +20,8 @@ from System import Random
 
 #---------------------------------------------------------------------------
 # Random functions
+# 
+# Somehow, random module is not available in OCTGN, so this a custom implementation.
 #---------------------------------------------------------------------------
 
 from math import log as _log, ceil as _ceil
@@ -81,4 +83,7 @@ class RRRandom(Random):
 
 #---------------------------------------------------------------------------
 
-random = RRRandom()
+try:
+   import random
+except (IOError, ImportError):
+   random = RRRandom()

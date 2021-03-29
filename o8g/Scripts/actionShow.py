@@ -87,3 +87,7 @@ def acsh_isCharAndPlayRemoved(args, x = 0, y = 0):
 def acsh_isNotBackup(args, x = 0, y = 0):
    card = args[0]
    return not isCharacter(card) or charIsInRing(card)
+
+      
+def acsh_isNotTutorial(args, x = 0, y = 0):
+   return tutorial is None
