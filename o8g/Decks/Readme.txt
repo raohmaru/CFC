@@ -22,12 +22,12 @@ Kido
 Basic deck, uses a wide variety of kung-fu/wrestler character cards.
 
 Dogou
-===
+=====
 Rebel/Gang-themed deck, uses "freak" character cards.
 
 Aso
 ===
-Rebel/Gang-themed deck, moderate contol deck.
+Rebel/Gang-themed deck, moderate control deck.
 
 Torawo
 ======
