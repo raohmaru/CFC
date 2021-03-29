@@ -4,10 +4,15 @@ require 'json'
 require 'redcarpet'
 require 'pathname'; 
 
-# Absolute path does not work anymore in Win10?
-OCTGN_data_dir = Pathname.new(Pathname.new(ENV["USERPROFILE"] + "/Documents/OCTGN")).relative_path_from(File.dirname(__FILE__)).to_s
+# Get the path to OCTGN data from OCTGN config
+OCTGN_dir = File.join(ENV["USERPROFILE"], "AppData", "Local", "Programs", "OCTGN")
+OCTGN_data_path = File.open(File.join(OCTGN_dir, "data.path"))
+OCTGN_data_dir = Pathname.new(OCTGN_data_path.read().split('\\').join('/'))
+# Setup clean task
+CLOBBER.include ["o8g/*.o8g", OCTGN_data_dir + "LocalFeed/Card*.nupkg", "o8g/Scripts/**/*.pyc"]
+# Rock'n roll
 start_time = Time.now
-CLOBBER.include ["o8g/*.o8g", "#{OCTGN_data_dir}/LocalFeed/Card*.nupkg", "o8g/Scripts/**/*.pyc"]
+
 
 task :default => [:build]
 
@@ -30,7 +35,7 @@ task :versionbump do
       m = line.match(regexp)
       if m
         buildnum = m[4].to_i + 1
-        puts "Bump build number to #{buildnum} (#{m[1]}.#{m[2]}.#{m[3]}.#{buildnum})\n\r"
+        puts "Bumping build number to #{buildnum} (#{m[1]}.#{m[2]}.#{m[3]}.#{buildnum})\n\r"
         line.sub!('.'+m[4]+'"', '.'+buildnum.to_s+'"')
       end
     end
@@ -69,15 +74,15 @@ end
 
 desc "Runs OCTGN in dev mode, in the table view with the CFC game loaded"
 task :octgn do
-  # OCTGN window closes after the loading screen ends
+  # OCTGN window closes after the loading screen ends  ¯\_(ツ)_/¯
   # system "OCTGN.exe /t /g=e3d56d9e-900d-49c6-b6ae-22cbb51be153 /x"
   puts "Run OCTGN.exe /t /g=e3d56d9e-900d-49c6-b6ae-22cbb51be153 /x"
 end
 
 
-desc "Converts Markdown documents in Documents/ folder into HTML files"
+desc "Converts Markdown documents in the Documents/ folder into HTML files"
 task :docs do
-  puts "Converting Markdown files into HTML"
+  puts "Converting Markdown files into HTML..."
   # Initializes a Markdown parser
   renderer = Redcarpet::Render::HTML.new({:with_toc_data=>true, :hard_wrap=>true, :tables => true})
   # Initializes a Markdown HTML renderer
@@ -96,82 +101,16 @@ task :docs do
 	    doc.sub!('<!-- toc -->', toc)
       end
       f.puts <<EOD
-<html>
-<head>
-	<meta charset="utf-8">
-	<title>#{base_name}</title>
-	<style>
-	html, body {
-		font-family: Tahoma, Arial, "Helvetica Neue", Helvetica, sans-serif;
-    font-size: 14px;
-		background-color: #FFFBF2;
-	}
-	h2 {
-    clear: left;
-		margin-top: 1.6em;
-	}
-	h3 {
-    clear: left;
-	}
-	li {
-		margin-bottom: 0.5em;
-	}
-	img {
-		max-width: 100%;
-    vertical-align: middle;
-	}
-  .kb {
-    padding: 0 0.2em;
-    font-family: "Courier New", Courier, monospace;
-    line-height: 1.6em;
-    background-color: #fff;
-    border: solid 1px #bbb;
-    border-radius: 3px;
-    box-shadow: 0 2px 0px 0px rgba(0, 0, 0, 0.33);
-  }
-  .sm {
-    font-size: 80%;
-  }
-  table {
-    font-size: 14px;
-    border-collapse: collapse;
-  }
-  th {
-    padding-bottom: 0.5em;
-  }
-  tbody tr:nth-child(2n) {
-    background-color: #F9F3E6;
-  }
-  thead tr {
-    border-bottom: solid 1px #b6b6b6;
-  }
-  td {
-    padding-right: 0.6em;
-    border-bottom: solid 1px #e1e1e1;
-  }
-  .ab {
-    font-size: 120%;
-    line-height: 0;
-    color: #990000;
-  }
-  .ab-trigger {
-    font-size: 170%;
-  }
-  .ab-auto {
-    position: relative;
-    top: 0.1em;
-    font-size: 175%;
-  }
-  blockquote {
-	margin: 40px 40px 14px;
-	padding: 10px 28px;
-	border: solid 6px #567c93;
-  }
-	</style>
-</head>
-<body>
-#{doc}
-</body>
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>#{base_name}</title>
+    <link href="doc.css" rel="stylesheet">
+  </head>
+  <body>
+    #{doc}
+  </body>
 </html>
 EOD
     }
