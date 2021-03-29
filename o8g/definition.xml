@@ -3,8 +3,8 @@
       xmlns:xsd="http://www.w3.org/2001/XMLSchema"
       name="Card Fighters' Clash"
       id="e3d56d9e-900d-49c6-b6ae-22cbb51be153"
-      octgnVersion="3.4.256.0"
-      version="0.9.8.764"
+      octgnVersion="3.4.286.0"
+      version="0.9.8.772"
       markersize="20"
       tags="capcom snk fighter"
       description="Card game based on SNK Playmore’s video game SNK vs. Capcom Card Fighters' Clash 2 Expand Edition.
@@ -146,7 +146,7 @@
 		<!-- <document name="Comprehensive Rules" icon="Documents/manual-comp.png" src="Documents/CFC-CompRules.html" /> -->
 	</documents>
 
-	<!-- Not supported -->
+	<!-- Not (yet) supported -->
 	<!-- <gameModes>
 		<gameMode name="Standard" shortDescription="Regular game where Player's ring has 4 slots for characters" image="Resources/Art/standard.jpg" playerCount="2" />
 		<gameMode name="Tutorial" shortDescription="Play a tutorial game to learn the basics of Card Fighters' Clash" image="Resources/Art/standard.jpg" playerCount="1" />
@@ -236,8 +236,9 @@
 			<groupaction menu="Pick a random card (Mine)"  execute="randomPickMine" />
 			<groupaction menu="Pick a random card (Enemy)" execute="randomPickEnemy" />
 		</groupactions>
-		<groupaction menu="Restart game" execute="restart"/>
-		<groupactions menu="Settings...">
+		<groupaction menu="Restart game" execute="restart" showIf="acsh_gameStarted" />
+		<groupseparator />
+		<groupactions menu="Settings..." showIf="acsh_isNotTutorial">
 			<groupaction menu="Switch Play automation ON/OFF" execute="switchPlayAuto" getName="aclb_PlayAuto" />
 			<groupaction menu="Switch Phase automation ON/OFF" execute="switchPhaseAuto" getName="aclb_PhaseAuto" />
 			<groupaction menu="Switch Activate automation ON/OFF" execute="switchActivateAuto" getName="aclb_ActivateAuto" />
@@ -310,6 +311,7 @@
 		<cardaction menu="Transform" shortcut="Ctrl+Shift+T" batchExecute="transformCards" showIf="acsh_AutoPlayOff" />
 		<cardaction menu="Realign card" shortcut="Ctrl+R" execute="alignCardAction" showIf="acsh_AutoPlayOff" />
 		<cardaction menu="Backup" shortcut="Ctrl+Alt+B" execute="askCardBackups" showIf="acsh_canBackup" />
+		<cardseparator />
 		<cardaction menu="Clear" shortcut="Esc" execute="clear" showIf="acsh_AutoPlayOff" />
 		<cardaction menu="&#x1f6c8; Card info" shortcut="Ctrl+I" execute="cardInfo" showIf="acsh_notUI" />
 	</table>
@@ -329,6 +331,7 @@
 				<groupaction menu="Deck (Bottom)" shortcut="Ctrl+Alt+D" execute="toDeckBottomAll" />
 				<groupaction menu="Shuffle into Deck" shortcut="Ctrl+S" execute="shuffleIntoDeck" />
 			</groupactions>
+			<!--  -->
 			<cardaction menu="Play card" default="True" shortcut="Ctrl+P" execute="play" />
 			<cardaction menu="Play as backup" shortcut="Ctrl+B" execute="backup" showIf="acsh_isChar" />
 			<cardaction menu="Discard card" shortcut="Del" execute="discard" />
@@ -339,10 +342,12 @@
 				<cardaction menu="Shuffle into Deck" shortcut="Ctrl+S" batchExecute="shuffleIntoDeck" />
 			</cardactions>
 			<cardaction menu="Transform" shortcut="Ctrl+Shift+T" batchExecute="transformCards" showIf="acsh_AutoPlayOff" />
+			<cardseparator />
 			<cardaction menu="Show backups" shortcut="Ctrl+Alt+B" execute="askCardBackups" showIf="acsh_isChar" />
 			<cardaction menu="Clear" shortcut="Esc" execute="clear" showIf="acsh_AutoPlayOff" />
 			<cardaction menu="&#x1f6c8; Card info" shortcut="Ctrl+I" execute="cardInfo" showIf="acsh_notUI" />
 		</group>
+		
 		<group name="Deck" visibility="none" viewState="pile" icon="Resources/Groups/deck.png">
 			<groupaction menu="Draw" shortcut="Ctrl+D" default="True" execute="draw" />
 			<groupaction menu="Draw X cards" shortcut="Ctrl+Shift+D" execute="drawMany" />
@@ -363,6 +368,7 @@
 			<cardaction menu="Put card into Hand" shortcut="Ctrl+H" execute="toHand" />
 			<cardaction menu="Put card into Discard pile" shortcut="Del" execute="discard" />
 		</group>
+		
 		<group name="Discard pile" visibility="all" viewState="pile" icon="Resources/Groups/discards.png">
 			<!-- <groupaction menu="Shuffle" shortcut="Ctrl+S" execute="shuffle" /> -->
 			<groupactions menu="Shuffle into Deck...">
@@ -379,10 +385,13 @@
 				<groupaction menu="Deck (Bottom)" execute="toDeckBottomAll" />
 				<groupaction menu="Removed pile" execute="removeAll" />
 			</groupactions>
+			<!--  -->
 			<cardaction menu="Return card to Hand" shortcut="Ctrl+H" default="True" execute="toHand" />
 			<cardaction menu="Put into Deck (Top)" shortcut="Ctrl+D" execute="toDeckTop" />
 			<cardaction menu="Put into Deck (Bottom)" shortcut="Ctrl+Alt+D" execute="toDeckBottom" />
 			<cardaction menu="Put into Removed Pile" shortcut="Shift+Del" execute="remove" />
+			<cardseparator />
+			<cardaction menu="&#x1f6c8; Card info" shortcut="Ctrl+I" execute="cardInfo" showIf="acsh_notUI" />
 		</group>
 		<group name="Removed pile" visibility="all"  viewState="pile" icon="Resources/Groups/removed.png" collapsed="True">
 			<groupactions menu="Move All Cards To...">
@@ -391,15 +400,20 @@
 				<groupaction menu="Deck (Bottom)" execute="toDeckBottomAll" />
 				<groupaction menu="Discard pile" execute="discardAll" />
 			</groupactions>
+			<!--  -->
 			<cardaction menu="Return card to Hand" shortcut="Ctrl+H" default="True" execute="removedDefaultAction" getName="aclb_RemovedDefault" />
 			<cardaction menu="Play as backup" execute="backup" showIf="acsh_isCharAndPlayRemoved" />
 			<cardaction menu="Put card into Discard pile" shortcut="Del" execute="discard" />
 			<cardaction menu="Put into Deck (Top)" shortcut="Ctrl+D" execute="toDeckTop" />
 			<cardaction menu="Put into Deck (Bottom)" shortcut="Ctrl+Alt+D" execute="toDeckBottom" />
+			<cardseparator />
+			<cardaction menu="&#x1f6c8; Card info" shortcut="Ctrl+I" execute="cardInfo" showIf="acsh_notUI" />
 		</group>
 	</player>
 
-	<!-- <shared summary="| HP: {#HP} | SP: {#SP} | Hand: {#Hand} | Deck: {#Deck}">
+	<!-- Intended to be used as AI enemy. Didn't worked. -->
+	<!--	
+	<shared summary="| HP: {#HP} | SP: {#SP} | Hand: {#Hand} | Deck: {#Deck}">
 		<counter name="HP" icon="Resources/Counters/hp.png" default="3000" reset="True" />
 		<counter name="SP" icon="Resources/Counters/sp.png" default="0"  reset="True" />
 
@@ -407,7 +421,8 @@
 		<group name="Deck" visibility="none" viewState="pile" icon="Resources/Groups/deck.png"/>
 		<group name="Discard pile" visibility="all" viewState="pile" icon="Resources/Groups/discards.png"/>
 		<group name="Removed pile" visibility="all"  viewState="pile" icon="Resources/Groups/removed.png" collapsed="True"/>
-	</shared> -->
+	</shared>
+	-->
 
 	<deck>
 		<section name="Main" group="Deck" />
