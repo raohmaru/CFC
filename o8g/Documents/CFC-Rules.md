@@ -1,5 +1,5 @@
 # Card Fighters' Clash Rulebook
-This document is designed for people who want to start learning the rules and gameplay of Card Fighters' Clash. For a more advanced set of rules and further explanations, please see the [Comprehensive rules](CFC-CompRules.html) document.
+This document is designed for people who want to start learning the rules and gameplay of Card Fighters' Clash. ~~For a more advanced set of rules and further explanations, please see the [Comprehensive rules](CFC-CompRules.html) document.~~
 
 (To change the font size of the document, press <span class=kb>Ctrl</span>+<span class=kb>+</span> or <span class=kb>Ctrl</span>+<span class=kb>-</span> or <span class=kb>Ctrl</span>+Mouse Wheel.)
 
@@ -295,6 +295,9 @@ To remove an ability from a character and give it to another character. Any exis
 
 __Steal SP__
 When you steal SP from an enemy, that enemy loses an amount of SP and you gain that same amount.
+
+__Swap Abilities__
+The abilities between two character are interchanged. Both abilities are copied from one character and given to the other at the same time.
 
 __Trash__
 To put cards from the top of a player's deck into his or her discard pile.

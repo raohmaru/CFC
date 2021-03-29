@@ -1,6 +1,6 @@
 # Card Fighters' Clash Comprehensive Rules
 
-*These rules are effective as of December 20, 2015.*
+*These rules are effective as of March 29, 2021.*
 
 ## Introduction
 
@@ -10,7 +10,7 @@ For casual play you’ll find what you need in the [CFC rulebook](CFC-Rules.html
 
 This document includes a series of numbered rules followed by a glossary. Many of the numbered rules are divided into subrules, and each separate rule and subrule of the game has its own number. (Note that subrules skip the letters “l” and “o” due to potential confusion with the numbers “1” and “0”.)
 
-Finally, no matter how detailed the rules are, there will be situations with specific cards that will require a precise answer. If you have questions, you can look at the [FAQ](CFC-FAQ.html) page or you can get the answers at https://github.com/raohmaru/CFC.
+Finally, no matter how detailed the rules are, there will be situations with specific cards that will require a precise answer. If you have questions, you can look at the [FAQ](CFC-FAQ.html) page or you can get the answers at https://cardfightersclash.wordpress.com/.
 
 ## Contents
 <!-- toc -->
@@ -24,17 +24,15 @@ Finally, no matter how detailed the rules are, there will be situations with spe
 ### 106. SP
 ### 107. Numbers and Symbols
 ### 108. Cards
-### 109. Objects
-### 110. Permanents
-### 111. Spells
-### 112. Abilities
-### 114. Targets
-### 115. Special Actions
-### 116. Timing and Priority
-### 117. Costs
-### 118. Life
-### 119. Damage
-### 120. Drawing a Card
+### 109. Abilities
+### 110. Effects
+### 111. Targets
+### 112. Special Actions
+### 114. Timing and Priority
+### 115. Costs
+### 116. HP
+### 117. Damage
+### 118. Drawing a Card
 
 ## 2. Parts of a Card
 ### 200. General
@@ -74,24 +72,22 @@ Finally, no matter how detailed the rules are, there will be situations with spe
 ### 512. End Phase
 ### 514. Cleanup Phase
 
-## 6. Spells, Abilities, and Effects
+## 6. Actions, Reactions, Abilities, and Effects
 ### 600. General
-### 601. Casting Spells
+### 601. Casting Actions / Reactions
 ### 602. Activating Activated Abilities
 ### 603. Handling Triggered Abilities
 ### 604. Handling Static Abilities
-### 605. Mana Abilities
-### 606. Loyalty Abilities
-### 607. Linked Abilities
-### 608. Resolving Spells and Abilities
-### 609. Effects
-### 610. One-Shot Effects
-### 611. Continuous Effects
-### 612. Text-Changing Effects
-### 613. Interaction of Continuous Effects
-### 614. Replacement Effects
-### 615. Prevention Effects
-### 616. Interaction of Replacement and/or Prevention Effects
+### 605. SP Abilities
+### 606. Resolving Actions, Reactions and Abilities
+### 607. Effects
+### 608. One-Shot Effects
+### 609. Continuous Effects
+### 610. Text-Changing Effects
+### 611. Interaction of Continuous Effects
+### 612. Replacement Effects
+### 613. Prevention Effects
+### 614. Interaction of Replacement and/or Prevention Effects
 
 ## 7. Additional Rules
 ### 700. General
@@ -100,14 +96,6 @@ Finally, no matter how detailed the rules are, there will be situations with spe
 ### 703. Turn-Based Actions
 ### 704. State-Based Actions
 ### 705. Flipping a Coin
-### 706. Copying Objects
+### 706. Copying Abilities and Effects
 ### 713. Ending the Turn
 ### 714. Restarting the Game
-
-## 8. Multiplayer Rules
-### 800. General
-
-## 9. Casual Variants
-### 900. Classic
-### 901. Last Man Standing (1 vs 1)
-### 902. Restricted Mode
