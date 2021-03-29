@@ -742,6 +742,7 @@
 			<link block="bp_box" />
 			<link block="sp_box" />
 			<!-- Publisher -->
+			<!-- Now included in the art -->
 			<!-- <conditional>
 				<switch property="Publisher">
 					<case value="Capcom" break="True">
@@ -753,6 +754,7 @@
 				</switch>
 			</conditional> -->
 			<!-- Team -->
+			<!-- Now included in the art -->
 			<!-- <conditional>
 				<switch property="Team">
 					<case value="Art of Fighting" break="True">
@@ -1496,9 +1498,12 @@
 			<link block="sp">
 				<property name="SP" />
 			</link>
-			<!-- <link block="team">
+			<!-- Now included in the art -->
+			<!--
+			<link block="team">
 				<property name="Team" />
-			</link> -->
+			</link>
+			-->
 			<link block="type">
 				<property name="Type" />
 			</link>
