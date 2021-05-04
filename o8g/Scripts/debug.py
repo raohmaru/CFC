@@ -48,11 +48,10 @@ def debugScenario():
    gotoMain()
    rnd(10, 1000)  # Delay the next action until all animation is done
    tableCards = [
-       'e0c2ac67-1925-4e63-b9ae-9dcbc7ff229f' # The Ump
        # 'd14694b4-484c-4b45-962e-8cbb636d8a9a' # 200 BP
       # ,'c7d128ea-a3b9-4b04-b8b2-a61153b5b2e6' # 400 BP
       # ,'24e99a13-cb42-4e16-9900-78dde12e1a4c' # 600 BP
-      ,'e6e46f83-d089-4762-8d8e-2a3252cfc9db' # 800 BP
+      # ,'e6e46f83-d089-4762-8d8e-2a3252cfc9db' # 800 BP
    ]
    for i, id in enumerate(tableCards):
       debug("Creating card {} at slot {}".format(id, i))
@@ -65,8 +64,7 @@ def debugScenario():
       rnd(1, 100)  # Delay the next action until all animation is done
       
    handCards = [
-       '6504b1a3-e432-4c6c-845b-6ca72500b458' # Substitute
-      ,'0a951ced-4508-40b9-8350-5dafb6b7e8aa' # Super Art select  
+       '6597d835-666b-4056-8cae-dbf3a3bdc3df' # Grace
        # '8bb477f9-5004-4018-8d5e-73c6a23e8912' # Char 300 BP
       # ,'e910f462-bea9-4262-b168-c7c512eb6511' # Char 500 BP
       # ,'0fdadc92-0864-46cc-a3ff-c20e2af8249c' # Char 700 BP
@@ -136,11 +134,11 @@ def debugOpp():
    me.SP = 50
    
    tableCards = [
-       'e0c2ac67-1925-4e63-b9ae-9dcbc7ff229f' # The Ump
+       # 'e0c2ac67-1925-4e63-b9ae-9dcbc7ff229f' # The Ump
        # 'd14694b4-484c-4b45-962e-8cbb636d8a9a' # 200 BP
       # ,'c7d128ea-a3b9-4b04-b8b2-a61153b5b2e6' # 400 BP
       # ,'24e99a13-cb42-4e16-9900-78dde12e1a4c' # 600 BP
-      ,'e6e46f83-d089-4762-8d8e-2a3252cfc9db' # 800 BP
+      # ,'e6e46f83-d089-4762-8d8e-2a3252cfc9db' # 800 BP
    ]
    for i, id in enumerate(tableCards):
       card = table.create(id, 0, 0, quantity=1, persist=True)
@@ -149,8 +147,8 @@ def debugOpp():
       rnd(1, 100)  # Delay the next action until all animation is done
       
    handCards = [
-       '6504b1a3-e432-4c6c-845b-6ca72500b458' # Substitute
-      ,'0a951ced-4508-40b9-8350-5dafb6b7e8aa' # Super Art select
+       # '6504b1a3-e432-4c6c-845b-6ca72500b458' # Substitute
+      # ,'0a951ced-4508-40b9-8350-5dafb6b7e8aa' # Super Art select
        # '8bb477f9-5004-4018-8d5e-73c6a23e8912' # Char 300 BP
       # ,'e910f462-bea9-4262-b168-c7c512eb6511' # Char 500 BP
       # ,'0fdadc92-0864-46cc-a3ff-c20e2af8249c' # Char 700 BP

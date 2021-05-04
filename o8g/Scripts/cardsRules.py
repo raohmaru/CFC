@@ -1641,6 +1641,7 @@ action = disableRule(attack) uynt
 
 # Grace
 RulesDict['6597d835-666b-4056-8cae-dbf3a3bdc3df'] = """
+target = me
 action = hp(+500)
 """
 
