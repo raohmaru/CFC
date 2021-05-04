@@ -18,14 +18,13 @@
 # Helpers
 #---------------------------------------------------------------------------
 
-# Helper class to convert a dict to an object (to be accesed with dot notation)
+# Helper class to convert a dict to an object (to be accessed with dot notation)
 # http://stackoverflow.com/questions/1305532/convert-python-dict-to-object
 class Struct:
    def __init__(self, **entries): 
       self.__dict__.update(entries)
    # Called when the attribute does not exist
    def __getattr__(self, name):
-      # debug(name)
       return None
    # Because of the previous method, all of the following are needed or errors will raise
    def __repr__(self):
@@ -159,6 +158,7 @@ Yaxis        = 'y'
 PlayAction   = 'play'
 BackupAction = 'backup'
 Author       = 'raohmaru'
+GameId       = 'e3d56d9e-900d-49c6-b6ae-22cbb51be153'
 Website      = 'https://cardfightersclash.wordpress.com'
 # _extapi is not ready yet
 # ButtonSize = _extapi.game.CardSizes["button"].Width

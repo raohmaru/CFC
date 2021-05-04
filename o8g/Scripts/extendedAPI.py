@@ -15,7 +15,7 @@
 # along with this script.  If not, see <http://www.gnu.org/licenses/>.
 
 #---------------------------------------------------------------------------
-# Some extended consts
+# Some extended constants
 #---------------------------------------------------------------------------
 
 Colors = Struct(**{
@@ -41,11 +41,15 @@ try:
    import System
 except (IOError, ImportError):
    settings['ExtAPI'] = False
+   whisper("There was an error while starting the game and some functionalities won't be available.\nPlease restart OCTGN.")
    
 class ExtendedApi(object):
 # An extended API with methods that directly call C# methods
    def __init__(self):
-      self._game = Octgn.Program.GameEngine.Definition  # The game instance
+      # 3.4.286.0 
+      # self._game = Octgn.Program.GameEngine.Definition  # The game instance
+      # 3.4.350.0
+      self._game = Octgn.Core.DataManagers.GameManager.Get().GetById(Guid.Parse(GameId))
       self._gameMethods = Octgn.Core.DataExtensionMethods.GameExtensionMethods
       self._cardMethods = Octgn.Core.DataExtensionMethods.CardExtensionMethods
       self.customPlayer = False
@@ -176,16 +180,22 @@ class ExtendedApi(object):
                else:
                   self._gameMethods.GetCardProxyDef(self._game).SaveProxyImage(self._cardMethods.GetProxyMappings(cardData), uri.LocalPath, crops[0])
             except EnvironmentError:
-               self.warning('A error ocurred generating the proxy image')
+               self.warning('An error occurred while generating the proxy image.')
       cardData.Alternate = currAlternate
       
       
+   def addMessage(self, message):
+      try:
+         Octgn.Program.GameMess.AddMessage(message)
+      except AttributeError:
+         whisper(message.Message)
+      
    def warning(self, str):
-      Octgn.Program.GameMess.AddMessage(Octgn.Core.Play.WarningMessage(str, {}))
+      self.addMessage(Octgn.Core.Play.WarningMessage(str, {}))
       
             
    def system(self, str):
-      Octgn.Program.GameMess.AddMessage(Octgn.Core.Play.SystemMessage(str, {}))
+      self.addMessage(Octgn.Core.Play.SystemMessage(str, {}))
       
       
    def whisper(self, str, color = Colors.Black, bold = False):
@@ -195,21 +205,21 @@ class ExtendedApi(object):
          customPlayer.name = str
          msg = ''
       update()  # To make next function work if this has been invoked from a remote call
-      Octgn.Program.GameMess.AddMessage(Octgn.Core.Play.PlayerEventMessage(customPlayer, msg, {}))
+      self.addMessage(Octgn.Core.Play.PlayerEventMessage(customPlayer, msg, {}))
       del customPlayer
       
       
    def notify(self, str, color = Colors.Black, bold = False):
       self.whisper(str, color, bold)
       if len(players) > 1:
-         remoteCall(players[1], "_extapi_whisper_", [str, color, bold])
+         remoteCall(players[1], "_extapi_whisper", [str, color, bold])
       
       
 # Make it global
 if settings['ExtAPI']:
    _extapi = ExtendedApi()
-   # Aliases for remoteCall
-   _extapi_whisper_ = _extapi.whisper
+   # Alias for remoteCall()
+   _extapi_whisper = _extapi.whisper
 
 
 #---------------------------------------------------------------------------
@@ -220,7 +230,7 @@ if settings['ExtAPI']:
 class CustomPlayer(Octgn.Core.Play.IPlayPlayer):
    id = 555
    def __init__(self, color = Colors.Black, bold = False):
-      # color is a System.Windows.Media.Color, which is not available as an object
+      # `color` is a System.Windows.Media.Color C# object, which is not available as a Python object
       self.color = Octgn.Core.Play.BuiltInPlayer.Notify.Color.FromRgb(*hexToRGB(color))
       self.name = u'\u200B'  # Zero-width space character
       CustomPlayer.id += 1
