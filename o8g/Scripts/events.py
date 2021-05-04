@@ -393,6 +393,10 @@ def overrideCardsMoved(args):
          
 def overrideTurnPassed(args):
 # Triggers when the player clicks the green "Pass Turn" button on the player tabs.
+   if tutorial:
+      tutorial.goNext()
+      return
+   
    player = args.player  # The player the turn is being passed to
    setState(None, 'activePlayer', player._id)
    nextTurn(player)
