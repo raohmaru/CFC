@@ -92,7 +92,12 @@ MarkersDict = {
    "Cannot Unfreeze": ("Cannot Unfreeze", "5231f83b-b78e-48b3-8bce-62031c022bf4"),
    "Unfreezable"    : ("Unfreezable",     "fec1976b-9ce5-4b32-8c07-76eadc5607f6"),
    "Backup"         : ("Backup",          "efd3208d-2ec3-44ca-be1d-858e91628da4"),
-   "Pierce"         : ("Pierce",          "3131facc-3fe4-4dd5-95ff-afc08570d869"),
+   "Pierce"         : ("Pierce",          "3131facc-3fe4-4dd5-95ff-afc08570d869")
+}
+
+Buttons = {
+   "StartButton": "81918f9c-83cc-4589-8b86-19a238a0623b",
+   "NextButton": "1d0c798b-b785-4bb6-b160-14c71db6af47"
 }
 
 # A table holding tuples with the location for the cards according its states
