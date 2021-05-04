@@ -20,8 +20,7 @@
 
 def debug(msg):
    if debugVerbosity > 0:
-      # msg = "{}".format(msg)
-      msg = '[#]=> ' + msg
+      msg = '[#]=> ' + str(msg)
       whisper(msg)
 
 
