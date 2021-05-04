@@ -58,11 +58,11 @@ def onDeckLoaded(args):
       # return
    cards = {}
    for card in player.Deck:
-      if card.Name in cards:
-         cards[card.Name] += 1
+      if card.model in cards:
+         cards[card.model] += 1
       else:
-         cards[card.Name] = 1
-      if cards[card.Name] > MaxCardCopies:
+         cards[card.model] = 1
+      if cards[card.model] > MaxCardCopies:
          msg = "INVALID DECK: {0}'s deck has more than {1} copies of a card (only {1} copies are allowed).".format(player, MaxCardCopies)
          _extapi.notify(msg, Colors.Red)
          notification(msg, Colors.Red, True)  # Big notification for all players
