@@ -8,7 +8,7 @@ Updated SP cost of King, Samanosuke, Overheat and Reliable warrior.
 Translated some ability names from japanese.
 `askCardBackups()` now allows to backup only the available backup types in the card.
 Removes KOed chars in the ring from the selection shown by `showCardDlg()`.
-`showCardDlg()` now shows cards in the same order as they are in their groups.
+`showCardDlg()` now shows cards in the same order as they are in their respective groups.
 Improved tutorial.
 Improved game play.
 Several bug fixes.
@@ -19,7 +19,7 @@ Updated illustration of some cards.
 Fixed bug in Cruel hunt card when a 800 BP char attacks alone and a 800 BP char joins an united attack. 
 Added more sound effects.
 Fixed Remy ability not drawing an arrow to player controller.
-Fixed Jin Saotome's ability ca be activated when opponent has no characters.
+Fixed Jin Saotome's ability can be activated when opponent has no characters.
 Added requisite to Lucifer's ability.
 ## 0.9.6
 Changed Blodia rule text (new command "lose HP").

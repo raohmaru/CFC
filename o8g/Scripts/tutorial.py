@@ -104,7 +104,7 @@ Please play a Character card from your hand into your Ring.
 
 {}
 
-\u2E3B
+\u2E3B\u2E3B\u2E3B\u2E3B\u2E3B\u2E3B\u2E3B\u2E3B\u2E3B
 To play a card form you hand you can:
 - Drag it into your Ring,
 - Double-click on it,
@@ -211,7 +211,7 @@ Now play Gato from your hand, and then activate its ability.
 
 {}
 
-\u2E3B
+\u2E3B\u2E3B\u2E3B\u2E3B\u2E3B\u2E3B\u2E3B\u2E3B\u2E3B
 To activate a {} ability you can:
 - Double-click on the card,
 - Right click on the mouse while hovering the card and then click "Use ability" in the contextual menu.
@@ -246,7 +246,7 @@ Please attack with a character in your Ring.
 
 {}
 
-\u2E3B
+\u2E3B\u2E3B\u2E3B\u2E3B\u2E3B\u2E3B\u2E3B\u2E3B\u2E3B
 To attack with a character you can:
 - Move it to the front,
 - Double-click on the Character card,
@@ -295,7 +295,7 @@ Attack the enemy with a United Attack.
 
 {}
 
-\u2E3B
+\u2E3B\u2E3B\u2E3B\u2E3B\u2E3B\u2E3B\u2E3B\u2E3B\u2E3B
 To do an United Attack:
 - Drag and drop a character on top of an attacking character,
 - Press Ctrl+Alt+A while hovering the card with the mouse,
@@ -350,7 +350,7 @@ Block the attacking character with one character in your Ring.
 
 {}
 
-\u2E3B
+\u2E3B\u2E3B\u2E3B\u2E3B\u2E3B\u2E3B\u2E3B\u2E3B\u2E3B
 To do a counter-attack:
 - Drag and drop a character in front of the attacking character
 - Double-click on a Character card,
@@ -394,7 +394,7 @@ Please play the card "Revive" from your hand.
 
 {}
 
-\u2E3B
+\u2E3B\u2E3B\u2E3B\u2E3B\u2E3B\u2E3B\u2E3B\u2E3B\u2E3B
 Hint: You can target Baby Head from the Discard pile with Shift + Left Click as the target of the Action card. Otherwise, the Card Selection dialog will pop-up with the available targets.
 """.format(self.msgOnDone), 'OK')
 
@@ -431,7 +431,7 @@ Play the card "Vacation" from your hand in response of the enemy attack.
 
 {}
 
-\u2E3B
+\u2E3B\u2E3B\u2E3B\u2E3B\u2E3B\u2E3B\u2E3B\u2E3B\u2E3B
 Hint: Please remember that you can target a character in the Ring with Shift + Left Click as the target of the reaction card.
 """.format(self.msgOnDone), 'OK')
          

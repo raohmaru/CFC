@@ -1271,7 +1271,6 @@ def isReaction(card):
 
 
 def isButton(card):
-   # return card._id in buttons
    return card.Type == ButtonType
 
 
