@@ -36,6 +36,7 @@ try:
    # Start to hack :)
    clr.AddReference("Octgn")
    clr.AddReference("Octgn.Core")
+   clr.AddReference("Octgn.JodsEngine") # 3.4.350.0
    # clr.AddReference("Octgn.DataNew")
    import Octgn
    import System
