@@ -68,9 +68,8 @@ CleanupPhase  = 7
 AttackColor         = "#ff0000"
 AttackNoFreezeColor = "#ff8000"
 UnitedAttackColor   = "#ff42de"
-BlockColor          = "#25750f"
+BlockColor          = "#3ec61a"
 ActivatedColor      = "#0000ff"
-InfoColor           = "#00ff00"
 
 # Filter colours
 CannotUnfreezeFilter = '#6699d9ff'

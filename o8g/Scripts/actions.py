@@ -390,15 +390,7 @@ def doesNotUnfreeze(card, x = 0, y = 0, restr = None):
 
 def clear(card, x = 0, y = 0):
    card.target(False)
-   if settings['Play']:
-      # Triggered from the menu
-      if x != 0 or y != 0:
-         if card.highlight in [InfoColor]:
-            card.highlight = None
-      else:
-         card.highlight = None
-   else:
-      card.highlight = None
+   card.highlight = None
 
 
 def alignCardAction(card, x = 0, y = 0):
@@ -433,10 +425,7 @@ def askCardBackups(card, x = 0, y = 0):
       for c in me.hand:
          if isCharacter(c):
             if c != card and c.Subtype in avlBackups:
-               c.highlight = InfoColor
                charsBackup.append(c)
-            elif c.highlight == InfoColor:
-               c.highlight = None
       if len(charsBackup) > 0:
          if inRing:
             targets = showCardDlg(charsBackup, 'Select a character card from your hand to back-up {}'.format(card.Name))

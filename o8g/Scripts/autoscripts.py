@@ -365,12 +365,7 @@ def preparePhase():
             changed = True
    if changed:
       setGlobalVar('Rules', Rules)
-      
-   # Unhighlight avaible backup cards in hand
-   for c in me.hand:
-      if c.highlight == InfoColor:
-         c.highlight = None
-   
+
    update()
 
 
