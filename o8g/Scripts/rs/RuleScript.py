@@ -120,7 +120,7 @@ class Rules():
          for req in requisite:
             reqTarget = RulesLexer.parseTarget(req)
             if not RulesUtils.getTargets(reqTarget, thisCard, reveal=False):
-               notify(MSG_AB_MISS_REQ.format(thisCard))
+               _extapi.whisper(MSG_AB_MISS_REQ.format(thisCard), Colors.Red)
                playSnd('cancel-2')
                return False
             debug("-- Requisites are met")

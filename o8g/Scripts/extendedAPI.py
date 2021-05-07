@@ -192,18 +192,18 @@ class ExtendedApi(object):
          whisper(message.Message)
       
    def warning(self, str):
-      self.addMessage(Octgn.Core.Play.WarningMessage(str, {}))
+      self.addMessage(Octgn.Core.Play.WarningMessage(replIdsWithNames(str), {}))
       
             
    def system(self, str):
-      self.addMessage(Octgn.Core.Play.SystemMessage(str, {}))
+      self.addMessage(Octgn.Core.Play.SystemMessage(replIdsWithNames(str), {}))
       
       
    def whisper(self, str, color = Colors.Black, bold = False):
-      msg = str
+      msg = replIdsWithNames(str)
       customPlayer = CustomPlayer(color, bold)
       if bold:
-         customPlayer.name = str
+         customPlayer.name = msg
          msg = ''
       update()  # To make next function work if this has been invoked from a remote call
       self.addMessage(Octgn.Core.Play.PlayerEventMessage(customPlayer, msg, {}))

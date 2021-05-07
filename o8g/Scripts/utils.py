@@ -638,6 +638,10 @@ def notifyWin(player):
       notification(msg, Colors.Black, True)
       
 
+def replIdsWithNames(msg):
+# Replace card ID with card name
+   return re.sub(Regexps['cardid'], lambda match: Card(int(match.group(1))).Name, msg)
+
 #---------------------------------------------------------------------------
 # Card functions
 #---------------------------------------------------------------------------
@@ -908,7 +912,7 @@ def addAlternateRules(card, ability, rules, altname=None):
 def askForSlot(player = me, showEmptySlots = True):
    ring = getGlobalVar('Ring', player)
    if showEmptySlots and ring.count(None) == 0:
-      warning("There is no emply slot in your ring where to put a character card.")
+      warning("There is no empty slot in your ring where to put a character card.")
       return -1
    # Prompt the player to select an empty slot
    slots = []

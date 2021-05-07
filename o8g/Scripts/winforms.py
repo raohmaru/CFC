@@ -127,7 +127,7 @@ def messageBox(type, msg, title, icon = None):
    if settings['WinForms']:
       Application.EnableVisualStyles()
       # Replace card ID with card name
-      msg = re.sub(Regexps['cardid'], lambda match: Card(int(match.group(1))).Name, msg)
+      msg = replIdsWithNames(msg)
       debug(msg)
       form = MessageBoxForm(msg, title, icon)
       playSnd('win-{}'.format(type), True)
