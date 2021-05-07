@@ -156,7 +156,7 @@ effect:
          copyAbility(expr)
          swapAbilities()
          each(expr in group -> effect)    // effect context: group item
-         transform(card name|expr)
+         transform("card model"|expr)
          moveRestTo(zone)
          enableRule(rule)
          disableRule(rule)
@@ -564,9 +564,10 @@ RulesDict['d5e70014-8a56-4d9b-8b06-0192bac3f0b8'] = """
 action = {F}: +cantplayac to(opp) oppueot
 """
 
-# Zombie's RESIDENT EVIL
+# Zombie's BIOHAZARD
 RulesDict['80d411e3-c3df-486f-927f-1592d9db65de'] = """
-action = {S}: transform(Zombie) target(character)
+requisite = ^character<1>
+action = {S}: transform("80d411e3-c3df-486f-927f-1592d9db65de") target(character)
 """
 
 # Akira's BROTHER SEARCH

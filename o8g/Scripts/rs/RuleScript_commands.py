@@ -525,9 +525,9 @@ def cmd_each(rc, targets, source, restr, args):
    
 def cmd_transform(rc, targets, source, restr, expr):
    model = None
-   models = queryCard({"Name":expr}, True)
-   if len(models):
-      model = models[0]
+   # Is expr a literal with a UUID?
+   if expr[0] == '"':
+      model = expr.strip('"')
    else:
       card = evalExpression(expr, True, getLocals(rc=rc, targets=targets, source=source))
       if card:
