@@ -365,7 +365,7 @@ def preparePhase():
             changed = True
    if changed:
       setGlobalVar('Rules', Rules)
-
+   
    update()
 
 
@@ -380,11 +380,6 @@ def playAuto(card, slotIdx=None, force=False):
 
    # Player plays a Character card
    if isCharacter(card):
-      # If a char has been selected, backup that char instead
-      targets = getTargetedCards(card)
-      if len(targets) > 0:
-         backup(card)
-         return
       # Check if the card can be legally played
       if (not me.isActive or phaseIdx != MainPhase) and not force:
          information("Character cards can only be played on your Main Phase.")
@@ -494,7 +489,7 @@ def backupAuto(card, target = None):
             if card.Subtype in acceptedBackups:
                targets.append(c)
          if targets:
-            targets = showCardDlg(targets, 'Select a character to back-up')
+            targets = showCardDlg(targets, 'Select a character in your ring to back-up')
             if targets == None:
                return
          else:
@@ -505,20 +500,13 @@ def backupAuto(card, target = None):
    if isFrozen(target):
       warning("Frozen characters can't be backed-up.")
       return
-   # Target just entered the ring?
-   if MarkersDict['Just Entered'] in target.markers and not getRule('backup_fresh'):
-      warning("Characters that just entered the ring this turn can't be backed-up.")
+   # Check some constrains
+   if not canBackup(target):
       return
-   # Backup limit
-   backupsPlayed = getState(me, 'backupsPlayed')
-   if backupsPlayed >= BackupsPerTurn:
-      if getRule('backup_limit') and triggerHook([Hooks.BackupLimit, target._id]) != False:
-         warning("Can't backup more than {} character per turn.".format(BackupsPerTurn))
-         return
    # Check compatible backups
    acceptedBackups = getAcceptedBackups(target)
    if not card.Subtype in acceptedBackups:
-      warning("Incompatible backups.\n{} only accepts {} character types.".format(target.Name, ', '.join(filter(None, acceptedBackups))))
+      warning("Incompatible backups.\n{} accepts these character types: {}.".format(target.Name, cardsNamesStr(acceptedBackups)))
       return
    # Check remaining backups
    avlbckps = acceptedBackups.count(card.Subtype)
@@ -538,7 +526,7 @@ def backupAuto(card, target = None):
    setMarker(card, 'Backup')
    oldBP = getMarker(target, 'BP')
    addMarker(target, 'BP', BackupRaiseBP)  # Backed-up char's BP is raised
-   setState(me, 'backupsPlayed', backupsPlayed + 1)
+   setState(me, 'backupsPlayed', getState(me, 'backupsPlayed') + 1)
    triggerGameEvent(GameEvents.BackedUp, target._id)
    return (target, oldBP)
 

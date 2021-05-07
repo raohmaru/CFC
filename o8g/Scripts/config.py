@@ -151,7 +151,8 @@ Regexps = {
    '.damaged'  : re.compile(r'(\w+)\.damaged'),
    '.lostsp'   : re.compile(r'(\w+)\.lostsp'),
    'opp'       : re.compile(r'\bopp\b'),
-   'listIdx'   : re.compile(r'([\w\d])\.(\d)\b')
+   'listIdx'   : re.compile(r'([\w\d])\.(\d)\b'),
+   'cardid'    : re.compile(r'\{#(\d+)\}')
 }
 
 # Misc

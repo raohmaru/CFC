@@ -346,7 +346,7 @@ class RulesUtils():
          else:
             cards_f1 = cards_f2
             choose = False
-            debug("-- %s cards targeted" % len(cards_f1))
+            debug("-- %s card(s) targeted" % len(cards_f1))
 
       # Apply filters
       cards_f1 = RulesFilters.applyFiltersTo(cards_f1, filters)

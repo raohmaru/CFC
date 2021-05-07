@@ -1019,6 +1019,7 @@ def fixBP(n):
    else:
       return int(round(n / 100.0)) * 100
 
+
 #---------------------------------------------------------------------------
 # Counter Manipulation
 #---------------------------------------------------------------------------
@@ -1233,7 +1234,7 @@ def getAttachmets(card):
    
 
 def getAcceptedBackups(card):
-   return (card.properties['Backup 1'], card.properties['Backup 2'], card.properties['Backup 3'])
+   return filter(None, [card.properties['Backup 1'], card.properties['Backup 2'], card.properties['Backup 3']])
 
 
 #---------------------------------------------------------------------------
@@ -1316,3 +1317,17 @@ def isVisible(card):
 
 def hasFilter(card, filter):
    return card.filter and card.filter[1:] == filter[3:]
+
+
+def canBackup(card):
+   # Char just entered the ring?
+   if MarkersDict['Just Entered'] in card.markers and not getRule('backup_fresh'):
+      warning("Characters that just entered the ring this turn can't be backed-up.")
+      return
+   # Backup limit
+   backupsPlayed = getState(me, 'backupsPlayed')
+   if backupsPlayed >= BackupsPerTurn:
+      if getRule('backup_limit') and triggerHook([Hooks.BackupLimit, card._id]) != False:
+         warning("You can't backup more than {} character per turn.".format(BackupsPerTurn))
+         return
+   return True
