@@ -290,7 +290,7 @@ def clearKOedChars():
    # KOs characters with 0 BP
    for card in getRing():
       if getMarker(card, 'BP') == 0:
-         notify("{}'s {} BP is 0. It will be KOed from the ring.".format(card.controller, card))
+         notify("{}'s {} BP is 0. Removing it from the arena.".format(card.controller, card))
          if card.controller == me:
             destroy(card)
             update()  # Syncs the game state along players. Also delays animations.
@@ -749,7 +749,8 @@ def activateAuto(card):
    preparePhase()
 
    if card.highlight == ActivatedColor:
-      notify("{}'s ability or effect has already been activated".format(card))
+      kind = "ability" if isCharacter(card) else "effect"
+      notify("{}'s {} has already been activated.".format(card, kind))
       return
    # Character ability
    if isCharacter(card):

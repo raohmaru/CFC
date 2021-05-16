@@ -333,9 +333,15 @@ class Rules():
                max = 1
                if target:
                   max = int(target['types'][0])
-               cards = RulesUtils.getCardsFromZone(RS_KW_ZONE_HAND)
-               notify(MSG_PLAYER_LOOKS.format(me, 'their', 'hand'))
-               cards = showCardDlg(cards, "Select {} card{} from you hand to discard".format(max, plural(max)), max, min=max)
+               # Looking exactly for `max` targeted cards in the hand
+               targetedCards = getTargetedCards(type=None, group=me.hand)
+               if len(targetedCards) == max:
+                  cards = targetedCards
+               # Should ask for cards?
+               if len(cards) == 0:
+                  cards = RulesUtils.getCardsFromZone(RS_KW_ZONE_HAND)
+                  notify(MSG_PLAYER_LOOKS.format(me, 'their', 'hand'))
+                  cards = showCardDlg(cards, "Select {} card{} from you hand to discard".format(max, plural(max)), max, min=max)
                if cards == None:
                   return False
             # ... or a valid target
