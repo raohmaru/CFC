@@ -275,7 +275,7 @@ def cmd_discard(rc, targets, source, restr, whichCards=''):
    cardsTokens = RulesLexer.parseTarget(whichCards)
    if not targets or isCard(targets[0]):
       targets = [source.controller]
-   # Is a random discard?
+   # It's a random discard?
    if cardsTokens['qty'] and cardsTokens['qty'][0] == RS_KW_RANDOM:
       cmd_randomDiscard(rc, targets, source, restr, RulesUtils.getTargetQty(cardsTokens['qty']).samples)
       return

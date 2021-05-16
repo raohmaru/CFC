@@ -48,9 +48,10 @@ def debugScenario():
    gotoMain()
    rnd(10, 1000)  # Delay the next action until all animation is done
    tableCards = [
-       '80d411e3-c3df-486f-927f-1592d9db65de' # Zombie
+       '9c6b99fa-ff60-4d70-aee8-7e1eae6f29b7' # Mack
+      ,'4f2454d7-2294-47a2-a473-a838c1f7d874' # Ryu
        # 'd14694b4-484c-4b45-962e-8cbb636d8a9a' # 200 BP
-      ,'c7d128ea-a3b9-4b04-b8b2-a61153b5b2e6' # 400 BP
+      # ,'c7d128ea-a3b9-4b04-b8b2-a61153b5b2e6' # 400 BP
       # ,'24e99a13-cb42-4e16-9900-78dde12e1a4c' # 600 BP
       # ,'e6e46f83-d089-4762-8d8e-2a3252cfc9db' # 800 BP
    ]
@@ -65,8 +66,7 @@ def debugScenario():
       rnd(1, 100)  # Delay the next action until all animation is done
       
    handCards = [
-       '80d411e3-c3df-486f-927f-1592d9db65de' # Zombie
-      ,'80d411e3-c3df-486f-927f-1592d9db65de' # Zombie
+       '4d7520b9-9ced-43e0-a2e7-974d76d8eb82' # Iori
        # '8bb477f9-5004-4018-8d5e-73c6a23e8912' # Char 300 BP
       ,'e910f462-bea9-4262-b168-c7c512eb6511' # Char 500 BP
       # ,'0fdadc92-0864-46cc-a3ff-c20e2af8249c' # Char 700 BP
@@ -136,11 +136,10 @@ def debugOpp():
    me.SP = 50
    
    tableCards = [
-       # 'e0c2ac67-1925-4e63-b9ae-9dcbc7ff229f' # The Ump
-       # 'd14694b4-484c-4b45-962e-8cbb636d8a9a' # 200 BP
-      # ,'c7d128ea-a3b9-4b04-b8b2-a61153b5b2e6' # 400 BP
-      # ,'24e99a13-cb42-4e16-9900-78dde12e1a4c' # 600 BP
-      # ,'e6e46f83-d089-4762-8d8e-2a3252cfc9db' # 800 BP
+       'd14694b4-484c-4b45-962e-8cbb636d8a9a' # 200 BP
+      ,'c7d128ea-a3b9-4b04-b8b2-a61153b5b2e6' # 400 BP
+      ,'24e99a13-cb42-4e16-9900-78dde12e1a4c' # 600 BP
+      ,'e6e46f83-d089-4762-8d8e-2a3252cfc9db' # 800 BP
    ]
    for i, id in enumerate(tableCards):
       card = table.create(id, 0, 0, quantity=1, persist=True)

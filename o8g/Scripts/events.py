@@ -50,7 +50,6 @@ def onDeckLoaded(args):
    if player != me:  # We only want the owner of the deck to run this script
       return
    debug(">>> onDeckLoaded({})".format(player))
-   notify("{} has loaded a deck.")
    if len(player.Deck) != DeckSize:
       msg = "INVALID DECK: {}'s deck has {} cards (it must have exactly {} cards).".format(player, len(player.Deck), DeckSize)
       _extapi.notify(msg, Colors.Red)

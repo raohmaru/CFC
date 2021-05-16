@@ -68,7 +68,7 @@ CleanupPhase  = 7
 AttackColor         = "#ff0000"
 AttackNoFreezeColor = "#ff8000"
 UnitedAttackColor   = "#ff42de"
-BlockColor          = "#3ec61a"
+BlockColor          = "#00e100"
 ActivatedColor      = "#0000ff"
 
 # Filter colours
@@ -81,7 +81,7 @@ FiltersDict = {
    'Cannot Unfreeze': CannotUnfreezeFilter
 }
 
-# Dictionary which hold all the hard coded markers and tokens (in the markers & tokens set)
+# Dictionary which hold all the hard coded markers (in the game definition)
 MarkersDict = {
    "BP"             : ("BP",              "b86fc644-d084-43d3-99d2-5b11457321cc"),
    "Just Entered"   : ("Just Entered",    "9a52c42c-543f-48bb-9a48-d7599d6c8fae"),
@@ -91,12 +91,13 @@ MarkersDict = {
    "Cannot Unfreeze": ("Cannot Unfreeze", "5231f83b-b78e-48b3-8bce-62031c022bf4"),
    "Unfreezable"    : ("Unfreezable",     "fec1976b-9ce5-4b32-8c07-76eadc5607f6"),
    "Backup"         : ("Backup",          "efd3208d-2ec3-44ca-be1d-858e91628da4"),
-   "Pierce"         : ("Pierce",          "3131facc-3fe4-4dd5-95ff-afc08570d869")
+   "Pierce"         : ("Pierce",          "3131facc-3fe4-4dd5-95ff-afc08570d869"),
+   "Cant Block"     : ("Cant Block",      "a8a4b1a3-6023-4ac1-b24f-a50e4768a598")
 }
 
 Buttons = {
    "StartButton": "81918f9c-83cc-4589-8b86-19a238a0623b",
-   "NextButton": "1d0c798b-b785-4bb6-b160-14c71db6af47"
+   "NextButton" : "1d0c798b-b785-4bb6-b160-14c71db6af47"
 }
 
 # A table holding tuples with the location for the cards according its states
