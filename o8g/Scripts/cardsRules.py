@@ -1910,6 +1910,7 @@ action = hp(+opp.hand.size * 100)
 
 # Banquet
 RulesDict['bc59a360-18f6-4c79-8305-77d0975d4106'] = """
+target = me
 action = hp(+500)
 """
 
