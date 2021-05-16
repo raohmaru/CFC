@@ -254,8 +254,10 @@ def cmd_reveal(rc, targets, source, restr, pileName=None):
       if targets:
          if targets[0].controller == me:
             reveal(targets)
+            remoteCall(getOpp(), "showCardDlg", [targets, "Cards revealed by {}".format(me)])
          else:
             remoteCall(getOpp(), "reveal", [targets])
+            showCardDlg(targets, "Cards revealed by {}".format(getOpp()))
    elif pileName in RS_KW_ZONES_PILES:
       if not targets or isCard(targets[0]):
          targets = [source.controller]

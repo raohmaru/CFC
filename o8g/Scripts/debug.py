@@ -48,8 +48,10 @@ def debugScenario():
    gotoMain()
    rnd(10, 1000)  # Delay the next action until all animation is done
    tableCards = [
-       '9c6b99fa-ff60-4d70-aee8-7e1eae6f29b7' # Mack
-      ,'4f2454d7-2294-47a2-a473-a838c1f7d874' # Ryu
+       'a68dc591-6976-4341-b8b9-1a7dc1c71775' # Samanosuke
+      ,'2981e9ad-11e1-4f14-a707-2120bfc0cc2f' # Sagat
+      ,'c6ee2630-7f1a-4ac1-95f3-be8db970e855' # Omokane Saki
+      ,'1cd7580b-d396-496c-afac-bcd6da9c1f83' # Akira
        # 'd14694b4-484c-4b45-962e-8cbb636d8a9a' # 200 BP
       # ,'c7d128ea-a3b9-4b04-b8b2-a61153b5b2e6' # 400 BP
       # ,'24e99a13-cb42-4e16-9900-78dde12e1a4c' # 600 BP
@@ -66,8 +68,8 @@ def debugScenario():
       rnd(1, 100)  # Delay the next action until all animation is done
       
    handCards = [
-       '4d7520b9-9ced-43e0-a2e7-974d76d8eb82' # Iori
-       # '8bb477f9-5004-4018-8d5e-73c6a23e8912' # Char 300 BP
+       '51a47b27-abf3-4219-a241-c72bd23b178b' # Morph
+      ,'8bb477f9-5004-4018-8d5e-73c6a23e8912' # Char 300 BP
       ,'e910f462-bea9-4262-b168-c7c512eb6511' # Char 500 BP
       # ,'0fdadc92-0864-46cc-a3ff-c20e2af8249c' # Char 700 BP
       # ,'af43872e-e47d-4fe0-9b55-aedd8a0d0fc7' # Char 800 BP
@@ -85,15 +87,15 @@ def debugScenario():
       card.moveTo(me.hand)
    
    deckCards = [
-       # '55ab2891-c99e-4647-8a9d-b01fbce3009f' # Char 300 BP
+       '55ab2891-c99e-4647-8a9d-b01fbce3009f' # Char 300 BP
       # ,'248517e9-d7a0-450d-9281-df91d20f68ab' # Char 500 BP
       # ,'eb648ee7-aa4e-41ce-a7fc-04af31349ca9' # Char 700 BP
       # ,'4d7520b9-9ced-43e0-a2e7-974d76d8eb82' # Char 1000 BP
-      # ,'5e2211a0-e52e-4b7b-b03d-f6ecb3660bb0' # Action 0 SP
+      ,'5e2211a0-e52e-4b7b-b03d-f6ecb3660bb0' # Action 0 SP
       # ,'83c33aa8-5981-4352-8107-cbb7e05547ec' # Action -1 SP
       # ,'80692723-3895-435f-bf8f-e94507704af5' # Action -3 SP
       # ,'ac01bbbe-583e-46ae-b26c-3c25eb8f0779' # Action -6 SP
-      # ,'556b3359-e642-419a-ab5c-67f70de1bb4f' # Reaction 0 SP
+      ,'556b3359-e642-419a-ab5c-67f70de1bb4f' # Reaction 0 SP
       # ,'46deecf5-7f7b-42b5-b6fa-e3162dce2013' # Reaction -1 SP
       # ,'91e441cc-0f1f-4b01-a2b0-94678d6f0b56' # Reaction -4 SP
    ]
@@ -136,10 +138,10 @@ def debugOpp():
    me.SP = 50
    
    tableCards = [
-       'd14694b4-484c-4b45-962e-8cbb636d8a9a' # 200 BP
-      ,'c7d128ea-a3b9-4b04-b8b2-a61153b5b2e6' # 400 BP
-      ,'24e99a13-cb42-4e16-9900-78dde12e1a4c' # 600 BP
-      ,'e6e46f83-d089-4762-8d8e-2a3252cfc9db' # 800 BP
+       # 'd14694b4-484c-4b45-962e-8cbb636d8a9a' # 200 BP
+      # ,'c7d128ea-a3b9-4b04-b8b2-a61153b5b2e6' # 400 BP
+      # ,'24e99a13-cb42-4e16-9900-78dde12e1a4c' # 600 BP
+      # ,'e6e46f83-d089-4762-8d8e-2a3252cfc9db' # 800 BP
    ]
    for i, id in enumerate(tableCards):
       card = table.create(id, 0, 0, quantity=1, persist=True)
@@ -148,17 +150,15 @@ def debugOpp():
       rnd(1, 100)  # Delay the next action until all animation is done
       
    handCards = [
-       # '6504b1a3-e432-4c6c-845b-6ca72500b458' # Substitute
-      # ,'0a951ced-4508-40b9-8350-5dafb6b7e8aa' # Super Art select
-       # '8bb477f9-5004-4018-8d5e-73c6a23e8912' # Char 300 BP
+       '8bb477f9-5004-4018-8d5e-73c6a23e8912' # Char 300 BP
       # ,'e910f462-bea9-4262-b168-c7c512eb6511' # Char 500 BP
       # ,'0fdadc92-0864-46cc-a3ff-c20e2af8249c' # Char 700 BP
       # ,'af43872e-e47d-4fe0-9b55-aedd8a0d0fc7' # Char 800 BP
-      # ,'5e2211a0-e52e-4b7b-b03d-f6ecb3660bb0' # Action 0 SP
+      ,'5e2211a0-e52e-4b7b-b03d-f6ecb3660bb0' # Action 0 SP
       # ,'83c33aa8-5981-4352-8107-cbb7e05547ec' # Action -1 SP
       # ,'80692723-3895-435f-bf8f-e94507704af5' # Action -3 SP
       # ,'26fa7e0e-eb86-40d5-b5ab-39723fd67e43' # Action -5 SP
-      # ,'556b3359-e642-419a-ab5c-67f70de1bb4f' # Reaction 0 SP
+      ,'556b3359-e642-419a-ab5c-67f70de1bb4f' # Reaction 0 SP
       # ,'46deecf5-7f7b-42b5-b6fa-e3162dce2013' # Reaction -1 SP
       # ,'91e441cc-0f1f-4b01-a2b0-94678d6f0b56' # Reaction -4 SP
    ]
