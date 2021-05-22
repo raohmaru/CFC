@@ -46,10 +46,8 @@ except (IOError, ImportError):
 class ExtendedApi(object):
 # An extended API with methods that directly call C# methods
    def __init__(self):
-      # 3.4.286.0 
-      # self._game = Octgn.Program.GameEngine.Definition  # The game instance
-      # 3.4.350.0
-      self._game = Octgn.Core.DataManagers.GameManager.Get().GetById(Guid.Parse(GameId))
+      # self._game = Octgn.Program.GameEngine.Definition  # 3.4.286.0 
+      self._game = Octgn.Core.DataManagers.GameManager.Get().GetById(Guid.Parse(GameId))  # 3.4.350.0
       self._gameMethods = Octgn.Core.DataExtensionMethods.GameExtensionMethods
       self._cardMethods = Octgn.Core.DataExtensionMethods.CardExtensionMethods
       self.customPlayer = False
