@@ -254,8 +254,10 @@ def cmd_reveal(rc, targets, source, restr, pileName=None):
       if targets:
          if targets[0].controller == me:
             reveal(targets)
+            remoteCall(getOpp(), "showCardDlg", [targets, "Cards revealed by {}".format(me)])
          else:
             remoteCall(getOpp(), "reveal", [targets])
+            showCardDlg(targets, "Cards revealed by {}".format(getOpp()))
    elif pileName in RS_KW_ZONES_PILES:
       if not targets or isCard(targets[0]):
          targets = [source.controller]
@@ -275,7 +277,7 @@ def cmd_discard(rc, targets, source, restr, whichCards=''):
    cardsTokens = RulesLexer.parseTarget(whichCards)
    if not targets or isCard(targets[0]):
       targets = [source.controller]
-   # Is a random discard?
+   # It's a random discard?
    if cardsTokens['qty'] and cardsTokens['qty'][0] == RS_KW_RANDOM:
       cmd_randomDiscard(rc, targets, source, restr, RulesUtils.getTargetQty(cardsTokens['qty']).samples)
       return
@@ -525,9 +527,9 @@ def cmd_each(rc, targets, source, restr, args):
    
 def cmd_transform(rc, targets, source, restr, expr):
    model = None
-   models = queryCard({"Name":expr}, True)
-   if len(models):
-      model = models[0]
+   # Is expr a literal with a UUID?
+   if expr[0] == '"':
+      model = expr.strip('"')
    else:
       card = evalExpression(expr, True, getLocals(rc=rc, targets=targets, source=source))
       if card:

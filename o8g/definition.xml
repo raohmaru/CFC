@@ -3,12 +3,12 @@
       xmlns:xsd="http://www.w3.org/2001/XMLSchema"
       name="Card Fighters' Clash"
       id="e3d56d9e-900d-49c6-b6ae-22cbb51be153"
-      octgnVersion="3.4.286.0"
-      version="0.9.8.772"
+      octgnVersion="3.4.350.0"
+      version="0.9.8.781"
       markersize="20"
       tags="capcom snk fighter"
       description="Card game based on SNK Playmore’s video game SNK vs. Capcom Card Fighters' Clash 2 Expand Edition.
-      &#xd;&#xd;This game is for 2 players.
+      &#xd;&#xd;This game is for two players.
       &#xd;&#xd;Automation rank: A
       &#xd;(This game contains fully automation of play, events and cards to ease game play.)"
       setsurl="https://cardfightersclash.wordpress.com/image-packs/"
@@ -124,6 +124,7 @@
 		<marker name="Unfreezable"     id="fec1976b-9ce5-4b32-8c07-76eadc5607f6" src="Resources/Markers/unfreezable.png"/>
 		<marker name="Backup"          id="efd3208d-2ec3-44ca-be1d-858e91628da4" src="Resources/Markers/backup.png"/>
 		<marker name="Pierce"          id="3131facc-3fe4-4dd5-95ff-afc08570d869" src="Resources/Markers/pierce.png"/>
+		<marker name="Cant Block"      id="a8a4b1a3-6023-4ac1-b24f-a50e4768a598" src="Resources/Markers/cant-block.png"/>
 	</markers>
 	
 	<proxygen definitionsrc="Proxy/proxydef.xml">

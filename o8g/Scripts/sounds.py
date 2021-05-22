@@ -34,7 +34,7 @@ def playSnd(name, isInternal=False):
       or Octgn.Program.DeveloperMode
    ):
       try:
-         sound = Octgn.Program.GameEngine.Definition.Sounds[name]
+         sound = _extapi.game.Sounds[name]
          Octgn.Utils.Sounds.PlayGameSound(sound)
       except KeyError:
          debug("Sound {} does not exist".format(name))

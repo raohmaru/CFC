@@ -50,7 +50,6 @@ def onDeckLoaded(args):
    if player != me:  # We only want the owner of the deck to run this script
       return
    debug(">>> onDeckLoaded({})".format(player))
-   notify("{} has loaded a deck.")
    if len(player.Deck) != DeckSize:
       msg = "INVALID DECK: {}'s deck has {} cards (it must have exactly {} cards).".format(player, len(player.Deck), DeckSize)
       _extapi.notify(msg, Colors.Red)
@@ -58,11 +57,11 @@ def onDeckLoaded(args):
       # return
    cards = {}
    for card in player.Deck:
-      if card.Name in cards:
-         cards[card.Name] += 1
+      if card.model in cards:
+         cards[card.model] += 1
       else:
-         cards[card.Name] = 1
-      if cards[card.Name] > MaxCardCopies:
+         cards[card.model] = 1
+      if cards[card.model] > MaxCardCopies:
          msg = "INVALID DECK: {0}'s deck has more than {1} copies of a card (only {1} copies are allowed).".format(player, MaxCardCopies)
          _extapi.notify(msg, Colors.Red)
          notification(msg, Colors.Red, True)  # Big notification for all players
@@ -393,6 +392,10 @@ def overrideCardsMoved(args):
          
 def overrideTurnPassed(args):
 # Triggers when the player clicks the green "Pass Turn" button on the player tabs.
+   if tutorial:
+      tutorial.goNext()
+      return
+   
    player = args.player  # The player the turn is being passed to
    setState(None, 'activePlayer', player._id)
    nextTurn(player)

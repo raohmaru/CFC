@@ -51,7 +51,7 @@ def acsh_hasAbility(args, x = 0, y = 0):
 
       
 def acsh_AutoPlayOff(args, x = 0, y = 0):
-   card = args[0] if args != table else None
+   card = args[0] if isinstance(args, list) else None
    return (not card or not isButton(card)) and (debugging or not settings['Play'])
 
       

@@ -337,16 +337,17 @@ class RulesUtils():
             debug("      Nope")
 
       # Look for targeted cards
-      if typeSuffix != RS_SUFFIX_PLURAL:
+      if choose:
          cards_f2 = [c for c in cards_f1
             if c.targetedBy == me]
          if len(cards_f2) == 0:
             if len(cards_f1) == 0 and not reveal:
                return False
          else:
-            cards_f1 = cards_f2
-            choose = False
-            debug("-- %s cards targeted" % len(cards_f1))
+            if len(cards_f2) >= minQty and len(cards_f2) <= maxQty:
+               cards_f1 = cards_f2
+               choose = False
+               debug("-- %s card(s) targeted" % len(cards_f1))
 
       # Apply filters
       cards_f1 = RulesFilters.applyFiltersTo(cards_f1, filters)
@@ -362,7 +363,7 @@ class RulesUtils():
          if qty is None:
             choose = False
       
-      # Don't look for cards in this zone, there is only one
+      # Don't look for cards in this zone, there is only one card
       if zone[1] == RS_KW_ZONE_INFRONT:
          choose = False
 

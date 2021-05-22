@@ -126,6 +126,9 @@ def messageBox(type, msg, title, icon = None):
    debug(">>> messageBox({}) with message: {}".format(title, msg))
    if settings['WinForms']:
       Application.EnableVisualStyles()
+      # Replace card ID with card name
+      msg = replIdsWithNames(msg)
+      debug(msg)
       form = MessageBoxForm(msg, title, icon)
       playSnd('win-{}'.format(type), True)
       showWinForm(form)

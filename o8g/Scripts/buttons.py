@@ -35,19 +35,17 @@ def addButton(name):
    mute()
    if name in buttons.values():
       return
-   cards = queryCard({"Name": name}, True)
-   if cards:
-      x = CardsCoords[name][0] * playerSide - ButtonSize/2
-      y = fixCardY(CardsCoords[name][1], ButtonSize)
-      btn = table.create(cards[0], x, y, quantity=1, persist=False)
-      btn.anchor = True
-      buttons[btn._id] = btn.Name
-      # Removes the model so the button image is not shown in the preview
-      # It breaks OCTGN on closing the window :(
-      # icard = _extapi.getCardIdentityById(btn._id)
-      # if icard:
-         # update()
-         # icard.Model = None
+   x = CardsCoords[name][0] * playerSide - ButtonSize/2
+   y = fixCardY(CardsCoords[name][1], ButtonSize)
+   btn = table.create(Buttons[name], x, y, quantity=1, persist=False)
+   btn.anchor = True
+   buttons[btn._id] = btn.Name
+   # Removes the model so the button image is not shown in the preview
+   # It breaks OCTGN on closing the window :(
+   # icard = _extapi.getCardIdentityById(btn._id)
+   # if icard:
+      # update()
+      # icard.Model = None
       
       
 def removeButton(name):

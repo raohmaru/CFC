@@ -23,13 +23,14 @@ class RulesAbilities():
    items = {}
 
    @staticmethod
-   def register(name, event, checkFunc=None, onAdded=None):
+   def register(name, event, checkFunc=None, onAdded=None, onRemoved=None):
       msg = MSG_AB[name] if name in MSG_AB else None
       RulesAbilities.items[name] = {
          'event'    : event,
          'msg'      : msg,
          'checkFunc': checkFunc,
-         'onAdded'  : onAdded
+         'onAdded'  : onAdded,
+         'onRemoved': onRemoved
       }
       
    
@@ -45,7 +46,7 @@ class RulesAbilities():
          ability = RulesAbilities.items[abilityName]
          obj = getPlayerOrCard(target_id)
          debug("-- adding ability '{}' to {}".format(abilityName, obj))
-         abl_add(target_id, ability['event'], source_id, restr, ability['msg'], ability['checkFunc'])
+         abl_add(ability, target_id, source_id, restr)
          if ability['onAdded']:
             ability['onAdded'](obj, restr)
       else:
@@ -112,13 +113,17 @@ def notifyAbility(target_id, source_id=None, msg=None, restr='', isWarning=False
 # Abilities functions
 #---------------------------------------------------------------------------
 
-def abl_add(obj_id, event, source_id=None, restr=None, msg=None, checkFunc=None):
-   debug(">>> abl_add({}, {}, {}, {}, {}, {})".format(obj_id, event, source_id, restr, msg, checkFunc))
+def abl_add(abl, obj_id, source_id=None, restr=None):
+   event = abl['event']
+   msg = abl['msg']
+   checkFunc = abl['checkFunc']
+   onRemove = abl['onRemoved']
+   debug(">>> abl_add({}, {}, {}, {}, {}, {}, {})".format(obj_id, event, source_id, restr, msg, checkFunc, onRemove))
    
    if restr and msg and len(msg) > 1:
       restr = list(restr) + [msg[1]] # Show message when the effect has gone because of the restr cleanup
       
-   eventAdded = addGameEventListener(event, 'abl_genericListener', obj_id, source_id, restr, [obj_id, source_id, msg, checkFunc])
+   eventAdded = addGameEventListener(event, 'abl_genericListener', obj_id, source_id, restr, [obj_id, source_id, msg, checkFunc], onRemove=onRemove)
    if eventAdded and msg:
       notifyAbility(obj_id, source_id if source_id else obj_id, msg[0], getTextualRestr(restr))
 
@@ -174,8 +179,13 @@ def abl_cantattack_added(card, restr = None):
 
 
 def abl_cantblock_added(card, restr = None):
+   setMarker(card, 'Cant Block')
    if isBlocking(card):
       cancelBlock(card)
+
+
+def abl_cantblock_removed(obj_id, source_id, msg, checkFunc):
+   removeMarker(Card(obj_id), 'Cant Block')
 
 
 def abl_rush_added(card, restr = None):
@@ -185,7 +195,7 @@ def abl_rush_added(card, restr = None):
 
 RulesAbilities.register('unblockable',     Hooks.CanBeBlocked)
 RulesAbilities.register('cantattack',      Hooks.BeforeAttack, onAdded = abl_cantattack_added)
-RulesAbilities.register('cantblock',       Hooks.BeforeBlock, onAdded = abl_cantblock_added)
+RulesAbilities.register('cantblock',       Hooks.BeforeBlock, onAdded = abl_cantblock_added, onRemoved = 'abl_cantblock_removed')
 RulesAbilities.register('cantplayac',      Hooks.BeforePlayAC)
 RulesAbilities.register('cantplayre',      Hooks.BeforePlayRE)
 RulesAbilities.register('preventpierce',   Hooks.PreventPierce)

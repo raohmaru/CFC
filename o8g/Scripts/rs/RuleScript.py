@@ -120,7 +120,7 @@ class Rules():
          for req in requisite:
             reqTarget = RulesLexer.parseTarget(req)
             if not RulesUtils.getTargets(reqTarget, thisCard, reveal=False):
-               notify(MSG_AB_MISS_REQ.format(thisCard))
+               _extapi.whisper(MSG_AB_MISS_REQ.format(thisCard), Colors.Red)
                playSnd('cancel-2')
                return False
             debug("-- Requisites are met")
@@ -213,7 +213,7 @@ class Rules():
                      debug("--- Found ELIF/ELSE condition")
                      return self.execAction(cond[2], target, isAuto, True)
                   if len(effect[1]) > 0:
-                     notify("Cannot activate the ability because its condition does not match.")
+                     notify("Cannot activate the ability because its conditions does not match.")
                   if not isAuto:
                      return ERR_NO_EFFECT
                   revert = True
@@ -241,7 +241,7 @@ class Rules():
          # For auto with events that adds abilities, if the ability were already granted, check if any char has lost
          # it (it is not in in targets), then remove abilities of those chars
          if isAuto and action['event']:
-            abTargets = getTargetofSourceEvent(self.card_id)
+            abTargets = getTargetOfSourceEvent(self.card_id)
             newTargets = []
             for t in abTargets:
                if not t in targets:
@@ -333,9 +333,15 @@ class Rules():
                max = 1
                if target:
                   max = int(target['types'][0])
-               cards = RulesUtils.getCardsFromZone(RS_KW_ZONE_HAND)
-               notify(MSG_PLAYER_LOOKS.format(me, 'their', 'hand'))
-               cards = showCardDlg(cards, "Select {} card{} from you hand to discard".format(max, plural(max)), max, min=max)
+               # Looking exactly for `max` targeted cards in the hand
+               targetedCards = getTargetedCards(type=None, group=me.hand)
+               if len(targetedCards) == max:
+                  cards = targetedCards
+               # Should ask for cards?
+               if len(cards) == 0:
+                  cards = RulesUtils.getCardsFromZone(RS_KW_ZONE_HAND)
+                  notify(MSG_PLAYER_LOOKS.format(me, 'their', 'hand'))
+                  cards = showCardDlg(cards, "Select {} card{} from you hand to discard".format(max, plural(max)), max, min=max)
                if cards == None:
                   return False
             # ... or a valid target

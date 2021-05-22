@@ -414,6 +414,7 @@ def resetState():
    for p in players:
       gs = GameState[p._id] if p._id in GameState else {}
       GameState[p._id] = {
+         # Note that all keys must be lowercase
          'charsplayed'  : 0,  # Num of chars played this turn
          'charsperturn' : CharsPerTurn, # Allowed number of chars to play per turn
          'backupsplayed': 0,  # Num of chars backed-up this turn
@@ -638,6 +639,10 @@ def notifyWin(player):
       notification(msg, Colors.Black, True)
       
 
+def replIdsWithNames(msg):
+# Replace card ID with card name
+   return re.sub(Regexps['cardid'], lambda match: Card(int(match.group(1))).Name, msg)
+
 #---------------------------------------------------------------------------
 # Card functions
 #---------------------------------------------------------------------------
@@ -803,14 +808,14 @@ def alignBackups(card, x=0, y=0):
          c.index = 0
 
 
-def getTargetedCards(card=None, targetedByMe=True, controlledByMe=True, type=CharType):
+def getTargetedCards(card=None, targetedByMe=True, controlledByMe=True, type=CharType, group=table):
    targetedBy   = me if targetedByMe   or len(players) == 1 else players[1]
    controlledBy = me if controlledByMe or len(players) == 1 else players[1]
-   targets = [c for c in table
+   targets = [c for c in group
       if  c != card
       and c.targetedBy == targetedBy
       and c.controller == controlledBy
-      and c.Type == type]
+      and (type == None or c.Type == type)]
    return targets
 
    
@@ -908,7 +913,7 @@ def addAlternateRules(card, ability, rules, altname=None):
 def askForSlot(player = me, showEmptySlots = True):
    ring = getGlobalVar('Ring', player)
    if showEmptySlots and ring.count(None) == 0:
-      warning("There is no emply slot in your ring where to put a character card.")
+      warning("There is no empty slot in your ring where to put a character card.")
       return -1
    # Prompt the player to select an empty slot
    slots = []
@@ -1019,6 +1024,7 @@ def fixBP(n):
    else:
       return int(round(n / 100.0)) * 100
 
+
 #---------------------------------------------------------------------------
 # Counter Manipulation
 #---------------------------------------------------------------------------
@@ -1032,7 +1038,7 @@ def dealDamage(dmg, target, source, combatDmg = True, isPiercing = False):
       minDmg = min(dmg, getMarker(target, 'BP'))
       addMarker(target, 'BP', -minDmg)
       newBP = getMarker(target, 'BP')
-      notify("{} deals {} damage to {}. New BP is {} (before was {}).".format(source, dmg, target, newBP, oldBP))
+      notify("{} deals {} {}damage to {}. New BP is {} (before was {}).".format(source, dmg, "combat " if combatDmg else "", target, newBP, oldBP))
       if isCharacter(source):
          playSnd('damage-char-1')
          if combatDmg:
@@ -1050,8 +1056,12 @@ def dealDamage(dmg, target, source, combatDmg = True, isPiercing = False):
       newHP = oldHP - dmg
       target.HP = newHP
       setState(target, 'HP', newHP)  # Update game state
-      piercing = "piercing " if isPiercing else ""
-      notify("{} deals {} {}damage to {}. New HP is {} (before was {}).".format(source, dmg, piercing, target, target.HP, oldHP))
+      typeOfDmg = ""
+      if isPiercing:
+         typeOfDmg = "piercing "
+      elif combatDmg:
+         typeOfDmg = "combat "
+      notify("{} deals {} {}damage to {}. New HP is {} (before was {}).".format(source, dmg, typeOfDmg, target, target.HP, oldHP))
       if newHP <= 0:
          notifyWin(getOpp(target))
       # Change game state: non-combat damage
@@ -1233,7 +1243,7 @@ def getAttachmets(card):
    
 
 def getAcceptedBackups(card):
-   return (card.properties['Backup 1'], card.properties['Backup 2'], card.properties['Backup 3'])
+   return filter(None, [card.properties['Backup 1'], card.properties['Backup 2'], card.properties['Backup 3']])
 
 
 #---------------------------------------------------------------------------
@@ -1316,3 +1326,17 @@ def isVisible(card):
 
 def hasFilter(card, filter):
    return card.filter and card.filter[1:] == filter[3:]
+
+
+def canBackup(card):
+   # Char just entered the ring?
+   if MarkersDict['Just Entered'] in card.markers and not getRule('backup_fresh'):
+      warning("Characters that just entered the ring this turn can't be backed-up.")
+      return
+   # Backup limit
+   backupsPlayed = getState(me, 'backupsPlayed')
+   if backupsPlayed >= BackupsPerTurn:
+      if getRule('backup_limit') and triggerHook([Hooks.BackupLimit, card._id]) != False:
+         warning("You can't backup more than {} character per turn.".format(BackupsPerTurn))
+         return
+   return True

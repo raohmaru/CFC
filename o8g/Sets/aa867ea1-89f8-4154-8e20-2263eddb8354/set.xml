@@ -922,9 +922,9 @@
 			<property name="Type"         value="Character" />
 			<property name="Subtype"      value="Zombie" />
 			<property name="Rarity"       value="C" />
-			<property name="Ability"      value="&#163; RESIDENT EVIL" />
+			<property name="Ability"      value="&#163; BIOHAZARD" />
 			<property name="Ability Type" value="&#163;" />
-			<property name="Ability Name" value="RESIDENT EVIL" />
+			<property name="Ability Name" value="BIOHAZARD" />
 			<property name="Rules"        value="KO this character. A character becomes a Zombie card. (It loses its back-ups.)" />
 			<property name="BP"           value="200" />
 			<property name="SP"           value="3" />

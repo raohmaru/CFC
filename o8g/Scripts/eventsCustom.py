@@ -19,21 +19,10 @@
 # Custom event handlers
 #---------------------------------------------------------------------------
 
-def addGameEventListener(event, callback, obj_id, source_id=None, restr=None, args=[], appliesto=None):
+def addGameEventListener(event, callback, obj_id, source_id=None, restr=None, args=[], appliesto=None, onRemove=None):
    ge = getGlobalVar('GameEvents')
    prfx, eventName = RulesLexer.getPrefix(RS_PREFIX_EVENTS, event)
-   controller = Card(source_id).controller._id if source_id else me._id
-   listener = {
-      'event'     : eventName,
-      'controller': controller,
-      'id'        : obj_id,
-      'source'    : source_id,
-      'callback'  : callback,
-      'restr'     : restr,
-      'scope'     : prfx,
-      'args'      : args,
-      'appliesto' : appliesto
-   }
+   # Do not add the same event again
    for e in ge:
       if (
          e['event'] == eventName
@@ -44,6 +33,19 @@ def addGameEventListener(event, callback, obj_id, source_id=None, restr=None, ar
          and e['args'] == args
       ):
          return False
+   controller = Card(source_id).controller._id if source_id else me._id
+   listener = {
+      'event'     : eventName,
+      'controller': controller,
+      'id'        : obj_id,
+      'source'    : source_id,
+      'callback'  : callback,
+      'restr'     : restr,
+      'scope'     : prfx,
+      'args'      : args,
+      'appliesto' : appliesto,
+      'onremove'  : onRemove
+   }
    ge.append(listener)
    setGlobalVar('GameEvents', ge)
    debug("Added listener to game event '{}' -> {}".format(eventName, listener))
@@ -65,10 +67,8 @@ def removeGameEventListener(obj_id, eventName=None, callback=None):
                del ge[i]
                removed = True
                debug("Removed listener for event {} ({})".format(listener['event'], listener))
-               # Maybe invoke the callback
-               if listener['event'] == Hooks.CallOnRemove:
-                  func = eval(listener['callback'])
-                  func(*listener['args'])
+               # Invoke any callback
+               onRemoveEvent(listener)
    if removed:
       setGlobalVar('GameEvents', ge)
    return removed
@@ -146,13 +146,6 @@ def triggerHook(event, *args):
          notifyAbility(args[0], source, MSG_HOOKS_ERR[ability], isWarning=True)   
    return res
    
-
-# def remoteGameEvent(cardID, eventName, *args):
-   # debug(">>> remoteGameEvent({}, {}, {})".format(cardID, eventName, args))
-   # card = Card(cardID)
-   # pcard = getParsedCard(card)
-   # pcard.rules.execAuto(None, eventName, *args)
-   
    
 def cleanupGameEvents(restr):
    debug(">>> cleanupGameEvents({})".format(restr))
@@ -174,21 +167,29 @@ def cleanupGameEvents(restr):
                notify(restrMsg.format(getObjName(listener['id'])))
             del ge[i]
             debug("Removed listener for event {} -> {}".format(listener['event'], listener))
-            
-            # Maybe invoke the callback
-            if listener['event'] == Hooks.CallOnRemove:
-               func = eval(listener['callback'])
-               func(*listener['args'])
+            # Invoke any callback
+            onRemoveEvent(listener)
                   
    setGlobalVar('GameEvents', ge)
 
    
-def getTargetofSourceEvent(source):
+def getTargetOfSourceEvent(source):
    targets = []
    ge = getGlobalVar('GameEvents')
    for listener in ge:
       if listener['source'] == source:
          targets.append(Card(listener['id']))
-   debug(">>> getTargetofSourceEvent({}) -> {}".format(source, targets))
+   debug(">>> getTargetOfSourceEvent({}) -> {}".format(source, targets))
    return targets
+   
+   
+def onRemoveEvent(listener):
+   func = None
+   if listener['event'] == Hooks.CallOnRemove:
+      func = eval(listener['callback'])
+   elif listener['onremove']:
+      func = eval(listener['onremove'])
+   if func:
+      debug("Calling on removed callback {}()".format(func.func_name))
+      func(*listener['args'])
    

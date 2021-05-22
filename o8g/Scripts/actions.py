@@ -390,15 +390,7 @@ def doesNotUnfreeze(card, x = 0, y = 0, restr = None):
 
 def clear(card, x = 0, y = 0):
    card.target(False)
-   if settings['Play']:
-      # Triggered from the menu
-      if x != 0 or y != 0:
-         if card.highlight in [InfoColor]:
-            card.highlight = None
-      else:
-         card.highlight = None
-   else:
-      card.highlight = None
+   card.highlight = None
 
 
 def alignCardAction(card, x = 0, y = 0):
@@ -418,40 +410,40 @@ def askCardBackups(card, x = 0, y = 0):
       acceptedBackups = getAcceptedBackups(card)
       inRing = charIsInRing(card)
       charsBackup = []
-      msg1 = ''
-      msg2 = "{} can be backed-up with the following character types:\n  - {}".format(card.Name, '\n  - '.join(filter(None, acceptedBackups)))
+      msg = "{} can be backed-up with the following character types:\n  - {}".format(card.Name, '\n  - '.join(filter(None, acceptedBackups)))
       # Check remaining backups
       avlBackups = list(acceptedBackups) # Copy array
       backups = getGlobalVar('Backups')
       for id in backups:
          if backups[id] == card._id:
             avlBackups.remove(Card(id).Subtype)
-      avlBackups = filter(None, avlBackups)
-      if inRing and len(avlBackups) < len(acceptedBackups):
-         msg2 += "\n\nRemaining backups: {}.".format(", ".join(avlBackups))
       # Candidates to back-up in the hand
       for c in me.hand:
          if isCharacter(c):
             if c != card and c.Subtype in avlBackups:
-               c.highlight = InfoColor
                charsBackup.append(c)
-            elif c.highlight == InfoColor:
-               c.highlight = None
-      if len(charsBackup) > 0:
-         if inRing:
-            targets = showCardDlg(charsBackup, 'Select a character card from your hand to back-up {}'.format(card.Name))
-            if targets:
-               backup(targets[0], target=card)
-         whisper("Highlighting compatible back-ups cards in your hand: {}.".format(cardsNamesStr(charsBackup)))
-      else:
-         if inRing:
-            if len(avlBackups) > 0:
-               msg1 = "You don't have compatible character cards in your hand to backup {}.\n\n".format(card.Name)
+      # Backup char if it is in the ring
+      if inRing:
+         if len(avlBackups) > 0:
+            msg += "\n\nRemaining backups: {}/{} ({}).".format(len(avlBackups), len(acceptedBackups), ', '.join(avlBackups))
+            if len(charsBackup) > 0:
+               if not canBackup(card):
+                  return
+               targets = showCardDlg(charsBackup, 'Select a character card from your hand to back-up {}'.format(card.Name))
+               if targets:
+                  if backup(targets[0], target=card):
+                     return
             else:
-               msg2 = "{} cannot be backed-up, maximum number of back-ups reached for this character.".format(card.Name)
-      whisper(msg2)
+               msg = "You don't have compatible character cards in your hand to backup {}.\n\n".format(card.Name) + msg
+         else:
+            information("{} cannot be backed-up, maximum number of back-ups ({}) reached for this character.".format(card.Name, len(acceptedBackups)))
+            return
+      # Asked for back-up info
+      if len(avlBackups) > 0 and len(charsBackup) > 0:
+         msg += "\n\nCompatible cards in your hand: {}.".format(cardsNamesStr(charsBackup))
+      whisper(msg)
       if not inRing or len(charsBackup) == 0:
-         information(msg1 + msg2)
+         information(msg)
    else:
       information("Only character cards can be backed-up.")
 
@@ -1079,9 +1071,9 @@ def prophecy(group = me.Deck, x = 0, y = 0, count = None, deckPos = 0):
 def shuffle(group):
 # A simple function to shuffle piles
    mute()
-   for card in group:
-      if card.isFaceUp:
-         card.isFaceUp = False
+   # for card in group:
+      # if card.isFaceUp:
+         # card.isFaceUp = False
    group.shuffle()
    playSnd('shuffle')
    notify("{} shuffled its {}".format(me, group.name))
@@ -1161,11 +1153,11 @@ def setDebugVerbosity(group=None, x=0, y=0):
    global debugVerbosity
    mute()
    levels = DebugLevel.keys()
-   choice = askChoice("Set debug verbosity to: (current is {})".format(levels[debugVerbosity]), levels)
+   choice = askChoice("Set debug verbosity to:\n(currently is \"{}\")".format(levels[debugVerbosity]), levels)
    if choice == 0:
       return
    debugVerbosity = choice - 1
-   whisper("Debug verbosity is now: {} ({})".format(levels[debugVerbosity], debugVerbosity))
+   whisper("Debug verbosity is now \"{}\" ({})".format(levels[debugVerbosity], debugVerbosity))
 
 
 def createCard(group, x=0, y=0):

@@ -28,9 +28,7 @@ def addAvatar(model = None):
    mute()
    if not model:
       if settings['Avatar']:
-         cards = queryCard({'name': settings['Avatar']}, True)
-         if cards:
-            model = cards[0]
+         model = settings['Avatar']
       if not model:
          cards = queryCard({'Type': AvatarType}, True)
          model = cards[random.randint(0, len(cards)-1)]
@@ -44,7 +42,7 @@ def addAvatar(model = None):
       avatar = table.create(model, x, y, quantity=1, persist=False)
       avatar.anchor = True
       if avatar.Name != settings['Avatar']:
-         switchSetting('Avatar', avatar.Name)
+         switchSetting('Avatar', model)
 
 
 def getAvatar(player):
