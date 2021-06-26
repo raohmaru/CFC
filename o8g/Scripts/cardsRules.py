@@ -366,6 +366,7 @@ Available functions:
    isChar()
    flipCoin()
    inUAttack()
+   getTargets('target')
    
 ---------------------------------------------------
 Scripting
@@ -1609,10 +1610,12 @@ action = activate(tgt)
 
 # Engokogeki
 RulesDict['1ef4cecb-c096-47e0-995f-a20b6b75325a'] = """
-# target = opp
+target = opp
 # action = damage(100)
-target? = "Engokogeki"s@myDiscards
-action = damage(100) & each(card in prevTgt -> damage(100)) to(opp)
+# target? = "Engokogeki"s@myDiscards
+# action = damage(100) & each(card in prevTgt -> damage(100)) to(opp)
+vars = _cards := getTargets('"Engokogeki"s@myDiscards')
+action = damage(100) & each(card in _cards -> damage(100))
 """
 
 # Escape

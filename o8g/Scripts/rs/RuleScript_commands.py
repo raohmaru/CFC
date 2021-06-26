@@ -173,7 +173,7 @@ def getEnvVars():
       for f in globalFuncs:
          envVars[f.__name__] = f
       # Used in cardRules, case insensitive
-      globalFuncs = [flipCoin, isCharacter, inUAttack]
+      globalFuncs = [flipCoin, isCharacter, inUAttack, getTargets]
       for f in globalFuncs:
          envVars[f.__name__.lower()] = f
    return envVars
