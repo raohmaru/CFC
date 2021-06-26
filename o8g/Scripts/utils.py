@@ -23,7 +23,8 @@ import re
 def num(s):
 # This function reads the value of a card and returns an integer. For some reason integer values of cards are not processed correctly
 # see bug 373 https://octgn.16bugs.com/projects/3602/bugs/188805
-   if not s: return 0
+   if not s:
+      return 0
    try:
       return int(s)
    except ValueError:
@@ -1251,7 +1252,7 @@ def getAcceptedBackups(card):
 #---------------------------------------------------------------------------
 
 def isNumber(s):
-   if not s:
+   if not s or isinstance(s, bool):
       return False
    try:
       float(s)

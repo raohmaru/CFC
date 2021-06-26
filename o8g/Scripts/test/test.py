@@ -21,6 +21,21 @@
 
 import sys
 sys.path.append('..')
+
+if not 'debug' in globals():
+   # Make debug accessible from any module
+   import __builtin__
+   import config
+   def debug(str):
+      print str
+   __builtin__.debug = debug
+   __builtin__.me = {}
+   __builtin__.table = {}
+   __builtin__.CardHeight = config.CardHeight
+   __builtin__.CharType = config.CharType
+   from utils import isNumber
+   __builtin__.isNumber = isNumber
+
 from cardsRules import RulesDict
 from rs.RuleScript_lexer import RulesLexer
 import pprint
@@ -61,11 +76,11 @@ actions = [
    # "action = discard(1) & draw(1)",
    # "action = destroy(); draw(1)",
    # "action = {F}: destroy()",
-   "action = {D}{F}: destroy()",
-   "action = {D(2)}{F}: destroy()",
-   "action = {D(character)}{F}: sp(abs(discarded.0.SP))",
-   "action = {D(<**>)}{F}: damage(discarded.size * 100) to(^characters)",
-   "action = {D(<r>)}{F}: bp(+300) target(character)",
+   # "action = {D}{F}: destroy()",
+   # "action = {D(2)}{F}: destroy()",
+   # "action = {D(character)}{F}: sp(abs(discarded.0.SP))",
+   # "action = {D(<**>)}{F}: damage(discarded.size * 100) to(^characters)",
+   # "action = {D(<r>)}{F}: bp(+300) target(character)",
    # "action = {f}:destroy() & draw(1)",
    # "action = {S(character@myRing)}: destroy()",
    # "action = {D}: destroy() to(character[bp>=800]@oppRing)",
@@ -97,6 +112,7 @@ actions = [
    # "action = shuffle?()",
    # "action = steal(character@ring) from(character[powerful])",
    # "action = {S}: transform('80d411e3-c3df-486f-927f-1592d9db65de') target(character)",
+   "action = reveal(nil, true, false, 1, -12, yes, none)"
 ]
 abilities = [
    "abilities = unblockable",
@@ -144,13 +160,6 @@ rules = [
    action = discard(character)
    """
 ]
-
-if not 'debug' in globals():
-   # Make debug accessible from any module
-   import __builtin__
-   def debug(str):
-      print str
-   __builtin__.debug = debug
 
 def test(arr, title):
    print "Testing {} ".format(title) + ("=" * 80) + "\n"

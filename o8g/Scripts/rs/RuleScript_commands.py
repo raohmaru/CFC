@@ -110,7 +110,7 @@ def toggleRule(ruleName, value, id, restr = None, player = None):
    if id in rule:
       del rule[id]
    else:
-      if not isinstance(value, bool) and isNumber(value):
+      if isNumber(value):
          value = int(value)
       rule[id] = value
    setGlobalVar('Rules', Rules, player)
@@ -308,8 +308,6 @@ def cmd_discard(rc, targets, source, restr, whichCards=''):
 
 def cmd_randomDiscard(rc, targets, source, restr, numCards=1):
    debug(">>> cmd_randomDiscard({}, {})".format(targets, numCards))
-   if not isNumber(numCards):
-      numCards = int(numCards)
    if not targets:
       targets = [source.controller]
    if numCards > 0:
@@ -337,11 +335,11 @@ def cmd_moveTo(rc, targets, source, restr, zone, pos = None, reveal = None):
             reveal = pos
             pos = None
          if reveal is not None:
-            reveal = True if reveal == 'true' else False
+            reveal = True if reveal == True else False
          msgs = []
          for target in targets:
             pile = RulesUtils.getZoneByName(zone, target)
-            debug("{}'s {} -> {}'s {}".format(target.controller, target, pile.controller, pile.name))
+            debug("{}'s {} -> {}'s {} {} ({})".format(target.controller, target, pile.controller, pile.name, pos, reveal))
             if target.controller == me and pile.controller == me:
                msg = moveToGroup(pile, target, pos = pos, reveal = reveal, silent = True)
                msgs.append(msg)
@@ -545,7 +543,7 @@ def cmd_transform(rc, targets, source, restr, expr):
    rc.applyNext()
 
    
-def cmd_moveRestTo(rc, targets, source, restr, zone, pos = None):
+def cmd_moveRevealedTo(rc, targets, source, restr, zone, pos = None):
    pile = me.deck
    index = len(pile)
    if len(targets) > 0:
@@ -554,7 +552,7 @@ def cmd_moveRestTo(rc, targets, source, restr, zone, pos = None):
    newPile = [pile[i] for i in range(0, index)]
    targetZone = RulesUtils.getZoneByName(zone, pile[0])
    myPile = targetZone.controller == me
-   debug(">>> cmd_moveRestTo({}, {}, {})".format(zone, index, pos))
+   debug(">>> cmd_moveRevealedTo({}, {}, {})".format(zone, index, pos))
    notify("{} looks through the top of {} {} ({} card{} revealed)".format(me, 'his' if myPile else players[1], pile.name, index+1, plural(index+1)))
    for card in newPile:
       if myPile:
@@ -810,7 +808,7 @@ RulesCommands.register('copyability',      cmd_copyAbility)
 RulesCommands.register('swapabilities',    cmd_swapAbilities)
 RulesCommands.register('each',             cmd_each)
 RulesCommands.register('transform',        cmd_transform)
-RulesCommands.register('moverestto',       cmd_moveRestTo)
+RulesCommands.register('moverevealedto',   cmd_moveRevealedTo)
 RulesCommands.register('enablerule',       cmd_enableRule)
 RulesCommands.register('disablerule',      cmd_disableRule)
 RulesCommands.register('modrule',          cmd_enableRule)  # alias

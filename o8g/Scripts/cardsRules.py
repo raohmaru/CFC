@@ -16,7 +16,7 @@
 
 """
 ***RuleScript***
-Case Insensitive
+Case insensitive
 
 ---------------------------------------------------
 target = <qty> type <pick> [filters] @ zone ::selector([args]); ...
@@ -135,48 +135,48 @@ effect:
    Values:
       Effect command (followed by () or ?() with 0 or more parameters):
       ?() marks the command as optional:
-         damage(#|expr)
-         modDamage(#)
-         loseLife(#)
-         swapPiles(pile1, pile2)
-         shuffle([myDeck])
-         destroy()
-         reveal([pile])        // default: target
-         discard([#|target])   // default: 1, zone: myHand
-         rndDiscard([#])
-         moveTo(zone [, pos] [, reveal])    // pos = signed int or '?'
-         movePile(pile1, pile2)
-         bp(#|x#|=#|expr)       // default target = this
-         sp(#|=#|expr)          // default target = me
-         hp(#|expr)             // default target = me
-         playExtraChar()
-         draw([#|expression])   // default: 1
-         steal([copyToTarget])  // default = this card
-         loseAbility()
-         copyAbility(expr)
-         swapAbilities()
-         each(expr in group -> effect)    // effect context: group item
-         transform("card model"|expr)
-         moveRestTo(zone)
-         enableRule(rule)
-         disableRule(rule)
-         modRule(rule, arg)
-         freeze([toggle])
-         unfreeze()
-         alterCost(cardtype, #)   // permanent
-         modCost(cardtype, #)     // for auto keys
-         swapChars()
-         moveToSlot()
-         trash([#])       // default: 1
-         prophecy([#])    // default: 1
          activate(expr)
-         turns(#)     // unsiged int, target = current player
-         skip(phase)
-         unite()
-         removeFromAttack()
+         alterCost(cardtype, #)   // permanent
+         bp(#|x#|=#|expr)       // default target = this
+         clear([ability])
+         copyAbility(expr)
+         damage(#|expr)
+         destroy()
+         disableRule(rule)
+         discard([#|target])   // default: 1, zone: myHand
+         draw([#|expression])   // default: 1
+         each(expr in group -> effect)    // effect context: group item
+         enableRule(rule)
+         freeze([toggle])
+         hp(#|expr)             // default target = me
+         loseAbility()
+         loseLife(#)
+         modCost(cardtype, #)     // for auto keys
+         modDamage(#)
+         modRule(rule, arg)
+         movePile(pile1, pile2)
+         moveRevealedTo(zone)
+         moveTo(zone [, pos] [, reveal])    // pos = signed int or '?'
+         moveToSlot()
          peek()
          pileView(pile, state)    // state: collapsed, pile, expanded
-         clear([ability])
+         playExtraChar()
+         prophecy([#])    // default: 1
+         removeFromAttack()
+         reveal([pile])        // default: target
+         rndDiscard([#])
+         shuffle([myDeck])
+         skip(phase)
+         sp(#|=#|expr)          // default target = me
+         steal([copyToTarget])  // default = this card
+         swapAbilities()
+         swapChars()
+         swapPiles(pile1, pile2)
+         transform("card model"|expr)
+         trash([#])       // default: 1
+         turns(#)     // unsiged int, target = current player
+         unfreeze()
+         unite()
       Ability:
          Keywords:
             @see abilities
@@ -293,7 +293,7 @@ A list of targets that all must exist in order to execute the action.
 ---------------------------------------------------
 vars = varname := value [; varname := value] 
 
-Assigns a value to a variable, which will exists during the execution of the effects.
+Assigns a value to a variable, which will exists only during the execution of the effects.
 Several variables can be joined with ';'.
 
 varname:
@@ -371,6 +371,9 @@ Available functions:
 Scripting
 
 Types:
+   boolean
+   nil (none type)
+   integer
    list:
       .size
       .#     // gets an item by its index
@@ -573,7 +576,7 @@ action = {S}: transform("80d411e3-c3df-486f-927f-1592d9db65de") target(character
 # Akira's BROTHER SEARCH
 RulesDict['1cd7580b-d396-496c-afac-bcd6da9c1f83'] = """
 target = action<1>@deck
-action = moveRestTo(discards) & reveal() & moveTo(hand, true)
+action = moveRevealedTo(discards) & reveal() & moveTo(hand, true)
 """
 
 # Batsu's BOILING BLOOD
@@ -634,6 +637,7 @@ auto = ~anyBeforePayCostReaction~ modCost(reaction, -3)
 
 # Roberto's GOAL KEEPER
 RulesDict['6b1e210a-4846-419c-87f8-875aae812c6e'] = """
+# The system will get the label for each choice from CMD_LABELS
 action = swapChars() target(<2>character@sameRing)
 action = moveToSlot() target(character@sameRing)
 """
@@ -1005,7 +1009,7 @@ auto = ~blocks:this~ draw(2)
 # God Rugal's YUUGOU POWER
 RulesDict['067d592e-2ddf-43f5-82cc-25c70d29a996'] = """
 target = character<1>[powerful]@anyDeck
-action = {F}: moveRestTo(ctrlDeck, -1) & moveTo(ctrlDeck, -1, true); copyAbility(prevTgt.0) to(character)
+action = {F}: moveRevealedTo(ctrlDeck, -1) & moveTo(ctrlDeck, -1, true); copyAbility(prevTgt.0) to(character)
 """
 
 # Alfred's WAVE RIDER
@@ -1572,7 +1576,7 @@ auto = ~myEndPhase:once~ moveTo(discards) target?(*s@removed) & pileView(removed
 # Curse
 RulesDict['e1fb17f3-c4bf-4993-9b2f-91706cccf448'] = """
 target = character<1>[powerful]@anyDeck
-action = moveRestTo(ctrlDeck, -1) & moveTo(ctrlDeck, -1, true); copyAbility(prevTgt.0) to(characters)
+action = moveRevealedTo(ctrlDeck, -1) & moveTo(ctrlDeck, -1, true); copyAbility(prevTgt.0) to(characters)
 """
 
 # Domination
@@ -1816,7 +1820,7 @@ action = destroy()
 RulesDict['0e1b4f81-93e9-44be-ab31-7aed8cb354d0'] = """
 target = character; character<1>@anyDeck
 vars = _char := tgt.0; _card := tgt.1
-action = moveRestTo(ctrlDeck, -1) & moveTo(ctrlDeck, -1, true) target(_card); transform(_card) to(_char)
+action = moveRevealedTo(ctrlDeck, -1) & moveTo(ctrlDeck, -1, true) target(_card); transform(_card) to(_char)
 """
 
 # Shopping

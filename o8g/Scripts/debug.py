@@ -48,10 +48,10 @@ def debugScenario():
    gotoMain()
    rnd(10, 1000)  # Delay the next action until all animation is done
    tableCards = [
-       'a68dc591-6976-4341-b8b9-1a7dc1c71775' # Samanosuke
-      ,'2981e9ad-11e1-4f14-a707-2120bfc0cc2f' # Sagat
-      ,'c6ee2630-7f1a-4ac1-95f3-be8db970e855' # Omokane Saki
+       'c6ee2630-7f1a-4ac1-95f3-be8db970e855' # Omokane Saki
       ,'1cd7580b-d396-496c-afac-bcd6da9c1f83' # Akira
+      ,'40ef0410-798f-4d60-865b-9af14ed4e355' # Tiffany
+      ,'f67a1f9b-29c7-4ccc-bb17-b80a1c25b67a' # June
        # 'd14694b4-484c-4b45-962e-8cbb636d8a9a' # 200 BP
       # ,'c7d128ea-a3b9-4b04-b8b2-a61153b5b2e6' # 400 BP
       # ,'24e99a13-cb42-4e16-9900-78dde12e1a4c' # 600 BP
@@ -69,10 +69,12 @@ def debugScenario():
       
    handCards = [
        '51a47b27-abf3-4219-a241-c72bd23b178b' # Morph
-      ,'8bb477f9-5004-4018-8d5e-73c6a23e8912' # Char 300 BP
-      ,'e910f462-bea9-4262-b168-c7c512eb6511' # Char 500 BP
+      ,'48a553a1-fd40-482a-9161-86be2e29f246' # Yuki
+      ,'fa585a56-2a8f-48ff-9cc5-1234fecb4b09' # Marco
+      # ,'8bb477f9-5004-4018-8d5e-73c6a23e8912' # Char 300 BP
+      # ,'e910f462-bea9-4262-b168-c7c512eb6511' # Char 500 BP
       # ,'0fdadc92-0864-46cc-a3ff-c20e2af8249c' # Char 700 BP
-      # ,'af43872e-e47d-4fe0-9b55-aedd8a0d0fc7' # Char 800 BP
+      ,'af43872e-e47d-4fe0-9b55-aedd8a0d0fc7' # Char 800 BP
       # ,'5e2211a0-e52e-4b7b-b03d-f6ecb3660bb0' # Action 0 SP
       # ,'83c33aa8-5981-4352-8107-cbb7e05547ec' # Action -1 SP
       # ,'80692723-3895-435f-bf8f-e94507704af5' # Action -3 SP
@@ -206,7 +208,7 @@ def debugOpp():
    
 def debugSetupDone():
    global debugVerbosity
-   # debugVerbosity = DebugLevel['Debug']
+   debugVerbosity = DebugLevel['Debug']
       
 
 def debugBackups():

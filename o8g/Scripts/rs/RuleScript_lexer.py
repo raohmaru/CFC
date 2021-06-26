@@ -382,6 +382,7 @@ class RulesLexer():
             if match:
                params = filter(None, RS_RGX_AC_ARGS_SEP.split(match.group(2)))
                params = [p.strip() for p in params]
+               params = map(RulesLexer.literalToType, params)
                effect[1].append([match.group(1), params])
                debug("---- found effect '%s'" % effect[1][-1])
             else:
@@ -469,3 +470,16 @@ class RulesLexer():
             return (kw, str.strip())
       return ('', str)
       
+      
+   @staticmethod
+   def literalToType(token):
+   # Returns a python data type from the given literal
+      if token == 'true':
+         return True
+      if token == 'false':
+         return False
+      if token == 'nil':
+         return None
+      if isNumber(token):
+         return int(token)
+      return token
