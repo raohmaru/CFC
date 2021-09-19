@@ -23,11 +23,12 @@ def getGameVersion():
 # Welcome screen
 #---------------------------------------------------------------------------
 
-def showWelcomeScreen(group=table, x=0, y=0):
-   if not settings['WelcomeScreen']:
-      if settings['GameVersion'] != getGameVersion():
-         showChangelog()
-      return
+def showWelcomeScreen(group=None, x=0, y=0):
+   if group is None:
+      if not settings['WelcomeScreen']:
+         if settings['GameVersion'] != getGameVersion():
+            showChangelog()
+         return
       
    choiceList = ['Tutorial', 'Rulebook', 'Download card images', 'Help us improve', 'What\'s new?']
    colorsList = ['#004d99'] * len(choiceList)
@@ -61,7 +62,7 @@ Have a good battle and thanks for playing!"""
       
       
 def downloadImagePack(group=table, x=0, y=0):
-   openUrl(Website + '/image-packs#installation')
+   openUrl(Website + '/image-packs#sets')
 
 
 #---------------------------------------------------------------------------
