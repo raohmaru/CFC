@@ -36,6 +36,7 @@ try:
    # Start to hack :)
    clr.AddReference("Octgn")
    clr.AddReference("Octgn.Core")
+   clr.AddReference("Octgn.JodsEngine") # 3.4.350.0
    # clr.AddReference("Octgn.DataNew")
    import Octgn
    import System
@@ -46,8 +47,7 @@ except (IOError, ImportError):
 class ExtendedApi(object):
 # An extended API with methods that directly call C# methods
    def __init__(self):
-      # self._game = Octgn.Program.GameEngine.Definition  # 3.4.286.0 
-      self._game = Octgn.Core.DataManagers.GameManager.Get().GetById(Guid.Parse(GameId))  # 3.4.350.0
+      self._game = Octgn.Program.GameEngine.Definition
       self._gameMethods = Octgn.Core.DataExtensionMethods.GameExtensionMethods
       self._cardMethods = Octgn.Core.DataExtensionMethods.CardExtensionMethods
       self.customPlayer = False
