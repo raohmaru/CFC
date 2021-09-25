@@ -528,7 +528,6 @@ def moveToGroup(toGroup, card, sourceGroup = None, pos = None, reveal = None, so
    mute()
    if not sourceGroup:
       sourceGroup = card.group
-   fromText = fromWhereStr(sourceGroup, sourcePlayer)
    posText = "to the top of"
    if pos is not None:
       if pos < 0:
@@ -561,6 +560,7 @@ def moveToGroup(toGroup, card, sourceGroup = None, pos = None, reveal = None, so
          name = card
    if card.isFaceUp != isFaceUp:
       card.isFaceUp = isFaceUp
+   fromText = fromWhereStr(sourceGroup, sourcePlayer)
    targetCtrl = 'its' if me == sourcePlayer else "{}'s".format(me)
    msg = "{} moved {} {} {} {} {}.".format(sourcePlayer, name, fromText, posText, targetCtrl, toGroup.name)
    # Buy some time for onCardsMoved() to complete and sync
@@ -599,7 +599,10 @@ def fromWhereStr(src, srcPlayer = me):
       return "from the ring"
    else:
       ctrl = 'its'
-      if srcPlayer != me:
+      # If the source of the effect is not the current player, then the full name is stored to avoid confusion in the log
+      if src.controller == me and srcPlayer != me:
+         ctrl = "{}'s".format(me)
+      elif srcPlayer != me:
          ctrl = "{}'s".format(srcPlayer)
       elif src.controller != me:
          ctrl = "{}'s".format(src.controller)
@@ -608,8 +611,7 @@ def fromWhereStr(src, srcPlayer = me):
 
    
 def sanitizeStr(str):
-# Strips the string, replaces spaces with dashes and removes characters not in
-# a-z, 0-9
+# Strips the string, replaces spaces with dashes and removes characters not in a-z, 0-9
    valid_chars = '-abcdefghijklmnopqrstuvwxyz0123456789'
    str = str.strip().lower().replace(" ", "-")
    str = ''.join(c for c in str if c in valid_chars)
@@ -643,6 +645,7 @@ def notifyWin(player):
 def replIdsWithNames(msg):
 # Replace card ID with card name
    return re.sub(Regexps['cardid'], lambda match: Card(int(match.group(1))).Name, msg)
+
 
 #---------------------------------------------------------------------------
 # Card functions
