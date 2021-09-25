@@ -703,7 +703,7 @@ action = trash(5)
 
 # Cammy (Alpha)'s SPY
 RulesDict['de28f9bf-d995-4743-afcd-a28065beb39d'] = """
-action = moveTo(oppDeck, ?, true) target(*@oppHand) & peek()
+action = peek() & moveTo(oppDeck, ?, true) target(*@oppHand)
 """
 
 # Chun-Li's S.B. KICK
