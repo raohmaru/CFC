@@ -41,7 +41,7 @@ def addButton(name):
    btn.anchor = True
    buttons[btn._id] = btn.Name
    # Removes the model so the button image is not shown in the preview
-   # It breaks OCTGN on closing the window :(
+   # It breaks OCTGN when closing the play window :(
    # icard = _extapi.getCardIdentityById(btn._id)
    # if icard:
       # update()

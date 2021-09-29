@@ -20,7 +20,7 @@ import re
 # Phases
 #---------------------------------------------------------------------------
 
-def nextPhase(fromKeyStroke = True, x = 0, y = 0):
+def nextPhase(fromKeyStroke = True, x=0, y=0):
    global phaseOngoing
    if fromKeyStroke and phaseOngoing and settings['Play'] and me.isActive:
       return
@@ -68,7 +68,7 @@ def nextPhase(fromKeyStroke = True, x = 0, y = 0):
       playSnd('notification')
       
       
-def prevPhase(group = table, x = 0, y = 0):
+def prevPhase(group = table, x=0, y=0):
    if me.isActive:
       phaseIdx = currentPhase()[1]
       if phaseIdx > 1:
@@ -79,31 +79,31 @@ def gotoPhase(idx, oldIdx = 0):
    triggerPhaseEvent(idx, oldIdx)
 
 
-def gotoActivate(group = table, x = 0, y = 0):
+def gotoActivate(group = table, x=0, y=0):
    setPhase(ActivatePhase)
 
 
-def gotoDraw(group = table, x = 0, y = 0):
+def gotoDraw(group = table, x=0, y=0):
    setPhase(DrawPhase)
 
 
-def gotoMain(group = table, x = 0, y = 0):
+def gotoMain(group = table, x=0, y=0):
    setPhase(MainPhase)
 
 
-def gotoAttack(group = table, x = 0, y = 0):
+def gotoAttack(group = table, x=0, y=0):
    setPhase(AttackPhase)
 
 
-def gotoCounterattack(group = table, x = 0, y = 0):
+def gotoCounterattack(group = table, x=0, y=0):
    setPhase(BlockPhase)
 
 
-def gotoEnd(group = table, x = 0, y = 0):
+def gotoEnd(group = table, x=0, y=0):
    setPhase(EndPhase)
 
 
-def gotoCleanup(group = table, x = 0, y = 0, silent = False):
+def gotoCleanup(group = table, x=0, y=0, silent = False):
    setPhase(CleanupPhase)
 
 
@@ -111,7 +111,7 @@ def gotoCleanup(group = table, x = 0, y = 0, silent = False):
 # Table group actions
 #---------------------------------------------------------------------------
 
-def setup(group = table, x = 0, y = 0, silent = False):
+def setup(group = table, x=0, y=0, silent = False):
 # This function is usually the first one the player does
    debug(">>> setup()")
    mute()
@@ -155,7 +155,7 @@ def restart(group=None, x=0, y=0):
       remoteCall(players[1], 'restart', [])
 
 
-def flipCoin(group = None, x = 0, y = 0):
+def flipCoin(group = None, x=0, y=0):
    mute()
    sides = ['Heads','Tails']
    notify("{} flips a coin...".format(me))
@@ -169,7 +169,7 @@ def flipCoin(group = None, x = 0, y = 0):
    return wins
 
 
-def randomPick(group, x = 0, y = 0, fromPlayer = None):
+def randomPick(group, x=0, y=0, fromPlayer = None):
    mute()
    card = None
    player = fromPlayer if fromPlayer != None else me
@@ -193,16 +193,16 @@ def randomPick(group, x = 0, y = 0, fromPlayer = None):
       notify("{} randomly selects {} from their {}.".format(me, card, group.name))
 
 
-def randomPickMine(group, x = 0, y = 0):
+def randomPickMine(group, x=0, y=0):
    randomPick(group, fromPlayer = me)
 
 
-def randomPickEnemy(group, x = 0, y = 0):
+def randomPickEnemy(group, x=0, y=0):
    if len(players) > 1:
       randomPick(group, fromPlayer = players[1])
 
 
-def clearAll(group = None, x = 0, y = 0):
+def clearAll(group = None, x=0, y=0):
    notify("{} clears all targets and highlights.".format(me))
    for card in table:
       if card.controller == me:
@@ -210,34 +210,34 @@ def clearAll(group = None, x = 0, y = 0):
    clearSelection()
 
 
-def alignCards(group = None, x = 0, y = 0):
+def alignCards(group = None, x=0, y=0):
    for card in getRing():
       alignCard(card)
 
 
-def switchPlayAuto(group, x = 0, y = 0):
+def switchPlayAuto(group, x=0, y=0):
    switchSetting('Play')
 
 
-def switchPhaseAuto(group, x = 0, y = 0):
+def switchPhaseAuto(group, x=0, y=0):
    switchSetting('Phase')
 
 
-def switchActivateAuto(group, x = 0, y = 0):
+def switchActivateAuto(group, x=0, y=0):
    switchSetting('Activate')
 
 
-def switchWinForms(group, x = 0, y = 0):
+def switchWinForms(group, x=0, y=0):
    switchSetting('WinForms')
    
    
-def switchSounds(group, x = 0, y = 0):
+def switchSounds(group, x=0, y=0):
    switchSetting('Sounds')
    # Udpate OCTGN preferences
    Octgn.Core.Prefs.EnableGameSound = settings['Sounds']
    
    
-def switchWelcomeScreen(group, x = 0, y = 0):
+def switchWelcomeScreen(group, x=0, y=0):
    switchSetting('WelcomeScreen')
 
 
@@ -245,7 +245,7 @@ def switchWelcomeScreen(group, x = 0, y = 0):
 # Table card actions
 #---------------------------------------------------------------------------
 
-def defaultAction(card, x = 0, y = 0):
+def defaultAction(card, x=0, y=0):
    phaseIdx = currentPhase()[1]
    # Button
    if isButton(card):
@@ -267,7 +267,7 @@ def defaultAction(card, x = 0, y = 0):
       activate(card)
 
 
-def attack(card, x = 0, y = 0):
+def attack(card, x=0, y=0):
    mute()
    if settings['Play']:
       if not attackAuto(card): return
@@ -276,7 +276,7 @@ def attack(card, x = 0, y = 0):
    notify('{} attacks with {}'.format(me, card))
 
 
-def attackNoFreeze(card, x = 0, y = 0):
+def attackNoFreeze(card, x=0, y=0):
    mute()
    if settings['Play']:
       if not attackAuto(card): return
@@ -286,7 +286,7 @@ def attackNoFreeze(card, x = 0, y = 0):
    notify('{} attacks with {} (character will not freeze).'.format(me, card))
 
 
-def unitedAttack(card, x = 0, y = 0, targets = None):
+def unitedAttack(card, x=0, y=0, targets = None):
    debug(">>> unitedAttack()")
    mute()
    cardsnames = card
@@ -301,7 +301,7 @@ def unitedAttack(card, x = 0, y = 0, targets = None):
    notify('{} does an United Attack with {}.'.format(me, cardsnames))
 
 
-def block(card, x = 0, y = 0, targets = None):
+def block(card, x=0, y=0, targets = None):
    mute()
    text = 'with {}'.format(card)
    if settings['Play']:
@@ -315,7 +315,7 @@ def block(card, x = 0, y = 0, targets = None):
    notify('{} counter-attacks {}'.format(me, text))
 
 
-def activate(card, x = 0, y = 0):
+def activate(card, x=0, y=0):
    debug(">>> activate()")
    mute()
    if card.highlight == ActivatedColor and not settings['Play']:
@@ -354,7 +354,7 @@ def activate(card, x = 0, y = 0):
    notify("{} has activated {}'s {}.".format(me, card, ability))
 
 
-def freeze(card, x = 0, y = 0, unfreeze = None, silent = False):
+def freeze(card, x=0, y=0, unfreeze = None, silent = False):
    mute()
    if card.group != table:
       return
@@ -372,7 +372,7 @@ def freeze(card, x = 0, y = 0, unfreeze = None, silent = False):
       card.target(None)
 
 
-def doesNotUnfreeze(card, x = 0, y = 0, restr = None):
+def doesNotUnfreeze(card, x=0, y=0, restr = None):
    debug("doesNotUnfreeze({}, {}, {}, {})".format(card, x, y, restr))
    mute()
    msg = "not unfreeze"
@@ -388,12 +388,12 @@ def doesNotUnfreeze(card, x = 0, y = 0, restr = None):
    notify("{0}'s {1} will {2} in {0}'s {3}Activate phase.".format(card.controller, card, msg, when))
 
 
-def clear(card, x = 0, y = 0):
+def clear(card, x=0, y=0):
    card.target(False)
    card.highlight = None
 
 
-def alignCardAction(card, x = 0, y = 0):
+def alignCardAction(card, x=0, y=0):
    if isCharacter(card):
       slotIdx = getSlotIdx(card)
       if slotIdx != -1:
@@ -405,7 +405,7 @@ def alignCardAction(card, x = 0, y = 0):
             alignBackups(c, *c.position)
 
 
-def askCardBackups(card, x = 0, y = 0):
+def askCardBackups(card, x=0, y=0):
    if isCharacter(card):
       acceptedBackups = getAcceptedBackups(card)
       inRing = charIsInRing(card)
@@ -448,7 +448,7 @@ def askCardBackups(card, x = 0, y = 0):
       information("Only character cards can be backed-up.")
 
 
-def transformCards(cards, x = 0, y = 0):
+def transformCards(cards, x=0, y=0):
    mute()
    cardModel = None
    targets =  [c for c in table   if c.targetedBy == me]
@@ -470,7 +470,7 @@ def transformCards(cards, x = 0, y = 0):
          target.target(False)
 
          
-def toggleAbility(card, x = 0, y = 0, remove = False):
+def toggleAbility(card, x=0, y=0, remove = False):
    mute()
    if not isCharacter(card) or (card.alternate == '' and card.Rules == ''):
       return
@@ -505,7 +505,7 @@ def toggleAbility(card, x = 0, y = 0, remove = False):
       notify("{} removes {}'s abilities".format(me, card))
 
 
-def copyAbility(card, x = 0, y = 0, target = None):
+def copyAbility(card, x=0, y=0, target = None):
    debug(">>> copyAbility({}, {})".format(card, target))
    mute()
    if not isCharacter(card):
@@ -568,7 +568,7 @@ def copyAbility(card, x = 0, y = 0, target = None):
    debug("<<< copyAbility()")
 
 
-def swapAbilities(card, x = 0, y = 0, target = None):
+def swapAbilities(card, x=0, y=0, target = None):
    debug(">>> swapAbilities({}, {})".format(card, target))
    mute()
    if not isCharacter(card) or not charIsInRing(card, card.controller) or not card.Rules:
@@ -595,7 +595,7 @@ def swapAbilities(card, x = 0, y = 0, target = None):
    notify("{} has swapped abilities between {} and {}".format(me, card, target))
       
       
-def stealAbility(card, x = 0, y = 0, target = None):
+def stealAbility(card, x=0, y=0, target = None):
    target = copyAbility(card, target = target)
    if target:
       ability = getParsedCard(target).ability.name
@@ -607,8 +607,9 @@ def stealAbility(card, x = 0, y = 0, target = None):
 # Movement actions
 #---------------------------------------------------------------------------
 
-def destroy(card, x = 0, y = 0, controller=me):
+def destroy(card, controller=me):
    mute()
+   # Do not delete UI elements (they are cards after all)
    if isUI(card) and not debugging:
       return
    fromText = fromWhereStr(card.group)
@@ -624,14 +625,25 @@ def destroy(card, x = 0, y = 0, controller=me):
    notify("{} {} {} {}.".format(controller, action, card, fromText))
 
 
-def remove(card, x = 0, y = 0):
+def batchDestroy(cards, x=0, y=0):
+   if len(cards) == 1:
+      msg = "Do you want to KO {}?".format(cards[0].Name)
+   else:
+      msg = "Do you want to KO these {} cards?".format(len(cards))
+   # Ask for confirmation if user uses a shortcut command
+   if confirm(msg):
+      for card in cards:
+         destroy(card)
+      
+
+def remove(card, x=0, y=0):
    mute()
    fromText = fromWhereStr(card.group)
    card.moveTo(me.piles['Removed pile'])
    notify("{} removes {} {}.".format(me, card, fromText))
 
 
-def toHand(card, x = 0, y = 0):
+def toHand(card, x=0, y=0):
    mute()
    src = card.group
    fromText = fromWhereStr(card.group)
@@ -643,7 +655,7 @@ def toHand(card, x = 0, y = 0):
       notify("{} puts {} in its hand {}.".format(me, cardname, fromText))
 
 
-def toDeckTop(card, x = 0, y = 0):
+def toDeckTop(card, x=0, y=0):
    mute()
    fromText = fromWhereStr(card.group)
    cardname = revealDrawnCard(card, faceUp = False)
@@ -651,14 +663,14 @@ def toDeckTop(card, x = 0, y = 0):
    notify("{} puts {} {} on the top of its Deck.".format(me, cardname, fromText))
 
 
-def toDeckBottom(card, x = 0, y = 0):
+def toDeckBottom(card, x=0, y=0):
    mute()
    fromText = fromWhereStr(card.group)
    card.moveToBottom(me.Deck)
    notify("{} puts {} {} on the bottom of its Deck.".format(me, card, fromText))
 
 
-def toHandAll(group, x = 0, y = 0):
+def toHandAll(group, x=0, y=0):
    mute()
    for card in group:
       card.moveTo(me.hand)
@@ -666,7 +678,7 @@ def toHandAll(group, x = 0, y = 0):
    notify("{} moves all cards from their {} to its hand.".format(me, group.name))
 
 
-def toDeckTopAll(group, x = 0, y = 0):
+def toDeckTopAll(group, x=0, y=0):
    mute()
    Deck = me.Deck
    for card in group:
@@ -675,7 +687,7 @@ def toDeckTopAll(group, x = 0, y = 0):
    notify("{} moves all cards from their {} to the top of its Deck.".format(me, group.name))
 
 
-def toDeckBottomAll(group, x = 0, y = 0):
+def toDeckBottomAll(group, x=0, y=0):
    mute()
    Deck = me.Deck
    for card in group:
@@ -689,7 +701,7 @@ def toOwnerDeck(cards):
       card.moveTo(card.owner.Deck)
 
 
-def shuffleIntoDeck(cards, x = 0, y = 0):
+def shuffleIntoDeck(cards, x=0, y=0):
    mute()
    for card in cards:
       toDeckTop(card)
@@ -697,7 +709,7 @@ def shuffleIntoDeck(cards, x = 0, y = 0):
    shuffle(me.Deck)
 
 
-def discardAll(group, x = 0, y = 0):
+def discardAll(group, x=0, y=0):
    mute()
    discards = me.piles['Discard pile']
    for card in group:
@@ -706,7 +718,7 @@ def discardAll(group, x = 0, y = 0):
    notify("{} moved all cards from their {} to its discard pile.".format(me, group.name))
 
 
-def removeAll(group, x = 0, y = 0):
+def removeAll(group, x=0, y=0):
    mute()
    pile = me.piles['Removed pile']
    for card in group:
@@ -715,7 +727,7 @@ def removeAll(group, x = 0, y = 0):
    notify("{} moved all cards from their {} to its removed pile.".format(me, group.name))
 
 
-def toTableFaceDown(card, x = 0, y = 0):
+def toTableFaceDown(card, x=0, y=0):
    debug(">>> toTableFaceDown {}".format(card))
    mute()
    fromText = fromWhereStr(card.group)
@@ -723,7 +735,7 @@ def toTableFaceDown(card, x = 0, y = 0):
    notify("{} puts a card face down in the Arena {}.".format(me, fromText))
 
 
-def changeSlot(card, x = 0, y = 0, targets = None):
+def changeSlot(card, x=0, y=0, targets = None):
    debug(">>> changeSlot {}".format(card))
    mute()
    cardSlot = getSlotIdx(card, card.controller)
@@ -762,14 +774,14 @@ def changeSlot(card, x = 0, y = 0, targets = None):
 # --------------
 # Characters' BP
 # --------------
-def plusBP(cards, x = 0, y = 0, silent = False, count = 100):
+def plusBP(cards, x=0, y=0, silent = False, count = 100):
    mute()
    for card in cards:
       addMarker(card, 'BP', count)
       if not silent:
          notify("{} raises {}'s BP by {} (new BP is {})".format(me, card, count, getMarker(card, 'BP')))
 
-def minusBP(cards, x = 0, y = 0, silent = False, count = 100):
+def minusBP(cards, x=0, y=0, silent = False, count = 100):
    mute()
    for card in cards:
       c = count
@@ -780,39 +792,39 @@ def minusBP(cards, x = 0, y = 0, silent = False, count = 100):
       if not silent:
          notify("{} lowers {}'s BP by {} (new BP is {}).".format(me, card, count, getMarker(card, 'BP')))
 
-def plusBP2(cards, x = 0, y = 0): plusBP(cards, count = 200)
-def plusBP3(cards, x = 0, y = 0): plusBP(cards, count = 300)
-def plusBP4(cards, x = 0, y = 0): plusBP(cards, count = 400)
-def plusBP5(cards, x = 0, y = 0): plusBP(cards, count = 500)
-def plusBP6(cards, x = 0, y = 0): plusBP(cards, count = 600)
-def plusBP7(cards, x = 0, y = 0): plusBP(cards, count = 700)
-def plusBP8(cards, x = 0, y = 0): plusBP(cards, count = 800)
-def plusBP9(cards, x = 0, y = 0): plusBP(cards, count = 900)
+def plusBP2(cards, x=0, y=0): plusBP(cards, count = 200)
+def plusBP3(cards, x=0, y=0): plusBP(cards, count = 300)
+def plusBP4(cards, x=0, y=0): plusBP(cards, count = 400)
+def plusBP5(cards, x=0, y=0): plusBP(cards, count = 500)
+def plusBP6(cards, x=0, y=0): plusBP(cards, count = 600)
+def plusBP7(cards, x=0, y=0): plusBP(cards, count = 700)
+def plusBP8(cards, x=0, y=0): plusBP(cards, count = 800)
+def plusBP9(cards, x=0, y=0): plusBP(cards, count = 900)
 
-def plusBPX(cards, x = 0, y = 0):
+def plusBPX(cards, x=0, y=0):
    n = askInteger("Raise BP by...", 100)
    if n == None: return
    plusBP(cards, count = fixBP(n))
 
-def minusBP2(cards, x = 0, y = 0): minusBP(cards, count = 200)
-def minusBP3(cards, x = 0, y = 0): minusBP(cards, count = 300)
-def minusBP4(cards, x = 0, y = 0): minusBP(cards, count = 400)
-def minusBP5(cards, x = 0, y = 0): minusBP(cards, count = 500)
-def minusBP6(cards, x = 0, y = 0): minusBP(cards, count = 600)
-def minusBP7(cards, x = 0, y = 0): minusBP(cards, count = 700)
-def minusBP8(cards, x = 0, y = 0): minusBP(cards, count = 800)
-def minusBP9(cards, x = 0, y = 0): minusBP(cards, count = 900)
+def minusBP2(cards, x=0, y=0): minusBP(cards, count = 200)
+def minusBP3(cards, x=0, y=0): minusBP(cards, count = 300)
+def minusBP4(cards, x=0, y=0): minusBP(cards, count = 400)
+def minusBP5(cards, x=0, y=0): minusBP(cards, count = 500)
+def minusBP6(cards, x=0, y=0): minusBP(cards, count = 600)
+def minusBP7(cards, x=0, y=0): minusBP(cards, count = 700)
+def minusBP8(cards, x=0, y=0): minusBP(cards, count = 800)
+def minusBP9(cards, x=0, y=0): minusBP(cards, count = 900)
 
-def minusBPX(cards, x = 0, y = 0):
+def minusBPX(cards, x=0, y=0):
    n = askInteger("Lower BP by...", 100)
    if n == None: return
    minusBP(cards, count = fixBP(n))
 
-def changeBP(cards, x = 0, y = 0):
+def changeBP(cards, x=0, y=0):
    mute()
    changeMarker(cards, MarkersDict['BP'], "Set character BP to:")
 
-def addMarkerAction(cards, x = 0, y = 0):  # A simple function to manually add any of the available markers.
+def addMarkerAction(cards, x=0, y=0):  # A simple function to manually add any of the available markers.
    mute()
    marker, quantity = askMarker() # Ask the player how many of the same type they want.
    if quantity == 0: return
@@ -823,32 +835,32 @@ def addMarkerAction(cards, x = 0, y = 0):  # A simple function to manually add a
 # -----------
 # Players' SP
 # -----------
-def plusSP (group, x = 0, y = 0): modSP(1)
-def plusSP2(group, x = 0, y = 0): modSP(2)
-def plusSP3(group, x = 0, y = 0): modSP(3)
-def plusSP4(group, x = 0, y = 0): modSP(4)
-def plusSP5(group, x = 0, y = 0): modSP(5)
-def plusSP6(group, x = 0, y = 0): modSP(6)
-def plusSP7(group, x = 0, y = 0): modSP(7)
-def plusSP8(group, x = 0, y = 0): modSP(8)
-def plusSP9(group, x = 0, y = 0): modSP(9)
+def plusSP (group, x=0, y=0): modSP(1)
+def plusSP2(group, x=0, y=0): modSP(2)
+def plusSP3(group, x=0, y=0): modSP(3)
+def plusSP4(group, x=0, y=0): modSP(4)
+def plusSP5(group, x=0, y=0): modSP(5)
+def plusSP6(group, x=0, y=0): modSP(6)
+def plusSP7(group, x=0, y=0): modSP(7)
+def plusSP8(group, x=0, y=0): modSP(8)
+def plusSP9(group, x=0, y=0): modSP(9)
 
-def plusSPX(group, x = 0, y = 0):
+def plusSPX(group, x=0, y=0):
    n = askInteger("Gain SP by...", 1)
    if n == None: return
    modSP(n)
 
-def minusSP (group, x = 0, y = 0): modSP(-1)
-def minusSP2(group, x = 0, y = 0): modSP(-2)
-def minusSP3(group, x = 0, y = 0): modSP(-3)
-def minusSP4(group, x = 0, y = 0): modSP(-4)
-def minusSP5(group, x = 0, y = 0): modSP(-5)
-def minusSP6(group, x = 0, y = 0): modSP(-6)
-def minusSP7(group, x = 0, y = 0): modSP(-7)
-def minusSP8(group, x = 0, y = 0): modSP(-8)
-def minusSP9(group, x = 0, y = 0): modSP(-9)
+def minusSP (group, x=0, y=0): modSP(-1)
+def minusSP2(group, x=0, y=0): modSP(-2)
+def minusSP3(group, x=0, y=0): modSP(-3)
+def minusSP4(group, x=0, y=0): modSP(-4)
+def minusSP5(group, x=0, y=0): modSP(-5)
+def minusSP6(group, x=0, y=0): modSP(-6)
+def minusSP7(group, x=0, y=0): modSP(-7)
+def minusSP8(group, x=0, y=0): modSP(-8)
+def minusSP9(group, x=0, y=0): modSP(-9)
 
-def minusSPX(group, x = 0, y = 0):
+def minusSPX(group, x=0, y=0):
    n = askInteger("Lose SP by...", 1)
    if n == None: return
    modSP(-n)
@@ -858,7 +870,7 @@ def minusSPX(group, x = 0, y = 0):
 # Hand actions
 #---------------------------------------------------------------------------
 
-def play(card, x = 0, y = 0, slotIdx=None):  # This is the function to play cards from your hand.
+def play(card, x=0, y=0, slotIdx=None):  # This is the function to play cards from your hand.
    debug(">>> playing card {} at {}".format(card, slotIdx))
 
    mute()
@@ -898,7 +910,7 @@ def play(card, x = 0, y = 0, slotIdx=None):  # This is the function to play card
    debug("<<< playing card end")
 
 
-def backup(card, x = 0, y = 0, target = None):  # Play a card as backup attached to a character in the player's ring
+def backup(card, x=0, y=0, target = None):  # Play a card as backup attached to a character in the player's ring
    debug(">>> backup with card {}".format(card))
    mute()
    group = card.group
@@ -916,7 +928,7 @@ def backup(card, x = 0, y = 0, target = None):  # Play a card as backup attached
       playSnd('backup')
 
 
-def discard(card, x = 0, y = 0, isRandom = False):
+def discard(card, x=0, y=0, isRandom = False):
    if isUI(card):
       return
    mute()
@@ -931,7 +943,7 @@ def discard(card, x = 0, y = 0, isRandom = False):
    notify(msg.format(me, card, group.name))
 
 
-def randomDiscard(group = me.hand, x = 0, y = 0):
+def randomDiscard(group = me.hand, x=0, y=0):
     mute()
     card = group.random()
     if card == None:
@@ -1010,7 +1022,7 @@ def randomDrawRE(group = me.Deck):
    randomDraw(group, ReactionType)
 
 
-def trash(group, x = 0, y = 0, silent = False, count = None):
+def trash(group, x=0, y=0, silent = False, count = None):
 # Draws one or more cards from the deck into the discard pile
    mute()
    if group is None:
@@ -1033,7 +1045,7 @@ def trash(group, x = 0, y = 0, silent = False, count = None):
       notify("{} trashes top {} cards {}.".format(me, count, fromWhereStr(group)))
 
 
-def prophecy(group = me.Deck, x = 0, y = 0, count = None, deckPos = 0):
+def prophecy(group = me.Deck, x=0, y=0, count = None, deckPos = 0):
    mute()
    if len(group) == 0:
       return
@@ -1117,7 +1129,7 @@ def reshuffleRE(group = me.piles['Discard pile']):
    reshuffleCards(group, ReactionType)
 
 
-def revealTopDeck(group, x = 0, y = 0):
+def revealTopDeck(group, x=0, y=0):
    mute()
    if group[0].isFaceUp:
       notify("{} hides {} from the top of their Deck.".format(me, group[0]))
@@ -1131,7 +1143,7 @@ def swapWithDeck(group = me.piles['Discard pile']):
    swapPiles(me.Deck, group)
 
 
-def removedDefaultAction(card, x = 0, y = 0):
+def removedDefaultAction(card, x=0, y=0):
    if me.isActive and currentPhase()[1] == MainPhase and getRule('play_removed'):
       play(card)
    else:

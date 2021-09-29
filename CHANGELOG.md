@@ -1,6 +1,7 @@
 # Card Fighters' Clash Changelog
 
 ## 0.9.9
++ Ask for confirmation when user discards cards from the game area.
 
 ## 0.9.8
 + Re-balanced Zaki ability: now it adds 10 SP again.

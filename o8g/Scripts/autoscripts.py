@@ -295,7 +295,7 @@ def clearKOedChars():
             destroy(card)
             update()  # Syncs the game state along players. Also delays animations.
          else:
-            remoteCall(card.controller, "destroy", [card, 0, 0, card.controller])
+            remoteCall(card.controller, "destroy", [card, card.controller])
             remoteCall(card.controller, "update", [])
 
 

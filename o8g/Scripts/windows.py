@@ -46,7 +46,7 @@ Have a good battle and thanks for playing!"""
       showWelcomeScreen()
       
    elif choice == 3:
-      downloadImagePack()
+      downloadImagePacks()
       showWelcomeScreen()
       
    elif choice == 4:
@@ -61,7 +61,7 @@ Have a good battle and thanks for playing!"""
       switchSetting('WelcomeScreen', False)
       
       
-def downloadImagePack(group=table, x=0, y=0):
+def downloadImagePacks(group=table, x=0, y=0):
    openUrl(Website + '/image-packs#sets')
 
 
@@ -71,18 +71,9 @@ def downloadImagePack(group=table, x=0, y=0):
 
 def showChangelog():
    switchSetting('GameVersion', getGameVersion())
-   msg = u"""What's new in version 0.9.8
+   msg = u"""What's new in version 0.9.9
 
-- Re-balanced Zaki ability: now it adds 10 SP
-  again.
-- Re-balanced Athena Asamiya, it generates
-  3 SP again.
-- Updated rules for Marco, Engokogeki, Laundry
-  and Lunch rush.
-- Updated SP cost of King, Samanosuke,
-  Overheat and Reliable warrior.
-- Improved tutorial and game play.
-- Several bug fixes.
+- 
 """.format(TriggerUniChar)
    askChoice(msg, [], [], ['Close'])
    

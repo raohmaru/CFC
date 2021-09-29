@@ -90,7 +90,7 @@ class RulesCommands():
       self.cmdsArgs[0] = target
 
 
-   def destroy(self):
+   def dispose(self):
       self.cmds = None
       self.prevTargets = None
       
@@ -241,7 +241,7 @@ def cmd_destroy(rc, targets, source, restr, *args):
       if target.controller == me:
          destroy(target)
       else:
-         remoteCall(target.controller, "destroy", [target, 0, 0, me])
+         remoteCall(target.controller, "destroy", [target, me])
       update()
    # Add destroyed cards to action local variables
    addTempVar('destroyed', targets)
@@ -518,7 +518,7 @@ def cmd_each(rc, targets, source, restr, args):
          if v:
             subrc.applyAll(func, targets, None, source)
             # rnd(1, 100) # Wait between effects until all animation is done
-      subrc.destroy()
+      subrc.dispose()
    update()
    rc.applyNext()
 

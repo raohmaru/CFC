@@ -4,7 +4,7 @@
       name="Card Fighters' Clash"
       id="e3d56d9e-900d-49c6-b6ae-22cbb51be153"
       octgnVersion="3.4.350.0"
-      version="0.9.9.788"
+      version="0.9.9.791"
       markersize="20"
       tags="capcom snk fighter"
       description="Play epic battles with fighters from Capcom and SNK!
@@ -250,7 +250,7 @@
 			<groupseparator />
 			<groupaction menu="Play Tutorial" execute="startTutorial" />
 			<groupaction menu="Show Welcome Screen" execute="showWelcomeScreen" />
-			<groupaction menu="Download Image Pack" execute="downloadImagePack" />
+			<groupaction menu="Download Image Packs" execute="downloadImagePacks" />
 		</groupactions>
 		<groupactions menu="Debug..." showIf="acsh_Debug">
 			<groupaction menu="Setup" execute="setupDebug" />
@@ -268,7 +268,7 @@
 			<cardaction menu="Counter-attack" shortcut="Ctrl+B" execute="block" getName="aclb_Block" showIf="acsh_hidden" />
 		</cardactions>
 		<cardactions menu="Move..." showIf="acsh_notUI">
-			<cardaction menu="KO" shortcut="Del" execute="destroy" getName="aclb_Destroy" />
+			<cardaction menu="KO" shortcut="Del" batchExecute="batchDestroy" getName="aclb_Destroy" />
 			<!-- <cardaction menu="Remove" shortcut="Shift+Del" execute="remove" /> -->
 			<cardaction menu="Return to Hand" shortcut="Ctrl+H" execute="toHand" />
 			<cardaction menu="Put into Deck (Top)" shortcut="Ctrl+D" execute="toDeckTop" />
