@@ -9,14 +9,11 @@
 		<block type="overlay" id="image_mask" src="Proxy/Overlays/image_mask.png">
 			<location x="25" y="25" />
 		</block>
-		<block type="overlay" id="bp_box" src="Proxy/Overlays/bp_box.png">
-			<location x="321" y="35" />
+		<block type="overlay" id="bp_box" src="Proxy/Overlays/bp_sp_box.png">
+			<location x="317" y="35" />
 		</block>
 		<block type="overlay" id="sp_box" src="Proxy/Overlays/sp_box.png">
-			<location x="382" y="87" />
-		</block>
-		<block type="overlay" id="sp_box2" src="Proxy/Overlays/sp_box.png">
-			<location x="382" y="35" />
+			<location x="344" y="35" />
 		</block>
 		<!-- Subtype -->
 		<block type="overlay" id="subtype_agent" src="Proxy/Subtypes/Agent.png">
@@ -638,22 +635,19 @@
 		</block>
 		<!-- Text blocks -->
 		<block type="text" id="bp">
-			<location x="340" y="44" />
-			<text color="#ffffff" size="29" font="Resources/Fonts/m04b_CFC.ttf" />
-			<border color="#691e1e" size="6" />
+			<location x="335" y="44" />
+			<text color="#000000" size="28" font="Resources/Fonts/m04b_CFC.ttf" />
 			<wordwrap width="124" height="32" align="far" shrinktofit="False" />
 		</block>
 		<block type="text" id="sp">
-			<location x="398" y="95" />
-			<text color="#ffffff" size="23" font="Resources/Fonts/m04b_CFC.ttf" />
-			<border color="#102267" size="6" />
-			<wordwrap width="65" height="25" align="far" shrinktofit="False" />
+			<location x="335" y="95" />
+			<text color="#000000" size="23" font="Resources/Fonts/m04b_CFC.ttf" />
+			<wordwrap width="124" height="25" align="far" shrinktofit="False" />
 		</block>
 		<block type="text" id="sp2">
-			<location x="394" y="43" />
-			<text color="#e7ecfa" size="23" font="Resources/Fonts/m04b_CFC.ttf" />
-			<border color="#102267" size="6" />
-			<wordwrap width="69" height="25" align="far" shrinktofit="False" />
+			<location x="335" y="44" />
+			<text color="#000000" size="28" font="Resources/Fonts/m04b_CFC.ttf" />
+			<wordwrap width="124" height="32" align="far" shrinktofit="False" />
 		</block>
 		<block type="text" id="team">
 			<location x="208" y="407" />
@@ -740,7 +734,6 @@
 			</artoverlay>
 			<link block="image_mask" />
 			<link block="bp_box" />
-			<link block="sp_box" />
 			<!-- Publisher -->
 			<!-- Now included in the art -->
 			<!-- <conditional>
@@ -1543,7 +1536,7 @@
 				<size width="466" height="416" />
 			</artoverlay>
 			<link block="image_mask" />
-			<link block="sp_box2" />
+			<link block="sp_box" />
 			<!-- Rarity -->
 			<conditional>
 				<switch property="Rarity">
@@ -1603,7 +1596,7 @@
 				<size width="466" height="416" />
 			</artoverlay>
 			<link block="image_mask" />
-			<link block="sp_box2" />
+			<link block="sp_box" />
 			<!-- Rarity -->
 			<conditional>
 				<switch property="Rarity">

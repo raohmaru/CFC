@@ -262,8 +262,8 @@ PlayerGlobals  = {}  # Replaces OCTGN player global variables
 debugVerbosity = DebugLevel['Off']
 debugging      = False
 # If I am alone debugging I want to know EVERYTHING
-if me.name == Author and len(players) == 1:
-   debugVerbosity = DebugLevel['Debug']
+# if me.name == Author and len(players) == 1:
+   # debugVerbosity = DebugLevel['Debug']
 
 settings = {
    'Play'         : True, # Trigger game, event and card effects
