@@ -30,7 +30,7 @@ except (IOError, ImportError):
 
 
 # Base class for custom forms
-class CustomForm(Form):
+class CustomForm(Form):   
    def __init__(self):
       self.bringToFront()
       
@@ -55,7 +55,8 @@ class CustomForm(Form):
 
 # This is a WinForm which creates a simple window, with some text and an OK button to close it.
 class MessageBoxForm(CustomForm):
-   Width = 400
+   MinWidth = 200
+   MaxWidth = 400
    TextPadding = 20
 
    def __init__(self, msg, title, icon = None):
@@ -63,21 +64,10 @@ class MessageBoxForm(CustomForm):
    
       labelPanel = Panel()
       buttonPanel = FlowLayoutPanel()
-      # self.pictureBox = PictureBox()
 	  
       labelPanel.SuspendLayout()
       buttonPanel.SuspendLayout()
-      # self.pictureBox.BeginInit()
       self.SuspendLayout()
-	  	  
-      formSize = self.calcStringSize(msg, self.Width - self.TextPadding * 2)
-      self.StartPosition = FormStartPosition.CenterScreen
-      self.Text = title
-      self.Size = Size(self.Width, formSize.Height + 130)
-      self.AutoSize = True
-      self.MinimizeBox = False
-      self.MaximizeBox = False
-      self.Icon = icon
       
       label = Label()
       label.Text = self.stringEscape(msg)
@@ -95,31 +85,28 @@ class MessageBoxForm(CustomForm):
 	  
       buttonPanel.Dock = DockStyle.Bottom
       buttonPanel.FlowDirection = FlowDirection.RightToLeft
-      buttonPanel.Size = Size(self.ClientSize.Width, button.Height + 15)
+      buttonPanel.AutoSize = True;
       buttonPanel.Padding = Padding(5)
       buttonPanel.Controls.Add(button)
       
-      # self.pictureBox.Location = Point(13, 13)
-      # self.pictureBox.Size = Size(self.Icon.Width, self.Icon.Height)
-      # self.pictureBox.BackColor = Color.Transparent
-      # self.pictureBox.Paint += self.pictureBox_Paint
-
-      # self.Controls.Add(self.pictureBox)
+      formSize = self.calcStringSize(msg, self.MaxWidth + self.TextPadding * 2)
+      self.StartPosition = FormStartPosition.CenterScreen
+      self.Text = title
+      self.Size = Size(max(self.MinWidth, formSize.Width) + self.TextPadding * 2, formSize.Height + buttonPanel.Size.Height + self.TextPadding * 2)
+      self.AutoSize = True
+      self.MinimizeBox = False
+      self.MaximizeBox = False
+      self.Icon = icon
+      
       self.Controls.Add(labelPanel)
       self.Controls.Add(buttonPanel)
       
       labelPanel.ResumeLayout(False)
       buttonPanel.ResumeLayout(False)
-      # self.pictureBox.EndInit()
       self.ResumeLayout(False)
 
    def button_Click(self, sender, args):
       self.Close()
-
-   # Drawing graphics only seems to work on click
-   # def pictureBox_Paint(self, e):
-      # g = self.pictureBox.CreateGraphics()
-      # g.DrawIcon(self.Icon, 0, 0)
 
 
 def messageBox(type, msg, title, icon = None):

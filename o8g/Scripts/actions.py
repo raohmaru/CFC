@@ -631,7 +631,7 @@ def batchDestroy(cards, x=0, y=0):
    else:
       msg = "Do you want to KO these {} cards?".format(len(cards))
    # Ask for confirmation if user uses a shortcut command
-   if confirm(msg):
+   if not settings['WinForms'] or confirm(msg):
       for card in cards:
          destroy(card)
       

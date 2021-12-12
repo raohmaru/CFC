@@ -18,10 +18,10 @@
 # Debugging
 #------------------------------------------------------------------------------
 
-def debug(msg):
+def debug(*msgs):
    if debugVerbosity > 0:
-      msg = '[#]=> ' + str(msg)
-      whisper(msg)
+      res = map(lambda x: str(x), msgs)
+      whisper('[#]=> ' + ', '.join(res))
 
 
 def debugSetup():

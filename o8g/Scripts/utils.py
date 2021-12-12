@@ -74,15 +74,6 @@ def resetAll():
    resetState()
    if tutorial and tutorial.step > 0:
       tutorial = None
-   # clearGlobalVar('Backups')
-   # clearGlobalVar('UnitedAttack')
-   # clearGlobalVar('Blockers')
-   # clearGlobalVar('GameEvents')
-   # clearGlobalVar('Modifiers')
-   # clearGlobalVar('Rules')
-   # clearGlobalVar('TempVars')
-   # clearGlobalVar('CharsAbilities')
-   # clearGlobalVar('GameState')  # Do not reset!
    debug("<<< resetAll()")
 
 
