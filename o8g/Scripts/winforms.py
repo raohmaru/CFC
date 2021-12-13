@@ -55,7 +55,7 @@ class CustomForm(Form):
 
 # This is a WinForm which creates a simple window, with some text and an OK button to close it.
 class MessageBoxForm(CustomForm):
-   MinWidth = 200
+   MinWidth = 250
    MaxWidth = 400
    TextPadding = 20
 
