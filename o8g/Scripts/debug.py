@@ -20,7 +20,9 @@
 
 def debug(msg, *args):
    if debugVerbosity > 0:
-      res = str(msg).format(*args)
+      res = str(msg)
+      if len(args) > 0:
+         res = res.format(*args)
       whisper("[#]=> " + res)
 
 

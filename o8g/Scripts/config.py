@@ -180,6 +180,7 @@ ButtonSize   = 58
 AvatarWidth  = 292
 AvatarHeight = 40
 DragOffsetY  = 60
+SoundMinAge  = 0.3 # seconds
 
 # Rules
 NumSlots        = 4

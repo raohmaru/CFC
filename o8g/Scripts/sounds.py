@@ -24,10 +24,13 @@ import time
 soundsPlaying = {}
 
 def playSnd(name, isInternal = False):
+   """
+   Play a sound effect, whether it is internal (only for the current player) or for everyone.
+   """
    # debug(">>> playSnd({}, {})", name, isInternal)
    if name in soundsPlaying:
-      # Do not repeat sound if it has been played 0.3s ago
-      if time.time() - soundsPlaying[name] < 0.3:
+      # Do not repeat the sound if it has been played some seconds ago
+      if time.time() - soundsPlaying[name] < SoundMinAge:
          return   
    soundsPlaying[name] = time.time()
 
