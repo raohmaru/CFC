@@ -1,5 +1,5 @@
 # Python Scripts for the Card Fighters' Clash definition for OCTGN
-# Copyright (C) 2013  Raohmaru
+# Copyright (C) 2013 Raohmaru
 
 # This python script is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -12,408 +12,186 @@
 # GNU General Public License for more details.
 
 # You should have received a copy of the GNU General Public License
-# along with this script.  If not, see <http://www.gnu.org/licenses/>.
+# along with this script. If not, see <http://www.gnu.org/licenses/>.
+
 
 #---------------------------------------------------------------------------
-# Event handlers
+# Event system
 #---------------------------------------------------------------------------
 
-def onTableLoaded():
-# Happens when the table first loads, and never again.
-   global settings
-   try:
-      strSettings = getSetting('settings', str(settings))
-      settings.update(eval(strSettings))
-      debug("Settings loaded: {}".format(settings))
-   except:
-      debug("Error loading settings}")
-   checkTwoSidedTable()
-   showWelcomeScreen()
-
-
-def onGameStarted():
-# Triggers when the table initially loads, and after each game restart.
-   resetAll()
-   chooseSide()
-   if debugging:
-      debugScenario()
-   elif settings['Play']:
-      addButton('StartButton')
-      addAvatar()
-   playSnd('new-game', True)
-
-
-def onDeckLoaded(args):
-   mute()
-   player = args.player
-   groups = args.groups
-   if player != me:  # We only want the owner of the deck to run this script
-      return
-   debug(">>> onDeckLoaded({})".format(player))
-   if len(player.Deck) != DeckSize:
-      msg = "INVALID DECK: {}'s deck has {} cards (it must have exactly {} cards).".format(player, len(player.Deck), DeckSize)
-      _extapi.notify(msg, Colors.Red)
-      notification(msg, Colors.Red, True)  # Big notification for all players
-      # return
-   cards = {}
-   for card in player.Deck:
-      if card.model in cards:
-         cards[card.model] += 1
-      else:
-         cards[card.model] = 1
-      if cards[card.model] > MaxCardCopies:
-         msg = "INVALID DECK: {0}'s deck has more than {1} copies of a card (only {1} copies are allowed).".format(player, MaxCardCopies)
-         _extapi.notify(msg, Colors.Red)
-         notification(msg, Colors.Red, True)  # Big notification for all players
-         # return
-   if settings['Play']:
-      setup(silent=True)
-   playSnd('load-deck')
-
-      
-def onCardsMoved(args):
-   mute()
-   cards = args.cards
-   hand  = me.hand
-   piles = me.piles
-   CharsAbilities = getGlobalVar('CharsAbilities')
-   MyRing = getGlobalVar('Ring', me)
-   handChanged = False
-   ringChanged = False
-   abilitiesChanged = False
-   
-   for i in range(len(cards)):
-      # Because Python is dynamic, accessing variables is faster than attribute lookup
-      card      = cards[i]
-      card_id   = card._id
-      fromGroup = args.fromGroups[i]
-      toGroup   = args.toGroups[i]
-      markers   = args.markers[i]  # markers it's a string equivalent of the Marker object
-      
-      if card.controller != me:
-         continue
-      
-      # debug("onCardsMoved: {} ({}) from {} to {}".format(card, card_id, fromGroup._name, toGroup._name))
-      
-      if isCharacter(card):
-         # From the table to anywhere else
-         if fromGroup == table and toGroup != table:
-            clearAttachLinks(card)
-            if charIsInRing(card):
-               # Frees a slot of the ring
-               MyRing[MyRing.index(card_id)] = None
-               setGlobalVar('Ring', MyRing, me)
-               ringChanged = True
-               card.filter = None
-            triggerGameEvent([GameEvents.Removed, card_id])
-            removeGameEventListener(card_id)
-            if 'Attack' in markers:
-               phaseIdx = currentPhase()[1]
-               if phaseIdx == AttackPhase or phaseIdx == BlockPhase:
-                  rearrangeUAttack(card)
-            if card_id in CharsAbilities:
-               del CharsAbilities[card_id]
-               abilitiesChanged = True
-         # Moved cards in the table
-         elif fromGroup == table and toGroup == table:
-            if card.position != (args.xs[i], args.ys[i]):
-               if not hasMarker(card, 'Backup'):
-                  alignBackups(card, *card.position)
-         # From anywhere else to the table
-         elif fromGroup != table and toGroup == table:
-            if not ringChanged and charIsInRing(card):
-               ringChanged = True
-         # Movements in the same pile
-         elif fromGroup == toGroup:
-            continue
-      
-      if toGroup._name == 'Hand':
-         playSnd('to-hand')
-      elif toGroup != table:
-         playSnd('move-card')
-      
-      # Restore transformed card if it goes to a pile
-      if toGroup._name in piles:
-         if card_id in transformed:
-            newCard = toGroup.create(transformed[card_id], quantity = 1)
-            newCard.moveTo(toGroup, card.index)
-            notify("transformed card {} is restored into {}".format(card, newCard))
-            del transformed[card_id]
-            card.delete()
+def addGameEventListener(event, callback, obj_id, source_id = None, restr = None, args = [], appliesto = None, onRemove = None):
+   """
+   Subscribes to a global event for the given card (obj_id).
+   """
+   GameEvents = getGlobalVar('GameEvents')
+   prfx, eventName = RulesLexer.getPrefix(RS_PREFIX_EVENTS, event)
+   # Do not add the same event again
+   for e in GameEvents:
       if (
-         not handChanged
-         and (
-            (fromGroup == hand and toGroup != hand) or
-            (fromGroup != hand and toGroup == hand)
-         )
+             e['event']    == eventName
+         and e['id']       == obj_id
+         and e['callback'] == callback
+         and e['restr']    == restr
+         and e['scope']    == prfx
+         and e['args']     == args
       ):
-         handChanged = True
-         
-   if abilitiesChanged:
-      setGlobalVar('CharsAbilities', CharsAbilities)
-   # Trigger events
-   if handChanged:
-      triggerGameEvent(GameEvents.HandChanges, len(me.hand))
-   if ringChanged:
-      triggerGameEvent(GameEvents.RingChanges, getRingSize(ring=MyRing))
-
-   
-def onTurnPassed(args):
-# Triggers when the player passes the turn to another player.
-   debug(">>> onTurnPassed: #{}, {} -> {}".format(turnNumber(), args.player, getActivePlayer()))
-   global cleanedUpRing, turns
-   resetState()
-   # That was my old turn
-   if args.player == me:
-      clearGlobalVar('UnitedAttack')
-      clearGlobalVar('Blockers')
-      if not cleanedUpRing:
-         triggerPhaseEvent(CleanupPhase)  # Force cleanup
-      if not me.isActive:  # Not repeating turn
-         removeButtons()
-   # I start my turn
-   if me.isActive:
-      cleanedUpRing = False
-      turns = 1
-      # Jump to first phase
-      if turnNumber() == 1:
-         setState(None, 'activePlayer', me._id)
-      if not debugging and currentPhase()[1] <= ActivatePhase or turnNumber() > 1:
-         nextPhase(False)
-      playSnd('turn-change')
-   if turnNumber() == 1:
-      removeButton('StartButton')
-   debug("<<< onTurnPassed()")
+         return False
+   controller = Card(source_id).controller._id if source_id else me._id
+   listener = {
+      'event'     : eventName,
+      'controller': controller,
+      'id'        : obj_id,
+      'source'    : source_id,
+      'callback'  : callback,
+      'restr'     : restr,
+      'scope'     : prfx,
+      'args'      : args,
+      'appliesto' : appliesto,
+      'onremove'  : onRemove
+   }
+   GameEvents.append(listener)
+   setGlobalVar('GameEvents', GameEvents)
+   debug("Added listener to game event '{}' -> {}".format(eventName, listener))
+   return True
 
 
-def onPhasePassed(args):
-   name, idx = currentPhase()
-   debug(">>> onPhasePassed: {} => {}".format(args.id, idx))
-   if args.id == idx:
-      return
-   
-   # if idx == ActivatePhase:
-   # elif idx == DrawPhase:
-      # if turnNumber() == 1:
-         # _extapi.whisper("(The player who goes first must skip his Draw phase during their first turn.)", Colors.Blue)
-   # elif idx == MainPhase:
-   if idx == AttackPhase:
-      if me.isActive:
-         _extapi.whisper(MSG_HINT_ATTACK, Colors.Blue)
-   if idx == BlockPhase:
-      if me.isActive and len(getAttackingCards()) > 0:
-         _extapi.whisper(MSG_HINT_BLOCK1.format('defending player', 'he or she'), Colors.Blue)
-      elif not me.isActive and len(getAttackingCards(getOpp())) > 0:
-         setStop(BlockPhase, True)
-         addButton('NextButton')
-         _extapi.whisper(MSG_HINT_BLOCK1.format('you', 'you'), Colors.Blue)
-         _extapi.whisper(MSG_HINT_BLOCK2, Colors.Blue)
-   # elif idx == EndPhase:
-   elif idx == CleanupPhase:
-      if me.isActive:
-         if not settings['Phase']:
-            _extapi.whisper("(This is the last phase of your turn)", Colors.Blue)
-         global cleanedUpRing
-         cleanedUpRing = True
-      
-   if me.isActive:
-      if idx != ActivatePhase:
-         playSnd('phase-change')
-      elif turnNumber() == 1:
-         playSnd('turn-change')
-      gotoPhase(idx, args.id)
+def removeGameEventListener(obj_id, eventName = None, callback = None):
+   """
+   Unsubscribes the given card (obj_id) from a global event. If the additional arguments are not defined
+   it will remove all listeners the card was subscribed to.
+   """
+   debug(">>> removeGameEventListener({}, {}, {})".format(obj_id, eventName, callback))
+   GameEvents = getGlobalVar('GameEvents')
+   removed = False
+   # Iterate it in reverse order because we are removing items
+   for i, listener in reversed(list(enumerate(GameEvents))):
+      if not eventName or eventName == listener['event']:
+         if(
+            (listener['id'] == obj_id or listener['source'] == obj_id) and
+            (not callback or callback == listener['callback'])
+         ):
+            # Events with restrictions will be removed eventually in cleanupGameEvents()
+            if listener['restr'] is None:
+               del GameEvents[i]
+               removed = True
+               debug("Removed listener for event {} ({})".format(listener['event'], listener))
+               # Invoke any callback
+               onRemoveEvent(listener)
+   if removed:
+      setGlobalVar('GameEvents', GameEvents)
+   return removed
 
 
-def onMarkerChanged(args):
-# Invoked on all players
-   card = args.card
-   if card.controller != me:
-      return
-   marker = args.marker
-   oldValue = args.value
-   debug(">>> onMarkerChanged: {}, {}, {}, {}".format(card, marker, oldValue, args.scripted))
-   if marker == 'BP':
-      qty = getMarker(card, 'BP')
-      if args.scripted and settings['Play']:
-         getParsedCard(card).lastBP = qty if qty > 0 else oldValue  # last BP before being KOed
-      if args.scripted or not settings['Play']:
-         if card.controller == me and isCharacter(card):
-            if qty == 0:
-               card.filter = KOedFilter
-            elif hasFilter(card, KOedFilter):
-               card.filter = None
-   # Tint cards according to the markers
-   elif marker in FiltersDict:
-      if args.scripted or not settings['Play']:
-         if card.controller == me and isCharacter(card):
-            removeFilter = True
-            for m,f in FiltersDict.iteritems():
-               if hasMarker(card, m):
-                  card.filter = f
-                  removeFilter = False
-                  break
-            if removeFilter:
-               card.filter = None
-   
-   # Don't allow movement of markers
-   if settings['Play']:
-      if not args.scripted and card.controller == me:
-         if marker == 'BP':
-            bp = getMarker(card, 'BP')
-            fixedBP = fixBP(bp)
-            if bp != fixedBP:
-               setMarker(card, 'BP', fixedBP)
-         else:
-            setMarker(card, marker, oldValue)
-
-
-def OnCounterChanged(args):
-   debug(">>> OnCounterChanged: {}, {}, {}, {}".format(args.counter._player, args.counter._name, args.value, args.scripted))
-   player = args.counter._player
-   counterName = args.counter._name
-   setState(player, counterName, player.counters[counterName].value)
-
-
-def OnCardClicked(args):
-   card = args.card
-   mouseButton = args.mouseButton
-   if card and card.controller == me:
-      if isButton(card) and mouseButton == 0:  # Left button
-         debug(">>> OnCardClicked: {}, {}, {}".format(card, mouseButton, args.keysDown))
-         buttonAction(card)
-         
-
-def onCardTargeted(args):
-   card = args.card
-   targeted = args.targeted
-   debug(">>> onCardTargeted: {} by {} ({})".format(card, args.player, targeted))
-   if isUI(card) and targeted:
-      card.target(False)
-
-
-#---------------------------------------------------------------------------
-# Overrides
-#---------------------------------------------------------------------------
-
-def overrideCardsMoved(args):
-   cards     = args.cards
-   toGroups  = args.toGroups
-   indexs    = args.indexs
-   xs        = args.xs
-   ys        = args.ys
-   faceups   = args.faceups
-   phaseIdx  = currentPhase()[1]
-   
-   for i in range(len(cards)):
-      card      = args.cards[i]
-      fromGroup = card.group
-      toGroup   = toGroups[i]
-      index     = indexs[i]
-      x         = xs[i]
-      y         = ys[i]
-      faceup    = faceups[i]
-      # debug("overrideCardsMoved: {}: {} -> {}, [{}, {}] ({}) {}".format(card, fromGroup.name, toGroup.name, x, y, index, faceup))
-      
-      if isUI(card):
-         continue
-      
-      if toGroup == table:
-         if settings['Play']:
-            # Play from hand
-            if fromGroup == me.hand or (getRule('play_removed') and fromGroup.name == 'Removed pile'):
-               # Play a character card
-               if isCharacter(card):
-                  slotIdx = getDropSlotIndex(x)
-                  if slotIdx == None:
-                     continue
-                  myRing = getGlobalVar('Ring', me)
-                  if myRing[slotIdx] == None:
-                     play(card, slotIdx=slotIdx)
+def dispatchEvent(event, obj_id = None, args = []):
+   """
+   Sends a global event and executes the callbacks of all the listeners subscribed to the given event.
+   """
+   res = (None, None)
+   if not settings['PlayAuto']:
+      return res
+   debug(">>> dispatchEvent({}, {}, {})".format(event, obj_id, args))
+   GameEvents = getGlobalVar('GameEvents')
+   for listener in GameEvents:
+      if event == listener['event']:
+         # Join args with the default args
+         params = args + listener['args']
+         if (
+            (not obj_id and (not listener['appliesto'] or listener['appliesto'] == RS_SUFFIX_ONCE))
+            or listener['id'] == obj_id
+            or listener['appliesto'] == RS_SUFFIX_ANY
+         ):
+            debug("-- Found listener {}".format(listener))
+            res = (True, None)
+            # Callback could be the ID of a card...
+            if isinstance(listener['callback'], (int, long)):
+               card = Card(listener['callback'])
+               # Don't trigger auto ability for chars in a UA
+               if inUAttack(card):
+                  notify("{}'s ability cannot be activated because it joined an United Attack.".format(card))
+                  res = (None, listener['callback'])
+                  continue
+               # Call callback
+               scope = listener['scope']
+               if (
+                  # Event added by active player (me)
+                  (not scope and me.isActive and listener['controller'] == me._id)
+                  # Events affects any player
+                  or scope == RS_PREFIX_ANY
+                  # Event added by the opponent
+                  or (scope == RS_PREFIX_OPP and listener['controller'] != me._id)
+                  or obj_id  # FIXME Needed?
+               ):
+                  pcard = getGameCard(card)
+                  if not pcard.rules.parsed:
+                     pcard.init()
+                  if not pcard.rules.execAuto(None, event, *params):
+                     res = (False, listener['callback'])
                   else:
-                     backup(card, target=Card(myRing[slotIdx]))
-               # Play other type of card
-               else:
-                  play(card)
-               continue
-            # Move cards in table
-            elif fromGroup == table:
-               cy = card.position[1]
-               # Attack
-               if me.isActive and phaseIdx == AttackPhase and charIsInRing(card):
-                  if (y>cy-60, y<cy+60)[bool(playerSide+1)]:
-                     slotIdx = getDropSlotIndex(x)
-                     if slotIdx == None:
-                        continue
-                     myRing = getGlobalVar('Ring', me)
-                     # United Attack
-                     if myRing[slotIdx] != None:
-                        atkCard = Card(myRing[slotIdx])
-                        if isAttacking(atkCard, False):
-                           if isAttacking(card):
-                              cancelAttack(card, True)
-                           unitedAttack(card, targets=[atkCard])
-                           continue
-                     if hasMarker(card, 'Attack'):
-                        alignCard(card)
-                     else:
-                        if hasMarker(card, 'United Attack'):
-                           cancelAttack(card, True)
-                        attack(card)
-                     continue
-                  # Cancel attack
-                  elif isAttacking(card):
-                     cancelAttack(card)
-                     continue
-               # Block
-               elif (not me.isActive or tutorial) and phaseIdx == BlockPhase and charIsInRing(card):
-                  if (y>cy-60, y<cy+60)[bool(playerSide+1)]:
-                     slotIdx = getDropSlotIndex(x)
-                     if slotIdx == None:
-                        continue
-                     slotIdx = fixSlotIdx(slotIdx, fix=True)
-                     targets = None
-                     oppRing = getGlobalVar('Ring', getOpp())
-                     if oppRing[slotIdx] != None:
-                        targets = [Card(oppRing[slotIdx])]
-                     if isBlocking(card):
-                        cancelBlock(card, True)
-                     block(card, targets=targets)
-                     continue
-                  # Cancel block
-                  elif isBlocking(card):
-                     cancelBlock(card)
-                     continue
-         card.moveToTable(x, y, not faceup)
-         card.index = index
-      # Move cards to piles
-      else:
-         card.moveTo(toGroup, index)
-         
-         
-def overrideTurnPassed(args):
-# Triggers when the player clicks the green "Pass Turn" button on the player tabs.
-   if tutorial:
-      tutorial.goNext()
-      return
+                     playSnd('activate-3')
+               if listener['appliesto'] == RS_SUFFIX_ONCE:
+                  removeGameEventListener(card._id)
+            # ... or the name of a global function
+            else:
+               try:
+                  func = eval(listener['callback']) # eval is a necessary evil
+               except:
+                  debug("Callback function {} is not defined".format(listener['callback']))
+                  continue
+               res = (func(*params), listener['source'] or listener['id'])
+   return res
+
+
+def triggerHook(event, obj_id = None, args = []):
+   """
+   Hook system. It returns a boolean whether the given action defined by the hook is allowed or not or not.
+   """
+   res, source = dispatchEvent(event, obj_id, args)
+   debug(">>> triggerHook({}, {}, {}) => {}, {}".format(event, obj_id, args, res, source))
+   # If the action is not allowed, maybe we should notify the player
+   if res == False and source:
+      if event in MSG_HOOKS_ERR:
+         notifyAbility(args[0], source, MSG_HOOKS_ERR[event], isWarning = True)
+   return res
    
-   player = args.player  # The player the turn is being passed to
-   setState(None, 'activePlayer', player._id)
-   nextTurn(player)
+   
+def cleanupGameEvents(restr):
+   """
+   Dispatches an event it the restriction matches, then removes it. (Like "end of turn" events.)
+   """
+   debug(">>> cleanupGameEvents({})".format(restr))
+   GameEvents = getGlobalVar('GameEvents')
+   removed = False
+   # Iterate it in reverse order because we are removing items
+   for i, listener in reversed(list(enumerate(GameEvents))):
+      if listener['restr'] is None:
+         continue
+      restrTarget = listener['restr'][0]
+      evRestr     = listener['restr'][1]
+      if evRestr == restr:
+         # Remove event added by me that affects me, or added by the opp that affects me as well
+         if (
+            (listener['controller'] == me._id and restrTarget != RS_PREFIX_OPP) or
+            (listener['controller'] != me._id and restrTarget == RS_PREFIX_OPP)
+         ):
+            del GameEvents[i]
+            removed = True
+            debug("Removed listener for event {} -> {}".format(listener['event'], listener))
+            # Invoke any callback
+            onRemoveEvent(listener)
+   if removed:
+      setGlobalVar('GameEvents', GameEvents)
 
-
-#---------------------------------------------------------------------------
-# Related functions
-#---------------------------------------------------------------------------
-
-def getDropSlotIndex(x):
-   idx = None
-   ox = 200
-   cx = x + CardWidth/2
-   for j in range(NumSlots):
-      coordsX = CardsCoords['Slot'+`fixSlotIdx(j)`][0] + CardWidth/2
-      diff = abs(coordsX - cx)
-      if diff < ox:
-         idx = j
-         ox = diff
-   return idx
+   
+def onRemoveEvent(listener):
+   """
+   Calls the "on remove" callback if any.
+   """
+   func = None
+   if listener['event'] == Hooks.CallOnRemove:
+      func = eval(listener['callback'])
+   elif listener['onremove']:
+      func = eval(listener['onremove'])
+   if func:
+      debug("Calling on removed callback {}()".format(func.func_name))
+      func(*listener['args'])
    

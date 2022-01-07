@@ -1,5 +1,5 @@
 # Python Scripts for the Card Fighters' Clash definition for OCTGN
-# Copyright (C) 2013  Raohmaru
+# Copyright (C) 2013 Raohmaru
 
 # This python script is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -12,7 +12,7 @@
 # GNU General Public License for more details.
 
 # You should have received a copy of the GNU General Public License
-# along with this script.  If not, see <http://www.gnu.org/licenses/>.
+# along with this script. If not, see <http://www.gnu.org/licenses/>.
 
 #---------------------------------------------------------------------------
 # Filter class
@@ -33,11 +33,11 @@ class RulesSelectors():
       
       # Get the selector function
       if cmd in RulesSelectors.selectors:      
-         debug("-- applying selector ::{}({}) to {}".format(cmd, expr, cardsNamesStr(targets)))
+         debug("-- applying selector ::{}({}) to {}".format(cmd, expr, cardsToNamesStr(targets)))
          func = RulesSelectors.selectors[cmd]
          res = evalExpression(expr, True, getLocals())
          targets = func(targets, res)
-         debug("-- new selection: {}".format(cardsNamesStr(targets)))
+         debug("-- new selection: {}".format(cardsToNamesStr(targets)))
          
       return targets
 

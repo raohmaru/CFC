@@ -1,5 +1,5 @@
 # Python Scripts for the Card Fighters' Clash definition for OCTGN
-# Copyright (C) 2013 Raohmaru
+# Copyright (C) 2022 Raohmaru
 
 # This python script is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -14,31 +14,32 @@
 # You should have received a copy of the GNU General Public License
 # along with this script. If not, see <http://www.gnu.org/licenses/>.
 
-
-import time 
-
 #---------------------------------------------------------------------------
-# Sound interface
+# CharCard class
 #---------------------------------------------------------------------------
 
-soundsPlaying = {}
+class CharCard(GameCard):
+   """ A class which stores the character card ability name and its parsed rule scripts """
+   ability = None
+   
+   def __init__(self, card, ruleId = None):
+      super(self.__class__, self).__init__(card, ruleId)
+      
+      self.state["lastBP"] = self.BP
+      ability = Ability(card, ruleId = ruleId)
+      if ability.name:
+         debug("Found ability {}".format(ability))
+         self.ability = ability
+      else:
+         debug("No ability found")
+         
+   def hasEffect(self):
+      return self.ability != None
 
-def playSnd(name, isInternal = False):
-   # debug(">>> playSnd({}, {})".format(name, isInternal))
-   if name in soundsPlaying:
-      # Do not repeat sound if it has been played 0.3s ago
-      if time.time() - soundsPlaying[name] < 0.3:
-         return   
-   soundsPlaying[name] = time.time()
-
-   if (
-      isInternal
-      or Octgn.Program.DeveloperMode
-   ):
-      try:
-         sound = _extapi.game.Sounds[name]
-         Octgn.Utils.Sounds.PlayGameSound(sound)
-      except KeyError:
-         debug("Sound {} does not exist".format(name))
-   else:
-      playSound(name)
+   @property
+   def BP(self):
+      _BP = getMarker(self.card, 'BP')
+      if _BP == 0 and self.card.group != table:
+         # Even though card property BP is of type Integer, OCTGN returns a String
+         _BP = self.card.BP
+      return _BP

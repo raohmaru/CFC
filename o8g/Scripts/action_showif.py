@@ -1,5 +1,5 @@
 # Python Scripts for the Card Fighters' Clash definition for OCTGN
-# Copyright (C) 2013  Raohmaru
+# Copyright (C) 2013 Raohmaru
 
 # This python script is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -12,11 +12,11 @@
 # GNU General Public License for more details.
 
 # You should have received a copy of the GNU General Public License
-# along with this script.  If not, see <http://www.gnu.org/licenses/>.
+# along with this script. If not, see <http://www.gnu.org/licenses/>.
 
-#---------------------------------------------------------------------------
+#-------------------------------------------------------------------------------------------------
 # Functions to dynamically determines whether or not an action should appear or hide from the menu
-#---------------------------------------------------------------------------
+#-------------------------------------------------------------------------------------------------
 
 def acsh_Debug(args, x = 0, y = 0):
    return me.name == Author
@@ -42,7 +42,7 @@ def acsh_gameNotStarted(args, x = 0, y = 0):
 
 def acsh_isActivePlayerAttack(args, x = 0, y = 0):
    card = args[0]
-   return isCharacter(card) and me.isActive and currentPhase()[1] == AttackPhase and not isAttacking(card) and charIsInRing(card)
+   return isCharacter(card) and me.isActive and getCurrentPhase() == AttackPhase and not isAttacking(card) and charIsInRing(card)
 
 
 def acsh_hasAbility(args, x = 0, y = 0):
@@ -52,7 +52,7 @@ def acsh_hasAbility(args, x = 0, y = 0):
       
 def acsh_AutoPlayOff(args, x = 0, y = 0):
    card = args[0] if isinstance(args, list) else None
-   return (not card or not isButton(card)) and (debugging or not settings['Play'])
+   return (not card or not isButton(card)) and (debugging or not settings['PlayAuto'])
 
       
 def acsh_isCharAndAutoPlayOff(args, x = 0, y = 0):
@@ -61,7 +61,7 @@ def acsh_isCharAndAutoPlayOff(args, x = 0, y = 0):
       
 def acsh_canBackup(args, x = 0, y = 0):
    card = args[0]
-   return isCharacter(card) and me.isActive and currentPhase()[1] == MainPhase and charIsInRing(card)
+   return isCharacter(card) and me.isActive and getCurrentPhase() == MainPhase and charIsInRing(card)
 
       
 def acsh_hidden(args, x = 0, y = 0):
@@ -91,3 +91,7 @@ def acsh_isNotBackup(args, x = 0, y = 0):
       
 def acsh_isNotTutorial(args, x = 0, y = 0):
    return tutorial is None
+
+      
+def acsh_charsInArena(args, x = 0, y = 0):
+   return len(getRing()) > 0

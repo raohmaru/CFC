@@ -1,5 +1,8 @@
+#!/usr/bin/python
+# -*- coding: iso-8859-15 -*-
+
 # Python Scripts for the Card Fighters' Clash definition for OCTGN
-# Copyright (C) 2013  Raohmaru
+# Copyright (C) 2013 Raohmaru
 
 # This python script is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -12,7 +15,7 @@
 # GNU General Public License for more details.
 
 # You should have received a copy of the GNU General Public License
-# along with this script.  If not, see <http://www.gnu.org/licenses/>.
+# along with this script. If not, see <http://www.gnu.org/licenses/>.
 
 def getGameVersion():
 # Returns game version in the format x.x.x
@@ -30,7 +33,7 @@ def showWelcomeScreen(group=None, x=0, y=0):
             showChangelog()
          return
       
-   choiceList = ['Tutorial', 'Rulebook', 'Download card images', 'Help us improve', 'What\'s new?']
+   choiceList = ['Tutorial', u'   Rulebook  🡕', u'   Download card images  🡕', u'   Help us improve the game  🡕', 'What\'s new?']
    colorsList = ['#004d99'] * len(choiceList)
    buttons = ['Close', 'Do not show again']
    msg = """        Welcome to Card Fighters' Clash!\n
@@ -93,7 +96,7 @@ def cardInfo(card, x = 0, y = 0):
       msg += '\nSP: {0}'.format(card.SP)
    
    if isCharacter(card):
-      pcard = getParsedCard(card)
+      pcard = getGameCard(card)
       abl = card.properties['Ability Type']
       if abl:
          msg += '\n\n{} ability\n{}'.format(pcard.ability.unicodeChar, MSG_HELP_AB[abl])
@@ -106,13 +109,13 @@ def cardInfo(card, x = 0, y = 0):
 BECOME ANOTHER CARD / TRANSFORM
 When a card becomes another card (it is transformed), all of the card's properties are replaced by the other card's properties. If the card is a character, the BP is replaced by the other card BP (even if that character has received damage). Any back-up on the card is discarded.
 The state of the transformed card does not change (fresh, freeze, etc.), but all effects applied on the card are terminated.
-If the card goes to a pile (deck, discard pile or removed pile), it is transformed back to its original card."""
+If the card goes to a pile (deck, Discard pile or Removed pile), it is transformed back to its original card."""
 
       if re.search('KO', rules):
          msg += """
 
 KO
-To move a character from the arena to its controller's discard pile."""
+To move a character from the arena to its controller's Discard pile."""
 
       if re.search('copy[\w ]+abilit(y|ies)', rules, re.IGNORECASE):
          msg += """
@@ -178,7 +181,7 @@ The abilities between two character are interchanged. Both abilities are copied 
          msg += """
 
 TRASH
-To put cards from the top of a player's deck into his or her discard pile."""            
+To put cards from the top of a player's deck into their Discard pile."""            
          
    if isCharacter(card):
       msg += "\n\nBackups: {}.".format(', '.join(filter(None, getAcceptedBackups(card))))

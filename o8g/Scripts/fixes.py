@@ -1,5 +1,5 @@
 # Python Scripts for the Card Fighters' Clash definition for OCTGN
-# Copyright (C) 2013 Raohmaru
+# Copyright (C) 2022 Raohmaru
 
 # This python script is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -14,31 +14,22 @@
 # You should have received a copy of the GNU General Public License
 # along with this script. If not, see <http://www.gnu.org/licenses/>.
 
-
-import time 
-
 #---------------------------------------------------------------------------
-# Sound interface
+# Game engine fixes
 #---------------------------------------------------------------------------
 
-soundsPlaying = {}
+# Fix card properties of type Integer returns a string instead of an integer
+# https://octgn.16bugs.com/projects/3602/bugs/188805
+cardPropertiesType = {}
+for prop in _api.CardProperties():
+   cardPropertiesType[prop] = _extapi._game.CardProperties[prop].Type.ToString()
 
-def playSnd(name, isInternal = False):
-   # debug(">>> playSnd({}, {})".format(name, isInternal))
-   if name in soundsPlaying:
-      # Do not repeat sound if it has been played 0.3s ago
-      if time.time() - soundsPlaying[name] < 0.3:
-         return   
-   soundsPlaying[name] = time.time()
+# https://github.com/octgn/OCTGN/blob/master/octgnFX/Octgn.JodsEngine/Scripting/Versions/3.1.0.2.py#L263
+def CardProperties_getitem(self, key):
+   value = _api.CardProperty(self._id, key)
+   if cardPropertiesType[key] == "Integer":
+      value = int(value)
+   return value
 
-   if (
-      isInternal
-      or Octgn.Program.DeveloperMode
-   ):
-      try:
-         sound = _extapi.game.Sounds[name]
-         Octgn.Utils.Sounds.PlayGameSound(sound)
-      except KeyError:
-         debug("Sound {} does not exist".format(name))
-   else:
-      playSound(name)
+# Monkey patch. Might not work in Python 3.
+CardProperties.__getitem__ = CardProperties_getitem

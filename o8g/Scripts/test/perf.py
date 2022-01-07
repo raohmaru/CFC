@@ -1,5 +1,5 @@
 # Python Scripts for the Card Fighters' Clash definition for OCTGN
-# Copyright (C) 2013  Raohmaru
+# Copyright (C) 2013 Raohmaru
 
 # This python script is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -12,7 +12,7 @@
 # GNU General Public License for more details.
 
 # You should have received a copy of the GNU General Public License
-# along with this script.  If not, see <http://www.gnu.org/licenses/>.
+# along with this script. If not, see <http://www.gnu.org/licenses/>.
 
 
 #---------------------------------------------------------------------------
@@ -34,8 +34,8 @@ def test(fun, args=[], r=1000):
 #---------------------------------------------------------------------------
 
 def replaceVars(str):
-   str = re.sub(Regexps['bp']        , r'getParsedCard(\1).BP', str)
-   str = re.sub(Regexps['lastbp']    , r'getParsedCard(\1).lastBP', str)
+   str = re.sub(Regexps['bp']        , r'getGameCard(\1).BP', str)
+   str = re.sub(Regexps['lastbp']    , r'getGameCard(\1).getState("lastBP")', str)
    str = re.sub(Regexps['action']    , 'isAction(card)', str)
    str = re.sub(Regexps['reaction']  , 'isReaction(card)', str)
    str = re.sub(Regexps['char']      , 'isCharacter(card)', str)
@@ -57,8 +57,8 @@ def replaceVars(str):
 
 def replaceVarsIf(str):
    # Order is important
-   str = replaceCond(str, 'bp'        , r'getParsedCard(\1).BP')
-   str = replaceCond(str, 'lastbp'    , r'getParsedCard(\1).lastBP')
+   str = replaceCond(str, 'bp'        , r'getGameCard(\1).BP')
+   str = replaceCond(str, 'lastbp'    , r'getGameCard(\1).getState("lastBP")')
    str = replaceCond(str, 'action'    , 'isAction(card)')
    str = replaceCond(str, 'reaction'  , 'isReaction(card)')
    str = replaceCond(str, 'char'      , 'isCharacter(card)')
@@ -78,8 +78,8 @@ def replaceVarsIf(str):
    return str
 
 R = {
-   'bp'     : r'getParsedCard(\1).BP',
-   'lastbp' : r'getParsedCard(\1).lastBP',
+   'bp'     : r'getGameCard(\1).BP',
+   'lastbp' : r'getGameCard(\1).getState("lastBP")',
    'size'   : r'len(\1)',
    'ring'   : r'getRingSize(\1)',
    'chars'  : r'getRing(\1)',

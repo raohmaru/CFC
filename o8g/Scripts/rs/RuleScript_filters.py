@@ -1,5 +1,5 @@
 # Python Scripts for the Card Fighters' Clash definition for OCTGN
-# Copyright (C) 2013  Raohmaru
+# Copyright (C) 2013 Raohmaru
 
 # This python script is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -12,7 +12,7 @@
 # GNU General Public License for more details.
 
 # You should have received a copy of the GNU General Public License
-# along with this script.  If not, see <http://www.gnu.org/licenses/>.
+# along with this script. If not, see <http://www.gnu.org/licenses/>.
 
 #---------------------------------------------------------------------------
 # Filter class
@@ -83,10 +83,10 @@ def getCardProp(card, prop):
    if prop == 'bp':
       bp = getMarker(card, 'BP')
       if bp == 0:
-         bp = num(card.BP)
+         bp = card.BP
       return bp
    elif prop == 'sp':
-      return num(card.SP)
+      return card.SP
        
 
 def compareValuesByOp(v1, v2, op):
@@ -115,7 +115,7 @@ def filterBP(card, include, cmd, *args):
    except ValueError:
       return False
    if op != RS_OP_FUNC:
-      value = num(value)
+      value = int(value)
 
    bp = getCardProp(card, 'bp')
       
@@ -136,9 +136,9 @@ def filterSP(card, include, cmd, *args):
    except ValueError:
       return False
    if op != RS_OP_FUNC:
-      value = num(value)
+      value = int(value)
 
-   sp = num(card.SP)
+   sp = card.SP
       
    # Compare values
    res = compareValuesByOp(sp, value, op)

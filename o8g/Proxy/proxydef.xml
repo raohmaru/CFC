@@ -17,151 +17,151 @@
 		</block>
 		<!-- Subtype -->
 		<block type="overlay" id="subtype_agent" src="Proxy/Subtypes/Agent.png">
-			<location x="311" y="447" />
+			<location x="312" y="447" />
 		</block>
 		<block type="overlay" id="subtype_aikido" src="Proxy/Subtypes/Aikido.png">
-			<location x="311" y="447" />
+			<location x="312" y="447" />
 		</block>
 		<block type="overlay" id="subtype_alien" src="Proxy/Subtypes/Alien.png">
-			<location x="311" y="447" />
+			<location x="312" y="447" />
 		</block>
 		<block type="overlay" id="subtype_android" src="Proxy/Subtypes/Android.png">
-			<location x="311" y="447" />
+			<location x="312" y="447" />
 		</block>
 		<block type="overlay" id="subtype_artist" src="Proxy/Subtypes/Artist.png">
-			<location x="311" y="447" />
+			<location x="312" y="447" />
 		</block>
 		<block type="overlay" id="subtype_assassin" src="Proxy/Subtypes/Assassin.png">
-			<location x="311" y="447" />
+			<location x="312" y="447" />
 		</block>
 		<block type="overlay" id="subtype_avatar" src="Proxy/Subtypes/Avatar.png">
-			<location x="311" y="447" />
+			<location x="312" y="447" />
 		</block>
 		<block type="overlay" id="subtype_beast" src="Proxy/Subtypes/Beast.png">
-			<location x="311" y="447" />
+			<location x="312" y="447" />
 		</block>
 		<block type="overlay" id="subtype_boss" src="Proxy/Subtypes/Boss.png">
-			<location x="311" y="447" />
+			<location x="312" y="447" />
 		</block>
 		<block type="overlay" id="subtype_boxer" src="Proxy/Subtypes/Boxer.png">
-			<location x="311" y="447" />
+			<location x="312" y="447" />
 		</block>
 		<block type="overlay" id="subtype_brute" src="Proxy/Subtypes/Brute.png">
-			<location x="311" y="447" />
+			<location x="312" y="447" />
 		</block>
 		<block type="overlay" id="subtype_capoeira" src="Proxy/Subtypes/Capoeira.png">
-			<location x="311" y="447" />
+			<location x="312" y="447" />
 		</block>
 		<block type="overlay" id="subtype_captain" src="Proxy/Subtypes/Captain.png">
-			<location x="311" y="447" />
+			<location x="312" y="447" />
 		</block>
 		<block type="overlay" id="subtype_cursed" src="Proxy/Subtypes/Cursed.png">
-			<location x="311" y="447" />
+			<location x="312" y="447" />
 		</block>
 		<block type="overlay" id="subtype_cyborg" src="Proxy/Subtypes/Cyborg.png">
-			<location x="311" y="447" />
+			<location x="312" y="447" />
 		</block>
 		<block type="overlay" id="subtype_kami" src="Proxy/Subtypes/Kami.png">
-			<location x="311" y="447" />
+			<location x="312" y="447" />
 		</block>
 		<block type="overlay" id="subtype_demon" src="Proxy/Subtypes/Demon.png">
-			<location x="311" y="447" />
+			<location x="312" y="447" />
 		</block>
 		<block type="overlay" id="subtype_detective" src="Proxy/Subtypes/Detective.png">
-			<location x="311" y="447" />
+			<location x="312" y="447" />
 		</block>
 		<block type="overlay" id="subtype_experiment" src="Proxy/Subtypes/Experiment.png">
-			<location x="311" y="447" />
+			<location x="312" y="447" />
 		</block>
 		<block type="overlay" id="subtype_fighter" src="Proxy/Subtypes/Fighter.png">
-			<location x="311" y="447" />
+			<location x="312" y="447" />
 		</block>
 		<block type="overlay" id="subtype_gangster" src="Proxy/Subtypes/Gangster.png">
-			<location x="311" y="447" />
+			<location x="312" y="447" />
 		</block>
 		<block type="overlay" id="subtype_guardian" src="Proxy/Subtypes/Guardian.png">
-			<location x="311" y="447" />
+			<location x="312" y="447" />
 		</block>
 		<block type="overlay" id="subtype_gymnast" src="Proxy/Subtypes/Gymnast.png">
-			<location x="311" y="447" />
+			<location x="312" y="447" />
 		</block>
 		<block type="overlay" id="subtype_hunter" src="Proxy/Subtypes/Hunter.png">
-			<location x="311" y="447" />
+			<location x="312" y="447" />
 		</block>
 		<block type="overlay" id="subtype_karateka" src="Proxy/Subtypes/Karateka.png">
-			<location x="311" y="447" />
+			<location x="312" y="447" />
 		</block>
 		<block type="overlay" id="subtype_kickboxer" src="Proxy/Subtypes/Kickboxer.png">
-			<location x="311" y="447" />
+			<location x="312" y="447" />
 		</block>
 		<block type="overlay" id="subtype_kobudo" src="Proxy/Subtypes/Kobudo.png">
-			<location x="311" y="447" />
+			<location x="312" y="447" />
 		</block>
 		<block type="overlay" id="subtype_kung-fu" src="Proxy/Subtypes/Kung-fu.png">
-			<location x="311" y="447" />
+			<location x="312" y="447" />
 		</block>
 		<block type="overlay" id="subtype_magician" src="Proxy/Subtypes/Magician.png">
-			<location x="311" y="447" />
+			<location x="312" y="447" />
 		</block>
 		<block type="overlay" id="subtype_mentor" src="Proxy/Subtypes/Mentor.png">
-			<location x="311" y="447" />
+			<location x="312" y="447" />
 		</block>
 		<block type="overlay" id="subtype_mercenary" src="Proxy/Subtypes/Mercenary.png">
-			<location x="311" y="447" />
+			<location x="312" y="447" />
 		</block>
 		<block type="overlay" id="subtype_monk" src="Proxy/Subtypes/Monk.png">
-			<location x="311" y="447" />
+			<location x="312" y="447" />
 		</block>
 		<block type="overlay" id="subtype_monster" src="Proxy/Subtypes/Monster.png">
-			<location x="311" y="447" />
+			<location x="312" y="447" />
 		</block>
 		<block type="overlay" id="subtype_ninja" src="Proxy/Subtypes/Ninja.png">
-			<location x="311" y="447" />
+			<location x="312" y="447" />
 		</block>
 		<block type="overlay" id="subtype_pilot" src="Proxy/Subtypes/Pilot.png">
-			<location x="311" y="447" />
+			<location x="312" y="447" />
 		</block>
 		<block type="overlay" id="subtype_priest" src="Proxy/Subtypes/Priest.png">
-			<location x="311" y="447" />
+			<location x="312" y="447" />
 		</block>
 		<block type="overlay" id="subtype_psychic" src="Proxy/Subtypes/Psychic.png">
-			<location x="311" y="447" />
+			<location x="312" y="447" />
 		</block>
 		<block type="overlay" id="subtype_robot" src="Proxy/Subtypes/Robot.png">
-			<location x="311" y="447" />
+			<location x="312" y="447" />
 		</block>
 		<block type="overlay" id="subtype_samurai" src="Proxy/Subtypes/Samurai.png">
-			<location x="311" y="447" />
+			<location x="312" y="447" />
 		</block>
 		<block type="overlay" id="subtype_soldier" src="Proxy/Subtypes/Soldier.png">
-			<location x="311" y="447" />
+			<location x="312" y="447" />
 		</block>
 		<block type="overlay" id="subtype_spirit" src="Proxy/Subtypes/Spirit.png">
-			<location x="311" y="447" />
+			<location x="312" y="447" />
 		</block>
 		<block type="overlay" id="subtype_student" src="Proxy/Subtypes/Student.png">
-			<location x="311" y="447" />
+			<location x="312" y="447" />
 		</block>
 		<block type="overlay" id="subtype_sumotori" src="Proxy/Subtypes/Sumotori.png">
-			<location x="311" y="447" />
+			<location x="312" y="447" />
 		</block>
 		<block type="overlay" id="subtype_swordsman" src="Proxy/Subtypes/Swordsman.png">
-			<location x="311" y="447" />
+			<location x="312" y="447" />
 		</block>
 		<block type="overlay" id="subtype_taekwondo" src="Proxy/Subtypes/Taekwondo.png">
-			<location x="311" y="447" />
+			<location x="312" y="447" />
 		</block>
 		<block type="overlay" id="subtype_vampire" src="Proxy/Subtypes/Vampire.png">
-			<location x="311" y="447" />
+			<location x="312" y="447" />
 		</block>
 		<block type="overlay" id="subtype_warrior" src="Proxy/Subtypes/Warrior.png">
-			<location x="311" y="447" />
+			<location x="312" y="447" />
 		</block>
 		<block type="overlay" id="subtype_wrestler" src="Proxy/Subtypes/Wrestler.png">
-			<location x="311" y="447" />
+			<location x="312" y="447" />
 		</block>
 		<block type="overlay" id="subtype_zombie" src="Proxy/Subtypes/Zombie.png">
-			<location x="311" y="447" />
+			<location x="312" y="447" />
 		</block>
 		<!-- Rarity -->
 		<block type="overlay" id="rarity_s" src="Proxy/Overlays/rarity_s.png">

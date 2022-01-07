@@ -1,5 +1,5 @@
 # Python Scripts for the Card Fighters' Clash definition for OCTGN
-# Copyright (C) 2013  Raohmaru
+# Copyright (C) 2013 Raohmaru
 
 # This python script is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -12,7 +12,7 @@
 # GNU General Public License for more details.
 
 # You should have received a copy of the GNU General Public License
-# along with this script.  If not, see <http://www.gnu.org/licenses/>.
+# along with this script. If not, see <http://www.gnu.org/licenses/>.
 
 #---------------------------------------------------------------------------
 # Commands class
@@ -82,7 +82,10 @@ class RulesCommands():
                   RulesAbilities.add(params, target._id, source._id, restr)
          self.applyNext()
       else:
-         debug("-- cmd not found: {}".format(cmd[0]))
+         if funcStr in RulesCommands.items:
+            debug("-- skipping cmd {} because condition does not match".format(cmd[0]))
+         else:
+            debug("-- cmd not found: {}".format(cmd[0]))
          self.applyNext()
 
 
@@ -165,11 +168,12 @@ def getEnvVars():
    if not envVars:
       envVars = {
          'me': me,
+         'triggered': TriggerAbility,
          # aliases
          'ischar': isCharacter
       }
       # To use in evalExpression(), case sensitive
-      globalFuncs = [getParsedCard, isAction, isReaction, isCharacter, getRingSize, getRing, getState, getOpp, getAttackingCards, num, getCardByContext]
+      globalFuncs = [getGameCard, isAction, isReaction, isCharacter, getRingSize, getRing, getState, getOpp, getAttackingCards, num, getCardByContext]
       for f in globalFuncs:
          envVars[f.__name__] = f
       # Used in cardRules, case insensitive
@@ -229,7 +233,7 @@ def cmd_shuffle(rc, targets, source, restr, pileName=None):
          shuffle(pile)
       else:
          remoteCall(pile.controller, "shuffle", [pile])
-   rnd(10, 1000) # Wait until all animation is done
+   waitForAnimation()
    rc.applyNext()
 
 
@@ -327,7 +331,7 @@ def cmd_moveTo(rc, targets, source, restr, zone, pos = None, reveal = None):
    if targets:
       if zoneName in RS_KW_ZONES_PILES:
          if isNumber(pos):
-            pos = num(pos)
+            pos = int(pos)
          elif pos == '?':
             choice = askChoice("Where to put the card{}?".format(plural(len(targets))), ['Top of pile', 'Bottom of pile'])
             pos = (max(choice, 1) - 1) * -1
@@ -352,7 +356,7 @@ def cmd_moveTo(rc, targets, source, restr, zone, pos = None, reveal = None):
                remoteCall(target.controller, "passControlTo", [me, [target], ["moveToGroup", [pile, target, target.group, pos, reveal, source.controller]]])
             else:
                remoteCall(target.controller, "moveToGroup", [pile, target, None, pos, reveal, source.controller])
-            # rnd(1, 100) # Wait until all animation is done
+            # waitForAnimation()
          if msgs:
             notify('\n'.join(msgs))
       else:
@@ -372,7 +376,7 @@ def cmd_movePile(rc, targets, source, restr, zone1, zone2):
       mute()
       for card in pile1:
          card.moveTo(pile2)
-      if len(players) > 1: rnd(1, 100) # Wait a bit more, as in multiplayer games, things are slower.
+      if len(players) > 1: waitForAnimation()
       notify("{} moves all cards from their {} to their {}.".format(me, pile1.name, pile2.name))      
    rc.applyNext()
 
@@ -381,11 +385,11 @@ def cmd_bp(rc, targets, source, restr, qty):
    mode = None
    amount = None
    if isNumber(qty):
-      amount = num(qty)
+      amount = int(qty)
    elif qty[0] in RS_MODES:
       mode = qty[0]
       if isNumber(qty[1:]):
-         amount = num(qty[1:])
+         amount = int(qty[1:])
       else:
          qty = qty[1:]
    if amount == None:
@@ -405,10 +409,10 @@ def cmd_bp(rc, targets, source, restr, qty):
 def cmd_sp(rc, targets, source, restr, qty):
    mode = None
    if isNumber(qty):
-      amount = num(qty)
+      amount = int(qty)
    elif qty[0] in RS_MODES:
       mode = qty[0]
-      amount = num(qty[1:])
+      amount = int(qty[1:])
    else:
       amount = num(evalExpression(qty, True, getLocals(rc=rc, targets=targets, source=source)))
    if not targets or isCard(targets[0]):
@@ -448,7 +452,7 @@ def cmd_draw(rc, targets, source, restr, qty = None):
    if qty == '' or not qty:
       qty = 1
    if isNumber(qty):
-      amount = num(qty)
+      amount = int(qty)
    else:
       amount = num(evalExpression(qty, True, getLocals(rc=rc, targets=targets, source=source)))
    if not targets or isCard(targets[0]):
@@ -517,7 +521,7 @@ def cmd_each(rc, targets, source, restr, args):
       for v in res:
          if v:
             subrc.applyAll(func, targets, None, source)
-            # rnd(1, 100) # Wait between effects until all animation is done
+            # waitForAnimation()
       subrc.dispose()
    update()
    rc.applyNext()
@@ -539,7 +543,7 @@ def cmd_transform(rc, targets, source, restr, expr):
             transformCard(target, model)
          else:
             remoteCall(target.controller, "transformCard", [target, model])
-         rnd(1,100) # Small wait (bug workaround) to make sure all animations are done.
+         waitForAnimation()
    rc.applyNext()
 
    
@@ -556,10 +560,10 @@ def cmd_moveRevealedTo(rc, targets, source, restr, zone, pos = None):
    notify("{} looks through the top of {} {} ({} card{} revealed)".format(me, 'his' if myPile else players[1], pile.name, index+1, plural(index+1)))
    for card in newPile:
       if myPile:
-         moveToGroup(targetZone, card, pile, num(pos), True)
+         moveToGroup(targetZone, card, pile, int(pos), True)
       else:
-         remoteCall(targetZone.controller, "moveToGroup", [targetZone, card, pile, num(pos), True])
-      rnd(1, 100) # Wait between effects until all animation is done
+         remoteCall(targetZone.controller, "moveToGroup", [targetZone, card, pile, int(pos), True])
+      waitForAnimation()
    rc.applyNext()
    
    
@@ -606,17 +610,17 @@ def cmd_unfreeze(rc, targets, source, restr, *args):
 
 
 def cmd_alterCost(rc, targets, source, restr, type, mod):
-   debug(">>> cmd_alterCost({}, {})".format(type, mod))
+   debug(">>> cmd_alterCost({}, {}, {})".format(type, mod, restr))
    mode = None
    msg = MSG_RULES['card_cost']
    if 'cost_' + type in MSG_RULES:
       msg = MSG_RULES['cost_' + type]
    if isNumber(mod):
-      mod = num(mod)
+      mod = int(mod)
       notify(msg.format(type.title(), abs(mod), 'less ' if mod >= 0 else 'more ', getTextualRestr(restr)))
    else:
       mode = mod[0]
-      mod = num(mod[1:])
+      mod = int(mod[1:])
       notify(msg.format(type.title(), mod, '', getTextualRestr(restr)))
       
    addGameMod('cost', source._id, type, mod, mode)
@@ -664,9 +668,9 @@ def cmd_trash(rc, targets, source, restr, numCards=1):
       targets = [source.controller]
    for player in targets:
       if player == me:
-         trash(me.Deck, count=numCards)
+         trash(me.Deck, count = numCards)
       else:
-         remoteCall(player, "trash", [None, 0, 0, False, numCards])
+         remoteCall(player, "trash", [None, 0, 0, numCards])
    rc.applyNext()
 
 
@@ -678,7 +682,7 @@ def cmd_prophecy(rc, targets, source, restr, numCards=1, deckPos=0):
       if deckPos == 'top':
          deckPos = 1
       else:
-         deckPos = 2
+         deckPos = -1
    debug(">>> cmd_prophecy({}, {}, {})".format(numCards, pile, deckPos))
    prophecy(group = pile, count = int(numCards), deckPos = deckPos)
    rc.applyNext()
@@ -688,16 +692,18 @@ def cmd_activate(rc, targets, source, restr, expr):
    debug(">>> cmd_activate({})".format(expr))
    card = evalExpression(expr, True, getLocals(rc=rc, targets=targets, source=source))
    if card:
-      pcard = parseCard(source, card.model, dryRun = True)
+      pcard = createGameCard(source, card.model, dryRun = True)
       pcard.activateEffect()
+      pcard.destroy()
+      del pcard
    rc.applyNext()
    
 
 def cmd_turns(rc, targets, source, restr, qty):
-   global turns
+   global turnsRemaining
    qty = int(qty)
    debug(">>> cmd_turns({}, {})".format(targets, qty))
-   turns += qty
+   turnsRemaining += qty
    if qty > 0:
       notify("{} will play another turn after this one".format(me))
    elif qty < 0:
@@ -707,7 +713,7 @@ def cmd_turns(rc, targets, source, restr, qty):
    
 
 def cmd_skip(rc, targets, source, restr, phase):
-   phases = map(str.lower, Phases)
+   phases = map(str.lower, PhaseNames)
    idx = phases.index(phase)
    debug(">>> cmd_skip({}, {} ({}))".format(targets, phase, idx))
    for player in targets:
@@ -730,8 +736,8 @@ def cmd_unite(rc, targets, source, restr, *args):
       for card in targets:
          if card != target:
             remoteCall(getOpp(), "unitedAttackAuto", [card, [target], True])
-            rnd(1, 100) # Wait until all animation is done
-      notify("{} has forced {} to do an United Attack".format(me, cardsNamesStr(targets)))
+            waitForAnimation()
+      notify("{} has forced {} to do an United Attack".format(me, cardsToNamesStr(targets)))
    rc.applyNext()
    
    
@@ -739,7 +745,7 @@ def cmd_removeFromAttack(rc, targets, source, restr, *args):
    debug(">>> cmd_removeFromAttack({})".format(targets))
    for card in targets:
       remoteCall(getOpp(), "cancelAttack", [card])
-      rnd(1, 100) # Wait until all animation is done
+      waitForAnimation()
       notify("{} removes {} from attack.".format(me, card))
    rc.applyNext()
 
@@ -770,20 +776,10 @@ def cmd_pileView(rc, targets, source, restr, pileName, viewState):
    rc.applyNext()
 
 
-def cmd_clear(rc, targets, source, restr, abl=None):
-   debug(">>> cmd_clear({})".format(abl))
-   if abl:
-      abls = {
-         'instant': InstantAbility,
-         'trigger': TriggerAbility,
-         'auto'   : AutoAbility
-      }
-      pcard = getParsedCard(source)
-      if abl in abls and pcard.ability.type == abls[abl]:
-         abl = False
-      else:
-         abl = True
-   pcard.setState('highlight', abl)
+def cmd_clear(rc, targets, source, restr):
+   debug(">>> cmd_clear({})")
+   pcard = getGameCard(source)
+   pcard.setState('willHighlight', False)
    rc.applyNext()
    
 

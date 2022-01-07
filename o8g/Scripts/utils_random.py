@@ -12,7 +12,7 @@
 # GNU General Public License for more details.
 
 # You should have received a copy of the GNU General Public License
-# along with this script.  If not, see <http://www.gnu.org/licenses/>.
+# along with this script. If not, see <http://www.gnu.org/licenses/>.
 
 import clr
 clr.AddReference("System")
@@ -28,26 +28,34 @@ from math import log as _log, ceil as _ceil
 
 class RRRandom(Random):
    def random(self):
-      """Get the next random number in the range [0.0, 1.0)."""
-      # https://docs.microsoft.com/en-us/dotnet/api/system.random.sample
+      """
+      Get the next random number in the range [0.0, 1.0).
+      https://docs.microsoft.com/en-us/dotnet/api/system.random.sample
+      """
       return self.Sample()
 
 
    def randint(self, a, b):
-      """Return random integer in range [a, b], including both end points."""
+      """
+      Return random integer in range [a, b], including both end points.
+      """
       if b <= a:
          raise ValueError("second argument must be greater than the first")
       return int(round(a + self.Sample() * (b - a)))
 
 
    def choice(self, seq):
-      """Choose a random element from a non-empty sequence."""
+      """
+      Choose a random element from a non-empty sequence.
+      """
       return seq[int(self.random() * len(seq))]
 
 
    def sample(self, population, k):
-      """Chooses k unique random elements from a population sequence."""
-      # https://github.com/python/cpython/blob/2.7/Lib/random.py#L275
+      """
+      Chooses k unique random elements from a population sequence.
+      https://github.com/python/cpython/blob/2.7/Lib/random.py#L275
+      """
       n = len(population)
       if not 0 <= k <= n:
          raise ValueError("sample larger than population")

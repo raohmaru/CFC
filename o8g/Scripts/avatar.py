@@ -1,5 +1,5 @@
-# Python Scripts for the Card Fighters' Clash definition for OCTGN
-# Copyright (C) 2013  Raohmaru
+# Python Scripts for the Card Fighters" Clash definition for OCTGN
+# Copyright (C) 2013 Raohmaru
 
 # This python script is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -12,37 +12,38 @@
 # GNU General Public License for more details.
 
 # You should have received a copy of the GNU General Public License
-# along with this script.  If not, see <http://www.gnu.org/licenses/>.
+# along with this script. If not, see <http://www.gnu.org/licenses/>.
 
 #---------------------------------------------------------------------------
 # Avatar
 #---------------------------------------------------------------------------
 
 def avatarAction(card):
-   model, qty = askCard({'Type': AvatarType}, title = 'Choose your avatar image')
+   model, qty = askCard({"Type": AvatarType}, title = "Choose your avatar image")
    if qty > 0:
-      addAvatar(model)
+      setAvatar(model)
       
       
-def addAvatar(model = None):
+def setAvatar(model = None):
    mute()
    if not model:
-      if settings['Avatar']:
-         model = settings['Avatar']
+      if settings["Avatar"]:
+         model = settings["Avatar"]
       if not model:
-         cards = queryCard({'Type': AvatarType}, True)
+         cards = queryCard({"Type": AvatarType}, True)
          model = cards[random.randint(0, len(cards)-1)]
    if model:
       oldAvatar = getAvatar(me)
       if oldAvatar:
          oldAvatar.delete()
          
-      x = CardsCoords['Avatar'][0] * playerSide - AvatarWidth/2
-      y = fixCardY(CardsCoords['Avatar'][1], AvatarHeight)         
-      avatar = table.create(model, x, y, quantity=1, persist=False)
+      x = CardsCoords["Avatar"][0] * playerSide - AvatarWidth/2
+      y = fixCardY(CardsCoords["Avatar"][1], AvatarHeight)         
+      avatar = table.create(model, x, y, quantity = 1, persist = False)
+      # Nail it to the table thus preventing players from manually moving it
       avatar.anchor = True
-      if avatar.Name != settings['Avatar']:
-         switchSetting('Avatar', model)
+      if avatar.Name != settings["Avatar"]:
+         switchSetting("Avatar", model)
 
 
 def getAvatar(player):

@@ -4,7 +4,7 @@
       name="Card Fighters' Clash"
       id="e3d56d9e-900d-49c6-b6ae-22cbb51be153"
       octgnVersion="3.4.350.0"
-      version="0.9.9.798"
+      version="0.9.9.842"
       markersize="20"
       tags="capcom snk fighter"
       description="Play epic battles with fighters from Capcom and SNK!
@@ -23,10 +23,12 @@
 		<script src="Scripts/config.py" />
 		<script src="Scripts/config_messages.py" />
 		<script src="Scripts/actions.py" />
+		<script src="Scripts/event_handlers.py" />
+		<script src="Scripts/event_overrides.py" />
 		<script src="Scripts/events.py" />
-		<script src="Scripts/eventsCustom.py" />
-		<script src="Scripts/autoscripts.py" />
-		<script src="Scripts/cardsAutoscripts.py" />
+		<script src="Scripts/autoscript_phases.py" />
+		<script src="Scripts/autoscript_actions.py" />
+		<script src="Scripts/game_cards.py" />
 		<script src="Scripts/utils.py" />
 		<script src="Scripts/utils_random.py" />
 		<script src="Scripts/debug.py" />
@@ -35,11 +37,16 @@
 		<script src="Scripts/sounds.py" />
 		<script src="Scripts/buttons.py" />
 		<script src="Scripts/avatar.py" />
-		<script src="Scripts/extendedAPI.py" />
-		<script src="Scripts/actionLabels.py" />
-		<script src="Scripts/actionShow.py" />
-		<script src="Scripts/cardsRules.py" />
+		<script src="Scripts/api_ext.py" />
+		<script src="Scripts/action_labels.py" />
+		<script src="Scripts/action_showif.py" />
+		<script src="Scripts/card_rules.py" />
 		<script src="Scripts/tutorial.py" />
+		<script src="Scripts/fixes.py" />
+		<script src="Scripts/entities/GameCard.py" />
+		<script src="Scripts/entities/CharCard.py" />
+		<script src="Scripts/entities/Ability.py" />
+		<script src="Scripts/entities/DummyPlayer.py" />
 		<script src="Scripts/rs/RuleScript.py" />
 		<script src="Scripts/rs/RuleScript_config.py" />
 		<script src="Scripts/rs/RuleScript_lexer.py" />
@@ -91,7 +98,9 @@
 		<sound name="load-deck" src="Resources/Sounds/load-deck.mp3"/>
 		<sound name="lose-life" src="Resources/Sounds/lose-life.mp3"/>
 		<sound name="lose-sp" src="Resources/Sounds/lose-sp.mp3"/>
-		<sound name="move-card" src="Resources/Sounds/move-card.mp3"/>
+		<sound name="move-card-1" src="Resources/Sounds/move-card-1.mp3"/>
+		<sound name="move-card-2" src="Resources/Sounds/move-card-2.mp3"/>
+		<sound name="move-card-3" src="Resources/Sounds/move-card-3.mp3"/>
 		<sound name="new-game" src="Resources/Sounds/new-game.mp3"/>
 		<sound name="notification" src="Resources/Sounds/notification.mp3"/>
 		<sound name="phase-change" src="Resources/Sounds/phase-change.mp3"/>
@@ -125,11 +134,10 @@
 		<marker name="Unfreezable"     id="fec1976b-9ce5-4b32-8c07-76eadc5607f6" src="Resources/Markers/unfreezable.png"/>
 		<marker name="Backup"          id="efd3208d-2ec3-44ca-be1d-858e91628da4" src="Resources/Markers/backup.png"/>
 		<marker name="Pierce"          id="3131facc-3fe4-4dd5-95ff-afc08570d869" src="Resources/Markers/pierce.png"/>
-		<marker name="Cant Block"      id="a8a4b1a3-6023-4ac1-b24f-a50e4768a598" src="Resources/Markers/cant-block.png"/>
+		<marker name="Cannot Block"    id="a8a4b1a3-6023-4ac1-b24f-a50e4768a598" src="Resources/Markers/cannot-block.png"/>
 	</markers>
 	
-	<proxygen definitionsrc="Proxy/proxydef.xml">
-	</proxygen>
+	<proxygen definitionsrc="Proxy/proxydef.xml"></proxygen>
 
 	<phases>
 		<phase name="Activate Phase (F1)"       icon="Resources/Phases/phase1.png" />
@@ -170,8 +178,8 @@
 		<property name="Type" type="String" textKind="Enum" />
 		<property name="Subtype" type="String" textKind="Tokens" />
 		<property name="Rarity" type="String" ignoreText="True" textKind="Enum" />
-		<property name="BP" type="Integer" textKind="Enum" />
-		<property name="SP" type="Integer" textKind="Enum" />
+		<property name="BP" type="Integer" />
+		<property name="SP" type="Integer" />
 		<property name="Ability" type="String" hidden="True" />
 		<property name="Ability Type" type="String" ignoreText="True" textKind="Enum" />
 		<property name="Ability Name" type="String" ignoreText="True" />
@@ -230,7 +238,7 @@
 				<groupaction menu="-X" shortcut="Ctrl+Shift+0" execute="minusSPX" />
 			</groupactions>
 		</groupactions>
-		<groupaction menu="Realign cards" shortcut="Ctrl+R" execute="alignCards" showIf="acsh_AutoPlayOff" />
+		<groupaction menu="Realign cards" shortcut="Ctrl+R" execute="alignCards" showIf="acsh_charsInArena" />
 		<groupaction menu="Clear cards" shortcut="esc" execute="clearAll" showIf="acsh_AutoPlayOff" />
 		<groupactions menu="Random..." showIf="acsh_AutoPlayOff">
 			<groupaction menu="Flip a coin" shortcut="Ctrl+Alt+2" execute="flipCoin" />
@@ -250,7 +258,7 @@
 			<groupseparator />
 			<groupaction menu="Play Tutorial" execute="startTutorial" />
 			<groupaction menu="Show Welcome Screen" execute="showWelcomeScreen" />
-			<groupaction menu="Download Image Packs" execute="downloadImagePacks" />
+			<groupaction menu="Download Image Packs &#129109;" execute="downloadImagePacks" />
 		</groupactions>
 		<groupactions menu="Debug..." showIf="acsh_Debug">
 			<groupaction menu="Setup" execute="setupDebug" />
@@ -269,7 +277,7 @@
 		</cardactions>
 		<cardactions menu="Move..." showIf="acsh_notUI">
 			<cardaction menu="KO" shortcut="Del" batchExecute="batchDestroy" getName="aclb_Destroy" />
-			<!-- <cardaction menu="Remove" shortcut="Shift+Del" execute="remove" /> -->
+			<cardaction menu="Remove from the game" shortcut="Shift+Del" execute="remove" showIf="acsh_AutoPlayOff" />
 			<cardaction menu="Return to Hand" shortcut="Ctrl+H" execute="toHand" />
 			<cardaction menu="Put into Deck (Top)" shortcut="Ctrl+D" execute="toDeckTop" />
 			<cardaction menu="Put into Deck (Bottom)" shortcut="Ctrl+Alt+D" execute="toDeckBottom" />
@@ -311,10 +319,11 @@
 		</cardactions>
 		<cardaction menu="Add markers..." shortcut="Ctrl+M" batchExecute="addMarkerAction" showIf="acsh_AutoPlayOff" />
 		<cardaction menu="Transform" shortcut="Ctrl+Shift+T" batchExecute="transformCards" showIf="acsh_AutoPlayOff" />
-		<cardaction menu="Realign card" shortcut="Ctrl+R" execute="alignCardAction" showIf="acsh_AutoPlayOff" />
 		<cardaction menu="Backup" shortcut="Ctrl+Alt+B" execute="askCardBackups" showIf="acsh_canBackup" />
 		<cardseparator />
 		<cardaction menu="Clear" shortcut="Esc" execute="clear" showIf="acsh_AutoPlayOff" />
+		<cardaction menu="Flip" shortcut="Ctrl+U" execute="flip" showIf="acsh_AutoPlayOff" />
+		<cardaction menu="Realign card" shortcut="Ctrl+R" execute="alignCardAction" showIf="acsh_isChar" />
 		<cardaction menu="&#x1f6c8; Card info" shortcut="Ctrl+I" execute="cardInfo" showIf="acsh_notUI" />
 	</table>
 
@@ -338,15 +347,16 @@
 			<cardaction menu="Play as backup" shortcut="Ctrl+B" execute="backup" showIf="acsh_isChar" />
 			<cardaction menu="Discard card" shortcut="Del" execute="discard" />
 			<cardactions menu="Move...">
-				<cardaction menu="Put into Arena face down" shortcut="Ctrl+F" execute="toTableFaceDown" />
+				<cardaction menu="Put into Arena face down" shortcut="Ctrl+Shift+F" execute="toTableFaceDown" />
 				<cardaction menu="Put into Deck (Top)" shortcut="Ctrl+D" execute="toDeckTop" />
 				<cardaction menu="Put into Deck (Bottom)" shortcut="Ctrl+Alt+D" execute="toDeckBottom" />
 				<cardaction menu="Shuffle into Deck" shortcut="Ctrl+S" batchExecute="shuffleIntoDeck" />
 			</cardactions>
 			<cardaction menu="Transform" shortcut="Ctrl+Shift+T" batchExecute="transformCards" showIf="acsh_AutoPlayOff" />
 			<cardseparator />
-			<cardaction menu="Show backups" shortcut="Ctrl+Alt+B" execute="askCardBackups" showIf="acsh_isChar" />
 			<cardaction menu="Clear" shortcut="Esc" execute="clear" showIf="acsh_AutoPlayOff" />
+			<cardaction menu="Flip" shortcut="Ctrl+U" execute="flip" showIf="acsh_AutoPlayOff" />
+			<cardaction menu="&#x1f6c8; Show backups" shortcut="Ctrl+Alt+B" execute="askCardBackups" showIf="acsh_isChar" />
 			<cardaction menu="&#x1f6c8; Card info" shortcut="Ctrl+I" execute="cardInfo" showIf="acsh_notUI" />
 		</group>
 		
@@ -369,10 +379,10 @@
 			</groupactions>
 			<cardaction menu="Put card into Hand" shortcut="Ctrl+H" execute="toHand" />
 			<cardaction menu="Put card into Discard pile" shortcut="Del" execute="discard" />
+			<cardaction menu="Flip" shortcut="Ctrl+U" execute="flip" showIf="acsh_AutoPlayOff" />
 		</group>
 		
 		<group name="Discard pile" visibility="all" viewState="pile" icon="Resources/Groups/discards.png">
-			<!-- <groupaction menu="Shuffle" shortcut="Ctrl+S" execute="shuffle" /> -->
 			<groupactions menu="Shuffle into Deck...">
 				<groupaction menu="All cards" shortcut="Ctrl+Shift+S" execute="reshuffle" />
 				<groupaction menu="All Character cards" execute="reshuffleCHA" />

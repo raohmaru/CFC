@@ -1,5 +1,5 @@
 # Python Scripts for the Card Fighters' Clash definition for OCTGN
-# Copyright (C) 2013  Raohmaru
+# Copyright (C) 2013 Raohmaru
 
 # This python script is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -12,65 +12,71 @@
 # GNU General Public License for more details.
 
 # You should have received a copy of the GNU General Public License
-# along with this script.  If not, see <http://www.gnu.org/licenses/>.
+# along with this script. If not, see <http://www.gnu.org/licenses/>.
+
+#---------------------------------------------------------------------------
+
+# Functions in this file correspond to the actions the player can execute, defined in definition.xml.
 
 import re
 
 #---------------------------------------------------------------------------
-# Phases
+# Phase actions
 #---------------------------------------------------------------------------
 
-def nextPhase(fromKeyStroke = True, x=0, y=0):
-   global phaseOngoing
-   if fromKeyStroke and phaseOngoing and settings['Play'] and me.isActive:
+def nextPhase(fromKeyStroke = True, x = 0, y = 0):
+   global phaseOngoing, turnsRemaining
+   if fromKeyStroke and phaseOngoing and settings["PlayAuto"] and me.isActive:
       return
       
-   phaseIdx = currentPhase()[1]
+   phaseIdx = getCurrentPhase()
       
+   # If playing the tutorial we go to the next tutorial phase instead
    if tutorial and tutorial.validate == phaseIdx and fromKeyStroke:
       tutorial.goNext()
       return
    
-   # if me.isActive:
-   if getState(None, 'activePlayer') == me._id:
-      if phaseIdx == BlockPhase and getState(None, 'priority') != me._id:
-         whisper('You cannot go to the next phase until {} is done.'.format(getOpp()))
-         playSnd('win-warning', True)
+   # If I am the active player
+   if getState(None, "activePlayer") == me._id:
+      # Opp has the priority, we cannot advance
+      if phaseIdx == BlockPhase and getState(None, "priority") != me._id:
+         whisper(MSG_PHASE_LOCK.format(getOpp()))
+         playSnd("win-warning", True)
          return
       # Priority back to me
-      if getState(None, 'priority') != me._id:
-         setState(None, 'priority', me._id)
-      
-      global turns
+      if getState(None, "priority") != me._id:
+         setState(None, "priority", me._id)
+      # We reached the last phase
       if phaseIdx >= CleanupPhase:
-         turns -= 1
-         if turns <= 0:
-            setState(None, 'activePlayer', getOpp()._id)
+         turnsRemaining -= 1
+         if turnsRemaining <= 0:
+            setState(None, "activePlayer", getOpp()._id)
             nextTurn(getOpp())
          else:
             notify("{} takes another turn".format(me))
-            setState(None, 'activePlayer', me._id)
+            setState(None, "activePlayer", me._id)
             nextTurn(me)
          return
       else:
          phaseIdx += 1
+      
       setPhase(phaseIdx)
       phaseOngoing = True
-   elif phaseIdx == BlockPhase and getState(None, 'priority') == me._id:
+   # If I am the active player but is the Block phase
+   elif phaseIdx == BlockPhase and getState(None, "priority") == me._id:
       setStop(BlockPhase, False)
       # Pass priority to opponent
-      setState(None, 'priority', getOpp()._id)
-      notify(MSG_PHASE_DONE.format(me, Phases[phaseIdx], getOpp()))
-      notification(MSG_PHASE_DONE.format(me, Phases[phaseIdx], 'you'), player = getOpp())
-      removeButton('NextButton')
-      # remoteCall(players[1], 'addButton', ['NextButton'])
-      remoteCall(players[1], 'nextPhase', [False])
-      playSnd('notification')
+      setState(None, "priority", getOpp()._id)
+      notify(MSG_PHASE_DONE.format(me, PhaseNames[phaseIdx], getOpp()))
+      notification(MSG_PHASE_DONE.format(me, PhaseNames[phaseIdx], "you"), player = getOpp())
+      removeButton("NextButton")
+      remoteCall(players[1], "nextPhase", [False])
+      playSnd("notification")
       
       
-def prevPhase(group = table, x=0, y=0):
+def prevPhase(group = table, x = 0, y = 0):
    if me.isActive:
-      phaseIdx = currentPhase()[1]
+      phaseIdx = getCurrentPhase()
       if phaseIdx > 1:
          setPhase(phaseIdx-1)
 
@@ -79,31 +85,31 @@ def gotoPhase(idx, oldIdx = 0):
    triggerPhaseEvent(idx, oldIdx)
 
 
-def gotoActivate(group = table, x=0, y=0):
+def gotoActivate(group = table, x = 0, y = 0):
    setPhase(ActivatePhase)
 
 
-def gotoDraw(group = table, x=0, y=0):
+def gotoDraw(group = table, x = 0, y = 0):
    setPhase(DrawPhase)
 
 
-def gotoMain(group = table, x=0, y=0):
+def gotoMain(group = table, x = 0, y = 0):
    setPhase(MainPhase)
 
 
-def gotoAttack(group = table, x=0, y=0):
+def gotoAttack(group = table, x = 0, y = 0):
    setPhase(AttackPhase)
 
 
-def gotoCounterattack(group = table, x=0, y=0):
+def gotoCounterattack(group = table, x = 0, y = 0):
    setPhase(BlockPhase)
 
 
-def gotoEnd(group = table, x=0, y=0):
+def gotoEnd(group = table, x = 0, y = 0):
    setPhase(EndPhase)
 
 
-def gotoCleanup(group = table, x=0, y=0, silent = False):
+def gotoCleanup(group = table, x = 0, y = 0, silent = False):
    setPhase(CleanupPhase)
 
 
@@ -111,65 +117,62 @@ def gotoCleanup(group = table, x=0, y=0, silent = False):
 # Table group actions
 #---------------------------------------------------------------------------
 
-def setup(group = table, x=0, y=0, silent = False):
-# This function is usually the first one the player does
+def setup(group = table, x = 0, y = 0):
+   """
+   Game setup. It should be the first function to invoke to start a game.
+   """
    debug(">>> setup()")
-   mute()
-   # if not silent:
-      # if not confirm("Are you sure you want to setup for a new game?"):
-         # return
    chooseSide()
    # We ensure that player has loaded a deck
    if len(me.Deck) == 0:
-      warning("Please load a deck first.")
+      warning(MSG_ACTION_LOAD_DECK)
       return
    _extapi.notify(MSG_PHASES[SetupPhase].format(me), Colors.LightBlue, True)
    me.Deck.shuffle()
    notify("{} shuffles their deck.".format(me))
-   refill() # We fill the player's play hand to their hand size
+   refillHand() # We fill the player's hand to their hand size
    notify("Setup for player {} completed.".format(me))
-   # Start the turn of the first player to do the setup
-   # if settings['Play'] and not getActivePlayer():
-      # me.setActive()
 
 
-def restart(group=None, x=0, y=0):
-# Reset the game
+def restart(isRemote = False, x = 0, y = 0):
    debug(">>> reset()")
-   mute()
-   if group != None and not confirm("Are you sure you want to restart the game?"):
+   if not isRemote and not confirm("Are you sure you want to restart the game?"):
       return
    resetAll()
+   # Get all my cards in the table
    myCards = (card for card in table
-      if card.controller == me
-      and not isUI(card))
+      if card.controller == me and not isUI(card))
    toOwnerDeck(myCards)
    toOwnerDeck(me.Deck)
    toOwnerDeck(me.hand)
-   toOwnerDeck(me.piles['Discard pile'])
-   toOwnerDeck(me.piles['Removed pile'])
-   rnd(100, 10000) # Delays the next action until all animation is done
+   toOwnerDeck(me.piles["Discard pile"])
+   toOwnerDeck(me.piles["Removed pile"])
+   waitForAnimation()
    setup()
    notify("{} restarts the game.".format(me))
-   if group != None and len(players) > 1:
-      remoteCall(players[1], 'restart', [])
+   if not isRemote and len(players) > 1:
+      remoteCall(players[1], "restart", [])
 
 
-def flipCoin(group = None, x=0, y=0):
-   mute()
-   sides = ['Heads','Tails']
+def flipCoin(group = None, x = 0, y = 0):
+   sides = ["Heads", "Tails"]
    notify("{} flips a coin...".format(me))
    choice = askChoice("Call heads or tails", sides)
-   if choice == 0:
-      choice = 1
-   notify("{} has choosen {}".format(me, sides[choice-1]))
-   n = rnd(1, 2)
+   # askChoice() returns 0 if the window is closed
+   choice = choice - 1
+   if choice == -1:
+      choice = 0
+   notify("{} has choosen {}".format(me, sides[choice]))
+   n = rnd(0, 1)
    wins = n == choice
-   notify(u" \u2192 flips {} ({}).".format(sides[n-1], ('loses', 'wins')[wins]))
+   notify(u"\u2192 flips {} ({}).".format(sides[n], ("loses", "wins")[wins]))
    return wins
 
 
-def randomPick(group, x=0, y=0, fromPlayer = None):
+def randomPick(group, x = 0, y = 0, fromPlayer = None):
+   """
+   Randomly picks a card from the given group.
+   """
    mute()
    card = None
    player = fromPlayer if fromPlayer != None else me
@@ -193,67 +196,76 @@ def randomPick(group, x=0, y=0, fromPlayer = None):
       notify("{} randomly selects {} from their {}.".format(me, card, group.name))
 
 
-def randomPickMine(group, x=0, y=0):
+def randomPickMine(group, x = 0, y = 0):
    randomPick(group, fromPlayer = me)
 
 
-def randomPickEnemy(group, x=0, y=0):
+def randomPickEnemy(group, x = 0, y = 0):
    if len(players) > 1:
       randomPick(group, fromPlayer = players[1])
 
 
-def clearAll(group = None, x=0, y=0):
-   notify("{} clears all targets and highlights.".format(me))
-   for card in table:
-      if card.controller == me:
-         clear(card, group)
+def clearAll(group = None, x = 0, y = 0):
+   """
+   Clear selections on all cards
+   """
+   notify("{} clears all selections, targets and highlights.".format(me))
+   for card in getCards(table, me):
+      clear(card)
    clearSelection()
 
 
-def alignCards(group = None, x=0, y=0):
+def alignCards(group = None, x = 0, y = 0):
+   """
+   Arranges cards in the table according to the grid.
+   """
    for card in getRing():
       alignCard(card)
 
 
-def switchPlayAuto(group, x=0, y=0):
-   switchSetting('Play')
+def switchPlayAuto(group, x = 0, y = 0):
+   switchSetting("PlayAuto")
 
 
-def switchPhaseAuto(group, x=0, y=0):
-   switchSetting('Phase')
+def switchPhaseAuto(group, x = 0, y = 0):
+   switchSetting("PhaseAuto")
 
 
-def switchActivateAuto(group, x=0, y=0):
-   switchSetting('Activate')
+def switchActivateAuto(group, x = 0, y = 0):
+   switchSetting("Activate")
 
 
-def switchWinForms(group, x=0, y=0):
-   switchSetting('WinForms')
+def switchWinForms(group, x = 0, y = 0):
+   switchSetting("WinForms")
    
    
-def switchSounds(group, x=0, y=0):
-   switchSetting('Sounds')
-   # Udpate OCTGN preferences
-   Octgn.Core.Prefs.EnableGameSound = settings['Sounds']
+def switchSounds(group, x = 0, y = 0):
+   switchSetting("Sounds")
+   # Udpates OCTGN preferences
+   Octgn.Core.Prefs.EnableGameSound = settings["Sounds"]
    
    
-def switchWelcomeScreen(group, x=0, y=0):
-   switchSetting('WelcomeScreen')
+def switchWelcomeScreen(group, x = 0, y = 0):
+   switchSetting("WelcomeScreen")
 
 
 #---------------------------------------------------------------------------
 # Table card actions
 #---------------------------------------------------------------------------
 
-def defaultAction(card, x=0, y=0):
-   phaseIdx = currentPhase()[1]
+def defaultAction(card, x = 0, y = 0):
+   """
+   Changes the action of the first item of the contextual menu (which is also activated with double click)
+   depending on the context.
+   """
+   phaseIdx = getCurrentPhase()
    # Button
    if isButton(card):
       buttonAction(card)
    # Avatar
    elif isAvatar(card):
       avatarAction(card)
-   # Char Attack
+   # Char attack
    elif me.isActive and phaseIdx == AttackPhase and isCharacter(card):
       attack(card)
    # Char block
@@ -267,94 +279,98 @@ def defaultAction(card, x=0, y=0):
       activate(card)
 
 
-def attack(card, x=0, y=0):
-   mute()
-   if settings['Play']:
-      if not attackAuto(card): return
+def attack(card, x = 0, y = 0):
+   if settings["PlayAuto"]:
+      if not attackAuto(card):
+         return
    card.highlight = AttackColor
-   playSnd('attack-1')
-   notify('{} attacks with {}'.format(me, card))
+   playSnd("attack-1")
+   notify(MSG_ACTION_ATTACK.format(me, card))
 
 
-def attackNoFreeze(card, x=0, y=0):
-   mute()
-   if settings['Play']:
-      if not attackAuto(card): return
+def attackNoFreeze(card, x = 0, y = 0):
+   if settings["PlayAuto"]:
+      if not attackAuto(card):
+         return
    card.highlight = AttackNoFreezeColor
-   setMarker(card, 'Unfreezable')
-   playSnd('attack-1')
-   notify('{} attacks with {} (character will not freeze).'.format(me, card))
+   setMarker(card, "Unfreezable")
+   playSnd("attack-1")
+   notify(MSG_ACTION_ATTACK_NOFREEZE.format(me, card))
 
 
-def unitedAttack(card, x=0, y=0, targets = None):
+def unitedAttack(card, x = 0, y = 0, targets = None):
    debug(">>> unitedAttack()")
-   mute()
    cardsnames = card
-   if settings['Play']:
+   if settings["PlayAuto"]:
       target = unitedAttackAuto(card, targets)
       if target:
-         cardsnames = '{} and {}'.format(card, target)
+         cardsnames = "{} and {}".format(card, target)
       else:
          return
    card.highlight = UnitedAttackColor
-   playSnd('attack-2')
-   notify('{} does an United Attack with {}.'.format(me, cardsnames))
+   playSnd("attack-2")
+   notify("{} does an United Attack with {}.".format(me, cardsnames))
 
 
-def block(card, x=0, y=0, targets = None):
-   mute()
-   text = 'with {}'.format(card)
-   if settings['Play']:
+def block(card, x = 0, y = 0, targets = None):
+   withChar = "with {}".format(card)
+   if settings["PlayAuto"]:
       target = blockAuto(card, targets)
       if target:
-         text = '{} '.format(target) + text
+         withChar = "{} ".format(target) + withChar
       else:
+         notify("{} cannot counter-attack due to an ability or effect.".format(card))
          return
    card.highlight = BlockColor
-   playSnd('block')
-   notify('{} counter-attacks {}'.format(me, text))
+   playSnd("block")
+   notify("{} counter-attacks {}.".format(me, withChar))
 
 
-def activate(card, x=0, y=0):
+def activate(card, x = 0, y = 0):
    debug(">>> activate()")
    mute()
-   if card.highlight == ActivatedColor and not settings['Play']:
+   # Action can toggle the activated state when play automations are off
+   if card.highlight == ActivatedColor and not settings["PlayAuto"]:
       card.highlight = None
       card.target(None)
       notify("{} deactivates {}.".format(me, card))
       return
-   ability = "effect"
-   pcard = getParsedCard(card)
+   pcard = getGameCard(card)
    if not pcard.hasEffect():
-      whisper("{} has no ability to activate".format(card))
+      whisper("{} has no ability to activate.".format(card))
       return
+   ability = "effect"
    if isCharacter(card):
       ability = "ability {}".format(pcard.ability)
    notify("{} tries to activate {}'s {}.".format(me, card, ability))
-   if settings['Play']:
+   if settings["PlayAuto"]:
       res = activateAuto(card)
+      # Nothing happened
       if not res or res != True:
          if res == ERR_NO_EFFECT:
             notify("{}'s {} has no effect.".format(card, ability))
-            playSnd('cancel-2')
+            playSnd("cancel-2")
          if (isCharacter(card) and pcard.ability.type == TriggerAbility) or res != ERR_NO_EFFECT:
             return
+   # Freeze char if it's a triggered ability
    elif isCharacter(card) and pcard.ability.type == TriggerAbility:
       freeze(card, silent = True)
+   # Apply highlight
    if card.group == table:
-      willHighlight = pcard.getState('highlight')
-      if willHighlight != False:
+      if pcard.getState("willHighlight") == True:
          card.highlight = ActivatedColor
-      if willHighlight != None:
-         pcard.setState('highlight', None)
+         pcard.setState("willHighlight", True)
    if isCharacter(card):
-      playSnd('activate-1')
+      playSnd("activate-1")
    else:
-      playSnd('activate-2')
+      playSnd("activate-2")
    notify("{} has activated {}'s {}.".format(me, card, ability))
 
 
-def freeze(card, x=0, y=0, unfreeze = None, silent = False):
+def freeze(card, x = 0, y = 0, unfreeze = None, silent = False):
+   """
+   Rotates (taps or untaps) a card.
+   """
    mute()
    if card.group != table:
       return
@@ -362,105 +378,110 @@ def freeze(card, x=0, y=0, unfreeze = None, silent = False):
    if unfreeze != None:
       card.orientation = Rot0 if unfreeze else Rot90
    else:
+      # Toggle rotation
       card.orientation ^= Rot90
    if card.orientation != initialRot:
       if not silent:
-         notify('{} {}freezes {}'.format(me, ('un', '')[isFrozen(card)], card))
-      playSnd(('untap','tap')[isFrozen(card)])
+         notify("{} {}freezes {}".format(me, ("un", "")[isFrozen(card)], card))
+      playSnd(("untap", "tap")[isFrozen(card)])
    if not isFrozen(card) and card.highlight == ActivatedColor:
-      card.highlight = None
-      card.target(None)
+      clear(card)
 
 
-def doesNotUnfreeze(card, x=0, y=0, restr = None):
-   debug("doesNotUnfreeze({}, {}, {}, {})".format(card, x, y, restr))
+def doesNotUnfreeze(card, restr = None):
+   """
+   Card does not unfreeze (untap) normally.
+   """
    mute()
+   debug("doesNotUnfreeze({}, {})".format(card, restr))
    msg = "not unfreeze"
-   when = ''
-   if not hasMarker(card, 'Cannot Unfreeze'):
+   when = ""
+   if not hasMarker(card, "Cannot Unfreeze"):
       setMarker(card, "Cannot Unfreeze")
-      if restr:
-         when = 'next '
+      if restr:  # Time restrictions
+         when = "next "
    else:
       removeMarker(card, "Cannot Unfreeze")
       msg = "unfreeze as normal"
-
    notify("{0}'s {1} will {2} in {0}'s {3}Activate phase.".format(card.controller, card, msg, when))
 
 
-def clear(card, x=0, y=0):
+def clear(card, x = 0, y = 0):
    card.target(False)
    card.highlight = None
+   card.select(False)
 
 
-def alignCardAction(card, x=0, y=0):
+def alignCardAction(card, x = 0, y = 0):
    if isCharacter(card):
       slotIdx = getSlotIdx(card)
       if slotIdx != -1:
-         alignCard(card, slotIdx=slotIdx)
+         alignCard(card, slotIdx = slotIdx)
       else:
-         backups = getGlobalVar('Backups')
+         backups = getGlobalVar("Backups")
          if backups.get(card._id):
             c = Card(backups[card._id])
             alignBackups(c, *c.position)
 
 
-def askCardBackups(card, x=0, y=0):
-   if isCharacter(card):
-      acceptedBackups = getAcceptedBackups(card)
-      inRing = charIsInRing(card)
-      charsBackup = []
-      msg = "{} can be backed-up with the following character types:\n  - {}".format(card.Name, '\n  - '.join(filter(None, acceptedBackups)))
-      # Check remaining backups
-      avlBackups = list(acceptedBackups) # Copy array
-      backups = getGlobalVar('Backups')
-      for id in backups:
-         if backups[id] == card._id:
-            avlBackups.remove(Card(id).Subtype)
-      # Candidates to back-up in the hand
-      for c in me.hand:
-         if isCharacter(c):
-            if c != card and c.Subtype in avlBackups:
-               charsBackup.append(c)
-      # Backup char if it is in the ring
-      if inRing:
-         if len(avlBackups) > 0:
-            msg += "\n\nRemaining backups: {}/{} ({}).".format(len(avlBackups), len(acceptedBackups), ', '.join(avlBackups))
-            if len(charsBackup) > 0:
-               if not canBackup(card):
-                  return
-               targets = showCardDlg(charsBackup, 'Select a character card from your hand to back-up {}'.format(card.Name))
-               if targets:
-                  if backup(targets[0], target=card):
-                     return
-            else:
-               msg = "You don't have compatible character cards in your hand to backup {}.\n\n".format(card.Name) + msg
-         else:
-            information("{} cannot be backed-up, maximum number of back-ups ({}) reached for this character.".format(card.Name, len(acceptedBackups)))
-            return
-      # Asked for back-up info
-      if len(avlBackups) > 0 and len(charsBackup) > 0:
-         msg += "\n\nCompatible cards in your hand: {}.".format(cardsNamesStr(charsBackup))
-      whisper(msg)
-      if not inRing or len(charsBackup) == 0:
-         information(msg)
-   else:
+def askCardBackups(card, x = 0, y = 0):
+   if not isCharacter(card):
       information("Only character cards can be backed-up.")
+      return
+   acceptedBackups = getAcceptedBackups(card)
+   inRing = charIsInRing(card)
+   avlCharsForBackup = []
+   msg = "{} can be backed-up with the following character types:\n  - {}".format(card.Name, "\n  - ".join(filter(None, acceptedBackups)))
+   # Check remaining backups
+   avlBackups = list(acceptedBackups) # Copy array
+   backups = getGlobalVar("Backups")
+   for id in backups:
+      # Remove the backups the card already has
+      if backups[id] == card._id:
+         avlBackups.remove(Card(id).Subtype)
+   # Candidates to back-up from the hand
+   for c in me.hand:
+      if isCharacter(c):
+         if c != card and c.Subtype in avlBackups:
+            avlCharsForBackup.append(c)
+   # Backup char if it is in the ring
+   if inRing:
+      if len(avlBackups) > 0:
+         msg += "\n\nRemaining backups: {}/{} ({}).".format(len(avlBackups), len(acceptedBackups), ", ".join(avlBackups))
+         if len(avlCharsForBackup) > 0:
+            if not canBackup(card):
+               return
+            targets = showCardDlg(avlCharsForBackup, "Select a character card from your hand to back-up {}".format(card.Name))
+            if targets:
+               if backup(targets[0], target = card):
+                  return
+         else:
+            msg = "You don't have compatible character cards in your hand to back-up {}.".format(card.Name) + "\n\n" + msg
+            whisper(msg)
+            information(msg)
+            return
+      else:
+         warning("{} cannot be backed-up, maximum number of back-ups ({}) reached for this character.".format(card.Name, len(acceptedBackups)))
+         return
+   # Asked for back-up info
+   if len(avlBackups) > 0 and len(avlCharsForBackup) > 0:
+      msg += "\n\nCompatible cards in your hand: {}.".format(cardsToNamesStr(avlCharsForBackup))
+   whisper(msg)
+   if not inRing or len(avlCharsForBackup) == 0:
+      information(msg)
 
 
-def transformCards(cards, x=0, y=0):
-   mute()
+def transformCards(cards, x = 0, y = 0):
+   """
+   Transform a card into another card.
+   """
    cardModel = None
-   targets =  [c for c in table   if c.targetedBy == me]
-   targets += [c for c in me.hand if c.targetedBy == me]
-   targets += [c for c in me.piles['Discard pile'] if c.targetedBy == me]
-   if len(players) > 1:
-      targets += [c for c in players[1].piles['Discard pile'] if c.targetedBy == me]
+   targets = getAllTargetedCards()
    if len(targets) > 0:
       cardModel = targets[0].model
    else:
       cardtype = cards[0].Type
-      card, quantity = askCard({"Type":cardtype}, "and", "Target character will be transformed into choosen card.")
+      card, quantity = askCard({"Type": cardtype}, "and", "Target character will be transformed into chosen card.")
       if quantity > 0:
          cardModel = card
    if cardModel:
@@ -469,56 +490,60 @@ def transformCards(cards, x=0, y=0):
       for target in targets:
          target.target(False)
 
-         
-def toggleAbility(card, x=0, y=0, remove = False):
-   mute()
-   if not isCharacter(card) or (card.alternate == '' and card.Rules == ''):
+
+def toggleAbility(card, x = 0, y = 0, remove = False):
+   """
+   Removes or restores the ability of a character.
+   """
+   if not isCharacter(card) or (card.alternate == "" and card.Rules == ""):
       return
    # Restores ability
-   if card.alternate == 'noability' and not remove:
-      card.alternate = ''
+   if card.alternate == "noability" and not remove:
+      card.alternate = ""  # Revert to default form
       # Removes card from parsed list to parse it again with the new abilities
       for p in players:
-         funcCall(p, removeParsedCard, [card])
-      funcCall(card.controller, parseCard, [card])
-      if card.Rules != '':
-         notify("{} restores {}'s abilities".format(me, card))
+         funcCall(p, deleteGameCard, [card])
+      funcCall(card.controller, createGameCard, [card, None, True, False, True])
+      if card.Rules != "":
+         notify("{} restores {}'s abilities.".format(me, card))
       else:
-         notify("{} tried to restore {}'s abilities, but it doesn't have any original ability".format(me, card))
+         notify("{} tried to restore {}'s abilities, but it doesn't have any original ability.".format(me, card))
    # Removes ability
    else:
-      triggerGameEvent([GameEvents.Powerless, card._id])
+      dispatchEvent(GameEvents.Powerless, card._id)
       for p in players:
-         funcCall(p, removeParsedCard, [card])
-      CharsAbilities = getGlobalVar('CharsAbilities')
+         funcCall(p, deleteGameCard, [card])
+       # Remove the ability from the dict that holds the state of the modified abilities
+      CharsAbilities = getGlobalVar("CharsAbilities")
       if card._id in CharsAbilities:
          del CharsAbilities[card._id]
-      setGlobalVar('CharsAbilities', CharsAbilities)
-      if 'Model' in card.properties:
-         card.properties['Model'] = None
-      if 'noability' in card.alternates:
-         card.alternate = 'noability'
+      setGlobalVar("CharsAbilities", CharsAbilities)
+      if "Model" in card.properties:
+         card.properties["Model"] = None
+      # Ability was already removed
+      if "noability" in card.alternates:
+         card.alternate = "noability"
       else:
          # Updates proxy image for all players
          for p in players:
-            funcCall(p, addAlternateRules, [card, '', '', 'noability'])
+            funcCall(p, addAlternateRules, [card, "", "", "noability"])
       notify("{} removes {}'s abilities".format(me, card))
 
 
-def copyAbility(card, x=0, y=0, target = None):
+def copyAbility(card, x = 0, y = 0, target = None):
+   """
+   Copies an ability from one target card to another card.
+   """
    debug(">>> copyAbility({}, {})".format(card, target))
-   mute()
    if not isCharacter(card):
-      warning('Abilities can only be copied to character cards.')
+      warning("Abilities can only be copied to character cards.")
       return
    if target == None:
-      targets =  [c for c in table   if c.targetedBy == me]
-      targets += [c for c in me.hand if c.targetedBy == me]
-      targets += [c for c in me.piles['Discard pile'] if c.targetedBy == me]
+      targets = getAllTargetedCards()
       if len(targets) > 0 and isCharacter(targets[0]) and targets[0] != card:
          target = targets[0]
       else:
-         choice = askChoice('From where do you want to copy an ability?', ['Arena', 'Hand', 'My discard pile'])
+         choice = askChoice("From where do you want to copy an ability?", ["Arena", "Hand", "My Discard pile"])
          if choice == 0:
             return
          if choice == 1:
@@ -526,12 +551,12 @@ def copyAbility(card, x=0, y=0, target = None):
          elif choice == 2:
             pile = me.hand
          else:
-            pile = me.piles['Discard pile']
+            pile = me.piles["Discard pile"]
          cards = [c for c in pile
                   if c.Rules != ""
                   and isCharacter(c)
                   and c != card]
-         choosenCards = showCardDlg(cards, 'Choose a character with an ability to copy')
+         choosenCards = showCardDlg(cards, "Choose a character with an ability to copy")
          if choosenCards:
             target = choosenCards[0]
          else:
@@ -539,14 +564,16 @@ def copyAbility(card, x=0, y=0, target = None):
    if target:
       result = copyAlternateRules(card, target)
       if result:
-         CharsAbilities = getGlobalVar('CharsAbilities')
+         CharsAbilities = getGlobalVar("CharsAbilities")
          model = target.model
+         # target can be a Struct
          if isinstance(target, Card):
             if target._id in CharsAbilities:
                model = CharsAbilities[target._id]
+         # Updates the dict that holds the state of the modified abilities
          CharsAbilities[card._id] = model
-         setGlobalVar('CharsAbilities', CharsAbilities)
-         triggerGameEvent([GameEvents.Powerless, card._id])
+         setGlobalVar("CharsAbilities", CharsAbilities)
+         dispatchEvent(GameEvents.Powerless, card._id)
          # Updates proxy image for the other players
          if len(players) > 1:
             for p in players:
@@ -554,9 +581,9 @@ def copyAbility(card, x=0, y=0, target = None):
                   remoteCall(p, "copyAlternateRules", [card, target])
          update()  # Trying this method to delay next actions until networked tasks are complete
          for p in players:
-            funcCall(p, removeParsedCard, [card])
-         funcCall(card.controller, parseCard, [card, model])
-         if target.Ability.split(' ')[0] != InstantAbility:
+            funcCall(p, deleteGameCard, [card])
+         funcCall(card.controller, createGameCard, [card, model, True, False, True])
+         if target.Ability.split(" ")[0] != InstantAbility:
             if card.highlight == ActivatedColor:
                card.highlight = None
          notify("{} copies ability {} to {}.".format(me, target.Ability, card))
@@ -568,9 +595,11 @@ def copyAbility(card, x=0, y=0, target = None):
    debug("<<< copyAbility()")
 
 
-def swapAbilities(card, x=0, y=0, target = None):
+def swapAbilities(card, x = 0, y = 0, target = None):
+   """
+   Swap the abilities between two characters.
+   """
    debug(">>> swapAbilities({}, {})".format(card, target))
-   mute()
    if not isCharacter(card) or not charIsInRing(card, card.controller) or not card.Rules:
       whisper("Abilities can only be swapped between character cards with abilities in the arena.")
       return
@@ -583,11 +612,12 @@ def swapAbilities(card, x=0, y=0, target = None):
             return
       target = targets[0]
    model = card.model
-   CharsAbilities = getGlobalVar('CharsAbilities')
+   CharsAbilities = getGlobalVar("CharsAbilities")
+   # Shallow copy of the card
    card_copy = Struct(**{
-      'Rules'  : card.Rules,
-      'Ability': card.Ability,
-      'model'  : CharsAbilities[card._id] if card._id in CharsAbilities else card.model
+      "Rules"  : card.Rules,
+      "Ability": card.Ability,
+      "model"  : CharsAbilities[card._id] if card._id in CharsAbilities else card.model
    })
    copyAbility(card,   target = target)
    copyAbility(target, target = card_copy)
@@ -595,67 +625,88 @@ def swapAbilities(card, x=0, y=0, target = None):
    notify("{} has swapped abilities between {} and {}".format(me, card, target))
       
       
-def stealAbility(card, x=0, y=0, target = None):
+def stealAbility(card, x = 0, y = 0, target = None):
+   """
+   Copies the ability from one card to another and removes the ability of the first.
+   """
    target = copyAbility(card, target = target)
    if target:
-      ability = getParsedCard(target).ability.name
-      toggleAbility(target, remove=True)
+      ability = getGameCard(target).ability.name
+      toggleAbility(target, remove = True)
       notify("{} steals ability {} from {} and gives it to {}.".format(me, ability, target, card))
 
-   
+
+def flip(card, x = 0, y = 0):
+   """
+   Flips a card so it is face down or face up.
+   """
+   mute()
+   faceUp = card.isFaceUp
+   card.isFaceUp = True
+   notify("{} flips {} face {}.".format(me, card, ("up", "down")[faceUp]))
+   card.isFaceUp = not faceUp
+
+
 #---------------------------------------------------------------------------
-# Movement actions
+# Card movement actions
 #---------------------------------------------------------------------------
 
-def destroy(card, controller=me):
+def destroy(card, controller = me):
+   """
+   Puts a card in the discards pile.
+   """
    mute()
    # Do not delete UI elements (they are cards after all)
    if isUI(card) and not debugging:
       return
    fromText = fromWhereStr(card.group)
    action = "discards"
-   card.moveTo(me.piles['Discard pile'])
+   card.moveTo(me.piles["Discard pile"])
    if isCharacter(card):
       action = "KOs"
-      playSnd('ko-1')
+      playSnd("ko-1")
    else:
-      playSnd('ko-2')
+      playSnd("ko-2")
+   # Restore rotation or it will go to the pile rotated
    if card.orientation != Rot0:
       card.orientation = Rot0
    notify("{} {} {} {}.".format(controller, action, card, fromText))
 
 
-def batchDestroy(cards, x=0, y=0):
+def batchDestroy(cards, x = 0, y = 0):
    if len(cards) == 1:
       msg = "Do you want to KO {}?".format(cards[0].Name)
    else:
       msg = "Do you want to KO these {} cards?".format(len(cards))
-   # Ask for confirmation if user uses a shortcut command
-   if not settings['WinForms'] or confirm(msg):
+   # Ask for confirmation if user uses a keyboard shortcut
+   if not settings["WinForms"] or confirm(msg):
       for card in cards:
          destroy(card)
       
 
-def remove(card, x=0, y=0):
+def remove(card, x = 0, y = 0):
    mute()
+   """
+   Puts a card in the Removed pile.
+   """
    fromText = fromWhereStr(card.group)
-   card.moveTo(me.piles['Removed pile'])
+   card.moveTo(me.piles["Removed pile"])
    notify("{} removes {} {}.".format(me, card, fromText))
 
 
-def toHand(card, x=0, y=0):
+def toHand(card, x = 0, y = 0):
    mute()
    src = card.group
    fromText = fromWhereStr(card.group)
    cardname = revealDrawnCard(card)
    card.moveTo(me.hand)
    if src == table:
-      notify("{} returns {} to its hand {}.".format(me, cardname, fromText))
+      notify("{} returns {} to its Hand {}.".format(me, cardname, fromText))
    else:
-      notify("{} puts {} in its hand {}.".format(me, cardname, fromText))
+      notify("{} puts {} in its Hand {}.".format(me, cardname, fromText))
 
 
-def toDeckTop(card, x=0, y=0):
+def toDeckTop(card, x = 0, y = 0):
    mute()
    fromText = fromWhereStr(card.group)
    cardname = revealDrawnCard(card, faceUp = False)
@@ -663,37 +714,40 @@ def toDeckTop(card, x=0, y=0):
    notify("{} puts {} {} on the top of its Deck.".format(me, cardname, fromText))
 
 
-def toDeckBottom(card, x=0, y=0):
+def toDeckBottom(card, x = 0, y = 0):
    mute()
    fromText = fromWhereStr(card.group)
    card.moveToBottom(me.Deck)
    notify("{} puts {} {} on the bottom of its Deck.".format(me, card, fromText))
 
 
-def toHandAll(group, x=0, y=0):
+def toHandAll(group, x = 0, y = 0):
    mute()
    for card in group:
       card.moveTo(me.hand)
-   if len(players) > 1: rnd(1, 100) # Wait a bit more, as in multiplayer games, things are slower.
-   notify("{} moves all cards from their {} to its hand.".format(me, group.name))
+   if len(players) > 1:
+      waitForAnimation()
+   notify(MSG_ACTION_MOVE_ALL_CARDS.format(me, group.name, "its Hand"))
 
 
-def toDeckTopAll(group, x=0, y=0):
+def toDeckTopAll(group, x = 0, y = 0):
    mute()
    Deck = me.Deck
    for card in group:
       card.moveTo(Deck)
-   if len(players) > 1: rnd(1, 100) # Wait a bit more, as in multiplayer games, things are slower.
-   notify("{} moves all cards from their {} to the top of its Deck.".format(me, group.name))
+   if len(players) > 1:
+      waitForAnimation()
+   notify(MSG_ACTION_MOVE_ALL_CARDS.format(me, group.name, "the top of its Deck"))
 
 
-def toDeckBottomAll(group, x=0, y=0):
+def toDeckBottomAll(group, x = 0, y = 0):
    mute()
    Deck = me.Deck
    for card in group:
       card.moveToBottom(Deck)
-   if len(players) > 1: rnd(1, 100) # Wait a bit more, as in multiplayer games, things are slower.
-   notify("{} moves all cards from their {} to the bottom of its Deck.".format(me, group.name))
+   if len(players) > 1:
+      waitForAnimation()
+   notify(MSG_ACTION_MOVE_ALL_CARDS.format(me, group.name, "the bottom of its Deck"))
 
 
 def toOwnerDeck(cards):
@@ -701,41 +755,46 @@ def toOwnerDeck(cards):
       card.moveTo(card.owner.Deck)
 
 
-def shuffleIntoDeck(cards, x=0, y=0):
+def shuffleIntoDeck(group, x = 0, y = 0):
    mute()
-   for card in cards:
+   for card in group:
       toDeckTop(card)
-   rnd(100, 10000) # Bug 105 workaround. This delays the next action until all animation is done.
+   waitForAnimation()
    shuffle(me.Deck)
 
 
-def discardAll(group, x=0, y=0):
+def discardAll(group, x = 0, y = 0):
    mute()
-   discards = me.piles['Discard pile']
+   discards = me.piles["Discard pile"]
    for card in group:
       card.moveTo(discards)
-   if len(players) > 1: rnd(1, 100) # Wait a bit more, as in multiplayer games, things are slower.
-   notify("{} moved all cards from their {} to its discard pile.".format(me, group.name))
+   if len(players) > 1:
+      waitForAnimation()
+   notify(MSG_ACTION_MOVE_ALL_CARDS.format(me, group.name, "the bottom of its Discard pile"))
 
 
-def removeAll(group, x=0, y=0):
+def removeAll(group, x = 0, y = 0):
+   """
+   Puts the cards in the group into the Removed pile
+   """
    mute()
-   pile = me.piles['Removed pile']
+   pile = me.piles["Removed pile"]
    for card in group:
       card.moveTo(pile)
-   if len(players) > 1: rnd(1, 100) # Wait a bit more, as in multiplayer games, things are slower.
-   notify("{} moved all cards from their {} to its removed pile.".format(me, group.name))
+   if len(players) > 1:
+      waitForAnimation()
+   notify(MSG_ACTION_MOVE_ALL_CARDS.format(me, group.name, "the bottom of its Removed pile"))
 
 
-def toTableFaceDown(card, x=0, y=0):
+def toTableFaceDown(card, x = 0, y = 0):
    debug(">>> toTableFaceDown {}".format(card))
    mute()
    fromText = fromWhereStr(card.group)
-   placeCard(card, card.Type, faceDown=True)
-   notify("{} puts a card face down in the Arena {}.".format(me, fromText))
+   placeCard(card, card.Type, faceDown = True)
+   notify(MSG_ACTION_FACE_DOWN.format(me, fromText))
 
 
-def changeSlot(card, x=0, y=0, targets = None):
+def changeSlot(card, x = 0, y = 0, targets = None):
    debug(">>> changeSlot {}".format(card))
    mute()
    cardSlot = getSlotIdx(card, card.controller)
@@ -744,6 +803,7 @@ def changeSlot(card, x=0, y=0, targets = None):
       return
    if not targets:
       targets = getTargetedCards(card, True, card.controller == me)
+   # Swap the position of two characters
    if len(targets) > 0:
       target = targets[0]
       targetSlot = getSlotIdx(target, target.controller)
@@ -751,7 +811,7 @@ def changeSlot(card, x=0, y=0, targets = None):
          warning(MSG_SEL_CHAR_RING)
          return
       if target.controller != target.controller:
-         whisper("You can only swap exactly two characters in the same ring.")
+         whisper("You can only swap two characters in the same ring.")
          return
       putAtSlot(card, targetSlot, card.controller)
       putAtSlot(target, cardSlot, target.controller)
@@ -759,8 +819,9 @@ def changeSlot(card, x=0, y=0, targets = None):
       alignCard(target)
       target.target(False)
       notify("{} swapped positions of {} and {}.".format(me, card, target))
+   # Move a character to another slot
    else:
-      slotIdx = askForSlot(card.controller)
+      slotIdx = askForEmptySlot(card.controller)
       if slotIdx > -1:
          putAtSlot(card, slotIdx, card.controller, True)
          alignCard(card)
@@ -771,98 +832,110 @@ def changeSlot(card, x=0, y=0, targets = None):
 # Marker actions
 #---------------------------------------------------------------------------
 
-# --------------
-# Characters' BP
-# --------------
-def plusBP(cards, x=0, y=0, silent = False, count = 100):
+def addMarkerAction(cards, x = 0, y = 0):
+   """
+   Manually adds any of the available markers.
+   """
    mute()
+   # Ask the player how many of the same type they want.
+   marker, quantity = askMarker()
+   if quantity == 0:
+      return
+   # Then go through their cards and add those markers to each.
    for card in cards:
-      addMarker(card, 'BP', count)
-      if not silent:
-         notify("{} raises {}'s BP by {} (new BP is {})".format(me, card, count, getMarker(card, 'BP')))
-
-def minusBP(cards, x=0, y=0, silent = False, count = 100):
-   mute()
-   for card in cards:
-      c = count
-      bp = getMarker(card, 'BP')
-      if c > bp:
-         c = bp
-      addMarker(card, 'BP', -c)
-      if not silent:
-         notify("{} lowers {}'s BP by {} (new BP is {}).".format(me, card, count, getMarker(card, 'BP')))
-
-def plusBP2(cards, x=0, y=0): plusBP(cards, count = 200)
-def plusBP3(cards, x=0, y=0): plusBP(cards, count = 300)
-def plusBP4(cards, x=0, y=0): plusBP(cards, count = 400)
-def plusBP5(cards, x=0, y=0): plusBP(cards, count = 500)
-def plusBP6(cards, x=0, y=0): plusBP(cards, count = 600)
-def plusBP7(cards, x=0, y=0): plusBP(cards, count = 700)
-def plusBP8(cards, x=0, y=0): plusBP(cards, count = 800)
-def plusBP9(cards, x=0, y=0): plusBP(cards, count = 900)
-
-def plusBPX(cards, x=0, y=0):
-   n = askInteger("Raise BP by...", 100)
-   if n == None: return
-   plusBP(cards, count = fixBP(n))
-
-def minusBP2(cards, x=0, y=0): minusBP(cards, count = 200)
-def minusBP3(cards, x=0, y=0): minusBP(cards, count = 300)
-def minusBP4(cards, x=0, y=0): minusBP(cards, count = 400)
-def minusBP5(cards, x=0, y=0): minusBP(cards, count = 500)
-def minusBP6(cards, x=0, y=0): minusBP(cards, count = 600)
-def minusBP7(cards, x=0, y=0): minusBP(cards, count = 700)
-def minusBP8(cards, x=0, y=0): minusBP(cards, count = 800)
-def minusBP9(cards, x=0, y=0): minusBP(cards, count = 900)
-
-def minusBPX(cards, x=0, y=0):
-   n = askInteger("Lower BP by...", 100)
-   if n == None: return
-   minusBP(cards, count = fixBP(n))
-
-def changeBP(cards, x=0, y=0):
-   mute()
-   changeMarker(cards, MarkersDict['BP'], "Set character BP to:")
-
-def addMarkerAction(cards, x=0, y=0):  # A simple function to manually add any of the available markers.
-   mute()
-   marker, quantity = askMarker() # Ask the player how many of the same type they want.
-   if quantity == 0: return
-   for card in cards:  # Then go through their cards and add those markers to each.
       card.markers[marker] += quantity
       notify("{} adds {} {} counter to {}.".format(me, quantity, marker[0], card))
 
-# -----------
-# Players' SP
-# -----------
-def plusSP (group, x=0, y=0): modSP(1)
-def plusSP2(group, x=0, y=0): modSP(2)
-def plusSP3(group, x=0, y=0): modSP(3)
-def plusSP4(group, x=0, y=0): modSP(4)
-def plusSP5(group, x=0, y=0): modSP(5)
-def plusSP6(group, x=0, y=0): modSP(6)
-def plusSP7(group, x=0, y=0): modSP(7)
-def plusSP8(group, x=0, y=0): modSP(8)
-def plusSP9(group, x=0, y=0): modSP(9)
+# --------------
+# Character BP
+# --------------
 
-def plusSPX(group, x=0, y=0):
+def plusBP(cards, x = 0, y = 0, silent = False, count = 100):
+   mute()
+   for card in cards:
+      addMarker(card, "BP", count)
+      if not silent:
+         notify("{} raises {}'s BP by {} (new BP is {})".format(me, card, count, getMarker(card, "BP")))
+
+def minusBP(cards, x = 0, y = 0, silent = False, count = 100):
+   mute()
+   for card in cards:
+      c = count
+      bp = getMarker(card, "BP")
+      if c > bp:
+         c = bp
+      addMarker(card, "BP", -c)
+      if not silent:
+         notify("{} lowers {}'s BP by {} (new BP is {}).".format(me, card, count, getMarker(card, "BP")))
+
+def plusBP2(cards, x = 0, y = 0): plusBP(cards, count = 200)
+def plusBP3(cards, x = 0, y = 0): plusBP(cards, count = 300)
+def plusBP4(cards, x = 0, y = 0): plusBP(cards, count = 400)
+def plusBP5(cards, x = 0, y = 0): plusBP(cards, count = 500)
+def plusBP6(cards, x = 0, y = 0): plusBP(cards, count = 600)
+def plusBP7(cards, x = 0, y = 0): plusBP(cards, count = 700)
+def plusBP8(cards, x = 0, y = 0): plusBP(cards, count = 800)
+def plusBP9(cards, x = 0, y = 0): plusBP(cards, count = 900)
+
+def plusBPX(cards, x = 0, y = 0):
+   n = askInteger("Raise BP by...", 100)
+   if n == None:
+      return
+   plusBP(cards, count = fixBP(n))
+
+def minusBP2(cards, x = 0, y = 0): minusBP(cards, count = 200)
+def minusBP3(cards, x = 0, y = 0): minusBP(cards, count = 300)
+def minusBP4(cards, x = 0, y = 0): minusBP(cards, count = 400)
+def minusBP5(cards, x = 0, y = 0): minusBP(cards, count = 500)
+def minusBP6(cards, x = 0, y = 0): minusBP(cards, count = 600)
+def minusBP7(cards, x = 0, y = 0): minusBP(cards, count = 700)
+def minusBP8(cards, x = 0, y = 0): minusBP(cards, count = 800)
+def minusBP9(cards, x = 0, y = 0): minusBP(cards, count = 900)
+
+def minusBPX(cards, x = 0, y = 0):
+   n = askInteger("Lower BP by...", 100)
+   if n == None:
+      return
+   minusBP(cards, count = fixBP(n))
+
+def changeBP(cards, x = 0, y = 0):
+   mute()
+   changeMarker(cards, MarkersDict["BP"], "Set character BP to:\n(a value of 0 will KO the character)")
+
+# -----------
+# Player SP
+# -----------
+
+def plusSP (group, x = 0, y = 0): modSP(1)
+def plusSP2(group, x = 0, y = 0): modSP(2)
+def plusSP3(group, x = 0, y = 0): modSP(3)
+def plusSP4(group, x = 0, y = 0): modSP(4)
+def plusSP5(group, x = 0, y = 0): modSP(5)
+def plusSP6(group, x = 0, y = 0): modSP(6)
+def plusSP7(group, x = 0, y = 0): modSP(7)
+def plusSP8(group, x = 0, y = 0): modSP(8)
+def plusSP9(group, x = 0, y = 0): modSP(9)
+
+def plusSPX(group, x = 0, y = 0):
    n = askInteger("Gain SP by...", 1)
-   if n == None: return
+   if n == None:
+      return
    modSP(n)
 
-def minusSP (group, x=0, y=0): modSP(-1)
-def minusSP2(group, x=0, y=0): modSP(-2)
-def minusSP3(group, x=0, y=0): modSP(-3)
-def minusSP4(group, x=0, y=0): modSP(-4)
-def minusSP5(group, x=0, y=0): modSP(-5)
-def minusSP6(group, x=0, y=0): modSP(-6)
-def minusSP7(group, x=0, y=0): modSP(-7)
-def minusSP8(group, x=0, y=0): modSP(-8)
-def minusSP9(group, x=0, y=0): modSP(-9)
+def minusSP (group, x = 0, y = 0): modSP(-1)
+def minusSP2(group, x = 0, y = 0): modSP(-2)
+def minusSP3(group, x = 0, y = 0): modSP(-3)
+def minusSP4(group, x = 0, y = 0): modSP(-4)
+def minusSP5(group, x = 0, y = 0): modSP(-5)
+def minusSP6(group, x = 0, y = 0): modSP(-6)
+def minusSP7(group, x = 0, y = 0): modSP(-7)
+def minusSP8(group, x = 0, y = 0): modSP(-8)
+def minusSP9(group, x = 0, y = 0): modSP(-9)
 
-def minusSPX(group, x=0, y=0):
+def minusSPX(group, x = 0, y = 0):
    n = askInteger("Lose SP by...", 1)
-   if n == None: return
+   if n == None:
+      return
    modSP(-n)
 
 
@@ -870,37 +943,40 @@ def minusSPX(group, x=0, y=0):
 # Hand actions
 #---------------------------------------------------------------------------
 
-def play(card, x=0, y=0, slotIdx=None):  # This is the function to play cards from your hand.
-   debug(">>> playing card {} at {}".format(card, slotIdx))
+def play(card, x = 0, y = 0, slotIdx = None):
+   """
+   Play cards from (usually) the player's hand.
+   """
+   debug(">>> playing card {} at slot {}".format(card, slotIdx))
 
    mute()
-   chooseSide()
    slot = ""
    group = card.group
-   if settings['Play']:
+   if settings["PlayAuto"]:
       if not playAuto(card, slotIdx):
+         # Something happened and couldn't play the card
          return False
-      slot = " in slot {}".format(getSlotIdx(card)+1)
+      slot = " in slot {}".format(getSlotIdx(card) + 1)
    else:
       placeCard(card, card.Type)
    isChar = isCharacter(card)
    if isChar:
       notify("{} plays {} from their {}{}.".format(me, card, group.name, slot))
-      charsPlayed = getState(me, 'charsPlayed')
-      playSnd('card-play-1')
+      charsPlayed = getState(me, "charsPlayed")
+      playSnd("card-play-1")
       notify("({} has played {} character{} this turn.)".format(me, charsPlayed, plural(charsPlayed)))
    else:
-      playSnd('card-play-2')
+      playSnd("card-play-2")
       notify("{} plays {} from their {}.".format(me, card, group.name))
       
-   if settings['Play']:
-      pcard = getParsedCard(card)
-      if isChar and pcard.hasEffect() and pcard.ability.type == InstantAbility or not isChar:
-         if settings['Activate']:
+   if settings["PlayAuto"]:
+      pcard = getGameCard(card)
+      if not isChar or pcard.hasEffect() and pcard.ability.type == InstantAbility:
+         if settings["Activate"]:
             # Trying to delay activation {
-            rnd(10, 1000)
+            waitForAnimation()
             update()
-            rnd(10, 1000)
+            waitForAnimation()
             update()
             # }
             activate(card)
@@ -910,72 +986,84 @@ def play(card, x=0, y=0, slotIdx=None):  # This is the function to play cards fr
    debug("<<< playing card end")
 
 
-def backup(card, x=0, y=0, target = None):  # Play a card as backup attached to a character in the player's ring
-   debug(">>> backup with card {}".format(card))
+def backup(card, x = 0, y = 0, target = None):
+   """
+   Play a card as backup attached to a character in the player's ring.
+   """
+   debug(">>> back-up with card {}".format(card))
    mute()
    group = card.group
-   if settings['Play']:
+   if settings["PlayAuto"]:
       target = backupAuto(card, target)
       if target:
-         target, oldBP = target
-         newBP = getMarker(target, 'BP')
-         notify("{0} backups {1} with {2} from their {3}. New BP of {1} is {4} (before was {5}).".format(me, target, card, group.name, newBP, oldBP))
-         playSnd('backup')
+         lastBP = getGameCard(target).getState("lastBP")
+         newBP = getMarker(target, "BP")
+         notify("{0} back-ups {1} with {2} from their {3}. New BP of {1} is {4} (before was {5}).".format(me, target, card, group.name, newBP, lastBP))
+         playSnd("backup")
          return True
    else:
       placeCard(card, card.Type)
-      notify("{} backups with {} from their {}.".format(me, card, group.name))
-      playSnd('backup')
+      notify("{} back-ups with {} from their {}.".format(me, card, group.name))
+      playSnd("backup")
+   debug("<<< back-up end")
 
 
-def discard(card, x=0, y=0, isRandom = False):
-   if isUI(card):
-      return
+def discard(card, x = 0, y = 0, isRandom = False):
    mute()
    group = card.group
-   card.moveTo(me.piles['Discard pile'])
+   card.moveTo(me.piles["Discard pile"])
    msg = "{} has discarded {} from their {}."
    if group != me.hand:
-      msg = "{} puts {} into his discard pile."
+      msg = "{} puts {} into his Discard pile."
    if isRandom:
       msg = MSG_DISCARD_RANDOM
-   playSnd('discard')
+   playSnd("discard")
    notify(msg.format(me, card, group.name))
 
 
-def randomDiscard(group = me.hand, x=0, y=0):
+def randomDiscard(group = me.hand, x = 0, y = 0):
     mute()
     card = group.random()
     if card == None:
         return
-    card.moveTo(me.piles['Discard pile'])
+    card.moveTo(me.piles["Discard pile"])
     notify(MSG_DISCARD_RANDOM.format(me, card, group.name))
 
 
-def refill(group = me.hand):  # Refill the player's hand to its hand size.
-   playhand = len(me.hand) # count how many cards there are currently there.
-   if playhand < handSize:
-      drawMany(me.Deck, handSize - playhand) # If there's less cards than the handSize, draw from the deck until it's full.
+def refillHand(group = me.hand):
+   """
+   Refill the player's hand to its hand size.
+   """
+   playHand = len(me.hand)
+   # If there's less cards than the handSize, draw from the deck until it's full
+   if playHand < handSize:
+      drawMany(me.Deck, handSize - playHand)
 
 
 #---------------------------------------------------------------------------
 # Piles actions
 #---------------------------------------------------------------------------
 
-def draw(group = me.Deck):  # Draws one card from the deck into the player's hand.
+def draw(group = me.Deck):
+   """
+   Draws one card from the deck into the player's hand.
+   """
    mute()
    if len(group) == 0:
-      whisper("You can't draw cards from an empty {}.".format(group.name))
+      whisper(MSG_ERR_DRAW_EMPTY_PILE.format(group.name))
       return
    group.top().moveTo(me.hand)
-   playSnd('draw')
+   playSnd("draw")
    notify("{} draws a card.".format(me))
 
 
-def drawMany(group, count = None, silent = False):  # This function draws a variable number cards into the player's hand.
+def drawMany(group, count = None):
+   """
+   Draws a variable number cards into the player's hand.
+   """
    mute()
    if len(group) == 0:
-      whisper("Can't draw cards from an empty {}.".format(group.name))
+      whisper(MSG_ERR_DRAW_EMPTY_PILE.format(group.name))
       return
    if count == None:
       count = askInteger("How many cards do you want to draw?", handSize) # Ask the player how many cards they want.
@@ -983,18 +1071,19 @@ def drawMany(group, count = None, silent = False):  # This function draws a vari
       return
    drawn = 0
    for i in range(0, count):
-      if len(group) > 0:  # If the deck is not empty...
-         group.top().moveTo(me.hand)  # ...then move them one by one into their play hand.
+      # If the deck is not empty...
+      if len(group) > 0:
+         # ...then move them one by one into their play hand.
+         group.top().moveTo(me.hand)
          drawn += 1
-   if not silent:
-      notify("{} draws {} card{}.".format(me, drawn, plural(drawn)))
-   playSnd('draw')
+   notify("{} draws {} card{}.".format(me, drawn, plural(drawn)))
+   playSnd("draw")
 
 
 def randomDraw(group = me.Deck, type = None):
    mute()
    if len(group) == 0:
-      whisper("Can't draw from an empty {}.".format(group.name))
+      whisper(MSG_ERR_DRAW_EMPTY_PILE.format(group.name))
       return
    if type == None:
       card = group.random()
@@ -1002,7 +1091,7 @@ def randomDraw(group = me.Deck, type = None):
       cards = [card for card in group
          if card.Type == type]
       if len(cards) == 0:
-         whisper("There is no cards of type {} in the {}.".format(type, group.name))
+         whisper("There is no cards of the type {} in the {}.".format(type, group.name))
          return
       card = cards[rnd(0, len(cards)-1)]
    cardname = revealDrawnCard(card, type)
@@ -1022,58 +1111,69 @@ def randomDrawRE(group = me.Deck):
    randomDraw(group, ReactionType)
 
 
-def trash(group, x=0, y=0, silent = False, count = None):
-# Draws one or more cards from the deck into the discard pile
+def trash(group, x = 0, y = 0, count = None):
+   """
+   Puts one or more cards from the given pile into the Discard pile.
+   """
    mute()
    if group is None:
       group = me.Deck
-   global defTrashCount
+   # Last input by the user
+   global dialogTrashCount
    if count == None:
-      count = askInteger("How many cards do you want to trash?", defTrashCount)
+      count = askInteger("How many cards do you want to trash?", dialogTrashCount)
    if count == None:
       return
-   defTrashCount = count
-   discards = me.piles['Discard pile']
+   dialogTrashCount = count
+   discards = me.piles["Discard pile"]
    cards = []
    for card in group.top(count):
       card.moveTo(discards)
       cards.append(card)
    # Add trashed card to action local variables
-   addTempVar('trashed', cards)
-   if len(players) > 1: rnd(1, 100)  # Wait a bit more, as in multiplayer games, things are slower.
-   if not silent:
-      notify("{} trashes top {} cards {}.".format(me, count, fromWhereStr(group)))
+   addTempVar("trashed", cards)
+   if len(players) > 1:
+      waitForAnimation()
+   notify("{} trashes top {} cards {}.".format(me, count, fromWhereStr(group)))
 
 
-def prophecy(group = me.Deck, x=0, y=0, count = None, deckPos = 0):
+def prophecy(group = me.Deck, x = 0, y = 0, count = None, deckPos = 0):
+   """
+   Rearranges the top cards of the deck according to the given argument.
+   """
    mute()
    if len(group) == 0:
       return
-   global defProphecyCount
+   # Last input by the user
+   global dialogProphecyCount
    if not count:
-      count = askInteger("How many cards do you want to see?", defProphecyCount)
+      count = askInteger("How many cards do you want to see?", dialogProphecyCount)
       if count == None:
          return
-   defProphecyCount = count
-   cards = [c for c in group[:count]]
+   dialogProphecyCount = count
+   cards = list(group[:count])  # Convert generator object to list
    cardsPos = []
-   owner = 'his' if group.controller == me else "{}'s".format(group.controller)
+   posChosen = False
+   owner = "his" if group.controller == me else "{}'s".format(group.controller)
    notify(MSG_PLAYER_LOOKS.format(me, owner, group.name))
    while len(cards) > 0:
+      # Allow the player to first see the cards...
       card = showCardDlg(cards, "Select a card to put on {} of the deck".format(["top or bottom", "top", "bottom"][deckPos]))
       if card == None:
          return
       card = card[0]
-      # Allow the player to first see the cards, and then choose where to put them
-      if not deckPos:
-         deckPos = askChoice("Where to put the card?", ['Top of deck', 'Bottom of deck'])
+      # ... and then choose where to put them (once)
+      if not posChosen:
+         posChosen = True
+         deckPos = askChoice("Where to put the card?", ["Top of the deck", "Bottom of the deck"])
          if deckPos == 0:
             return
+         # Reverse the choice  1,2 => 0,-1
+         deckPos = (deckPos - 1) * -1
       cards.remove(card)
       cardsPos.append((card, deckPos))
    for item in cardsPos:
-      card = item[0]
-      pos = (item[1] - 1) * -1
+      card, pos = item
       if group.controller == me:
          moveToGroup(group, card, pos = pos, reveal = False)
       else:
@@ -1081,70 +1181,77 @@ def prophecy(group = me.Deck, x=0, y=0, count = None, deckPos = 0):
 
 
 def shuffle(group):
-# A simple function to shuffle piles
+   """
+   A simple function to shuffle piles.
+   """
    mute()
-   # for card in group:
-      # if card.isFaceUp:
-         # card.isFaceUp = False
    group.shuffle()
-   playSnd('shuffle')
+   playSnd("shuffle")
    notify("{} shuffled its {}".format(me, group.name))
 
 
-def reshuffle(group = me.piles['Discard pile']):
-# This function reshuffles the player's discard pile into its deck.
+def reshuffle(group = me.piles["Discard pile"]):
+   """
+   This function reshuffles a pile into player's deck.
+   """
    mute()
    Deck = me.Deck
    for card in group:
-      card.moveTo(Deck) # Move the player's cards from the discard to its deck one-by-one.
-   rnd(100, 10000) # Bug 105 workaround. This delays the next action until all animation is done.
-               # see https://octgn.16bugs.com/projects/3602/bugs/102681
-   Deck.shuffle() # Then use the built-in shuffle action
-   playSnd('shuffle')
-   notify("{} reshuffled its {} into its Deck.".format(me, group.name)) # And inform everyone.
+      # Move the player's cards from the group to its deck one-by-one.
+      card.moveTo(Deck)
+   waitForAnimation()
+   Deck.shuffle()
+   playSnd("shuffle")
+   notify("{} reshuffled its {} into its Deck.".format(me, group.name))
 
 
-def reshuffleCards(group, cardType):
-# Reshuffles all the cards of the given type into the player's deck
+def reshuffleCardsOfType(group, cardType):
+   """
+   Reshuffles all the cards of the given type into the player's deck.
+   """
    Deck = me.Deck
    for card in group:
       if card.Type == cardType:
-         card.moveTo(Deck) # Move the player's cards from the discard to its deck one-by-one.
+         # Move the player's cards from the group to its deck one-by-one.
+         card.moveTo(Deck)
    update()  # Trying this method to delay next actions until networked tasks are complete
    Deck.shuffle()
-   playSnd('shuffle')
-   notify("{} shuffles all {} cards from his {} into its Deck.".format(me, cardType, group.name)) # And inform everyone.
+   playSnd("shuffle")
+   notify("{} shuffles all {} cards from his {} into its Deck.".format(me, cardType, group.name))
 
 
-def reshuffleCHA(group = me.piles['Discard pile']):
+def reshuffleCHA(group = me.piles["Discard pile"]):
    mute()
-   reshuffleCards(group, CharType)
+   reshuffleCardsOfType(group, CharType)
 
-def reshuffleAC(group = me.piles['Discard pile']):
+def reshuffleAC(group = me.piles["Discard pile"]):
    mute()
-   reshuffleCards(group, ActionType)
+   reshuffleCardsOfType(group, ActionType)
 
-def reshuffleRE(group = me.piles['Discard pile']):
+def reshuffleRE(group = me.piles["Discard pile"]):
    mute()
-   reshuffleCards(group, ReactionType)
+   reshuffleCardsOfType(group, ReactionType)
 
 
-def revealTopDeck(group, x=0, y=0):
+def revealTopDeck(group, x = 0, y = 0):
    mute()
-   if group[0].isFaceUp:
-      notify("{} hides {} from the top of their Deck.".format(me, group[0]))
-      group[0].isFaceUp = False
+   if len(group) == 0:
+      return
+   card = group[0]
+   if card.isFaceUp:
+      notify("{} hides {} from the top of their {}.".format(me, card, group.name))
+      card.isFaceUp = False
    else:
-      group[0].isFaceUp = True
-      notify("{} reveals {} from the top of their Deck.".format(me, group[0]))
+      card.isFaceUp = True
+      notify("{} reveals {} from the top of their {}.".format(me, card, group.name))
 
 
-def swapWithDeck(group = me.piles['Discard pile']):
+def swapWithDeck(group = me.piles["Discard pile"]):
    swapPiles(me.Deck, group)
 
 
-def removedDefaultAction(card, x=0, y=0):
-   if me.isActive and currentPhase()[1] == MainPhase and getRule('play_removed'):
+def removedDefaultAction(card, x = 0, y = 0):
+   if me.isActive and getCurrentPhase() == MainPhase and getRule("play_removed"):
       play(card)
    else:
       toHand(card)
@@ -1154,14 +1261,14 @@ def removedDefaultAction(card, x=0, y=0):
 # Debug actions
 #---------------------------------------------------------------------------
 
-def setupDebug(group, x=0, y=0):
+def setupDebug(group, x = 0, y = 0):
    mute()
    global debugging
    debugging = True
    resetGame()
 
 
-def setDebugVerbosity(group=None, x=0, y=0):
+def setDebugVerbosity(group = None, x = 0, y = 0):
    global debugVerbosity
    mute()
    levels = DebugLevel.keys()
@@ -1172,8 +1279,8 @@ def setDebugVerbosity(group=None, x=0, y=0):
    whisper("Debug verbosity is now \"{}\" ({})".format(levels[debugVerbosity], debugVerbosity))
 
 
-def createCard(group, x=0, y=0):
-   id, quantity = askCard(title = 'Choose a card to add to the game')
+def createCard(group, x = 0, y = 0):
+   id, quantity = askCard(title = "Choose a card to add to the game")
    if quantity > 0:
-      card = table.create(id, 0, 0, quantity=quantity, persist=True)
+      card = table.create(id, 0, 0, quantity = quantity, persist = True)
       notify("{} has created the card {}".format(me, card))

@@ -1,5 +1,5 @@
 # Python Scripts for the Card Fighters' Clash definition for OCTGN
-# Copyright (C) 2013  Raohmaru
+# Copyright (C) 2013 Raohmaru
 
 # This python script is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -12,7 +12,7 @@
 # GNU General Public License for more details.
 
 # You should have received a copy of the GNU General Public License
-# along with this script.  If not, see <http://www.gnu.org/licenses/>.
+# along with this script. If not, see <http://www.gnu.org/licenses/>.
 
 #---------------------------------------------------------------------------
 # Utility class
@@ -108,6 +108,20 @@ class RulesUtils():
 
 
    @staticmethod
+   def getTargetsOfEventSource(source):
+      """
+      Gets the targets affected by the given source card.
+      """
+      targets = []
+      GameEvents = getGlobalVar('GameEvents')
+      for listener in GameEvents:
+         if listener['source'] == source:
+            targets.append(Card(listener['id']))
+      debug(">>> getTargetOfSourceEvent({}) -> {}".format(source, targets))
+      return targets
+
+
+   @staticmethod
    def getTargetQty(str = None):
       if str is None:
          return
@@ -133,8 +147,8 @@ class RulesUtils():
       arr = str.split(',')
       if len(arr) == 2:
          return Struct(**{
-            'min': num(arr[0]),
-            'max': num(arr[1])
+            'min': int(arr[0]),
+            'max': int(arr[1])
          })
 
 
@@ -155,7 +169,7 @@ class RulesUtils():
          kw_types = set(RS_KW_TARGETS) & set(types)
          if len(kw_types) > 0:
             debug("-- found %s types, player must choose one. (%s)" % (len(kw_types), list(kw_types)))
-            options = [ASK_REPL[t].title() if t in ASK_REPL else t.title() for t in types]
+            options = [ABBR[t].title() if t in ABBR else t.title() for t in types]
             t = askChoice("Select a target:", options)
             if t == 0:
                return False
@@ -332,7 +346,7 @@ class RulesUtils():
                cardsByType.append(c)
          cards_f1 = cardsByType
          if len(cards_f1) > 0:
-            debug( "      " + cardsNamesStr(cards_f1))
+            debug( "      " + cardsToNamesStr(cards_f1))
          else:
             debug("      Nope")
 
@@ -422,7 +436,7 @@ class RulesUtils():
                   warning(title)
             if cards_f1:
                if isVisible(cards_f1[0]):
-                  notify(MSG_PLAYER_SELECTS_NAMED.format(me, cardsNamesStr(cards_f1)))
+                  notify(MSG_PLAYER_SELECTS_NAMED.format(me, cardsToNamesStr(cards_f1)))
                else:
                   notify(MSG_PLAYER_SELECTS.format(me, len(cards_f1)))
          if cards_f1 == None and minQty != 0:

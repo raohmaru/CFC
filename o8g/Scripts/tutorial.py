@@ -1,5 +1,5 @@
 ﻿# Python Scripts for the Card Fighters' Clash definition for OCTGN
-# Copyright (C) 2013  Raohmaru
+# Copyright (C) 2013 Raohmaru
 
 # This python script is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -12,7 +12,7 @@
 # GNU General Public License for more details.
 
 # You should have received a copy of the GNU General Public License
-# along with this script.  If not, see <http://www.gnu.org/licenses/>.
+# along with this script. If not, see <http://www.gnu.org/licenses/>.
 
 #---------------------------------------------------------------------------
 # Tutorial
@@ -25,8 +25,8 @@ class Tutorial(object):
       self.msgOnDone = u'When done, please click on the \u25B6 button or press the Tab key.'
       self.validate = None
       self.step = 0
-      settings['Play'] = True
-      settings['Phase'] = True
+      settings['PlayAuto'] = True
+      settings['PhaseAuto'] = True
       settings['Activate'] = True
       self.start()
       
@@ -45,7 +45,7 @@ class Tutorial(object):
    def nextTurn(self):
       nextTurn(me, True)
       # gotoMain()
-      rnd(100, 10000)  # Delay the next action until all animation is done
+      waitForAnimation()
       
       
    def setNext(self, f, phase):
@@ -91,7 +91,7 @@ The game board is called "Arena", and it is split into two parts: one for each p
 """)
 
       chooseSide()
-      addAvatar()
+      setAvatar()
       self.nextTurn()
       self.addCard('d14694b4-484c-4b45-962e-8cbb636d8a9a', me.hand)  # Baby Head
       self.addCard('f286cc08-ae18-4a40-bd66-17aedcfd9267', me.hand)  # Krauser

@@ -1,5 +1,5 @@
-# Python Scripts for the Card Fighters' Clash definition for OCTGN
-# Copyright (C) 2013  Raohmaru
+# Python Scripts for the Card Fighters" Clash definition for OCTGN
+# Copyright (C) 2013 Raohmaru
 
 # This python script is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -12,22 +12,26 @@
 # GNU General Public License for more details.
 
 # You should have received a copy of the GNU General Public License
-# along with this script.  If not, see <http://www.gnu.org/licenses/>.
+# along with this script. If not, see <http://www.gnu.org/licenses/>.
+
+import re
 
 #---------------------------------------------------------------------------
 # Helpers
 #---------------------------------------------------------------------------
 
-# Helper class to convert a dict to an object (to be accessed with dot notation)
-# http://stackoverflow.com/questions/1305532/convert-python-dict-to-object
 class Struct:
+   """
+   Helper class to convert a dict to an object (to be accessed with dot notation).
+   http://stackoverflow.com/questions/1305532/convert-python-dict-to-object
+   """
    def __init__(self, **entries): 
       self.__dict__.update(entries)
-   # Called when the attribute does not exist
    def __getattr__(self, name):
+      # Called when the attribute does not exist
       return None
-   # Because of the previous method, all of the following are needed or errors will raise
    def __repr__(self):
+      # Because of the previous method, all of the following are needed or errors will raise
       return str(self.__dict__)
    def __str__(self):
       return str(self.__dict__)
@@ -42,18 +46,17 @@ class Struct:
 #---------------------------------------------------------------------------
 # Constants
 #---------------------------------------------------------------------------
-import re
 
 # Phases
-Phases = [
-   'Setup',
-   'Activate',
-   'Draw',
-   'Main',
-   'Attack',
-   'Counter-attack',
-   'End',
-   'Cleanup'
+PhaseNames = [
+   "Setup",
+   "Activate",
+   "Draw",
+   "Main",
+   "Attack",
+   "Counter-attack",
+   "End",
+   "Cleanup"
 ]
 SetupPhase    = 0
 ActivatePhase = 1
@@ -64,24 +67,27 @@ BlockPhase    = 5
 EndPhase      = 6
 CleanupPhase  = 7
 
-# Highlight Colours
+# Highlight colors
 AttackColor         = "#ff0000"
 AttackNoFreezeColor = "#ff8000"
 UnitedAttackColor   = "#ff42de"
 BlockColor          = "#00e100"
 ActivatedColor      = "#0000ff"
 
-# Filter colours
-CannotUnfreezeFilter = '#6699d9ff'
-JustEnteredFilter    = '#55dddd00'
-KOedFilter           = '#55ff0000'
+# Filter colors
+# Format: RRGGBBAA
+CannotUnfreezeFilter = "#6699d9ff"
+JustEnteredFilter    = "#55dddd00"
+KOedFilter           = "#55ff0000"
 
-FiltersDict = {
-   'Just Entered'   : JustEnteredFilter,
-   'Cannot Unfreeze': CannotUnfreezeFilter
+MarkerFilters = {
+   # Marker           Filter
+   "Just Entered"   : JustEnteredFilter,
+   "Cannot Unfreeze": CannotUnfreezeFilter
 }
 
-# Dictionary which hold all the hard coded markers (in the game definition)
+# Dictionary which hold all the hard-coded markers (in the game definition)
+# (variable Markers does exist and it is an OCTGN python class)
 MarkersDict = {
    "BP"             : ("BP",              "b86fc644-d084-43d3-99d2-5b11457321cc"),
    "Just Entered"   : ("Just Entered",    "9a52c42c-543f-48bb-9a48-d7599d6c8fae"),
@@ -92,7 +98,7 @@ MarkersDict = {
    "Unfreezable"    : ("Unfreezable",     "fec1976b-9ce5-4b32-8c07-76eadc5607f6"),
    "Backup"         : ("Backup",          "efd3208d-2ec3-44ca-be1d-858e91628da4"),
    "Pierce"         : ("Pierce",          "3131facc-3fe4-4dd5-95ff-afc08570d869"),
-   "Cant Block"     : ("Cant Block",      "a8a4b1a3-6023-4ac1-b24f-a50e4768a598")
+   "Cannot Block"   : ("Cannot Block",      "a8a4b1a3-6023-4ac1-b24f-a50e4768a598")
 }
 
 Buttons = {
@@ -100,7 +106,7 @@ Buttons = {
    "NextButton" : "1d0c798b-b785-4bb6-b160-14c71db6af47"
 }
 
-# A table holding tuples with the location for the cards according its states
+# A table holding tuples with the location for the cards according its state
 CardsCoords = dict(
    #                x      y
    Slot0         = (-311,  209),
@@ -120,57 +126,60 @@ CardsCoords = dict(
 )
 
 # Card types
-CharType     = 'Character'
-ActionType   = 'Action'
-ReactionType = 'Reaction'
-ButtonType   = 'Button'
-AvatarType   = 'Avatar'
+CharType     = "Character"
+ActionType   = "Action"
+ReactionType = "Reaction"
+ButtonType   = "Button"
+AvatarType   = "Avatar"
 
 # Card abilities
-InstantAbility = u'\xa2'
-TriggerAbility = u'\xa3'
-AutoAbility    = u'\xa4'
+InstantAbility = u"\xa2"
+TriggerAbility = u"\xa3"
+AutoAbility    = u"\xa4"
 
-InstantUniChar = u'\u25B2'
-TriggerUniChar = u'\u2588'
-AutoUniChar    = u'\u26AB'
+InstantUniChar = u"\u25B2"
+TriggerUniChar = u"\u2588"
+AutoUniChar    = u"\u26AB"
 
-# A dictionary that holds the regex used in other scripts
+# A dictionary that holds regular expressions used in other scripts, for performance reasons
 Regexps = {
-   'ability'   : re.compile(r'(.)\s+([^\r]+)'),
-   'leftcond'  : re.compile(r'^[\w.]+'),
-   '.bp'       : re.compile(r'([\w\d\[\]]+)\.bp'),
-   '.sp'       : re.compile(r'([\w\d\[\]]+)\.sp'),
-   '.lastbp'   : re.compile(r'([\w\d\[\]]+)\.lastbp'),
-   'action'    : re.compile(r'\baction\b'),
-   'reaction'  : re.compile(r'\breaction\b'),
-   'char'      : re.compile(r'\bchar\b'),
-   '.size'     : re.compile(r'([\w.]+)\.size'),
-   '.ring'     : re.compile(r'(\w+)\.ring'),
-   '.ring.size': re.compile(r'(\w+)\.ring\.size'),
-   '.chars'    : re.compile(r'(\w+)\.chars'),
-   '.damaged'  : re.compile(r'(\w+)\.damaged'),
-   '.lostsp'   : re.compile(r'(\w+)\.lostsp'),
-   'opp'       : re.compile(r'\bopp\b'),
-   'listIdx'   : re.compile(r'([\w\d])\.(\d)\b'),
-   'cardid'    : re.compile(r'\{#(\d+)\}')
+   "ability"   : re.compile(r"(.)\s+([^\r]+)"),
+   "leftcond"  : re.compile(r"^[\w.]+"),
+   ".bp"       : re.compile(r"([\w\d\[\]]+)\.bp"),
+   ".sp"       : re.compile(r"([\w\d\[\]]+)\.sp"),
+   ".lastbp"   : re.compile(r"([\w\d\[\]]+)\.lastbp"),
+   ".ability"  : re.compile(r"([\w\d\[\]]+)\.ability"),
+   "action"    : re.compile(r"\baction\b"),
+   "reaction"  : re.compile(r"\breaction\b"),
+   "char"      : re.compile(r"\bchar\b"),
+   ".size"     : re.compile(r"([\w.]+)\.size"),
+   ".ring"     : re.compile(r"(\w+)\.ring"),
+   ".ring.size": re.compile(r"(\w+)\.ring\.size"),
+   ".chars"    : re.compile(r"(\w+)\.chars"),
+   ".damaged"  : re.compile(r"(\w+)\.damaged"),
+   ".lostsp"   : re.compile(r"(\w+)\.lostsp"),
+   "opp"       : re.compile(r"\bopp\b"),
+   "listIdx"   : re.compile(r"([\w\d])\.(\d)\b"),
+   "cardid"    : re.compile(r"\{#(\d+)\}")
 }
 
 # Misc
 CardWidth    = 90
 CardHeight   = 126
-Xaxis        = 'x'
-Yaxis        = 'y'
-PlayAction   = 'play'
-BackupAction = 'backup'
-Author       = 'raohmaru'
-GameId       = 'e3d56d9e-900d-49c6-b6ae-22cbb51be153'
-Website      = 'https://cardfightersclash.wordpress.com'
+Xaxis        = "x"
+Yaxis        = "y"
+PlayAction   = "play"
+BackupAction = "backup"
+Author       = "raohmaru"
+GameId       = "e3d56d9e-900d-49c6-b6ae-22cbb51be153"
+Website      = "https://cardfightersclash.wordpress.com"
+NaN          = float("nan")
 # _extapi is not ready yet
 # ButtonSize = _extapi.game.CardSizes["button"].Width
 ButtonSize   = 58
 AvatarWidth  = 292
 AvatarHeight = 40
+DragOffsetY  = 60
 
 # Rules
 NumSlots        = 4
@@ -185,98 +194,103 @@ StartingHP      = 3000
 DeckSize        = 50
 
 GameRulesDefaults = {
-   'ab_trigger_fresh'  : False, # Activate [] abilities of fresh characters
-   'ab_trigger_act'    : True,  # Activate [] abilities
-   'ab_instant_act'    : True,  # Activate /\ abilities
-   'piercing'          : True,  # Allow piercing damage
-   'backup_fresh'      : False, # Backup fresh characters
-   'play_char_bp_limit': None,  # BP limit to play chars
-   'dmg_combat_deal'   : True,  # Deal combat damage
-   'attack_freeze'     : True,  # Characters freeze after a attack
-   'attack'            : True,  # Characters can attack
-   'backup_limit'      : True,  # Limit the number of backups per turn
-   'play_removed'      : False  # Play cards from removed pile
+   "ab_trigger_fresh"  : False, # Activate [] abilities of fresh characters
+   "ab_trigger_act"    : True,  # Activate [] abilities
+   "ab_instant_act"    : True,  # Activate /\ abilities
+   "piercing"          : True,  # Allow piercing damage
+   "backup_fresh"      : False, # Backup fresh characters
+   "play_char_bp_limit": None,  # BP limit to play chars
+   "dmg_combat_deal"   : True,  # Deal combat damage
+   "attack_freeze"     : True,  # Characters freeze after a attack
+   "attack"            : True,  # Characters can attack
+   "backup_limit"      : True,  # Limit the number of backups per turn
+   "play_removed"      : False  # Play cards from Removed pile
 }
 
 # Debug
 DebugLevel = {
-   'Off'    : 0,
-   'Debug'  : 1
+   "Off"    : 0,
+   "Debug"  : 1
 }
 
 # Hooks
 Hooks = Struct(**{
-   'BeforeAttack'      : 'beforeattack',
-   'BeforeBlock'       : 'beforeblock',
-   'BeforePlayAC'      : 'beforeplayac',
-   'BeforePlayRE'      : 'beforeplayre',
-   'BackupLimit'       : 'backuplimit',
-   'PreventPierce'     : 'preventpierce',
-   'CallOnRemove'      : 'callonremove',
-   'PlayAsFresh'       : 'playasfresh',
-   'CanBeBlocked'      : 'canblock',
-   'CancelCombatDamage': 'cancelcombatdamage'
+   "BeforeAttack"      : "beforeattack",
+   "BeforeBlock"       : "beforeblock",
+   "BeforePlayAC"      : "beforeplayac",
+   "BeforePlayRE"      : "beforeplayre",
+   "BackupLimit"       : "backuplimit",
+   "PreventPierce"     : "preventpierce",
+   "CallOnRemove"      : "callonremove",
+   "PlayAsFresh"       : "playasfresh",
+   "CanBeBlocked"      : "canblock",
+   "CancelCombatDamage": "cancelcombatdamage"
 })
 
 # Game Events
 GameEvents = Struct(**{
-   'ActivatePhase'      : 'activatephase',
-   'DrawPhase'          : 'drawphase',
-   'BlockPhase'         : 'blockphase',
-   'EndPhase'           : 'endphase',
-   'CleanupPhase'       : 'cleanupphase',
-   'HandChanges'        : 'handchanges',
-   'RingChanges'        : 'ringchanges',
-   'Removed'            : 'removed',
-   'Powerless'          : 'powerless',
-   'BeforeDamage'       : 'beforedamage',
-   'PlayerCombatDamaged': 'playercombatdamaged',
-   'Attacks'            : 'attacks',
-   'Blocks'             : 'blocks',
-   'Blocked'            : 'blocked',
-   'BackedUp'           : 'backedup',
-   'BeforePayCost'      : 'beforepaycost'  # Used with suffixes 'action' or 'reaction'
+   "ActivatePhase"      : "activatephase",
+   "DrawPhase"          : "drawphase",
+   "BlockPhase"         : "blockphase",
+   "EndPhase"           : "endphase",
+   "CleanupPhase"       : "cleanupphase",
+   "HandChanges"        : "handchanges",
+   "RingChanges"        : "ringchanges",
+   "Removed"            : "removed",
+   "Powerless"          : "powerless",
+   "BeforeDamage"       : "beforedamage",
+   "PlayerCombatDamaged": "playercombatdamaged",
+   "Attacks"            : "attacks",
+   "Blocks"             : "blocks",
+   "Blocked"            : "blocked",
+   "BackedUp"           : "backedup",
+   "BeforePayCost"      : "beforepaycost"  # Used with suffixes "action" or "reaction"
 })
 
-# Maps variables to events
+# Maps variables in card rules to events
 GameEventsFromVars = {
-   'hand.size': GameEvents.HandChanges
+   "hand.size": GameEvents.HandChanges
 }
 
+# Actions triggered by these events can be executed when the ability is copied
+GameEventsExecOnCopy = [
+   GameEvents.HandChanges
+]
+
 #---------------------------------------------------------------------------
-# Global variables (for the current user)
+# Variables for the current user
 #---------------------------------------------------------------------------
 
-playerSide     = None  # The side of the player (top: -1, bottom: 1)
+playerSide     = None   # The side of the player (top: -1, bottom: 1)
 handSize       = HandSize
-parsedCards    = {} # Dictionary holding all parsed cards
+gameCards      = {}     # Dictionary holding all parsed cards
 cleanedUpRing  = False  # Tracks if the user has run the Clean-up phase
-commander      = None  # RulesCommands instance
-turns          = 1  # The number of consecutive turns a player can play
-envVars        = None  # Global variables to be used in eval() expression
-buttons        = {}  # Holds the UI buttons created
-transformed    = {}  # Transformed cards
+commander      = None   # RulesCommands instance
+turnsRemaining = 1      # The number of consecutive turns a player can play
+envVars        = None   # Global variables to be used in eval() expression
+buttons        = {}     # Holds the created UI buttons
+transformed    = {}     # Transformed cards
 phaseOngoing   = False  # True while running phase automation tasks
-Globals        = {}  # Replaces OCTGN global variables
-PlayerGlobals  = {}  # Replaces OCTGN player global variables
-debugVerbosity = DebugLevel['Off']
+Globals        = {}     # Replaces OCTGN global variables
+PlayerGlobals  = {}     # Replaces OCTGN player global variables
+debugVerbosity = DebugLevel["Off"]
 debugging      = False
-# If I am alone debugging I want to know EVERYTHING
+# If I am alone playing I want to know EVERYTHING
 # if me.name == Author and len(players) == 1:
-   # debugVerbosity = DebugLevel['Debug']
+   # debugVerbosity = DebugLevel["Debug"]
 
 settings = {
-   'Play'         : True, # Trigger game, event and card effects
-   'Phase'        : True, # Automatic phase advancement
-   'Activate'     : True, # Automatic activate /\ abilites and Action and Reaction
-   'WinForms'     : True, # Use custom Windows Forms for displaying info pop-ups
-   'Sounds'       : True, # Play sound effect
-   'WelcomeScreen': True, # Show welcome screen
-   'ExtAPI'       : True, # Make use of the extended API to access the C# API
-   'GameVersion'  : '0.0.0', # Last version shown in the changelog window
-   'Avatar'       : None  # Player's avatar
+   "PlayAuto"     : True,    # Trigger game, event and card effects
+   "PhaseAuto"    : True,    # Automatic phase advancement
+   "Activate"     : True,    # Automatic activate /\ abilites and Action and Reaction cards
+   "WinForms"     : True,    # Use custom Windows Forms for displaying info pop-ups
+   "Sounds"       : True,    # Play sound effect
+   "WelcomeScreen": True,    # Show welcome screen
+   "ExtAPI"       : True,    # Make use of the extended API to access the C# API of IronPython
+   "GameVersion"  : "0.0.0", # Last version shown in the changelog window
+   "Avatar"       : None     # Player"s avatar
 }
 
-# Default values used in dialogs that can be overridden by the user to remember his last input
-defProphecyCount = 3
-defTrashCount    = 1
+# Values used in dialogs that can be overridden by the user to remember his last input
+dialogProphecyCount = 3
+dialogTrashCount    = 1

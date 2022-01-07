@@ -1,5 +1,5 @@
 # Python Scripts for the Card Fighters' Clash definition for OCTGN
-# Copyright (C) 2013  Raohmaru
+# Copyright (C) 2013 Raohmaru
 
 # This python script is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -12,7 +12,7 @@
 # GNU General Public License for more details.
 
 # You should have received a copy of the GNU General Public License
-# along with this script.  If not, see <http://www.gnu.org/licenses/>.
+# along with this script. If not, see <http://www.gnu.org/licenses/>.
 
 
 #---------------------------------------------------------------------------
@@ -112,7 +112,9 @@ actions = [
    # "action = shuffle?()",
    # "action = steal(character@ring) from(character[powerful])",
    # "action = {S}: transform('80d411e3-c3df-486f-927f-1592d9db65de') target(character)",
-   "action = reveal(nil, true, false, 1, -12, yes, none)"
+   # "action = reveal(nil, true, false, 1, -12, yes, none)",
+   "action = copyAbility(prevTgt.0) to(this); [[if prevTgt.ability == trigger]] clear()",
+   "action = {S}: each(card in me.hand => hp(+100))"
 ]
 abilities = [
    "abilities = unblockable",
@@ -121,7 +123,7 @@ abilities = [
 ]
 autos = [
    # "auto = destroy()",
-   "auto = ~my HandChanges~ destroy()",
+   # "auto = ~my HandChanges~ destroy()",
    # "auto = ~HandChanges~ destroy() & draw(1)",
    "auto = ~opp HandChanges~ [[if oppRing<2]] destroy()",
    # "auto = ~ myHandChanges ~ destroy() to(character@myRing)",
@@ -133,10 +135,10 @@ autos = [
    # "auto = ~myEndPhase~ moveTo(ctrlHand) to(characters[bp>=800])",
    # "auto = ~anyBlockPhase~ +unblockable to(characters[bp<=300 & attack & -uattack]) ueot",
    # "auto = ~playerCombatDamaged fromThis~ +cantplayac to(opp) oppueot",
-   # "auto = ?oppCanBeBlocked:any? [[if blocker.bp > this.bp]]",
-   "auto = ~anyPlayerDamaged:action~ damage(1) to(damagedPlayer)",
+   "auto = ?oppCanBlock:any? [[if blocker.bp > this.bp]]",
+   # "auto = ~anyPlayerDamaged:action~ damage(1) to(damagedPlayer)",
    # "auto = ~anyPlayerDamaged:action~ [[if me.hp < 10]] hp(+1)",
-   "auto = ~oppEndPhase:once~ discard(all)",
+   # "auto = ~oppEndPhase:once~ discard(all)",
 ]
 evals = [
    "action in me.hand => bp(+2)"
@@ -170,9 +172,9 @@ def test(arr, title):
 
 # rules = RulesDict['aa867ea1-89f8-4154-8e20-2263edd00002']
 # test(targets, 'targets')
-test(actions, 'actions')
+# test(actions, 'actions')
 # test(abilities, 'abilities')
-# test(autos, 'autos')
+test(autos, 'autos')
 # test(requisite, 'requisite')
 # test(vars, 'vars')
 # test(labels, 'labels')

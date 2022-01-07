@@ -1,5 +1,5 @@
 # Python Scripts for the Card Fighters' Clash definition for OCTGN
-# Copyright (C) 2013  Raohmaru
+# Copyright (C) 2013 Raohmaru
 
 # This python script is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -12,7 +12,7 @@
 # GNU General Public License for more details.
 
 # You should have received a copy of the GNU General Public License
-# along with this script.  If not, see <http://www.gnu.org/licenses/>.
+# along with this script. If not, see <http://www.gnu.org/licenses/>.
 
 #---------------------------------------------------------------------------
 # Abilities class
@@ -23,7 +23,7 @@ class RulesAbilities():
    items = {}
 
    @staticmethod
-   def register(name, event, checkFunc=None, onAdded=None, onRemoved=None):
+   def register(name, event, checkFunc = None, onAdded = None, onRemoved = "abl_removed"):
       msg = MSG_AB[name] if name in MSG_AB else None
       RulesAbilities.items[name] = {
          'event'    : event,
@@ -41,7 +41,7 @@ class RulesAbilities():
    
    
    @staticmethod   
-   def add(abilityName, target_id, source_id=None, restr=None):
+   def add(abilityName, target_id, source_id = None, restr = None):
       if abilityName in RulesAbilities.items:
          ability = RulesAbilities.items[abilityName]
          obj = getPlayerOrCard(target_id)
@@ -93,7 +93,7 @@ def getTextualRestr(restr):
    return restr(1)
    
    
-def notifyAbility(target_id, source_id=None, msg=None, restr='', isWarning=False):
+def notifyAbility(target_id, source_id = None, msg = None, restr = '', isWarning = False):
    obj = getPlayerOrCard(target_id)
    source = obj
    if source_id is not None:
@@ -113,22 +113,19 @@ def notifyAbility(target_id, source_id=None, msg=None, restr='', isWarning=False
 # Abilities functions
 #---------------------------------------------------------------------------
 
-def abl_add(abl, obj_id, source_id=None, restr=None):
+def abl_add(abl, obj_id, source_id = None, restr = None):
    event = abl['event']
    msg = abl['msg']
    checkFunc = abl['checkFunc']
    onRemove = abl['onRemoved']
    debug(">>> abl_add({}, {}, {}, {}, {}, {}, {})".format(obj_id, event, source_id, restr, msg, checkFunc, onRemove))
-   
-   if restr and msg and len(msg) > 1:
-      restr = list(restr) + [msg[1]] # Show message when the effect has gone because of the restr cleanup
       
-   eventAdded = addGameEventListener(event, 'abl_genericListener', obj_id, source_id, restr, [obj_id, source_id, msg, checkFunc], onRemove=onRemove)
+   eventAdded = addGameEventListener(event, 'abl_genericListener', obj_id, source_id, restr, [obj_id, source_id, msg, checkFunc, restr], onRemove = onRemove)
    if eventAdded and msg:
       notifyAbility(obj_id, source_id if source_id else obj_id, msg[0], getTextualRestr(restr))
 
 
-def abl_genericListener(target_id, obj_id, source_id=None, msgOrFunc=None, checkFunc=None):
+def abl_genericListener(target_id, obj_id, source_id = None, msgOrFunc = None, checkFunc = None, restr = None):
    """ Checks if the original card with the ability is equal to the second card the system wants to check """
    debug(">>> abl_genericListener({}, {}, {}, {}, {})".format(target_id, obj_id, source_id, msgOrFunc, checkFunc))
    callFunc = False
@@ -162,11 +159,10 @@ def abl_pierce(obj_id):
    
 def abl_frosted_added(card, restr = None):
    if not hasMarker(card, 'Cannot Unfreeze'):
-      doesNotUnfreeze(card, restr = restr)
+      doesNotUnfreeze(card, restr)
    
    
 def abl_removeFrost(obj_id):
-   debug('>>> abl_removeFrost()')
    card = Card(obj_id)
    if hasMarker(card, 'Cannot Unfreeze'):
       doesNotUnfreeze(card)
@@ -179,18 +175,30 @@ def abl_cantattack_added(card, restr = None):
 
 
 def abl_cantblock_added(card, restr = None):
-   setMarker(card, 'Cant Block')
+   setMarker(card, 'Cannot Block')
    if isBlocking(card):
       cancelBlock(card)
 
 
-def abl_cantblock_removed(obj_id, source_id, msg, checkFunc):
-   removeMarker(Card(obj_id), 'Cant Block')
+def abl_cantblock_removed(obj_id, source_id, msg, checkFunc, restr = None):
+   removeMarker(Card(obj_id), 'Cannot Block')
+   # It's mandatory to call this function
+   abl_removed(obj_id, source_id, msg, checkFunc, restr)
 
 
 def abl_rush_added(card, restr = None):
    if hasMarker(card, 'Just Entered'):
       removeMarker(card, 'Just Entered')
+      
+
+def abl_removed(obj_id, source_id, msg, checkFunc, restr = None):
+   """
+   On removed ability callback function.
+   """
+   # If msg has 2 items it means that it is a on/off message.
+   # Then we want to show the message when the effect is gone because of the restr cleanup.
+   if restr and msg and len(msg) == 2:
+      notify(msg[1].format(getObjName(obj_id)))
 
 
 RulesAbilities.register('unblockable',     Hooks.CanBeBlocked)

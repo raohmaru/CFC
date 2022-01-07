@@ -1,5 +1,5 @@
 # Python Scripts for the Card Fighters' Clash definition for OCTGN
-# Copyright (C) 2013  Raohmaru
+# Copyright (C) 2013 Raohmaru
 
 # This python script is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -12,7 +12,7 @@
 # GNU General Public License for more details.
 
 # You should have received a copy of the GNU General Public License
-# along with this script.  If not, see <http://www.gnu.org/licenses/>.
+# along with this script. If not, see <http://www.gnu.org/licenses/>.
 
 import re
 
@@ -66,7 +66,7 @@ RS_KW_ANYNUM = '**'
 RS_KW_ALL    = 'all'
 RS_KW_NAME   = '"'
 RS_KW_RANDOM = 'r'
-RS_KW_ARROW  = '->'
+RS_KW_ARROW  = '=>'
 
 # Operators
 RS_OP_OR       = ','

@@ -1,5 +1,5 @@
 # Python Scripts for the Card Fighters' Clash definition for OCTGN
-# Copyright (C) 2013  Raohmaru
+# Copyright (C) 2013 Raohmaru
 
 # This python script is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -12,10 +12,10 @@
 # GNU General Public License for more details.
 
 # You should have received a copy of the GNU General Public License
-# along with this script.  If not, see <http://www.gnu.org/licenses/>.
+# along with this script. If not, see <http://www.gnu.org/licenses/>.
 
 #---------------------------------------------------------------------------
-# Functions that alter the label name of an action from the menu
+# Functions that alter the label name of an action from the contextual menu
 #---------------------------------------------------------------------------
 
 def aclb_Freeze(args, x = 0, y = 0):
@@ -28,7 +28,7 @@ def aclb_Freeze(args, x = 0, y = 0):
       
 def aclb_Default(args, x = 0, y = 0):
    card = args[0]
-   phaseIdx = currentPhase()[1]
+   phaseIdx = getCurrentPhase()
    if isCharacter(card):
       if me.isActive and phaseIdx == AttackPhase:
          if isAttacking(card):
@@ -43,6 +43,7 @@ def aclb_Default(args, x = 0, y = 0):
             return "Counter-attack"
       
       return "Use ability"
+      
    elif isButton(card):
       return "Activate"
    elif isAvatar(card):
@@ -86,15 +87,15 @@ def aclb_RevealTopDeck(group, x = 0, y = 0):
 
       
 def aclb_PlayAuto(group, x = 0, y = 0):
-   return aclb_setting('Play automation', 'Play')
+   return aclb_setting('Play automation', 'PlayAuto')
 
       
 def aclb_PhaseAuto(group, x = 0, y = 0):
-   return aclb_setting('Phase auto advance', 'Phase')
+   return aclb_setting('Phase auto advance', 'PhaseAuto')
 
       
 def aclb_ActivateAuto(group, x = 0, y = 0):
-   return aclb_setting(u'Activate {} abilites and effects'.format(InstantUniChar), 'Activate')
+   return aclb_setting(u'Activate {} abilities and effects'.format(InstantUniChar), 'Activate')
 
       
 def aclb_WinForms(group, x = 0, y = 0):
@@ -124,7 +125,7 @@ def aclb_unitedAttack(group, x = 0, y = 0):
       
       
 def aclb_RemovedDefault(group, x = 0, y = 0):
-   if me.isActive and currentPhase()[1] == MainPhase and getRule('play_removed'):
+   if me.isActive and getCurrentPhase() == MainPhase and getRule('play_removed'):
       return 'Play card'
       
    

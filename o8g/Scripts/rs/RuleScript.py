@@ -1,5 +1,5 @@
 # Python Scripts for the Card Fighters' Clash definition for OCTGN
-# Copyright (C) 2013  Raohmaru
+# Copyright (C) 2013 Raohmaru
 
 # This python script is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -12,7 +12,7 @@
 # GNU General Public License for more details.
 
 # You should have received a copy of the GNU General Public License
-# along with this script.  If not, see <http://www.gnu.org/licenses/>.
+# along with this script. If not, see <http://www.gnu.org/licenses/>.
 
 #---------------------------------------------------------------------------
 # RuleScript
@@ -41,7 +41,7 @@ class Rules():
       self.parsed = True
 
          
-   def init(self):
+   def init(self, forceExecAuto = False):
       if not self.parsed:
          self.parse()
    
@@ -60,8 +60,10 @@ class Rules():
                self.addEvent(event)
          else:
             self.addEventsFromIfCond()
-         # If it does not have events, then it has commands that must be executed
-         if not self.has_events:
+         # If it does not have events, or if it is allowed to execute on init,
+         # then it has commands that must be executed
+         if not self.has_events or forceExecAuto and self.canExecAuto(auto['event']):
+            debug("Can execute auto on init")
             self.execAction(auto, [Card(self.card_id)], True)
          
          
@@ -85,6 +87,13 @@ class Rules():
                   event = RulesLexer.getPrefix(RS_PREFIX_EVENTS, leftCond.group())
                   if event[1] in GameEventsFromVars:
                      self.addEvent((event[0], GameEventsFromVars[event[1]]))
+            
+            
+   def canExecAuto(self, events):
+      for event in events:
+         if event[1] in GameEventsExecOnCopy:
+            return True
+      return False
                      
                      
    def getTargets(self, targetList):
@@ -196,7 +205,7 @@ class Rules():
             cond = effect[0]
             # MAY condition
             if cond[0] == RS_KW_COND_MAY:
-               question = MSG_MAY_DEF
+               question = MSG_Q_MAY
                if len(cond) > 1:
                   question = cond[1].strip('"\'').capitalize()
                debug("-- Found MAY condition: {}".format(question))
@@ -212,9 +221,10 @@ class Rules():
                   if len(cond) > 2:
                      debug("--- Found ELIF/ELSE condition")
                      return self.execAction(cond[2], target, isAuto, True)
-                  if len(effect[1]) > 0:
+                  # Only a failed condition in the first action can stop the execution
+                  if i == 0 and len(effect[1]) > 0:
                      notify("Cannot activate the ability because its conditions does not match.")
-                  if not isAuto:
+                  if not isAuto and i == 0:
                      return ERR_NO_EFFECT
                   revert = True
                # If there aren't any command, then we return resulting boolean
@@ -238,10 +248,11 @@ class Rules():
          if currTarget:
             targets += currTarget
             
-         # For auto with events that adds abilities, if the ability were already granted, check if any char has lost
-         # it (it is not in in targets), then remove abilities of those chars
+         # For auto with events that adds abilities, if the ability was already granted, check if any char has lost
+         # it (it is not already in targets), then remove abilities of those chars.
+         # FIXME Not sure if it still relevant.
          if isAuto and action['event']:
-            abTargets = getTargetOfSourceEvent(self.card_id)
+            abTargets = RulesUtils.getTargetsOfEventSource(self.card_id)
             newTargets = []
             for t in abTargets:
                if not t in targets:
@@ -260,14 +271,11 @@ class Rules():
                for obj in targets:
                   if isCard(obj) and obj.targetedBy:
                      obj.target(False)
-         rnd(10, 1000) # Wait between effects until all animation is done
+         waitForAnimation()
             
-      # if not targets:
-         # notify(MSG_AB_NO_EFFECT.format(thisCard, getParsedCard(thisCard).ability))
-         
       if isAuto and not revert:
          if isCharacter(thisCard):
-            notify(MSG_AB_AUTO_ACT_CHAR.format(thisCard.controller, thisCard, getParsedCard(thisCard).ability))
+            notify(MSG_AB_AUTO_ACT_CHAR.format(thisCard.controller, thisCard, getGameCard(thisCard).ability))
          else:
             notify(MSG_AB_AUTO_ACT.format(thisCard.controller, thisCard))
       
@@ -289,7 +297,7 @@ class Rules():
                notify(MSG_AB_AUTO_TRIGGER_CHAR.format(eventName, thisCard, thisCard.controller, thisCard.group.name))
             else:
                notify(MSG_AB_AUTO_TRIGGER.format(eventName, thisCard, thisCard.controller))
-            if not MarkersDict['United Attack'] in thisCard.markers:
+            if not hasMarker(thisCard, "United Attack"):
                targets = [thisCard]
                if RS_KEY_TARGET in self.rules_tokens:
                   newTargets = self.getTargets(self.rules_tokens[RS_KEY_TARGET])

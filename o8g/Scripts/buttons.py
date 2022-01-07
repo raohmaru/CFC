@@ -1,5 +1,5 @@
 # Python Scripts for the Card Fighters' Clash definition for OCTGN
-# Copyright (C) 2013  Raohmaru
+# Copyright (C) 2013 Raohmaru
 
 # This python script is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -12,7 +12,7 @@
 # GNU General Public License for more details.
 
 # You should have received a copy of the GNU General Public License
-# along with this script.  If not, see <http://www.gnu.org/licenses/>.
+# along with this script. If not, see <http://www.gnu.org/licenses/>.
 
 
 #---------------------------------------------------------------------------
@@ -23,7 +23,7 @@ def buttonAction(btn):
    if btn._id in buttons:
       if buttons[btn._id] == 'StartButton':
          if len(me.Deck) == 0:
-            warning("Please load a deck first.")
+            warning(MSG_ACTION_LOAD_DECK)
             return
          me.setActive()
          
@@ -37,11 +37,12 @@ def addButton(name):
       return
    x = CardsCoords[name][0] * playerSide - ButtonSize/2
    y = fixCardY(CardsCoords[name][1], ButtonSize)
-   btn = table.create(Buttons[name], x, y, quantity=1, persist=False)
+   btn = table.create(Buttons[name], x, y, quantity = 1, persist = False)
+   # Nail it to the table thus preventing players from manually moving it
    btn.anchor = True
    buttons[btn._id] = btn.Name
-   # Removes the model so the button image is not shown in the preview
-   # It breaks OCTGN when closing the play window :(
+   # Removes the model so the button image is not shown in the preview.
+   # Unfortunately it loses its type and buttonAction() won't be called
    # icard = _extapi.getCardIdentityById(btn._id)
    # if icard:
       # update()
@@ -61,7 +62,10 @@ def removeButton(name):
             c.delete()
 
 
-def removeButtons():
+def removeAllButtons():
+   """
+   Removes all buttons in the game.
+   """
    mute()
    for c in table:
       if c._id in buttons:
