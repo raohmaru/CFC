@@ -28,7 +28,7 @@ class CharCard(GameCard):
       self.state["lastBP"] = self.BP
       ability = Ability(card, ruleId = ruleId)
       if ability.name:
-         debug("Found ability {}".format(ability))
+         debug("Found ability {}", ability)
          self.ability = ability
       else:
          debug("No ability found")

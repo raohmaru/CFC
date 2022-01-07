@@ -76,7 +76,7 @@ def resetAll():
 
 
 def switchSetting(name, value = None):
-   debug(">>> switchSetting({})".format(name))
+   debug(">>> switchSetting({})", name)
 
    global settings
    if not name in settings:
@@ -90,9 +90,9 @@ def switchSetting(name, value = None):
       status = "ON" if settings[name] else "OFF"
    else:
       status = settings[name]
-   debug(" -> {}'s {} setting is {}.".format(me, name, status))
+   debug(" -> {}'s {} setting is {}.", me, name, status)
 
-   debug("<<< switchSetting({})".format(name))
+   debug("<<< switchSetting({})", name)
 
 
 def rollDie(num):
@@ -181,7 +181,7 @@ def updateSharedGlobals(name, value, player = None):
    
 
 def replaceVars(str):
-   debug("-- replaceVars({})".format(str))
+   debug("-- replaceVars({})", str)
    # Order is important
    str = replaceIfRgx (str, 'listIdx'   , r'\1[\2]', False)
    str = replaceIfRgx (str, '.bp'       , r'getGameCard(\1).BP')
@@ -203,7 +203,7 @@ def replaceVars(str):
    str = replaceIf    (str, 'blocker'   , 'blocker[0]')
    str = replaceIf    (str, 'soloattack', 'len(getAttackingCards()) == 1')
    str = replaceIf    (str, '.discards' , '.piles["Discard pile"]')
-   debug("---- {}".format(str))
+   debug("---- {}", str)
    return str
 
    
@@ -229,7 +229,7 @@ def getCardByContext(l):
 
 
 def evalExpression(expr, retValue = False, locals = None):
-   debug("evalExpression({})\nLocals: {}".format(expr, locals))
+   debug("evalExpression({})\nLocals: {}", expr, locals)
    expr = replaceVars(expr)
    forexpr = "[{} for card in {}]"
    
@@ -256,7 +256,7 @@ def evalExpression(expr, retValue = False, locals = None):
    
    
 def showCardDlg(list, title, max=1, text="Card Selection", min=1, bottomList=None, label=None, bottomLabel=None):
-   debug("showCardDlg({}, {}, {}, {}, {}, {}, {}, {})".format(list, title, max, text, min, bottomList, label, bottomLabel))
+   debug("showCardDlg({}, {}, {}, {}, {}, {}, {}, {})", list, title, max, text, min, bottomList, label, bottomLabel)
    newList = []
    groups = {}
    
@@ -359,7 +359,7 @@ def getRule(rule, Rules = None):
 
 
 def addTempVar(name, value, merge = False):
-   debug(">>> addTempVar({}, {})".format(name, value))
+   debug(">>> addTempVar({}, {})", name, value)
    name = name.lower()
    vars = getGlobalVar('TempVars')
    if isinstance(value, list):
@@ -382,29 +382,29 @@ def getTempVar(name, default = None):
 
 
 def getState(player = None, name = None):
-   debug(">>> getState({}, {})".format(player, name))
+   debug(">>> getState({}, {})", player, name)
    GameState = getGlobalVar('GameState')
    name = name.lower()
    if not player:
       return GameState[name] if name in GameState else None
    if not name:
       return GameState[player._id]
-   debug("GameState: {}".format(GameState))
+   debug("GameState: {}", GameState)
    if name in GameState[player._id]:
-      debug(" -- {}: {}".format(name, GameState[player._id][name]))
+      debug(" -- {}: {}", name, GameState[player._id][name])
       return GameState[player._id][name]
    return None
 
 
 def setState(player, name, value):
-   debug(">>> setState({}, {}, {})".format(player, name, value))
+   debug(">>> setState({}, {}, {})", player, name, value)
    GameState = getGlobalVar('GameState')
    if player:
       GameState[player._id][name.lower()] = value
    else:
       GameState[name.lower()] = value
    setGlobalVar('GameState', GameState)
-   debug("GameState: {}".format(GameState))
+   debug("GameState: {}", GameState)
    
 
 def resetState():
@@ -427,28 +427,28 @@ def resetState():
          'sp'           : p.SP
       }
    setGlobalVar('GameState', GameState)
-   debug(">>> resetState()\n{}".format(GameState))
+   debug(">>> resetState()\n{}", GameState)
    
    
 def addGameMod(type, id, *args):
-   debug(">>> addGameMod({}, {}, {})".format(type, id, args))
+   debug(">>> addGameMod({}, {}, {})", type, id, args)
    Modifiers = getGlobalVar('Modifiers')
    if not type in Modifiers:
       Modifiers[type] = []
    Modifiers[type].append([id] + list(args))
-   debug("{}".format(Modifiers))
+   debug("{}", Modifiers)
    setGlobalVar('Modifiers', Modifiers)
    
   
 def removeGameMod(id, msg = False):
-   debug(">>> removeGameMod({}, {})".format(id, msg))
+   debug(">>> removeGameMod({}, {})", id, msg)
    Modifiers = getGlobalVar('Modifiers')
-   debug("{}".format(Modifiers))
+   debug("{}", Modifiers)
    for key, modList in Modifiers.iteritems():
       for i, mod in enumerate(list(reversed(modList))):
          if mod[0] == id:
             del modList[len(modList) - 1 - i]
-   debug("{}".format(Modifiers))
+   debug("{}", Modifiers)
    setGlobalVar('Modifiers', Modifiers)
    if msg:
       notify(msg)
@@ -708,27 +708,27 @@ def placeCard(card, type = None, action = None, target = None, faceDown = False)
 
   
 def getSlotIdx(card, player = me):
-   debug(">>> getSlotIdx({})".format(card))
+   debug(">>> getSlotIdx({})", card)
    
    ring = getGlobalVar('Ring', player)
    for i, id in enumerate(ring):
       if id == card._id:
          if card.controller != me or (tutorial and card.position[1] < 0):
             i = fixSlotIdx(i, player)
-         debug("Slot idx: {}".format(i))
+         debug("Slot idx: {}", i)
          return i
    debug("Card isn't in a slot")
    return -1
    
    
 def getCardAtSlot(idx, player = me):
-   debug(">>> getCardAtSlot({}, {})".format(idx, player))
+   debug(">>> getCardAtSlot({}, {})", idx, player)
    
    ring = getGlobalVar('Ring', player)
    if player != me:
       ring.reverse()
    card = Card(ring[idx]) if ring[idx] else None
-   debug("Card at slot {} is: {}".format(idx, card))
+   debug("Card at slot {} is: {}", idx, card)
    return card
    
 
@@ -738,7 +738,7 @@ def charIsInRing(card, player = me):
 
    
 def putAtSlot(card, idx, player = me, move = False):
-   debug(">>> putAtSlot({}, {}, move={})".format(card, idx, move))
+   debug(">>> putAtSlot({}, {}, move={})", card, idx, move)
    if idx < NumSlots:
       ring = getGlobalVar('Ring', player)
       if move:
@@ -747,13 +747,13 @@ def putAtSlot(card, idx, player = me, move = False):
             ring[oldIdx] = None         
       ring[idx] = card._id
       setGlobalVar('Ring', ring, player)
-      debug("{}'s ring: {}".format(me, ring))
+      debug("{}'s ring: {}", me, ring)
 
 
 def alignCard(card, x=None, y=None, slotIdx=None):
    if hasMarker(card, 'Backup'):
       return
-   debug(">>> alignCard({}, {}, {}, {})".format(card, x, y, slotIdx))
+   debug(">>> alignCard({}, {}, {}, {})", card, x, y, slotIdx)
    z = None
    if x == None or y == None:
       if slotIdx == None:
@@ -798,7 +798,7 @@ def alignCard(card, x=None, y=None, slotIdx=None):
 
 
 def alignBackups(card, x=0, y=0):
-   debug(">>> alignBackups({}, {}, {})".format(card, x, y))
+   debug(">>> alignBackups({}, {}, {})", card, x, y)
    attachs = getAttachmets(card)
    if len(attachs) > 0:
       ox, oy = CardsCoords['BackupOffset']
@@ -842,7 +842,7 @@ def transformCard(card, cardModel):
    """
    Transform a card into another card. Actually it creates a new card and removes the original.
    """
-   debug(">>> transformCard({}, {})".format(card, cardModel))
+   debug(">>> transformCard({}, {})", card, cardModel)
    
    group = card.group
    cx, cy = card.position
@@ -873,7 +873,7 @@ def transformCard(card, cardModel):
       model = transformed[card._id]
       del transformed[card._id]
    transformed[newCard._id] = model
-   debug("{}".format(transformed))
+   debug("{}", transformed)
    dispatchEvent(GameEvents.Removed, card._id)
    removeGameEventListener(card._id)
    deleteGameCard(card)
@@ -882,7 +882,7 @@ def transformCard(card, cardModel):
    
    
 def copyAlternateRules(card, target):
-   debug(">>> copyAlternateRules({}, {})".format(card, target))
+   debug(">>> copyAlternateRules({}, {})", card, target)
    
    if not settings['ExtAPI']:
       return False
@@ -891,13 +891,13 @@ def copyAlternateRules(card, target):
    rules = target.Rules
    ability = target.Ability
    if rules:
-      debug("Found rule '{} {}'".format(ability, rules))
+      debug("Found rule '{} {}'", ability, rules)
       return addAlternateRules(card, ability, rules)
    return False
    
    
 def addAlternateRules(card, ability, rules, altname=None):
-   debug(">>> addAlternateRules({}, {}, {})".format(card, ability, altname))
+   debug(">>> addAlternateRules({}, {}, {})", card, ability, altname)
    
    if not settings['ExtAPI']:
       return None
@@ -910,7 +910,7 @@ def addAlternateRules(card, ability, rules, altname=None):
    _extapi.setCardProperty(cardData, "Ability Type", ability.type, altname)
    _extapi.setCardProperty(cardData, "Ability Name", ability.name, altname)
    _extapi.setCardProperty(cardData, "Ability", (ability.type+' '+ability.name).strip(), altname)
-   debug("Adding new alternate '{}' and generating proxy".format(altname))
+   debug("Adding new alternate '{}' and generating proxy", altname)
    _extapi.generateProxy(cardData, altname)
    # Need to be here, otherwise if active player switches the card and network tasks are not
    # completed, the card won't switch at all
@@ -932,7 +932,7 @@ def askForEmptySlot(player = me):
    if len(slots) == 1:
       return int(slots[0]) - 1
    slotIdx = askChoice("Select an empty slot:", slots)
-   debug("Selected option {} ({})".format(slotIdx, slotIdx-1))
+   debug("Selected option {} ({})", slotIdx, slotIdx-1)
    if slotIdx == 0:
       return -1
    return int(slots[slotIdx-1]) - 1
@@ -1137,7 +1137,7 @@ def modSP(count = 1, mode = None, silent = False, player = me, silentSnd = False
 
 def payCostSP(amount = 1, obj = None, msg = 'play this card', type = None):
 # Pay an SP cost. However we also check if the cost can actually be paid.
-   debug(">>> payCostSP({}, {})".format(amount, type))
+   debug(">>> payCostSP({}, {})", amount, type)
    costModMsg = None
    
    # Cost modifiers
@@ -1162,7 +1162,7 @@ def payCostSP(amount = 1, obj = None, msg = 'play this card', type = None):
    
    
 def getCostMod(initialAmount, type, obj=None):
-   debug(">>> getCostMod({}, {})".format(obj, type))
+   debug(">>> getCostMod({}, {})", obj, type)
    newAmount = initialAmount
    costMod = 0
    type = type.lower()
@@ -1170,7 +1170,7 @@ def getCostMod(initialAmount, type, obj=None):
    if 'cost' in Modifiers:
       for mod in Modifiers['cost']:
          if mod[1] == type:
-            debug("-- Found cost modifier: {}".format(mod))
+            debug("-- Found cost modifier: {}", mod)
             if mod[3] == RS_MODE_EQUAL:  # mode
                newAmount = mod[2]
                initialAmount = mod[2]
@@ -1228,7 +1228,7 @@ def dettach(card):
 def clearAttachLinks(card):
 # This function takes care to discard any attachments of a card that left play.
 # It also clear the card from the attach dictionary, if it was itself attached to another card.
-   debug(">>> clearAttachLinks({})".format(card))
+   debug(">>> clearAttachLinks({})", card)
    
    backups = getGlobalVar('Backups')
    card_id = card._id
@@ -1238,13 +1238,13 @@ def clearAttachLinks(card):
       for id in backups:
          if backups[id] == card_id:
             attcard = Card(id)
-            debug("Unattaching {} from {}.".format(attcard, card))
+            debug("Unattaching {} from {}.", attcard, card)
             if attcard in table:
                discard(attcard)
             del backups[id]
    # If the card was an attachment, delete the link
    elif backups.has_key(card_id):
-      debug("{} is attached to {}. Unattaching.".format(card, Card(backups[card_id])))
+      debug("{} is attached to {}. Unattaching.", card, Card(backups[card_id]))
       del backups[card_id] # If the card was an attachment, delete the link
    setGlobalVar('Backups', backups)
    
@@ -1253,7 +1253,7 @@ def clearAttachLinks(card):
    
 
 def getAttachmets(card):
-   debug(">>> getAttachmets({})".format(card))
+   debug(">>> getAttachmets({})", card)
    
    # Returns a list with all the cards attached to this card
    backups = getGlobalVar('Backups')
@@ -1263,7 +1263,7 @@ def getAttachmets(card):
       if backups[id] == card_id:
          attachs.append(Card(id))
          
-   debug("{} has {} cards attached".format(card, len(attachs)))
+   debug("{} has {} cards attached", card, len(attachs))
    return attachs
    
 

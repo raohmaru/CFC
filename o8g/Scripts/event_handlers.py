@@ -27,7 +27,7 @@ def onTableLoaded():
    try:
       strSettings = getSetting("settings", str(settings))
       settings.update(eval(strSettings))  # Merges other dict overwriting existing keys
-      debug("Settings loaded: {}".format(settings))
+      debug("Settings loaded: {}", settings)
    except:
       debug("Error loading settings}")
    checkTwoSidedTable()
@@ -58,7 +58,7 @@ def onDeckLoaded(args):
    # We only want the owner of the deck to run this script
    if player != me:
       return
-   debug(">>> onDeckLoaded({})".format(player))
+   debug(">>> onDeckLoaded({})", player)
    if len(player.Deck) != DeckSize:
       msg = "INVALID DECK: {}'s deck has {} cards (it must have exactly {} cards).".format(player, len(player.Deck), DeckSize)
       _extapi.notify(msg, Colors.Red)
@@ -105,7 +105,7 @@ def onCardsMoved(args):
       if card.controller != me:
          continue
       
-      # debug("onCardsMoved: {} ({}) from {} to {}".format(card, card_id, fromGroup._name, toGroup._name))
+      # debug("onCardsMoved: {} ({}) from {} to {}", card, card_id, fromGroup._name, toGroup._name)
       if isCharacter(card):
          # From the table to anywhere else
          if fromGroup == table and toGroup != table:
@@ -220,7 +220,7 @@ def onPhasePassed(args):
    Triggers when the current game phase changes.
    """
    phaseIdx = getCurrentPhase()
-   debug(">>> onPhasePassed: {} => {}".format(args.id, phaseIdx))
+   debug(">>> onPhasePassed: {} => {}", args.id, phaseIdx)
    if args.id == phaseIdx:
       return
    
@@ -262,7 +262,7 @@ def onMarkerChanged(args):
       return
    marker = args.marker
    oldValue = args.value
-   debug(">>> onMarkerChanged: {}, {}, {}, {}".format(card, marker, oldValue, args.scripted))
+   debug(">>> onMarkerChanged: {}, {}, {}, {}", card, marker, oldValue, args.scripted)
    if marker == "BP":
       bp = getMarker(card, "BP")
       # scripted is true if the marker was changed via Python
@@ -304,7 +304,7 @@ def OnCounterChanged(args):
    """
    Triggers when a player's counter value is adjusted.
    """
-   debug(">>> OnCounterChanged: {}, {}, {}, {}".format(args.counter._player, args.counter._name, args.value, args.scripted))
+   debug(">>> OnCounterChanged: {}, {}, {}, {}", args.counter._player, args.counter._name, args.value, args.scripted)
    player = args.counter._player
    counterName = args.counter._name
    # Syncs with the custom GameState
@@ -319,7 +319,7 @@ def OnCardClicked(args):
    mouseButton = args.mouseButton
    if card and card.controller == me:
       if isButton(card) and mouseButton == 0:  # Left button
-         debug(">>> OnCardClicked: {}, {}, {}".format(card, mouseButton, args.keysDown))
+         debug(">>> OnCardClicked: {}, {}, {}", card, mouseButton, args.keysDown)
          buttonAction(card)
          
 
@@ -329,7 +329,7 @@ def onCardTargeted(args):
    """
    card = args.card
    targeted = args.targeted
-   debug(">>> onCardTargeted: {} by {} ({})".format(card, args.player, targeted))
+   debug(">>> onCardTargeted: {} by {} ({})", card, args.player, targeted)
    # Disallow targeting UI cards
    if isUI(card) and targeted:
       card.target(False)

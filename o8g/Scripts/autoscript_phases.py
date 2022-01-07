@@ -22,7 +22,7 @@ def triggerPhaseEvent(phase, oldPhase = 0):
    """
    Function which triggers effects at the start or end of the phase.
    """
-   debug(">>> triggerPhaseEvent({})".format(phase))
+   debug(">>> triggerPhaseEvent({})", phase)
    mute()
    if not settings["PlayAuto"]:
       return

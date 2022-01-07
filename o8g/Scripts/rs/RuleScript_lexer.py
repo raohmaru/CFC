@@ -179,7 +179,7 @@ class RulesLexer():
             else:
                rulesDict[RS_KEY_LABEL] = [label]
             
-      debug("{}".format(rulesDict))
+      debug("{}", rulesDict)
       return rulesDict
 
 
@@ -213,7 +213,7 @@ class RulesLexer():
       types = RS_RGX_TARGET_TYPE.split(tgtStr)[:1]
       typeOp = RS_OP_OR
       if not types[0]:
-         debug("ParseInfo: 'target' has no type parameter. Defult target is {}".format(RS_KW_ANY))
+         debug("ParseInfo: 'target' has no type parameter. Defult target is {}", RS_KW_ANY)
          types[0] = RS_KW_ANY
       for op in RS_TARGET_OPS:
          if len(types) <= 1:
@@ -319,7 +319,7 @@ class RulesLexer():
                   sffx = e[1]
                # transform suffix into an if condition
                else:
-                  debug("-- transforming suffix \"{0}\" into [[if {0}]]".format(e[1]))
+                  debug("-- transforming suffix \"{0}\" into [[if {0}]]", e[1])
                   firstEffect = [["if", e[1]], [], None, None]
             debug("-- found event: %s + %s + %s" % (prfx, eventName, sffx))
             event.append([prfx, eventName, sffx])

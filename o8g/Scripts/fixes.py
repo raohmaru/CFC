@@ -18,10 +18,11 @@
 # Game engine fixes
 #---------------------------------------------------------------------------
 
-# Fix card properties of type Integer returns a string instead of an integer
+# Fix card properties of type Integer which returns a string instead of an integer
 # https://octgn.16bugs.com/projects/3602/bugs/188805
 cardPropertiesType = {}
 for prop in _api.CardProperties():
+   # Map the property name to its type
    cardPropertiesType[prop] = _extapi._game.CardProperties[prop].Type.ToString()
 
 # https://github.com/octgn/OCTGN/blob/master/octgnFX/Octgn.JodsEngine/Scripting/Versions/3.1.0.2.py#L263

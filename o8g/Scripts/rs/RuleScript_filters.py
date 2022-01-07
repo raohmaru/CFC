@@ -104,7 +104,7 @@ def compareValuesByOp(v1, v2, op):
 #---------------------------------------------------------------------------
 
 def filterBP(card, include, cmd, *args):
-   debug(">>> filterBP({}, {}, {}, {})".format(card, include, cmd, args))
+   debug(">>> filterBP({}, {}, {}, {})", card, include, cmd, args)
    
    if not isCard(card) or not isCharacter(card):
       return False
@@ -123,12 +123,12 @@ def filterBP(card, include, cmd, *args):
    res = compareValuesByOp(bp, value, op)
    if not include:
       res = not res
-   debug("--- {} {} {} -> {}".format(bp, op, value, res))
+   debug("--- {} {} {} -> {}", bp, op, value, res)
    return res
    
    
 def filterSP(card, include, cmd, *args):
-   debug(">>> filterSP({}, {}, {}, {})".format(card, include, cmd, args))
+   debug(">>> filterSP({}, {}, {}, {})", card, include, cmd, args)
       
    # Get additional parameters
    try:
@@ -144,12 +144,12 @@ def filterSP(card, include, cmd, *args):
    res = compareValuesByOp(sp, value, op)
    if not include:
       res = not res
-   debug("--- {} {} {} -> {}".format(sp, op, value, res))
+   debug("--- {} {} {} -> {}", sp, op, value, res)
    return res
 
 
 def filterType(card, include, cmd, *args):
-   debug(">>> filterType({}, {}, {}, {})".format(card, include, cmd, args))
+   debug(">>> filterType({}, {}, {}, {})", card, include, cmd, args)
    
    if not isCard(card):
       return False
@@ -162,7 +162,7 @@ def filterType(card, include, cmd, *args):
 
 
 def filterSubtype(card, include, cmd, *args):
-   debug(">>> filterSubtype({}, {}, {}, {})".format(card, include, cmd, args))
+   debug(">>> filterSubtype({}, {}, {}, {})", card, include, cmd, args)
    
    if not isCard(card):
       return False
@@ -175,7 +175,7 @@ def filterSubtype(card, include, cmd, *args):
 
 
 def filterBackedup(card, include, cmd, *args):
-   debug(">>> filterBacked({}, {}, {}, {})".format(card, include, cmd, args))
+   debug(">>> filterBacked({}, {}, {}, {})", card, include, cmd, args)
 
    if not isCard(card):
       return False
@@ -188,7 +188,7 @@ def filterBackedup(card, include, cmd, *args):
     
     
 def filterBackup(card, include, cmd, *args):
-   debug(">>> filterBackup({}, {}, {}, {})".format(card, include, cmd, args))
+   debug(">>> filterBackup({}, {}, {}, {})", card, include, cmd, args)
 
    if not isCard(card):
       return False
@@ -201,12 +201,12 @@ def filterBackup(card, include, cmd, *args):
    
    
 def filterAttack(card, include, cmd, *args):
-   debug(">>> filterAttack({}, {}, {}, {})".format(card, include, cmd, args))
+   debug(">>> filterAttack({}, {}, {}, {})", card, include, cmd, args)
    return hasMarker(card, 'Attack', include)
     
     
 def filterUnitedAttack(card, include, cmd, *args):
-   debug(">>> filterUnitedAttack({}, {}, {}, {})".format(card, include, cmd, args))
+   debug(">>> filterUnitedAttack({}, {}, {}, {})", card, include, cmd, args)
 
    if not isCard(card):
       return False
@@ -219,17 +219,17 @@ def filterUnitedAttack(card, include, cmd, *args):
    
    
 def filterBlock(card, include, cmd, *args):
-   debug(">>> filterBlock({}, {}, {}, {})".format(card, include, cmd, args))
+   debug(">>> filterBlock({}, {}, {}, {})", card, include, cmd, args)
    return hasMarker(card, 'Counter-attack', include)
    
    
 def filterBlocked(card, include, cmd, *args):
-   debug(">>> filterBlocked({}, {}, {}, {})".format(card, include, cmd, args))
+   debug(">>> filterBlocked({}, {}, {}, {})", card, include, cmd, args)
    return hasMarker(card, 'Attack', include) and card._id in getGlobalVar('Blockers')
     
     
 def filterFrozen(card, include, cmd, *args):
-   debug(">>> filterFrozen({}, {}, {}, {})".format(card, include, cmd, args))
+   debug(">>> filterFrozen({}, {}, {}, {})", card, include, cmd, args)
 
    if not isCard(card):
       return False
@@ -242,12 +242,12 @@ def filterFrozen(card, include, cmd, *args):
    
    
 def filterJustEntered(card, include, cmd, *args):
-   debug(">>> filterJustEntered({}, {}, {}, {})".format(card, include, cmd, args))
+   debug(">>> filterJustEntered({}, {}, {}, {})", card, include, cmd, args)
    return hasMarker(card, 'Just Entered', include)
    
    
 def filterHasAbility(card, include, cmd, *args):
-   debug(">>> filterHasAbility({}, {}, {}, {})".format(card, include, cmd, args))
+   debug(">>> filterHasAbility({}, {}, {}, {})", card, include, cmd, args)
 
    if not isCard(card):
       return False
@@ -256,7 +256,7 @@ def filterHasAbility(card, include, cmd, *args):
    
    
 def filterNoAbility(card, include, cmd, *args):
-   debug(">>> filterNoAbility({}, {}, {}, {})".format(card, include, cmd, args))
+   debug(">>> filterNoAbility({}, {}, {}, {})", card, include, cmd, args)
 
    if not isCard(card):
       return False
@@ -265,7 +265,7 @@ def filterNoAbility(card, include, cmd, *args):
       
       
 def filterAbilityInstant(card, include, cmd, *args):
-   debug(">>> filterAbilityInstant({}, {}, {}, {})".format(card, include, cmd, args))
+   debug(">>> filterAbilityInstant({}, {}, {}, {})", card, include, cmd, args)
 
    if not isCard(card):
       return False
@@ -274,7 +274,7 @@ def filterAbilityInstant(card, include, cmd, *args):
       
       
 def filterAbilityTrigger(card, include, cmd, *args):
-   debug(">>> filterAbilityTrigger({}, {}, {}, {})".format(card, include, cmd, args))
+   debug(">>> filterAbilityTrigger({}, {}, {}, {})", card, include, cmd, args)
 
    if not isCard(card):
       return False
@@ -283,7 +283,7 @@ def filterAbilityTrigger(card, include, cmd, *args):
       
       
 def filterAbilityAuto(card, include, cmd, *args):
-   debug(">>> filterAbilityAuto({}, {}, {}, {})".format(card, include, cmd, args))
+   debug(">>> filterAbilityAuto({}, {}, {}, {})", card, include, cmd, args)
 
    if not isCard(card):
       return False

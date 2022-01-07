@@ -18,10 +18,10 @@
 # Debugging
 #------------------------------------------------------------------------------
 
-def debug(*msgs):
+def debug(msg, *args):
    if debugVerbosity > 0:
-      res = map(lambda x: str(x), msgs)
-      whisper("[#]=> " + ", ".join(res))
+      res = str(msg).format(*args)
+      whisper("[#]=> " + res)
 
 
 def debugSetup():
@@ -57,7 +57,7 @@ def debugScenario():
       # ,"e6e46f83-d089-4762-8d8e-2a3252cfc9db" # 800 BP
    ]
    for i, id in enumerate(tableCards):
-      debug("Creating card {} at slot {}".format(id, i))
+      debug("Creating card {} at slot {}", id, i)
       card = table.create(id, 0, 0, quantity = 1, persist = True)
       playAuto(card, i)
       ability = Ability(card)
@@ -81,7 +81,7 @@ def debugScenario():
       # ,"91e441cc-0f1f-4b01-a2b0-94678d6f0b56" # Reaction -4 SP
    ]
    for id in handCards:
-      debug("Adding card {} to hand".format(id))
+      debug("Adding card {} to hand", id)
       card = table.create(id, 0, 0, quantity = 1, persist = True)
       card.moveTo(me.hand)
    
@@ -99,7 +99,7 @@ def debugScenario():
       # ,"91e441cc-0f1f-4b01-a2b0-94678d6f0b56" # Reaction -4 SP
    ]
    for id in deckCards:
-      debug("Adding card {} to Deck".format(id))
+      debug("Adding card {} to Deck", id)
       card = table.create(id, 0, 0, quantity = 1, persist = True)
       card.moveTo(me.deck)
    
@@ -117,7 +117,7 @@ def debugScenario():
       # ,"91e441cc-0f1f-4b01-a2b0-94678d6f0b56" # Reaction -4 SP
    ]
    for id in discardCards:
-      debug("Adding card {} to Discard pile".format(id))
+      debug("Adding card {} to Discard pile", id)
       card = table.create(id, 0, 0, quantity = 1, persist = True)
       card.moveTo(me.piles["Discard pile"])
       
@@ -196,7 +196,7 @@ def debugOpp():
       # ,"91e441cc-0f1f-4b01-a2b0-94678d6f0b56" # Reaction -4 SP
    ]
    for id in discardCards:
-      debug("Adding card {} to Discard pile".format(id))
+      debug("Adding card {} to Discard pile", id)
       card = table.create(id, 0, 0, quantity = 1, persist = True)
       card.moveTo(me.piles["Discard pile"])
       
@@ -210,7 +210,7 @@ def debugSetupDone():
 
 def debugBackups():
    backups = getGlobalVar("Backups")
-   debug("BACKUPS ({})".format(len(backups)))
+   debug("BACKUPS ({})", len(backups))
    for id in backups:
       debug("   {} backups {}".format(Card(id), Card(backups[id])))
 

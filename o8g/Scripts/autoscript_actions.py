@@ -19,7 +19,7 @@
 #------------------------------------------------------------------------------
 
 def playAuto(card, slotIdx = None, force = False):
-   debug(">>> playAuto({}, {}, {})".format(card, slotIdx, force))
+   debug(">>> playAuto({}, {}, {})", card, slotIdx, force)
    syncGlobalVars()
    phaseIdx = getCurrentPhase()
 
@@ -53,7 +53,7 @@ def playAuto(card, slotIdx = None, force = False):
          slotIdx = askForEmptySlot()
          if slotIdx == -1:
             return
-         debug("Selected slot: {} ({})".format(slotIdx, myRing[slotIdx]))
+         debug("Selected slot: {} ({})", slotIdx, myRing[slotIdx])
       # Sanity check: Is it really empty that slot?
       # (It's also really needed this check?)
       if myRing[slotIdx] != None:
@@ -114,7 +114,7 @@ def playAuto(card, slotIdx = None, force = False):
 
 
 def backupAuto(card, target = None):
-   debug(">>> backupAuto({}, {})".format(card, target))
+   debug(">>> backupAuto({}, {})", card, target)
 
    # Check if the card can be legally played
    if not me.isActive or getCurrentPhase() != MainPhase:
@@ -181,7 +181,7 @@ def backupAuto(card, target = None):
 
 
 def attackAuto(card, force = False):
-   debug(">>> attackAuto({}, {})".format(card, force))
+   debug(">>> attackAuto({}, {})", card, force)
 
    # Check if player can attack
    if not force and (not me.isActive or getCurrentPhase() != AttackPhase):
@@ -229,7 +229,7 @@ def attackAuto(card, force = False):
 
 
 def unitedAttackAuto(card, targets = None, force = False):
-   debug(">>> attackAuto({}, {}, {})".format(card, targets, force))
+   debug(">>> attackAuto({}, {}, {})", card, targets, force)
 
    # Is char in player's ring?
    if not charIsInRing(card):
@@ -305,7 +305,7 @@ def unitedAttackAuto(card, targets = None, force = False):
    else:
       uattack.append(card._id)
    setGlobalVar("UnitedAttack", uattack)
-   debug("UnitedAttack: {}".format(uattack))
+   debug("UnitedAttack: {}", uattack)
 
    setMarker(card, "United Attack")
    removeMarker(card, "Attack")
@@ -390,7 +390,7 @@ def blockAuto(card, targets = None):
 
 
 def activateAuto(card):
-   debug(">>> activateAuto({})".format(card))
+   debug(">>> activateAuto({})", card)
    
    syncGlobalVars()
 
@@ -404,7 +404,7 @@ def activateAuto(card):
       if not pcard.hasEffect():
          notify("{} has no ability to activate.".format(card))
          return
-      debug("Trying to activate {}'s ability {} {}".format(card.Name, pcard.ability.type, pcard.ability.name))
+      debug("Trying to activate {}'s ability {} {}", card.Name, pcard.ability.type, pcard.ability.name)
       # Activate [] and /\ only in player's Main Phase
       if pcard.ability.type in [InstantAbility, TriggerAbility] and (not me.isActive or getCurrentPhase() != MainPhase):
          information("You can only activate {} or {} abilities in your Main Phase.".format(TriggerUniChar, InstantUniChar))
@@ -462,7 +462,7 @@ def rearrangeUAttack(card):
    """
    Rearrange or cancels a UA if the card was part of it.
    """
-   debug(">>> rearrangeUAttack({})".format(card))
+   debug(">>> rearrangeUAttack({})", card)
    uattack = getGlobalVar("UnitedAttack")
    if card._id in uattack:
       notify("{} was part of an United Attack. Now it will be rearranged.".format(card))
@@ -484,7 +484,7 @@ def rearrangeUAttack(card):
       else:
          for cid in uattack[1:]:
             alignCard(Card(cid))
-      debug("UnitedAttack: {}".format(uattack))
+      debug("UnitedAttack: {}", uattack)
       
 
 def cancelAttack(card, silent = False):
@@ -507,7 +507,7 @@ def cancelBlock(card, silent = False):
    for i in blockers:
       if blockers[i] == card._id:
          del blockers[i]
-         debug("Removed blocker {}".format(blockers))
+         debug("Removed blocker {}", blockers)
          setGlobalVar("Blockers", blockers)
          break
    if not silent:

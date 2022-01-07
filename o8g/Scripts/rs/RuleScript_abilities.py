@@ -45,18 +45,18 @@ class RulesAbilities():
       if abilityName in RulesAbilities.items:
          ability = RulesAbilities.items[abilityName]
          obj = getPlayerOrCard(target_id)
-         debug("-- adding ability '{}' to {}".format(abilityName, obj))
+         debug("-- adding ability '{}' to {}", abilityName, obj)
          abl_add(ability, target_id, source_id, restr)
          if ability['onAdded']:
             ability['onAdded'](obj, restr)
       else:
-         debug("-- ability not found: {}".format(abilityName))
+         debug("-- ability not found: {}", abilityName)
    
    
    @staticmethod   
    def remove(ability, card_id):
       card = Card(card_id)
-      debug("-- removing ability '{}' from {}".format(ability, card))
+      debug("-- removing ability '{}' from {}", ability, card)
       if ability in RulesAbilities.items:
          if removeGameEventListener(card_id, RulesAbilities.items[ability]['event'], 'abl_genericListener'):
             notify("{} has lost the {} ability".format(card, ability))
@@ -118,7 +118,7 @@ def abl_add(abl, obj_id, source_id = None, restr = None):
    msg = abl['msg']
    checkFunc = abl['checkFunc']
    onRemove = abl['onRemoved']
-   debug(">>> abl_add({}, {}, {}, {}, {}, {}, {})".format(obj_id, event, source_id, restr, msg, checkFunc, onRemove))
+   debug(">>> abl_add({}, {}, {}, {}, {}, {}, {})", obj_id, event, source_id, restr, msg, checkFunc, onRemove)
       
    eventAdded = addGameEventListener(event, 'abl_genericListener', obj_id, source_id, restr, [obj_id, source_id, msg, checkFunc, restr], onRemove = onRemove)
    if eventAdded and msg:
@@ -127,7 +127,7 @@ def abl_add(abl, obj_id, source_id = None, restr = None):
 
 def abl_genericListener(target_id, obj_id, source_id = None, msgOrFunc = None, checkFunc = None, restr = None):
    """ Checks if the original card with the ability is equal to the second card the system wants to check """
-   debug(">>> abl_genericListener({}, {}, {}, {}, {})".format(target_id, obj_id, source_id, msgOrFunc, checkFunc))
+   debug(">>> abl_genericListener({}, {}, {}, {}, {})", target_id, obj_id, source_id, msgOrFunc, checkFunc)
    callFunc = False
    if checkFunc is None and isinstance(msgOrFunc, basestring):
       checkFunc = msgOrFunc
@@ -137,7 +137,7 @@ def abl_genericListener(target_id, obj_id, source_id = None, msgOrFunc = None, c
          debug("Ability callback: False")
          return False
       else:
-         debug("Invoking ability callback: {}".format(checkFunc))
+         debug("Invoking ability callback: {}", checkFunc)
          checkFunc = eval(checkFunc)
          return checkFunc(target_id)
    return True

@@ -23,7 +23,7 @@ def createGameCard(card, ruleId = None, init = True, dryRun = False, forceExecAu
    Wrapper for a Card object. Should only be called for cards just added to the table or when its effect changes.
    """
    if not card._id in gameCards or dryRun:
-      debug(">>> createGameCard({}, {}, {}, {}, {})".format(card, ruleId, init, dryRun, forceExecAuto))
+      debug(">>> createGameCard({}, {}, {}, {}, {})", card, ruleId, init, dryRun, forceExecAuto)
       if isCharacter(card):
          gc = CharCard(card, ruleId)
       else:
@@ -35,12 +35,12 @@ def createGameCard(card, ruleId = None, init = True, dryRun = False, forceExecAu
       if dryRun:
          return gc
    else:
-      debug("GameCard for {} already exists".format(card))
+      debug("GameCard for {} already exists", card)
    return gameCards.get(card._id)
    
 
 def getGameCard(card):
-   debug(">>> Retrieve GameCard for ID {} ({})".format(card._id, card))
+   debug(">>> Retrieve GameCard for ID {} ({})", card._id, card)
    ruleId = None
    if card.controller != me:
       CharsAbilities = getGlobalVar('CharsAbilities')
@@ -55,7 +55,7 @@ def getGameCard(card):
    
 
 def deleteGameCard(card):
-   debug(">>> Remove GameCard for ID {} ({})".format(card._id, card))
+   debug(">>> Remove GameCard for ID {} ({})", card._id, card)
    if card.controller == me:
       removeGameEventListener(card._id)
    gc = gameCards.pop(card._id, None)

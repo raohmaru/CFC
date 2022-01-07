@@ -36,7 +36,7 @@ class Rules():
          rules = RulesDict[self.rule_id]
       else:
          return
-      debug("Parsing rule id {}".format(self.rule_id))
+      debug("Parsing rule id {}", self.rule_id)
       self.rules_tokens = RulesLexer.tokenize(rules)
       self.parsed = True
 
@@ -125,7 +125,7 @@ class Rules():
       # Check if there is any requisite
       if RS_KEY_REQ in self.rules_tokens:
          requisite = self.rules_tokens[RS_KEY_REQ]
-         debug("Checking requisites: {}".format(requisite))
+         debug("Checking requisites: {}", requisite)
          for req in requisite:
             reqTarget = RulesLexer.parseTarget(req)
             if not RulesUtils.getTargets(reqTarget, thisCard, reveal=False):
@@ -147,7 +147,7 @@ class Rules():
 
       
    def execAction(self, action, target, isAuto=False, isBranch=False):
-      debug("Executing actions: {}, {}, isAuto={}".format(action, target, isAuto))
+      debug("Executing actions: {}, {}, isAuto={}", action, target, isAuto)
       
       if isinstance(action, list):
          debug("Several actions found, player must choose one")
@@ -163,7 +163,7 @@ class Rules():
          t = askChoice("Select an effect", actionLabels)
          if t == 0:
             return False
-         debug("Action chosen: {}".format(action[t-1]))
+         debug("Action chosen: {}", action[t-1])
          action = action[t-1]
             
       thisCard = Card(self.card_id)
@@ -177,11 +177,11 @@ class Rules():
          # Add temp variables
          if RS_KEY_VARS in self.rules_tokens:
             vars = self.rules_tokens[RS_KEY_VARS]
-            debug("Adding custom vars: {}".format(vars))
+            debug("Adding custom vars: {}", vars)
             for var in vars:
                res = evalExpression(var[1], True, getLocals(source=thisCard))
                if res is not None:
-                  debug("-- {} := {}".format(var[0], res))
+                  debug("-- {} := {}", var[0], res)
                   addTempVar(var[0], res)
                
          # The player must pay the cost, or we cancel
@@ -195,7 +195,7 @@ class Rules():
       for i, effect in enumerate(action['effects']):
          revert = False
       
-         debug("Executing effect: {}".format(effect))
+         debug("Executing effect: {}", effect)
          targets = []
          currTarget = target
          newTarget = None
@@ -208,13 +208,13 @@ class Rules():
                question = MSG_Q_MAY
                if len(cond) > 1:
                   question = cond[1].strip('"\'').capitalize()
-               debug("-- Found MAY condition: {}".format(question))
+               debug("-- Found MAY condition: {}", question)
                if not confirm(question):
-                  debug("--- {} cancelled".format(me))
+                  debug("--- {} cancelled", me)
                   return False
             # IF condition
             elif cond[0] == RS_KW_COND_IF:            
-               debug("-- Found IF condition: {}".format(cond[1]))
+               debug("-- Found IF condition: {}", cond[1])
                res = evalExpression(cond[1], False, getLocals(source=thisCard))
                if not res:
                   debug("--- Condition not matching")
@@ -233,7 +233,7 @@ class Rules():
          
          # Additional target
          if effect[2]:
-            debug("-- Found additional {}target".format('optional' if effect[2]['opt'] else ''))
+            debug("-- Found additional {}target", 'optional' if effect[2]['opt'] else '')
             newTarget = RulesUtils.getTargets(effect[2], source=thisCard)
             if newTarget == False and not effect[2]['opt']:
                if not isAuto:
@@ -260,7 +260,7 @@ class Rules():
             if len(newTargets) > 0:
                targets = newTargets
                revert = True
-               debug("-- Following targets will lose an ability: {}".format(targets))
+               debug("-- Following targets will lose an ability: {}", targets)
                
          # Run the commands
          if len(effect[1]) > 0:
@@ -288,7 +288,7 @@ class Rules():
             return False
          auto = self.rules_tokens[RS_KEY_AUTO]
       
-      debug("Executing auto on event {} ({})".format(eventName, args))
+      debug("Executing auto on event {} ({})", eventName, args)
       
       if eventName:
          thisCard = Card(self.card_id)
@@ -325,7 +325,7 @@ class Rules():
             type = cost
          else:
             type, target = cost
-         debug("-- Cost to pay: {}, {}".format(type, target))
+         debug("-- Cost to pay: {}, {}", type, target)
          
          if type == RS_KW_COST_FREEZE:
             freeze(thisCard, silent = True)

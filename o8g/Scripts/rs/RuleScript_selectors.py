@@ -33,11 +33,11 @@ class RulesSelectors():
       
       # Get the selector function
       if cmd in RulesSelectors.selectors:      
-         debug("-- applying selector ::{}({}) to {}".format(cmd, expr, cardsToNamesStr(targets)))
+         debug("-- applying selector ::{}({}) to {}", cmd, expr, cardsToNamesStr(targets))
          func = RulesSelectors.selectors[cmd]
          res = evalExpression(expr, True, getLocals())
          targets = func(targets, res)
-         debug("-- new selection: {}".format(cardsToNamesStr(targets)))
+         debug("-- new selection: {}", cardsToNamesStr(targets))
          
       return targets
 
@@ -47,7 +47,7 @@ class RulesSelectors():
 #---------------------------------------------------------------------------
 
 def selectorNot(targets, args):
-   debug(">>> selectorNot({}, {})".format(targets, args))
+   debug(">>> selectorNot({}, {})", targets, args)
    return list(set(targets).difference(args))
    
 

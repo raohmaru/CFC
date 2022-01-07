@@ -42,7 +42,7 @@ class RulesCommands():
    # Ensures that a command is applied only when the precedent command is done
       if len(self.cmds) > 0:
          cmd = self.cmds.pop(0)
-         debug(">>> applyNext({}, {})".format(cmd, self.cmdsArgs))
+         debug(">>> applyNext({}, {})", cmd, self.cmdsArgs)
          self.applyCmd(cmd, *self.cmdsArgs)
       elif len(self.cmdsArgs) > 1:
          self.prevTargets = self.cmdsArgs[0]
@@ -52,7 +52,7 @@ class RulesCommands():
 
 
    def applyCmd(self, cmd, targets, restr, source, revert=False):
-      debug(">>> applyCmd({}, {}, {}, {}, {})".format(cmd, targets, restr, source, revert))
+      debug(">>> applyCmd({}, {}, {}, {}, {})", cmd, targets, restr, source, revert)
       funcStr = cmd[0]
       params = cmd[1]
       
@@ -83,9 +83,9 @@ class RulesCommands():
          self.applyNext()
       else:
          if funcStr in RulesCommands.items:
-            debug("-- skipping cmd {} because condition does not match".format(cmd[0]))
+            debug("-- skipping cmd {} because condition does not match", cmd[0])
          else:
-            debug("-- cmd not found: {}".format(cmd[0]))
+            debug("-- cmd not found: {}", cmd[0])
          self.applyNext()
 
 
@@ -103,7 +103,7 @@ class RulesCommands():
 #---------------------------------------------------------------------------
 
 def toggleRule(ruleName, value, id, restr = None, player = None):
-   debug(">>> toggleRule({}, {}, {}, {})".format(ruleName, value, id, player))
+   debug(">>> toggleRule({}, {}, {}, {})", ruleName, value, id, player)
    if player:
       player = Player(player)
    Rules = getGlobalVar('Rules', player)
@@ -194,7 +194,7 @@ def getSourcePlayer():
 #---------------------------------------------------------------------------
 
 def cmd_damage(rc, targets, source, restr, dmg):
-   debug(">>> cmd_damage({}, {})".format(targets, dmg))
+   debug(">>> cmd_damage({}, {})", targets, dmg)
    if isNumber(dmg):
       dmg = int(dmg)
    else:
@@ -205,7 +205,7 @@ def cmd_damage(rc, targets, source, restr, dmg):
 
 
 def cmd_loseLife(rc, targets, source, restr, qty):
-   debug(">>> cmd_loseLife({}, {})".format(targets, qty))
+   debug(">>> cmd_loseLife({}, {})", targets, qty)
    if not targets or isCard(targets[0]):
       targets = [source.controller]
    for target in targets:
@@ -214,7 +214,7 @@ def cmd_loseLife(rc, targets, source, restr, qty):
 
 
 def cmd_swapPiles(rc, targets, source, restr, pile1, pile2):
-   debug(">>> cmd_swapPiles({}, {}, {})".format(source, pile1, pile2))
+   debug(">>> cmd_swapPiles({}, {}, {})", source, pile1, pile2)
    pile1 = RulesUtils.getZoneByName(pile1)
    pile2 = RulesUtils.getZoneByName(pile2)
    swapPiles(pile1, pile2)
@@ -222,7 +222,7 @@ def cmd_swapPiles(rc, targets, source, restr, pile1, pile2):
 
 
 def cmd_shuffle(rc, targets, source, restr, pileName=None):
-   debug(">>> cmd_shuffle({})".format(pileName))
+   debug(">>> cmd_shuffle({})", pileName)
    if not pileName:
       pileName = RS_KW_ZONE_DECK
    prefix, name = RulesLexer.getPrefix(RS_PREFIX_ZONES, pileName)
@@ -238,7 +238,7 @@ def cmd_shuffle(rc, targets, source, restr, pileName=None):
 
 
 def cmd_destroy(rc, targets, source, restr, *args):
-   debug(">>> cmd_destroy({})".format(targets))
+   debug(">>> cmd_destroy({})", targets)
    if not targets:
       targets = [source]
    for target in targets:
@@ -253,7 +253,7 @@ def cmd_destroy(rc, targets, source, restr, *args):
 
 
 def cmd_reveal(rc, targets, source, restr, pileName=None):
-   debug(">>> cmd_reveal({})".format(pileName))
+   debug(">>> cmd_reveal({})", pileName)
    if not pileName:
       if targets:
          if targets[0].controller == me:
@@ -275,7 +275,7 @@ def cmd_reveal(rc, targets, source, restr, pileName=None):
 
 
 def cmd_discard(rc, targets, source, restr, whichCards=''):
-   debug(">>> cmd_discard({}, {})".format(targets, whichCards))
+   debug(">>> cmd_discard({}, {})", targets, whichCards)
    if isNumber(whichCards):
       whichCards = '<{}>*'.format(whichCards)
    cardsTokens = RulesLexer.parseTarget(whichCards)
@@ -311,7 +311,7 @@ def cmd_discard(rc, targets, source, restr, whichCards=''):
 
 
 def cmd_randomDiscard(rc, targets, source, restr, numCards=1):
-   debug(">>> cmd_randomDiscard({}, {})".format(targets, numCards))
+   debug(">>> cmd_randomDiscard({}, {})", targets, numCards)
    if not targets:
       targets = [source.controller]
    if numCards > 0:
@@ -325,7 +325,7 @@ def cmd_randomDiscard(rc, targets, source, restr, numCards=1):
 
 
 def cmd_moveTo(rc, targets, source, restr, zone, pos = None, reveal = None):
-   debug(">>> cmd_moveTo({}, {}, {}, {})".format(targets, zone, pos, reveal))
+   debug(">>> cmd_moveTo({}, {}, {}, {})", targets, zone, pos, reveal)
    mute()
    zonePrefix, zoneName = RulesLexer.getPrefix(RS_PREFIX_ZONES, zone, RS_PREFIX_CTRL)
    if targets:
@@ -343,7 +343,7 @@ def cmd_moveTo(rc, targets, source, restr, zone, pos = None, reveal = None):
          msgs = []
          for target in targets:
             pile = RulesUtils.getZoneByName(zone, target)
-            debug("{}'s {} -> {}'s {} {} ({})".format(target.controller, target, pile.controller, pile.name, pos, reveal))
+            debug("{}'s {} -> {}'s {} {} ({})", target.controller, target, pile.controller, pile.name, pos, reveal)
             if target.controller == me and pile.controller == me:
                msg = moveToGroup(pile, target, pos = pos, reveal = reveal, silent = True)
                msgs.append(msg)
@@ -367,7 +367,7 @@ def cmd_moveTo(rc, targets, source, restr, zone, pos = None, reveal = None):
 
 
 def cmd_movePile(rc, targets, source, restr, zone1, zone2):
-   debug(">>> cmd_movePile({}, {})".format(zone1, zone2))
+   debug(">>> cmd_movePile({}, {})", zone1, zone2)
    z1Prefix, z1Name = RulesLexer.getPrefix(RS_PREFIX_ZONES, zone1, RS_PREFIX_CTRL)
    z2Prefix, z2Name = RulesLexer.getPrefix(RS_PREFIX_ZONES, zone2, RS_PREFIX_CTRL)
    if z1Name in RS_KW_ZONES_PILES and z2Name in RS_KW_ZONES_PILES:
@@ -396,7 +396,7 @@ def cmd_bp(rc, targets, source, restr, qty):
       amount = num(evalExpression(qty, True, getLocals(rc=rc, targets=targets, source=source)))
    if not targets:
       targets = [source]
-   debug(">>> cmd_bp({}, {}, {}, {})".format(targets, qty, mode, amount))
+   debug(">>> cmd_bp({}, {}, {}, {})", targets, qty, mode, amount)
    for target in targets:
       if isCharacter(target):
          newQty = amount
@@ -417,7 +417,7 @@ def cmd_sp(rc, targets, source, restr, qty):
       amount = num(evalExpression(qty, True, getLocals(rc=rc, targets=targets, source=source)))
    if not targets or isCard(targets[0]):
       targets = [source.controller]
-   debug(">>> cmd_sp({}, {}, {})".format(targets, amount, mode))
+   debug(">>> cmd_sp({}, {}, {})", targets, amount, mode)
    for player in targets:
       modSP(amount, mode, player=player)
    rc.applyNext()
@@ -430,7 +430,7 @@ def cmd_hp(rc, targets, source, restr, qtyExpr):
       qty = evalExpression(qtyExpr, True, getLocals(rc=rc, targets=targets, source=source))
    if not targets or isCard(targets[0]):
       targets = [source.controller]
-   debug(">>> cmd_hp({}, {}) => {}".format(targets, qtyExpr, qty))
+   debug(">>> cmd_hp({}, {}) => {}", targets, qtyExpr, qty)
    for player in targets:
       player.HP += qty
       sign = '+' if qty >= 0 else ''
@@ -442,7 +442,7 @@ def cmd_hp(rc, targets, source, restr, qtyExpr):
 
 def cmd_playExtraChar(rc, targets, source, restr, *args):
    cpt = getState(me, 'charsPerTurn')
-   debug(">>> cmd_playExtraChar() {} -> {}".format(cpt, cpt+1))
+   debug(">>> cmd_playExtraChar() {} -> {}", cpt, cpt+1)
    setState(me, 'charsPerTurn', cpt+1)
    notify("{} can play an additional character this turn.".format(me))
    rc.applyNext()
@@ -457,7 +457,7 @@ def cmd_draw(rc, targets, source, restr, qty = None):
       amount = num(evalExpression(qty, True, getLocals(rc=rc, targets=targets, source=source)))
    if not targets or isCard(targets[0]):
       targets = [source.controller]
-   debug(">>> cmd_draw({}, {}, {})".format(targets, qty, amount))
+   debug(">>> cmd_draw({}, {}, {})", targets, qty, amount)
    for target in targets:
       if target == me:
          drawMany(me.Deck, amount)
@@ -472,13 +472,13 @@ def cmd_steal(rc, targets, source, restr, extraSource = None):
       cards = RulesUtils.getTargets(cardsTokens)
       if cards:
          source = cards[0]
-   debug(">>> cmd_steal({}, {}, {})".format(targets, source, extraSource))
+   debug(">>> cmd_steal({}, {}, {})", targets, source, extraSource)
    stealAbility(source, target = targets[0])
    rc.applyNext()
 
 
 def cmd_loseAbility(rc, targets, source, restr, *args):
-   debug(">>> cmd_loseAbility({})".format(targets))
+   debug(">>> cmd_loseAbility({})", targets)
    for target in targets:
       toggleAbility(target, remove=True)
       update()
@@ -486,7 +486,7 @@ def cmd_loseAbility(rc, targets, source, restr, *args):
    
 
 def cmd_copyAbility(rc, targets, source, restr, expr):
-   debug(">>> cmd_copyAbility({}, {}, {})".format(targets, source, expr))
+   debug(">>> cmd_copyAbility({}, {}, {})", targets, source, expr)
    card = evalExpression(expr, True, getLocals(rc=rc, targets=targets, source=source))
    if not targets:
       targets = [source]
@@ -499,7 +499,7 @@ def cmd_copyAbility(rc, targets, source, restr, expr):
 
 
 def cmd_swapAbilities(rc, targets, source, restr, *args):
-   debug(">>> cmd_swapAbilities({}, {})".format(targets, source))
+   debug(">>> cmd_swapAbilities({}, {})", targets, source)
    swapAbilities(targets[0], target = targets[1])
    rc.applyNext()
    
@@ -508,7 +508,7 @@ def cmd_each(rc, targets, source, restr, args):
    cond, func = args.split(RS_KW_ARROW)
    func = RulesLexer.parseAction(func)
    func = func['effects'][0][1]
-   debug(">>> cmd_each({}, {}, {})".format(targets, cond, func))
+   debug(">>> cmd_each({}, {}, {})", targets, cond, func)
    
    if not ' in ' in cond:
       tokens = RulesLexer.parseTarget(cond)
@@ -536,7 +536,7 @@ def cmd_transform(rc, targets, source, restr, expr):
       card = evalExpression(expr, True, getLocals(rc=rc, targets=targets, source=source))
       if card:
          model = card.model
-   debug(">>> cmd_transfrom({}, {}) => {}".format(targets, expr, model))
+   debug(">>> cmd_transfrom({}, {}) => {}", targets, expr, model)
    if model:
       for target in targets:
          if target.controller == me:
@@ -556,7 +556,7 @@ def cmd_moveRevealedTo(rc, targets, source, restr, zone, pos = None):
    newPile = [pile[i] for i in range(0, index)]
    targetZone = RulesUtils.getZoneByName(zone, pile[0])
    myPile = targetZone.controller == me
-   debug(">>> cmd_moveRevealedTo({}, {}, {})".format(zone, index, pos))
+   debug(">>> cmd_moveRevealedTo({}, {}, {})", zone, index, pos)
    notify("{} looks through the top of {} {} ({} card{} revealed)".format(me, 'his' if myPile else players[1], pile.name, index+1, plural(index+1)))
    for card in newPile:
       if myPile:
@@ -568,7 +568,7 @@ def cmd_moveRevealedTo(rc, targets, source, restr, zone, pos = None):
    
    
 def cmd_enableRule(rc, targets, source, restr, rule, value = True):
-   debug(">>> cmd_enableRule({}, {})".format(rule, value))
+   debug(">>> cmd_enableRule({}, {})", rule, value)
    player = None
    if targets and isPlayer(targets[0]):
       player = targets[0]._id
@@ -583,12 +583,12 @@ def cmd_enableRule(rc, targets, source, restr, rule, value = True):
    
   
 def cmd_disableRule(rc, targets, source, restr, rule):
-   debug(">>> cmd_disableRule({})".format(rule))
+   debug(">>> cmd_disableRule({})", rule)
    cmd_enableRule(rc, targets, source, restr, rule, False)
 
 
 def cmd_freeze(rc, targets, source, restr, unfreeze=False):
-   debug(">>> cmd_freeze({}, {})".format(targets, unfreeze))
+   debug(">>> cmd_freeze({}, {})", targets, unfreeze)
    if bool(unfreeze):
       unfreeze = None
    for target in targets:
@@ -600,7 +600,7 @@ def cmd_freeze(rc, targets, source, restr, unfreeze=False):
 
 
 def cmd_unfreeze(rc, targets, source, restr, *args):
-   debug(">>> cmd_unfreeze({})".format(targets))
+   debug(">>> cmd_unfreeze({})", targets)
    for target in targets:
       if target.controller == me:
          freeze(target, unfreeze = True)
@@ -610,7 +610,7 @@ def cmd_unfreeze(rc, targets, source, restr, *args):
 
 
 def cmd_alterCost(rc, targets, source, restr, type, mod):
-   debug(">>> cmd_alterCost({}, {}, {})".format(type, mod, restr))
+   debug(">>> cmd_alterCost({}, {}, {})", type, mod, restr)
    mode = None
    msg = MSG_RULES['card_cost']
    if 'cost_' + type in MSG_RULES:
@@ -635,7 +635,7 @@ def cmd_alterCost(rc, targets, source, restr, type, mod):
 
 
 def cmd_modCost(rc, targets, source, restr, type, mod):
-   debug(">>> cmd_modCost({}, {})".format(type, mod))
+   debug(">>> cmd_modCost({}, {})", type, mod)
    mod = int(mod)
    addTempVar('costMod'+type, mod, True)
    notify(MSG_RULES['card_cost'].format(type.title(), abs(mod), 'less ' if mod >= 0 else 'more ', getTextualRestr(restr)))
@@ -643,7 +643,7 @@ def cmd_modCost(rc, targets, source, restr, type, mod):
 
 
 def cmd_swapChars(rc, targets, source, restr, *args):
-   debug(">>> cmd_swapChars({})".format(targets))
+   debug(">>> cmd_swapChars({})", targets)
    if len(targets) >= 2:
       if targets[0].controller == me:
          changeSlot(targets[0], targets = [targets[1]])
@@ -653,7 +653,7 @@ def cmd_swapChars(rc, targets, source, restr, *args):
 
 
 def cmd_moveToSlot(rc, targets, source, restr, *args):
-   debug(">>> cmd_moveToSlot({})".format(targets))
+   debug(">>> cmd_moveToSlot({})", targets)
    if targets[0].controller == me:
       changeSlot(targets[0])
    else:
@@ -662,7 +662,7 @@ def cmd_moveToSlot(rc, targets, source, restr, *args):
 
 
 def cmd_trash(rc, targets, source, restr, numCards=1):
-   debug(">>> cmd_trash({}, {})".format(targets, numCards))
+   debug(">>> cmd_trash({}, {})", targets, numCards)
    numCards = int(numCards)
    if not targets or isCard(targets[0]):
       targets = [source.controller]
@@ -683,13 +683,13 @@ def cmd_prophecy(rc, targets, source, restr, numCards=1, deckPos=0):
          deckPos = 1
       else:
          deckPos = -1
-   debug(">>> cmd_prophecy({}, {}, {})".format(numCards, pile, deckPos))
+   debug(">>> cmd_prophecy({}, {}, {})", numCards, pile, deckPos)
    prophecy(group = pile, count = int(numCards), deckPos = deckPos)
    rc.applyNext()
 
 
 def cmd_activate(rc, targets, source, restr, expr):
-   debug(">>> cmd_activate({})".format(expr))
+   debug(">>> cmd_activate({})", expr)
    card = evalExpression(expr, True, getLocals(rc=rc, targets=targets, source=source))
    if card:
       pcard = createGameCard(source, card.model, dryRun = True)
@@ -702,7 +702,7 @@ def cmd_activate(rc, targets, source, restr, expr):
 def cmd_turns(rc, targets, source, restr, qty):
    global turnsRemaining
    qty = int(qty)
-   debug(">>> cmd_turns({}, {})".format(targets, qty))
+   debug(">>> cmd_turns({}, {})", targets, qty)
    turnsRemaining += qty
    if qty > 0:
       notify("{} will play another turn after this one".format(me))
@@ -715,7 +715,7 @@ def cmd_turns(rc, targets, source, restr, qty):
 def cmd_skip(rc, targets, source, restr, phase):
    phases = map(str.lower, PhaseNames)
    idx = phases.index(phase)
-   debug(">>> cmd_skip({}, {} ({}))".format(targets, phase, idx))
+   debug(">>> cmd_skip({}, {} ({}))", targets, phase, idx)
    for player in targets:
       skipPhases = getState(player, 'skip')
       if not idx in skipPhases:
@@ -726,7 +726,7 @@ def cmd_skip(rc, targets, source, restr, phase):
    
    
 def cmd_unite(rc, targets, source, restr, *args):
-   debug(">>> cmd_unite({})".format(targets))
+   debug(">>> cmd_unite({})", targets)
    if targets:
       uattack = getGlobalVar('UnitedAttack')
       if len(uattack) > 0:
@@ -742,7 +742,7 @@ def cmd_unite(rc, targets, source, restr, *args):
    
    
 def cmd_removeFromAttack(rc, targets, source, restr, *args):
-   debug(">>> cmd_removeFromAttack({})".format(targets))
+   debug(">>> cmd_removeFromAttack({})", targets)
    for card in targets:
       remoteCall(getOpp(), "cancelAttack", [card])
       waitForAnimation()
@@ -751,7 +751,7 @@ def cmd_removeFromAttack(rc, targets, source, restr, *args):
 
 
 def cmd_modDamage(rc, targets, source, restr, qty):
-   debug(">>> cmd_modDamage({})".format(qty))
+   debug(">>> cmd_modDamage({})", qty)
    addTempVar('damageMod', int(qty), True)
    notify('Damage has been increased by {}.'.format(qty))
    rc.applyNext()
@@ -764,7 +764,7 @@ def cmd_peek(rc, targets, source, restr):
 
 
 def cmd_pileView(rc, targets, source, restr, pileName, viewState):
-   debug(">>> cmd_pileView({}, {})".format(pileName, viewState))
+   debug(">>> cmd_pileView({}, {})", pileName, viewState)
    prefix, name = RulesLexer.getPrefix(RS_PREFIX_ZONES, pileName)
    if name in RS_KW_ZONES_PILES:
       pile = RulesUtils.getZoneByName(pileName)

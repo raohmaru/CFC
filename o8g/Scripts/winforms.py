@@ -110,7 +110,7 @@ class MessageBoxForm(CustomForm):
 
 
 def messageBox(type, msg, title, icon = None):
-   debug(">>> messageBox({}) with message: {}".format(title, msg))
+   debug(">>> messageBox({}) with message: {}", title, msg)
    if settings['WinForms']:
       Application.EnableVisualStyles()
       # Replace card ID with card name

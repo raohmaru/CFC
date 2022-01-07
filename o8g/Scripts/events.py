@@ -51,7 +51,7 @@ def addGameEventListener(event, callback, obj_id, source_id = None, restr = None
    }
    GameEvents.append(listener)
    setGlobalVar('GameEvents', GameEvents)
-   debug("Added listener to game event '{}' -> {}".format(eventName, listener))
+   debug("Added listener to game event '{}' -> {}", eventName, listener)
    return True
 
 
@@ -60,7 +60,7 @@ def removeGameEventListener(obj_id, eventName = None, callback = None):
    Unsubscribes the given card (obj_id) from a global event. If the additional arguments are not defined
    it will remove all listeners the card was subscribed to.
    """
-   debug(">>> removeGameEventListener({}, {}, {})".format(obj_id, eventName, callback))
+   debug(">>> removeGameEventListener({}, {}, {})", obj_id, eventName, callback)
    GameEvents = getGlobalVar('GameEvents')
    removed = False
    # Iterate it in reverse order because we are removing items
@@ -74,7 +74,7 @@ def removeGameEventListener(obj_id, eventName = None, callback = None):
             if listener['restr'] is None:
                del GameEvents[i]
                removed = True
-               debug("Removed listener for event {} ({})".format(listener['event'], listener))
+               debug("Removed listener for event {} ({})", listener['event'], listener)
                # Invoke any callback
                onRemoveEvent(listener)
    if removed:
@@ -89,7 +89,7 @@ def dispatchEvent(event, obj_id = None, args = []):
    res = (None, None)
    if not settings['PlayAuto']:
       return res
-   debug(">>> dispatchEvent({}, {}, {})".format(event, obj_id, args))
+   debug(">>> dispatchEvent({}, {}, {})", event, obj_id, args)
    GameEvents = getGlobalVar('GameEvents')
    for listener in GameEvents:
       if event == listener['event']:
@@ -100,7 +100,7 @@ def dispatchEvent(event, obj_id = None, args = []):
             or listener['id'] == obj_id
             or listener['appliesto'] == RS_SUFFIX_ANY
          ):
-            debug("-- Found listener {}".format(listener))
+            debug("-- Found listener {}", listener)
             res = (True, None)
             # Callback could be the ID of a card...
             if isinstance(listener['callback'], (int, long)):
@@ -124,8 +124,10 @@ def dispatchEvent(event, obj_id = None, args = []):
                   pcard = getGameCard(card)
                   if not pcard.rules.parsed:
                      pcard.init()
+                  # Something happened during execution
                   if not pcard.rules.execAuto(None, event, *params):
                      res = (False, listener['callback'])
+                  # This is fine
                   else:
                      playSnd('activate-3')
                if listener['appliesto'] == RS_SUFFIX_ONCE:
@@ -135,7 +137,7 @@ def dispatchEvent(event, obj_id = None, args = []):
                try:
                   func = eval(listener['callback']) # eval is a necessary evil
                except:
-                  debug("Callback function {} is not defined".format(listener['callback']))
+                  debug("Callback function {} is not defined", listener['callback'])
                   continue
                res = (func(*params), listener['source'] or listener['id'])
    return res
@@ -146,7 +148,7 @@ def triggerHook(event, obj_id = None, args = []):
    Hook system. It returns a boolean whether the given action defined by the hook is allowed or not or not.
    """
    res, source = dispatchEvent(event, obj_id, args)
-   debug(">>> triggerHook({}, {}, {}) => {}, {}".format(event, obj_id, args, res, source))
+   debug(">>> triggerHook({}, {}, {}) => {}, {}", event, obj_id, args, res, source)
    # If the action is not allowed, maybe we should notify the player
    if res == False and source:
       if event in MSG_HOOKS_ERR:
@@ -158,7 +160,7 @@ def cleanupGameEvents(restr):
    """
    Dispatches an event it the restriction matches, then removes it. (Like "end of turn" events.)
    """
-   debug(">>> cleanupGameEvents({})".format(restr))
+   debug(">>> cleanupGameEvents({})", restr)
    GameEvents = getGlobalVar('GameEvents')
    removed = False
    # Iterate it in reverse order because we are removing items
@@ -175,7 +177,7 @@ def cleanupGameEvents(restr):
          ):
             del GameEvents[i]
             removed = True
-            debug("Removed listener for event {} -> {}".format(listener['event'], listener))
+            debug("Removed listener for event {} -> {}", listener['event'], listener)
             # Invoke any callback
             onRemoveEvent(listener)
    if removed:
@@ -192,6 +194,6 @@ def onRemoveEvent(listener):
    elif listener['onremove']:
       func = eval(listener['onremove'])
    if func:
-      debug("Calling on removed callback {}()".format(func.func_name))
+      debug("Calling on removed callback {}()", func.func_name)
       func(*listener['args'])
    

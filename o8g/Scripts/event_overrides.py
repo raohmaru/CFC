@@ -38,7 +38,7 @@ def overrideCardsMoved(args):
       x         = xs[i]
       y         = ys[i]
       faceup    = faceups[i]
-      # debug("overrideCardsMoved: {}: {} -> {}, [{}, {}] ({}) {}".format(card, fromGroup.name, toGroup.name, x, y, index, faceup))
+      # debug("overrideCardsMoved: {}: {} -> {}, [{}, {}] ({}) {}", card, fromGroup.name, toGroup.name, x, y, index, faceup)
       
       if isUI(card):
          continue

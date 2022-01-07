@@ -26,8 +26,9 @@ if not 'debug' in globals():
    # Make debug accessible from any module
    import __builtin__
    import config
-   def debug(str):
-      print str
+   def debug(msg, *args):
+      res = str(msg).format(*args)
+      print(res)
    __builtin__.debug = debug
    __builtin__.me = {}
    __builtin__.table = {}
@@ -36,7 +37,7 @@ if not 'debug' in globals():
    from utils import isNumber
    __builtin__.isNumber = isNumber
 
-from cardsRules import RulesDict
+from card_rules import RulesDict
 from rs.RuleScript_lexer import RulesLexer
 import pprint
 

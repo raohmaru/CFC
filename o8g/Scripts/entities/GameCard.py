@@ -50,12 +50,12 @@ class GameCard(object):
          return self.state[name]
       
    def setState(self, name, value):
-      debug(">>> GameCard.setState({}, {}, {})".format(self.card, name, value))
+      debug(">>> GameCard.setState({}, {}, {})", self.card, name, value)
       self.state[name] = value
       debug(self.state)
       
    def destroy(self):
-      debug(">>> Delete GameCard {}".format(self.card))
+      debug(">>> Delete GameCard {}", self.card)
       del self.card
       del self.rules
       

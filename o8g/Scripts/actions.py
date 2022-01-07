@@ -393,7 +393,7 @@ def doesNotUnfreeze(card, restr = None):
    Card does not unfreeze (untap) normally.
    """
    mute()
-   debug("doesNotUnfreeze({}, {})".format(card, restr))
+   debug("doesNotUnfreeze({}, {})", card, restr)
    msg = "not unfreeze"
    when = ""
    if not hasMarker(card, "Cannot Unfreeze"):
@@ -534,7 +534,7 @@ def copyAbility(card, x = 0, y = 0, target = None):
    """
    Copies an ability from one target card to another card.
    """
-   debug(">>> copyAbility({}, {})".format(card, target))
+   debug(">>> copyAbility({}, {})", card, target)
    if not isCharacter(card):
       warning("Abilities can only be copied to character cards.")
       return
@@ -599,7 +599,7 @@ def swapAbilities(card, x = 0, y = 0, target = None):
    """
    Swap the abilities between two characters.
    """
-   debug(">>> swapAbilities({}, {})".format(card, target))
+   debug(">>> swapAbilities({}, {})", card, target)
    if not isCharacter(card) or not charIsInRing(card, card.controller) or not card.Rules:
       whisper("Abilities can only be swapped between character cards with abilities in the arena.")
       return
@@ -787,7 +787,7 @@ def removeAll(group, x = 0, y = 0):
 
 
 def toTableFaceDown(card, x = 0, y = 0):
-   debug(">>> toTableFaceDown {}".format(card))
+   debug(">>> toTableFaceDown {}", card)
    mute()
    fromText = fromWhereStr(card.group)
    placeCard(card, card.Type, faceDown = True)
@@ -795,7 +795,7 @@ def toTableFaceDown(card, x = 0, y = 0):
 
 
 def changeSlot(card, x = 0, y = 0, targets = None):
-   debug(">>> changeSlot {}".format(card))
+   debug(">>> changeSlot {}", card)
    mute()
    cardSlot = getSlotIdx(card, card.controller)
    if cardSlot == -1:
@@ -947,7 +947,7 @@ def play(card, x = 0, y = 0, slotIdx = None):
    """
    Play cards from (usually) the player's hand.
    """
-   debug(">>> playing card {} at slot {}".format(card, slotIdx))
+   debug(">>> playing card {} at slot {}", card, slotIdx)
 
    mute()
    slot = ""
@@ -990,7 +990,7 @@ def backup(card, x = 0, y = 0, target = None):
    """
    Play a card as backup attached to a character in the player's ring.
    """
-   debug(">>> back-up with card {}".format(card))
+   debug(">>> back-up with card {}", card)
    mute()
    group = card.group
    if settings["PlayAuto"]:

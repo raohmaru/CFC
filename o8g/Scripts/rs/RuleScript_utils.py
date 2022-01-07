@@ -63,7 +63,7 @@ class RulesUtils():
       elif name == RS_KW_ZONE_REMOVED:
          zone = player.piles['Removed pile']
 
-      debug("getZoneByName({}) => {}".format(name, zone))
+      debug("getZoneByName({}) => {}", name, zone)
 
       return zone
 
@@ -117,7 +117,7 @@ class RulesUtils():
       for listener in GameEvents:
          if listener['source'] == source:
             targets.append(Card(listener['id']))
-      debug(">>> getTargetOfSourceEvent({}) -> {}".format(source, targets))
+      debug(">>> getTargetOfSourceEvent({}) -> {}", source, targets)
       return targets
 
 
@@ -154,7 +154,7 @@ class RulesUtils():
 
    @staticmethod
    def getTargets(target, source=None, msg=None, reveal=True):
-      debug("Getting targets ({})".format(reveal))
+      debug("Getting targets ({})", reveal)
 
       types    = target['types']
       zone     = target['zone']
@@ -218,7 +218,7 @@ class RulesUtils():
          if samples > len(targets):
             samples = len(targets)
          targets = random.sample(targets, samples)
-         debug("-- Randomly selected {} card(s)".format(samples))
+         debug("-- Randomly selected {} card(s)", samples)
          
       # Apply a final selector
       if selector and targets:
@@ -257,10 +257,10 @@ class RulesUtils():
          targets = RulesUtils.filterCards(type, filters, zone, cards, source, msg, pick, qty, reveal)
 
       if isinstance(targets, list):
-         debug("-- {} target(s) retrieved:".format(len(targets)))
+         debug("-- {} target(s) retrieved:", len(targets))
          for i, t in enumerate(targets):
             if i < 10:
-               debug("        {}".format(t))
+               debug("        {}", t)
             else:
                debug("        ...")
                break
@@ -323,7 +323,7 @@ class RulesUtils():
             # Current card can't be selected
             card = source
             if card in cards_f1:
-               debug(MSG_ERR_TARGET_OTHER.format(card))
+               debug(MSG_ERR_TARGET_OTHER, card)
                cards_f1.remove(card)
             
       # Type is a card name?
@@ -370,7 +370,7 @@ class RulesUtils():
       if pick:
          if pick > 0:
             cards_f1 = cards_f1[:pick]
-            debug("-- Picked {} card(s)".format(len(cards_f1)))
+            debug("-- Picked {} card(s)", len(cards_f1))
          else:
             cards_f1 = cards_f1[pick:]
             debug("-- Picked {} card(s) from the bottom of {}".format(len(cards_f1), ''.join(zone)))

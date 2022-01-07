@@ -24,7 +24,7 @@ import time
 soundsPlaying = {}
 
 def playSnd(name, isInternal = False):
-   # debug(">>> playSnd({}, {})".format(name, isInternal))
+   # debug(">>> playSnd({}, {})", name, isInternal)
    if name in soundsPlaying:
       # Do not repeat sound if it has been played 0.3s ago
       if time.time() - soundsPlaying[name] < 0.3:
@@ -39,6 +39,6 @@ def playSnd(name, isInternal = False):
          sound = _extapi.game.Sounds[name]
          Octgn.Utils.Sounds.PlayGameSound(sound)
       except KeyError:
-         debug("Sound {} does not exist".format(name))
+         debug("Sound {} does not exist!", name)
    else:
       playSound(name)
