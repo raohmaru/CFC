@@ -4,7 +4,7 @@
       name="Card Fighters' Clash"
       id="e3d56d9e-900d-49c6-b6ae-22cbb51be153"
       octgnVersion="3.4.350.0"
-      version="0.9.9.843"
+      version="0.9.9.852"
       markersize="20"
       tags="capcom snk fighter"
       description="Play epic battles with fighters from Capcom and SNK!
@@ -47,6 +47,7 @@
 		<script src="Scripts/entities/CharCard.py" />
 		<script src="Scripts/entities/Ability.py" />
 		<script src="Scripts/entities/DummyPlayer.py" />
+		<script src="Scripts/entities/FakePlayer.py" />
 		<script src="Scripts/rs/RuleScript.py" />
 		<script src="Scripts/rs/RuleScript_config.py" />
 		<script src="Scripts/rs/RuleScript_lexer.py" />
@@ -109,7 +110,8 @@
 		<sound name="to-hand" src="Resources/Sounds/to-hand.mp3"/>
 		<sound name="turn-change" src="Resources/Sounds/turn-change.mp3"/>
 		<sound name="untap" src="Resources/Sounds/untap.mp3"/>
-		<sound name="win-ask" src="Resources/Sounds/win-ask.mp3"/>
+		<sound name="win-ask-1" src="Resources/Sounds/win-ask-1.mp3"/>
+		<sound name="win-ask-2" src="Resources/Sounds/win-ask-2.mp3"/>
 		<sound name="win-confirm" src="Resources/Sounds/win-confirm.mp3"/>
 		<sound name="win-error" src="Resources/Sounds/win-error.mp3"/>
 		<sound name="win-info" src="Resources/Sounds/win-info.mp3"/>

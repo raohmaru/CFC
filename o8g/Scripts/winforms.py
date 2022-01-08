@@ -155,6 +155,11 @@ def confirm(str):
    playSnd('win-confirm', True)
    return _api.Confirm(str)
    
+_askChoice_ = askChoice
+def askChoice(question, choices = [], colors = [], customButtons = []):
+   playSnd('win-ask-2', True)
+   return _askChoice_(question, choices, colors, customButtons)
+   
 
 # clr.AddReference('WindowsBase')
 # System.Windows.Threading.Dispatcher.CurrentDispatcher.Invoke

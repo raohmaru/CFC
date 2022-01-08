@@ -127,7 +127,7 @@ def overrideTurnPassed(args):
    Triggers when the player clicks the green "Pass Turn" button on the player tabs.
    """
    if tutorial:
-      tutorial.goNext()
+      tutorial.goNextStep()
       return
    
    player = args.player  # The player the turn is being passed to

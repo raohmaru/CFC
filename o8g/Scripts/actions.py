@@ -32,8 +32,8 @@ def nextPhase(fromKeyStroke = True, x = 0, y = 0):
    phaseIdx = getCurrentPhase()
       
    # If playing the tutorial we go to the next tutorial phase instead
-   if tutorial and tutorial.validate == phaseIdx and fromKeyStroke:
-      tutorial.goNext()
+   if tutorial and tutorial.validatePhase == phaseIdx and fromKeyStroke:
+      tutorial.goNextStep()
       return
    
    # If I am the active player
@@ -135,7 +135,7 @@ def setup(group = table, x = 0, y = 0):
 
 
 def restart(isRemote = False, x = 0, y = 0):
-   debug(">>> reset()")
+   debug(">>> restart()")
    if not isRemote and not confirm("Are you sure you want to restart the game?"):
       return
    resetAll()

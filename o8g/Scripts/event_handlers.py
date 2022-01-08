@@ -42,9 +42,11 @@ def onGameStarted():
    chooseSide()
    if debugging:
       debugScenario()
+   elif tutorial == True:
+      startTutorial()
    elif settings["PlayAuto"]:
       addButton("StartButton")
-      setAvatar()
+   setAvatar()
    playSnd("new-game", True)
 
 

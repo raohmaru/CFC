@@ -276,6 +276,7 @@ Globals        = {}     # Replaces OCTGN global variables
 PlayerGlobals  = {}     # Replaces OCTGN player global variables
 debugVerbosity = DebugLevel["Off"]
 debugging      = False
+tutorial       = None
 # If I am alone playing I want to know EVERYTHING
 # if me.name == Author and len(players) == 1:
    # debugVerbosity = DebugLevel["Debug"]

@@ -27,11 +27,14 @@ def getGameVersion():
 #---------------------------------------------------------------------------
 
 def showWelcomeScreen(group=None, x=0, y=0):
+   debug(">>> showWelcomeScreen()")
    if group is None:
       if not settings['WelcomeScreen']:
          if settings['GameVersion'] != getGameVersion():
+            debug("Showing changelog because of a version update")
             showChangelog()
          return
+   debug("Showing welcome screen")
       
    choiceList = ['Tutorial', u'   Rulebook  🡕', u'   Download card images  🡕', u'   Help us improve the game  🡕', 'What\'s new?']
    colorsList = ['#004d99'] * len(choiceList)
@@ -42,7 +45,9 @@ Have a good battle and thanks for playing!"""
    choice = askChoice(msg, choiceList, colorsList, buttons)
    
    if choice == 1:
-      startTutorial()
+      global tutorial
+      tutorial = True
+      resetGame()
       
    elif choice == 2:
       openUrl(Website + '/rulebook/')

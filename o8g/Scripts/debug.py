@@ -30,7 +30,6 @@ def debugSetup():
    settings.update(eval(getSetting("settings", "")))
    settings["PhaseAuto"] = False
    settings["Activate"] = False
-   setAvatar()
    if me.isActive:
       setState(None, "activePlayer", me._id)
       update()

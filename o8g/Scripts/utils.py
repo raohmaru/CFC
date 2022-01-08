@@ -59,7 +59,7 @@ def resetAll():
    debug(">>> resetAll()")
    # Import all our global variables and reset them.
    global playerSide, handSize, gameCards, turnsRemaining, transformed, buttons, PlayerGlobals, Globals, tutorial
-   playerSide = None
+   # playerSide = None  # Do we really need to reset it? It does not change during a game...
    handSize = HandSize
    gameCards = {}
    transformed = {}
@@ -70,7 +70,8 @@ def resetAll():
    PlayerGlobals = {}
    Globals = {}
    resetState()
-   if tutorial and tutorial.step > 0:
+   # The user is playing the tutorial
+   if isinstance(tutorial, Tutorial) and tutorial.step > 0:
       tutorial = None
    debug("<<< resetAll()")
 
@@ -289,7 +290,7 @@ def showCardDlg(list, title, max=1, text="Card Selection", min=1, bottomList=Non
    dlg.max = max
    dlg.label = label
    dlg.bottomLabel = bottomLabel
-   playSnd('win-ask', True)
+   playSnd('win-ask-1', True)
    return dlg.show()
             
 
