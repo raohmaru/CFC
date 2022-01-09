@@ -21,7 +21,8 @@
 
 def onTableLoaded():
    """
-   Happens when the table first loads, and never again."""
+   Happens when the table first loads, and never again.
+   """
    
    global settings
    try:

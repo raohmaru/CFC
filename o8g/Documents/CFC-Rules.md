@@ -60,7 +60,7 @@ By playing cards players can bring into the battle powerful fighters and effects
    If the BP lowers to zero, that character is KO'ed and goes to the discard pile.
 2. **Soul Points (SP)**. It represents Ki energy in battles. Players can spend SP to play cards and to make United Attacks.  
    When a player plays a card, he gains the SP listed in that card. If the SP is a negative value, then the player must spend that amount from his SP or that card can't be played.
-3. **Publisher and Team**. These are the name of the video game where a character appeared (second logo) and that game publisher (first logo).
+3. **Publisher and Team**. These are the name of the video game where a character appeared (first logo) and that game publisher (second logo).
 4. **Card name**.
    The icon on the left represents the card subtype.
 5. **Type and Subtype**. The upper line is the card type (Character, Action or Reaction), and the lower line is the card subtype. Only Characters have a subtype.  

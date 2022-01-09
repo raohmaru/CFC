@@ -31,7 +31,7 @@ def setAvatar(model = None):
          model = settings["Avatar"]
       if not model:
          cards = queryCard({"Type": AvatarType}, True)
-         model = cards[random.randint(0, len(cards)-1)]
+         model = cards[random.randInt(0, len(cards)-1)]
    if model:
       oldAvatar = getAvatar(me)
       if oldAvatar:

@@ -35,7 +35,7 @@ class RRRandom(Random):
       return self.Sample()
 
 
-   def randint(self, a, b):
+   def randInt(self, a, b):
       """
       Return random integer in range [a, b], including both end points.
       """

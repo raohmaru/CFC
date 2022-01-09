@@ -452,10 +452,10 @@ Hint: Please remember that you can target a character in the Ring with Shift + L
       self.msg("""
 Congratulations! You have completed the training!
 
-You will find more information about the game rules at the menu option "Game > Documents" and at the website cardfightersclash.wordpress.com.
+You will find more information about the game rules at the menu option "Game > Documents" and in the website {}.
 
 Also you can get information in-game about any card by right-clicking on that card and selecting the option "Card info".
-""", "OK")
+""".format(Website), "OK")
          
       self.msg("""
 Now you are ready to face any opponent in the online arena! Good luck!
