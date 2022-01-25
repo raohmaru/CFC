@@ -33,7 +33,7 @@ def playAuto(card, slotIdx = None, force = False):
       charsPlayed = getState(me, "charsPlayed")
       charsPerTurn = getState(me, "charsPerTurn")
       if charsPlayed >= charsPerTurn:
-         warning("Only {} character card{} per turn can be played.\n(You have played {} character{} this turn.)".format(charsPerTurn, plural(charsPerTurn), charsPlayed, plural(charsPlayed)))
+         warning("Only {} character card{} per turn can be played.\n(You have played {} character{} this turn.)".format(charsPerTurn, pluralize(charsPerTurn), charsPlayed, pluralize(charsPlayed)))
          return
       # BP limit?
       bplimit = getRule("play_char_bp_limit")
@@ -63,7 +63,7 @@ def playAuto(card, slotIdx = None, force = False):
       if not payCostSP(card.SP, card, type = CharType):
          return
       # Finally, the card is played
-      placeCard(card, card.Type, PlayAction, slotIdx)
+      placeCard(card, card.Type, "play", slotIdx)
       # Parse the card to enable the card autoscript
       deleteGameCard(card)
       pcard = createGameCard(card)
@@ -86,7 +86,7 @@ def playAuto(card, slotIdx = None, force = False):
       # Pay SP cost
       if not payCostSP(card.SP, card, type = ActionType):
          return
-      placeCard(card, card.Type, PlayAction)
+      placeCard(card, card.Type, "play")
       # Parse the card to enable card autoscript
       deleteGameCard(card)
       createGameCard(card)
@@ -105,7 +105,7 @@ def playAuto(card, slotIdx = None, force = False):
       # Pay SP cost
       if not payCostSP(card.SP, card, type = ReactionType):
          return
-      placeCard(card, card.Type, PlayAction)
+      placeCard(card, card.Type, "play")
       # Parse the card to enable card autoscript
       deleteGameCard(card)
       createGameCard(card)
@@ -153,7 +153,7 @@ def backupAuto(card, target = None):
    # Check compatible backups
    acceptedBackups = getAcceptedBackups(target)
    if not card.Subtype in acceptedBackups:
-      warning("Incompatible back-up type.\n{} accepts these character subtypes: {}.".format(target.Name, cardsToNamesStr(acceptedBackups)))
+      warning("Incompatible back-up type.\n{} accepts these character subtypes: {}.".format(target.Name, cardsAsNamesListStr(acceptedBackups)))
       return
    # Check remaining backups
    avlbckps = acceptedBackups.count(card.Subtype)
@@ -165,11 +165,11 @@ def backupAuto(card, target = None):
             avlbckps -= 1
    if avlbckps <= 0:
       qty = acceptedBackups.count(card.Subtype)
-      warning("{} can't be backed-up with more than {} {} card{}.".format(target.Name, qty, card.Subtype, plural(qty)))
+      warning("{} can't be backed-up with more than {} {} card{}.".format(target.Name, qty, card.Subtype, pluralize(qty)))
       return
    # It's a legal backup
    attach(card, target)
-   placeCard(card, card.Type, BackupAction, target)
+   placeCard(card, card.Type, "backup", target)
    card.sendToBack()
    setMarker(card, "Backup")
    pcard = getGameCard(target)

@@ -33,11 +33,11 @@ class RulesSelectors():
       
       # Get the selector function
       if cmd in RulesSelectors.selectors:      
-         debug("-- applying selector ::{}({}) to {}", cmd, expr, cardsToNamesStr(targets))
+         debug("-- applying selector ::{}({}) to {}", cmd, expr, cardsAsNamesListStr(targets))
          func = RulesSelectors.selectors[cmd]
          res = evalExpression(expr, True, getLocals())
          targets = func(targets, res)
-         debug("-- new selection: {}", cardsToNamesStr(targets))
+         debug("-- new selection: {}", cardsAsNamesListStr(targets))
          
       return targets
 

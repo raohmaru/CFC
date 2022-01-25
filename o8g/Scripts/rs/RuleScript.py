@@ -196,6 +196,7 @@ class Rules():
          revert = False
       
          debug("Executing effect: {}", effect)
+         addTempVar('effect', effect)
          targets = []
          currTarget = target
          newTarget = None
@@ -349,7 +350,7 @@ class Rules():
                if len(cards) == 0:
                   cards = RulesUtils.getCardsFromZone(RS_KW_ZONE_HAND)
                   notify(MSG_PLAYER_LOOKS.format(me, 'their', 'hand'))
-                  cards = showCardDlg(cards, "Select {} card{} from you hand to discard".format(max, plural(max)), max, min=max)
+                  cards = showCardDlg(cards, "Select {} card{} from you hand to discard".format(max, pluralize(max)), max, min=max)
                if cards == None:
                   return False
             # ... or a valid target

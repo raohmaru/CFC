@@ -49,9 +49,8 @@ def debugScenario():
    gotoMain()
    waitForAnimation()
    tableCards = [
-       "9c6b99fa-ff60-4d70-aee8-7e1eae6f29b7" # Mack Knife
-      ,"55b0c9ff-4b3a-4b08-adc1-f1b5e03adef9" # Nina
-      ,"d5e70014-8a56-4d9b-8b06-0192bac3f0b8" # leon
+       "aaf18dab-973f-4126-a47a-78798ec5058b" # Rock
+      ,"487f66ee-c717-41a1-ad2e-31d3fe0dd424" # Kenji
        # "d14694b4-484c-4b45-962e-8cbb636d8a9a" # 200 BP
       # ,"c7d128ea-a3b9-4b04-b8b2-a61153b5b2e6" # 400 BP
       # ,"24e99a13-cb42-4e16-9900-78dde12e1a4c" # 600 BP
@@ -68,7 +67,7 @@ def debugScenario():
       waitForAnimation()
       
    handCards = [
-       "fa4ee219-8264-41bc-b8a3-23a24df61d9a" # Tooptadon
+       "83c33aa8-5981-4352-8107-cbb7e05547ec" # Synchro
        # "8bb477f9-5004-4018-8d5e-73c6a23e8912" # Char 300 BP
       # ,"e910f462-bea9-4262-b168-c7c512eb6511" # Char 500 BP
       # ,"0fdadc92-0864-46cc-a3ff-c20e2af8249c" # Char 700 BP
@@ -87,10 +86,10 @@ def debugScenario():
       card.moveTo(me.hand)
    
    deckCards = [
-       # "55ab2891-c99e-4647-8a9d-b01fbce3009f" # Char 300 BP
-      # ,"248517e9-d7a0-450d-9281-df91d20f68ab" # Char 500 BP
-      # ,"eb648ee7-aa4e-41ce-a7fc-04af31349ca9" # Char 700 BP
-      # ,"4d7520b9-9ced-43e0-a2e7-974d76d8eb82" # Char 1000 BP
+       "55ab2891-c99e-4647-8a9d-b01fbce3009f" # Char 300 BP
+      ,"248517e9-d7a0-450d-9281-df91d20f68ab" # Char 500 BP
+      ,"eb648ee7-aa4e-41ce-a7fc-04af31349ca9" # Char 700 BP
+      ,"4d7520b9-9ced-43e0-a2e7-974d76d8eb82" # Char 1000 BP
       # ,"5e2211a0-e52e-4b7b-b03d-f6ecb3660bb0" # Action 0 SP
       # ,"83c33aa8-5981-4352-8107-cbb7e05547ec" # Action -1 SP
       # ,"80692723-3895-435f-bf8f-e94507704af5" # Action -3 SP
@@ -138,7 +137,8 @@ def debugOpp():
    me.SP = 50
    
    tableCards = [
-       "d14694b4-484c-4b45-962e-8cbb636d8a9a" # 200 BP
+       "aaf18dab-973f-4126-a47a-78798ec5058b" # Rock
+       # "d14694b4-484c-4b45-962e-8cbb636d8a9a" # 200 BP
       # ,"c7d128ea-a3b9-4b04-b8b2-a61153b5b2e6" # 400 BP
       # ,"24e99a13-cb42-4e16-9900-78dde12e1a4c" # 600 BP
       # ,"e6e46f83-d089-4762-8d8e-2a3252cfc9db" # 800 BP
@@ -150,11 +150,12 @@ def debugOpp():
       waitForAnimation()
       
    handCards = [
+       "83c33aa8-5981-4352-8107-cbb7e05547ec" # Synchro
        # "8bb477f9-5004-4018-8d5e-73c6a23e8912" # Char 300 BP
       # ,"e910f462-bea9-4262-b168-c7c512eb6511" # Char 500 BP
       # ,"0fdadc92-0864-46cc-a3ff-c20e2af8249c" # Char 700 BP
       # ,"af43872e-e47d-4fe0-9b55-aedd8a0d0fc7" # Char 800 BP
-      "5e2211a0-e52e-4b7b-b03d-f6ecb3660bb0" # Action 0 SP
+      # "5e2211a0-e52e-4b7b-b03d-f6ecb3660bb0" # Action 0 SP
       # ,"83c33aa8-5981-4352-8107-cbb7e05547ec" # Action -1 SP
       # ,"80692723-3895-435f-bf8f-e94507704af5" # Action -3 SP
       # ,"26fa7e0e-eb86-40d5-b5ab-39723fd67e43" # Action -5 SP
@@ -171,10 +172,10 @@ def debugOpp():
       # ,"55ab2891-c99e-4647-8a9d-b01fbce3009f" # Char 300 BP
       # ,"248517e9-d7a0-450d-9281-df91d20f68ab" # Char 500 BP
       # ,"eb648ee7-aa4e-41ce-a7fc-04af31349ca9" # Char 700 BP
-      # ,"5e2211a0-e52e-4b7b-b03d-f6ecb3660bb0" # Action 0 SP
-      # ,"83c33aa8-5981-4352-8107-cbb7e05547ec" # Action -1 SP
-      # ,"80692723-3895-435f-bf8f-e94507704af5" # Action -3 SP
-      # ,"ac01bbbe-583e-46ae-b26c-3c25eb8f0779" # Action -6 SP
+      "5e2211a0-e52e-4b7b-b03d-f6ecb3660bb0" # Action 0 SP
+      ,"83c33aa8-5981-4352-8107-cbb7e05547ec" # Action -1 SP
+      ,"80692723-3895-435f-bf8f-e94507704af5" # Action -3 SP
+      ,"ac01bbbe-583e-46ae-b26c-3c25eb8f0779" # Action -6 SP
       # ,"68eaee28-a00a-480f-b8e5-e14d2a8f102c" # Reaction 0 SP
       # ,"46deecf5-7f7b-42b5-b6fa-e3162dce2013" # Reaction -1 SP
       # ,"91e441cc-0f1f-4b01-a2b0-94678d6f0b56" # Reaction -4 SP

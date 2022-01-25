@@ -102,7 +102,7 @@ def overrideCardsMoved(args):
                      slotIdx = getDropSlotIndex(x)
                      if slotIdx == None:
                         continue
-                     slotIdx = fixSlotIdx(slotIdx, fix = True)
+                     slotIdx = invertSlotIdx(slotIdx, inverted = True)
                      targets = None
                      oppRing = getGlobalVar("Ring", getOpp())
                      if oppRing[slotIdx] != None:
@@ -147,7 +147,7 @@ def getDropSlotIndex(x):
    ox = 200
    cx = x + CardWidth/2
    for j in range(NumSlots):
-      slotX = CardsCoords["Slot" + `fixSlotIdx(j)`][0] + CardWidth / 2
+      slotX = CardsCoords["Slot" + `invertSlotIdx(j)`][0] + CardWidth / 2
       diff = abs(slotX - cx)
       if diff < ox:
          idx = j

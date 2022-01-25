@@ -56,7 +56,7 @@ type:
       ^ (other)
       ! (not)
    Sufixes:
-      s (plural) (valid on Type, Subtype, player or *)
+      s (pluralize) (valid on Type, Subtype, player or *)
    Default:
       *
       

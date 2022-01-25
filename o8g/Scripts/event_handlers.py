@@ -31,7 +31,8 @@ def onTableLoaded():
       debug("Settings loaded: {}", settings)
    except:
       debug("Error loading settings}")
-   checkTwoSidedTable()
+   if not table.isTwoSided():
+      warning("This game is designed to be played on a two-sided table.\n\nPlease start a new game and make sure the option 'Two Side Table' is checked.")
    showWelcomeScreen()
 
 
@@ -66,7 +67,7 @@ def onDeckLoaded(args):
       msg = "INVALID DECK: {}'s deck has {} cards (it must have exactly {} cards).".format(player, len(player.Deck), DeckSize)
       _extapi.notify(msg, Colors.Red)
       # Big notification for all players
-      notification(msg, Colors.Red, True)
+      notification(msg, Colors.Red, players)
    cards = {}
    # Validate deck 
    for card in player.Deck:
@@ -77,7 +78,8 @@ def onDeckLoaded(args):
       if cards[card.model] > MaxCardCopies:
          msg = "INVALID DECK: {0}'s deck has more than {1} copies of a card (only {1} copies are allowed).".format(player, MaxCardCopies)
          _extapi.notify(msg, Colors.Red)
-         notification(msg, Colors.Red, True)  # Big notification for all players
+         # Big notification for all players
+         notification(msg, Colors.Red, players)
    if settings["PlayAuto"]:
       setup()
    playSnd("load-deck")
@@ -182,7 +184,7 @@ def onCardsMoved(args):
    if handChanged:
       dispatchEvent(GameEvents.HandChanges, args = [len(me.hand)])
    if ringChanged:
-      dispatchEvent(GameEvents.RingChanges, args = [getRingSize(ring = MyRing)])
+      dispatchEvent(GameEvents.RingChanges, args = [getRingSize()])
 
    
 def onTurnPassed(args):

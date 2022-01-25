@@ -68,7 +68,7 @@ def nextPhase(fromKeyStroke = True, x = 0, y = 0):
       # Pass priority to opponent
       setState(None, "priority", getOpp()._id)
       notify(MSG_PHASE_DONE.format(me, PhaseNames[phaseIdx], getOpp()))
-      notification(MSG_PHASE_DONE.format(me, PhaseNames[phaseIdx], "you"), player = getOpp())
+      notification(MSG_PHASE_DONE.format(me, PhaseNames[phaseIdx], "you"), playerList = [getOpp()])
       removeButton("NextButton")
       remoteCall(players[1], "nextPhase", [False])
       playSnd("notification")
@@ -122,7 +122,6 @@ def setup(group = table, x = 0, y = 0):
    Game setup. It should be the first function to invoke to start a game.
    """
    debug(">>> setup()")
-   chooseSide()
    # We ensure that player has loaded a deck
    if len(me.Deck) == 0:
       warning(MSG_ACTION_LOAD_DECK)
@@ -189,7 +188,7 @@ def randomPick(group, x = 0, y = 0, fromPlayer = None):
       return
    card.select()
    card.target(True)
-   revealDrawnCard(card)
+   revealCard(card)
    if group == table:
       notify("{} randomly selects {}'s {} on the ring.".format(me, card.controller, card))
    else:
@@ -465,7 +464,7 @@ def askCardBackups(card, x = 0, y = 0):
          return
    # Asked for back-up info
    if len(avlBackups) > 0 and len(avlCharsForBackup) > 0:
-      msg += "\n\nCompatible cards in your hand: {}.".format(cardsToNamesStr(avlCharsForBackup))
+      msg += "\n\nCompatible cards in your hand: {}.".format(cardsAsNamesListStr(avlCharsForBackup))
    whisper(msg)
    if not inRing or len(avlCharsForBackup) == 0:
       information(msg)
@@ -698,7 +697,7 @@ def toHand(card, x = 0, y = 0):
    mute()
    src = card.group
    fromText = fromWhereStr(card.group)
-   cardname = revealDrawnCard(card)
+   cardname = revealCard(card)
    card.moveTo(me.hand)
    if src == table:
       notify("{} returns {} to its Hand {}.".format(me, cardname, fromText))
@@ -709,7 +708,8 @@ def toHand(card, x = 0, y = 0):
 def toDeckTop(card, x = 0, y = 0):
    mute()
    fromText = fromWhereStr(card.group)
-   cardname = revealDrawnCard(card, faceUp = False)
+   cardname = revealCard(card)
+   card.isFaceUp = False
    card.moveTo(me.Deck)
    notify("{} puts {} {} on the top of its Deck.".format(me, cardname, fromText))
 
@@ -964,7 +964,7 @@ def play(card, x = 0, y = 0, slotIdx = None):
       notify("{} plays {} from their {}{}.".format(me, card, group.name, slot))
       charsPlayed = getState(me, "charsPlayed")
       playSnd("card-play-1")
-      notify("({} has played {} character{} this turn.)".format(me, charsPlayed, plural(charsPlayed)))
+      notify("({} has played {} character{} this turn.)".format(me, charsPlayed, pluralize(charsPlayed)))
    else:
       playSnd("card-play-2")
       notify("{} plays {} from their {}.".format(me, card, group.name))
@@ -1076,7 +1076,7 @@ def drawMany(group, count = None):
          # ...then move them one by one into their play hand.
          group.top().moveTo(me.hand)
          drawn += 1
-   notify("{} draws {} card{}.".format(me, drawn, plural(drawn)))
+   notify("{} draws {} card{}.".format(me, drawn, pluralize(drawn)))
    playSnd("draw")
 
 
@@ -1094,7 +1094,7 @@ def randomDraw(group = me.Deck, type = None):
          whisper("There is no cards of the type {} in the {}.".format(type, group.name))
          return
       card = cards[rnd(0, len(cards)-1)]
-   cardname = revealDrawnCard(card, type)
+   cardname = revealCard(card, type)
    card.moveTo(me.hand)
    notify("{} draws {} at random {}.".format(me, cardname, fromWhereStr(group)))
 

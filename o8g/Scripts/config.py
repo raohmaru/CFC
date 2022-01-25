@@ -168,8 +168,6 @@ CardWidth    = 90
 CardHeight   = 126
 Xaxis        = "x"
 Yaxis        = "y"
-PlayAction   = "play"
-BackupAction = "backup"
 Author       = "raohmaru"
 GameId       = "e3d56d9e-900d-49c6-b6ae-22cbb51be153"
 Website      = "https://cardfightersclash.wordpress.com"
@@ -200,7 +198,7 @@ GameRulesDefaults = {
    "ab_instant_act"    : True,  # Activate /\ abilities
    "piercing"          : True,  # Allow piercing damage
    "backup_fresh"      : False, # Backup fresh characters
-   "play_char_bp_limit": None,  # BP limit to play chars
+   "play_char_bp_limit": None,  # BP limit to play chars (dict)
    "dmg_combat_deal"   : True,  # Deal combat damage
    "attack_freeze"     : True,  # Characters freeze after a attack
    "attack"            : True,  # Characters can attack
@@ -257,6 +255,15 @@ GameEventsFromVars = {
 GameEventsExecOnCopy = [
    GameEvents.HandChanges
 ]
+
+Colors = Struct(**{
+   "Black"    : "#000000",
+   "Red"      : "#CC0000",
+   "Blue"     : "#2C6798",
+   "LightBlue": "#5A9ACF",
+   "Orange"   : "#b35900"
+})
+
 
 #---------------------------------------------------------------------------
 # Variables for the current user

@@ -26,35 +26,46 @@ try:
    from System.Windows.Forms import *
    from System.Drawing import *
 except (IOError, ImportError):
-   settings['WinForms'] = False
+   settings["WinForms"] = False
 
 
-# Base class for custom forms
 class CustomForm(Form):   
+   """
+   Base class for custom forms.
+   """
    def __init__(self):
       self.bringToFront()
       
-   # Try to display the message box as the top-most window 
    def bringToFront(self):
+      """
+      Try to display the message box as the top-most window.
+      """
       self.TopMost = True
       self.BringToFront()
 	  
-   # Return the size of the string when drawn with the specified Font for a fixed width
-   def calcStringSize(self, str, width):
+   def measureString(self, str, width):
+      """
+      Return the size of the string when drawn with the specified Font for a fixed width.
+      """
       form = Form()
       g = form.CreateGraphics()
+      # System.Drawing.SizeF
       size = g.MeasureString(str, form.Font, width).ToSize()
       g.Dispose()
       form.Dispose()
       return size
 
-   # Escapes some characters that are not otherwise displayed by WinForms, like '&'
    def stringEscape(self, str):
-      return str.replace('&', '&&')
+      """
+      Escapes some characters that are otherwise not displayed by WinForms, like "&".
+      """
+      return str.replace("&", "&&")
    
 
-# This is a WinForm which creates a simple window, with some text and an OK button to close it.
 class MessageBoxForm(CustomForm):
+   """
+   This is a WinForm which creates a simple window, with some text and an OK button to close it.
+   """
    MinWidth = 250
    MaxWidth = 400
    TextPadding = 20
@@ -65,6 +76,7 @@ class MessageBoxForm(CustomForm):
       labelPanel = Panel()
       buttonPanel = FlowLayoutPanel()
 	  
+      # Suppress multiple Layout events while adjusting attributes of the controls
       labelPanel.SuspendLayout()
       buttonPanel.SuspendLayout()
       self.SuspendLayout()
@@ -89,7 +101,7 @@ class MessageBoxForm(CustomForm):
       buttonPanel.Padding = Padding(5)
       buttonPanel.Controls.Add(button)
       
-      formSize = self.calcStringSize(msg, self.MaxWidth + self.TextPadding * 2)
+      formSize = self.measureString(msg, self.MaxWidth + self.TextPadding * 2)
       self.StartPosition = FormStartPosition.CenterScreen
       self.Text = title
       self.Size = Size(max(self.MinWidth, formSize.Width) + self.TextPadding * 2, formSize.Height + buttonPanel.Size.Height + self.TextPadding * 2)
@@ -110,62 +122,66 @@ class MessageBoxForm(CustomForm):
 
 
 def messageBox(type, msg, title, icon = None):
-   debug(">>> messageBox({}) with message: {}", title, msg)
-   if settings['WinForms']:
+   debug(">>> messageBox({}, {})", title, icon)
+   if settings["WinForms"]:
+      # Enables the colors, fonts, and other visual elements that form an operating system theme
       Application.EnableVisualStyles()
-      # Replace card ID with card name
+      # Replace the card ID with the card name
       msg = replIdsWithNames(msg)
       debug(msg)
       form = MessageBoxForm(msg, title, icon)
-      playSnd('win-{}'.format(type), True)
+      playSnd("win-{}".format(type), True)
       showWinForm(form)
    else:
-      if type == 'error':
+      if type == "error":
          _extapi.warning(msg)
-      elif type == 'warning':
+      elif type == "warning":
          _extapi.whisper(msg, Colors.Red)
       else:
          whisper(msg)
    
 
-def information(msg, title = 'Information'):
-   messageBox('info', msg, title, SystemIcons.Information)
+def information(msg, title = "Information"):
+   messageBox("info", msg, title, SystemIcons.Information)
 
-def warning(msg, title = 'Warning'):
-   messageBox('warning', msg, title, SystemIcons.Warning)
 
-def error(msg, title = 'Error'):
-   messageBox('error', msg, title, SystemIcons.Error)
-   
-def notification(msg, color = '#000000', toAll = False, player = None):
-   if player:
-      remoteCall(player, "notification", [msg, color])
-   elif toAll:
-      for p in players:
-         remoteCall(p, "notification", [msg, color])
+def warning(msg, title = "Warning"):
+   messageBox("warning", msg, title, SystemIcons.Warning)
+
+
+def error(msg, title = "Error"):
+   messageBox("error", msg, title, SystemIcons.Error)
+
+
+def notification(msg, color = Colors.Black, playerList = None):
+   """
+   Shows the notification bar for the given players.
+   """
+   if playerList:
+      for player in playerList:
+         remoteCall(player, "notification", [msg, color])
    else:
-      notifyBar(color, msg + ' ' * 2000)
+      # Right padding to push outside the window the previous message
+      notifyBar(color, msg + " " * 2000)
 
 
 #---------------------------------------------------------------------------
 # Overrides
 #---------------------------------------------------------------------------
 
+_confirm_ = confirm
 def confirm(str):
-   playSnd('win-confirm', True)
-   return _api.Confirm(str)
-   
+   playSnd("win-confirm", True)
+   return _confirm_(str)
+
+
 _askChoice_ = askChoice
 def askChoice(question, choices = [], colors = [], customButtons = []):
-   playSnd('win-ask-2', True)
+   playSnd("win-ask-2", True)
    return _askChoice_(question, choices, colors, customButtons)
-   
 
-# clr.AddReference('WindowsBase')
-# System.Windows.Threading.Dispatcher.CurrentDispatcher.Invoke
 
-# clr.AddReferenceByName("PresentationCore, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35")
-# clr.AddReferenceByName("PresentationFramework, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35")
-# Octgn.Play.Gui.Commands.LoadPrebuiltDeck.Execute({}, System.Windows.ContentElement())
-
-# Octgn.WindowManager.PlayWindow.AddHandler(Octgn.Play.Gui.CardControl.CardHoveredEvent, Octgn.Play.Gui.CardEventHandler(btnHover))
+_remoteCall_ = remoteCall
+def remoteCall(player, func, args):
+	mute()
+	_remoteCall_(player, func, args)

@@ -17,46 +17,10 @@
 #-------------------------------------------------------------------------------------------------
 # Functions to dynamically determines whether or not an action should appear or hide from the menu
 #-------------------------------------------------------------------------------------------------
-
-def acsh_Debug(args, x = 0, y = 0):
-   return me.name == Author
-
       
-def acsh_isChar(args, x = 0, y = 0):
-   card = args[0]
-   return isCharacter(card)
-
-      
-def acsh_charIsInRing(args, x = 0, y = 0):
-   card = args[0]
-   return isCharacter(card) and charIsInRing(card)
-
-      
-def acsh_gameStarted(args, x = 0, y = 0):
-   return turnNumber() != 0
-
-      
-def acsh_gameNotStarted(args, x = 0, y = 0):
-   return turnNumber() == 0
-
-
-def acsh_isActivePlayerAttack(args, x = 0, y = 0):
-   card = args[0]
-   return isCharacter(card) and me.isActive and getCurrentPhase() == AttackPhase and not isAttacking(card) and charIsInRing(card)
-
-
-def acsh_hasAbility(args, x = 0, y = 0):
-   card = args[0]
-   return bool(card.properties['Ability Type'])
-
-      
-def acsh_AutoPlayOff(args, x = 0, y = 0):
+def acsh_autoPlayOff(args, x = 0, y = 0):
    card = args[0] if isinstance(args, list) else None
    return (not card or not isButton(card)) and (debugging or not settings['PlayAuto'])
-
-      
-def acsh_isCharAndAutoPlayOff(args, x = 0, y = 0):
-   return acsh_charIsInRing(args) and acsh_AutoPlayOff(args)
 
       
 def acsh_canBackup(args, x = 0, y = 0):
@@ -64,24 +28,65 @@ def acsh_canBackup(args, x = 0, y = 0):
    return isCharacter(card) and me.isActive and getCurrentPhase() == MainPhase and charIsInRing(card)
 
       
-def acsh_hidden(args, x = 0, y = 0):
-   return False
+def acsh_charsInArena(args, x = 0, y = 0):
+   return len(getRing()) > 0
+   
 
+def acsh_charIsInRing(args, x = 0, y = 0):
+   card = args[0]
+   return isCharacter(card) and charIsInRing(card)
+   
+   
+def acsh_debug(args, x = 0, y = 0):
+   return me.name == Author
       
-def acsh_notUI(args, x = 0, y = 0):
-   return not isUI(args[0])
-
       
-def acsh_gameStartedAutoPlayOff(args, x = 0, y = 0):
-   return acsh_gameStarted(args) and acsh_AutoPlayOff(args)
+def acsh_gameStarted(args, x = 0, y = 0):
+   return turnNumber() != 0
 
       
 def acsh_gameStartedAutoPlay(args, x = 0, y = 0):
-   return acsh_gameStarted(args) and not acsh_AutoPlayOff(args) and me.isActive
+   return acsh_gameStarted(args) and not acsh_autoPlayOff(args) and me.isActive
+
+      
+def acsh_gameStartedAutoPlayOff(args, x = 0, y = 0):
+   return acsh_gameStarted(args) and acsh_autoPlayOff(args)
+
+      
+def acsh_gameNotStarted(args, x = 0, y = 0):
+   return turnNumber() == 0
+
+
+def acsh_hasAbility(args, x = 0, y = 0):
+   card = args[0]
+   return bool(card.properties['Ability Type'])
+
+      
+def acsh_hidden(args, x = 0, y = 0):
+   return False
+
+
+def acsh_isActivePlayerAttack(args, x = 0, y = 0):
+   card = args[0]
+   return isCharacter(card) and me.isActive and getCurrentPhase() == AttackPhase and not isAttacking(card) and charIsInRing(card)
+
+      
+def acsh_isChar(args, x = 0, y = 0):
+   card = args[0]
+   return isCharacter(card)
+
+      
+def acsh_isCharAndAutoPlayOff(args, x = 0, y = 0):
+   return acsh_charIsInRing(args) and acsh_autoPlayOff(args)
    
    
 def acsh_isCharAndPlayRemoved(args, x = 0, y = 0):
    return getRule('play_removed') and acsh_isChar(args)
+
+      
+def acsh_isCharNotBackup(args, x = 0, y = 0):
+   card = args[0]
+   return isCharacter(card) and not hasMarker(card, "Backup")
 
       
 def acsh_isNotBackup(args, x = 0, y = 0):
@@ -93,5 +98,5 @@ def acsh_isNotTutorial(args, x = 0, y = 0):
    return tutorial is None
 
       
-def acsh_charsInArena(args, x = 0, y = 0):
-   return len(getRing()) > 0
+def acsh_notUI(args, x = 0, y = 0):
+   return not isUI(args[0])

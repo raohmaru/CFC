@@ -157,7 +157,10 @@ MSG_RULES = {
    ),
    "attack": (
       "Characters cannot attack{1}.",
-      "Characters can attack as normal.",
+      "Characters can attack as normal."
+   ),
+   # Same as 'attack' but specific for a player
+   "attack_player": (
       "{2}\'s characters cannot attack{1}.",
       "{2}\'s characters can attack as normal."
    ),

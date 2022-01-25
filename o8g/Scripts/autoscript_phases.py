@@ -99,7 +99,7 @@ def activatePhaseStart():
          discard(card)
    frostedChars = ""
    if frosted:
-      frostedChars = " but {}".format(cardsToNamesStr(frosted))
+      frostedChars = " but {}".format(cardsAsNamesListStr(frosted))
    notify("{} unfreezes all characters in their ring{}.".format(me, frostedChars))
    # Trigger event
    dispatchEvent(GameEvents.ActivatePhase)

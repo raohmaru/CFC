@@ -346,7 +346,7 @@ class RulesUtils():
                cardsByType.append(c)
          cards_f1 = cardsByType
          if len(cards_f1) > 0:
-            debug( "      " + cardsToNamesStr(cards_f1))
+            debug( "      " + cardsAsNamesListStr(cards_f1))
          else:
             debug("      Nope")
 
@@ -389,7 +389,7 @@ class RulesUtils():
          sourceName = source.Name if source else ''
          # Quantity message
          qtyMsg = min(minQty, len(cards_f1))
-         qtyPlural = plural(minQty)
+         qtyPlural = pluralize(minQty)
          if qty is not None and qty.max == RS_KW_ANYNUM:
             maxQty = len(cards_f1)
          if minQty < maxQty:
@@ -417,7 +417,7 @@ class RulesUtils():
             # Info message
             owner = article.replace('your', 'their')
             if pick:
-               pickMsg = "the {} {} card{} of ".format('top' if pick > 0 else 'bottom', abs(pick), plural(abs(pick)))
+               pickMsg = "the {} {} card{} of ".format('top' if pick > 0 else 'bottom', abs(pick), pluralize(abs(pick)))
                owner = pickMsg + owner
             notify(MSG_PLAYER_LOOKS.format(me, owner, zone[1]))
             title = msg.format(qtyMsg, qtyPlural, article, zone[1], sourceName)
@@ -436,7 +436,7 @@ class RulesUtils():
                   warning(title)
             if cards_f1:
                if isVisible(cards_f1[0]):
-                  notify(MSG_PLAYER_SELECTS_NAMED.format(me, cardsToNamesStr(cards_f1)))
+                  notify(MSG_PLAYER_SELECTS_NAMED.format(me, cardsAsNamesListStr(cards_f1)))
                else:
                   notify(MSG_PLAYER_SELECTS.format(me, len(cards_f1)))
          if cards_f1 == None and minQty != 0:

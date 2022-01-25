@@ -4,7 +4,7 @@
       name="Card Fighters' Clash"
       id="e3d56d9e-900d-49c6-b6ae-22cbb51be153"
       octgnVersion="3.4.350.0"
-      version="0.9.9.852"
+      version="0.9.9.860"
       markersize="20"
       tags="capcom snk fighter"
       description="Play epic battles with fighters from Capcom and SNK!
@@ -22,6 +22,7 @@
 	<scripts>
 		<script src="Scripts/config.py" />
 		<script src="Scripts/config_messages.py" />
+		<script src="Scripts/api_ext.py" />
 		<script src="Scripts/actions.py" />
 		<script src="Scripts/event_handlers.py" />
 		<script src="Scripts/event_overrides.py" />
@@ -30,14 +31,18 @@
 		<script src="Scripts/autoscript_actions.py" />
 		<script src="Scripts/game_cards.py" />
 		<script src="Scripts/utils.py" />
-		<script src="Scripts/utils_random.py" />
+		<script src="Scripts/utils/util.py" />
+		<script src="Scripts/utils/card.py" />
+		<script src="Scripts/utils/game.py" />
+		<script src="Scripts/utils/parser.py" />
+		<script src="Scripts/utils/piles.py" />
+		<script src="Scripts/utils/random.py" />
 		<script src="Scripts/debug.py" />
 		<script src="Scripts/winforms.py" />
 		<script src="Scripts/windows.py" />
 		<script src="Scripts/sounds.py" />
 		<script src="Scripts/buttons.py" />
 		<script src="Scripts/avatar.py" />
-		<script src="Scripts/api_ext.py" />
 		<script src="Scripts/action_labels.py" />
 		<script src="Scripts/action_showif.py" />
 		<script src="Scripts/card_rules.py" />
@@ -214,7 +219,7 @@
 			<groupaction menu="Go to End phase"           shortcut="F6" execute="gotoEnd" />
 			<groupaction menu="Go to Cleanup phase"       shortcut="F7" execute="gotoCleanup" />
 		</groupactions>
-		<groupactions menu="SP..." showIf="acsh_AutoPlayOff">
+		<groupactions menu="SP..." showIf="acsh_autoPlayOff">
 			<groupactions menu="Gain SP...">
 				<groupaction menu="+1" shortcut="Ctrl+1" execute="plusSP" />
 				<groupaction menu="+2" shortcut="Ctrl+2" execute="plusSP2" />
@@ -241,8 +246,8 @@
 			</groupactions>
 		</groupactions>
 		<groupaction menu="Realign cards" shortcut="Ctrl+R" execute="alignCards" showIf="acsh_charsInArena" />
-		<groupaction menu="Clear cards" shortcut="esc" execute="clearAll" showIf="acsh_AutoPlayOff" />
-		<groupactions menu="Random..." showIf="acsh_AutoPlayOff">
+		<groupaction menu="Clear cards" shortcut="esc" execute="clearAll" showIf="acsh_autoPlayOff" />
+		<groupactions menu="Random..." showIf="acsh_autoPlayOff">
 			<groupaction menu="Flip a coin" shortcut="Ctrl+Alt+2" execute="flipCoin" />
 			<groupaction menu="Pick a random card" shortcut="Ctrl+Alt+R" execute="randomPick" />
 			<groupaction menu="Pick a random card (Mine)"  execute="randomPickMine" />
@@ -262,7 +267,7 @@
 			<groupaction menu="Show Welcome Screen" execute="showWelcomeScreen" />
 			<groupaction menu="Download Image Packs &#129109;" execute="downloadImagePacks" />
 		</groupactions>
-		<groupactions menu="Debug..." showIf="acsh_Debug">
+		<groupactions menu="Debug..." showIf="acsh_debug">
 			<groupaction menu="Setup" execute="setupDebug" />
 			<groupaction menu="Set debug verbosity" execute="setDebugVerbosity" />
 			<groupaction menu="Create card" execute="createCard" />
@@ -271,7 +276,7 @@
 		<cardaction menu="Default action" default="True" execute="defaultAction" getName="aclb_Default" showIf="acsh_isNotBackup" />
 		<cardaction menu="United Attack" execute="unitedAttack" getName="aclb_unitedAttack" showIf="acsh_isActivePlayerAttack" />
 		<cardaction menu="(Un)Freeze" shortcut="Ctrl+F" execute="freeze" getName="aclb_Freeze" showIf="acsh_charIsInRing" />
-		<cardactions menu="Combat..." showIf="acsh_AutoPlayOff">
+		<cardactions menu="Combat..." showIf="acsh_autoPlayOff">
 			<cardaction menu="Attack" shortcut="Ctrl+A" execute="attack" />
 			<cardaction menu="Attack without freezing" shortcut="Ctrl+Shift+A" execute="attackNoFreeze" />
 			<cardaction menu="United Attack" shortcut="Ctrl+Alt+A" execute="unitedAttack" getName="aclb_unitedAttack" />
@@ -279,7 +284,7 @@
 		</cardactions>
 		<cardactions menu="Move..." showIf="acsh_notUI">
 			<cardaction menu="KO" shortcut="Del" batchExecute="batchDestroy" getName="aclb_Destroy" />
-			<cardaction menu="Remove from the game" shortcut="Shift+Del" execute="remove" showIf="acsh_AutoPlayOff" />
+			<cardaction menu="Remove from the game" shortcut="Shift+Del" execute="remove" showIf="acsh_autoPlayOff" />
 			<cardaction menu="Return to Hand" shortcut="Ctrl+H" execute="toHand" />
 			<cardaction menu="Put into Deck (Top)" shortcut="Ctrl+D" execute="toDeckTop" />
 			<cardaction menu="Put into Deck (Bottom)" shortcut="Ctrl+Alt+D" execute="toDeckBottom" />
@@ -319,13 +324,13 @@
 			</cardactions>
 			<cardaction menu="Change BP..." shortcut="Ctrl+Alt+0" batchExecute="changeBP" />
 		</cardactions>
-		<cardaction menu="Add markers..." shortcut="Ctrl+M" batchExecute="addMarkerAction" showIf="acsh_AutoPlayOff" />
-		<cardaction menu="Transform" shortcut="Ctrl+Shift+T" batchExecute="transformCards" showIf="acsh_AutoPlayOff" />
+		<cardaction menu="Add markers..." shortcut="Ctrl+M" batchExecute="addMarkerAction" showIf="acsh_autoPlayOff" />
+		<cardaction menu="Transform" shortcut="Ctrl+Shift+T" batchExecute="transformCards" showIf="acsh_autoPlayOff" />
 		<cardaction menu="Backup" shortcut="Ctrl+Alt+B" execute="askCardBackups" showIf="acsh_canBackup" />
 		<cardseparator />
-		<cardaction menu="Clear" shortcut="Esc" execute="clear" showIf="acsh_AutoPlayOff" />
-		<cardaction menu="Flip" shortcut="Ctrl+U" execute="flip" showIf="acsh_AutoPlayOff" />
-		<cardaction menu="Realign card" shortcut="Ctrl+R" execute="alignCardAction" showIf="acsh_isChar" />
+		<cardaction menu="Clear" shortcut="Esc" execute="clear" showIf="acsh_autoPlayOff" />
+		<cardaction menu="Flip" shortcut="Ctrl+U" execute="flip" showIf="acsh_autoPlayOff" />
+		<cardaction menu="Realign card" shortcut="Ctrl+R" execute="alignCardAction" showIf="acsh_isCharNotBackup" />
 		<cardaction menu="&#x1f6c8; Card info" shortcut="Ctrl+I" execute="cardInfo" showIf="acsh_notUI" />
 	</table>
 
@@ -354,10 +359,10 @@
 				<cardaction menu="Put into Deck (Bottom)" shortcut="Ctrl+Alt+D" execute="toDeckBottom" />
 				<cardaction menu="Shuffle into Deck" shortcut="Ctrl+S" batchExecute="shuffleIntoDeck" />
 			</cardactions>
-			<cardaction menu="Transform" shortcut="Ctrl+Shift+T" batchExecute="transformCards" showIf="acsh_AutoPlayOff" />
+			<cardaction menu="Transform" shortcut="Ctrl+Shift+T" batchExecute="transformCards" showIf="acsh_autoPlayOff" />
 			<cardseparator />
-			<cardaction menu="Clear" shortcut="Esc" execute="clear" showIf="acsh_AutoPlayOff" />
-			<cardaction menu="Flip" shortcut="Ctrl+U" execute="flip" showIf="acsh_AutoPlayOff" />
+			<cardaction menu="Clear" shortcut="Esc" execute="clear" showIf="acsh_autoPlayOff" />
+			<cardaction menu="Flip" shortcut="Ctrl+U" execute="flip" showIf="acsh_autoPlayOff" />
 			<cardaction menu="&#x1f6c8; Show backups" shortcut="Ctrl+Alt+B" execute="askCardBackups" showIf="acsh_isChar" />
 			<cardaction menu="&#x1f6c8; Card info" shortcut="Ctrl+I" execute="cardInfo" showIf="acsh_notUI" />
 		</group>
@@ -381,7 +386,7 @@
 			</groupactions>
 			<cardaction menu="Put card into Hand" shortcut="Ctrl+H" execute="toHand" />
 			<cardaction menu="Put card into Discard pile" shortcut="Del" execute="discard" />
-			<cardaction menu="Flip" shortcut="Ctrl+U" execute="flip" showIf="acsh_AutoPlayOff" />
+			<cardaction menu="Flip" shortcut="Ctrl+U" execute="flip" showIf="acsh_autoPlayOff" />
 		</group>
 		
 		<group name="Discard pile" visibility="all" viewState="pile" icon="Resources/Groups/discards.png">
@@ -392,7 +397,7 @@
 				<groupaction menu="All Reaction cards" execute="reshuffleRE" />
 			</groupactions>
 			<groupaction menu="Swap with Deck" shortcut="Ctrl+Alt+S" execute="swapWithDeck" />
-			<groupaction menu="Pick a random card" shortcut="Ctrl+Alt+R" execute="randomPick" showIf="acsh_AutoPlayOff" />
+			<groupaction menu="Pick a random card" shortcut="Ctrl+Alt+R" execute="randomPick" showIf="acsh_autoPlayOff" />
 			<groupactions menu="Move all cards to...">
 				<groupaction menu="Hand" execute="toHandAll" />
 				<groupaction menu="Deck (Top)" execute="toDeckTopAll" />

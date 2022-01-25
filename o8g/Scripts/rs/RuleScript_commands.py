@@ -102,36 +102,6 @@ class RulesCommands():
 # Related functions
 #---------------------------------------------------------------------------
 
-def toggleRule(ruleName, value, id, restr = None, player = None):
-   debug(">>> toggleRule({}, {}, {}, {})", ruleName, value, id, player)
-   if player:
-      player = Player(player)
-   Rules = getGlobalVar('Rules', player)
-   if not ruleName in Rules:
-      Rules[ruleName] = {}
-   rule = Rules[ruleName]
-   if id in rule:
-      del rule[id]
-   else:
-      if isNumber(value):
-         value = int(value)
-      rule[id] = value
-   setGlobalVar('Rules', Rules, player)
-   debug("Rule {} has been {} ({})".format(ruleName, ('disabled','enabled')[bool(value)], Rules[ruleName]))
-   ruleValue = getRule(ruleName, Rules)
-   if (bool(value) and ruleValue) or (value == False and not ruleValue) or ruleValue == None:
-      if ruleName in MSG_RULES:
-         msg = MSG_RULES[ruleName]
-         idx = int(bool(value))
-         # Select messsage for a player
-         if player and len(msg) - 1 >= idx + 2:
-            idx += 2
-         msg = msg[idx]
-         restr = getTextualRestr(restr)
-         ctrl = player if player else ''
-         notify(msg.format(value, restr, ctrl))
-
-
 def getLocals(**kwargs): 
 # Adds action local variables defined in other places
    locals = {}
@@ -139,9 +109,9 @@ def getLocals(**kwargs):
    for key, value in vars.iteritems():
       key = key.lower()
       if isinstance(value, list):
-         locals[key] = [stringToObject(id) for id in value]
+         locals[key] = [objectify(id) for id in value]
       else:
-         locals[key] = stringToObject(value)
+         locals[key] = objectify(value)
         
    rc = commander
    if kwargs:
@@ -333,7 +303,7 @@ def cmd_moveTo(rc, targets, source, restr, zone, pos = None, reveal = None):
          if isNumber(pos):
             pos = int(pos)
          elif pos == '?':
-            choice = askChoice("Where to put the card{}?".format(plural(len(targets))), ['Top of pile', 'Bottom of pile'])
+            choice = askChoice("Where to put the card{}?".format(pluralize(len(targets))), ['Top of pile', 'Bottom of pile'])
             pos = (max(choice, 1) - 1) * -1
          elif pos is not None:
             reveal = pos
@@ -353,7 +323,7 @@ def cmd_moveTo(rc, targets, source, restr, zone, pos = None, reveal = None):
                target.controller = pile.controller
                remoteCall(target.controller, "moveToGroup", [pile, target, group, pos, reveal, source.controller])
             elif target.controller != me and pile.controller == me:
-               remoteCall(target.controller, "passControlTo", [me, [target], ["moveToGroup", [pile, target, target.group, pos, reveal, source.controller]]])
+               remoteCall(target.controller, "passControlTo", [me, [target], "moveToGroup", [pile, target, target.group, pos, reveal, source.controller]])
             else:
                remoteCall(target.controller, "moveToGroup", [pile, target, None, pos, reveal, source.controller])
             # waitForAnimation()
@@ -557,7 +527,7 @@ def cmd_moveRevealedTo(rc, targets, source, restr, zone, pos = None):
    targetZone = RulesUtils.getZoneByName(zone, pile[0])
    myPile = targetZone.controller == me
    debug(">>> cmd_moveRevealedTo({}, {}, {})", zone, index, pos)
-   notify("{} looks through the top of {} {} ({} card{} revealed)".format(me, 'his' if myPile else players[1], pile.name, index+1, plural(index+1)))
+   notify("{} looks through the top of {} {} ({} card{} revealed)".format(me, 'his' if myPile else players[1], pile.name, index+1, pluralize(index+1)))
    for card in newPile:
       if myPile:
          moveToGroup(targetZone, card, pile, int(pos), True)
@@ -737,7 +707,7 @@ def cmd_unite(rc, targets, source, restr, *args):
          if card != target:
             remoteCall(getOpp(), "unitedAttackAuto", [card, [target], True])
             waitForAnimation()
-      notify("{} has forced {} to do an United Attack".format(me, cardsToNamesStr(targets)))
+      notify("{} has forced {} to do an United Attack".format(me, cardsAsNamesListStr(targets)))
    rc.applyNext()
    
    
