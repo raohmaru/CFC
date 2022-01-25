@@ -1,0 +1,424 @@
+02157c40-3b96-480d-99c5-083613d8eb45  Terry
+299685df-122c-4fbe-a8dd-05ceaaf41055  Andy
+8cb08852-491e-4a34-9589-79bf3959ba63  Joe
+a33974af-3d8e-41d6-8f90-fd6c8d525e18  Mai
+2e6f329d-9a1e-45b7-864d-67feeb5eade2  Billy
+38fcbdaf-0025-4692-adac-be99aa1be750  Kim
+510c1217-5b95-467e-ae49-93fd5e726797  Duck King
+6814ab83-c21d-4df9-8d07-e977ee27f131  Blue Mary
+782a8773-1837-4d7a-8629-30ff08ccddca  Hon Fu
+0cc81206-ad63-4ea9-b74c-57947b531f11  Bob
+8b6c2617-7c58-459c-b09f-63c86556d17e  Yamazaki
+b77da717-47d7-4dc1-bb79-cddecf0c5af5  Jin Chonshu
+b016d203-aaf6-4b0b-97a1-68b10976e9d3  Jin Chonrei
+69cdd0d9-371a-4477-9319-8e9faf208c4b  Rick
+e31339d3-792e-4605-a087-b468c156a63b  Li Xiangfei
+3d044b8c-bac6-4b9a-bcf5-4868538de313  Alfred
+e46279a7-e014-42a2-8d5a-0edbfd033064  Tsugumi
+f286cc08-ae18-4a40-bd66-17aedcfd9267  Krauser
+59253bbd-0dbd-4d43-9a2b-7f01b4bc1f76  Geese
+952dc83f-9f22-4993-a824-707b0682753e  Ryo
+e2d49d34-c746-4b41-9155-4f95062df711  Robert
+3e1736d4-354b-4a5b-962a-4aea0a9e1a4b  Yuri
+ebce697e-c49f-4a1d-b111-bbc4df796dd3  Takuma
+06c4b88f-8634-4b67-87d0-c0406fa268f1  Mr. Karate
+513f441d-fcec-4064-bbe6-152967cf38b8  King
+84932796-e27d-4c7c-8a7d-2a2a88bd72b6  John
+620cc673-9881-4ac3-8389-fd2fe4c3cefd  Lee Pai Long
+d14dd0ed-cba6-404d-b7d1-e25c9b5c78ed  Mr. Big
+62067a74-53f9-4bb0-872c-f77e735fc826  Eiji
+fc2e9e7c-98dc-4d46-b3ad-0f3ede2fd166  Kasumi
+30eaa33f-ca59-4233-81b8-8fe3f0db94dd  Haohmaru
+8bb3dd10-bb0f-4380-9772-c97ba0428378  Ukyo
+90c1ccf4-999a-4567-92e4-0f7602b7799e  Hanzo
+494cb024-ef21-4019-98fe-9afc4355e424  Galford
+d231ed6e-8f7c-417e-8826-64f9297b395f  Nakoruru (Slash)
+f3f105e5-a0b1-4b4b-9f88-5932182d3ace  Nakoruru (Bust)
+248517e9-d7a0-450d-9281-df91d20f68ab  Nakoruru
+e3c021d7-8ba2-471e-b74e-b5129da32f62  Rimoruru (Slash)
+537aa0e6-9231-423a-8aaa-3b9722cef6ec  Rimoruru (Bust)
+4741718b-926b-4807-8cc3-716919181519  Jubei
+0021f707-9ee8-4409-ba30-8d20ae68e354  Charlotte
+7b2a974c-de9b-4f42-a8da-f15b68dbc41c  Kyoshiro
+1c7bc861-c4e0-4127-9fc8-fd56d06ec965  Genan
+b4f7bb46-c3d5-4957-86d8-f73e64c3c176  Tam Tam
+483b9441-d435-43a3-beb7-61e41c9e4045  Cham Cham
+9a52f604-bf68-4ef4-934b-1c984877d484  Genjuro
+37ccd6b2-dadc-48e2-91fa-da6c823293e9  Nicotine
+07fb9dba-ef83-4a69-a700-11cff3e313f3  Shizumaru
+40ece65c-0c59-4000-ab13-d948c4012f84  Gaira
+20cefb30-1a41-4980-a072-e0964b1de1f7  Basara
+54c61d60-d68a-4ce8-8c2f-65bd0192c26a  Kazuki
+ce62aaad-d114-4ce6-842f-7f6ed39f1afa  Sougetsu
+de04d64c-9d97-490f-a8c3-7469416bfc85  Shiki (Slash)
+9d836743-0d5e-4b4e-951a-cbe216558e6f  Shiki (Bust)
+48aba37c-374b-4362-b30a-d41fa9727b2c  Asura
+c1dc9fa1-f6f5-45af-8c09-18d68861ec4d  Taizan
+e590d588-84af-4c26-8dbe-e28d5b626747  Amakusa
+3ba61626-3c2e-48e6-a497-ba5814b8e137  Zankuro
+e0c2ac67-1925-4e63-b9ae-9dcbc7ff229f  The Ump
+0fa9c81d-eee6-47e9-9c9b-d4d802bca0c4  Kyo
+37af4395-3d1c-470a-b8e4-cefc39eaa27a  Kyo Kusanagi
+4f3dd284-fc50-4d11-8771-3154d2010845  Benimaru
+becdbe18-0d59-47fd-8f94-177359dfdc56  Daimon
+aa591fb7-0136-4af8-9229-9b6da2e02aca  Heidern
+835fc2ce-bbea-4798-b911-18cc8f1156c7  Leona
+29e30a16-0b27-438d-a3d1-f906b2958b1e  Ralf
+c7d128ea-a3b9-4b04-b8b2-a61153b5b2e6  Clark
+08b229e2-6af7-478a-bda5-774dd66af9f9  Athena Asamiya
+a099049d-37ff-4c72-8691-a1bba86e506a  Kensou
+a70c4fbf-34a6-4bb3-ba35-825e78ae7119  Chin Gensai
+fd7abaec-4051-4f12-8a63-26dd0a098ad6  Chang
+0d76ceeb-f809-464f-9954-240de260a132  Choi
+b25a11ac-1166-4868-990a-5113350f1502  Saishu
+f0163d6b-bd20-4737-a40b-c84ca19da681  Shingo
+55ab2891-c99e-4647-8a9d-b01fbce3009f  Chizuru
+4d7520b9-9ced-43e0-a2e7-974d76d8eb82  Iori
+0eeaf712-f3c6-4696-93cc-615c081b6cdd  Yashiro
+672ac290-d6f2-4579-b5ae-1067add14601  Shermie
+27ea424f-1178-4cda-9660-1c34dc7c4a83  Chris
+28e13f92-dbc1-49d7-b74e-147b1f79f141  Goenitz
+e9c7f532-89ff-4f69-a885-bc09b549d989  Orochi
+e492017d-58da-4098-87aa-14e05b6c938f  Mature
+a0787066-cada-49a9-9f3e-48b13983e758  Vice
+3e38ee5c-2421-4267-b0da-86035060fcc0  Wild Iori
+ba027d6e-4bc2-4c0d-8e97-4ad1c3baf24c  Wild Leona
+78fc2eb4-f142-471b-83c0-1b615b67bb89  K'
+ae491a2c-fb67-4e1e-aac2-abc968dd0938  Maxima
+da18d80a-ffa3-4df4-a3a7-7779bb5ad577  Awakened Kaede
+92215d75-75a2-4721-89c8-252c52c33e56  Kaede
+9aac7225-cffe-452c-8b8f-e2382ff7219c  Moriya
+03416225-8ed1-48fc-8178-c82559f61dcd  Akari (Power)
+299c01d7-37f0-41de-81f3-712b8dd63f11  Akari (Speed)
+98d446a1-2968-4007-b727-9de0410ecd27  Juzoh
+6d334b54-4ced-4788-acac-1426742e25aa  Washizuka
+f3ddafb5-e6b5-4d07-b883-23cfe6ea6782  Kojiroh
+63e74c7e-c1df-4d7f-a336-58f52e094320  Amano
+34f11eff-b3e2-4ac9-b505-a274eb5291c9  Mukuro
+d6441760-574a-447d-bf1e-f900cb39535e  Lee Rekka
+5ccdb31f-f7f8-4f89-916f-74e9db9130cb  Zantetsu
+ddbfda17-0ba7-422e-9ed3-376a0ba64644  Shigen
+57de9ee8-5791-4696-96a1-057bf866ed9f  Kagami
+0769534f-9679-4025-bf49-4a5ce026cbd3  Hibiki
+781bd288-e9bf-4cf1-b630-0883a2834d0b  Setsuna
+f71ccccf-4c2e-4adf-a409-b8ab8e17c8f1  Wanderer
+9c405677-1d42-4eb7-bb44-7b21c1d84859  Akari
+2be82da3-6d73-4502-bb02-eea20d6eaac4  Hayate
+221dbc2e-25cb-4aad-8127-d4cef2056c37  Carol
+51ad9363-8ba8-447b-bed5-b6e0e5f85ce8  Rosa
+bb3614d9-307b-4053-8fca-1d8727f1fc96  Kim Sue Il
+7c731f8b-a96b-472a-ba13-c868135cfbd8  King Lion
+9aa78672-8e22-488a-ae4a-ce6c433f3216  Guy Tendo
+d5f9a649-cae0-46dc-b22c-139128ac8d52  Takato
+357096d5-7c23-487e-8783-5b3486c9cd7c  Rob Python
+04660547-18c8-4eb4-96b5-2a977dda0dcb  Eri
+f4c92a8e-399f-4030-a99f-b0159031d53a  Tarma
+fa585a56-2a8f-48ff-9cc5-1234fecb4b09  Marco
+cb139512-8d16-4229-a641-0a4e86357ef2  Fio
+959f67ed-17f4-4433-89e9-9e674a69f403  Roddy
+ae5b6e26-b297-4e51-afeb-daa08712f837  Cathy
+2f8ecb64-d513-4e67-b537-5acef9de6c68  Athena
+b1082f22-34d1-4ecf-b972-261ace7b2a68  Rock Howard
+eb648ee7-aa4e-41ce-a7fc-04af31349ca9  Terry Bogard
+8995cad8-feaa-4704-9610-ae5e0dc6d800  Wild Wolf
+3938e681-0e1f-4074-a3b5-e6d54e0cd89a  Dong Hwan
+302c6abd-2245-4b4e-b82d-e4f438f35f15  Jae Hoon
+f3557575-c61e-42fd-9442-9413cea64bdf  Gato
+5ca6f345-403b-4ad9-973a-673b8cd1cdb8  B. Jenet
+54d70bdf-7bfb-4c8a-8111-99b411513622  Marco R.
+75e57026-e4fe-4470-88b2-22268ddd6b61  Hokutomaru
+928b8c60-483a-467c-9c11-e858009ff362  Hotaru
+d5038a1d-55a1-4d85-a43e-52eb2b8d7b09  Griffon Mask
+5c048acd-9ade-4854-8038-479fc92eabe3  Kevin
+4e2a7a02-b13b-44ba-9cf7-37340f47d8f6  Freeman
+ae301f49-6e9d-4ca3-aba8-54bb5142e46d  Grant
+e81e9366-b3e1-45a6-b010-bd02934b2efd  Kain
+bfb5d6cd-afca-4aeb-a1da-8204eb4b2eed  Raiden
+846a0be7-b1b3-40bd-b315-ba5cae774185  Ryuhaku
+526c4102-b6da-4880-91dc-1b9b007d4cc5  Geese Howard
+0f9e815a-d71a-4eba-9264-6e65c05fe8d7  Seishiro
+52b8e15b-36b5-4a05-88f0-098dff1148d2  Tohma
+bfb737c0-4dcf-4b0c-b201-45857c83016b  Haohmaru (WR)
+ae20ea05-0df7-4360-99a5-11a7dfe44b9f  Mikoto
+b428a15e-adf3-4fd1-897e-8dea39b8d9ca  Rimoruru
+235b8800-ad31-4224-93c2-4713ae4c45ec  Shiki
+c0f1e98e-4233-446a-af2d-6e50eb8e6177  Rugal
+964c7f9b-0d56-4af4-984a-83bd237e9045  Bao
+eba4b6d7-1b14-4112-8e1e-6bee2017d338  Jhun Hoon
+ac0958fb-d125-4894-8dbd-26ff718f405f  Whip
+2ba9556c-59b0-4154-8325-f9793a8eacb5  Krizalid
+e910f462-bea9-4262-b168-c7c512eb6511  Seth
+0fdadc92-0864-46cc-a3ff-c20e2af8249c  Vanessa
+371e3784-a1a6-4607-8459-d1e0f3899152  Ramon
+30ecabeb-4da9-4e9c-a936-222b90532e78  Lin
+bbdd3687-7200-4f34-9c96-ed882cee3588  Hinako
+1f11dc82-0581-49c2-ae93-35688c6acb7a  Kula
+ab45b64f-e231-44ca-83ad-bd4d89bcb851  Clone Zero
+48a553a1-fd40-482a-9161-86be2e29f246  Yuki
+95675af9-956c-4b27-b7e1-a59b10a0cb7c  Akari Ichijou
+d66622dd-27e3-4e3b-bb1f-245907ee3b66  Ryo Sakazaki
+067d592e-2ddf-43f5-82cc-25c70d29a996  God Rugal
+4f2454d7-2294-47a2-a473-a838c1f7d874  Ryu
+366963a0-6515-4b14-ae36-475b8000be26  Ken
+a124cd33-4427-4584-8216-885bbb97baa8  Chun-Li
+20cfabef-f733-478f-89d6-25a71371a89e  Guile
+3036ebcc-7b49-42a5-89f3-118399f34d47  E. Honda
+70df22cd-ebe5-461e-a017-26879f2cb71f  Blanka
+9c383f6b-2813-407f-be87-f9746fbb6d18  Dhalsim
+e50fff33-496d-4ef8-a717-b1047ea72c22  Zangief
+bd446a69-e3d1-4072-80e8-d1648b6044eb  Balrog
+322adae9-8502-4605-a903-abf1310ff8c5  Vega
+2981e9ad-11e1-4f14-a707-2120bfc0cc2f  Sagat
+229cbb1b-9710-4981-b4ea-e476145d73f4  M. Bison
+da642ca1-7148-41ef-8783-4435041c9622  Dee Jay
+e2ae72da-614c-4d52-b0dc-46460fb10d60  T. Hawk
+a9432a7c-ddd1-4182-8482-94055a7e380f  Fei-Long
+03374dde-624a-4a5b-a663-149ea504bf12  Cammy
+de28f9bf-d995-4743-afcd-a28065beb39d  Cammy (Zero)
+bc5e5159-fe3c-4324-97bb-2b56b920a6a3  Akuma
+03a6a70c-6f38-48b5-bcc0-4529ec0a18c2  Ryu (Zero)
+7b9371dc-63a4-4dd8-91e9-5380aae0491f  Chun-Li (Zero)
+2c1d8c60-0858-4524-adc1-e7596a4d08e0  Guy
+2a039849-7e43-43e2-b67a-2d341d27d9e1  Rose
+24e99a13-cb42-4e16-9900-78dde12e1a4c  Charlie
+0602213e-4a02-4065-af93-3184211c653e  Sodom
+e912330e-cc3f-48fd-a2a4-7cd3a431d327  Birdie
+dcf91a2d-7e27-4d20-b662-fcfea48cf5bf  Adon
+9d7ec580-fdc3-4222-92ec-10fd33741a2b  Dan
+f53e910f-8aef-47dc-a919-af81a5b0d2c4  Sakura
+137d17e0-7c5a-4216-9085-21f05a744fd8  Gen
+943a2659-05c5-4bc5-a75f-5ab12f229e53  Rolento
+3eb68262-58ec-41c2-8fe0-b8284afc87fb  Karin
+90ce3af3-56fa-4e70-9c15-7af22fa3522c  R. Mika
+87e0bd7f-d86e-4455-8f05-292bb16d4949  Juni
+a2536791-c173-4228-84ce-4d2dec036ac3  Juli
+c7c73d2e-1728-4c1b-ba7e-dcd989e61d98  Alex
+53f6ef62-7661-4101-a139-ffb5b7c129de  Yun
+99748411-0663-467f-9530-0099e1127cf9  Yang
+7f5099da-4bcf-4895-9493-e83a993118b7  Sean
+d8e2ad6f-32a1-46e2-b9cc-936dec91b919  Oro
+c023c0dd-677d-488a-83a6-2e9419bcb868  Elena
+fd549399-59de-4b2c-8aca-5454f7862e50  Ibuki
+128c05b1-ab91-49e7-b294-109c4c0c8209  Necro
+216e0a0d-a46c-42f4-a0f4-c32ac83d6cc1  Makoto
+929afc04-8fc6-4419-80ec-0c9ead5ea105  Q
+e4ae5562-a510-4a1d-98e8-59a91dc1cb8c  Twelve
+63df795b-236c-4449-aa96-287a836ed648  Remy
+9351a375-2ba8-43c4-83a6-1180e08e0309  Retsu
+b4b60753-c4ab-43b6-bc8f-136a72174e1f  Lee
+759b3fef-e5c0-406e-b186-a94b211e8735  Evil Ryu
+563fbb65-90bc-43aa-9246-2f69e56ab119  Demitri
+4e34756e-34e4-45e5-a6ab-698604c6fb99  Morrigan
+73e4c201-f462-4106-9e03-3b63ecd04aab  Morrigan Aensland
+3a0e4fbc-6895-43e0-97d1-e1f667aca271  J. Talbain
+1f7e6d88-4317-458a-82e2-624c664072aa  L. Raptor
+c3fe81ed-d593-4653-9c82-1279cd991d91  Victor
+53eafaec-68bc-4fe8-88ee-be578a785f5c  Felicia
+4dcf842b-7c5a-48cf-a94d-3f0978b6403f  Sasquatch
+e778bf71-2f0f-4094-b096-b443fdbac8de  Bishamon
+9ec88c6c-dc57-41fd-bb90-cf2822a735aa  Anakaris
+6c8ec7ed-2442-4847-8f38-8c8f5967b2ba  Rikuo
+4c777de9-09f0-4d60-a412-1c98e5386ca9  Huitzil
+d646ffc5-bec9-4e98-b799-510b4e1ea464  Pyron
+299377b4-f955-420b-b252-85ed6cf98c14  Hsien-Ko
+7f7fe518-3669-4dad-9063-79052f5067b7  Donovan
+1d07a01b-e099-44a8-87eb-71fb2f3fa762  Jedah
+d44d9e8a-785c-48f2-85a5-ed076c1aa518  B. B. Hood
+65c91e9d-761c-4978-ba3e-6e05026f080e  Q-Bee
+60b0d429-c2bf-482d-84f1-10c78f424cc6  Lilith
+f232c282-6a03-436f-aae2-53f6988c6603  Hayato
+8f6bb780-72ff-4983-b887-265b8d00ab11  Black Hayato
+f67a1f9b-29c7-4ccc-bb17-b80a1c25b67a  June
+cb1440e1-42f7-47e5-92d5-2246d399bd64  Rain
+af43872e-e47d-4fe0-9b55-aedd8a0d0fc7  Jin Saotome
+b8a8653c-0286-4b05-a255-c436fd23132d  Blodia
+fd1a3f1c-7df1-443e-97b1-f093d66e74c9  Zero Akuma
+ad3dbaa2-5ea6-4f9c-b88a-d770f7ed1595  Leo
+487f66ee-c717-41a1-ad2e-31d3fe0dd424  Kenji
+559c6131-7a72-47c7-9669-6a6c23a48cb7  Tessa
+9600fa0f-7974-400d-850e-4590dce548e3  Al &amp; Ivan
+561aadeb-54bd-48e8-9f67-12b15da31b5a  Mai Ling
+4bd333d6-f063-424e-8cf9-3512f96f23b4  Batsu
+7abee6d7-1831-4090-b882-eee2fd3aa246  Kyosuke
+514717b1-432b-4da7-aa84-a751b996416f  Hinata
+1cd7580b-d396-496c-afac-bcd6da9c1f83  Akira
+ff8a97e3-9a78-4c5f-86fa-23480fa57da5  Pure Rider Akira
+e6e46f83-d089-4762-8d8e-2a3252cfc9db  Daigo
+09dfc071-ce3a-448f-86fe-502bd5d1392b  Kyoko
+2e83003e-643d-4308-ba61-79437228842d  Hideo
+6f733db6-883b-41f5-a657-4e19784d183c  Falcon
+33796f5f-c699-42e8-a084-fd28663f08ae  Ayame
+5a4d4f79-e794-4387-82fb-75c4c0162cae  Wang Tang
+3d5fb82c-2ad5-44e3-83e1-ef00f370c604  Ryoma
+ef9c7a93-d677-4667-a3f0-533e007a919c  Rouge
+c09e1c30-468b-4173-8aa8-3e6ba31cd3e8  Strider Hiryu
+c3a432e3-3642-46a2-a1e2-e2d5d5f698ab  Option
+4f3e6df0-dd8c-4749-9c92-df9bdac62045  Cody
+be2728eb-0a2d-4f27-8cc5-3208d103b888  Haggar
+66d424bb-e5da-4f61-b063-61efd1fc61a6  Damn D
+8ce9a56f-8c0c-49e7-879c-12179c63f288  Cap. Commando
+61ef9ecd-980b-46b8-83fc-12399ce044f1  Ginzu Ninja
+9c6b99fa-ff60-4d70-aee8-7e1eae6f29b7  Mack Knife
+d14694b4-484c-4b45-962e-8cbb636d8a9a  Baby Head
+d5e70014-8a56-4d9b-8b06-0192bac3f0b8  Leon
+a25d74b5-8774-4729-8ac2-b820878241b9  Claire
+80d411e3-c3df-486f-927f-1592d9db65de  Zombie
+0b2c9e8a-5f9b-4ab5-a9b3-414f1154ce24  Jill
+7717e285-f824-4bfa-bd76-c0039c97190e  Mega Man
+47804cd4-2cc5-4aba-a4f8-393da73a5758  Roll-chan
+cb84f1c6-aa56-4c15-b27b-4906a5bff3b7  Rush
+95f16ce4-91c2-4c39-96ea-9a2da2fa5319  Proto Man
+e367c942-342e-4434-a2d1-dd7188b2d15a  Mega Man X
+6bc2d6b2-7ee6-476b-b580-8c018632f6f5  Zero
+bdeceb7c-9d94-4c98-824b-90d5317d8cda  Arthur
+e94aaa00-2449-46a4-9ff4-273e6dac272a  Red Arremer
+39b7d042-d2c5-4ff3-aad5-231bd3ccc9e7  Lucifer
+48a07b48-7415-42e7-a3cd-6bae37c56489  Ryu no Senshi
+55b0c9ff-4b3a-4b08-adc1-f1b5e03adef9  Nina
+eeb7169d-f3df-4f88-9acf-436bd822e478  Michelle Heart
+c6ee2630-7f1a-4ac1-95f3-be8db970e855  Omokane Saki
+365cddf9-f741-4a3e-bf07-de4b3eecc6d2  Mech Zangief
+456ec08b-d17c-48fc-9dd3-24fb40f13b51  Dudley
+3b05eb6f-d20f-433f-9ceb-4d6bb31d0328  Hugo
+79239cad-fd51-4557-9534-af96bd1302bc  Urien
+298bd386-e304-4739-95c6-78c9de4c17e4  Gill
+a6893e41-9dd0-4eec-a84b-3c8345778394  Eagle
+525d8365-c90e-491f-9811-1f23efbafccb  Cody Travers
+c3bb69f7-4b77-469f-a9ff-79cca1e52574  Bilstein
+70b0e251-e5f8-405b-b784-5f1cff41ecc9  Elle
+a7b36a01-dbb4-4442-aaf8-e415611581a9  Shoma
+7e0c215c-72f6-4967-83a5-27491376280f  Natsu
+6b1e210a-4846-419c-87f8-875aae812c6e  Roberto
+770a55b0-f68d-46ce-bb52-23ec3372b92a  Roy
+40ef0410-798f-4d60-865b-9af14ed4e355  Tiffany
+5ac04e26-4811-4064-8386-0e25beb8f974  Boman
+e9c8e4ca-7d41-43c5-b427-f7e47125052e  Edge
+e5c35688-b123-4b7f-a96d-06d6b9a9034b  Gan
+c553b9d0-946a-4c61-bc9b-a4b074c49045  Raizou
+fb3d3a49-a1de-4887-9ea4-ec761426471e  Hyo
+7c819434-a8b0-4858-a478-1fdaf46bd49c  Iincho
+9d92f2f0-7395-4f1e-bc32-99ec9c82c686  Momo
+faa72b01-cf50-4cff-8b70-13245a7fa5df  Zaki
+e50cef51-a01e-46be-a5af-a99576263b9d  Yurika
+d38dc1f6-4586-44f2-bacc-adb649f4d38f  Kurow
+a9478fcd-e1e2-403b-b1e4-5076b342fd50  Maki
+38d6c7a8-7463-4aa6-88c4-13f725ada0be  Chris Redfield
+26f3f47c-881f-4d98-a583-ddc6b6b90cd5  Nemesis
+163c9ec0-61d2-45ae-842b-15aba8cc61f8  Jill Valentine
+aaf18dab-973f-4126-a47a-78798ec5058b  Rock
+1c986de3-bec5-430b-a661-ebbe9b20c20f  Rock Man
+91cb59bd-1e5a-472d-a410-8fa0e1698eb5  Roll
+81ec2067-daec-4678-b5fd-9ab13e410551  Roll Caskett
+8e8e0107-db05-4cb3-a912-af2b2dea92d9  Tron Bonne
+0a8f39ff-6b21-4805-bafb-27c3f38d1986  Regina
+a68dc591-6976-4341-b8b9-1a7dc1c71775  Samanosuke
+8bb477f9-5004-4018-8d5e-73c6a23e8912  Kaede (OM)
+ee979882-67cc-4549-881c-8e158df495ce  Ruby Heart
+b8325eaa-1687-4d18-b1e7-6bf335e447c2  Son Son
+a0811f0c-0915-4556-97b4-5d61a25ee4ca  Amingo
+99081829-e898-4766-8727-b0a2918df49f  Kikaioh
+9da88c0d-7915-43e2-a555-23ffbcf11226  Shinjin Akuma
+b95b2104-d184-43cc-bb04-b3eb096c6fca  Fight!
+b7f9fdff-641d-4c16-b9fb-c7429b990fff  Lightning
+4124ac7a-b7f5-4784-8246-872621cc9d95  Double
+0d1f3d2d-72ef-42e4-9c24-d0b36371b230  Puppet
+96c5cd74-a898-42f3-a169-9f98e1ce8945  Escape
+153e2c26-7329-4a5e-a405-43191f75a2ac  Peacemaker
+a89ae46c-bbbe-4780-9a7f-3d68857047ac  Reparation
+0d7b5186-92db-4d61-8309-bfbd593df160  School's out
+713207f3-e051-43f8-9953-0a78e295122b  Cover fire
+c50f1a40-87e9-41b9-a69c-600b36b68077  Bopper
+f215a022-c742-4c96-95d1-40c202f8d104  Chaos
+26fa7e0e-eb86-40d5-b5ab-39723fd67e43  Grenade
+5d3bc1c3-692b-4d7c-9781-68fcdc0bd96e  Mega crush
+98e1e7ed-8c66-4105-a2fc-1290036c0f70  Earth's pike
+4e493533-2d51-4af6-8a8e-ec55cb1b7ca5  Break up
+6c6fd560-017e-4819-accf-a66faef84218  Nothingness
+e22264db-d58f-48ce-9be7-608bdfdd4299  Double KO
+ac01bbbe-583e-46ae-b26c-3c25eb8f0779  Seraphic wing
+3c92b6f8-d68f-4d0f-8a29-f5172b09a864  Fate duel
+62a6c4e0-51d0-4a23-9854-9ba0a25bc751  Slaughter
+50afc361-3dd7-4847-ae4c-d9ed84f1d991  Raw shield
+6597d835-666b-4056-8cae-dbf3a3bdc3df  Grace
+f7a00823-d37b-48eb-b2f6-c530623a2a9c  Abduction
+11fa47f0-9573-48ca-9a4a-7aa16a4ec76e  Psyche up!
+c8284885-2ab1-4020-afc7-faae4e196e74  Hey! Hey!
+14a057f5-be46-4ec0-abee-a6c573f4711e  Heritage
+b0346de5-63b8-4443-8ea4-8155d889a0fc  Best shot
+9610668a-18c9-4448-8216-f40119a03269  Lucky kitty
+5ed66b91-2f3a-4fae-a1ba-ceb59040ea8c  Round 2
+80692723-3895-435f-bf8f-e94507704af5  Awakening
+51a47b27-abf3-4219-a241-c72bd23b178b  Morph
+7302a3d9-0ee7-4a5e-93aa-b93cc44b6463  Showtime!
+7b7ffef2-2790-46ed-8407-e7395c26b4a0  ESP
+6504b1a3-e432-4c6c-845b-6ca72500b458  Substitute
+e1fb17f3-c4bf-4993-9b2f-91706cccf448  Curse
+77792408-ba0f-4e5f-a079-f7eca5955543  Stifler
+4d7fd45a-aa2a-48e3-856b-cfb04e203e3b  Storm rush
+a8b949ff-7def-4c0a-8d79-49ad2a1d02d8  Pride
+7a394ff3-727d-48d9-91a9-b9cba90510b6  Mischief
+69cf51ab-090c-4c60-8b58-b71d6455f0a2  No tricks
+f6a32199-62df-49b5-8544-ae7a86915cbe  Makeover
+e8c43fc9-a217-49e6-9847-9c9ced63b0ac  Pester
+fd8db3d4-7df1-45fb-8712-5c35bb5acb3f  Management
+eece88a0-17d8-4b16-90b4-ac7317d36f95  Last resort
+7f869cae-cf68-4d2d-881d-4f4107134469  Roulette
+0035d193-fe4b-4927-9dc1-6124b26768bc  Shopping
+96f72173-528d-4a3a-a85c-9cf92439435a  Laundry
+c977a855-1358-4dab-870f-dee886f929c3  Study
+5f19902c-60fb-44b8-9e64-eab4b31c9d3d  Revive
+053ba349-515d-4293-898b-625f837f62b6  Emulate
+e2597326-5639-435f-ae33-3303b181527c  Activate!
+fa4ee219-8264-41bc-b8a3-23a24df61d9a  Tooptadon
+37b88c5f-026b-40e4-bfd2-e5b7b83a7394  SP partner
+83c33aa8-5981-4352-8107-cbb7e05547ec  Synchro
+6eec9528-7473-47a5-916b-a22261f79816  Indulge
+faea0028-c313-438e-b9f0-8536e494ddb1  Glare off
+0e1b4f81-93e9-44be-ab31-7aed8cb354d0  Shadow
+2d3891a7-6fc0-4793-9122-5abfc0bb3e22  Tri-Quiz
+85d84ab1-dede-4fc7-b80d-00778f73c905  Reset button
+ab631979-20d8-4789-85be-149b414d1ef1  Crossover
+1ef4cecb-c096-47e0-995f-a20b6b75325a  Engokogeki
+5e2211a0-e52e-4b7b-b03d-f6ecb3660bb0  Successor
+58580e2e-1f48-4210-a68f-57cd900b1036  Lunch rush
+e5fa3d6f-3368-4450-8327-3f7672c78834  Domination
+016a06d3-e739-4862-848a-d40ba0ec12ee  Reliable warrior
+372525df-1345-47cc-ae2f-2fe34a226ac9  Held back
+91e441cc-0f1f-4b01-a2b0-94678d6f0b56  Robot punch
+be84124e-5057-4511-a181-7492451db5b2  Aura spark
+f9a93f64-d331-4aa8-b58d-c213c8dfd742  Striker
+48a11103-e08d-4237-952e-bf4cdc2868f7  Time bomb
+55dd552f-0c26-4bc1-819a-92cf32f285ae  Ferocity
+dd49c2e2-3455-481d-b8a7-5f813796b3f4  Galactica phantom
+fef1b38c-a055-4cd7-9436-34e220c30d52  Cruel hunt
+bc59a360-18f6-4c79-8305-77d0975d4106  Banquet
+826a8255-ed98-4c13-bb8c-96502837df52  Bamboo shoots
+68eaee28-a00a-480f-b8e5-e14d2a8f102c  SP leak
+2c9000df-e21a-4482-9dfc-8df3f702e29e  Rest
+2644337b-a5f8-4669-858b-824d9607f2d8  Fellowship
+f4df6ee6-2fcd-4ba1-b86f-59d5028eb96b  Vacation
+81b95f17-ba79-4f2f-aa7f-4808d6fad1ec  Painful treatment
+559a71aa-0d14-44b0-bfb9-557d08ae0e0b  Power mode
+ed5b10af-ad01-4d70-bdac-0a7dfbf9de3f  Evil eye
+e038ebfd-6c19-4b1c-bf38-a2fd9f5ffbfd  Ancestry
+74def9a7-0898-4ed4-93eb-33e57cf3a215  Clone
+eaf346c3-d2e6-4066-adae-e1678746673d  Robber
+b9023490-790e-4e5f-a495-c196f6672dff  Amnesia
+0a951ced-4508-40b9-8350-5dafb6b7e8aa  Super Art select
+2b3ad6cd-61d8-4786-9268-5963491a1ffa  Manari's song
+556b3359-e642-419a-ab5c-67f70de1bb4f  Overdoing it
+36450a2c-321b-4697-a37e-1563b16faf0e  Charm
+1e54d73a-4795-4eae-b1d1-c0ca5d075fcf  Waiting in vain
+0a5179dd-e5a0-499e-90ac-8d62391743b8  Cash profits
+1722e9d6-30e1-4355-9aa3-9b80b765754a  Scan
+46deecf5-7f7b-42b5-b6fa-e3162dce2013  Go home
+130c068d-bf62-4013-8b17-32af4a3f6994  Face off
+27befc33-c2be-40d2-8839-bb8ee41f8d95  Overheat
+fd8b647c-9fc7-4c3a-bc91-ac5266e50a55  Lend a hand
+30fdfea5-4781-40b8-a8e7-7830fba3bcd6  Snared
+76c3d3b5-b3bc-41b1-8fef-d9c005269646  Three sisters
+21db37a5-3483-41d4-9c6a-529071fce7ba  Lucky card
+3507e173-6329-4541-99fb-f4b81a482308  Suspicious
+2298624c-1eeb-4f71-b028-b0118ea614ac  Who's taller
+c6acfab6-c7cb-442e-87f0-432779af5ad9  Wanna gimme
+5972ea54-137c-41a7-a1eb-b9d9cd0ecfe5  Grandmaster

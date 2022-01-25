@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<deck game="e3d56d9e-900d-49c6-b6ae-22cbb51be153" sleeveid="0">
+  <section name="Main" shared="False">
+    <card qty="2" id="30eaa33f-ca59-4233-81b8-8fe3f0db94dd">Haohmaru</card>
+    <card qty="2" id="537aa0e6-9231-423a-8aaa-3b9722cef6ec">Rimoruru (Bust)</card>
+    <card qty="2" id="ce62aaad-d114-4ce6-842f-7f6ed39f1afa">Sougetsu</card>
+    <card qty="2" id="0fa9c81d-eee6-47e9-9c9b-d4d802bca0c4">Kyo</card>
+    <card qty="2" id="37af4395-3d1c-470a-b8e4-cefc39eaa27a">Kyo Kusanagi</card>
+    <card qty="1" id="4f3dd284-fc50-4d11-8771-3154d2010845">Benimaru</card>
+    <card qty="2" id="9aac7225-cffe-452c-8b8f-e2382ff7219c">Moriya</card>
+    <card qty="3" id="e81e9366-b3e1-45a6-b010-bd02934b2efd">Kain</card>
+    <card qty="2" id="b428a15e-adf3-4fd1-897e-8dea39b8d9ca">Rimoruru</card>
+    <card qty="2" id="759b3fef-e5c0-406e-b186-a94b211e8735">Evil Ryu</card>
+    <card qty="2" id="d646ffc5-bec9-4e98-b799-510b4e1ea464">Pyron</card>
+    <card qty="2" id="09dfc071-ce3a-448f-86fe-502bd5d1392b">Kyoko</card>
+    <card qty="2" id="163c9ec0-61d2-45ae-842b-15aba8cc61f8">Jill Valentine</card>
+    <card qty="2" id="0a8f39ff-6b21-4805-bafb-27c3f38d1986">Regina</card>
+    <card qty="2" id="b95b2104-d184-43cc-bb04-b3eb096c6fca">Fight!</card>
+    <card qty="1" id="0d1f3d2d-72ef-42e4-9c24-d0b36371b230">Puppet</card>
+    <card qty="2" id="153e2c26-7329-4a5e-a405-43191f75a2ac">Peacemaker</card>
+    <card qty="2" id="26fa7e0e-eb86-40d5-b5ab-39723fd67e43">Grenade</card>
+    <card qty="2" id="98e1e7ed-8c66-4105-a2fc-1290036c0f70">Earth's pike</card>
+    <card qty="2" id="11fa47f0-9573-48ca-9a4a-7aa16a4ec76e">Psyche up!</card>
+    <card qty="2" id="9610668a-18c9-4448-8216-f40119a03269">Lucky kitty</card>
+    <card qty="1" id="37b88c5f-026b-40e4-bfd2-e5b7b83a7394">SP partner</card>
+    <card qty="2" id="016a06d3-e739-4862-848a-d40ba0ec12ee">Reliable warrior</card>
+    <card qty="2" id="372525df-1345-47cc-ae2f-2fe34a226ac9">Held back</card>
+    <card qty="1" id="48a11103-e08d-4237-952e-bf4cdc2868f7">Time bomb</card>
+    <card qty="1" id="559a71aa-0d14-44b0-bfb9-557d08ae0e0b">Power mode</card>
+    <card qty="1" id="0a5179dd-e5a0-499e-90ac-8d62391743b8">Cash profits</card>
+    <card qty="1" id="fd8b647c-9fc7-4c3a-bc91-ac5266e50a55">Lend a hand</card>
+  </section>
+  <notes><![CDATA[]]></notes>
+</deck>

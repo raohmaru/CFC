@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<deck game="e3d56d9e-900d-49c6-b6ae-22cbb51be153" sleeveid="0">
+  <section name="Main" shared="False">
+	<card qty="1" id="7abee6d7-1831-4090-b882-eee2fd3aa246">Kyosuke</card>
+	<card qty="1" id="9d92f2f0-7395-4f1e-bc32-99ec9c82c686">Momo</card>
+	<card qty="1" id="7e0c215c-72f6-4967-83a5-27491376280f">Natsu</card>
+	<card qty="1" id="c553b9d0-946a-4c61-bc9b-a4b074c49045">Raizou</card>
+	<card qty="1" id="6b1e210a-4846-419c-87f8-875aae812c6e">Roberto</card>
+	<card qty="1" id="c6ee2630-7f1a-4ac1-95f3-be8db970e855">Omokane Saki</card>
+	<card qty="1" id="38d6c7a8-7463-4aa6-88c4-13f725ada0be">Chris Redfield</card>
+	<card qty="1" id="a25d74b5-8774-4729-8ac2-b820878241b9">Claire</card>
+	<card qty="1" id="0b2c9e8a-5f9b-4ab5-a9b3-414f1154ce24">Jill</card>
+	<card qty="1" id="163c9ec0-61d2-45ae-842b-15aba8cc61f8">Jill Valentine</card>
+	<card qty="1" id="d5e70014-8a56-4d9b-8b06-0192bac3f0b8">Leon</card>
+	<card qty="1" id="80d411e3-c3df-486f-927f-1592d9db65de">Zombie</card>
+	<card qty="1" id="1cd7580b-d396-496c-afac-bcd6da9c1f83">Akira</card>
+	<card qty="1" id="4bd333d6-f063-424e-8cf9-3512f96f23b4">Batsu</card>
+	<card qty="1" id="e6e46f83-d089-4762-8d8e-2a3252cfc9db">Daigo</card>
+    <card qty="1" id="770a55b0-f68d-46ce-bb52-23ec3372b92a">Roy</card>
+	<card qty="1" id="a7b36a01-dbb4-4442-aaf8-e415611581a9">Shoma</card>
+	<card qty="1" id="40ef0410-798f-4d60-865b-9af14ed4e355">Tiffany</card>
+	<card qty="1" id="faa72b01-cf50-4cff-8b70-13245a7fa5df">Zaki</card>
+	<card qty="1" id="c3bb69f7-4b77-469f-a9ff-79cca1e52574">Bilstein</card>
+	<card qty="1" id="f232c282-6a03-436f-aae2-53f6988c6603">Hayato</card>
+	<card qty="1" id="f67a1f9b-29c7-4ccc-bb17-b80a1c25b67a">June</card>
+	<card qty="1" id="cb1440e1-42f7-47e5-92d5-2246d399bd64">Rain</card>
+	<card qty="1" id="bc5e5159-fe3c-4324-97bb-2b56b920a6a3">Akuma</card>
+	<card qty="1" id="c7c73d2e-1728-4c1b-ba7e-dcd989e61d98">Alex</card>
+	<card qty="1" id="70df22cd-ebe5-461e-a017-26879f2cb71f">Blanka</card>
+	<card qty="1" id="de28f9bf-d995-4743-afcd-a28065beb39d">Cammy (Alpha)</card>
+	<card qty="1" id="a124cd33-4427-4584-8216-885bbb97baa8">Chun-Li</card>
+	<card qty="1" id="7b9371dc-63a4-4dd8-91e9-5380aae0491f">Chun-Li (Alpha)</card>
+	<card qty="1" id="9d7ec580-fdc3-4222-92ec-10fd33741a2b">Dan</card>
+	<card qty="1" id="9c383f6b-2813-407f-be87-f9746fbb6d18">Dhalsim</card>
+	<card qty="1" id="3036ebcc-7b49-42a5-89f3-118399f34d47">E. Honda</card>
+	<card qty="1" id="c023c0dd-677d-488a-83a6-2e9419bcb868">Elena</card>
+	<card qty="1" id="759b3fef-e5c0-406e-b186-a94b211e8735">Evil Ryu</card>
+	<card qty="1" id="137d17e0-7c5a-4216-9085-21f05a744fd8">Gen</card>	
+	
+	<card qty="1" id="e5fa3d6f-3368-4450-8327-3f7672c78834">Domination</card>
+	<card qty="1" id="4124ac7a-b7f5-4784-8246-872621cc9d95">Double</card>
+	<card qty="1" id="e22264db-d58f-48ce-9be7-608bdfdd4299">Double KO</card>
+	<card qty="1" id="98e1e7ed-8c66-4105-a2fc-1290036c0f70">Earth's pike</card>
+	<card qty="1" id="053ba349-515d-4293-898b-625f837f62b6">Emulate</card>
+	<card qty="1" id="1ef4cecb-c096-47e0-995f-a20b6b75325a">Engokogeki</card>
+	<card qty="1" id="96c5cd74-a898-42f3-a169-9f98e1ce8945">Escape</card>
+	<card qty="1" id="7b7ffef2-2790-46ed-8407-e7395c26b4a0">ESP</card>
+	<card qty="1" id="3c92b6f8-d68f-4d0f-8a29-f5172b09a864">Fate duel</card>
+	<card qty="1" id="b95b2104-d184-43cc-bb04-b3eb096c6fca">Fight!</card>
+	
+	<card qty="1" id="0a5179dd-e5a0-499e-90ac-8d62391743b8">Cash profits</card>
+	<card qty="1" id="36450a2c-321b-4697-a37e-1563b16faf0e">Charm</card>
+	<card qty="1" id="74def9a7-0898-4ed4-93eb-33e57cf3a215">Clone</card>
+	<card qty="1" id="fef1b38c-a055-4cd7-9436-34e220c30d52">Cruel hunt</card>
+	<card qty="1" id="ed5b10af-ad01-4d70-bdac-0a7dfbf9de3f">Evil eye</card>
+  </section>
+  <notes><![CDATA[]]></notes>
+</deck>

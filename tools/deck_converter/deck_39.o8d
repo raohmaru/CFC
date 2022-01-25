@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<deck game="e3d56d9e-900d-49c6-b6ae-22cbb51be153" sleeveid="0">
+  <section name="Main" shared="False">
+    <card qty="2" id="d14dd0ed-cba6-404d-b7d1-e25c9b5c78ed">Mr. Big</card>
+    <card qty="2" id="62067a74-53f9-4bb0-872c-f77e735fc826">Eiji</card>
+    <card qty="2" id="55ab2891-c99e-4647-8a9d-b01fbce3009f">Chizuru</card>
+    <card qty="1" id="299c01d7-37f0-41de-81f3-712b8dd63f11">Akari (Speed)</card>
+    <card qty="1" id="34f11eff-b3e2-4ac9-b505-a274eb5291c9">Mukuro</card>
+    <card qty="1" id="9c405677-1d42-4eb7-bb44-7b21c1d84859">Akari</card>
+    <card qty="2" id="f3557575-c61e-42fd-9442-9413cea64bdf">Gato</card>
+    <card qty="2" id="bfb737c0-4dcf-4b0c-b201-45857c83016b">Haohmaru (WR)</card>
+    <card qty="2" id="c0f1e98e-4233-446a-af2d-6e50eb8e6177">Rugal</card>
+    <card qty="2" id="2ba9556c-59b0-4154-8325-f9793a8eacb5">Krizalid</card>
+    <card qty="3" id="ab45b64f-e231-44ca-83ad-bd4d89bcb851">Clone Zero</card>
+    <card qty="2" id="067d592e-2ddf-43f5-82cc-25c70d29a996">God Rugal</card>
+    <card qty="1" id="9ec88c6c-dc57-41fd-bb90-cf2822a735aa">Anakaris</card>
+    <card qty="2" id="7717e285-f824-4bfa-bd76-c0039c97190e">Mega Man</card>
+    <card qty="3" id="e9c8e4ca-7d41-43c5-b427-f7e47125052e">Edge</card>
+    <card qty="3" id="fb3d3a49-a1de-4887-9ea4-ec761426471e">Hyo</card>
+    <card qty="2" id="7b7ffef2-2790-46ed-8407-e7395c26b4a0">ESP</card>
+    <card qty="2" id="6504b1a3-e432-4c6c-845b-6ca72500b458">Substitute</card>
+    <card qty="2" id="e1fb17f3-c4bf-4993-9b2f-91706cccf448">Curse</card>
+    <card qty="2" id="0e1b4f81-93e9-44be-ab31-7aed8cb354d0">Shadow</card>
+    <card qty="2" id="5e2211a0-e52e-4b7b-b03d-f6ecb3660bb0">Successor</card>
+    <card qty="2" id="74def9a7-0898-4ed4-93eb-33e57cf3a215">Clone</card>
+    <card qty="3" id="eaf346c3-d2e6-4066-adae-e1678746673d">Robber</card>
+    <card qty="2" id="b9023490-790e-4e5f-a495-c196f6672dff">Amnesia</card>
+    <card qty="2" id="0a951ced-4508-40b9-8350-5dafb6b7e8aa">Super Art select</card>
+  </section>
+  <notes><![CDATA[]]></notes>
+</deck>

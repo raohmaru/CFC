@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<deck game="e3d56d9e-900d-49c6-b6ae-22cbb51be153" sleeveid="0">
+  <section name="Main" shared="False">
+	<card qty="1" id="298bd386-e304-4739-95c6-78c9de4c17e4">Gill</card>
+	<card qty="1" id="20cfabef-f733-478f-89d6-25a71371a89e">Guile</card>
+	<card qty="1" id="3b05eb6f-d20f-433f-9ceb-4d6bb31d0328">Hugo</card>
+	<card qty="1" id="fd549399-59de-4b2c-8aca-5454f7862e50">Ibuki</card>
+	<card qty="1" id="a2536791-c173-4228-84ce-4d2dec036ac3">Juli</card>
+	<card qty="1" id="3eb68262-58ec-41c2-8fe0-b8284afc87fb">Karin</card>
+	<card qty="1" id="366963a0-6515-4b14-ae36-475b8000be26">Ken</card>
+	<card qty="1" id="229cbb1b-9710-4981-b4ea-e476145d73f4">M. Bison</card>
+	<card qty="1" id="216e0a0d-a46c-42f4-a0f4-c32ac83d6cc1">Makoto</card>
+	<card qty="1" id="d8e2ad6f-32a1-46e2-b9cc-936dec91b919">Oro</card>
+	<card qty="1" id="929afc04-8fc6-4419-80ec-0c9ead5ea105">Q</card>
+	<card qty="1" id="63df795b-236c-4449-aa96-287a836ed648">Remy</card>
+	<card qty="1" id="2a039849-7e43-43e2-b67a-2d341d27d9e1">Rose</card>
+	<card qty="1" id="4f2454d7-2294-47a2-a473-a838c1f7d874">Ryu</card>
+	<card qty="1" id="03a6a70c-6f38-48b5-bcc0-4529ec0a18c2">Ryu (Alpha)</card>
+	<card qty="1" id="2981e9ad-11e1-4f14-a707-2120bfc0cc2f">Sagat</card>
+	<card qty="1" id="f53e910f-8aef-47dc-a919-af81a5b0d2c4">Sakura</card>
+	<card qty="1" id="7f5099da-4bcf-4895-9493-e83a993118b7">Sean</card>
+	<card qty="1" id="e4ae5562-a510-4a1d-98e8-59a91dc1cb8c">Twelve</card>
+	<card qty="1" id="79239cad-fd51-4557-9534-af96bd1302bc">Urien</card>
+	<card qty="1" id="c3a432e3-3642-46a2-a1e2-e2d5d5f698ab">Option</card>
+	<card qty="1" id="c09e1c30-468b-4173-8aa8-3e6ba31cd3e8">Strider Hiryu</card>
+	<card qty="1" id="99081829-e898-4766-8727-b0a2918df49f">Kikaioh</card>
+	<card qty="1" id="9ec88c6c-dc57-41fd-bb90-cf2822a735aa">Anakaris</card>
+	<card qty="1" id="d44d9e8a-785c-48f2-85a5-ed076c1aa518">B. B. Hood</card>
+	<card qty="1" id="e778bf71-2f0f-4094-b096-b443fdbac8de">Bishamon</card>
+	<card qty="1" id="563fbb65-90bc-43aa-9246-2f69e56ab119">Demitri</card>
+	<card qty="1" id="7f7fe518-3669-4dad-9063-79052f5067b7">Donovan</card>
+	<card qty="1" id="53eafaec-68bc-4fe8-88ee-be578a785f5c">Felicia</card>
+	<card qty="1" id="299377b4-f955-420b-b252-85ed6cf98c14">Hsien-Ko</card>
+    <card qty="1" id="3a0e4fbc-6895-43e0-97d1-e1f667aca271">J. Talbain</card>
+	<card qty="1" id="1d07a01b-e099-44a8-87eb-71fb2f3fa762">Jedah</card>
+	<card qty="1" id="60b0d429-c2bf-482d-84f1-10c78f424cc6">Lilith</card>
+	<card qty="1" id="4e34756e-34e4-45e5-a6ab-698604c6fb99">Morrigan</card>
+	<card qty="1" id="73e4c201-f462-4106-9e03-3b63ecd04aab">Morrigan Aensland</card>
+	
+	<card qty="1" id="faea0028-c313-438e-b9f0-8536e494ddb1">Glare off</card>
+	<card qty="1" id="6597d835-666b-4056-8cae-dbf3a3bdc3df">Grace</card>
+	<card qty="1" id="14a057f5-be46-4ec0-abee-a6c573f4711e">Heritage</card>
+	<card qty="1" id="c8284885-2ab1-4020-afc7-faae4e196e74">Hey! Hey!</card>
+	<card qty="1" id="6eec9528-7473-47a5-916b-a22261f79816">Indulge</card>
+	<card qty="1" id="eece88a0-17d8-4b16-90b4-ac7317d36f95">Last resort</card>
+	<card qty="1" id="96f72173-528d-4a3a-a85c-9cf92439435a">Laundry</card>
+	<card qty="1" id="b7f9fdff-641d-4c16-b9fb-c7429b990fff">Lightning</card>
+    <card qty="1" id="9610668a-18c9-4448-8216-f40119a03269">Lucky kitty</card>
+	<card qty="1" id="58580e2e-1f48-4210-a68f-57cd900b1036">Lunch rush</card>
+
+	<card qty="1" id="130c068d-bf62-4013-8b17-32af4a3f6994">Face off</card>
+	<card qty="1" id="2644337b-a5f8-4669-858b-824d9607f2d8">Fellowship</card>
+	<card qty="1" id="55dd552f-0c26-4bc1-819a-92cf32f285ae">Ferocity</card>
+	<card qty="1" id="dd49c2e2-3455-481d-b8a7-5f813796b3f4">Galactica phantom</card>
+	<card qty="1" id="46deecf5-7f7b-42b5-b6fa-e3162dce2013">Go home</card>
+  </section>
+  <notes><![CDATA[]]></notes>
+</deck>

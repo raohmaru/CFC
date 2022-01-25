@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<deck game="e3d56d9e-900d-49c6-b6ae-22cbb51be153" sleeveid="0">
+  <section name="Main" shared="False">
+    <card qty="3" id="0cc81206-ad63-4ea9-b74c-57947b531f11">Bob</card>
+    <card qty="3" id="e46279a7-e014-42a2-8d5a-0edbfd033064">Tsugumi</card>
+    <card qty="3" id="620cc673-9881-4ac3-8389-fd2fe4c3cefd">Lee Pai Long</card>
+    <card qty="2" id="1c7bc861-c4e0-4127-9fc8-fd56d06ec965">Genan</card>
+    <card qty="3" id="20cefb30-1a41-4980-a072-e0964b1de1f7">Basara</card>
+    <card qty="2" id="c1dc9fa1-f6f5-45af-8c09-18d68861ec4d">Taizan</card>
+    <card qty="3" id="a70c4fbf-34a6-4bb3-ba35-825e78ae7119">Chin Gensai</card>
+    <card qty="2" id="0d76ceeb-f809-464f-9954-240de260a132">Choi</card>
+    <card qty="2" id="27ea424f-1178-4cda-9660-1c34dc7c4a83">Chris</card>
+    <card qty="2" id="a0787066-cada-49a9-9f3e-48b13983e758">Vice</card>
+    <card qty="2" id="98d446a1-2968-4007-b727-9de0410ecd27">Juzoh</card>
+    <card qty="3" id="63e74c7e-c1df-4d7f-a336-58f52e094320">Amano</card>
+    <card qty="3" id="d6441760-574a-447d-bf1e-f900cb39535e">Lee Rekka</card>
+    <card qty="3" id="0769534f-9679-4025-bf49-4a5ce026cbd3">Hibiki</card>
+    <card qty="3" id="221dbc2e-25cb-4aad-8127-d4cef2056c37">Carol</card>
+    <card qty="2" id="9aa78672-8e22-488a-ae4a-ce6c433f3216">Guy Tendo</card>
+    <card qty="2" id="f4c92a8e-399f-4030-a99f-b0159031d53a">Tarma</card>
+    <card qty="3" id="cb139512-8d16-4229-a641-0a4e86357ef2">Fio</card>
+    <card qty="2" id="959f67ed-17f4-4433-89e9-9e674a69f403">Roddy</card>
+    <card qty="2" id="ae5b6e26-b297-4e51-afeb-daa08712f837">Cathy</card>
+  </section>
+  <notes><![CDATA[]]></notes>
+</deck>

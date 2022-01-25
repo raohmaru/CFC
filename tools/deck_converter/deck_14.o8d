@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<deck game="e3d56d9e-900d-49c6-b6ae-22cbb51be153" sleeveid="0">
+  <section name="Main" shared="False">
+    <card qty="1" id="299685df-122c-4fbe-a8dd-05ceaaf41055">Andy</card>
+    <card qty="1" id="a33974af-3d8e-41d6-8f90-fd6c8d525e18">Mai</card>
+    <card qty="1" id="38fcbdaf-0025-4692-adac-be99aa1be750">Kim</card>
+    <card qty="1" id="510c1217-5b95-467e-ae49-93fd5e726797">Duck King</card>
+    <card qty="2" id="d231ed6e-8f7c-417e-8826-64f9297b395f">Nakoruru (Slash)</card>
+    <card qty="2" id="f3f105e5-a0b1-4b4b-9f88-5932182d3ace">Nakoruru (Bust)</card>
+    <card qty="1" id="248517e9-d7a0-450d-9281-df91d20f68ab">Nakoruru</card>
+    <card qty="2" id="e3c021d7-8ba2-471e-b74e-b5129da32f62">Rimoruru (Slash)</card>
+    <card qty="2" id="537aa0e6-9231-423a-8aaa-3b9722cef6ec">Rimoruru (Bust)</card>
+    <card qty="1" id="aa591fb7-0136-4af8-9229-9b6da2e02aca">Heidern</card>
+    <card qty="2" id="eb648ee7-aa4e-41ce-a7fc-04af31349ca9">Terry Bogard</card>
+    <card qty="1" id="928b8c60-483a-467c-9c11-e858009ff362">Hotaru</card>
+    <card qty="1" id="b428a15e-adf3-4fd1-897e-8dea39b8d9ca">Rimoruru</card>
+    <card qty="1" id="c0f1e98e-4233-446a-af2d-6e50eb8e6177">Rugal</card>
+    <card qty="1" id="366963a0-6515-4b14-ae36-475b8000be26">Ken</card>
+    <card qty="1" id="9d7ec580-fdc3-4222-92ec-10fd33741a2b">Dan</card>
+    <card qty="1" id="d8e2ad6f-32a1-46e2-b9cc-936dec91b919">Oro</card>
+    <card qty="2" id="4e34756e-34e4-45e5-a6ab-698604c6fb99">Morrigan</card>
+    <card qty="2" id="73e4c201-f462-4106-9e03-3b63ecd04aab">Morrigan Aensland</card>
+    <card qty="1" id="53eafaec-68bc-4fe8-88ee-be578a785f5c">Felicia</card>
+    <card qty="1" id="559c6131-7a72-47c7-9669-6a6c23a48cb7">Tessa</card>
+    <card qty="1" id="09dfc071-ce3a-448f-86fe-502bd5d1392b">Kyoko</card>
+    <card qty="1" id="2e83003e-643d-4308-ba61-79437228842d">Hideo</card>
+    <card qty="2" id="c09e1c30-468b-4173-8aa8-3e6ba31cd3e8">Strider Hiryu</card>
+    <card qty="2" id="c3a432e3-3642-46a2-a1e2-e2d5d5f698ab">Option</card>
+    <card qty="1" id="c553b9d0-946a-4c61-bc9b-a4b074c49045">Raizou</card>
+    <card qty="1" id="b95b2104-d184-43cc-bb04-b3eb096c6fca">Fight!</card>
+    <card qty="1" id="6597d835-666b-4056-8cae-dbf3a3bdc3df">Grace</card>
+    <card qty="1" id="11fa47f0-9573-48ca-9a4a-7aa16a4ec76e">Psyche up!</card>
+    <card qty="2" id="b0346de5-63b8-4443-8ea4-8155d889a0fc">Best shot</card>
+    <card qty="2" id="80692723-3895-435f-bf8f-e94507704af5">Awakening</card>
+    <card qty="1" id="016a06d3-e739-4862-848a-d40ba0ec12ee">Reliable warrior</card>
+    <card qty="2" id="bc59a360-18f6-4c79-8305-77d0975d4106">Banquet</card>
+    <card qty="1" id="2c9000df-e21a-4482-9dfc-8df3f702e29e">Rest</card>
+    <card qty="2" id="f4df6ee6-2fcd-4ba1-b86f-59d5028eb96b">Vacation</card>
+    <card qty="1" id="81b95f17-ba79-4f2f-aa7f-4808d6fad1ec">Painful treatment</card>
+    <card qty="1" id="fd8b647c-9fc7-4c3a-bc91-ac5266e50a55">Lend a hand</card>
+  </section>
+  <notes><![CDATA[]]></notes>
+</deck>
