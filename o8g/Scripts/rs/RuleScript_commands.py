@@ -520,6 +520,7 @@ def cmd_transform(rc, targets, source, restr, expr):
 def cmd_moveRevealedTo(rc, targets, source, restr, zone, pos = None):
    pile = me.deck
    index = len(pile)
+   # Maybe there is a selected card
    if len(targets) > 0:
       pile = targets[0].group
       index = targets[0].index
@@ -530,9 +531,9 @@ def cmd_moveRevealedTo(rc, targets, source, restr, zone, pos = None):
    notify("{} looks through the top of {} {} ({} card{} revealed)".format(me, 'his' if myPile else players[1], pile.name, index+1, pluralize(index+1)))
    for card in newPile:
       if myPile:
-         moveToGroup(targetZone, card, pile, int(pos), True)
+         moveToGroup(targetZone, card, pile, num(pos), True)
       else:
-         remoteCall(targetZone.controller, "moveToGroup", [targetZone, card, pile, int(pos), True])
+         remoteCall(targetZone.controller, "moveToGroup", [targetZone, card, pile, num(pos), True])
       waitForAnimation()
    rc.applyNext()
    

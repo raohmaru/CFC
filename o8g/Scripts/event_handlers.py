@@ -222,18 +222,23 @@ def onTurnPassed(args):
 
 def onPhasePassed(args):
    """
-   Triggers when the current game phase changes.
+   Triggers when the current game phase changes. Triggered for all players.
    """
    phaseIdx = getCurrentPhase()
-   debug(">>> onPhasePassed: {} => {}", args.id, phaseIdx)
-   if args.id == phaseIdx:
+   oldPhase = args.id
+   debug(">>> onPhasePassed: {} => {}", oldPhase, phaseIdx)
+   if oldPhase == phaseIdx:
       return
+      
+   if not me.isActive:
+      # Remove any button and phase stop added during the opponent's turn
+      removeButton("NextButton")
+      setStop(BlockPhase, False)
    
-   # Any player
    if phaseIdx == AttackPhase:
       if me.isActive:
          _extapi.whisper(MSG_HINT_ATTACK, Colors.Blue)
-   if phaseIdx == BlockPhase:
+   elif phaseIdx == BlockPhase:
       if me.isActive and len(getAttackingCards()) > 0:
          _extapi.whisper(MSG_HINT_BLOCK1.format("defending player", "he or she"), Colors.Blue)
       elif not me.isActive and len(getAttackingCards(getOpp())) > 0:
@@ -251,11 +256,14 @@ def onPhasePassed(args):
          cleanedUpRing = True
    # Active player
    if me.isActive:
+      # Priority back to me
+      if getState(None, "priority") != me._id:
+         setState(None, "priority", me._id)
       if phaseIdx != ActivatePhase:
          playSnd("phase-change")
       elif turnNumber() == 1:
          playSnd("turn-change")
-      gotoPhase(phaseIdx, args.id)
+      gotoPhase(phaseIdx, oldPhase)
 
 
 def onMarkerChanged(args):
@@ -298,7 +306,7 @@ def onMarkerChanged(args):
       if not args.scripted and card.controller == me:
          if marker == "BP":
             bp = getMarker(card, "BP")
-            fixedBP = fixBP(bp)
+            fixedBP = roundBP(bp)
             if bp != fixedBP:
                setMarker(card, "BP", fixedBP)
          else:

@@ -43,9 +43,6 @@ def nextPhase(fromKeyStroke = True, x = 0, y = 0):
          whisper(MSG_PHASE_LOCK.format(getOpp()))
          playSnd("win-warning", True)
          return
-      # Priority back to me
-      if getState(None, "priority") != me._id:
-         setState(None, "priority", me._id)
       # We reached the last phase
       if phaseIdx >= CleanupPhase:
          turnsRemaining -= 1
@@ -62,9 +59,8 @@ def nextPhase(fromKeyStroke = True, x = 0, y = 0):
       
       setPhase(phaseIdx)
       phaseOngoing = True
-   # If I am the active player but is the Block phase
+   # If I am not the active player but it is the Block phase
    elif phaseIdx == BlockPhase and getState(None, "priority") == me._id:
-      setStop(BlockPhase, False)
       # Pass priority to opponent
       setState(None, "priority", getOpp()._id)
       notify(MSG_PHASE_DONE.format(me, PhaseNames[phaseIdx], getOpp()))
@@ -78,7 +74,7 @@ def prevPhase(group = table, x = 0, y = 0):
    if me.isActive:
       phaseIdx = getCurrentPhase()
       if phaseIdx > 1:
-         setPhase(phaseIdx-1)
+         setPhase(phaseIdx - 1)
 
 
 def gotoPhase(idx, oldIdx = 0):
@@ -356,8 +352,11 @@ def activate(card, x = 0, y = 0):
       freeze(card, silent = True)
    # Apply highlight
    if card.group == table:
+      # Get again the parsed card in case its rules changed
+      pcard = getGameCard(card)
       if pcard.getState("willHighlight") == True:
          card.highlight = ActivatedColor
+      else:
          pcard.setState("willHighlight", True)
    if isCharacter(card):
       playSnd("activate-1")
@@ -850,53 +849,53 @@ def addMarkerAction(cards, x = 0, y = 0):
 # Character BP
 # --------------
 
-def plusBP(cards, x = 0, y = 0, silent = False, count = 100):
+def plusBP(cards, x = 0, y = 0, silent = False, amount = 100):
    mute()
    for card in cards:
-      addMarker(card, "BP", count)
+      addMarker(card, "BP", amount)
       if not silent:
-         notify("{} raises {}'s BP by {} (new BP is {})".format(me, card, count, getMarker(card, "BP")))
+         notify("{} raises {}'s BP by {} (new BP is {})".format(me, card, amount, getMarker(card, "BP")))
 
-def minusBP(cards, x = 0, y = 0, silent = False, count = 100):
+def minusBP(cards, x = 0, y = 0, silent = False, amount = 100):
    mute()
    for card in cards:
-      c = count
+      c = amount
       bp = getMarker(card, "BP")
       if c > bp:
          c = bp
       addMarker(card, "BP", -c)
       if not silent:
-         notify("{} lowers {}'s BP by {} (new BP is {}).".format(me, card, count, getMarker(card, "BP")))
+         notify("{} lowers {}'s BP by {} (new BP is {}).".format(me, card, amount, getMarker(card, "BP")))
 
-def plusBP2(cards, x = 0, y = 0): plusBP(cards, count = 200)
-def plusBP3(cards, x = 0, y = 0): plusBP(cards, count = 300)
-def plusBP4(cards, x = 0, y = 0): plusBP(cards, count = 400)
-def plusBP5(cards, x = 0, y = 0): plusBP(cards, count = 500)
-def plusBP6(cards, x = 0, y = 0): plusBP(cards, count = 600)
-def plusBP7(cards, x = 0, y = 0): plusBP(cards, count = 700)
-def plusBP8(cards, x = 0, y = 0): plusBP(cards, count = 800)
-def plusBP9(cards, x = 0, y = 0): plusBP(cards, count = 900)
+def plusBP2(cards, x = 0, y = 0): plusBP(cards, amount = 200)
+def plusBP3(cards, x = 0, y = 0): plusBP(cards, amount = 300)
+def plusBP4(cards, x = 0, y = 0): plusBP(cards, amount = 400)
+def plusBP5(cards, x = 0, y = 0): plusBP(cards, amount = 500)
+def plusBP6(cards, x = 0, y = 0): plusBP(cards, amount = 600)
+def plusBP7(cards, x = 0, y = 0): plusBP(cards, amount = 700)
+def plusBP8(cards, x = 0, y = 0): plusBP(cards, amount = 800)
+def plusBP9(cards, x = 0, y = 0): plusBP(cards, amount = 900)
 
 def plusBPX(cards, x = 0, y = 0):
    n = askInteger("Raise BP by...", 100)
    if n == None:
       return
-   plusBP(cards, count = fixBP(n))
+   plusBP(cards, amount = roundBP(n))
 
-def minusBP2(cards, x = 0, y = 0): minusBP(cards, count = 200)
-def minusBP3(cards, x = 0, y = 0): minusBP(cards, count = 300)
-def minusBP4(cards, x = 0, y = 0): minusBP(cards, count = 400)
-def minusBP5(cards, x = 0, y = 0): minusBP(cards, count = 500)
-def minusBP6(cards, x = 0, y = 0): minusBP(cards, count = 600)
-def minusBP7(cards, x = 0, y = 0): minusBP(cards, count = 700)
-def minusBP8(cards, x = 0, y = 0): minusBP(cards, count = 800)
-def minusBP9(cards, x = 0, y = 0): minusBP(cards, count = 900)
+def minusBP2(cards, x = 0, y = 0): minusBP(cards, amount = 200)
+def minusBP3(cards, x = 0, y = 0): minusBP(cards, amount = 300)
+def minusBP4(cards, x = 0, y = 0): minusBP(cards, amount = 400)
+def minusBP5(cards, x = 0, y = 0): minusBP(cards, amount = 500)
+def minusBP6(cards, x = 0, y = 0): minusBP(cards, amount = 600)
+def minusBP7(cards, x = 0, y = 0): minusBP(cards, amount = 700)
+def minusBP8(cards, x = 0, y = 0): minusBP(cards, amount = 800)
+def minusBP9(cards, x = 0, y = 0): minusBP(cards, amount = 900)
 
 def minusBPX(cards, x = 0, y = 0):
    n = askInteger("Lower BP by...", 100)
    if n == None:
       return
-   minusBP(cards, count = fixBP(n))
+   minusBP(cards, amount = roundBP(n))
 
 def changeBP(cards, x = 0, y = 0):
    mute()
@@ -1261,10 +1260,17 @@ def removedDefaultAction(card, x = 0, y = 0):
 # Debug actions
 #---------------------------------------------------------------------------
 
-def setupDebug(group, x = 0, y = 0):
+def startDebug(group, x = 0, y = 0):
    mute()
    global debugging
    debugging = True
+   resetGame()
+   
+
+def stopDebug(group, x = 0, y = 0):
+   mute()
+   global debugging
+   debugging = False
    resetGame()
 
 

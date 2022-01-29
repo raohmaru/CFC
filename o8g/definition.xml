@@ -4,7 +4,7 @@
       name="Card Fighters' Clash"
       id="e3d56d9e-900d-49c6-b6ae-22cbb51be153"
       octgnVersion="3.4.350.0"
-      version="0.9.9.860"
+      version="0.9.9.868"
       markersize="20"
       tags="capcom snk fighter"
       description="Play epic battles with fighters from Capcom and SNK!
@@ -30,10 +30,13 @@
 		<script src="Scripts/autoscript_phases.py" />
 		<script src="Scripts/autoscript_actions.py" />
 		<script src="Scripts/game_cards.py" />
-		<script src="Scripts/utils.py" />
 		<script src="Scripts/utils/util.py" />
+		<script src="Scripts/utils/attachements.py" />
 		<script src="Scripts/utils/card.py" />
+		<script src="Scripts/utils/counters.py" />
 		<script src="Scripts/utils/game.py" />
+		<script src="Scripts/utils/helpers.py" />
+		<script src="Scripts/utils/markers.py" />
 		<script src="Scripts/utils/parser.py" />
 		<script src="Scripts/utils/piles.py" />
 		<script src="Scripts/utils/random.py" />
@@ -268,7 +271,8 @@
 			<groupaction menu="Download Image Packs &#129109;" execute="downloadImagePacks" />
 		</groupactions>
 		<groupactions menu="Debug..." showIf="acsh_debug">
-			<groupaction menu="Setup" execute="setupDebug" />
+			<groupaction menu="Start" execute="startDebug" />
+			<groupaction menu="Stop" execute="stopDebug" />
 			<groupaction menu="Set debug verbosity" execute="setDebugVerbosity" />
 			<groupaction menu="Create card" execute="createCard" />
 		</groupactions>

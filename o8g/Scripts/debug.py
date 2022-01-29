@@ -49,8 +49,9 @@ def debugScenario():
    gotoMain()
    waitForAnimation()
    tableCards = [
-       "aaf18dab-973f-4126-a47a-78798ec5058b" # Rock
-      ,"487f66ee-c717-41a1-ad2e-31d3fe0dd424" # Kenji
+       "ab45b64f-e231-44ca-83ad-bd4d89bcb851" # Clone Zero
+      ,"bfb737c0-4dcf-4b0c-b201-45857c83016b" # Haohmaru
+      ,"c09e1c30-468b-4173-8aa8-3e6ba31cd3e8" # Strider
        # "d14694b4-484c-4b45-962e-8cbb636d8a9a" # 200 BP
       # ,"c7d128ea-a3b9-4b04-b8b2-a61153b5b2e6" # 400 BP
       # ,"24e99a13-cb42-4e16-9900-78dde12e1a4c" # 600 BP
@@ -67,7 +68,6 @@ def debugScenario():
       waitForAnimation()
       
    handCards = [
-       "83c33aa8-5981-4352-8107-cbb7e05547ec" # Synchro
        # "8bb477f9-5004-4018-8d5e-73c6a23e8912" # Char 300 BP
       # ,"e910f462-bea9-4262-b168-c7c512eb6511" # Char 500 BP
       # ,"0fdadc92-0864-46cc-a3ff-c20e2af8249c" # Char 700 BP
@@ -86,10 +86,10 @@ def debugScenario():
       card.moveTo(me.hand)
    
    deckCards = [
-       "55ab2891-c99e-4647-8a9d-b01fbce3009f" # Char 300 BP
-      ,"248517e9-d7a0-450d-9281-df91d20f68ab" # Char 500 BP
-      ,"eb648ee7-aa4e-41ce-a7fc-04af31349ca9" # Char 700 BP
-      ,"4d7520b9-9ced-43e0-a2e7-974d76d8eb82" # Char 1000 BP
+       # "55ab2891-c99e-4647-8a9d-b01fbce3009f" # Char 300 BP
+      # ,"248517e9-d7a0-450d-9281-df91d20f68ab" # Char 500 BP
+      # ,"eb648ee7-aa4e-41ce-a7fc-04af31349ca9" # Char 700 BP
+      # ,"4d7520b9-9ced-43e0-a2e7-974d76d8eb82" # Char 1000 BP
       # ,"5e2211a0-e52e-4b7b-b03d-f6ecb3660bb0" # Action 0 SP
       # ,"83c33aa8-5981-4352-8107-cbb7e05547ec" # Action -1 SP
       # ,"80692723-3895-435f-bf8f-e94507704af5" # Action -3 SP
@@ -98,7 +98,7 @@ def debugScenario():
       # ,"46deecf5-7f7b-42b5-b6fa-e3162dce2013" # Reaction -1 SP
       # ,"91e441cc-0f1f-4b01-a2b0-94678d6f0b56" # Reaction -4 SP
    ]
-   for id in deckCards:
+   for id in list(reversed(deckCards)):
       debug("Adding card {} to Deck", id)
       card = table.create(id, 0, 0, quantity = 1, persist = True)
       card.moveTo(me.deck)
@@ -116,7 +116,7 @@ def debugScenario():
       # ,"46deecf5-7f7b-42b5-b6fa-e3162dce2013" # Reaction -1 SP
       # ,"91e441cc-0f1f-4b01-a2b0-94678d6f0b56" # Reaction -4 SP
    ]
-   for id in discardCards:
+   for id in list(reversed(discardCards)):
       debug("Adding card {} to Discard pile", id)
       card = table.create(id, 0, 0, quantity = 1, persist = True)
       card.moveTo(me.piles["Discard pile"])
@@ -137,7 +137,6 @@ def debugOpp():
    me.SP = 50
    
    tableCards = [
-       "aaf18dab-973f-4126-a47a-78798ec5058b" # Rock
        # "d14694b4-484c-4b45-962e-8cbb636d8a9a" # 200 BP
       # ,"c7d128ea-a3b9-4b04-b8b2-a61153b5b2e6" # 400 BP
       # ,"24e99a13-cb42-4e16-9900-78dde12e1a4c" # 600 BP
@@ -150,7 +149,6 @@ def debugOpp():
       waitForAnimation()
       
    handCards = [
-       "83c33aa8-5981-4352-8107-cbb7e05547ec" # Synchro
        # "8bb477f9-5004-4018-8d5e-73c6a23e8912" # Char 300 BP
       # ,"e910f462-bea9-4262-b168-c7c512eb6511" # Char 500 BP
       # ,"0fdadc92-0864-46cc-a3ff-c20e2af8249c" # Char 700 BP
@@ -172,15 +170,15 @@ def debugOpp():
       # ,"55ab2891-c99e-4647-8a9d-b01fbce3009f" # Char 300 BP
       # ,"248517e9-d7a0-450d-9281-df91d20f68ab" # Char 500 BP
       # ,"eb648ee7-aa4e-41ce-a7fc-04af31349ca9" # Char 700 BP
-      "5e2211a0-e52e-4b7b-b03d-f6ecb3660bb0" # Action 0 SP
-      ,"83c33aa8-5981-4352-8107-cbb7e05547ec" # Action -1 SP
-      ,"80692723-3895-435f-bf8f-e94507704af5" # Action -3 SP
-      ,"ac01bbbe-583e-46ae-b26c-3c25eb8f0779" # Action -6 SP
+      # "5e2211a0-e52e-4b7b-b03d-f6ecb3660bb0" # Action 0 SP
+      # ,"83c33aa8-5981-4352-8107-cbb7e05547ec" # Action -1 SP
+      # ,"80692723-3895-435f-bf8f-e94507704af5" # Action -3 SP
+      # ,"ac01bbbe-583e-46ae-b26c-3c25eb8f0779" # Action -6 SP
       # ,"68eaee28-a00a-480f-b8e5-e14d2a8f102c" # Reaction 0 SP
       # ,"46deecf5-7f7b-42b5-b6fa-e3162dce2013" # Reaction -1 SP
       # ,"91e441cc-0f1f-4b01-a2b0-94678d6f0b56" # Reaction -4 SP
    ]
-   for id in deckCards:
+   for id in list(reversed(deckCards)):
       card = table.create(id, 0, 0, quantity = 1, persist = True)
       card.moveTo(me.deck)
    
@@ -197,7 +195,7 @@ def debugOpp():
       # ,"46deecf5-7f7b-42b5-b6fa-e3162dce2013" # Reaction -1 SP
       # ,"91e441cc-0f1f-4b01-a2b0-94678d6f0b56" # Reaction -4 SP
    ]
-   for id in discardCards:
+   for id in list(reversed(discardCards)):
       debug("Adding card {} to Discard pile", id)
       card = table.create(id, 0, 0, quantity = 1, persist = True)
       card.moveTo(me.piles["Discard pile"])

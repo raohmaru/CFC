@@ -302,7 +302,7 @@ def resetState():
          "charsplayed"  : 0,            # Num of chars played this turn
          "charsperturn" : CharsPerTurn, # Allowed number of chars to play per turn
          "backupsplayed": 0,            # Num of chars backed-up this turn
-         "damaged"      : False,        # Player damaged by non-character card
+         "ncdamaged"    : False,        # Player damaged by non-character card
          "lostsp"       : 0,
          "skip"         : gs["skip"] if "skip" in gs else [], # Skip phases, don't reset
           # It seems that OCTGN counters are not updated among players fast enough, so we relay on these

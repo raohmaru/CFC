@@ -27,9 +27,10 @@ def triggerPhaseEvent(phase, oldPhase = 0):
    if not settings["PlayAuto"]:
       return
    
+   backwards = phase < oldPhase
    # Going backwards?
-   if phase < oldPhase:
-      return
+   # if backwards:
+      # return
    
    skipPhases = getState(me, "skip")
    if phase in skipPhases:
@@ -52,7 +53,10 @@ def triggerPhaseEvent(phase, oldPhase = 0):
    elif phase == BlockPhase:
       if len(getAttackingCards(me, True)) == 0:
          notify("{} skips their {} phase because there are no attacking characters.".format(me, PhaseNames[phase]))
-         nextPhase(False)
+         if backwards:
+            prevPhase()
+         else:
+            nextPhase(False)
          return
       else:
          blockPhaseStart()
@@ -63,7 +67,7 @@ def triggerPhaseEvent(phase, oldPhase = 0):
    phaseOngoing = False
    
    # Automatic phase change
-   if settings["PhaseAuto"]:
+   if settings["PhaseAuto"] and not backwards:
       if not getStop(phase) and (
             phase not in [MainPhase, AttackPhase, BlockPhase, EndPhase]
             or phase == EndPhase and len(getAttackingCards()) == 0
@@ -133,6 +137,9 @@ def mainPhaseStart():
 def attackPhaseStart():
    syncGlobalVars()
    discardKOedChars()
+   # In case going backwards and button was hence removed
+   if settings["PhaseAuto"]:
+      addButton("NextButton")
    for card in table:
       if card.controller == me:
          # Discard action cards I have played
@@ -154,7 +161,10 @@ def blockPhaseStart():
          uaSize = len(uattack) - 1
          uaType = ["", "Double", "Triple"][uaSize] + " United Attack"
          uaTypeKw = "ua{}".format(len(uattack))
-         payCostSP(-uaSize * UAttackCost, uaType, "do a {}".format(uaType), uaTypeKw)
+         if not payCostSP(-uaSize * UAttackCost, None, "do a {}".format(uaType), uaTypeKw):
+            notify("{} does not have enough SP to pay the {}.".format(me, uaType))
+            prevPhase()
+            return
          notify("{} has paid the cost of the {}.".format(me, uaType))
    dispatchEvent(GameEvents.BlockPhase)
    for card in getAttackingCards(me, True):

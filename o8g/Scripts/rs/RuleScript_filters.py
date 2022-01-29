@@ -180,7 +180,7 @@ def filterBackedup(card, include, cmd, *args):
    if not isCard(card):
       return False
       
-   backups = getAttachmets(card)
+   backups = getAttachments(card)
    if include:
       return len(backups) > 0
    else:

@@ -169,7 +169,7 @@ def fromWhereStr(group, srcPlayer = me):
          ctrl = "{}'s".format(srcPlayer)
       elif group.controller != me:
          ctrl = "{}'s".format(group.controller)
-      # Gets the current effect
+      # Gets the current ongoing effect
       effect = getTempVar("effect")
       if effect and effect[2] and effect[2]["pick"] is not None and effect[2]["pick"] < 0:
          ctrl = "the bottom of " + ctrl

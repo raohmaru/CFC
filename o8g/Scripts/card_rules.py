@@ -336,7 +336,7 @@ Available variables:
       .discards
       .ring
          .size
-      .damaged
+      .ncDamaged
       .lostSP
    -- piles (type: list) --
    discarded
@@ -911,7 +911,7 @@ action = {F}: moveTo(deck) target(this); moveTo(deck) target?(all@hand) & shuffl
 
 # J. Talbain's SEETHING BLOOD
 RulesDict["3a0e4fbc-6895-43e0-97d1-e1f667aca271"] = """
-action = [[if opp.damaged]] bp(+300)
+action = [[if opp.ncDamaged]] bp(+300)
 """
 
 # Jedah's P.D.C.

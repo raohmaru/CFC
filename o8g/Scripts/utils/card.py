@@ -172,7 +172,7 @@ def alignCard(card, x = None, y = None, slotIdx = None):
 
 def alignBackups(card, x = 0, y = 0):
    debug(">>> alignBackups({}, {}, {})", card, x, y)
-   attachs = getAttachmets(card)
+   attachs = getAttachments(card)
    if len(attachs) > 0:
       ox, oy = CardsCoords["BackupOffset"]
       # Card on top
@@ -189,7 +189,7 @@ def alignBackups(card, x = 0, y = 0):
    
 def revealCard(card, type = None):
    cardname = card.Name
-   if not card.isFaceUp or card.group.name == "Hand":
+   if not isVisible(card):
       if confirm("Reveal card to all players?"):
          card.isFaceUp = True
          waitForAnimation()

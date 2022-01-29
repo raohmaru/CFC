@@ -141,7 +141,8 @@ InstantUniChar = u"\u25B2"
 TriggerUniChar = u"\u2588"
 AutoUniChar    = u"\u26AB"
 
-# A dictionary that holds regular expressions used in other scripts, for performance reasons
+# A dictionary that holds regular expressions used in other scripts, for performance reasons.
+# Strings must be lowercase.
 Regexps = {
    "ability"   : re.compile(r"(.)\s+([^\r]+)"),
    "leftcond"  : re.compile(r"^[\w.]+"),
@@ -156,7 +157,7 @@ Regexps = {
    ".ring"     : re.compile(r"(\w+)\.ring"),
    ".ring.size": re.compile(r"(\w+)\.ring\.size"),
    ".chars"    : re.compile(r"(\w+)\.chars"),
-   ".damaged"  : re.compile(r"(\w+)\.damaged"),
+   ".ncdamaged": re.compile(r"(\w+)\.ncdamaged"),
    ".lostsp"   : re.compile(r"(\w+)\.lostsp"),
    "opp"       : re.compile(r"\bopp\b"),
    "listIdx"   : re.compile(r"([\w\d])\.(\d)\b"),

@@ -25,7 +25,7 @@ def replaceVars(str):
    Replaces variables of the card rules.
    """
    debug("-- replaceVars({})", str)
-   # Order is important
+   # Order matters
    str = replaceIfRgx (str, "listIdx"   , r"\1[\2]", False)
    str = replaceIfRgx (str, ".bp"       , r"getGameCard(\1).BP")
    str = replaceIfRgx (str, ".sp"       , r"\1.SP")
@@ -37,7 +37,7 @@ def replaceVars(str):
    str = replaceIfRgx (str, ".ring.size", r"getRingSize(\1)")
    str = replaceIfRgx (str, ".ring"     , r"getRing(\1)")
    str = replaceIfRgx (str, ".size"     , r"len(\1)")
-   str = replaceIfRgx (str, ".damaged"  , r"getState(\1, 'damaged')")
+   str = replaceIfRgx (str, ".ncdamaged", r"getState(\1, 'ncdamaged')")
    str = replaceIfRgx (str, ".lostsp"   , r"getState(\1, 'lostsp')")
    str = replaceIfRgx (str, "opp"       , r"getOpp()")
    str = replaceIf    (str, ".hp"       , ".HP")
