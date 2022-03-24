@@ -18,12 +18,12 @@
 # Card automations
 #---------------------------------------------------------------------------
 
-def createGameCard(card, ruleId = None, init = True, dryRun = False, forceExecAuto = False):
+def createGameCard(card, ruleId = None, init = True, dryRun = False, forceActivateAuto = False):
    """
    Wrapper for a Card object. Should only be called for cards just added to the table or when its effect changes.
    """
    if not card._id in gameCards or dryRun:
-      debug(">>> createGameCard({}, {}, {}, {}, {})", card, ruleId, init, dryRun, forceExecAuto)
+      debug(">>> createGameCard({}, {}, {}, {}, {})", card, ruleId, init, dryRun, forceActivateAuto)
       if isCharacter(card):
          gc = CharCard(card, ruleId)
       else:
@@ -31,7 +31,7 @@ def createGameCard(card, ruleId = None, init = True, dryRun = False, forceExecAu
       if not dryRun:
          gameCards[card._id] = gc
       if init:
-         gc.init(forceExecAuto)
+         gc.init(forceActivateAuto)
       if dryRun:
          return gc
    else:

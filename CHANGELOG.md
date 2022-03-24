@@ -4,6 +4,7 @@
 + Ask for confirmation when user discards cards from the game area.
 + Updated card design.
 + Performance improvements.
++ Fixed bug in the `prophecy` command affecting Mischief.
 
 ## 0.9.8
 + Re-balanced Zaki ability: now it adds 10 SP again.

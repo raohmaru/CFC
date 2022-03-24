@@ -216,7 +216,7 @@ def transformCard(card, cardModel):
          putAtSlot(newCard, slotIdx)
          newCard.orientation = card.orientation
          if settings["PlayAuto"]:
-            createGameCard(newCard, forceExecAuto = True)
+            createGameCard(newCard, forceActivateAuto = True)
          if hasMarker(card, "Just Entered"):
             setMarker(newCard, "Just Entered", 1)
       for m in card.markers:

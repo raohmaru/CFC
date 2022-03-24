@@ -645,15 +645,14 @@ def cmd_trash(rc, targets, source, restr, numCards=1):
    rc.applyNext()
 
 
-def cmd_prophecy(rc, targets, source, restr, numCards=1, deckPos=0):
+def cmd_prophecy(rc, targets, source, restr, numCards=1, deckPos=False):
    pile = source.controller.Deck
    if targets:
       pile = targets[0].group
-   if deckPos != 0:
-      if deckPos == 'top':
-         deckPos = 1
-      else:
-         deckPos = -1
+   if deckPos == 'top':
+      deckPos = 0
+   elif deckPos == 'bottom':
+      deckPos = -1
    debug(">>> cmd_prophecy({}, {}, {})", numCards, pile, deckPos)
    prophecy(group = pile, count = int(numCards), deckPos = deckPos)
    rc.applyNext()
@@ -748,7 +747,7 @@ def cmd_pileView(rc, targets, source, restr, pileName, viewState):
 
 
 def cmd_clear(rc, targets, source, restr):
-   debug(">>> cmd_clear({})")
+   debug(">>> cmd_clear()")
    pcard = getGameCard(source)
    pcard.setState('willHighlight', False)
    rc.applyNext()

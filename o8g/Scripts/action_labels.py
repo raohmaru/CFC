@@ -107,7 +107,7 @@ def aclb_Sounds(group, x = 0, y = 0):
 
       
 def aclb_WelcomeScreen(group, x = 0, y = 0):
-   return aclb_setting('Show welcome screen', 'WelcomeScreen')
+   return aclb_setting('Show welcome screen on start', 'WelcomeScreen')
 
       
 def aclb_NextOrPass(group, x = 0, y = 0):

@@ -253,7 +253,7 @@ GameEventsFromVars = {
 }
 
 # Actions triggered by these events can be executed when the ability is copied
-GameEventsExecOnCopy = [
+GameEventsActivateOnCopy = [
    GameEvents.HandChanges
 ]
 

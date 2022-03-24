@@ -4,7 +4,7 @@
       name="Card Fighters' Clash"
       id="e3d56d9e-900d-49c6-b6ae-22cbb51be153"
       octgnVersion="3.4.350.0"
-      version="0.9.9.868"
+      version="0.9.9.871"
       markersize="20"
       tags="capcom snk fighter"
       description="Play epic battles with fighters from Capcom and SNK!
@@ -262,13 +262,13 @@
 			<groupaction menu="Switch Play automation ON/OFF" execute="switchPlayAuto" getName="aclb_PlayAuto" />
 			<groupaction menu="Switch Phase automation ON/OFF" execute="switchPhaseAuto" getName="aclb_PhaseAuto" />
 			<groupaction menu="Switch Activate automation ON/OFF" execute="switchActivateAuto" getName="aclb_ActivateAuto" />
-			<groupaction menu="Switch Alert Messages ON/OFF" execute="switchWinForms" getName="aclb_WinForms" />
-			<groupaction menu="Switch Game Sounds ON/OFF" execute="switchSounds" getName="aclb_Sounds" />
-			<groupaction menu="Switch Show Welcome Screen on start ON/OFF" execute="switchWelcomeScreen" getName="aclb_WelcomeScreen" />
+			<groupaction menu="Switch Alert messages ON/OFF" execute="switchWinForms" getName="aclb_WinForms" />
+			<groupaction menu="Switch Game sounds ON/OFF" execute="switchSounds" getName="aclb_Sounds" />
+			<groupaction menu="Switch Show welcome screen on start ON/OFF" execute="switchWelcomeScreen" getName="aclb_WelcomeScreen" />
 			<groupseparator />
-			<groupaction menu="Play Tutorial" execute="startTutorial" />
-			<groupaction menu="Show Welcome Screen" execute="showWelcomeScreen" />
-			<groupaction menu="Download Image Packs &#129109;" execute="downloadImagePacks" />
+			<groupaction menu="Play tutorial" execute="startTutorial" />
+			<groupaction menu="Show welcome screen" execute="showWelcomeScreen" />
+			<groupaction menu="Download image packs &#129109;" execute="downloadImagePacks" />
 		</groupactions>
 		<groupactions menu="Debug..." showIf="acsh_debug">
 			<groupaction menu="Start" execute="startDebug" />

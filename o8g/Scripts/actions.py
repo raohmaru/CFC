@@ -673,9 +673,10 @@ def destroy(card, controller = me):
 
 def batchDestroy(cards, x = 0, y = 0):
    if len(cards) == 1:
-      msg = "Do you want to KO {}?".format(cards[0].Name)
+      action = "KO" if isCharacter(cards[0]) and charIsInRing(cards[0]) else "discard"
+      msg = "Do you want to {} {}?".format(action, cards[0].Name)
    else:
-      msg = "Do you want to KO these {} cards?".format(len(cards))
+      msg = "Do you want to discard these {} cards?".format(len(cards))
    # Ask for confirmation if user uses a keyboard shortcut
    if not settings["WinForms"] or confirm(msg):
       for card in cards:
@@ -1136,7 +1137,7 @@ def trash(group, x = 0, y = 0, count = None):
    notify("{} trashes top {} cards {}.".format(me, count, fromWhereStr(group)))
 
 
-def prophecy(group = me.Deck, x = 0, y = 0, count = None, deckPos = 0):
+def prophecy(group = me.Deck, x = 0, y = 0, count = None, deckPos = False):
    """
    Rearranges the top cards of the deck according to the given argument.
    """
@@ -1152,18 +1153,20 @@ def prophecy(group = me.Deck, x = 0, y = 0, count = None, deckPos = 0):
    dialogProphecyCount = count
    cards = list(group[:count])  # Convert generator object to list
    cardsPos = []
-   posChosen = False
    owner = "his" if group.controller == me else "{}'s".format(group.controller)
    notify(MSG_PLAYER_LOOKS.format(me, owner, group.name))
+   where = "top or bottom"
+   if deckPos is not False:
+      where = "top" if deckPos >= 0 else "bottom"
+   question = "Select a card to put on {} of the deck".format(where)
    while len(cards) > 0:
       # Allow the player to first see the cards...
-      card = showCardDlg(cards, "Select a card to put on {} of the deck".format(["top or bottom", "top", "bottom"][deckPos]))
+      card = showCardDlg(cards, question)
       if card == None:
          return
       card = card[0]
       # ... and then choose where to put them (once)
-      if not posChosen:
-         posChosen = True
+      if deckPos is False:
          deckPos = askChoice("Where to put the card?", ["Top of the deck", "Bottom of the deck"])
          if deckPos == 0:
             return

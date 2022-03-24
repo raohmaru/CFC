@@ -33,9 +33,9 @@ class GameCard(object):
          "lastBP": NaN
       }
       
-   def init(self, forceExecAuto = False):
+   def init(self, forceActivateAuto = False):
       if self.hasEffect():
-         self.rules.init(forceExecAuto)
+         self.rules.init(forceActivateAuto)
          
    def hasEffect(self):
       return True
@@ -57,6 +57,7 @@ class GameCard(object):
    def destroy(self):
       debug(">>> Delete GameCard {}", self.card)
       del self.card
+      self.rules.dispose()
       del self.rules
       
    @property

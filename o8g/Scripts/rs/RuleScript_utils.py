@@ -34,6 +34,7 @@ class RulesUtils():
          return target
       return None
 
+   
    @staticmethod
    def getObjIdFromSuffix(suffix, rs):
    # Returns an object ID of the game from the given suffix
