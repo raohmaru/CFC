@@ -34,7 +34,7 @@ if not 'debug' in globals():
    __builtin__.table = {}
    __builtin__.CardHeight = config.CardHeight
    __builtin__.CharType = config.CharType
-   from utils import isNumber
+   from utils.helpers import isNumber
    __builtin__.isNumber = isNumber
 
 from card_rules import RulesDict
@@ -114,8 +114,9 @@ actions = [
    # "action = steal(character@ring) from(character[powerful])",
    # "action = {S}: transform('80d411e3-c3df-486f-927f-1592d9db65de') target(character)",
    # "action = reveal(nil, true, false, 1, -12, yes, none)",
-   "action = copyAbility(prevTgt.0) to(this); [[if prevTgt.ability == trigger]] clear()",
-   "action = {S}: each(card in me.hand => hp(+100))"
+   # "action = copyAbility(prevTgt.0) to(this); [[if prevTgt.ability == trigger]] clear()",
+   # "action = {S}: each(card in me.hand => hp(+100))"
+   "action = discard(character) || destroy() & draw(2)"
 ]
 abilities = [
    "abilities = unblockable",
@@ -171,12 +172,12 @@ def test(arr, title):
       pp.pprint(tokens)
       print ""
 
-# rules = RulesDict['aa867ea1-89f8-4154-8e20-2263edd00002']
 # test(targets, 'targets')
-# test(actions, 'actions')
+test(actions, 'actions')
 # test(abilities, 'abilities')
-test(autos, 'autos')
+# test(autos, 'autos')
 # test(requisite, 'requisite')
 # test(vars, 'vars')
 # test(labels, 'labels')
+# rules = [RulesDict['781bd288-e9bf-4cf1-b630-0883a2834d0b']]
 # test(rules, 'rules')

@@ -373,6 +373,8 @@ class RulesLexer():
             expr = re.sub(RS_RGX_AC_TARGET, '', expr).strip()
          # Finally, get the commands
          effect[1] = []
+         # Transforms RS_OP_BOOL_OR into a command
+         expr = expr.replace(RS_OP_BOOL_OR, RS_OP_AND + " or() " + RS_OP_AND)
          commands = expr.split(RS_OP_AND)
          for cmd in commands:
             cmd = cmd.strip()
@@ -389,6 +391,7 @@ class RulesLexer():
                cmd = RulesLexer.getPrefix(RS_PREFIX_BONUS, cmd)
                filter(None, cmd)
                effect[1].append(cmd)
+               debug("---- found ability {}".format(cmd))
          effects.append(effect)
          
       return {

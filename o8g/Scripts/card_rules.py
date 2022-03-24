@@ -112,11 +112,11 @@ selector: (optional)
       not(expr)
 
 ---------------------------------------------------
-action = {cost}: [[cond]] effect [& effect] to(target) restr; ...
+action = {cost}: [[cond]] effect [& effect] [|| effect] to(target) restr; ...
 
 Multiple action keys are allowed. If there are two or more, a dialog will be show to choose the action.
 Several actions can be joined with ';'.
-Effects in the same action are executed synchronously; actions are async.
+Effects in the same action (joined by & or ||) are executed synchronously; actions are async.
 
 cost: (optional)
    Keywords:
@@ -185,6 +185,7 @@ effect:
             -
    Operators:
       & (and)
+      || (or, will execute right effect if left effect failed)
       
 to(): (optional)
    Parameters:
@@ -1345,7 +1346,7 @@ RulesDict["781bd288-e9bf-4cf1-b630-0883a2834d0b"] = """
 label  = "KO this character"
 action = destroy()
 label  = "Discard a character card"
-action = discard(character)
+action = discard(character) || destroy()
 """
 
 # Shigen's STEEL BULB

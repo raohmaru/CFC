@@ -35,11 +35,13 @@ class RulesCommands():
    def applyAll(self, cmds, targets, restr, source, revert=False):
       self.cmds = list(cmds)  # Clone array
       self.cmdsArgs = [targets, restr, source, revert]
+      self.lastCmdSuccess = True
       self.applyNext()
 
 
-   def applyNext(self):
+   def applyNext(self, success = True):
    # Ensures that a command is applied only when the precedent command is done
+      self.lastCmdSuccess = success
       if len(self.cmds) > 0:
          cmd = self.cmds.pop(0)
          debug(">>> applyNext({}, {})", cmd, self.cmdsArgs)
@@ -246,6 +248,7 @@ def cmd_reveal(rc, targets, source, restr, pileName=None):
 
 def cmd_discard(rc, targets, source, restr, whichCards=''):
    debug(">>> cmd_discard({}, {})", targets, whichCards)
+   success = True
    if isNumber(whichCards):
       whichCards = '<{}>*'.format(whichCards)
    cardsTokens = RulesLexer.parseTarget(whichCards)
@@ -271,13 +274,14 @@ def cmd_discard(rc, targets, source, restr, whichCards=''):
                remoteCall(player, "discard", [card])
       else:
          notify(MSG_ERR_NO_CARDS_DISCARD.format(player))
+         success = False
       # Peek cards
       if reveal or len(targets) > 1:
          if player == me:
             remoteCall(getOpp(), "cardPeek", [player.hand])
          else:
             cardPeek(player.hand)
-   rc.applyNext()
+   rc.applyNext(success)
 
 
 def cmd_randomDiscard(rc, targets, source, restr, numCards=1):
@@ -751,6 +755,14 @@ def cmd_clear(rc, targets, source, restr):
    pcard = getGameCard(source)
    pcard.setState('willHighlight', False)
    rc.applyNext()
+
+
+def cmd_or(rc, targets, source, restr):
+   debug(">>> cmd_or({})".format(rc.lastCmdSuccess))
+   if rc.lastCmdSuccess:
+      debug("Skip next cmd")
+      rc.cmds.pop(0)
+   rc.applyNext()
    
 
 RulesCommands.register('damage',           cmd_damage)
@@ -795,3 +807,4 @@ RulesCommands.register('moddamage',        cmd_modDamage)
 RulesCommands.register('peek',             cmd_peek)
 RulesCommands.register('pileview',         cmd_pileView)
 RulesCommands.register('clear',            cmd_clear)
+RulesCommands.register('or',                cmd_or)
