@@ -127,7 +127,7 @@ autos = [
    # "auto = destroy()",
    # "auto = ~my HandChanges~ destroy()",
    # "auto = ~HandChanges~ destroy() & draw(1)",
-   "auto = ~opp HandChanges~ [[if oppRing<2]] destroy()",
+   # "auto = ~opp HandChanges~ [[if oppRing<2]] destroy()",
    # "auto = ~ myHandChanges ~ destroy() to(character@myRing)",
    # "auto = ~myHandChanges~ destroy() ueot",
    # "auto = ~handChanges~ +unblockable",
@@ -136,9 +136,9 @@ autos = [
    # "auto = [[may 'Question?']] destroy() & +unblockable to(character@myRing) uynt",
    # "auto = ~myEndPhase~ moveTo(ctrlHand) to(characters[bp>=800])",
    # "auto = ~anyBlockPhase~ +unblockable to(characters[bp<=300 & attack & -uattack]) ueot",
-   # "auto = ~playerCombatDamaged fromThis~ +cantplayac to(opp) oppueot",
-   "auto = ?oppCanBlock:any? [[if blocker.bp > this.bp]]",
-   # "auto = ~anyPlayerDamaged:action~ damage(1) to(damagedPlayer)",
+   "auto = ~playerCombatDamaged:fromThis~ +cantplayac to(opp) oppueot",
+   # "auto = ?oppCanBlock:any? [[if blocker.bp > this.bp]]",
+   "auto = ~anyPlayerDamaged:action~ damage(1) to(damagedPlayer)",
    # "auto = ~anyPlayerDamaged:action~ [[if me.hp < 10]] hp(+1)",
    # "auto = ~oppEndPhase:once~ discard(all)",
 ]
@@ -173,9 +173,9 @@ def test(arr, title):
       print ""
 
 # test(targets, 'targets')
-test(actions, 'actions')
+# test(actions, 'actions')
 # test(abilities, 'abilities')
-# test(autos, 'autos')
+test(autos, 'autos')
 # test(requisite, 'requisite')
 # test(vars, 'vars')
 # test(labels, 'labels')

@@ -1,4 +1,4 @@
-# Python Scripts for the Card Fighters" Clash definition for OCTGN
+# Python Scripts for the Card Fighters' Clash definition for OCTGN
 # Copyright (C) 2013 Raohmaru
 
 # This python script is free software: you can redistribute it and/or modify
@@ -232,7 +232,7 @@ class Rules():
                      notify("Cannot activate the ability because its conditions does not match.")
                   if not isAuto and i == 0:
                      return ERR_NO_EFFECT
-                  revert = True
+                  revert = True  # Remove abilities
                # If there aren't any command, then we return resulting boolean
                if len(effect[1]) == 0:
                   return res
@@ -253,20 +253,6 @@ class Rules():
          
          if currTarget:
             targets += currTarget
-            
-         # For auto with events that adds abilities, if the ability was already granted, check if any char has lost
-         # it (it is not already in targets), then remove abilities of those chars.
-         # FIXME Not sure if it still relevant.
-         if isAuto and action["event"]:
-            abTargets = RulesUtils.getTargetsOfEventSource(self.card_id)
-            newTargets = []
-            for t in abTargets:
-               if not t in targets:
-                  newTargets.append(t)
-            if len(newTargets) > 0:
-               targets = newTargets
-               revert = True
-               debug("-- Following targets will lose an ability: {}", targets)
                
          # Run the commands
          if len(effect[1]) > 0:
@@ -309,9 +295,9 @@ class Rules():
                   newTargets = self.getTargets(self.rules_tokens[RS_KEY_TARGET])
                   if newTargets:
                      targets = newTargets
-               # First argument can be the id of the card that triggered the effect
-               if len(args) > 0 and isNumber(args[0]):
-                  trigger = Card(args[0])
+               # last argument can be the id of the card that triggered the effect
+               if len(args) > 0 and isNumber(args[-1]):
+                  trigger = Card(args[-1])
                   if hasattr(trigger, "model"):  # It's an actual card
                      addTempVar("trigger", trigger)
                return self.execAction(auto, targets, True)

@@ -758,7 +758,7 @@ def cmd_clear(rc, targets, source, restr):
 
 
 def cmd_or(rc, targets, source, restr):
-   debug(">>> cmd_or({})".format(rc.lastCmdSuccess))
+   debug(">>> cmd_or({})", rc.lastCmdSuccess)
    if rc.lastCmdSuccess:
       debug("Skip next cmd")
       rc.cmds.pop(0)

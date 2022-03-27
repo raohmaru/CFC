@@ -191,7 +191,7 @@ def onTurnPassed(args):
    """
    Triggers when the player passes the turn to another player.
    """
-   debug(">>> onTurnPassed: #{}, {} -> {}".format(turnNumber(), args.player, getActivePlayer()))
+   debug(">>> onTurnPassed: #{}, {} -> {}", turnNumber(), args.player, getActivePlayer())
    global cleanedUpRing, turnsRemaining
    resetState()
    # That was my old turn

@@ -93,8 +93,8 @@ def dispatchEvent(event, obj_id = None, args = []):
    GameEvents = getGlobalVar('GameEvents')
    for listener in GameEvents:
       if event == listener['event']:
-         # Join args with the default args
-         params = args + listener['args']
+         # Join the default args with the given args
+         params = listener['args'] + args
          if (
             (not obj_id and (not listener['appliesto'] or listener['appliesto'] == RS_SUFFIX_ONCE))
             or listener['id'] == obj_id
@@ -148,7 +148,7 @@ def triggerHook(event, obj_id = None, args = []):
    Hook system. It returns a boolean whether the given action defined by the hook is allowed or not or not.
    """
    res, source = dispatchEvent(event, obj_id, args)
-   debug(">>> triggerHook({}, {}, {}) => {}, {}", event, obj_id, args, res, source)
+   debug("triggerHook({}, {}, {}) => {}, {}", event, obj_id, args, res, source)
    # If the action is not allowed, maybe we should notify the player
    if res == False and source:
       if event in MSG_HOOKS_ERR:

@@ -29,7 +29,6 @@
 		<card name="Sys" id="ef433bbc-889f-4599-b00f-b627922f4744" size="avatar">
 			<property name="Type" value="Avatar" />
 		</card>
-		
 		<card name="Ryo" id="35063371-b08c-4668-9c49-dd6e96a65602" size="avatar">
 			<property name="Type" value="Avatar" />
 		</card>

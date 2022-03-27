@@ -109,20 +109,6 @@ class RulesUtils():
 
 
    @staticmethod
-   def getTargetsOfEventSource(source):
-      """
-      Gets the targets affected by the given source card.
-      """
-      targets = []
-      GameEvents = getGlobalVar('GameEvents')
-      for listener in GameEvents:
-         if listener['source'] == source:
-            targets.append(Card(listener['id']))
-      debug(">>> getTargetOfSourceEvent({}) -> {}", source, targets)
-      return targets
-
-
-   @staticmethod
    def getTargetQty(str = None):
       if str is None:
          return
@@ -280,7 +266,7 @@ class RulesUtils():
             if len(players) > 1:
                arr.append(players[1])
 
-      debug("-- applying {} filters to player {}".format(len(filters), arr))
+      debug("-- applying {} filters to player {}", len(filters), arr)
 
       # Apply filters
       arr = RulesFilters.applyFiltersTo(arr, filters)
@@ -374,7 +360,7 @@ class RulesUtils():
             debug("-- Picked {} card(s)", len(cards_f1))
          else:
             cards_f1 = cards_f1[pick:]
-            debug("-- Picked {} card(s) from the bottom of {}".format(len(cards_f1), ''.join(zone)))
+            debug("-- Picked {} card(s) from the bottom of {}", len(cards_f1), ''.join(zone))
          if qty is None:
             choose = False
       

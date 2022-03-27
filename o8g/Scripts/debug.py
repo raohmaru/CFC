@@ -49,8 +49,8 @@ def debugScenario():
    gotoMain()
    waitForAnimation()
    tableCards = [
-       "6b1e210a-4846-419c-87f8-875aae812c6e" # Roberto
-      ,"781bd288-e9bf-4cf1-b630-0883a2834d0b" # Setsuna
+       "c7c73d2e-1728-4c1b-ba7e-dcd989e61d98" # Alex
+      ,"ae20ea05-0df7-4360-99a5-11a7dfe44b9f" # Mikoto
        # "d14694b4-484c-4b45-962e-8cbb636d8a9a" # 200 BP
       # ,"c7d128ea-a3b9-4b04-b8b2-a61153b5b2e6" # 400 BP
       # ,"24e99a13-cb42-4e16-9900-78dde12e1a4c" # 600 BP
@@ -67,11 +67,11 @@ def debugScenario():
       waitForAnimation()
       
    handCards = [
-       "8bb477f9-5004-4018-8d5e-73c6a23e8912" # Char 300 BP
+       # "8bb477f9-5004-4018-8d5e-73c6a23e8912" # Char 300 BP
       # ,"e910f462-bea9-4262-b168-c7c512eb6511" # Char 500 BP
       # ,"0fdadc92-0864-46cc-a3ff-c20e2af8249c" # Char 700 BP
       # ,"af43872e-e47d-4fe0-9b55-aedd8a0d0fc7" # Char 800 BP
-      ,"5e2211a0-e52e-4b7b-b03d-f6ecb3660bb0" # Action 0 SP
+      # ,"5e2211a0-e52e-4b7b-b03d-f6ecb3660bb0" # Action 0 SP
       # ,"83c33aa8-5981-4352-8107-cbb7e05547ec" # Action -1 SP
       # ,"80692723-3895-435f-bf8f-e94507704af5" # Action -3 SP
       # ,"26fa7e0e-eb86-40d5-b5ab-39723fd67e43" # Action -5 SP
@@ -136,6 +136,7 @@ def debugOpp():
    me.SP = 50
    
    tableCards = [
+       # "55b0c9ff-4b3a-4b08-adc1-f1b5e03adef9" # Nina
        # "d14694b4-484c-4b45-962e-8cbb636d8a9a" # 200 BP
       # ,"c7d128ea-a3b9-4b04-b8b2-a61153b5b2e6" # 400 BP
       # ,"24e99a13-cb42-4e16-9900-78dde12e1a4c" # 600 BP
@@ -156,7 +157,7 @@ def debugOpp():
       # ,"83c33aa8-5981-4352-8107-cbb7e05547ec" # Action -1 SP
       # ,"80692723-3895-435f-bf8f-e94507704af5" # Action -3 SP
       # ,"26fa7e0e-eb86-40d5-b5ab-39723fd67e43" # Action -5 SP
-      # ,"68eaee28-a00a-480f-b8e5-e14d2a8f102c" # Reaction 0 SP
+       "68eaee28-a00a-480f-b8e5-e14d2a8f102c" # Reaction 0 SP
       # ,"46deecf5-7f7b-42b5-b6fa-e3162dce2013" # Reaction -1 SP
       # ,"91e441cc-0f1f-4b01-a2b0-94678d6f0b56" # Reaction -4 SP
    ]
@@ -211,14 +212,15 @@ def debugBackups():
    backups = getGlobalVar("Backups")
    debug("BACKUPS ({})", len(backups))
    for id in backups:
-      debug("   {} backups {}".format(Card(id), Card(backups[id])))
+      debug("   {} backups {}", Card(id), Card(backups[id]))
 
 
 def debugGameState():
    print(u"\u200B\n== GameEvents ==")
    ge = getGlobalVar("GameEvents")
    for e in ge:
-      print("{}: {} ({})".format(e["event"], Card(e["id"]).Name, Player(e["controller"])))
+      restr = " " + "".join(e["restr"]) if e["restr"] else ""
+      print("{}{}: {} ({})".format(e["event"], restr, Card(e["id"]).Name, Player(e["controller"])))
         
    print("\n== Modifiers ==")
    mods = getGlobalVar("Modifiers")

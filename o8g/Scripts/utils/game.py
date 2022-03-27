@@ -207,7 +207,7 @@ def toggleRule(ruleName, value, id, restr = None, playerId = None):
       # Assign the rule value to the source ID that toggled the rule
       rule[id] = value
    setGlobalVar("Rules", Rules, player)
-   debug("Rule {} has been {} ({})".format(ruleName, ("disabled", "enabled")[bool(value)], Rules[ruleName]))
+   debug("Rule {} has been {} ({})", ruleName, ("disabled", "enabled")[bool(value)], Rules[ruleName])
    ruleValue = getRule(ruleName, Rules)
    # Show a message if the rule did changed
    if (bool(value) and ruleValue) or (value == False and not ruleValue) or ruleValue == None:

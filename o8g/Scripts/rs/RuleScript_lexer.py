@@ -391,7 +391,7 @@ class RulesLexer():
                cmd = RulesLexer.getPrefix(RS_PREFIX_BONUS, cmd)
                filter(None, cmd)
                effect[1].append(cmd)
-               debug("---- found ability {}".format(cmd))
+               debug("---- found ability {}", cmd)
          effects.append(effect)
          
       return {
