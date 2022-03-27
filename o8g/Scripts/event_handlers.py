@@ -169,7 +169,7 @@ def onCardsMoved(args):
          if card_id in transformed:
             newCard = toGroup.create(transformed[card_id], quantity = 1)
             newCard.moveTo(toGroup, card.index)
-            notify("transformed card {} is restored into {}".format(card, newCard))
+            notify("Transformed card {} is restored into {}".format(card, newCard))
             del transformed[card_id]
             card.delete()
       if (
@@ -317,11 +317,13 @@ def OnCounterChanged(args):
    """
    Triggers when a player's counter value is adjusted.
    """
-   debug(">>> OnCounterChanged: {}, {}, {}, {}", args.counter._player, args.counter._name, args.value, args.scripted)
    player = args.counter._player
    counterName = args.counter._name
+   # Actually args.value is not in sync yet, so we trust the player object's counter value
+   value = player.counters[counterName].value
+   debug(">>> OnCounterChanged: {}, {}, {} ({}), {}", player, counterName, args.value, value, args.scripted)
    # Syncs with the custom GameState
-   setState(player, counterName, player.counters[counterName].value)
+   setState(player, counterName, value)
 
 
 def OnCardClicked(args):

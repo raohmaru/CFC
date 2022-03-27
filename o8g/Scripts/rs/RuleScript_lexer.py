@@ -317,7 +317,7 @@ class RulesLexer():
             if len(e) > 1:
                if e[1] in RS_SUFFIX_EVENTS:
                   sffx = e[1]
-               # transform suffix into an if condition
+               # Transform suffix into an if condition
                else:
                   debug("-- transforming suffix \"{0}\" into [[if {0}]]", e[1])
                   firstEffect = [["if", e[1]], [], None, None]

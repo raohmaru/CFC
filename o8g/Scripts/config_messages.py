@@ -174,6 +174,17 @@ MSG_RULES = {
    )
 }
 
+MSG_HELP_AB = {
+   InstantAbility: "It is activated when the character enters the ring.",
+   TriggerAbility: "It can be activated only in your Main phase. When it is activated the character enters the freeze state.\nIt cannot be activated on frozen characters or characters that just entered the ring.",
+   AutoAbility   : "It is always active as long as that character is on the ring. If the character takes part in a United Attack, the ability is nullified until the end of the turn."
+}
+
+MSG_DMG_MOD = {
+   "default": "Damage",
+   "action" : "Damage done by an Action card"
+}
+
 CMD_LABELS = {
    "swapchars" : "Swap the positions of two characters in the same ring",
    "movetoslot": "Move a character to an empty slot in the same ring",
@@ -187,10 +198,4 @@ CMD_LABELS = {
 
 ABBR = {
    "opp": "opponent"
-}
-
-MSG_HELP_AB = {
-   InstantAbility: "It is activated when the character enters the ring.",
-   TriggerAbility: "It can be activated only in your Main phase. When it is activated the character enters the freeze state.\nIt cannot be activated on frozen characters or characters that just entered the ring.",
-   AutoAbility   : "It is always active as long as that character is on the ring. If the character takes part in a United Attack, the ability is nullified until the end of the turn."
 }

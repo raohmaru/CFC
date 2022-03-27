@@ -52,7 +52,7 @@ def changeMarker(cards, marker, question = None, amount = None):
       diff = amount-n
       if diff >= 0:
          diff = "+" + str(diff)
-      notify("{} sets {}'s {} to {} ({}).".format(getSourcePlayer(), c, marker[0], amount, diff))
+      notify("{} sets {}'s {} to {} ({}).".format(getSourceController(), c, marker[0], amount, diff))
 
 
 def setMarker(card, mkname, qty = 1):

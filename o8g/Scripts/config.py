@@ -244,7 +244,7 @@ GameEvents = Struct(**{
    "Blocks"             : "blocks",
    "Blocked"            : "blocked",
    "BackedUp"           : "backedup",
-   "BeforePayCost"      : "beforepaycost"  # Used with suffixes "action" or "reaction"
+   "BeforePayCost"      : "beforepaycost"  # Used with suffixes "Action" and "reaction"
 })
 
 # Maps variables in card rules to events

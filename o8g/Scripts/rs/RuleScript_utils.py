@@ -44,7 +44,7 @@ class RulesUtils():
 
 
    @staticmethod
-   def getZoneByName(name, target=None):
+   def getPileByName(name, target=None):
       prefix, name = RulesLexer.getPrefix(RS_PREFIX_ZONES, name)
       player = RulesUtils.getObjFromPrefix(prefix, target) or me
       zone = None
@@ -64,7 +64,7 @@ class RulesUtils():
       elif name == RS_KW_ZONE_REMOVED:
          zone = player.piles['Removed pile']
 
-      debug("getZoneByName({}) => {}", name, zone)
+      debug("getPileByName({}) => {}", name, zone)
 
       return zone
 
@@ -141,7 +141,7 @@ class RulesUtils():
 
    @staticmethod
    def getTargets(target, source=None, msg=None, reveal=True):
-      debug("Getting targets ({})", reveal)
+      debug("Getting targets (reveal: {})", reveal)
 
       types    = target['types']
       zone     = target['zone']

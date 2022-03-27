@@ -48,7 +48,6 @@ def dealDamage(dmg, target, source, combatDmg = True, isPiercing = False):
       oldHP = getState(target, "HP")
       newHP = oldHP - dmg
       target.HP = newHP
-      setState(target, "HP", newHP)  # Update game state
       typeOfDmg = ""
       if isPiercing:
          typeOfDmg = "piercing "
@@ -74,7 +73,6 @@ def loseLife(qty, target, source):
    oldHP = getState(target, "HP")
    newHP = oldHP - qty
    target.HP = newHP
-   setState(target, "HP", newHP)  # Update game state
    effect = "ability".format(source) if isCharacter(source) else "effect"
    notify("{} loses {} HP due to {}'s {}. New HP is {} (before was {}).".format(target, qty, source, effect, target.HP, oldHP))
    if newHP <= 0:

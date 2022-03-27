@@ -152,7 +152,7 @@ effect:
          loseAbility()
          loseLife(#)
          modCost(cardtype, #)     // for auto keys
-         modDamage(#)
+         modDamage(# [, type])
          modRule(rule, arg)
          movePile(pile1, pile2)
          moveRevealedTo(zone)
@@ -324,7 +324,7 @@ A valid Python expression.
 
 Available variables:
    tgt (type: list)      // current target
-   prevTgt (type: list)
+   prevTgt (type: list)  // previous target
    uaBP
    -- players --
    me
@@ -1101,7 +1101,7 @@ action = {F}: trash(2) target(opp)
 
 # Kain's RISOU
 RulesDict["e81e9366-b3e1-45a6-b010-bd02934b2efd"] = """
-auto = ~anyBeforeDamage:action~ modDamage(+100)
+auto = ~anyBeforeDamage:action~ modDamage(+100, action)
 """
 
 # Kim's TRAINING!
@@ -1184,7 +1184,6 @@ action = discard(<1>reaction) target(opp)
 # Clone Zero's MIMIC
 RulesDict["ab45b64f-e231-44ca-83ad-bd4d89bcb851"] = """
 target = ^character[powerful]
-# action = copyAbility(prevTgt.0) to(this) & clear(trigger)
 action = copyAbility(prevTgt.0) to(this); [[if this.ability == triggered]] clear()
 """
 
@@ -1575,7 +1574,7 @@ action = damage(300)
 RulesDict["ab631979-20d8-4789-85be-149b414d1ef1"] = """
 # action = moveTo(deck) target?(*s@hand) & shuffle(); moveTo(hand) target(*s@discards)
 # auto = ~myEndPhase:once~ discard(all)
-action = moveTo(removed) target?(*s@discards) & pileView(removed, pile); enableRule(play_removed) target(me) ueot
+action = moveTo(removed) target?(*s@discards) & pileView(removed, expanded); enableRule(play_removed) target(me) ueot
 auto = ~myEndPhase:once~ moveTo(discards) target?(*s@removed) & pileView(removed, collapsed)
 """
 
@@ -1984,7 +1983,7 @@ action = moveTo(deck) target?(reactions@discards) & shuffle() & draw()
 RulesDict["5972ea54-137c-41a7-a1eb-b9d9cd0ecfe5"] = """
 # action = moveTo(hand) target(reactions@discards)
 # auto = ~anyEndPhase:once~ discard(reactions)
-action = moveTo(removed) target?(reactions@discards) & pileView(removed, pile); enableRule(play_removed) target(me) oppueot
+action = moveTo(removed) target?(reactions@discards) & pileView(removed, expanded); enableRule(play_removed) target(me) oppueot
 # Activated in opponent's turn, so target prefix opp = me
 auto = ~oppEndPhase:once~ moveTo(oppDiscards) target?(*s@oppRemoved) & pileView(oppRemoved, collapsed)
 """

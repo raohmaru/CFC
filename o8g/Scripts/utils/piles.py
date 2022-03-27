@@ -84,8 +84,9 @@ def moveToGroup(toGroup, card, sourceGroup = None, pos = None, reveal = None, so
    if pos is not None:
       if pos < 0:
          posText = "to the bottom of"
-         # -1 and -2 are treated as "end of pile", so we need to shift the index (bug?)
-         pos -= 1
+         # -2 is treated as "end of pile" (like -1), so we need to shift the index (bug?)
+         if pos < -1:
+            pos -= 1
       elif pos > 0:
          posText = "to position {} from the top of".format(pos)
    if toGroup.name == "Hand":
