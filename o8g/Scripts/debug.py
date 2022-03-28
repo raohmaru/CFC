@@ -50,6 +50,7 @@ def debugScenario():
    waitForAnimation()
    tableCards = [
        "e81e9366-b3e1-45a6-b010-bd02934b2efd" # Kain
+      ,"216e0a0d-a46c-42f4-a0f4-c32ac83d6cc1" # Makoto
        # "d14694b4-484c-4b45-962e-8cbb636d8a9a" # 200 BP
       # ,"c7d128ea-a3b9-4b04-b8b2-a61153b5b2e6" # 400 BP
       # ,"24e99a13-cb42-4e16-9900-78dde12e1a4c" # 600 BP
@@ -73,7 +74,7 @@ def debugScenario():
       # ,"5e2211a0-e52e-4b7b-b03d-f6ecb3660bb0" # Action 0 SP
       # ,"83c33aa8-5981-4352-8107-cbb7e05547ec" # Action -1 SP
       # ,"80692723-3895-435f-bf8f-e94507704af5" # Action -3 SP
-       "26fa7e0e-eb86-40d5-b5ab-39723fd67e43" # Action -5 SP
+       # "26fa7e0e-eb86-40d5-b5ab-39723fd67e43" # Action -5 SP
       # ,"68eaee28-a00a-480f-b8e5-e14d2a8f102c" # Reaction 0 SP
       # ,"46deecf5-7f7b-42b5-b6fa-e3162dce2013" # Reaction -1 SP
       # ,"91e441cc-0f1f-4b01-a2b0-94678d6f0b56" # Reaction -4 SP
@@ -135,8 +136,10 @@ def debugOpp():
    me.SP = 50
    
    tableCards = [
-       # "d14694b4-484c-4b45-962e-8cbb636d8a9a" # 200 BP
-      # ,"c7d128ea-a3b9-4b04-b8b2-a61153b5b2e6" # 400 BP
+       "2c1d8c60-0858-4524-adc1-e7596a4d08e0" # Guy
+      ,"525d8365-c90e-491f-9811-1f23efbafccb" # Cody (Alpha)
+      ,"d14694b4-484c-4b45-962e-8cbb636d8a9a" # 200 BP
+      ,"c7d128ea-a3b9-4b04-b8b2-a61153b5b2e6" # 400 BP
       # ,"24e99a13-cb42-4e16-9900-78dde12e1a4c" # 600 BP
       # ,"e6e46f83-d089-4762-8d8e-2a3252cfc9db" # 800 BP
    ]

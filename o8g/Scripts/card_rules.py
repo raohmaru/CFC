@@ -152,7 +152,7 @@ effect:
          loseAbility()
          loseLife(#)
          modCost(cardtype, #)     // for auto keys
-         modDamage(# [, type])
+         modDamage(#)
          modRule(rule, arg)
          movePile(pile1, pile2)
          moveRevealedTo(zone)
@@ -436,7 +436,7 @@ auto = ~myEndPhase~ moveTo(ctrlHand) target(characters[bp>=800])
 
 # Cody (Alpha)'s BAD STONE
 RulesDict["525d8365-c90e-491f-9811-1f23efbafccb"] = """
-auto = ?oppCanBlock:any? [[if attacker.bp > 300 or inUAttack(attacker)]]
+auto = ?oppCanBlock:any? [[if attacker.bp > 300 or inUAttack(attacker)]] # triggered when the opponent blocks
 """
 
 # Damn D's WHISTLE
@@ -1101,7 +1101,7 @@ action = {F}: trash(2) target(opp)
 
 # Kain's RISOU
 RulesDict["e81e9366-b3e1-45a6-b010-bd02934b2efd"] = """
-auto = ~anyBeforeDamage:action~ modDamage(+100, action)
+auto = ~anyBeforeDamage:action~ modDamage(+100)
 """
 
 # Kim's TRAINING!

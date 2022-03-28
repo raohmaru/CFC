@@ -203,11 +203,11 @@ def abl_cantblock_removed(obj_id, source_id, msg, eventCallback, restr = None):
 
 RulesAbilities.register("unblockable",     Hooks.CanBeBlocked)
 RulesAbilities.register("cantattack",      Hooks.BeforeAttack, onAdded = abl_cantattack_added)
-RulesAbilities.register("cantblock",       Hooks.BeforeBlock, onAdded = abl_cantblock_added, onRemoved = "abl_cantblock_removed")
+RulesAbilities.register("cantblock",       Hooks.BeforeBlock,  onAdded = abl_cantblock_added, onRemoved = "abl_cantblock_removed")
 RulesAbilities.register("cantplayac",      Hooks.BeforePlayAC)
 RulesAbilities.register("cantplayre",      Hooks.BeforePlayRE)
 RulesAbilities.register("preventpierce",   Hooks.PreventPierce)
-RulesAbilities.register("rush",            Hooks.PlayAsFresh, onAdded = abl_rush_added)
+RulesAbilities.register("rush",            Hooks.PlayAsFresh,  onAdded = abl_rush_added)
 RulesAbilities.register("unlimitedbackup", Hooks.BackupLimit,  "abl_callbackFalse")
 RulesAbilities.register("pierce",          GameEvents.Blocked, "abl_pierce")
 RulesAbilities.register("unfreezable",     GameEvents.Attacks, "abl_unfreezable")

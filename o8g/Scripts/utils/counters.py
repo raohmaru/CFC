@@ -28,7 +28,7 @@ def dealDamage(dmg, target, source, combatDmg = True, isPiercing = False):
    # Damage to a card
    if isinstance(target, Card):
       oldBP = getMarker(target, "BP")
-      realDmg = min(dmg, getMarker(target, "BP"))
+      realDmg = min(dmg, getMarker(target, "BP"))  # Damage cannot be greater than target's BP
       addMarker(target, "BP", -realDmg)
       newBP = getMarker(target, "BP")
       notify("{} deals {} {}damage to {}. New BP is {} (before was {}).".format(source, dmg, "combat " if combatDmg else "", target, newBP, oldBP))
@@ -42,9 +42,13 @@ def dealDamage(dmg, target, source, combatDmg = True, isPiercing = False):
          funcCall(target.controller, whisper, [MSG_HINT_KOED.format(target)])
    # Damage to a player
    else:
+      # Non-combat damage modifications
       if not isCharacter(source):
          dispatchEvent(GameEvents.BeforeDamage, args = [source._id])
-      dmg += getTempVar("damageMod", 0)
+      modDmg = getTempVar("damageMod", 0)
+      if modDmg != 0:
+         notify(u"Damage has been {} by {} ({}  \u2192  {}).".format(["decreased", "increased"][modDmg > 0], modDmg, dmg, dmg + modDmg))
+         dmg += modDmg
       oldHP = getState(target, "HP")
       newHP = oldHP - dmg
       target.HP = newHP

@@ -736,10 +736,9 @@ def cmd_removeFromAttack(rc, targets, source, restr, *args):
    rc.applyNext()
 
 
-def cmd_modDamage(rc, targets, source, restr, qty, type = "default"):
+def cmd_modDamage(rc, targets, source, restr, qty):
    debug(">>> cmd_modDamage({})", qty)
    addTempVar("damageMod", int(qty), True)
-   notify("{} has been increased by {}.".format(MSG_DMG_MOD[type], qty))
    rc.applyNext()
    
 
