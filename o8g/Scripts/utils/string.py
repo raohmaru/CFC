@@ -109,9 +109,9 @@ def getTextualRestr(restr):
    """
    if not restr:
       return ""
-   if restr[1] in RS_KW_RESTR_LABELS:
+   if restr[1] in MSG_RESTR_LABELS:
       player = me
       if restr[0] == RS_PREFIX_OPP:
          player = getOpp()
-      return " " + RS_KW_RESTR_LABELS[restr[1]].format(player)
+      return " " + MSG_RESTR_LABELS[restr[1]].format(player)
    return restr(1)

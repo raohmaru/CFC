@@ -85,10 +85,11 @@ def removeGameEventListener(obj_id, eventName = None, callback = None):
 def dispatchEvent(event, obj_id = None, args = []):
    """
    Sends a global event and executes the callbacks of all the listeners subscribed to the given event.
+   Then will return a list with the resulting values.
    """
-   res = (None, None)
+   results = []
    if not settings['PlayAuto']:
-      return res
+      return results
    debug(">>> dispatchEvent({}, {}, {})", event, obj_id, args)
    GameEvents = getGlobalVar('GameEvents')
    for listener in GameEvents:
@@ -140,15 +141,26 @@ def dispatchEvent(event, obj_id = None, args = []):
                   debug("Callback function {} is not defined", listener['callback'])
                   continue
                res = (func(*params), listener['source'] or listener['id'])
-   return res
+            results.append(res)
+   return results
 
 
 def triggerHook(event, obj_id = None, args = []):
    """
    Hook system. It returns a boolean whether the given action defined by the hook is allowed or not or not.
    """
-   res, source = dispatchEvent(event, obj_id, args)
+   res = None
+   source = None
+   results = dispatchEvent(event, obj_id, args)
+   # Reduce results until we found a False result
+   for result in results:
+      if result[1]:
+         source = result[1]
+      res = result[0]
+      if res == False:
+         break
    debug("triggerHook({}, {}, {}) => {}, {}", event, obj_id, args, res, source)
+   debug("-- results: {}", results)
    # If the action is not allowed, maybe we should notify the player
    if res == False and source:
       if event in MSG_HOOKS_ERR:

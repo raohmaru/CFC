@@ -34,14 +34,6 @@ class RulesUtils():
          return target
       return None
 
-   
-   @staticmethod
-   def getObjIdFromSuffix(suffix, rs):
-   # Returns an object ID of the game from the given suffix
-      if suffix == RS_SUFFIX_FROM_THIS or suffix == RS_SUFFIX_THIS:
-         return str(rs.card_id)
-      return ''
-
 
    @staticmethod
    def getPileByName(name, target=None):

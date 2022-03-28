@@ -180,9 +180,10 @@ MSG_HELP_AB = {
    AutoAbility   : "It is always active as long as that character is on the ring. If the character takes part in a United Attack, the ability is nullified until the end of the turn."
 }
 
-MSG_DMG_MOD = {
-   "default": "Damage",
-   "action" : "Damage done by an Action card"
+MSG_RESTR_LABELS = {
+   RS_KW_RESTR_UEOT: "until end of {}'s turn",
+   RS_KW_RESTR_UYNT: "until {}'s next turn",
+   RS_KW_RESTR_UNAC: "until {} plays an action card this turn"
 }
 
 CMD_LABELS = {

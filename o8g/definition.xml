@@ -4,7 +4,7 @@
       name="Card Fighters' Clash"
       id="e3d56d9e-900d-49c6-b6ae-22cbb51be153"
       octgnVersion="3.4.350.0"
-      version="0.9.9.876"
+      version="0.9.9.879"
       markersize="20"
       tags="capcom snk fighter"
       description="Play epic battles with fighters from Capcom and SNK!
@@ -21,6 +21,7 @@
 
 	<scripts>
 		<script src="Scripts/config.py" />
+		<script src="Scripts/rs/RuleScript_config.py" />
 		<script src="Scripts/config_messages.py" />
 		<script src="Scripts/api_ext.py" />
 		<script src="Scripts/actions.py" />
@@ -58,7 +59,6 @@
 		<script src="Scripts/entities/DummyPlayer.py" />
 		<script src="Scripts/entities/FakePlayer.py" />
 		<script src="Scripts/rs/RuleScript.py" />
-		<script src="Scripts/rs/RuleScript_config.py" />
 		<script src="Scripts/rs/RuleScript_lexer.py" />
 		<script src="Scripts/rs/RuleScript_filters.py" />
 		<script src="Scripts/rs/RuleScript_commands.py" />
