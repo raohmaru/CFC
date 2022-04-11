@@ -375,5 +375,6 @@ class Rules():
          
       return True
       
+   
    def dispose(self):
       del self.card

@@ -433,7 +433,10 @@ class RulesLexer():
       params = RS_RGX_TARGET_FPARAM.match(cmd)
       if params:
          cmd = params.group(1)
-         args = params.group(2, 3)
+         op = params.group(2)
+         value = RulesLexer.literalToType(params.group(3))
+         args = (op, value)
+         
       
       return [prfx, cmd, args]
       

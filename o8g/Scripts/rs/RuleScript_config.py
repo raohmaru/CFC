@@ -35,7 +35,7 @@ RS_KEY_LABEL     = "label"
 RS_RGX_KEY_TARGET     = re.compile(r"^target\??\s*=\s*")
 RS_RGX_TARGET_TYPE    = re.compile(r"@|\[")
 RS_RGX_TARGET_FILTERS = re.compile(r"\[(.+)\]")
-RS_RGX_TARGET_FPARAM  = re.compile(r"(\w+)\s*([=><:]+)\s*(\w+)")
+RS_RGX_TARGET_FPARAM  = re.compile(r"(\w+)\s*([=><:]+)\s*([\w\-]+)")
 RS_RGX_TARGET_ZONE    = re.compile(r"@\s*([\w*]+).*$")
 RS_RGX_TARGET_PICK    = re.compile(r"<\s*((?:\+|\-)?\s*[0-9]+)\s*>")
 RS_RGX_TARGET_QTY     = re.compile(r"^<\s*((?:\*\*)|(?:r\d*)|(?:,?[0-9]+){1,2})\s*>")
@@ -78,7 +78,7 @@ RS_OP_GTE      = ">="
 RS_OP_BOOL_AND = "&&"
 RS_OP_BOOL_OR  = "||"
 RS_OP_OPT      = "?"
-RS_OP_FUNC     = ":"
+RS_OP_SELECTOR = ":"
 RS_OP_ASSIGN   = ":="
 
 RS_TARGET_OPS = [
@@ -121,7 +121,9 @@ RS_PREFIX_EVENTS = [
 ]
 
 RS_PREFIX_FILTERS = [
-   RS_PREFIX_MINUS
+   RS_PREFIX_PLUS,
+   RS_PREFIX_MINUS,
+   RS_PREFIX_OTHER
 ]
 
 RS_PREFIX_BONUS = [

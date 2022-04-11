@@ -115,9 +115,7 @@ class RulesUtils():
             'max': RS_KW_ANYNUM
          })
       if str[:1] == RS_KW_RANDOM:
-         samples = num(str[1:])
-         if samples == 0:
-            samples = 1
+         samples = max(1, num(str[1:]))
          return Struct(**{
             'random': True,
             'samples': samples
@@ -171,15 +169,6 @@ class RulesUtils():
       # Filter targets
       targets = []
       for type in types:
-         # If kw is 'player' then must choose between himself or enemy
-         if type == RS_KW_TARGET_PLAYER:
-            if qty is not None and qty.random:
-               type = random.choice(RS_KW_PLAYERS)
-            else:
-               t = askChoice("Select a player:", RS_KW_PLAYERS_LABELS)
-               if t == 0:
-                  return False
-               type = RS_KW_PLAYERS[t-1]
          ftargets = RulesUtils.filterTargets(type, filters, zone, cards, source, msg, pick, qty, reveal)
          if ftargets:
             targets += ftargets
@@ -193,9 +182,7 @@ class RulesUtils():
 
       # Select random cards
       if qty is not None and qty.random:
-         samples = qty.samples
-         if samples > len(targets):
-            samples = len(targets)
+         samples = min(qty.samples, len(targets))
          targets = random.sample(targets, samples)
          debug("-- Randomly selected {} card(s)", samples)
          
@@ -230,7 +217,7 @@ class RulesUtils():
             targets = False
       # If target is a player
       elif type in RS_KW_TARGET_IS_PLAYER:
-         targets = RulesUtils.filterPlayers(type, filters)
+         targets = RulesUtils.filterPlayers(type, filters, qty)
       else:
          # Filter cards with a target
          targets = RulesUtils.filterCards(type, filters, zone, cards, source, msg, pick, qty, reveal)
@@ -247,13 +234,13 @@ class RulesUtils():
 
 
    @staticmethod
-   def filterPlayers(type, filters):
+   def filterPlayers(type, filters, qty=None):
       if isinstance(type, basestring):
          if type == RS_KW_TARGET_ME:
             arr = [me]
          elif type == RS_KW_TARGET_OPP:
             arr = [getOpp()]
-         elif type == RS_KW_TARGET_PLAYERS:
+         else:
             arr = [me]
             if len(players) > 1:
                arr.append(players[1])
@@ -267,6 +254,16 @@ class RulesUtils():
          whisper(MSG_ERR_NO_FILTERED_PLAYERS)
          return False
 
+      # If kw is 'player' then must choose between himself or enemy
+      if type == RS_KW_TARGET_PLAYER and len(arr) > 1:
+         if qty is not None and qty.random:
+            arr = [random.choice(arr)]
+         else:
+            t = askChoice("Select a player:", [player.name for player in arr])
+            if t == 0:
+               return False
+            arr = [arr[t-1]]
+               
       return arr
 
 

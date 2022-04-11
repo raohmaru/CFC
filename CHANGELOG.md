@@ -5,6 +5,7 @@
 + Updated card design.
 + Performance improvements.
 + Fixed bug in the `prophecy` command affecting Mischief.
++ Bug fix: only last result of the events triggered by triggerHook() counts for the returning value.
 
 ## 0.9.8
 + Re-balanced Zaki ability: now it adds 10 SP again.

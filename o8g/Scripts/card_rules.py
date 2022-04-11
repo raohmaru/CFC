@@ -73,10 +73,10 @@ filters: (optional)
       Any Type: Character, Action, Reaction
       Any Subtype: Warrior, Pilot, Captain...
    Keywords:
-      bp =|>=|<= number || bp:lowest
-      sp =|>=|<= number
+      bp [=|>=|<=] number
+      bp:lowest
+      sp [=|>=|<=] number
       backedup
-      backup
       attack
       uattack
       block
@@ -89,7 +89,9 @@ filters: (optional)
       abtrigger
       abauto
    Prefixes:
+      + (default)
       - (not)
+      ^ (not)
 
 zone: (optional)
    Keywords:

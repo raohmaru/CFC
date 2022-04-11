@@ -19,7 +19,9 @@
 #---------------------------------------------------------------------------
 
 class RulesFilters():
-   """ Class to handle the filters that are applied to a set of objects """
+   """
+   Class to handle the filters that are applied to a set of objects.
+   """
    filters = {}
 
    @staticmethod
@@ -28,51 +30,49 @@ class RulesFilters():
       
    
    @staticmethod   
-   def applyFiltersTo(arr, filters):
+   def applyFiltersTo(objects, filters):
       if len(filters) > 0:
-         arr2 = []
+         res = []
          for filter in filters:
             # filter could be a list of chained filters (&)
             if isinstance(filter[0], list):
-               arr3 = arr
+               arr = objects
                for f in filter:
-                  arr3 = RulesFilters.applyFilter(f, arr3)
-               arr2 += arr3
+                  arr = RulesFilters.applyFilter(f, arr)
+               res += arr
             # optional filter (,)
             else:
-               arr2 += RulesFilters.applyFilter(filter, arr)
-         # arr = list(set(arr2))  # unique values not ordered
-         arr = unique(arr2)  # unique values ordered
-      return arr
+               res += RulesFilters.applyFilter(filter, objects)
+         # res = list(set(res))  # unique values not ordered
+         return unique(res)  # unique values ordered
+      return objects
    
    
    @staticmethod
    def applyFilter(filter, arr):
       # filter = [prfx, cmd, [args]]
-      include = filter[0] != RS_PREFIX_MINUS
+      include = filter[0] not in [RS_PREFIX_MINUS, RS_PREFIX_OTHER]
       cmd = filter[1]
-      
       # Get the filter function
       if   cmd in RulesFilters.filters: func = RulesFilters.filters[cmd]
-      elif cmd in RS_KW_CARD_TYPES    : func = filterType
-      else                            : func = filterSubtype
-      
+      elif cmd in RS_KW_CARD_TYPES    : func = filter_type
+      else                            : func = filter_subtype
       # Special filtering functions
       args = filter[2]
       if args:
-         op, f = args
-         if op == RS_OP_FUNC:
-            if f == 'lowest':
-               value = reduce(lambda a,b: min(a,b), [getCardProp(c, cmd) for c in arr])
-               args = ('=', value)
-   
-      debug("-- applying filter %s to %s object(s)" % (filter, len(arr)))
-      arr = [c for c in arr
+         op, selector = args
+         if op == RS_OP_SELECTOR:
+            # Gets the lowest value in the array
+            if selector == "lowest":
+               value = reduce(lambda a, b: min(a, b), [getCardProp(c, cmd) for c in arr])
+               args = ("=", value)
+      # Apply the filters
+      debug("-- applying filter {} to {} object(s)", filter, len(arr))
+      res = [c for c in arr
          if func(c, include, cmd, *args)
       ]      
-      debug("-- %s object(s) match(es) the filter" % len(arr))
-         
-      return arr
+      debug("-- {} object(s) match(es) the filter", len(res))
+      return res
       
 
 #---------------------------------------------------------------------------
@@ -80,12 +80,12 @@ class RulesFilters():
 #---------------------------------------------------------------------------
 
 def getCardProp(card, prop):
-   if prop == 'bp':
-      bp = getMarker(card, 'BP')
+   if prop == "bp":
+      bp = getMarker(card, "BP")
       if bp == 0:
          bp = card.BP
       return bp
-   elif prop == 'sp':
+   elif prop == "sp":
       return card.SP
        
 
@@ -103,22 +103,16 @@ def compareValuesByOp(v1, v2, op):
 # Filter functions
 #---------------------------------------------------------------------------
 
-def filterBP(card, include, cmd, *args):
-   debug(">>> filterBP({}, {}, {}, {})", card, include, cmd, args)
-   
+def filter_bp(card, include, cmd, *args):
+   debug(">>> filter_bp({}, {}, {}, {})", card, include, cmd, args)
    if not isCard(card) or not isCharacter(card):
       return False
-      
    # Get additional parameters
    try:
       op, value = args
    except ValueError:
       return False
-   if op != RS_OP_FUNC:
-      value = int(value)
-
-   bp = getCardProp(card, 'bp')
-      
+   bp = getCardProp(card, "bp")
    # Compare values
    res = compareValuesByOp(bp, value, op)
    if not include:
@@ -127,19 +121,14 @@ def filterBP(card, include, cmd, *args):
    return res
    
    
-def filterSP(card, include, cmd, *args):
-   debug(">>> filterSP({}, {}, {}, {})", card, include, cmd, args)
-      
+def filter_sp(card, include, cmd, *args):
+   debug(">>> filter_sp({}, {}, {}, {})", card, include, cmd, args)
    # Get additional parameters
    try:
       op, value = args
    except ValueError:
       return False
-   if op != RS_OP_FUNC:
-      value = int(value)
-
    sp = card.SP
-      
    # Compare values
    res = compareValuesByOp(sp, value, op)
    if not include:
@@ -148,12 +137,10 @@ def filterSP(card, include, cmd, *args):
    return res
 
 
-def filterType(card, include, cmd, *args):
-   debug(">>> filterType({}, {}, {}, {})", card, include, cmd, args)
-   
+def filter_type(card, include, cmd, *args):
+   debug(">>> filter_type({}, {}, {}, {})", card, include, cmd, args)
    if not isCard(card):
       return False
-      
    type = card.Type.lower()
    if include:
       return type == cmd
@@ -161,12 +148,10 @@ def filterType(card, include, cmd, *args):
       return type != cmd
 
 
-def filterSubtype(card, include, cmd, *args):
-   debug(">>> filterSubtype({}, {}, {}, {})", card, include, cmd, args)
-   
+def filter_subtype(card, include, cmd, *args):
+   debug(">>> filter_subtype({}, {}, {}, {})", card, include, cmd, args)
    if not isCard(card):
       return False
-      
    subtype = card.Subtype.lower()
    if include:
       return subtype == cmd
@@ -174,66 +159,59 @@ def filterSubtype(card, include, cmd, *args):
       return subtype != cmd
 
 
-def filterBackedup(card, include, cmd, *args):
-   debug(">>> filterBacked({}, {}, {}, {})", card, include, cmd, args)
-
+def filter_backedup(card, include, cmd, *args):
+   debug(">>> filter_backed({}, {}, {}, {})", card, include, cmd, args)
    if not isCard(card):
       return False
-      
    backups = getAttachments(card)
    if include:
       return len(backups) > 0
    else:
       return len(backups) == 0
     
-    
-def filterBackup(card, include, cmd, *args):
-   debug(">>> filterBackup({}, {}, {}, {})", card, include, cmd, args)
-
-   if not isCard(card):
-      return False
-      
-   isBackup = isAttached(card)
+   
+def filter_attack(card, include, cmd, *args):
+   debug(">>> filter_attack({}, {}, {}, {})", card, include, cmd, args)
+   res = hasMarker(card, "Attack")
    if include:
-      return isBackup
+      return res
    else:
-      return not isBackup
-   
-   
-def filterAttack(card, include, cmd, *args):
-   debug(">>> filterAttack({}, {}, {}, {})", card, include, cmd, args)
-   return hasMarker(card, 'Attack', include)
+      return not res
     
     
-def filterUnitedAttack(card, include, cmd, *args):
-   debug(">>> filterUnitedAttack({}, {}, {}, {})", card, include, cmd, args)
-
+def filter_unitedAttack(card, include, cmd, *args):
+   debug(">>> filter_unitedAttack({}, {}, {}, {})", card, include, cmd, args)
    if not isCard(card):
       return False
-      
-   attacking = card._id in getGlobalVar('UnitedAttack')   
+   attacking = card._id in getGlobalVar("UnitedAttack")   
    if include:
       return attacking
    else:
       return not attacking
    
    
-def filterBlock(card, include, cmd, *args):
-   debug(">>> filterBlock({}, {}, {}, {})", card, include, cmd, args)
-   return hasMarker(card, 'Counter-attack', include)
+def filter_block(card, include, cmd, *args):
+   debug(">>> filter_block({}, {}, {}, {})", card, include, cmd, args)
+   res = hasMarker(card, "Counter-attack")
+   if include:
+      return res
+   else:
+      return not res
    
    
-def filterBlocked(card, include, cmd, *args):
-   debug(">>> filterBlocked({}, {}, {}, {})", card, include, cmd, args)
-   return hasMarker(card, 'Attack', include) and card._id in getGlobalVar('Blockers')
+def filter_blocked(card, include, cmd, *args):
+   debug(">>> filter_blocked({}, {}, {}, {})", card, include, cmd, args)
+   res = hasMarker(card, "Attack") and card._id in getGlobalVar("Blockers")
+   if include:
+      return res
+   else:
+      return not res
     
     
-def filterFrozen(card, include, cmd, *args):
-   debug(">>> filterFrozen({}, {}, {}, {})", card, include, cmd, args)
-
+def filter_frozen(card, include, cmd, *args):
+   debug(">>> filter_frozen({}, {}, {}, {})", card, include, cmd, args)
    if not isCard(card):
       return False
-      
    frozen = isFrozen(card)
    if include:
       return frozen
@@ -241,70 +219,63 @@ def filterFrozen(card, include, cmd, *args):
       return not frozen
    
    
-def filterJustEntered(card, include, cmd, *args):
-   debug(">>> filterJustEntered({}, {}, {}, {})", card, include, cmd, args)
-   return hasMarker(card, 'Just Entered', include)
+def filter_justEntered(card, include, cmd, *args):
+   debug(">>> filter_justEntered({}, {}, {}, {})", card, include, cmd, args)
+   res = hasMarker(card, "Just Entered")
+   if include:
+      return res
+   else:
+      return not res
    
    
-def filterHasAbility(card, include, cmd, *args):
-   debug(">>> filterHasAbility({}, {}, {}, {})", card, include, cmd, args)
-
+def filter_hasAbility(card, include, cmd, *args):
+   debug(">>> filter_hasAbility({}, {}, {}, {})", card, include, cmd, args)
    if not isCard(card):
       return False
-	  
-   return bool(card.properties['Ability Type'])
+   return bool(card.properties["Ability Type"])
    
    
-def filterNoAbility(card, include, cmd, *args):
-   debug(">>> filterNoAbility({}, {}, {}, {})", card, include, cmd, args)
-
+def filter_noAbility(card, include, cmd, *args):
+   debug(">>> filter_noAbility({}, {}, {}, {})", card, include, cmd, args)
    if not isCard(card):
       return False
-	  
-   return not card.properties['Ability Type']
+   return not card.properties["Ability Type"]
       
       
-def filterAbilityInstant(card, include, cmd, *args):
-   debug(">>> filterAbilityInstant({}, {}, {}, {})", card, include, cmd, args)
-
+def filter_abilityInstant(card, include, cmd, *args):
+   debug(">>> filter_abilityInstant({}, {}, {}, {})", card, include, cmd, args)
    if not isCard(card):
       return False
-	  
-   return bool(card.properties['Ability Type']) and card.properties['Ability Type'] == InstantAbility
+   return bool(card.properties["Ability Type"]) and card.properties["Ability Type"] == InstantAbility
       
       
-def filterAbilityTrigger(card, include, cmd, *args):
-   debug(">>> filterAbilityTrigger({}, {}, {}, {})", card, include, cmd, args)
-
+def filter_abilityTrigger(card, include, cmd, *args):
+   debug(">>> filter_abilityTrigger({}, {}, {}, {})", card, include, cmd, args)
    if not isCard(card):
       return False
-	  
-   return bool(card.properties['Ability Type']) and card.properties['Ability Type'] == TriggerAbility
+   return bool(card.properties["Ability Type"]) and card.properties["Ability Type"] == TriggerAbility
       
       
-def filterAbilityAuto(card, include, cmd, *args):
-   debug(">>> filterAbilityAuto({}, {}, {}, {})", card, include, cmd, args)
-
+def filter_abilityAuto(card, include, cmd, *args):
+   debug(">>> filter_abilityAuto({}, {}, {}, {})", card, include, cmd, args)
    if not isCard(card):
       return False
-	  
-   return bool(card.properties['Ability Type']) and card.properties['Ability Type'] == AutoAbility
+   return bool(card.properties["Ability Type"]) and card.properties["Ability Type"] == AutoAbility
 
 
-RulesFilters.registerFilter('bp'       , filterBP)
-RulesFilters.registerFilter('sp'       , filterSP)
-RulesFilters.registerFilter('type'     , filterType)
-RulesFilters.registerFilter('subtype'  , filterSubtype)
-RulesFilters.registerFilter('backedup' , filterBackedup)
-RulesFilters.registerFilter('backup'   , filterBackup)
-RulesFilters.registerFilter('attack'   , filterAttack)
-RulesFilters.registerFilter('uattack'  , filterUnitedAttack)
-RulesFilters.registerFilter('block'    , filterBlock)
-RulesFilters.registerFilter('blocked'  , filterBlocked)
-RulesFilters.registerFilter('frozen'   , filterFrozen)
-RulesFilters.registerFilter('fresh'    , filterJustEntered)
-RulesFilters.registerFilter('powerful' , filterHasAbility)
-RulesFilters.registerFilter('powerless', filterNoAbility)
-RulesFilters.registerFilter('abinstant', filterAbilityInstant)
-RulesFilters.registerFilter('abtrigger', filterAbilityTrigger)
-RulesFilters.registerFilter('abauto'   , filterAbilityAuto)
+RulesFilters.registerFilter("bp"       , filter_bp)
+RulesFilters.registerFilter("sp"       , filter_sp)
+RulesFilters.registerFilter("type"     , filter_type)
+RulesFilters.registerFilter("subtype"  , filter_subtype)
+RulesFilters.registerFilter("backedup" , filter_backedup)
+RulesFilters.registerFilter("attack"   , filter_attack)
+RulesFilters.registerFilter("uattack"  , filter_unitedAttack)
+RulesFilters.registerFilter("block"    , filter_block)
+RulesFilters.registerFilter("blocked"  , filter_blocked)
+RulesFilters.registerFilter("frozen"   , filter_frozen)
+RulesFilters.registerFilter("fresh"    , filter_justEntered)
+RulesFilters.registerFilter("powerful" , filter_hasAbility)
+RulesFilters.registerFilter("powerless", filter_noAbility)
+RulesFilters.registerFilter("abinstant", filter_abilityInstant)
+RulesFilters.registerFilter("abtrigger", filter_abilityTrigger)
+RulesFilters.registerFilter("abauto"   , filter_abilityAuto)

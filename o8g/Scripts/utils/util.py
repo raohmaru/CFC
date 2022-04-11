@@ -51,7 +51,7 @@ def funcCall(player, func, args = []):
 
 def unique(seq):
    """
-   Returns a list with values not repeated.
+   Returns a list with values not repeated and the order unmodified.
    """
    seen = set()
    # Because Python is dynamic, accessing variables is faster than attribute lookup

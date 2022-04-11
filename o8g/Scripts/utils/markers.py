@@ -18,14 +18,10 @@
 # Marker functions
 #---------------------------------------------------------------------------
 
-def hasMarker(card, marker, include = True):
+def hasMarker(card, marker):
    if not isCard(card):
       return False
-   res = MarkersDict[marker] in card.markers
-   if include:
-      return res
-   else:
-      return not res
+   return MarkersDict[marker] in card.markers
       
       
 def getMarker(card, mkname):
