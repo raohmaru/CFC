@@ -49,11 +49,9 @@ def debugScenario():
    gotoMain()
    waitForAnimation()
    tableCards = [
-       "e81e9366-b3e1-45a6-b010-bd02934b2efd" # Kain
-      ,"299c01d7-37f0-41de-81f3-712b8dd63f11" # Akari (Speed)
-       # "d14694b4-484c-4b45-962e-8cbb636d8a9a" # 200 BP
+       "d14694b4-484c-4b45-962e-8cbb636d8a9a" # 200 BP
       # ,"c7d128ea-a3b9-4b04-b8b2-a61153b5b2e6" # 400 BP
-      ,"24e99a13-cb42-4e16-9900-78dde12e1a4c" # 600 BP
+      # ,"24e99a13-cb42-4e16-9900-78dde12e1a4c" # 600 BP
       ,"e6e46f83-d089-4762-8d8e-2a3252cfc9db" # 800 BP
    ]
    for i, id in enumerate(tableCards):
@@ -67,10 +65,11 @@ def debugScenario():
       waitForAnimation()
       
    handCards = [
-       "8bb477f9-5004-4018-8d5e-73c6a23e8912" # Char 300 BP
-      ,"e910f462-bea9-4262-b168-c7c512eb6511" # Char 500 BP
-      ,"0fdadc92-0864-46cc-a3ff-c20e2af8249c" # Char 700 BP
-      ,"af43872e-e47d-4fe0-9b55-aedd8a0d0fc7" # Char 800 BP
+       "3c92b6f8-d68f-4d0f-8a29-f5172b09a864" # Fate duel
+       # "8bb477f9-5004-4018-8d5e-73c6a23e8912" # Char 300 BP
+      # ,"e910f462-bea9-4262-b168-c7c512eb6511" # Char 500 BP
+      # ,"0fdadc92-0864-46cc-a3ff-c20e2af8249c" # Char 700 BP
+      # ,"af43872e-e47d-4fe0-9b55-aedd8a0d0fc7" # Char 800 BP
       # ,"5e2211a0-e52e-4b7b-b03d-f6ecb3660bb0" # Action 0 SP
       # ,"83c33aa8-5981-4352-8107-cbb7e05547ec" # Action -1 SP
       # ,"80692723-3895-435f-bf8f-e94507704af5" # Action -3 SP
@@ -138,7 +137,7 @@ def debugOpp():
    tableCards = [
        "d66622dd-27e3-4e3b-bb1f-245907ee3b66" # Ryo Sakazaki
       # ,"d14694b4-484c-4b45-962e-8cbb636d8a9a" # 200 BP
-      # ,"c7d128ea-a3b9-4b04-b8b2-a61153b5b2e6" # 400 BP
+      ,"c7d128ea-a3b9-4b04-b8b2-a61153b5b2e6" # 400 BP
       # ,"24e99a13-cb42-4e16-9900-78dde12e1a4c" # 600 BP
       # ,"e6e46f83-d089-4762-8d8e-2a3252cfc9db" # 800 BP
    ]

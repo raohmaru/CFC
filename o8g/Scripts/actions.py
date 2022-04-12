@@ -1274,6 +1274,8 @@ def stopDebug(group, x = 0, y = 0):
    mute()
    global debugging
    debugging = False
+   global debugVerbosity
+   debugVerbosity = DebugLevel["Off"]
    resetGame()
 
 

@@ -118,7 +118,7 @@ action = {cost}: [[cond]] effect [& effect] [|| effect] to(target) restr; ...
 
 Multiple action keys are allowed. If there are two or more, a dialog will be show to choose the action.
 Several actions can be joined with ';'.
-Effects in the same action (joined by & or ||) are executed synchronously; actions are async.
+Actions are executed in parallel, in order. Effects in the same action (joined by & or ||) are executed sequentially.
 
 cost: (optional)
    Keywords:
@@ -138,7 +138,7 @@ effect:
       Effect command (followed by () or ?() with 0 or more parameters):
       ?() marks the command as optional:
          activate(expr)
-         alterCost(cardtype, #)   // permanent
+         alterCost(cardtype, #) // permanent
          bp(#|x#|=#|expr)       // default target = this
          clear()
          copyAbility(expr)
@@ -146,14 +146,14 @@ effect:
          destroy()
          disableRule(rule)
          discard([#|target])   // default: 1, zone: myHand
-         draw([#|expression])   // default: 1
+         draw([#|expression])  // default: 1
          each(expr in group => effect)    // effect context: group item
          enableRule(rule)
          freeze([toggle])
          hp(#|expr)             // default target = me
          loseAbility()
          loseLife(#)
-         modCost(cardtype, #)     // for auto keys
+         modCost(cardtype, #)   // for auto keys
          modDamage(#)
          modRule(rule, arg)
          movePile(pile1, pile2)
@@ -175,7 +175,7 @@ effect:
          swapChars()
          swapPiles(pile1, pile2)
          transform("card model"|expr)
-         trash([#])       // default: 1
+         trash([#])   // default: 1
          turns(#)     // unsigned int, target = current player
          unfreeze()
          unite()
@@ -257,8 +257,8 @@ event:
       opp
       any
    Suffixes:
-      :fromThis
-      :this
+      :fromThis  // cosmetic
+      :this      // cosmetic
       :any
       :once
       :action
@@ -317,6 +317,7 @@ label = "string"
 
 A label to show in the "choose an action" dialog.
 Value can be quoted or not. Case-sensitive.
+Multiple label keys are allowed, up to the number of action keys.
 @see action
 
 ---------------------------------------------------

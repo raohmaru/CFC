@@ -19,7 +19,9 @@
 #---------------------------------------------------------------------------
 
 class RulesSelectors():
-   """ Class to handle selectors that are applied to a set of targets """
+   """
+   Class to handle selectors that are applied to a set of targets.
+   """
    selectors = {}
 
    @staticmethod
@@ -30,7 +32,6 @@ class RulesSelectors():
    @staticmethod
    def applySelector(selector, targets):
       cmd, expr = selector
-      
       # Get the selector function
       if cmd in RulesSelectors.selectors:      
          debug("-- applying selector ::{}({}) to {}", cmd, expr, cardsAsNamesListStr(targets))
@@ -38,7 +39,6 @@ class RulesSelectors():
          res = evalExpression(expr, True, getLocals())
          targets = func(targets, res)
          debug("-- new selection: {}", cardsAsNamesListStr(targets))
-         
       return targets
 
 
@@ -46,9 +46,9 @@ class RulesSelectors():
 # Selector functions
 #---------------------------------------------------------------------------
 
-def selectorNot(targets, args):
-   debug(">>> selectorNot({}, {})", targets, args)
+def selector_not(targets, args):
+   debug(">>> selector_not({}, {})", targets, args)
    return list(set(targets).difference(args))
    
 
-RulesSelectors.registerSelector('not', selectorNot)
+RulesSelectors.registerSelector('not', selector_not)

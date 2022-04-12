@@ -23,85 +23,95 @@
 """      
 target: [
    {
-      'filters': [
-         ['-', 'bp', ('>=', '800')]
+      "filters": [
+         ["-", "bp", (">=", "800")],
+         [
+            ['', 'fresh', ''],
+            ['-', 'powerless', '']
+         ]
       ],
-      'types': ['characters'],
-      'typeop': ',',
-      'zone': ['opp', 'ring'],
-      'pick': -1,
-      'qty': ',4',
-      'opt': False,
-      'selector': (type, expr)
+      "types": ["characters"],
+      "typeop": ",",
+      "zone": ["opp", "ring"],
+      "pick": -1,
+      "qty": ",4",
+      "opt": False,
+      "selector": (type, expr)
    }
 ],
 action: {
    cost: [
       [
-         'd',
+         "d",
          {
-            'filters': [],
-            'types': ['action'],
-            'zone': ['', 'arena']
+            "filters": [],
+            "types": ["action"],
+            "zone": ["", "arena"]
          }
       ]
    ],
    effects: [
       [
-         ['if', 'expression', {action}],
+         ["if", "expression", {action}],
+         # commands
          [
-            ['destroy'],
-            ['draw', ['2']],
-            ('+', 'unblockable')
+            ["destroy"],
+            ["draw", ["2"]],
+            ("+", "unblockable")
          ],
+         # additional target
          {
-            'filters': [],
-            'types': ['character'],
-            'zone': ['', 'arena']
+            "filters": [],
+            "types": ["character"],
+            "zone": ["", "arena"]
          },
-         ['opp', 'ueot']
+         ["opp", "ueot"]
       ]
    ]
 },
 abilities: [
-   'ability', 'ability'
+   "ability", "ability"
 ],
 auto: {
    [@see action],
    event: [
-      ['my', 'handchanges', 'fromthis']
+      ["my", "handchanges", "fromthis"]
    ]
 },
 requisite: [
-   'char<1>@oppring',
-   'char<1>@myring'
+   "char<1>@oppring",
+   "char<1>@myring"
 ],
 vars: [
-   ['varname', 'value or expr']
+   ["varname", "value or expr"]
 ],
 label: [
-   'String label'
+   "String label"
 ]
 """
 
 # Import needed for testing out of OCTGN
-if not 'RS_VERSION' in globals():
+if not "RS_VERSION" in globals():
    from RuleScript_config import *
    
 class RulesLexer():
-   """ Analyzes the given string and split it into tokens that will be used by the parser """
+   """
+   Analyzes a given string with rules and split it into tokens that will be consumed by the parser.
+   """
 
    @staticmethod
    def tokenize(rules):
-      """ Returns an array of tokens fromt the given string """
-      debug("Rules to parse: %s" % rules)
-      rules = rules.strip().split('\n')
+      """
+      Returns an array of tokens from the given string.
+      """
+      debug("Rules to parse: {}", rules)
+      rules = rules.strip().split("\n")
       rulesDict = {}
 
       for rule in rules:
          rule = rule.strip()
          line = rule.lower()
-         debug("Parsing line: %s" % line)
+         debug("Parsing line: {}", line)
 
          # Skip comment lines
          if line[0] == RS_COMMENT_CHAR:
@@ -111,7 +121,7 @@ class RulesLexer():
          # Remove comments at the end of the line
          line = line.split(RS_COMMENT_CHAR)[0].rstrip()
 
-         # Check for target command
+         # Check for one target command
          if not RS_KEY_TARGET in rulesDict:
             match = RS_RGX_KEY_TARGET.match(line)
             if match:
@@ -122,10 +132,10 @@ class RulesLexer():
                for target in targets:
                   targetsList.append(RulesLexer.parseTarget(target, flag))
                rulesDict[RS_KEY_TARGET] = targetsList
-         # else:
-            # debug("Target already defined. Line skipped")
+         else:
+            debug("Target already defined. Line skipped")
 
-         # Check for action command
+         # Check for action commands
          match = RS_RGX_KEY_ACTION.match(line)
          if match:
             debug("Action key found!")
@@ -136,40 +146,45 @@ class RulesLexer():
                rulesDict[RS_KEY_ACTION].append(action)
             else:
                rulesDict[RS_KEY_ACTION] = action
-         # else:
-            # debug("Action already defined. Line skipped")
             
-         # Check for abilities command
+         # Check for one abilities command
          if not RS_KEY_ABILITIES in rulesDict:
             match = RS_RGX_KEY_ABILITY.match(line)
             if match:
                debug("Abilities key found!")
                rulesDict[RS_KEY_ABILITIES] = RulesLexer.parseAbility( line[len(match.group()):] )
+         else:
+            debug("Abilities already defined. Line skipped")
 
-         # Check for auto command
+         # Check for one auto command
          if not RS_KEY_AUTO in rulesDict:
             match = RS_RGX_KEY_AUTO.match(line)
             if match:
                debug("Auto key found!")
                rulesDict[RS_KEY_AUTO] = RulesLexer.parseAction( line[len(match.group()):] )
-         # else:
-            # debug("Action already defined. Line skipped")
+         else:
+            debug("Action already defined. Line skipped")
             
-         # Check for conditions command
+         # Check for one requisite command
          if not RS_KEY_REQ in rulesDict:
             match = RS_RGX_KEY_REQ.match(line)
             if match:
                debug("Requisite key found!")
-               rulesDict[RS_KEY_REQ] = line[len(match.group()):].split(RS_OP_BOOL_AND)
+               requisites = line[len(match.group()):].split(RS_OP_BOOL_AND)
+               rulesDict[RS_KEY_REQ] = map(str.strip, requisites)
+         else:
+            debug("RS_KEY_REQ already defined. Line skipped")
             
-         # Check for variables command
+         # Check for one variables command
          if not RS_KEY_VARS in rulesDict:
             match = RS_RGX_KEY_VARS.match(line)
             if match:
                debug("Variables key found!")
                rulesDict[RS_KEY_VARS] = RulesLexer.parseVars( line[len(match.group()):] )
+         else:
+            debug("Variables already defined. Line skipped")
             
-         # Check for label command
+         # Check for label commands
          match = RS_RGX_KEY_LABEL.match(line)
          if match:
             debug("Label key found!")
@@ -184,37 +199,41 @@ class RulesLexer():
 
 
    @staticmethod
-   def parseTarget(tgtStr, flag=None):
+   def parseTarget(tgtStr, flag = None):
+      """
+      Parses a target string and returns a dict of tokens.
+      """
       tgtStr = tgtStr.strip()
-      debug("Parsing target: %s" % tgtStr)
+      debug("Parsing target: {}", tgtStr)
       
       # Get the quantity of cards to get
       qty_match = RS_RGX_TARGET_QTY.search(tgtStr)
       qty = None
       if qty_match:
          qty = qty_match.group(1)
-         tgtStr = tgtStr.replace(qty_match.group(0), '', 1)
+         tgtStr = tgtStr.replace(qty_match.group(0), "", 1)
       
       # Get the cards to pick
       pick_match = RS_RGX_TARGET_PICK.search(tgtStr)
       pick = None
       if pick_match:
          pick = int(pick_match.group(1))
-         tgtStr = tgtStr.replace(pick_match.group(0), '', 1)
+         tgtStr = tgtStr.replace(pick_match.group(0), "", 1)
       
       # Get the selector
       sel_match = RS_RGX_KEY_SELECTOR.search(tgtStr)
       selector = None
       if sel_match:
          selector = sel_match.groups()
-         tgtStr = tgtStr.replace(sel_match.group(0), '')
+         tgtStr = tgtStr.replace(sel_match.group(0), "")
 
       # Get the types
       types = RS_RGX_TARGET_TYPE.split(tgtStr)[:1]
       typeOp = RS_OP_OR
       if not types[0]:
-         debug("ParseInfo: 'target' has no type parameter. Defult target is {}", RS_KW_ANY)
+         debug("ParseInfo: 'target' has no type parameter. Default target is {}", RS_KW_ANY)
          types[0] = RS_KW_ANY
+      # Get the  boolean type operator
       for op in RS_TARGET_OPS:
          if len(types) <= 1:
             types = types[0].split(op)
@@ -222,11 +241,12 @@ class RulesLexer():
       # RS_KW_ANY overrides the rest
       if RS_KW_ANY in types:
          types = [RS_KW_ANY]
+      # RS_KW_ALL is like RS_KW_ANY but for several targets
       elif RS_KW_ALL in types:
          types = [RS_KW_ANY + RS_SUFFIX_PLURAL]
       else:
          types = map(str.strip, types)
-      debug("-- types: %s" % types)
+      debug("-- types: {}", types)
 
       # Get the filters
       filters = RS_RGX_TARGET_FILTERS.search(tgtStr)
@@ -240,43 +260,47 @@ class RulesLexer():
             arr = []
             for f in filter:
                arr.append(RulesLexer.getFilter(f))
-            debug("-- filter: %s" % arr)
+            debug("-- filter: {}", arr)
             if len(arr) > 0:
                filters_arr.append(arr if len(arr) > 1 else arr[0])
 
       # Get the zone
       zone = RS_RGX_TARGET_ZONE.search(tgtStr)
-      zone_prefix = ''
+      zone_prefix = ""
       if zone:
          zone = zone.group(1)
       else:
+         # Default zone
          zone = RS_KW_ZONE_ARENA
       # Check for zone prefixes
       if zone != RS_KW_ZONE_ARENA:
          zone_prefix, zone = RulesLexer.getPrefix(RS_PREFIX_ZONES, zone)
       # Check valid zones
       if zone not in RS_KW_ZONES:
-         debug("KeywordError: Invalid zone '%s'. Assuming '%s'" % (zone, RS_KW_ZONE_ARENA))
+         debug("KeywordError: Invalid zone '{}'. Assuming '{}'", zone, RS_KW_ZONE_ARENA)
          zone = RS_KW_ZONE_ARENA
-      debug("-- zone prefix: %s" % zone_prefix)
-      debug("-- zone: %s" % zone)
+      debug("-- zone prefix: {}", zone_prefix)
+      debug("-- zone: {}", zone)
       
       return {
-         'qty'     : qty,
-         'pick'    : pick,
-         'types'   : types,
-         'typeop'  : typeOp,
-         'filters' : filters_arr,
-         'zone'    : [zone_prefix, zone],
-         'opt'     : True if flag == RS_OP_OPT else False,
-         'selector': selector
+         "qty"     : qty,
+         "pick"    : pick,
+         "types"   : types,
+         "typeop"  : typeOp,
+         "filters" : filters_arr,
+         "zone"    : [zone_prefix, zone],
+         "opt"     : True if flag == RS_OP_OPT else False,
+         "selector": selector
       }
 
 
    @staticmethod
    def parseAction(acStr):
+      """
+      Parses an action string and returns a dict of tokens.
+      """
       acStr = acStr.strip()
-      debug("Parsing action: %s" % acStr)
+      debug("Parsing action: {}", acStr)
       
       # Get the cost
       cost = None
@@ -284,17 +308,17 @@ class RulesLexer():
       if match:
          cost = []
          acStr = acStr[len(match.group()):]
-         # Remove whitespaces, 1st ({) and last (}) character and split 
-         costs = match.group(1).replace(" ", "")[1:-1].split('}{')
+         # Remove white spaces, first "{" and last "}" characters and split 
+         costs = match.group(1).replace(" ", "")[1:-1].split("}{")
          for c in costs:
-            debug("-- found cost: %s" % c)
+            debug("-- found cost: {}", c)
             # Check if cost has a target
-            parts = c.split('(')
+            parts = c.split("(")
             if len(parts) > 1:
                c = parts[:2]
                # Remove last ")" character
                c[1] = c[1][:-1]
-               debug("-- cost target: %s" % c[1])
+               debug("-- cost target: {}", c[1])
                c[1] = RulesLexer.parseTarget(c[1])
             cost.append(c)
       
@@ -305,32 +329,34 @@ class RulesLexer():
       if match:
          acStr = acStr[len(match.group()):]
          event = []
-         events = match.group(1).split(',')
+         events = match.group(1).split(",")
          for e in events:
-            e = e.strip().replace(' ', '').split(':')
+            e = e.strip().replace(" ", "").split(":")
             # Look for prefixes
             prfx, eventName = RulesLexer.getPrefix(RS_PREFIX_EVENTS, e[0])
+            # "my" is assumed
             if prfx == RS_PREFIX_MY:
-               prfx = ''
+               prfx = ""
             # Look for suffixes
-            sffx = ''
+            sffx = ""
             if len(e) > 1:
                if e[1] in RS_SUFFIX_EVENTS:
                   sffx = e[1]
-               # Transform suffix into an if condition
+               # Unknown suffixes are transformed into an if condition
                else:
-                  debug("-- transforming suffix \"{0}\" into [[if {0}]]", e[1])
+                  debug("-- transforming suffix '{0}' into [[if {0}]]", e[1])
                   firstEffect = [["if", e[1]], [], None, None]
-            debug("-- found event: %s + %s + %s" % (prfx, eventName, sffx))
+            debug("-- found event: {} + {} + {}", prfx, eventName, sffx)
             event.append([prfx, eventName, sffx])
             
       # Analyze the expression
       effects = []
       expressions = acStr.split(RS_OP_SEP)
+      # Multiple effects 
       for expr in expressions:
-         debug("-- Parsing effect '%s'" % expr)
+         debug("-- Parsing effect '{}'", expr)
          if firstEffect:
-            debug("---- Found initial effect '%s'" % firstEffect)
+            debug("---- Found initial effect {}", firstEffect)
             effect = firstEffect
             firstEffect = None
          else:
@@ -340,53 +366,58 @@ class RulesLexer():
          if match:
             kw, params = RulesLexer.extractKeyword(match.group(1), RS_KW_CMD_COND)
             if kw:
+               # Join with condition from the event
                if effect[0]:
                   effect[0][1] += " and " + params
                else:
                   effect[0] = [kw, params]
-               debug("---- found condition '%s'" % effect[0])
-            expr = re.sub(RS_RGX_COND, '', expr, 1).strip()
+               debug("---- found condition {}", effect[0])
+            expr = re.sub(RS_RGX_COND, "", expr, 1).strip()
             # look for an elif/else condition
             if kw == RS_KW_COND_IF:               
                match = RS_RGX_COND.search(expr)
                if match:
                   kw, params = RulesLexer.extractKeyword(match.group(1), RS_KW_CMD_COND_SUB)
+                  # Matching condition, convert it into a sub expression
                   if kw:
-                     debug("---- found condition '%s'" % kw)
+                     debug("---- found condition {}", kw)
                      subexpr = expr.replace(RS_KW_COND_ELIF, RS_KW_COND_IF)
                      subexpr = subexpr[match.start(0):]
                      effect[0].append(RulesLexer.parseAction(subexpr))
                   expr = expr[:match.start(0)]
             # Remove any invalid condition
-            expr = re.sub(RS_RGX_COND, '', expr).strip()
+            expr = re.sub(RS_RGX_COND, "", expr).strip()
                   
          # Look for up to 1 restriction
          kw, expr = RulesLexer.extractKeyword(expr, RS_KW_CMD_RESTRS, RS_PREFIX_RESTR)
          if kw:
             effect[3] = kw
-            debug("---- found restriction %s" % (kw,))
-         # Has target?
+            debug("---- found restriction {}", (kw,))
+         # Has an additional target?
          match = RS_RGX_AC_TARGET.search(expr)
          if match:
-            debug("---- found target '%s'" % match.group(2))
+            debug("---- found additional target '{}'", match.group(2))
             effect[2] = RulesLexer.parseTarget(match.group(2), match.group(1))
-            expr = re.sub(RS_RGX_AC_TARGET, '', expr).strip()
+            expr = re.sub(RS_RGX_AC_TARGET, "", expr).strip()
          # Finally, get the commands
          effect[1] = []
          # Transforms RS_OP_BOOL_OR into a command
          expr = expr.replace(RS_OP_BOOL_OR, RS_OP_AND + " or() " + RS_OP_AND)
          commands = expr.split(RS_OP_AND)
+         # Multiple commands in the effect
          for cmd in commands:
             cmd = cmd.strip()
             if not cmd:
                continue 
             match = RS_RGX_AC_EFFECT.search(cmd)
+            # Command
             if match:
                params = filter(None, RS_RGX_AC_ARGS_SEP.split(match.group(2)))
                params = [p.strip() for p in params]
                params = map(RulesLexer.literalToType, params)
                effect[1].append([match.group(1), params])
-               debug("---- found effect '%s'" % effect[1][-1])
+               debug("---- found effect {}", effect[1][-1])
+            # Ability
             else:
                cmd = RulesLexer.getPrefix(RS_PREFIX_BONUS, cmd)
                filter(None, cmd)
@@ -395,15 +426,18 @@ class RulesLexer():
          effects.append(effect)
          
       return {
-         'cost'   : cost,
-         'event'  : event,
-         'effects': effects
+         "cost"   : cost,
+         "event"  : event,
+         "effects": effects
       }
 
 
    @staticmethod
    def parseAbility(abStr):
-      debug("Parsing ability: %s" % abStr)
+      """
+      Parses an abilities string and returns an array of strings.
+      """
+      debug("Parsing ability: {}", abStr)
       abilities = abStr.split(RS_OP_OR)
       abilities = [ item.strip() for item in abilities ]
       abilities = filter(None, abilities)
@@ -412,7 +446,10 @@ class RulesLexer():
 
    @staticmethod
    def parseVars(str):
-      debug("Parsing vars: %s" % str)
+      """
+      Parses a vars string and returns an array of variable name and value.
+      """
+      debug("Parsing vars: {}", str)
       strArr = str.split(RS_OP_SEP)
       vars = []
       for item in strArr:
@@ -422,13 +459,13 @@ class RulesLexer():
    
    @staticmethod
    def getFilter(str):
-   # Returns a filter as an array
-      str  = str.strip()
-      args = ''
-      
+      """
+      Returns a filter as an array.
+      """
+      str = str.strip()
+      args = ""
       # Look for prefixes
       prfx, cmd = RulesLexer.getPrefix(RS_PREFIX_FILTERS, str)
-      
       # Look for parameters
       params = RS_RGX_TARGET_FPARAM.match(cmd)
       if params:
@@ -436,14 +473,14 @@ class RulesLexer():
          op = params.group(2)
          value = RulesLexer.literalToType(params.group(3))
          args = (op, value)
-         
-      
       return [prfx, cmd, args]
       
    
    @staticmethod
-   def getPrefix(prefixes, str, defPrefix = ''):
-   # Get the prefix for a given string
+   def getPrefix(prefixes, str, defPrefix = ""):
+      """
+      Get the prefix for a given string from a list of allowed prefixes.
+      """
       for p in prefixes:
          if str[:len(p)] == p:
             cmd = str[len(p):].strip()
@@ -453,20 +490,24 @@ class RulesLexer():
       
    @staticmethod
    def getSuffix(suffixes, str):
-   # Get the suffix for a given string
+      """
+      Get the suffix for a given string from a list of allowed suffixes.
+      """
       for p in suffixes:
          if str[-len(p):] == p:
             cmd = str[:-len(p)].strip()
             return (p, cmd)
-      return ('', str)
+      return ("", str)
       
       
    @staticmethod
    def extractKeyword(str, keywords, prefixes = None):
-   # Extract any one keyword that match from the keywords list for the given string
+      """
+      Extract any one keyword that matches from the keywords list for the given string.
+      """
       strArr = str.split(" ")
       for i, kw in enumerate(strArr):
-         prefix = ''
+         prefix = ""
          if prefixes:
             prefix, kw = RulesLexer.getPrefix(prefixes, kw)
          if kw in keywords:
@@ -474,17 +515,19 @@ class RulesLexer():
             if prefixes:
                kw = (prefix, kw)
             return (kw, str.strip())
-      return ('', str)
+      return ("", str)
       
       
    @staticmethod
    def literalToType(token):
-   # Returns a python data type from the given literal
-      if token == 'true':
+      """
+      Returns a python data type from the given literal.
+      """
+      if token == "true":
          return True
-      if token == 'false':
+      if token == "false":
          return False
-      if token == 'nil':
+      if token == "nil":
          return None
       if isNumber(token):
          return int(token)

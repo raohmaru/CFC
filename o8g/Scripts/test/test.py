@@ -1,3 +1,6 @@
+#!/usr/bin/python
+# -*- coding: utf-8 -*-
+
 # Python Scripts for the Card Fighters' Clash definition for OCTGN
 # Copyright (C) 2013 Raohmaru
 
@@ -41,19 +44,19 @@ from card_rules import RulesDict
 from rs.RuleScript_lexer import RulesLexer
 import pprint
 
-pp = pprint.PrettyPrinter(indent=4)
+pp = pprint.PrettyPrinter(indent=1)
    
 # Rules to test
 targets = [
-   "target = character",
+   # "target = character",
    # "target = character,reactions",
    # "target = characters[attack]",
    # "target = character@hand",
    # "target = @oppRing",
-   # "target = Captain[attack] @ oppRing",
-   # "target = robot[-block]@myhand",
-   "target = character,action[bp>=800,frozen]@oppRing",
-   "target = characters[sp=-1]",
+   "target = Captain[attack] @ oppRing",
+   "target = robot[-block]@myhand",
+   # "target = character,action[bp>=800,frozen]@oppRing",
+   # "target = characters[sp=-1]",
    # "target = ^character[fresh&powerless]",
    # "target = ^character[fresh & -powerless]",
    # "target = ^character[fresh & -powerless, backedup]",
@@ -88,8 +91,8 @@ actions = [
    # "action = {D}: destroy() to(character[bp>=800]@oppRing)",
    # "action = {E(reaction@discard)}: [[may]] moveTo(hand)",
    # "action = {E(reaction@discard)}: [[may 'Question?']] moveTo(hand)",
-   # "action = destroy() ueot",
-   # "action = destroy() oppueot",
+   "action = destroy() ueot",
+   "action = destroy() oppueot",
    # "action = {D(action)}: [[if me.HP < 10]] destroy() to(character) & freeze; draw(2) ueot",
    # "action = {F}:  to(character) ueot",
    # "action = {D(2)}: +cantblock to(character@oppRing) ueot",
@@ -117,7 +120,7 @@ actions = [
    # "action = reveal(nil, true, false, 1, -12, yes, none)",
    # "action = copyAbility(prevTgt.0) to(this); [[if prevTgt.ability == trigger]] clear()",
    # "action = {S}: each(card in me.hand => hp(+100))"
-   "action = discard(character) || destroy() & draw(2)"
+   # "action = discard(character) || destroy() & draw(2)"
 ]
 abilities = [
    "abilities = unblockable",
@@ -137,10 +140,10 @@ autos = [
    # "auto = [[may 'Question?']] destroy() & +unblockable to(character@myRing) uynt",
    # "auto = ~myEndPhase~ moveTo(ctrlHand) to(characters[bp>=800])",
    # "auto = ~anyBlockPhase~ +unblockable to(characters[bp<=300 & attack & -uattack]) ueot",
-   "auto = ~playerCombatDamaged:fromThis~ +cantplayac to(opp) oppueot",
+   # "auto = ~playerCombatDamaged:fromThis~ +cantplayac to(opp) oppueot",
    # "auto = ?oppCanBlock:any? [[if blocker.bp > this.bp]]",
-   "auto = ~anyPlayerDamaged:action~ damage(1) to(damagedPlayer)",
-   # "auto = ~anyPlayerDamaged:action~ [[if me.hp < 10]] hp(+1)",
+   # "auto = ~anyPlayerDamaged:action~ damage(1) to(damagedPlayer)",
+   "auto = ~anyPlayerDamaged:action~ [[if me.hp < 10]] hp(+1)",
    # "auto = ~oppEndPhase:once~ discard(all)",
 ]
 evals = [
@@ -170,11 +173,12 @@ def test(arr, title):
    print "Testing {} ".format(title) + ("=" * 80) + "\n"
    for item in arr:
       tokens = RulesLexer.tokenize(item)
+      print("   ↓↓")
       pp.pprint(tokens)
       print ""
 
-test(targets, 'targets')
-# test(actions, 'actions')
+# test(targets, 'targets')
+test(actions, 'actions')
 # test(abilities, 'abilities')
 # test(autos, 'autos')
 # test(requisite, 'requisite')

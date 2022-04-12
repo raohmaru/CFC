@@ -216,7 +216,7 @@ class Rules():
                   question = cond[1].strip('"\"').capitalize()
                debug("-- Found MAY condition: {}", question)
                if not confirm(question):
-                  debug("--- {} cancelled", me)
+                  debug("--- {} canceled", me)
                   return False
             # IF condition
             elif cond[0] == RS_KW_COND_IF:            
