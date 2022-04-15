@@ -49,11 +49,11 @@ def debugScenario():
    gotoMain()
    waitForAnimation()
    tableCards = [
-       "067d592e-2ddf-43f5-82cc-25c70d29a996" # God Rugal
+       "e0c2ac67-1925-4e63-b9ae-9dcbc7ff229f" # The Ump
        # "d14694b4-484c-4b45-962e-8cbb636d8a9a" # 200 BP
       # ,"c7d128ea-a3b9-4b04-b8b2-a61153b5b2e6" # 400 BP
-      # ,"24e99a13-cb42-4e16-9900-78dde12e1a4c" # 600 BP
-      ,"e6e46f83-d089-4762-8d8e-2a3252cfc9db" # 800 BP
+      ,"24e99a13-cb42-4e16-9900-78dde12e1a4c" # 600 BP
+      # ,"e6e46f83-d089-4762-8d8e-2a3252cfc9db" # 800 BP
    ]
    for i, id in enumerate(tableCards):
       debug("Creating card {} at slot {}", id, i)

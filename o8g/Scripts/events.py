@@ -82,7 +82,7 @@ def removeGameEventListener(obj_id, eventName = None, callback = None):
    return removed
 
 
-def dispatchEvent(event, obj_id = None, args = []):
+def dispatchEvent(event, obj_id = None, args = [], excluded = []):
    """
    Sends a global event and executes the callbacks of all the listeners subscribed to the given event.
    Then will return a list with the resulting values.
@@ -90,10 +90,13 @@ def dispatchEvent(event, obj_id = None, args = []):
    results = []
    if not settings["PlayAuto"]:
       return results
-   debug(">>> dispatchEvent({}, {}, {})", event, obj_id, args)
+   debug(">>> dispatchEvent({}, {}, {}, excluded = {})", event, obj_id, args, excluded)
    GameEvents = getGlobalVar("GameEvents")
    for listener in GameEvents:
       if event == listener["event"]:
+         if listener["id"] in excluded:
+            debug("-- Listener {} is excluded", listener["id"])
+            continue
          # Join the default args with the given args
          params = listener["args"] + args
          if (
@@ -145,13 +148,13 @@ def dispatchEvent(event, obj_id = None, args = []):
    return results
 
 
-def triggerHook(event, obj_id = None, args = []):
+def triggerHook(event, obj_id = None, args = [], excluded = []):
    """
    Hook system. It returns a boolean whether the given action defined by the hook is allowed or not or not.
    """
    res = None
    source = None
-   results = dispatchEvent(event, obj_id, args)
+   results = dispatchEvent(event, obj_id, args, excluded)
    # Reduce results until we found a False result
    for result in results:
       if result[1]:
@@ -208,4 +211,3 @@ def onRemoveEvent(listener):
    if func:
       debug("Calling on removed callback {}()", func.func_name)
       func(*listener["args"])
-   
