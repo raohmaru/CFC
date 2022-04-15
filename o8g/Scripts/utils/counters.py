@@ -52,6 +52,8 @@ def dealDamage(dmg, target, source, combatDmg = True, isPiercing = False):
       oldHP = getState(target, "HP")
       newHP = oldHP - dmg
       target.HP = newHP
+      # Update game state in case several attacks are done at once
+      setState(target, "HP", newHP)
       typeOfDmg = ""
       if isPiercing:
          typeOfDmg = "piercing "
