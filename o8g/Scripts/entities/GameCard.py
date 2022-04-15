@@ -30,7 +30,8 @@ class GameCard(object):
       self.rules = Rules(self.rule_id, self.card_id)
       self.state = {
          "willHighlight": True,
-         "lastBP": NaN
+         "lastBP": NaN,
+         "joiningUA": False
       }
       
    def init(self, forceActivateAuto = False):

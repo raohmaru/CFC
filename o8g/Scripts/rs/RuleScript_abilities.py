@@ -157,6 +157,12 @@ def abl_removeFrost(obj_id):
       doesNotUnfreeze(card)
    return False  # Mandatory
    
+   
+def abl_cantattack(obj_id):
+   pcard = getGameCard(Card(obj_id))
+   # Disable ability if joining a UA
+   return pcard.getState("joiningUA") == True
+   
 
 # On ability added callbacks -----------------------------------------------
 
@@ -201,8 +207,9 @@ def abl_cantblock_removed(obj_id, source_id, msg, eventCallback, restr = None):
 
 # Register abilities -------------------------------------------------------
 
+#                       name,              event,              eventCallback,    onAdded,  onRemoved
 RulesAbilities.register("unblockable",     Hooks.CanBeBlocked)
-RulesAbilities.register("cantattack",      Hooks.BeforeAttack, onAdded = abl_cantattack_added)
+RulesAbilities.register("cantattack",      Hooks.BeforeAttack, "abl_cantattack", abl_cantattack_added)
 RulesAbilities.register("cantblock",       Hooks.BeforeBlock,  onAdded = abl_cantblock_added, onRemoved = "abl_cantblock_removed")
 RulesAbilities.register("cantplayac",      Hooks.BeforePlayAC)
 RulesAbilities.register("cantplayre",      Hooks.BeforePlayRE)

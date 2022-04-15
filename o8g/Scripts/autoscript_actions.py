@@ -229,7 +229,7 @@ def attackAuto(card, force = False):
 
 
 def unitedAttackAuto(card, targets = None, force = False):
-   debug(">>> attackAuto({}, {}, {})", card, targets, force)
+   debug(">>> unitedAttackAuto({}, {}, {})", card, targets, force)
 
    # Is char in player's ring?
    if not charIsInRing(card):
@@ -247,8 +247,13 @@ def unitedAttackAuto(card, targets = None, force = False):
    if hasMarker(card, "Just Entered"):
       warning(MSG_ERR_ATTACK_FRESH)
       return
-   # Triggers a hook to check if the character can attack
-   if triggerHook(Hooks.BeforeAttack, card._id, [card._id]) == False:
+   # Triggers a hook to check if the character can attack.
+   # Auto abilities of the card are deactivated in UA.
+   pcard = getGameCard(card)
+   pcard.setState("joiningUA", True)
+   canJoinUA = triggerHook(Hooks.BeforeAttack, card._id, [card._id])
+   pcard.setState("joiningUA", False)
+   if canJoinUA == False:
       return
    # Cancels the character's attack if it's already attacking
    if not force and isAttacking(card):
@@ -473,13 +478,14 @@ def rearrangeUAttack(card):
       # If it was the lead card, or there is only 1 char left, cancel UA
       if uatttackIdx == 0 or len(uattack) == 1:
          notify("{} cancels the United Attack.".format(me))
+         clearGlobalVar("UnitedAttack")
          for cid in uattack:
             c = Card(cid)
             removeMarker(c, "United Attack")
-            setMarker(c, "Attack")
-            c.highlight = AttackColor
-            alignCard(c)
-         clearGlobalVar("UnitedAttack")
+            if attackAuto(c):
+               c.highlight = AttackColor
+            else:
+               cancelAttack(c, True)
       # Reorder remaining chars in the UA
       else:
          for cid in uattack[1:]:
@@ -488,6 +494,7 @@ def rearrangeUAttack(card):
       
 
 def cancelAttack(card, silent = False):
+   debug(">>> cancelAttack({})", card)
    removeMarker(card, "Attack")
    removeMarker(card, "United Attack")
    removeMarker(card, "Unfreezable")
