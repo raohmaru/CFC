@@ -96,9 +96,9 @@ def evalExpression(expr, retValue = False, locals = None):
       return None
 
 
-def getTargets(str, source = None):
+def getTargets(str, source = None, reveal = True):
    """
    Parses a target strings and returns the targeted cards.
    """
    cardsTokens = RulesLexer.parseTarget(str.lower())
-   return RulesUtils.getTargets(cardsTokens, source)
+   return RulesUtils.getTargets(cardsTokens, source, reveal = reveal)

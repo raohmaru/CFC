@@ -126,14 +126,15 @@ class RulesUtils():
    def getTargets(target, source = None, msg = None, reveal = True):
       """
       Returns a list of objects targeted according the `target` rules.
+      :param bool or str: Either to reveal the cards to the players, or just get the list. Values: True, False, "all".
       """
-      debug("Getting targets (reveal: {})", reveal)
       types    = target["types"]
       zone     = target["zone"]
       filters  = target["filters"]
       pick     = target["pick"]
       qty      = RulesUtils.getTargetQty(target["qty"])
       selector = target["selector"]
+      debug("Getting targets ({}, {}, filters: {}, pick: {}, {}, selector: {}, reveal: {})", types, zone, filters, pick, qty, selector, reveal)
       # If two or more target types, ask for a single target
       if len(types) > 1 and target["typeop"] == RS_OP_OR:
          # Check if there is any keyword in the target types
@@ -154,75 +155,66 @@ class RulesUtils():
             return False
          zone = list(zone)  # Make a copy of the list
          zone[0] = [RS_PREFIX_MY, RS_PREFIX_OPP][pile - 1]
-
       # Get all the cards from the given zone
       debug("-- Getting all cards from zone {}", "".join(zone))
       cards = RulesUtils.getCardsFromZone(zone, source)
       debug("-- Retrieved {} cards", len(cards))
-
       # Filter targets
       targets = []
       for type in types:
          ftargets = RulesUtils.filterTargets(type, filters, zone, cards, source, msg, pick, qty, reveal)
          if ftargets:
             targets += ftargets
-      
       if not targets and not pick:
          debug("-- maybe it's an expression?")
-         res = evalExpression(types[0], True, getLocals())
-         if res:
-            return [res]
+         result = evalExpression(types[0], True, getLocals())
+         if result:
+            return [result]
          return False
-
       # Select random cards
       if qty is not None and qty.random:
          samples = min(qty.samples, len(targets))
          targets = random.sample(targets, samples)
          debug("-- Randomly selected {} card(s)", samples)
-         
       # Apply a final selector
       if selector and targets:
          targets = RulesSelectors.applySelector(selector, targets)
-         
       if not targets:
          whisper(MSG_ERR_NO_FILTERED_CARDS)
       # Draw an arrow between the source card and the targets
       elif reveal and source and isCard(source):
          for c in targets:
-            # if isCard(c):
-               # source.arrow(c)
-               # update()
             if isPlayer(c):
                c = getAvatar(c)
             if c:
                source.arrow(c)
                update()
-
       return targets
 
 
    @staticmethod
    def filterTargets(type, filters, zone, cards, source = None, msg = None, pick = None, qty = None, reveal = True):
+      """
+      Applies filters to the list of cards or players.
+      """
       debug("-- filter targets by type '{}' in zone {}", type, zone)
       targets = None
+      # The target is the source
       if type == RS_KW_TARGET_THIS and source:
          targets = RulesFilters.applyFiltersTo([source], filters)
          if len(targets) == 0:
             targets = False
-      # If target is a player
+      # If target is a player...
       elif type in RS_KW_TARGET_IS_PLAYER:
          targets = RulesUtils.filterPlayers(type, filters, qty)
+      # ... or a list of cards
       else:
-         # Filter cards with a target
          targets = RulesUtils.filterCards(type, filters, zone, cards, source, msg, pick, qty, reveal)
-
       if isinstance(targets, list):
          debug("-- {} target(s) retrieved:", len(targets))
          for i, t in enumerate(targets):
-            if i < 10:
-               debug("        {}", t)
-            else:
-               debug("        ...")
+            debug("        {}", t if i < 10 else "...")
+            if i >= 10:
                break
       return targets
 
@@ -238,35 +230,30 @@ class RulesUtils():
             arr = [me]
             if len(players) > 1:
                arr.append(players[1])
-
       debug("-- applying {} filters to player {}", len(filters), arr)
-
       # Apply filters
       arr = RulesFilters.applyFiltersTo(arr, filters)
-
       if len(arr) == 0:
          whisper(MSG_ERR_NO_FILTERED_PLAYERS)
          return False
-
-      # If kw is "player" then must choose between himself or enemy
+      # If kw is RS_KW_TARGET_PLAYER then must choose between himself or enemy
       if type == RS_KW_TARGET_PLAYER and len(arr) > 1:
          if qty is not None and qty.random:
             arr = [random.choice(arr)]
          else:
+            debug("-- found kw {}, must choose one player", RS_KW_TARGET_PLAYER)
             t = askChoice("Select a player:", [player.name for player in arr])
             if t == 0:
                return False
             arr = [arr[t - 1]]
-               
       return arr
 
 
    @staticmethod
    def filterCards(type, filters, zone, cards, source = None, msg = None, pick = None, qty = None, reveal = True):
       debug("-- applying {} filters to {} cards", len(filters), len(cards))
-
-      cards_f1 = cards
-      choose = True
+      result = cards
+      canChoose = True
       minQty = 1
       maxQty = 1
       isCardName = False
@@ -275,14 +262,14 @@ class RulesUtils():
             minQty = qty.min
             maxQty = qty.max
          elif qty.random:
-            choose = False
+            canChoose = False
 
       # Check for type suffixes
       typeSuffix, type = RulesLexer.getSuffix(RS_SUFFIX_TYPES, type)
       if typeSuffix:
          debug("-- found suffix '{}' in '{}'", typeSuffix, type + typeSuffix)
          if typeSuffix == RS_SUFFIX_PLURAL:
-            choose = False
+            canChoose = False
 
       # Check for type prefixes
       typePrefix, type = RulesLexer.getPrefix(RS_PREFIX_TYPES, type)
@@ -290,17 +277,16 @@ class RulesUtils():
          debug("-- found prefix '{}' in '{}'", typePrefix, typePrefix + type)
          # Targeting other cards?
          if typePrefix == RS_PREFIX_OTHER:
-            # Current card can"t be selected
-            card = source
-            if card in cards_f1:
-               debug(MSG_ERR_TARGET_OTHER, card)
-               cards_f1.remove(card)
+            # Current card can't be selected
+            if source in result:
+               debug(MSG_ERR_TARGET_OTHER, source)
+               result.remove(source)
             
       # Type is a card name?
       if type[0] == RS_KW_NAME:
          isCardName = True
          type = type.strip(RS_KW_NAME)
-
+      # Filter by type if it's not RS_KW_ANY
       if type != RS_KW_ANY:
          attr = "Subtype"
          if isCardName:
@@ -310,58 +296,57 @@ class RulesUtils():
          cardsByType = []
          exclude = typePrefix == RS_PREFIX_NOT
          debug("-- checking if any card {} {} '{}'", "does not match" if exclude else "matches", attr, type)
-         for c in cards_f1:
+         for c in result:
             cattr = getattr(c, attr).lower()
             if (exclude and cattr != type) or (not exclude and cattr == type):
                cardsByType.append(c)
-         cards_f1 = cardsByType
-         if len(cards_f1) > 0:
-            debug( "      " + cardsAsNamesListStr(cards_f1))
+         result = cardsByType
+         if len(result) > 0:
+            debug( "      " + cardsAsNamesListStr(result))
          else:
             debug("      Nope")
 
       # Look for targeted cards
-      if choose:
-         cards_f2 = [c for c in cards_f1
+      if canChoose:
+         targetedCards = [c for c in result
             if c.targetedBy == me]
-         if len(cards_f2) == 0:
-            if len(cards_f1) == 0 and not reveal:
-               return False
-         else:
-            if len(cards_f2) >= minQty and len(cards_f2) <= maxQty:
-               cards_f1 = cards_f2
-               choose = False
-               debug("-- {} card(s) targeted", len(cards_f1))
+         if len(targetedCards) == 0 and len(result) == 0 and not reveal:
+            return False
+         # Must target exactly the number of cards required
+         elif len(targetedCards) >= minQty and len(targetedCards) <= maxQty:
+            result = targetedCards
+            canChoose = False
+            debug("-- {} card(s) targeted", len(result))
 
-      # Apply filters
-      cards_f1 = RulesFilters.applyFiltersTo(cards_f1, filters)
+      # Apply the filters
+      result = RulesFilters.applyFiltersTo(result, filters)
 
       # Force to pick cards
       if pick:
          if pick > 0:
-            cards_f1 = cards_f1[:pick]
-            debug("-- Picked {} card(s)", len(cards_f1))
+            result = result[:pick]
+            debug("-- Picked {} card(s)", len(result))
          else:
-            cards_f1 = cards_f1[pick:]
-            debug("-- Picked {} card(s) from the bottom of {}", len(cards_f1), "".join(zone))
+            result = result[pick:]
+            debug("-- Picked {} card(s) from the bottom of {}", len(result), "".join(zone))
          if qty is None:
-            choose = False
+            canChoose = False
       
-      # Don"t look for cards in this zone, there is only one card
+      # Don't look for cards in this zone, there is only one card
       if zone[1] == RS_KW_ZONE_INFRONT:
-         choose = False
+         canChoose = False
 
-      if choose:
-         if len(cards_f1) == 0 and reveal != "all":
+      if canChoose:
+         if len(result) == 0 and reveal != "all":
             return False
          if not msg:
             msg = MSG_SEL_CARD_EFFECT if source else MSG_SEL_CARD
          sourceName = source.Name if source else ""
          # Quantity message
-         qtyMsg = min(minQty, len(cards_f1))
+         qtyMsg = min(minQty, len(result))
          qtyPlural = pluralize(minQty)
-         if qty is not None and qty.max == RS_KW_ANYNUM:
-            maxQty = len(cards_f1)
+         if qty is not None and maxQty == RS_KW_ANYNUM:
+            maxQty = len(result)
          if minQty < maxQty:
             if minQty == 0:
                qtyMsg = "up to {}".format(maxQty)
@@ -372,7 +357,7 @@ class RulesUtils():
             qtyMsg = "{} {}".format(qtyMsg, type)
             
          # Last chance to select a card
-         if len(cards_f1) > 1 or minQty == 0 or reveal:
+         if len(result) > 1 or minQty == 0 or reveal:
             article = "the"
             if zone[1] != RS_KW_ZONE_ARENA:
                article = "{}'s".format(getOpp()) if zone[0] == RS_PREFIX_OPP else "your"
@@ -381,7 +366,7 @@ class RulesUtils():
                ctrl = selectRing()
                if not ctrl:
                   return False
-               cards_f1 = [c for c in cards_f1 if c.controller == ctrl]
+               result = [c for c in result if c.controller == ctrl]
                if ctrl != me:
                   article = "{}'s".format(getOpp())
             # Info message
@@ -391,30 +376,36 @@ class RulesUtils():
                owner = pickMsg + owner
             notify(MSG_PLAYER_LOOKS.format(me, owner, zone[1]))
             title = msg.format(qtyMsg, qtyPlural, article, zone[1], sourceName)
-            # If there aren"t enough cards to select, just show the cards
-            if len(cards_f1) <= minQty:
-               showCardDlg(cards if reveal == "all" else cards_f1, title, min = 0, max = 0)
+            # If there aren't enough cards to select, just show the cards
+            if len(result) <= minQty:
+               showCardDlg(cards if reveal == "all" else result, title, min = 0, max = 0)
             else:
+               # Ask for cards until some are selected
                while True:
-                  cards_sel = showCardDlg(cards if reveal == "all" else cards_f1, title, min = minQty, max = maxQty)
-                  if cards_sel == None or minQty == 0 or not reveal or len(set(cards_sel) & set(cards_f1)) >= 1:
+                  cards_sel = showCardDlg(cards if reveal == "all" else result, title, min = minQty, max = maxQty)
+                  # Accept selection if
+                  # - dialog was closed
+                  # - no card is selected but minQty is 0
+                  # - no need to reveal cards (we just want to get the cards from another script)
+                  # - selected cards are contained in the result set
+                  if cards_sel == None or minQty == 0 or not reveal or len(set(cards_sel) & set(result)) >= 1:
                      if cards_sel == None:
                         notify(MSG_PLAYER_SELECTS_NONE.format(me, owner, zone[1]))
-                     cards_f1 = cards_sel
+                     result = cards_sel
                      break
                   title = "Please " + title[0].lower() + title[1:]
                   warning(title)
-            if cards_f1:
-               if isVisible(cards_f1[0]):
-                  notify(MSG_PLAYER_SELECTS_NAMED.format(me, cardsAsNamesListStr(cards_f1)))
+            if result:
+               if isVisible(result[0]):
+                  notify(MSG_PLAYER_SELECTS_NAMED.format(me, cardsAsNamesListStr(result)))
                else:
-                  notify(MSG_PLAYER_SELECTS.format(me, len(cards_f1)))
-         if cards_f1 == None and minQty != 0:
+                  notify(MSG_PLAYER_SELECTS.format(me, len(result)))
+         if result == None and minQty != 0:
             return False
 
       # At this point there are not cards to which apply the effect, but the ability
       # is activated anyway
-      if cards_f1 and len(cards_f1) == 0 and minQty != 0:
+      if result and len(result) == 0 and minQty != 0:
          notify(MSG_ERR_NO_CARDS)
 
-      return cards_f1
+      return result
