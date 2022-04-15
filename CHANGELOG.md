@@ -6,7 +6,8 @@
 + Performance improvements.
 + Fixed bug in the `prophecy` command affecting Mischief.
 + Bug fix: only last result of the events triggered by triggerHook() counts for the returning value.
-+ Bug fix: Allow negative numbers in RuleScript filters.
++ Bug fix: allow negative numbers in RuleScript filters.
++ Bugfix: multiple combat damage to a player is not correctly subtracted
 
 ## 0.9.8
 + Re-balanced Zaki ability: now it adds 10 SP again.

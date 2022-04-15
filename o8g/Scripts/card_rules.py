@@ -114,11 +114,11 @@ selector: (optional)
       not(expr)
 
 ---------------------------------------------------
-action = {cost}: [[cond]] effect [& effect] [|| effect] to(target) restr; ...
+action = {cost}: [[cond]] effect [& effect] [&& effect] [|| effect] to(target) restr; ...
 
 Multiple action keys are allowed. If there are two or more, a dialog will be show to choose the action.
 Several actions can be joined with ';'.
-Actions are executed in parallel, in order. Effects in the same action (joined by & or ||) are executed sequentially.
+Actions are executed in parallel, in order. Effects in the same action (joined by &, && or ||) are executed sequentially.
 
 cost: (optional)
    Keywords:
@@ -186,8 +186,9 @@ effect:
             +
             -
    Operators:
-      & (and)
-      || (or, will execute right effect if left effect failed)
+      &   (join, will execute next effect regardless of errors)
+      &&  (and, will stop execution if left effect failed)
+      ||  (or, will execute right effect if left effect failed)
       
 to(): (optional)
    Parameters:
@@ -1017,7 +1018,7 @@ auto = ~blocks:this~ draw(2)
 # God Rugal's YUUGOU POWER
 RulesDict["067d592e-2ddf-43f5-82cc-25c70d29a996"] = """
 target = character<1>[powerful]@anyDeck
-action = {F}: moveRevealedTo(ctrlDeck, -1) & moveTo(ctrlDeck, -1, true); copyAbility(prevTgt.0) to(character)
+action = {F}: moveRevealedTo(ctrlDeck, -1) && moveTo(ctrlDeck, -1, true); copyAbility(prevTgt.0) to(character)
 """
 
 # Alfred's WAVE RIDER

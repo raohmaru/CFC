@@ -536,24 +536,30 @@ def cmd_transform(rc, targets, source, restr, expr):
 
    
 def cmd_moveRevealedCardsTo(rc, targets, source, restr, zone, pos = None):
+   debug(">>> cmd_moveRevealedCardsTo({}, {})", zone, pos)
    pile = me.deck
    index = len(pile)
+   success = True
    # Maybe there is a selected card
    if len(targets) > 0:
       pile = targets[0].group
       index = targets[0].index
-   newPile = [pile[i] for i in range(0, index)]
-   targetZone = RulesUtils.getPileByName(zone, pile[0])
-   myPile = targetZone.controller == me
-   debug(">>> cmd_moveRevealedCardsTo({}, {}, {})", zone, index, pos)
-   notify("{} looks through the top of {} {} ({} card{} revealed)".format(me, "his" if myPile else players[1], pile.name, index + 1, pluralize(index + 1)))
-   for card in newPile:
-      if myPile:
-         moveToGroup(targetZone, card, pile, num(pos), True)
-      else:
-         remoteCall(targetZone.controller, "moveToGroup", [targetZone, card, pile, num(pos), True])
-      waitForAnimation()
-   rc.applyNext()
+   # Do nothing if there ain't cards in the pile
+   if len(pile) > 0:
+      newPile = [pile[i] for i in range(0, index)]
+      targetZone = RulesUtils.getPileByName(zone, pile[0])
+      myPile = targetZone.controller == me
+      debug("Moving up to {} cards to {} in pos {}", index, zone, pos)
+      notify("{} looks through the top of {} {} ({} card{} revealed)".format(me, "his" if myPile else players[1], pile.name, index + 1, pluralize(index + 1)))
+      for card in newPile:
+         if myPile:
+            moveToGroup(targetZone, card, pile, num(pos), True)
+         else:
+            remoteCall(targetZone.controller, "moveToGroup", [targetZone, card, pile, num(pos), True])
+         waitForAnimation()
+   else:
+      success = False
+   rc.applyNext(success)
    
    
 def cmd_enableRule(rc, targets, source, restr, rule, value = True):
@@ -774,6 +780,15 @@ def cmd_or(rc, targets, source, restr):
       cmd = rc.cmds.pop(0)
       debug("Skip next cmd: {}", cmd)
    rc.applyNext()
+
+
+def cmd_and(rc, targets, source, restr):
+   debug(">>> cmd_and({})", rc.lastCmdSuccess)
+   if not rc.lastCmdSuccess:
+      # Clear commands queue
+      rc.cmds = []
+      debug("Stop execution")
+   rc.applyNext()
    
 
 RulesCommands.register("damage",           cmd_damage)
@@ -819,3 +834,4 @@ RulesCommands.register("peek",             cmd_peek)
 RulesCommands.register("pileview",         cmd_pileView)
 RulesCommands.register("clear",            cmd_clear)
 RulesCommands.register("or",               cmd_or)
+RulesCommands.register("and",              cmd_and)

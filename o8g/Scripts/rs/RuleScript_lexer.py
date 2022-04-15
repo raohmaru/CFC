@@ -55,7 +55,7 @@ action: {
          ["if", "expression", {action}],
          # commands
          [
-            ["destroy"],
+            ["destroy", []],
             ["draw", ["2"]],
             ("+", "unblockable")
          ],
@@ -399,10 +399,11 @@ class RulesLexer():
             debug("---- found additional target '{}'", match.group(2))
             effect[2] = RulesLexer.parseTarget(match.group(2), match.group(1))
             expr = re.sub(RS_RGX_AC_TARGET, "", expr).strip()
+         # Transforms RS_OP_BOOL_OR and RS_OP_BOOL_AND into commands
+         expr = expr.replace(RS_OP_BOOL_OR, RS_OP_AND + " or() " + RS_OP_AND)
+         expr = expr.replace(RS_OP_BOOL_AND, RS_OP_AND + " and() " + RS_OP_AND)
          # Finally, get the commands
          effect[1] = []
-         # Transforms RS_OP_BOOL_OR into a command
-         expr = expr.replace(RS_OP_BOOL_OR, RS_OP_AND + " or() " + RS_OP_AND)
          commands = expr.split(RS_OP_AND)
          # Multiple commands in the effect
          for cmd in commands:

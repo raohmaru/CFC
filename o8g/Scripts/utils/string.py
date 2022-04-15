@@ -115,3 +115,7 @@ def getTextualRestr(restr):
          player = getOpp()
       return " " + MSG_RESTR_LABELS[restr[1]].format(player)
    return restr(1)
+   
+   
+def expandAbbr(abbr):
+   return ABBR[abbr] if abbr in ABBR else abbr

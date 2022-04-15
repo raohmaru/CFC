@@ -80,6 +80,7 @@ actions = [
    # "action = destroy & draw(1)",
    # "action = discard(1) & draw(1)",
    # "action = destroy(); draw(1)",
+   # "action = reveal() & destroy(); draw(1)",
    # "action = {F}: destroy()",
    # "action = {D}{F}: destroy()",
    # "action = {D(2)}{F}: destroy()",
@@ -91,8 +92,8 @@ actions = [
    # "action = {D}: destroy() to(character[bp>=800]@oppRing)",
    # "action = {E(reaction@discard)}: [[may]] moveTo(hand)",
    # "action = {E(reaction@discard)}: [[may 'Question?']] moveTo(hand)",
-   "action = destroy() ueot",
-   "action = destroy() oppueot",
+   # "action = destroy() ueot",
+   # "action = destroy() oppueot",
    # "action = {D(action)}: [[if me.HP < 10]] destroy() to(character) & freeze; draw(2) ueot",
    # "action = {F}:  to(character) ueot",
    # "action = {D(2)}: +cantblock to(character@oppRing) ueot",
@@ -121,6 +122,7 @@ actions = [
    # "action = copyAbility(prevTgt.0) to(this); [[if prevTgt.ability == trigger]] clear()",
    # "action = {S}: each(card in me.hand => hp(+100))"
    # "action = discard(character) || destroy() & draw(2)"
+   "action = discard(character) && destroy()"
 ]
 abilities = [
    "abilities = unblockable",

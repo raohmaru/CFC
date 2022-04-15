@@ -49,9 +49,10 @@ def debugScenario():
    gotoMain()
    waitForAnimation()
    tableCards = [
-       "d14694b4-484c-4b45-962e-8cbb636d8a9a" # 200 BP
-      ,"c7d128ea-a3b9-4b04-b8b2-a61153b5b2e6" # 400 BP
-      ,"24e99a13-cb42-4e16-9900-78dde12e1a4c" # 600 BP
+       "067d592e-2ddf-43f5-82cc-25c70d29a996" # God Rugal
+       # "d14694b4-484c-4b45-962e-8cbb636d8a9a" # 200 BP
+      # ,"c7d128ea-a3b9-4b04-b8b2-a61153b5b2e6" # 400 BP
+      # ,"24e99a13-cb42-4e16-9900-78dde12e1a4c" # 600 BP
       ,"e6e46f83-d089-4762-8d8e-2a3252cfc9db" # 800 BP
    ]
    for i, id in enumerate(tableCards):
@@ -65,7 +66,6 @@ def debugScenario():
       waitForAnimation()
       
    handCards = [
-       "fa4ee219-8264-41bc-b8a3-23a24df61d9a" # Tooptadon
        # "8bb477f9-5004-4018-8d5e-73c6a23e8912" # Char 300 BP
       # ,"e910f462-bea9-4262-b168-c7c512eb6511" # Char 500 BP
       # ,"0fdadc92-0864-46cc-a3ff-c20e2af8249c" # Char 700 BP
@@ -137,8 +137,8 @@ def debugOpp():
    tableCards = [
        "d14694b4-484c-4b45-962e-8cbb636d8a9a" # 200 BP
       ,"c7d128ea-a3b9-4b04-b8b2-a61153b5b2e6" # 400 BP
-      ,"24e99a13-cb42-4e16-9900-78dde12e1a4c" # 600 BP
-      ,"e6e46f83-d089-4762-8d8e-2a3252cfc9db" # 800 BP
+      # ,"24e99a13-cb42-4e16-9900-78dde12e1a4c" # 600 BP
+      # ,"e6e46f83-d089-4762-8d8e-2a3252cfc9db" # 800 BP
    ]
    for i, id in enumerate(tableCards):
       card = table.create(id, 0, 0, quantity = 1, persist = True)
