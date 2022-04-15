@@ -161,7 +161,7 @@ def blockPhaseStart():
          uaSize = len(uattack) - 1
          uaType = ["", "Double", "Triple"][uaSize] + " United Attack"
          uaTypeKw = "ua{}".format(len(uattack))
-         if not payCostSP(-uaSize * UAttackCost, None, "do a {}".format(uaType), uaTypeKw):
+         if not payCostSP(uaSize * UAttackCost, uaType, "do a {}".format(uaType), uaTypeKw):
             notify("{} does not have enough SP to pay the {}.".format(me, uaType))
             prevPhase()
             return

@@ -294,7 +294,7 @@ def unitedAttackAuto(card, targets = None, force = False):
    if not force:
       cost = totalUnited * UAttackCost
       cost = getCostMod(cost, "ua" + str(totalUnited + 1))
-      if cost > me.SP:
+      if me.SP + cost < 0:
          type = ["", "Double", "Triple"][totalUnited]
          warning("You do not have enough SP to do a {} United Attack (it costs {} SP).".format(type, cost))
          return

@@ -138,7 +138,7 @@ effect:
       Effect command (followed by () or ?() with 0 or more parameters):
       ?() marks the command as optional:
          activate(expr)
-         alterCost(cardtype, #) // permanent
+         alterCost(cardtype, [=]#) // permanent
          bp(#|x#|=#|expr)       // default target = this
          clear()
          copyAbility(expr)

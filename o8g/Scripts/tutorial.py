@@ -312,15 +312,15 @@ To do an United Attack you can do any of the following:
       if len(getGlobalVar("UnitedAttack")) == 0:
          warning("Please do an United Attack.")
          return False
-      me.SP -= UAttackCost
+      me.SP += UAttackCost
       
       self.msg("""
 Did you noticed how your SP lowered from {} to {}? That's because of the cost of the Double United Attack.
 
-Also take into account that {} abilities are nullified (cancelled) until the end of your turn if the character joins an United Attack.
-""".format(me.SP + UAttackCost, me.SP, AutoUniChar))
+Also take into account that {} abilities are nullified (canceled) until the end of your turn if the character joins an United Attack.
+""".format(me.SP - UAttackCost, me.SP, AutoUniChar))
 
-      me.SP += UAttackCost
+      me.SP -= UAttackCost
      
       self.msg("""
 Now that you know how to attack, it is about time to learn how to Counter-attack.

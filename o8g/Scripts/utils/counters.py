@@ -105,7 +105,7 @@ def modSP(amount = 1, mode = None, silent = False, player = me, silentSnd = Fals
       notify("{} {} {} SP. New total is {} SP (before was {}).".format(player, action, amount, player.SP, initialSP))
 
 
-def payCostSP(amount = 1, card = None, msg = "play this card", type = None):
+def payCostSP(amount = 1, obj = None, msg = "play this card", type = None):
    """
    Pays a SP cost. However it also check if the cost can actually be paid.
    """
@@ -113,16 +113,16 @@ def payCostSP(amount = 1, card = None, msg = "play this card", type = None):
    costModMsg = None
    # Cost modifiers
    if type:
-      newAmount = getCostMod(amount, type, card)
+      newAmount = getCostMod(amount, type, obj)
       if amount != newAmount:
-         costModMsg = u"The SP cost of {} has been modified by an ability ({}  \u2192  {}).".format(card, amount, newAmount)
+         costModMsg = u"The SP cost of {} has been modified by an ability ({}  \u2192  {}).".format(obj, amount, newAmount)
          amount = newAmount
    # Get the SP from playing a char
    if amount >= 0 and type == CharType:
       modSP(amount, silentSnd = True)
    else:
       initialSP = me.SP
-      # Cancel if player doesn"t have enough SP
+      # Cancel if player doesn't have enough SP
       if me.SP + amount < 0:
          warning("You do not have enough SP to {}.\n(Cost is {} SP.)".format(msg, amount))
          return False
@@ -133,12 +133,12 @@ def payCostSP(amount = 1, card = None, msg = "play this card", type = None):
    return True
    
    
-def getCostMod(initialAmount, type, card = None):
+def getCostMod(initialAmount, type, obj = None):
    """
-   Gets all the modifications applied to a cost for the given card type.
+   Gets all the modifications applied to a cost for the given type.
    :param str type: A card type, ua2, ua3.
    """
-   debug(">>> getCostMod({}, {})", card, type)
+   debug(">>> getCostMod({}, {})", obj, type)
    newAmount = initialAmount
    costMod = 0
    type = type.lower()
@@ -154,12 +154,12 @@ def getCostMod(initialAmount, type, card = None):
             else:
                costMod += mod[2]
    # Cost modified by events
-   dispatchEvent(GameEvents.BeforePayCost + type, args = [card._id] if isCard(card) else None)
+   dispatchEvent(GameEvents.BeforePayCost + type, args = [obj._id] if isCard(obj) else None)
    costMod += getTempVar("costMod" + type, 0)
    # Fix final value
    if costMod != 0:
       newAmount += costMod
-      # If initial cost is less than 0, then new cost cannot be less than -1 (Kyosuke rule)
-      if newAmount >= 0 and isCard(card):
+      # If initial cost is less than 0, then new cost cannot be greater than -1 (Kyosuke rule)
+      if newAmount >= 0 and isCard(obj):
          newAmount = max(initialAmount, -1)
    return newAmount
