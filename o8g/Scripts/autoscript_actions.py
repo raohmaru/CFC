@@ -247,9 +247,8 @@ def unitedAttackAuto(card, targets = None, force = False):
    if hasMarker(card, "Just Entered"):
       warning(MSG_ERR_ATTACK_FRESH)
       return
-   # Triggers a hook to check if the character can attack.
-   # Auto abilities of the card are deactivated in UA.
-   if triggerHook(Hooks.BeforeAttack, card._id, [card._id], excluded = [card._id]) == False:
+   # Triggers a hook to check if the character can attack
+   if triggerHook(Hooks.BeforeAttack, card._id, [card._id]) == False:
       return
    # Cancels the character's attack if it's already attacking
    if not force and isAttacking(card):
