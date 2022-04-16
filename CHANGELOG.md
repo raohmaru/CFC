@@ -1,5 +1,8 @@
 # Card Fighters' Clash Changelog
 
+## 0.9.10
++ Fixes card images not rendering because some PNG images were compressed at 8 bit depth.
+
 ## 0.9.9
 + Ask for confirmation when user discards cards from the game area.
 + Updated card design.
@@ -22,7 +25,7 @@
 + Improved tutorial.
 + Improved game play.
 + Several bug fixes.
-+ Fixed compatibilty error with OCTGN 3.4.350.0.
++ Fixed compatibility error with OCTGN 3.4.350.0.
 
 ## 0.9.7
 + Improved card design for a better reading of BP, SP and rarity icons.

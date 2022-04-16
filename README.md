@@ -25,7 +25,7 @@ Use [bundler](http://bundler.io/) to install the dependencies listed in the [Gem
 
 ## Templates
 CFC card templates (and sets of cards) are created and managed using [Magic Set Editor 2](http://magicseteditor.sourceforge.net/) software and a [custom template](https://github.com/raohmaru/CFC-MSE2).  
-The card template is ported as an [OCTGN proxy card](https://github.com/octgn/OCTGN/wiki/ProxyGenerator), hence the image packs only contains the illustration.
+The card template is ported as an [OCTGN proxy card](https://github.com/octgn/OCTGN/wiki/ProxyGenerator), hence the [image packs](https://cardfightersclash.wordpress.com/image-packs/) for the cards only contains the illustrations.
 
 ## Developing For OCTGN
 OCTGN Game Development wiki: https://github.com/octgn/OCTGN/wiki#create-games-on-octgn

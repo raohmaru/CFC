@@ -82,7 +82,7 @@ def getGameVersion():
 
 def showChangelog():
    switchSetting("GameVersion", getGameVersion())
-   msg = u"""What's new in version 0.9.9
+   msg = u"""What's new in version 0.9.10
 
 - Ask for confirmation when a player discards cards from the game area.
 - Improved card design.
