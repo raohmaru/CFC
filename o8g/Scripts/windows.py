@@ -84,7 +84,12 @@ def showChangelog():
    switchSetting("GameVersion", getGameVersion())
    msg = u"""What's new in version 0.9.9
 
-- 
+- Ask for confirmation when a player discards cards from the game area.
+- Improved card design.
+- Performance improvements.
+- Fixed bug in the `prophecy` command affecting Mischief.
+- Bugfix: multiple combat damage to a player is not correctly subtracted.
+- Bugfix: The Ump cannot join an United Attack although auto abilities are disabled in United Attacks.
 """.format(TriggerUniChar)
    askChoice(msg, [], [], ["Close"])
    

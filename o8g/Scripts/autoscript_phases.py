@@ -233,8 +233,8 @@ def endPhaseStart():
                getRule("piercing") and
                uadmg > 0 and
                (
-                  # If the blocker has the ability preventpierce, the hook will return False
-                  (isUA and triggerHook(Hooks.PreventPierce, blocker._id, [blocker._id]) != False)
+                  # If the blocker has the ability preventpierce, the hook will return True
+                  (isUA and triggerHook(Hooks.PreventPierce, blocker._id, [blocker._id]) != True)
                   # One does not simply stop Haohmaru
                   or hasMarker(card, "Pierce")
                )

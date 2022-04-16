@@ -72,11 +72,11 @@ def getCardByContext(obj):
 def evalExpression(expr, retValue = False, locals = None):
    debug("evalExpression({})\nLocals: {}", expr, locals)
    expr = replaceVars(expr)
-   forexpr = "[{} for card in {}]"
+   forExpr = "[{} for card in {}]"
    
    if " in " in expr:
       parts = expr.split(" in ")
-      expr = forexpr.format(parts[0], parts[1])
+      expr = forExpr.format(parts[0], parts[1])
    
    if "all " in expr:
       expr = expr.replace("all ", "")

@@ -22,8 +22,9 @@ Case insensitive
 target = <qty> type <pick> [filters] @ zone ::selector([args]); ...
 target? = ...
 
-Defines target(s) used for all effects.
+Defines target(s) used by the effects.
 Only one target key is allowed.
+Optional.
 Several targets can be joined with ';'.
 target? - Target is optional; actions will be executed even if there is no target
 
@@ -119,6 +120,7 @@ action = {cost}: [[cond]] effect [& effect] [&& effect] [|| effect] to(target) r
 Multiple action keys are allowed. If there are two or more, a dialog will be show to choose the action.
 Several actions can be joined with ';'.
 Actions are executed in parallel, in order. Effects in the same action (joined by &, && or ||) are executed sequentially.
+Optional, but a card may contain either an action or an auto field.
 
 cost: (optional)
    Keywords:
@@ -147,7 +149,7 @@ effect:
          disableRule(rule)
          discard([#|target])   // default: 1, zone: myHand
          draw([#|expression])  // default: 1
-         each(expr in group => effect)    // effect context: group item
+         each(expr in group => effect)    // effect target: current group item
          enableRule(rule)
          freeze([toggle])
          hp(#|expr)             // default target = me
@@ -198,7 +200,7 @@ to(): (optional)
    Default:
       current player or the card (depend on context)
 
-to?(): Same as to(), but target is optional and will run next effect in the action
+to?(): Same as to(), but target is optional and will run next effect in the action.
       
 restr: (optional)
    Keywords:
@@ -232,6 +234,7 @@ ability:
 auto = [~event[,event]~ | ?hook?] [[cond]] effect [& effect] to(target) restr; ...
 
 Only one auto key is allowed.
+Optional, but a card may contain either an action or an auto field.
 
 event:
    Keywords:
@@ -363,14 +366,15 @@ Available variables:
    -- const --
    triggered
    
-   context: each()
+Context variables:
+   each(), all
       card
       char
       action
       reaction
    
 Available functions:
-   all group: expr   // context = group item
+   all expr in group
    isChar()
    flipCoin()
    inUAttack()
@@ -1767,7 +1771,7 @@ action = trash(3) target(opp)
 
 # Pride
 RulesDict["a8b949ff-7def-4c0a-8d79-49ad2a1d02d8"] = """
-action = [[if me.hand.size > opp.hand.size]] discard(all) & draw(opp.hand.size) [[elif opp.hand.size > me.hand.size]] discard(all) & draw(me.hand.size) target(opp)
+action = [[if me.hand.size > opp.hand.size]] discard(all) & draw(opp.hand.size) [[elif me.hand.size < opp.hand.size]] target(opp) discard(all) & draw(me.hand.size)
 """
 
 # Psyche up!
@@ -2122,5 +2126,5 @@ action = shuffle() & moveTo(deck)
 
 # Who's taller
 RulesDict["2298624c-1eeb-4f71-b028-b0118ea614ac"] = """
-action = [[if me.hand.size < opp.hand.size]] discard(all) & draw(opp.hand.size) [[elif opp.hand.size < me.hand.size]] discard(all) & draw(me.hand.size) target(opp)
+action = [[if me.hand.size < opp.hand.size]] discard(all) & draw(opp.hand.size) [[elif me.hand.size > opp.hand.size]] discard(all) & draw(me.hand.size) target(opp)
 """

@@ -313,6 +313,7 @@ def cmd_randomDiscard(rc, targets, source, restr, numCards = 1):
 
 def cmd_moveTo(rc, targets, source, restr, zone, pos = None, reveal = None):
    debug(">>> cmd_moveTo({}, {}, {}, {})", targets, zone, pos, reveal)
+   # This cmd cannot have default targets
    mute()
    zonePrefix, zoneName = RulesLexer.getPrefix(RS_PREFIX_ZONES, zone, RS_PREFIX_CTRL)
    if targets:
