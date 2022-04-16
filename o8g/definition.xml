@@ -4,7 +4,7 @@
       name="Card Fighters' Clash"
       id="e3d56d9e-900d-49c6-b6ae-22cbb51be153"
       octgnVersion="3.4.350.0"
-      version="0.9.9.883"
+      version="0.9.9.885"
       markersize="20"
       tags="capcom snk fighter"
       description="Play epic battles with fighters from Capcom and SNK!
@@ -146,6 +146,7 @@
 		<marker name="Backup"          id="efd3208d-2ec3-44ca-be1d-858e91628da4" src="Resources/Markers/backup.png"/>
 		<marker name="Pierce"          id="3131facc-3fe4-4dd5-95ff-afc08570d869" src="Resources/Markers/pierce.png"/>
 		<marker name="Cannot Block"    id="a8a4b1a3-6023-4ac1-b24f-a50e4768a598" src="Resources/Markers/cannot-block.png"/>
+		<marker name="Cannot Attack"    id="d117bc87-57d3-4489-8407-4e0a955eecb3" src="Resources/Markers/cannot-attack.png"/>
 	</markers>
 	
 	<proxygen definitionsrc="Proxy/proxydef.xml"></proxygen>

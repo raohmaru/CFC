@@ -172,6 +172,7 @@ def abl_frosted_added(card, restr = None):
 
 
 def abl_cantattack_added(card, restr = None):
+   setMarker(card, "Cannot Attack")
    if isAttacking(card):
       cancelAttack(card)
 
@@ -205,11 +206,16 @@ def abl_cantblock_removed(obj_id, source_id, msg, eventCallback, restr = None):
    abl_removed(obj_id, source_id, msg, eventCallback, restr)
 
 
-# Register abilities -------------------------------------------------------
+def abl_cantattack_removed(obj_id, source_id, msg, eventCallback, restr = None):
+   removeMarker(Card(obj_id), "Cannot Attack")
+   # It's mandatory to call this function
+   abl_removed(obj_id, source_id, msg, eventCallback, restr)
 
-#                       name,              event,              eventCallback,    onAdded,  onRemoved
+
+# Register abilities -------------------------------------------------------
+#                       name,              event,              eventCallback,    onAdded,              onRemoved
 RulesAbilities.register("unblockable",     Hooks.CanBeBlocked)
-RulesAbilities.register("cantattack",      Hooks.BeforeAttack, "abl_cantattack", abl_cantattack_added)
+RulesAbilities.register("cantattack",      Hooks.BeforeAttack, "abl_cantattack", abl_cantattack_added, "abl_cantattack_removed")
 RulesAbilities.register("cantblock",       Hooks.BeforeBlock,  onAdded = abl_cantblock_added, onRemoved = "abl_cantblock_removed")
 RulesAbilities.register("cantplayac",      Hooks.BeforePlayAC)
 RulesAbilities.register("cantplayre",      Hooks.BeforePlayRE)

@@ -88,6 +88,7 @@ MarkerFilters = {
 
 # Dictionary which hold all the hard-coded markers (in the game definition)
 # (variable Markers does exist and it is an OCTGN python class)
+# https://www.uuidgenerator.net/version4
 MarkersDict = {
    "BP"             : ("BP",              "b86fc644-d084-43d3-99d2-5b11457321cc"),
    "Just Entered"   : ("Just Entered",    "9a52c42c-543f-48bb-9a48-d7599d6c8fae"),
@@ -98,7 +99,8 @@ MarkersDict = {
    "Unfreezable"    : ("Unfreezable",     "fec1976b-9ce5-4b32-8c07-76eadc5607f6"),
    "Backup"         : ("Backup",          "efd3208d-2ec3-44ca-be1d-858e91628da4"),
    "Pierce"         : ("Pierce",          "3131facc-3fe4-4dd5-95ff-afc08570d869"),
-   "Cannot Block"   : ("Cannot Block",      "a8a4b1a3-6023-4ac1-b24f-a50e4768a598")
+   "Cannot Block"   : ("Cannot Block",    "a8a4b1a3-6023-4ac1-b24f-a50e4768a598"),
+   "Cannot Attack"  : ("Cannot Attack",   "d117bc87-57d3-4489-8407-4e0a955eecb3")
 }
 
 Buttons = {
