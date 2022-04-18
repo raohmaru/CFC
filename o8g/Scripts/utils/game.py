@@ -60,7 +60,7 @@ def resetAll():
 
 def switchSetting(name, value = None):
    """
-   Updates the game setttings of the player.
+   Updates the game settings of the player.
    """
    debug(">>> switchSetting({})", name)
    global settings
@@ -68,7 +68,7 @@ def switchSetting(name, value = None):
       settings[name] = not settings[name]
    else:
       settings[name] = value
-   setSetting("settings", str(settings))
+   setSetting("settings", str(settings))  # C# method
    if isinstance(settings[name], bool):
       status = ("OFF", "ON")[settings[name]]
    else:

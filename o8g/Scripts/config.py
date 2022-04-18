@@ -300,7 +300,11 @@ settings = {
    "WelcomeScreen": True,    # Show welcome screen
    "ExtAPI"       : True,    # Make use of the extended API to access the C# API of IronPython
    "GameVersion"  : "0.0.0", # Last version shown in the changelog window
-   "Avatar"       : None     # Player"s avatar
+   "Avatar"       : None,    # Player's avatar
+   "DoNotShow": {            # If True, do not show these Confirmation dialog again
+      "Destroy" : False,
+      "Activate": False
+   }
 }
 
 # Values used in dialogs that can be overridden by the user to remember his last input

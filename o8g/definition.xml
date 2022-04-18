@@ -4,7 +4,7 @@
       name="Card Fighters' Clash"
       id="e3d56d9e-900d-49c6-b6ae-22cbb51be153"
       octgnVersion="3.4.350.0"
-      version="0.9.10.890"
+      version="0.9.10.896"
       markersize="20"
       tags="capcom snk fighter"
       description="Play epic battles with fighters from Capcom and SNK!
@@ -271,6 +271,7 @@
 			<groupaction menu="Play tutorial" execute="startTutorial" />
 			<groupaction menu="Show welcome screen" execute="showWelcomeScreen" />
 			<groupaction menu="Download image packs &#129109;" execute="downloadImagePacks" />
+			<groupaction menu="Reset &quot;Do not show again&quot; dialogs" execute="resetDoNotShowAgain" />
 		</groupactions>
 		<groupactions menu="Debug..." showIf="acsh_debug">
 			<groupaction menu="Start" execute="startDebug" />

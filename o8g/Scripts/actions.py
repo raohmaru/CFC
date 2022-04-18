@@ -218,6 +218,10 @@ def alignCards(group = None, x = 0, y = 0):
       alignCard(card)
 
 
+#---------------------------------------------------------------------------
+# Settings
+#---------------------------------------------------------------------------
+
 def switchPlayAuto(group, x = 0, y = 0):
    switchSetting("PlayAuto")
 
@@ -236,13 +240,19 @@ def switchWinForms(group, x = 0, y = 0):
    
 def switchSounds(group, x = 0, y = 0):
    switchSetting("Sounds")
-   # Udpates OCTGN preferences
+   # Updates OCTGN preferences
    Octgn.Core.Prefs.EnableGameSound = settings["Sounds"]
    
    
 def switchWelcomeScreen(group, x = 0, y = 0):
    switchSetting("WelcomeScreen")
 
+
+def resetDoNotShowAgain(group, x = 0, y = 0):
+   doNotShow = settings["DoNotShow"].copy()
+   doNotShow.clear()
+   switchSetting("DoNotShow", doNotShow)
+   whisper("Restored \"Do not show again\" dialogs. Hidden notifications will appear again.")
 
 #---------------------------------------------------------------------------
 # Table card actions
@@ -678,7 +688,7 @@ def batchDestroy(cards, x = 0, y = 0):
    else:
       msg = "Do you want to discard these {} cards?".format(len(cards))
    # Ask for confirmation if user uses a keyboard shortcut
-   if not settings["WinForms"] or confirm(msg):
+   if not settings["WinForms"] or confirm(msg, "Destroy"):
       for card in cards:
          destroy(card)
       

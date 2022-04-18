@@ -74,7 +74,7 @@ def cardsAsNamesListStr(cards):
 
 def replIdsWithNames(string):
    """
-   Replaces a card ID in the string (e.g. {#66526}) with the card name, to be used in forms.
+   Replaces a card ID in the given string (e.g. {#66526}) with the card name, to be used in forms.
    """
    return re.sub(Regexps["cardid"], lambda match: Card(int(match.group(1))).Name, string)
    

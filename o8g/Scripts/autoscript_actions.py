@@ -449,7 +449,8 @@ def activateAuto(card):
 
       # Activate [] ability?
       if pcard.ability.type == TriggerAbility:
-         if not confirm("Activate {}'s ability {} {}?\n\n\n{}".format(card.Name, pcard.ability.unicodeChar, pcard.ability.name, pcard.ability.rules)):
+         question = "Activate {}'s ability {} {}?\n\n{}".format(card.Name, pcard.ability.unicodeChar, pcard.ability.name, pcard.ability.rules)
+         if not confirm(question, "Activate"):
             return
       # Activate the ability
       return pcard.activateEffect()
