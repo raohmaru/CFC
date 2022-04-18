@@ -676,24 +676,24 @@
 			<wordwrap width="92" height="22" shrinktofit="True" />
 		</block>
 		<block type="text" id="ability_type">
-			<location x="95" y="505" />
-			<text color="#dd0000" size="24" font="Resources/Fonts/ArchivoNarrow-Regular_CFC.ttf" />
+			<location x="91" y="501" />
+			<text color="#dd0000" size="28" font="Resources/Fonts/ArchivoNarrow-Regular_CFC.ttf" />
 			<wordwrap width="25" height="25" />
 		</block>		
 		<block type="text" id="ability_name">
-			<location x="122" y="504" />
-			<text color="#000000" size="24" font="Resources/Fonts/ArchivoNarrow-Bold.ttf" />
-			<wordwrap width="363" height="26" />
+			<location x="124" y="500" />
+			<text color="#000000" size="28" font="Resources/Fonts/ArchivoNarrow-Bold.ttf" />
+			<wordwrap width="365" height="26" />
 		</block>		
 		<block type="text" id="rules_char">
-			<location x="95" y="536" />
-			<text color="#000000" size="24" font="Resources/Fonts/ArchivoNarrow-Regular_CFC.ttf" />
-			<wordwrap width="380" height="145" shrinktofit="True" />
+			<location x="91" y="536" />
+			<text color="#000000" size="28" font="Resources/Fonts/ArchivoNarrow-Regular_CFC.ttf" />
+			<wordwrap width="388" height="145" shrinktofit="True" />
 		</block>
 		<block type="text" id="rules">
-			<location x="95" y="503" />
-			<text color="#000000" size="24" font="Resources/Fonts/ArchivoNarrow-Regular_CFC.ttf" />
-			<wordwrap width="380" height="160" shrinktofit="True" />
+			<location x="91" y="503" />
+			<text color="#000000" size="28" font="Resources/Fonts/ArchivoNarrow-Regular_CFC.ttf" />
+			<wordwrap width="388" height="160" shrinktofit="True" />
 		</block>
 		<block type="text" id="illustrator">
 			<location x="90" y="673" />
