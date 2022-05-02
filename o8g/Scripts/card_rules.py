@@ -1391,8 +1391,8 @@ action = {D(<**>)}{F}: damage(discarded.size * 100) to(^characters)
 
 # Amakusa's GIVE YOURSELF
 RulesDict["e590d588-84af-4c26-8dbe-e28d5b626747"] = """
-# action = destroy() target(^characters@myRing); each(card in destroyed => sp(+5))
-action = destroy() target(^characters@myRing); sp(destroyed.size * 5)
+# action = destroy() target(^characters@myRing); each(card in destroyed => sp(+3))
+action = destroy() target(^characters@myRing); sp(destroyed.size * 3)
 """
 
 # Asura's RISING EVIL

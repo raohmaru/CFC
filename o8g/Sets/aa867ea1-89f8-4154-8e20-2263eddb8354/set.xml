@@ -5101,7 +5101,7 @@
 			<property name="Ability"      value="&#162; GIVE YOURSELF" />
 			<property name="Ability Type" value="&#162;" />
 			<property name="Ability Name" value="GIVE YOURSELF" />
-			<property name="Rules"        value="KO all other characters in your ring. Gain 5 SP points for each character KOed this way." />
+			<property name="Rules"        value="KO all other characters in your ring. Gain 3 SP points for each character KOed this way." />
 			<property name="BP"           value="600" />
 			<property name="SP"           value="2" />
 			<property name="Backup 1"     value="Demon" />
