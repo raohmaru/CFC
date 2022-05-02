@@ -636,17 +636,17 @@
 		<!-- Text blocks -->
 		<block type="text" id="bp">
 			<location x="335" y="44" />
-			<text color="#000000" size="28" font="Resources/Fonts/m04b_CFC.ttf" />
+			<text color="#000000" size="28" font="Resources/Fonts/CFC-Digits.ttf" />
 			<wordwrap width="124" height="32" align="far" shrinktofit="False" />
 		</block>
 		<block type="text" id="sp">
 			<location x="335" y="95" />
-			<text color="#000000" size="23" font="Resources/Fonts/m04b_CFC.ttf" />
+			<text color="#000000" size="23" font="Resources/Fonts/CFC-Digits.ttf" />
 			<wordwrap width="124" height="25" align="far" shrinktofit="False" />
 		</block>
 		<block type="text" id="sp2">
 			<location x="335" y="44" />
-			<text color="#000000" size="28" font="Resources/Fonts/m04b_CFC.ttf" />
+			<text color="#000000" size="28" font="Resources/Fonts/CFC-Digits.ttf" />
 			<wordwrap width="124" height="32" align="far" shrinktofit="False" />
 		</block>
 		<block type="text" id="team">

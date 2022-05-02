@@ -301,7 +301,7 @@ settings = {
    "ExtAPI"       : True,    # Make use of the extended API to access the C# API of IronPython
    "GameVersion"  : "0.0.0", # Last version shown in the changelog window
    "Avatar"       : None,    # Player's avatar
-   "DoNotShow": {            # If True, do not show these Confirmation dialog again
+   "DoNotShow": {            # If True, do not show these Confirmation dialogs again
       "Destroy" : False,
       "Activate": False
    }

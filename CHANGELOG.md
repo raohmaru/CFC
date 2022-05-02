@@ -1,5 +1,10 @@
 # Card Fighters' Clash Changelog
 
+## 0.9.11
++ Increased the font size of the rule text for a better legibility.
++ Confirm form can show a "Do not show again" check box option.
++ Replaced BP & SP font.
+
 ## 0.9.10
 + Fixes card images not rendering because some PNG images were compressed at 8 bit depth.
 

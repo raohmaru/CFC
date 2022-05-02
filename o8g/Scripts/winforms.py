@@ -14,10 +14,6 @@
 # You should have received a copy of the GNU General Public License
 # along with this script. If not, see <http://www.gnu.org/licenses/>.
 
-#---------------------------------------------------------------------------
-# Custom Windows Forms
-#---------------------------------------------------------------------------
-
 try:
    import clr
    clr.AddReference("System.Drawing")
@@ -30,6 +26,10 @@ try:
 except (IOError, ImportError):
    settings["WinForms"] = False
 
+
+#---------------------------------------------------------------------------
+# Custom Windows Forms
+#---------------------------------------------------------------------------
 
 class CustomForm(Form):   
    """
@@ -84,6 +84,7 @@ class MessageBoxForm(CustomForm):
    """
 
    def __init__(self, msg, title, icon = None, boxIcon = None):
+      debug("MessageBoxForm({}, {}, {}, {})", msg, title, icon, boxIcon)
       super(self.__class__, self).__init__()
       # Suppress multiple Layout events while adjusting attributes of the controls.
       # This will increase the performance of applications with many controls.
@@ -204,28 +205,20 @@ class MessageBoxForm(CustomForm):
 
 class ConfirmForm(MessageBoxForm):
    """
-   Customized confirm form with a checkbox option to choose to do not show again the dialog.
+   Customized confirm form with a checkbox option to do not show again the dialog.
    """
 
    def __init__(self, msg, title, settingID, icon = SystemIcons.Question):
+      debug("ConfirmForm({}, {}, {}, {})", msg, title, settingID, icon)
       self.settingID = settingID
       # Don't init the parent but the grandfather
       super(CustomForm, self).__init__()
       self.SuspendLayout()
-      # Checkbox
-      checkboxPanel = Panel()
-      checkboxPanel.SuspendLayout()
-      # checkboxPanel.BorderStyle = BorderStyle.FixedSingle
-      checkboxPanel.Dock = DockStyle.Fill
-      checkboxPanel.AutoSize = True
-      checkboxPanel.BackColor = Color.White
+      # Checkbox panel
+      checkboxPanel = self.createCheckboxPanel()
       self.Controls.Add(checkboxPanel)
-      self.checkBox = CheckBox()
-      self.checkBox.Text = "&Do not show this message again"
-      #                               left Top Right           Bottom
-      self.checkBox.Padding = Padding(28, 0, self.TextPadding, self.TextPadding)
-      self.checkBox.AutoSize = True
-      self.checkBox.ForeColor = Color.DimGray
+      # Checkbox
+      self.checkBox = self.createCheckbox("&Do not show this message again")
       checkboxPanel.Controls.Add(self.checkBox)
       # Label panel
       labelPanel = self.createLabelPanel(True)
@@ -263,6 +256,26 @@ class ConfirmForm(MessageBoxForm):
       buttonPanel.ResumeLayout(False)
       self.ResumeLayout(False)
       
+      
+   def createCheckboxPanel(self):
+      checkboxPanel = Panel()
+      checkboxPanel.SuspendLayout()
+      # checkboxPanel.BorderStyle = BorderStyle.FixedSingle
+      checkboxPanel.Dock = DockStyle.Fill
+      checkboxPanel.AutoSize = True
+      checkboxPanel.BackColor = Color.White
+      return checkboxPanel
+      
+   
+   def createCheckbox(self, text):
+      checkBox = CheckBox()
+      checkBox.Text = text
+      #                               left Top Right           Bottom
+      checkBox.Padding = Padding(28, 0, self.TextPadding, self.TextPadding)
+      checkBox.AutoSize = True
+      checkBox.ForeColor = Color.DimGray
+      return checkBox
+      
 
    def show(self):
       res = super(ConfirmForm, self).show()
@@ -287,6 +300,7 @@ def messageBox(type, msg, title, icon = None, boxIcon = None):
       debug(msg)
       if boxIcon:
          # Use native MessageBox
+         debug("Using .net MessageBox.Show()")
          return MessageBox.Show(msg, title, MessageBoxButtons.OK, boxIcon)
       else:
          # Custom form because in the native MessageBox we cannot add an icon to the toolbar
@@ -294,6 +308,7 @@ def messageBox(type, msg, title, icon = None, boxIcon = None):
          form = MessageBoxForm(msg, title, icon)
          return form.show()
    else:
+      debug("WinForms disabled, using OCTGN API")
       if type == "error":
          _extapi.warning(msg)
       elif type == "warning":
