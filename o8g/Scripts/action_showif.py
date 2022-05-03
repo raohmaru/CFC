@@ -20,7 +20,7 @@
       
 def acsh_autoPlayOff(args, x = 0, y = 0):
    card = args[0] if isinstance(args, list) else None
-   return (not card or not isButton(card)) and (debugging or not settings['PlayAuto'])
+   return (not card or not isButton(card)) and (debugging or not settings["PlayAuto"])
 
       
 def acsh_canBackup(args, x = 0, y = 0):
@@ -59,7 +59,7 @@ def acsh_gameNotStarted(args, x = 0, y = 0):
 
 def acsh_hasAbility(args, x = 0, y = 0):
    card = args[0]
-   return bool(card.properties['Ability Type'])
+   return bool(card.properties["Ability Type"])
 
       
 def acsh_hidden(args, x = 0, y = 0):
@@ -81,7 +81,7 @@ def acsh_isCharAndAutoPlayOff(args, x = 0, y = 0):
    
    
 def acsh_isCharAndPlayRemoved(args, x = 0, y = 0):
-   return getRule('play_removed') and acsh_isChar(args)
+   return getRule("play_removed") and acsh_isChar(args)
 
       
 def acsh_isCharNotBackup(args, x = 0, y = 0):

@@ -40,7 +40,7 @@ def resetAll():
    """
    debug(">>> resetAll()")
    # Import all our global variables and reset them
-   global playerSide, handSize, gameCards, turnsRemaining, transformed, buttons, PlayerGlobals, Globals, tutorial
+   global playerSide, handSize, gameCards, turnsRemaining, transformed, buttons, PlayerGlobals, Globals, tutorial, setupDone
    handSize = HandSize
    gameCards = {}
    transformed = {}
@@ -50,6 +50,7 @@ def resetAll():
    me.SP = 0
    PlayerGlobals = {}
    Globals = {}
+   setupDone = False
    resetState()
    # The user is playing the tutorial
    # FIXME If player does not start in the tutorial and resets the game, the tutorial is still active

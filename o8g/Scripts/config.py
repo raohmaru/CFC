@@ -284,6 +284,7 @@ transformed    = {}     # Transformed cards
 phaseOngoing   = False  # True while running phase automation tasks
 Globals        = {}     # Replaces OCTGN global variables
 PlayerGlobals  = {}     # Replaces OCTGN player global variables
+setupDone      = False  # Whether the player has done the game setup
 debugVerbosity = DebugLevel["Off"]
 debugging      = False
 tutorial       = None

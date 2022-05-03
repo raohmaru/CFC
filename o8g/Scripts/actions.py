@@ -118,15 +118,19 @@ def setup(group = table, x = 0, y = 0):
    Game setup. It should be the first function to invoke to start a game.
    """
    debug(">>> setup()")
+   global setupDone
    # We ensure that player has loaded a deck
    if len(me.Deck) == 0:
       warning(MSG_ACTION_LOAD_DECK)
       return
-   _extapi.notify(MSG_PHASES[SetupPhase].format(me), Colors.LightBlue, True)
-   me.Deck.shuffle()
-   notify("{} shuffles their deck.".format(me))
-   refillHand() # We fill the player's hand to their hand size
-   notify("Setup for player {} completed.".format(me))
+   if not setupDone:
+      _extapi.notify(MSG_PHASES[SetupPhase].format(me), Colors.LightBlue, True)
+      shuffle(me.Deck)
+      refillHand() # We fill the player's hand to their hand size
+      notify("Setup for player {} completed.".format(me))
+      setupDone = True
+   else:
+      me.setActive()
 
 
 def restart(isRemote = False, x = 0, y = 0):

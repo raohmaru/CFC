@@ -4,7 +4,7 @@
       name="Card Fighters' Clash"
       id="e3d56d9e-900d-49c6-b6ae-22cbb51be153"
       octgnVersion="3.4.350.0"
-      version="0.9.11.899"
+      version="0.9.11.902"
       markersize="20"
       tags="capcom snk fighter"
       description="Play epic battles with fighters from Capcom and SNK!
@@ -211,7 +211,7 @@
 	</gameboards>
 
 	<table name="Table" visibility="undefined" ordered="False" width="1250" height="750" background="Resources/Background/background.jpg" backgroundStyle="uniformToFill">
-		<groupaction menu="Setup game" shortcut="Ctrl+Shift+S" execute="setup" showIf="acsh_gameNotStarted" />
+		<groupaction menu="Setup game" shortcut="Ctrl+Shift+S" execute="setup" showIf="acsh_gameNotStarted" getName="aclb_SetupOrStart" />
 		<groupaction menu="Next phase" shortcut="Tab" execute="nextPhase" showIf="acsh_gameStarted" getName="aclb_NextOrPass" />
 		<groupaction menu="Previous phase" shortcut="Shift+Tab" execute="prevPhase" showIf="acsh_gameStartedAutoPlay" />
 		<groupactions menu="Phases..." showIf="acsh_gameStartedAutoPlayOff">

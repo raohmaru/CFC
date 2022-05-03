@@ -5,6 +5,8 @@
 + Confirm form can show a "Do not show again" check box option.
 + Replaced BP & SP font.
 + Nerfed Amakusa SP gain per KOed chararacter.
++ Updated illustration of the card Michelle Heart.
++ Improved UX.
 
 ## 0.9.10
 + Fixes card images not rendering because some PNG images were compressed at 8 bit depth.
