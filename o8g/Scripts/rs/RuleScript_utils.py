@@ -117,7 +117,7 @@ class RulesUtils():
       arr = str.split(",")
       if len(arr) == 2:
          return Struct(**{
-            "min": int(arr[0]),
+            "min": int(arr[0]) if arr[0] else 1,
             "max": int(arr[1])
          })
 
