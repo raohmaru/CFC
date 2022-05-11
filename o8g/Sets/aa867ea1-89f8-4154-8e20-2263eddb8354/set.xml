@@ -6548,7 +6548,7 @@
 			<property name="Backup 2"     value="" />
 			<property name="Backup 3"     value="" />
 			<property name="Number"       value="A043" />
-			<property name="Illustrator"  value="Art by そとはら (Hara and its)" />
+			<property name="Illustrator"  value="Art by そとはら" />
 		</card>
 		<card name="Raw shield" id="50afc361-3dd7-4847-ae4c-d9ed84f1d991">
 			<property name="Publisher"    value="" />

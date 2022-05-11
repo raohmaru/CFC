@@ -4,7 +4,7 @@
       name="Card Fighters' Clash"
       id="e3d56d9e-900d-49c6-b6ae-22cbb51be153"
       octgnVersion="3.4.350.0"
-      version="0.9.11.902"
+      version="0.9.11.906"
       markersize="20"
       tags="capcom snk fighter"
       description="Play epic battles with fighters from Capcom and SNK!
@@ -162,6 +162,7 @@
 
 	<documents>
 		<document name="Rulebook" icon="Documents/manual.png" src="Documents/CFC-Rules.html" />
+		<document name="Deck Building" icon="Documents/manual.png" src="Documents/Deck-Building.html" />
 		<document name="Gameplay" icon="Documents/manual-octgn.png" src="Documents/CFC-Octgn.html" />
 		<document name="FAQ" icon="Documents/manual-faq.png" src="Documents/CFC-FAQ.html" />
 		<!-- <document name="Comprehensive Rules" icon="Documents/manual-comp.png" src="Documents/CFC-CompRules.html" /> -->
@@ -185,7 +186,7 @@
 		<globalvariable name="GameState" value="{}" />
 	</globalvariables>
 
-	<card back="Resources/Card/card-back.jpg" front="Resources/Card/card-front.png" width="90" height="126" cornerRadius="3">
+	<card back="Resources/Card/card-back.png" front="Resources/Card/card-front.png" width="90" height="126" cornerRadius="3">
 		<property name="Type" type="String" textKind="Enum" />
 		<property name="Subtype" type="String" textKind="Tokens" />
 		<property name="Rarity" type="String" ignoreText="True" textKind="Enum" />

@@ -32,10 +32,10 @@ def showWelcomeScreen(group=None, x=0, y=0):
          return
    debug("Showing welcome screen")
       
-   choiceList = ["Tutorial", u"   Rulebook  🡕", u"   Download card images  🡕", u"   Help us improve the game  🡕", "What's new?"]
+   choiceList = ["Tutorial", u"   How to play  🡕", u"   Rulebook  🡕", u"   Download card images  🡕", "What's new?"]
    colorsList = ["#004d99"] * len(choiceList)
    buttons = ["Close", "Do not show again"]
-   msg = """        Welcome to Card Fighters" Clash!\n
+   msg = """        Welcome to Card Fighters' Clash!\n
 Here you will find useful information to get started with the game.
 Have a good battle and thanks for playing!"""
    choice = askChoice(msg, choiceList, colorsList, buttons)
@@ -46,15 +46,15 @@ Have a good battle and thanks for playing!"""
       resetGame()
       
    elif choice == 2:
-      openUrl(Website + "/rulebook/")
+      openUrl(Website + "/how-to-play/")
       showWelcomeScreen()
       
    elif choice == 3:
-      downloadImagePacks()
+      openUrl(Website + "/rulebook/")
       showWelcomeScreen()
       
    elif choice == 4:
-      openUrl(Website + "/feedback/")
+      downloadImagePacks()
       showWelcomeScreen()
       
    elif choice == 5:
@@ -82,14 +82,9 @@ def getGameVersion():
 
 def showChangelog():
    switchSetting("GameVersion", getGameVersion())
-   msg = u"""What's new in version 0.9.10
+   msg = u"""What's new in version 0.9.11
 
-- Ask for confirmation when a player discards cards from the game area.
-- Improved card design.
-- Performance improvements.
-- Fixed bug in the `prophecy` command affecting Mischief.
-- Bugfix: multiple combat damage to a player is not correctly subtracted.
-- Bugfix: The Ump cannot join an United Attack although auto abilities are disabled in United Attacks.
+- 
 """.format(TriggerUniChar)
    askChoice(msg, [], [], ["Close"])
    

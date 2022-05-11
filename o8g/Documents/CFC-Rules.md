@@ -189,7 +189,7 @@ CFC is designed for two players, each of whom has a customized deck of cards.
 The Hit Points represents a player's life. Each player starts the game with 3000 HP.
 
 When a player is dealt damage, he loses that much HP.
-A player loses the battle when his HP drops to 0 or less.
+A player loses the battle immediately when his HP drops to 0 or less.
 
 ### SP
 The Soul Points represents a player's Ki energy. SP can be spend to pay the cost of playing cards with a negative SP value, or to pay the cost of United Attacks.
@@ -201,6 +201,11 @@ SP can never drop to less than 0. If you don't have enough SP to play a card, th
 Each game (also called *Battle*) consists of a number of turns. Players take turns in sequence until one of the players is declared as winner.
 
 The player that is taking his turn is called the *active player*.
+
+### Setup
+Each player starts with a deck of 50 cards and an initial amount of 3000 HP.
+
+Each player shuffles his deck and draws an initial hand of 5 cards.
 
 ### Parts of the turn
 Each turn is composed of a set of different parts or *phases*. Whenever you enter a new phase, any <span class="ab ab-auto">●</span> abilities that happen during that phase are triggered and its effects apply.

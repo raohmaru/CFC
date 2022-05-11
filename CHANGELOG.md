@@ -7,7 +7,8 @@
 + Nerfed Amakusa SP gain per KOed chararacter.
 + Updated illustration of the card Michelle Heart.
 + Improved UX.
-+ Fixed error when a target of a rule has quantity with no min value.
++ Fixed error when the target of a rule has a quantity with no min value.
++ Added Deck Building documents.
 
 ## 0.9.10
 + Fixes card images not rendering because some PNG images were compressed at 8 bit depth.

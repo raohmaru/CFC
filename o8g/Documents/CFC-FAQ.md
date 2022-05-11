@@ -15,4 +15,4 @@ a list of character subtypes.
 To make the game more enjoyable some decisions where taken to balance the game, that mainly affected character cards.  
 Characters with low BP now have higher SP value than cards with high BP. That means no more useless cards like Cathy & Roddy in the video game.
 
-Depending on the power of character's ability its SP is decreased. For some characters the SP have a negative value due to its powerful abilities, like Kyo's Orochi Wave or Jin Saotome's Saotome Dynamite.
+Depending on the power of the character's ability its SP is decreased. For some characters the SP have a negative value due to its powerful abilities, like Kyo's _Orochi Wave_ or Jin Saotome's _Saotome Dynamite_.
