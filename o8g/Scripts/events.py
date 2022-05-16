@@ -75,7 +75,7 @@ def removeGameEventListener(obj_id, eventName = None, callback = None):
             if listener["restr"] is None and listener["appliesto"] != RS_SUFFIX_ONCE:
                del GameEvents[i]
                removed = True
-               debug("Removed listener for event {} ({})", listener["event"], listener)
+               debug("Removed ~{}~ event listener -> {}", listener["event"], listener)
                # Invoke any callback
                onRemoveEvent(listener)
    if removed:
@@ -93,9 +93,10 @@ def dispatchEvent(event, obj_id = None, args = []):
       return results
    debug(">>> dispatchEvent({}, {}, {})", event, obj_id, args)
    GameEvents = getGlobalVar("GameEvents")
-   for listener in GameEvents:
+   removed = False
+   for listener in list(GameEvents):  # Copy array because it could be modified
       if event == listener["event"]:
-         # Join the default args with the given args
+         # Merge the default args with the given args
          params = listener["args"] + args
          if (
             (not obj_id and (not listener["appliesto"] or listener["appliesto"] == RS_SUFFIX_ONCE))
@@ -133,7 +134,9 @@ def dispatchEvent(event, obj_id = None, args = []):
                   else:
                      playSnd("activate-3")
                if listener["appliesto"] == RS_SUFFIX_ONCE:
-                  removeGameEventListener(card._id)
+                  GameEvents.remove(listener)
+                  debug("Removed ~{}:once~ event listener -> {}", event, listener)
+                  removed = True
             # ... or the name of a global function
             else:
                try:
@@ -143,6 +146,8 @@ def dispatchEvent(event, obj_id = None, args = []):
                   continue
                res = (func(*params), listener["source"] or listener["id"])
             results.append(res)
+   if removed:
+      setGlobalVar("GameEvents", GameEvents)
    return results
 
 

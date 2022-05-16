@@ -422,7 +422,7 @@ def activateAuto(card):
                warning(MSG_RULES["ab_instant_act"][False])
             else:
                playSnd("cancel-2")
-            notify(MSG_RULES["ab_instant_act"][False])
+            _extapi.notify(MSG_RULES["ab_instant_act"][False], Colors.Red)
             return
          # Activate only once
          if not hasMarker(card, "Just Entered"):
