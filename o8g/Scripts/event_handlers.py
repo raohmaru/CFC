@@ -58,7 +58,7 @@ def onDeckLoaded(args):
    """
    mute()
    player = args.player
-   groups = args.groups
+   # groups = args.groups
    # We only want the owner of the deck to run this script
    if player != me:
       return

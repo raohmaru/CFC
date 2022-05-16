@@ -36,6 +36,7 @@ class ExtendedApi(object):
       self._game = Octgn.Program.GameEngine.Definition
       self._gameMethods = Octgn.Core.DataExtensionMethods.GameExtensionMethods
       self._cardMethods = Octgn.Core.DataExtensionMethods.CardExtensionMethods
+      self._deckMethods = Octgn.Core.DataExtensionMethods.DeckExtensionMethods
       
    @property
    def game(self): return self._game
@@ -213,6 +214,34 @@ class ExtendedApi(object):
       self.whisper(str, color, bold)
       if len(players) > 1:
          remoteCall(players[1], "_extapi_whisper", [str, color, bold])
+         
+         
+   def loadDeck(self, path):
+      """
+      Creates a Deck object from the given deck file.
+      Returns: List[Octgn.DataNew.Entities.MultiCard]
+      """
+      # Octgn.DataNew.Entities.Deck
+      deck = self._gameMethods.CreateDeck(_extapi._game)
+      deck = self._deckMethods.Load(deck, _extapi._game, path)
+      if self._deckMethods.CardCount(deck) > 0:
+         return deck.Sections[0].Cards
+         
+         
+   def getDecksPath(self):
+      return self._gameMethods.GetDefaultDeckPath(self._game)
+         
+         
+   def getPreBuiltDecksPath(self):
+      # https://github.com/octgn/OCTGN/blob/437b67efaec15729178523fe61de2eae29a8dded/octgnFX/Octgn.JodsEngine/Play/PlayWindow.xaml.cs#L511
+      return Path.Combine(self._game.InstallPath, "Decks")
+      
+      
+   def getAppResource(self, file):
+      """
+      Gets the path of a resource in the app installation folder.
+      """
+      return Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Resources", file)
       
 
 if settings["ExtAPI"]:

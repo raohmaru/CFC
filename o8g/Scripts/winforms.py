@@ -106,7 +106,7 @@ class MessageBoxForm(CustomForm):
       buttonPanel.Controls.Add(button)
       # Form setup
       formSize = self.measureString(msg, self.MaxWidth)
-      self.setup(formSize.Width, formSize.Height + buttonPanel.Height, title, msg, icon)
+      self.setup(formSize.Width, formSize.Height + buttonPanel.Height, title, icon)
       # Resumes usual layout logic
       labelPanel.ResumeLayout(False)
       buttonPanel.ResumeLayout(False)
@@ -158,7 +158,8 @@ class MessageBoxForm(CustomForm):
       pictureBox.Anchor = AnchorStyles.Right
       # pictureBox.BorderStyle = BorderStyle.FixedSingle
       return pictureBox
-    
+   
+   
    def createAcceptButton(self, text):
       button = Button()
       # Make button's dialog result OK, triggered on click or by pressing Enter key
@@ -181,7 +182,7 @@ class MessageBoxForm(CustomForm):
       return button
    
    
-   def setup(self, width, height, title, msg, icon = None):
+   def setup(self, width, height, title, icon = None):
       self.Size = Size(
          # Rendered dialog width is 20px less because reasons
          max(self.MinWidth,  width) + self.TextPadding * 2 + 20,
@@ -244,7 +245,7 @@ class ConfirmForm(MessageBoxForm):
       # Form setup
       formSize = self.measureString(msg, self.MaxWidth - 42)
       # Magic numbers. Magic numbers everywhere.
-      self.setup(formSize.Width, max(formSize.Height, 64) + buttonPanel.Height + self.TextPadding, title, msg)
+      self.setup(formSize.Width, max(formSize.Height, 64) + buttonPanel.Height + self.TextPadding, title)
       # If text contains 5 or more lines, it is rendered cropped
       if formSize.Height > 60:
          labelPanel.Height += 2
@@ -285,6 +286,103 @@ class ConfirmForm(MessageBoxForm):
          doNotShow = settings["DoNotShow"].copy()
          doNotShow[self.settingID] = self.checkBox.Checked
          switchSetting("DoNotShow", doNotShow)
+      return res
+
+
+class DeckSelector(MessageBoxForm):
+   """
+   Custom form to load a deck from OCTGN default deck path.
+   """
+
+   def __init__(self, path, title = "Please select a deck to open:"):
+      debug("DeckSelector({})", title)
+      # Don't init the parent but the grandfather
+      super(CustomForm, self).__init__()
+      self.SuspendLayout()
+      # Label panel
+      labelPanel = self.createLabelPanel()
+      labelPanel.Dock = DockStyle.Top
+      labelPanel.BackColor = Color.Empty
+      labelPanel.Padding = Padding(10)
+      labelPanel.Height = 43
+      self.Controls.Add(labelPanel)
+      # Label
+      # Adding the zero width character to the dir sep char will break long paths
+      label = self.createLabel("Decks location: {}.".format(path.replace(Path.DirectorySeparatorChar, Path.DirectorySeparatorChar + u"\u200b")))
+      labelPanel.Controls.Add(label)
+      # Deck list
+      # Invoking .NET OpenFileDialog freezes OCTGN
+      self.decks = Directory.GetFiles(path, "*.o8d")
+      self.list = self.createListView(self.decks)
+      self.list.SelectedIndexChanged += self.onItemSelectionChanged
+      self.Controls.Add(self.list)
+      # Buttons
+      buttonPanel = self.createButtonPanel()
+      buttonPanel.ColumnCount = 2
+      buttonPanel.ColumnStyles.Add(ColumnStyle(SizeType.Percent, 50))
+      self.Controls.Add(buttonPanel)
+      self.button1 = self.createAcceptButton("&Load")
+      self.button1.Enabled = False
+      buttonPanel.Controls.Add(self.button1)
+      button2 = self.createCancelButton("&Cancel")
+      buttonPanel.Controls.Add(button2)
+      # Form setup
+      icon = Icon(_extapi.getAppResource("Icon.ico"))  # OCTGN icon
+      self.setup(300, 301 + buttonPanel.Height, title, icon)
+      # Resumes usual layout logic
+      labelPanel.ResumeLayout(False)
+      self.list.ResumeLayout(False)
+      buttonPanel.ResumeLayout(False)
+      self.ResumeLayout(False)
+      
+      
+   def createListView(self, decks):
+      list = ListView()
+      list.SuspendLayout()
+      list.Bounds = Rectangle(Point(10, 43), Size(285 + self.TextPadding * 2, 300))
+      list.View = View.Details
+      list.FullRowSelect = True
+      list.GridLines = True
+      list.Columns.Add("Name", list.Size.Width - 25, HorizontalAlignment.Left)
+      list.HeaderStyle = ColumnHeaderStyle.None
+      # Row height
+      imgList = ImageList();
+      imgList.ImageSize = Size(1, 25)
+      list.SmallImageList = imgList
+      # Shutdown the painting of the ListView as items are added
+      list.BeginUpdate()
+      for deck in decks:
+         item = ListViewItem("  " + Path.GetFileNameWithoutExtension(deck))
+         list.Items.Add(item)
+      # Allow the ListView to repaint and display the new items.
+      list.EndUpdate()
+      return list
+      
+      
+   def onItemSelectionChanged(self, sender, args):
+      self.button1.Enabled = True
+      
+      
+   def show(self):
+      """
+      Loads the selected deck.
+      """
+      res = super(DeckSelector, self).show()
+      if res and len(self.list.SelectedIndices) > 0:
+         deckPath = self.decks[self.list.SelectedIndices[0]]
+         debug("Loading deck {}...", deckPath)
+         deck = _extapi.loadDeck(deckPath)
+         if deck:
+            # Octgn.Program.GameEngine.LoadDeck(deck) explodes
+            for Card in deck:
+               me.deck.create(Card.Id.ToString(), Card.Quantity)
+            debug("Deck loaded!")
+            _extapi.notify("{} has loaded a deck".format(me), Colors.Purple)
+            # Trigger event handler
+            onDeckLoaded(Struct(**{"player": me}))
+         else:
+            error("There was an error opening the deck")
+            return False
       return res
 
 
@@ -341,6 +439,12 @@ def notification(msg, color = Colors.Black, playerList = None):
       notifyBar(color, msg + " " * 2000)
 
 
+def loadDeckDialog(path):
+   playSnd("win-ask-1", True)
+   form = DeckSelector(path)
+   return form.show()
+
+   
 #---------------------------------------------------------------------------
 # Overrides
 #---------------------------------------------------------------------------
