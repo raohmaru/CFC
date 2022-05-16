@@ -1190,6 +1190,7 @@ def prophecy(group = me.Deck, x = 0, y = 0, count = None, deckPos = False):
          moveToGroup(group, card, pos = pos, reveal = False)
       else:
          remoteCall(group.controller, "moveToGroup", [group, card, group, pos, False, me])
+   waitForAnimation()
 
 
 def shuffle(group):

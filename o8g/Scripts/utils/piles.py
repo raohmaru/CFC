@@ -121,7 +121,6 @@ def moveToGroup(toGroup, card, sourceGroup = None, pos = None, reveal = None, so
    targetCtrl = "its" if me == sourcePlayer else "{}'s".format(me)
    msg = "{} moved {} {} {} {} {}.".format(sourcePlayer, name, fromText, posText, targetCtrl, toGroup.name)
    card.moveTo(toGroup, pos)
-   waitForAnimation()
    if not silent:
       notify(msg)
    else:

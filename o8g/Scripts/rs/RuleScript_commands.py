@@ -344,7 +344,7 @@ def cmd_moveTo(rc, targets, source, restr, zone, pos = None, reveal = None):
                remoteCall(target.controller, "passControlTo", [me, [target], "moveToGroup", [pile, target, target.group, pos, reveal, source.controller]])
             else:
                remoteCall(target.controller, "moveToGroup", [pile, target, None, pos, reveal, source.controller])
-            # waitForAnimation()
+            waitForAnimation()
          if msgs:
             notify("\n".join(msgs))
       else:

@@ -4,11 +4,13 @@
 + Increased the font size of the rule text for a better legibility.
 + Confirm form can show a "Do not show again" check box option.
 + Replaced BP & SP font.
++ New options in the Welcome screen to load decks.
 + Nerfed Amakusa SP gain per KOed chararacter.
-+ Updated illustration of the card Michelle Heart.
++ Updated illustration of the card Michelle Heart. ([Download updated image pack](https://drive.google.com/file/d/1gTmCpaD02u1IGSXqnNMr_7pcsKGLYPzD/view?usp=sharing)).
 + Improved UX.
-+ Fixed error when the target of a rule has a quantity with no min value.
 + Added Deck Building documents.
++ Fixed error when the target of a rule has a quantity with no min value.
++ Bugfix: `copyAbility()` does not update properly the copied ability for the other players.
 
 ## 0.9.10
 + Fixes card images not rendering because some PNG images were compressed at 8 bit depth.
