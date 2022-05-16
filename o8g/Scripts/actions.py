@@ -574,6 +574,8 @@ def copyAbility(card, x = 0, y = 0, target = None):
          else:
             return
    if target:
+      # Copy the card in case its abilities changes
+      target_copy = copyCard(target)
       result = copyAlternateRules(card, target)
       if result:
          CharsAbilities = getGlobalVar("CharsAbilities")
@@ -590,8 +592,8 @@ def copyAbility(card, x = 0, y = 0, target = None):
          if len(players) > 1:
             for p in players:
                if p != me:
-                  remoteCall(p, "copyAlternateRules", [card, target])
-         update()  # Trying this method to delay next actions until networked tasks are complete
+                  remoteCall(p, "copyAlternateRules", [card, target_copy])
+         update()
          for p in players:
             funcCall(p, deleteGameCard, [card])
          funcCall(card.controller, createGameCard, [card, model, True, False, True])
@@ -623,14 +625,8 @@ def swapAbilities(card, x = 0, y = 0, target = None):
          if targets == None:
             return
       target = targets[0]
-   model = card.model
-   CharsAbilities = getGlobalVar("CharsAbilities")
-   # Shallow copy of the card
-   card_copy = Struct(**{
-      "Rules"  : card.Rules,
-      "Ability": card.Ability,
-      "model"  : CharsAbilities[card._id] if card._id in CharsAbilities else card.model
-   })
+   model = card.model   
+   card_copy = copyCard(card)  # Shallow copy of the card
    copyAbility(card,   target = target)
    copyAbility(target, target = card_copy)
    target.target(False)

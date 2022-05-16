@@ -49,6 +49,8 @@ def debugScenario():
    gotoMain()
    waitForAnimation()
    tableCards = [
+       "2ba9556c-59b0-4154-8325-f9793a8eacb5" # Krizalid
+      ,"1f11dc82-0581-49c2-ae93-35688c6acb7a" # Kula
        # "d14694b4-484c-4b45-962e-8cbb636d8a9a" # 200 BP
       # ,"c7d128ea-a3b9-4b04-b8b2-a61153b5b2e6" # 400 BP
       # ,"24e99a13-cb42-4e16-9900-78dde12e1a4c" # 600 BP
@@ -65,7 +67,8 @@ def debugScenario():
       waitForAnimation()
       
    handCards = [
-       "0035d193-fe4b-4927-9dc1-6124b26768bc" # Shopping
+       "6504b1a3-e432-4c6c-845b-6ca72500b458" # Substitute
+       # "0035d193-fe4b-4927-9dc1-6124b26768bc" # Shopping
        # "8bb477f9-5004-4018-8d5e-73c6a23e8912" # Char 300 BP
       # ,"e910f462-bea9-4262-b168-c7c512eb6511" # Char 500 BP
       # ,"0fdadc92-0864-46cc-a3ff-c20e2af8249c" # Char 700 BP
@@ -80,8 +83,7 @@ def debugScenario():
    ]
    for id in handCards:
       debug("Adding card {} to hand", id)
-      card = table.create(id, 0, 0, quantity = 1, persist = True)
-      card.moveTo(me.hand)
+      me.hand.create(id, 1)
    
    deckCards = [
        # "55ab2891-c99e-4647-8a9d-b01fbce3009f" # Char 300 BP
@@ -98,26 +100,24 @@ def debugScenario():
    ]
    for id in list(reversed(deckCards)):
       debug("Adding card {} to Deck", id)
-      card = table.create(id, 0, 0, quantity = 1, persist = True)
-      card.moveTo(me.deck)
+      me.deck.create(id, 1)
    
    discardCards = [
-       "8bb477f9-5004-4018-8d5e-73c6a23e8912" # Char 300 BP
-      ,"e910f462-bea9-4262-b168-c7c512eb6511" # Char 500 BP
-      ,"0fdadc92-0864-46cc-a3ff-c20e2af8249c" # Char 700 BP
-      ,"af43872e-e47d-4fe0-9b55-aedd8a0d0fc7" # Char 800 BP
-      ,"5e2211a0-e52e-4b7b-b03d-f6ecb3660bb0" # Action 0 SP
-      ,"83c33aa8-5981-4352-8107-cbb7e05547ec" # Action -1 SP
-      ,"80692723-3895-435f-bf8f-e94507704af5" # Action -3 SP
-      ,"ac01bbbe-583e-46ae-b26c-3c25eb8f0779" # Action -6 SP
-      ,"556b3359-e642-419a-ab5c-67f70de1bb4f" # Reaction 0 SP
-      ,"46deecf5-7f7b-42b5-b6fa-e3162dce2013" # Reaction -1 SP
-      ,"91e441cc-0f1f-4b01-a2b0-94678d6f0b56" # Reaction -4 SP
+       # "8bb477f9-5004-4018-8d5e-73c6a23e8912" # Char 300 BP
+      # ,"e910f462-bea9-4262-b168-c7c512eb6511" # Char 500 BP
+      # ,"0fdadc92-0864-46cc-a3ff-c20e2af8249c" # Char 700 BP
+      # ,"af43872e-e47d-4fe0-9b55-aedd8a0d0fc7" # Char 800 BP
+      # ,"5e2211a0-e52e-4b7b-b03d-f6ecb3660bb0" # Action 0 SP
+      # ,"83c33aa8-5981-4352-8107-cbb7e05547ec" # Action -1 SP
+      # ,"80692723-3895-435f-bf8f-e94507704af5" # Action -3 SP
+      # ,"ac01bbbe-583e-46ae-b26c-3c25eb8f0779" # Action -6 SP
+      # ,"556b3359-e642-419a-ab5c-67f70de1bb4f" # Reaction 0 SP
+      # ,"46deecf5-7f7b-42b5-b6fa-e3162dce2013" # Reaction -1 SP
+      # ,"91e441cc-0f1f-4b01-a2b0-94678d6f0b56" # Reaction -4 SP
    ]
    for id in list(reversed(discardCards)):
       debug("Adding card {} to Discard pile", id)
-      card = table.create(id, 0, 0, quantity = 1, persist = True)
-      card.moveTo(me.piles["Discard pile"])
+      me.piles["Discard pile"].create(id, 1)
       
    if len(players) > 1:
       waitForAnimation()
@@ -135,10 +135,11 @@ def debugOpp():
    me.SP = 50
    
    tableCards = [
+       "2ba9556c-59b0-4154-8325-f9793a8eacb5" # Krizalid
        # "d14694b4-484c-4b45-962e-8cbb636d8a9a" # 200 BP
       # ,"c7d128ea-a3b9-4b04-b8b2-a61153b5b2e6" # 400 BP
       # ,"24e99a13-cb42-4e16-9900-78dde12e1a4c" # 600 BP
-      # ,"e6e46f83-d089-4762-8d8e-2a3252cfc9db" # 800 BP
+      ,"e6e46f83-d089-4762-8d8e-2a3252cfc9db" # 800 BP
    ]
    for i, id in enumerate(tableCards):
       card = table.create(id, 0, 0, quantity = 1, persist = True)
@@ -160,8 +161,7 @@ def debugOpp():
       # ,"91e441cc-0f1f-4b01-a2b0-94678d6f0b56" # Reaction -4 SP
    ]
    for id in handCards:
-      card = table.create(id, 0, 0, quantity = 1, persist = True)
-      card.moveTo(me.hand)
+      me.hand.create(id, 1)
    
    deckCards = [
        # "55ab2891-c99e-4647-8a9d-b01fbce3009f" # Char 300 BP
@@ -177,8 +177,7 @@ def debugOpp():
       # ,"91e441cc-0f1f-4b01-a2b0-94678d6f0b56" # Reaction -4 SP
    ]
    for id in list(reversed(deckCards)):
-      card = table.create(id, 0, 0, quantity = 1, persist = True)
-      card.moveTo(me.deck)
+      me.deck.create(id, 1)
    
    discardCards = [
        # "55ab2891-c99e-4647-8a9d-b01fbce3009f" # Char 300 BP
@@ -194,9 +193,7 @@ def debugOpp():
       # ,"91e441cc-0f1f-4b01-a2b0-94678d6f0b56" # Reaction -4 SP
    ]
    for id in list(reversed(discardCards)):
-      debug("Adding card {} to Discard pile", id)
-      card = table.create(id, 0, 0, quantity = 1, persist = True)
-      card.moveTo(me.piles["Discard pile"])
+      me.piles["Discard pile"].create(id, 1)
       
    remoteCall(players[1], "debugSetupDone", [])
    

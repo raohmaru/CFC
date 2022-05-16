@@ -349,3 +349,18 @@ def getCards(group = table, player = me):
    return [card for card in group
       if card.controller == me
       and not isUI(card)]
+
+
+def copyCard(card):
+   """
+   Creates a shallow copy of the card which is not a Card entity.
+   Returns: Struct
+   """
+   CharsAbilities = getGlobalVar("CharsAbilities")
+   # Shallow copy of the card
+   card_copy = Struct(**{
+      "Rules"  : card.Rules,
+      "Ability": card.Ability,
+      "model"  : CharsAbilities[card._id] if card._id in CharsAbilities else card.model
+   })
+   return card_copy

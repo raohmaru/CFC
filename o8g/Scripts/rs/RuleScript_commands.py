@@ -477,9 +477,9 @@ def cmd_loseAbility(rc, targets, source, restr, *args):
 def cmd_copyAbility(rc, targets, source, restr, expr):
    debug(">>> cmd_copyAbility({}, {}, {})", targets, source, expr)
    card = evalExpression(expr, True, getLocals(rc = rc, targets = targets, source = source))
-   if not targets:
-      targets = [source]
    if card:
+      if not targets:
+         targets = [source]
       for target in targets:
          # copyAbility(target, target = card)
          funcCall(target.controller, copyAbility, [target, 0, 0, card])
