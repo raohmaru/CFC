@@ -11,6 +11,7 @@
 + Added Deck Building documents.
 + Fixed error when the target of a rule has a quantity with no min value.
 + Bugfix: `copyAbility()` does not update properly the copied ability for the other players.
++ Bugfix: game events from auto abilities with suffix "once" are deleted if the card is removed from the table (affected Crossover and Grandmaster).
 
 ## 0.9.10
 + Fixes card images not rendering because some PNG images were compressed at 8 bit depth.

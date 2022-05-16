@@ -70,8 +70,9 @@ def removeGameEventListener(obj_id, eventName = None, callback = None):
             (listener["id"] == obj_id or listener["source"] == obj_id) and
             (not callback or callback == listener["callback"])
          ):
-            # Events with restrictions will be removed eventually in cleanupGameEvents()
-            if listener["restr"] is None:
+            # Events with restrictions will be removed eventually in cleanupGameEvents().
+            # Same for events that are dispatched only once.
+            if listener["restr"] is None and listener["appliesto"] != RS_SUFFIX_ONCE:
                del GameEvents[i]
                removed = True
                debug("Removed listener for event {} ({})", listener["event"], listener)
