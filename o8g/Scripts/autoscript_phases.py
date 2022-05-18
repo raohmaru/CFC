@@ -79,7 +79,7 @@ def triggerPhaseEvent(phase, oldPhase = 0):
          # update()
          nextPhase(False)
       elif getStop(phase):
-         addButton("NextButton")
+         addButton(NextButton)
 
 
 def activatePhaseStart():
@@ -110,7 +110,7 @@ def activatePhaseStart():
    cleanupGameEvents(RS_KW_RESTR_UYNT)
    # Add buttons
    if not settings["PhaseAuto"]:
-      addButton("NextButton")
+      addButton(NextButton)
 
 
 def drawPhaseStart():
@@ -128,7 +128,7 @@ def drawPhaseStart():
 def mainPhaseStart():
    alignCards()
    if settings["PhaseAuto"]:
-      addButton("NextButton")
+      addButton(NextButton)
       
    for card in table:
       card.target(False)
@@ -139,7 +139,7 @@ def attackPhaseStart():
    discardKOedChars()
    # In case going backwards and button was hence removed
    if settings["PhaseAuto"]:
-      addButton("NextButton")
+      addButton(NextButton)
    for card in table:
       if card.controller == me:
          # Discard action cards I have played
@@ -152,7 +152,7 @@ def attackPhaseStart():
 
 def blockPhaseStart():
    if not tutorial:
-      removeButton("NextButton")
+      removeButton(NextButton)
    uattack = getGlobalVar("UnitedAttack")
    if settings["PlayAuto"]:
       # Pay the cost of the UA
@@ -262,14 +262,14 @@ def endPhaseStart():
    
    # Remove buttons?
    if settings["PhaseAuto"] and not atkCards:
-      removeButton("NextButton")
+      removeButton(NextButton)
    else:
-      addButton("NextButton")
+      addButton(NextButton)
 
 
 def cleanupPhaseStart():
    if settings["PhaseAuto"]:
-      removeButton("NextButton")
+      removeButton(NextButton)
    syncGlobalVars()
    discardKOedChars()
    waitForAnimation()

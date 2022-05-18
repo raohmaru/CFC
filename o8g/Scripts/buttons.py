@@ -21,13 +21,13 @@
 
 def buttonAction(btn):
    if btn._id in buttons:
-      if buttons[btn._id] == 'StartButton':
+      if buttons[btn._id] == StartButton:
          if len(me.Deck) == 0:
             warning(MSG_ACTION_LOAD_DECK)
             return
          me.setActive()
          
-      elif buttons[btn._id] == 'NextButton':
+      elif buttons[btn._id] == NextButton:
          nextPhase(True)
       
       

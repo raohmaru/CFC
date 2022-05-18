@@ -47,7 +47,7 @@ def onGameStarted():
    elif tutorial == True:
       startTutorial()
    elif settings["PlayAuto"]:
-      addButton("StartButton")
+      addButton(StartButton)
    setAvatar()
    playSnd("new-game", True)
 
@@ -216,7 +216,7 @@ def onTurnPassed(args):
          nextPhase(False)
       playSnd("turn-change")
    if turnNumber() == 1:
-      removeButton("StartButton")
+      removeButton(StartButton)
    debug("<<< onTurnPassed()")
 
 
@@ -232,7 +232,7 @@ def onPhasePassed(args):
       
    if not me.isActive:
       # Remove any button and phase stop added during the opponent's turn
-      removeButton("NextButton")
+      removeButton(NextButton)
       setStop(BlockPhase, False)
    
    if phaseIdx == AttackPhase:
@@ -243,7 +243,7 @@ def onPhasePassed(args):
          _extapi.whisper(MSG_HINT_BLOCK1.format("defending player", "he or she"), Colors.Blue)
       elif not me.isActive and len(getAttackingCards(getOpp())) > 0:
          setStop(BlockPhase, True)
-         addButton("NextButton")
+         addButton(NextButton)
          msg1 = MSG_HINT_BLOCK1.format("you", "you")
          _extapi.whisper(msg1, Colors.Blue)
          _extapi.whisper(MSG_HINT_BLOCK2, Colors.Blue)

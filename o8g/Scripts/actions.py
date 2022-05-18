@@ -65,7 +65,7 @@ def nextPhase(fromKeyStroke = True, x = 0, y = 0):
       setState(None, "priority", getOpp()._id)
       notify(MSG_PHASE_DONE.format(me, PhaseNames[phaseIdx], getOpp()))
       notification(MSG_PHASE_DONE.format(me, PhaseNames[phaseIdx], "you"), playerList = [getOpp()])
-      removeButton("NextButton")
+      removeButton(NextButton)
       remoteCall(players[1], "nextPhase", [False])
       playSnd("notification")
       

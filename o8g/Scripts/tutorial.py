@@ -332,7 +332,7 @@ A character can only counter-attack one attack, and an attack can only be counte
          
       self.setNextStep(self.part8, BlockPhase)
       gotoCounterattack()
-      addButton("NextButton")
+      addButton(NextButton)
       
       for card in getRing(me):
          freeze(card, unfreeze = card.Name != "Gato", silent = True)
@@ -436,7 +436,7 @@ Hint: Please remember that you can target a character in the Ring with Shift + L
          
       self.setNextStep(self.part10, BlockPhase)
       gotoCounterattack()
-      addButton("NextButton")
+      addButton(NextButton)
       me.SP += 3
       
       card = self.addCardToGroup("fd1a3f1c-7df1-443e-97b1-f093d66e74c9")  # Zero Akuma

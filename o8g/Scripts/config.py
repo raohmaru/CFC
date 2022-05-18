@@ -103,9 +103,12 @@ MarkersDict = {
    "Cannot Attack"  : ("Cannot Attack",   "d117bc87-57d3-4489-8407-4e0a955eecb3")
 }
 
+
+StartButton = "Start Game"
+NextButton = "Next Phase"
 Buttons = {
-   "StartButton": "81918f9c-83cc-4589-8b86-19a238a0623b",
-   "NextButton" : "1d0c798b-b785-4bb6-b160-14c71db6af47"
+   StartButton: "81918f9c-83cc-4589-8b86-19a238a0623b",
+   NextButton : "1d0c798b-b785-4bb6-b160-14c71db6af47"
 }
 
 # A table holding tuples with the location for the cards according its state
@@ -122,10 +125,10 @@ CardsCoords = dict(
    BackupOffset  = ( 0,    13),
    UAttackOffset = ( 43,   0),
    Action        = ( 0,    -49),
-   StartButton   = ( -385, 30),
-   NextButton    = ( 387,  244),
    Avatar        = ( 0,    375),
 )
+CardsCoords[StartButton] = (-385, 30)
+CardsCoords[NextButton]  = ( 387, 244)
 
 # Card types
 CharType     = "Character"
