@@ -92,9 +92,9 @@ def dispatchEvent(event, obj_id = None, args = []):
    if not settings["PlayAuto"]:
       return results
    debug(">>> dispatchEvent({}, {}, {})", event, obj_id, args)
-   GameEvents = getGlobalVar("GameEvents")
+   GameEvents = list(getGlobalVar("GameEvents"))  # Copy list because it could be modified
    removed = False
-   for listener in list(GameEvents):  # Copy array because it could be modified
+   for listener in GameEvents:
       if event == listener["event"]:
          # Merge the default args with the given args
          params = listener["args"] + args

@@ -289,13 +289,14 @@ class ConfirmForm(MessageBoxForm):
       return res
 
 
-class DeckSelector(MessageBoxForm):
+class DeckSelectorForm(MessageBoxForm):
    """
    Custom form to load a deck from OCTGN default deck path.
    """
 
    def __init__(self, path, title = "Please select a deck to open:"):
-      debug("DeckSelector({})", title)
+      debug("DeckSelectorForm({}, {})", path, title)
+      self.path = path
       # Don't init the parent but the grandfather
       super(CustomForm, self).__init__()
       self.SuspendLayout()
@@ -309,6 +310,7 @@ class DeckSelector(MessageBoxForm):
       # Label
       # Adding the zero width character to the dir sep char will break long paths
       label = self.createLabel("Decks location: {}.".format(path.replace(Path.DirectorySeparatorChar, Path.DirectorySeparatorChar + u"\u200b")))
+      label.Click += self.onLabelClick
       labelPanel.Controls.Add(label)
       # Deck list
       # Invoking .NET OpenFileDialog freezes OCTGN
@@ -363,11 +365,15 @@ class DeckSelector(MessageBoxForm):
       self.button1.Enabled = True
       
       
+   def onLabelClick(self, sender, args):
+      System.Diagnostics.Process.Start("explorer.exe", self.path)
+      
+      
    def show(self):
       """
       Loads the selected deck.
       """
-      res = super(DeckSelector, self).show()
+      res = super(DeckSelectorForm, self).show()
       if res and len(self.list.SelectedIndices) > 0:
          deckPath = self.decks[self.list.SelectedIndices[0]]
          debug("Loading deck {}...", deckPath)
@@ -441,7 +447,7 @@ def notification(msg, color = Colors.Black, playerList = None):
 
 def loadDeckDialog(path):
    playSnd("win-ask-1", True)
-   form = DeckSelector(path)
+   form = DeckSelectorForm(path)
    return form.show()
 
    

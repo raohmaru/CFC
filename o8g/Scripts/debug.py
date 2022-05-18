@@ -66,6 +66,7 @@ def debugScenario():
       
    handCards = [
        "5972ea54-137c-41a7-a1eb-b9d9cd0ecfe5" # Grandmaster
+      ,"ab631979-20d8-4789-85be-149b414d1ef1" # Crossover
        # "8bb477f9-5004-4018-8d5e-73c6a23e8912" # Char 300 BP
       # ,"e910f462-bea9-4262-b168-c7c512eb6511" # Char 500 BP
       # ,"0fdadc92-0864-46cc-a3ff-c20e2af8249c" # Char 700 BP
@@ -106,7 +107,7 @@ def debugScenario():
       # ,"af43872e-e47d-4fe0-9b55-aedd8a0d0fc7" # Char 800 BP
       # ,"5e2211a0-e52e-4b7b-b03d-f6ecb3660bb0" # Action 0 SP
       # ,"83c33aa8-5981-4352-8107-cbb7e05547ec" # Action -1 SP
-      # ,"80692723-3895-435f-bf8f-e94507704af5" # Action -3 SP
+      ,"80692723-3895-435f-bf8f-e94507704af5" # Action -3 SP
       # ,"ac01bbbe-583e-46ae-b26c-3c25eb8f0779" # Action -6 SP
       ,"556b3359-e642-419a-ab5c-67f70de1bb4f" # Reaction 0 SP
       ,"46deecf5-7f7b-42b5-b6fa-e3162dce2013" # Reaction -1 SP
