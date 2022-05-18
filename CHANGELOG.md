@@ -5,11 +5,12 @@
 + Confirm form can show a "Do not show again" check box option.
 + Replaced BP & SP font.
 + New options in the Welcome screen to load decks.
-+ Nerfed Amakusa SP gain per KOed chararacter.
++ Nerfed Amakusa SP gain per KOed character.
++ Nerfed Kazuki: now it deals 400 damage.
 + Updated illustration of the card Michelle Heart. ([Download updated image pack](https://drive.google.com/file/d/1gTmCpaD02u1IGSXqnNMr_7pcsKGLYPzD/view?usp=sharing)).
 + Improved UX.
 + Added Deck Building documents.
-+ Fixed error when the target of a rule has a quantity with no min value.
++ Bugfix: Error when the target of a rule has a quantity with no min value.
 + Bugfix: `copyAbility()` does not update properly the copied ability for the other players.
 + Bugfix: game events from auto abilities with suffix "once" are deleted if the card is removed from the table (affected Crossover and Grandmaster).
 

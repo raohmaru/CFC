@@ -1442,7 +1442,7 @@ auto = ~myEndPhase~ loseAbility() target(character@infront)
 
 # Kazuki's IMBROGLIO
 RulesDict["54c61d60-d68a-4ce8-8c2f-65bd0192c26a"] = """
-action = {S}: damage(500) to(<r>character@oppRing)
+action = {S}: damage(400) to(<r>character@oppRing)
 """
 
 # Kyoshiro's WARRIOR DANCE

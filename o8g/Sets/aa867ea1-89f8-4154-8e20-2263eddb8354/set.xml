@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8" standalone="yes"?>
-<set name="Core Set" id="aa867ea1-89f8-4154-8e20-2263eddb8354" version="1.5.1" gameId="e3d56d9e-900d-49c6-b6ae-22cbb51be153" gameVersion="0.9.8">
+<set name="Core Set" id="aa867ea1-89f8-4154-8e20-2263eddb8354" version="1.5.2" gameId="e3d56d9e-900d-49c6-b6ae-22cbb51be153" gameVersion="0.9.8">
 	<packaging>
 		<pack name="Booster" id="800ab974-9fee-45c6-8d15-3c995c732cdc">
 			<options>
@@ -5335,7 +5335,7 @@
 			<property name="Ability"      value="&#163; IMBROGLIO" />
 			<property name="Ability Type" value="&#163;" />
 			<property name="Ability Name" value="IMBROGLIO" />
-			<property name="Rules"        value="KO this character. Deals 500 damage points to a random enemy character." />
+			<property name="Rules"        value="KO this character. Deals 400 damage points to a random enemy character." />
 			<property name="BP"           value="600" />
 			<property name="SP"           value="2" />
 			<property name="Backup 1"     value="Mercenary" />
