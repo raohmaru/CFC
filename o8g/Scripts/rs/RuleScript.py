@@ -26,7 +26,6 @@ class Rules():
    def __init__(self, rule, card_id):
       self.rule_id = rule.lower()  # case insensitive
       self.card_id = card_id
-      self.card = Card(card_id)
       self.rules_tokens = None
       self.parsed = False
       self.has_events = False
@@ -69,7 +68,7 @@ class Rules():
          # then it means that it has commands that must be executed
          if not self.has_events or forceActivateAuto and self.canActivateAuto(auto["event"]):
             debug("Can execute auto on init")
-            self.execAction(auto, [self.card], True)
+            self.execAction(auto, [Card(self.card_id)], True)
          
          
    def addEvent(self, event):
@@ -106,7 +105,7 @@ class Rules():
    def getTargets(self, targetList):
       targets = []
       for item in targetList:
-         target = RulesUtils.getTargets(item, source = self.card)
+         target = RulesUtils.getTargets(item, source = Card(self.card_id))
          if target == False and not item["opt"]:
             debug("Targeting cancelled")
             return False
@@ -116,12 +115,13 @@ class Rules():
       
       
    def activate(self):
+      thisCard = Card(self.card_id)
       # Just in case
       if not self.parsed:
          self.init()
          
       if not self.rules_tokens:
-         whisper("{}'s ability has not been scripted yet. You need to apply manually its effects.".format(self.card))
+         whisper("{}'s ability has not been scripted yet. You need to apply manually its effects.".format(thisCard))
          return True
    
       debug("Executing rules")
@@ -132,8 +132,8 @@ class Rules():
          debug("Checking requisites: {}", requisite)
          for req in requisite:
             reqTarget = RulesLexer.parseTarget(req)
-            if not RulesUtils.getTargets(reqTarget, self.card, reveal = False):
-               _extapi.whisper(MSG_AB_MISS_REQ.format(self.card), Colors.Red)
+            if not RulesUtils.getTargets(reqTarget, thisCard, reveal = False):
+               _extapi.whisper(MSG_AB_MISS_REQ.format(thisCard), Colors.Red)
                playSnd("cancel-2")
                return False
             debug("-- Requisites are met")
@@ -152,6 +152,7 @@ class Rules():
       
    def execAction(self, action, target, isAuto = False, isBranch = False):
       debug("Executing actions: {}, {}, isAuto={}", action, target, isAuto)
+      thisCard = Card(self.card_id)
       
       if isinstance(action, list):
          debug("Several actions found, player must choose one")
@@ -184,7 +185,7 @@ class Rules():
             vars = self.rules_tokens[RS_KEY_VARS]
             debug("Adding custom vars: {}", vars)
             for var in vars:
-               res = evalExpression(var[1], True, getLocals(source = self.card))
+               res = evalExpression(var[1], True, getLocals(source = thisCard))
                if res is not None:
                   debug("-- {} := {}", var[0], res)
                   addTempVar(var[0], res)
@@ -192,7 +193,7 @@ class Rules():
          # The player must pay the cost, or we cancel
          if action["cost"]:
             if not self.payCost(action["cost"]):
-               notify(MSG_COST_NOT_PAYED.format(me, self.card, ("effect", "ability")[isCharacter(self.card)]))
+               notify(MSG_COST_NOT_PAYED.format(me, thisCard, ("effect", "ability")[isCharacter(thisCard)]))
                playSnd("cancel-2")
                return False
             
@@ -221,7 +222,7 @@ class Rules():
             # IF condition
             elif cond[0] == RS_KW_COND_IF:            
                debug("-- Found IF condition: {}", cond[1])
-               res = evalExpression(cond[1], False, getLocals(source = self.card))
+               res = evalExpression(cond[1], False, getLocals(source = thisCard))
                if not res:
                   debug("--- Condition not matching")
                   if len(cond) > 2:
@@ -240,7 +241,7 @@ class Rules():
          # Additional target
          if effect[2]:
             debug("-- Found additional {}target", "optional" if effect[2]["opt"] else "")
-            newTarget = RulesUtils.getTargets(effect[2], source = self.card)
+            newTarget = RulesUtils.getTargets(effect[2], source = thisCard)
             if newTarget == False and not effect[2]["opt"]:
                if not isAuto:
                   notify(MSG_ERR_NO_CARDS)
@@ -257,7 +258,7 @@ class Rules():
          # Run the commands
          if len(effect[1]) > 0:
             debug("-- Applying commands")
-            commander.applyAll(effect[1], targets, effect[3], self.card, revert)
+            commander.applyAll(effect[1], targets, effect[3], thisCard, revert)
             # Clear visual target
             if targets and not isAuto:
                for obj in targets:
@@ -266,10 +267,10 @@ class Rules():
          waitForAnimation()
             
       if isAuto and not revert:
-         if isCharacter(self.card):
-            notify(MSG_AB_AUTO_ACT_CHAR.format(self.card.controller, self.card, getGameCard(self.card).ability))
+         if isCharacter(thisCard):
+            notify(MSG_AB_AUTO_ACT_CHAR.format(thisCard.controller, thisCard, getGameCard(thisCard).ability))
          else:
-            notify(MSG_AB_AUTO_ACT.format(self.card.controller, self.card))
+            notify(MSG_AB_AUTO_ACT.format(thisCard.controller, thisCard))
       
       return True
 
@@ -283,14 +284,15 @@ class Rules():
       debug("Executing auto on event {} ({})", eventName, args)
       
       if eventName:
+         thisCard = Card(self.card_id)
          # Non-character cards can have autos with events (Crossover/Grandmaster rule)
-         if not isCharacter(self.card) or getMarker(self.card, "BP") > 0:
-            if isCharacter(self.card):
-               notify(MSG_AB_AUTO_TRIGGER_CHAR.format(eventName, self.card, self.card.controller, self.card.group.name))
+         if not isCharacter(thisCard) or getMarker(thisCard, "BP") > 0:
+            if isCharacter(thisCard):
+               notify(MSG_AB_AUTO_TRIGGER_CHAR.format(eventName, thisCard, thisCard.controller, thisCard.group.name))
             else:
-               notify(MSG_AB_AUTO_TRIGGER.format(eventName, self.card, self.card.controller))
-            if not hasMarker(self.card, "United Attack"):
-               targets = [self.card]
+               notify(MSG_AB_AUTO_TRIGGER.format(eventName, thisCard, thisCard.controller))
+            if not hasMarker(thisCard, "United Attack"):
+               targets = [thisCard]
                if RS_KEY_TARGET in self.rules_tokens:
                   newTargets = self.getTargets(self.rules_tokens[RS_KEY_TARGET])
                   if newTargets:
@@ -302,12 +304,13 @@ class Rules():
                      addTempVar("trigger", trigger)
                return self.execAction(auto, targets, True)
             else:
-               notify(MSG_AB_AUTO_UATTACK.format(self.card, self.card.Ability))
+               notify(MSG_AB_AUTO_UATTACK.format(thisCard, thisCard.Ability))
       
       return True
                
    
    def payCost(self, costs):
+      thisCard = Card(self.card_id)
       for cost in costs:
          target = None
          if isinstance(cost, basestring):
@@ -317,7 +320,7 @@ class Rules():
          debug("-- Cost to pay: {}, {}", type, target)
          
          if type == RS_KW_COST_FREEZE:
-            freeze(self.card, silent = True)
+            freeze(thisCard, silent = True)
             
          elif type == RS_KW_COST_DISCARD:
             cards = []
@@ -345,7 +348,7 @@ class Rules():
             else:
                # The only zone allowed is player's hand
                target["zone"] = ["", RS_KW_ZONE_HAND]
-               cards = RulesUtils.getTargets(target, self.card, MSG_SEL_CARD_DISCARD)
+               cards = RulesUtils.getTargets(target, thisCard, MSG_SEL_CARD_DISCARD)
                if cards == False or len(cards) == 0:
                   whisper(MSG_ERR_NO_CARDS_HAND)
                   return False
@@ -361,20 +364,16 @@ class Rules():
             if target:
                # The only zone allowed is player's ring
                target["zone"] = ["", RS_KW_ZONE_RING]
-               cards = RulesUtils.getTargets(target, self.card, MSG_SEL_CARD_SACRIFICE)
+               cards = RulesUtils.getTargets(target, thisCard, MSG_SEL_CARD_SACRIFICE)
                if cards == False or len(cards) == 0:
                   return False
                for card in cards:
                   destroy(card)
                addTempVar("sacrificed", cards)
             else:
-               destroy(self.card)
-               addTempVar("sacrificed", [self.card])
+               destroy(thisCard)
+               addTempVar("sacrificed", [thisCard])
             
          # elif type == RS_KW_COST_EXILE:
          
       return True
-      
-   
-   def dispose(self):
-      del self.card

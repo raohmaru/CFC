@@ -58,7 +58,6 @@ class GameCard(object):
    def destroy(self):
       debug(">>> Delete GameCard {}", self.card)
       del self.card
-      self.rules.dispose()
       del self.rules
       
    @property
