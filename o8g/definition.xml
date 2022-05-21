@@ -4,7 +4,7 @@
       name="Card Fighters' Clash"
       id="e3d56d9e-900d-49c6-b6ae-22cbb51be153"
       octgnVersion="3.4.350.0"
-      version="0.9.11.914"
+      version="0.9.11.915"
       markersize="20"
       tags="capcom snk fighter"
       description="Play epic battles with fighters from Capcom and SNK!
@@ -114,6 +114,8 @@
 		<sound name="new-game" src="Resources/Sounds/new-game.mp3"/>
 		<sound name="notification" src="Resources/Sounds/notification.mp3"/>
 		<sound name="phase-change" src="Resources/Sounds/phase-change.mp3"/>
+		<sound name="power-up" src="Resources/Sounds/power-up.mp3"/>
+		<sound name="power-down" src="Resources/Sounds/power-down.mp3"/>
 		<sound name="shuffle" src="Resources/Sounds/shuffle.mp3"/>
 		<sound name="tap" src="Resources/Sounds/tap.mp3"/>
 		<sound name="to-hand" src="Resources/Sounds/to-hand.mp3"/>

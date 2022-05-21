@@ -47,7 +47,7 @@ def reveal(group):
          card.isFaceUp = isFaceUp
    else:
       cards = [card for card in group]
-      notify("{} shows his {}".format(group.controller, group.name))
+      notify("{} shows their {}".format(group.controller, group.name))
       showCardDlg(cards, "Cards in {}'s {}".format(group.controller, group.name), 0, min = 0)
       # Allow opponent to peek at the revealed cards of your hand
       if group.name == "Hand":

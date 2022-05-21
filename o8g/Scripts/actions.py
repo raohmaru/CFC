@@ -866,6 +866,7 @@ def plusBP(cards, x = 0, y = 0, silent = False, amount = 100):
       addMarker(card, "BP", amount)
       if not silent:
          notify("{} raises {}'s BP by {} (new BP is {})".format(me, card, amount, getMarker(card, "BP")))
+         playSnd("power-up")
 
 def minusBP(cards, x = 0, y = 0, silent = False, amount = 100):
    mute()
@@ -877,6 +878,7 @@ def minusBP(cards, x = 0, y = 0, silent = False, amount = 100):
       addMarker(card, "BP", -c)
       if not silent:
          notify("{} lowers {}'s BP by {} (new BP is {}).".format(me, card, amount, getMarker(card, "BP")))
+         playSnd("power-down")
 
 def plusBP2(cards, x = 0, y = 0): plusBP(cards, amount = 200)
 def plusBP3(cards, x = 0, y = 0): plusBP(cards, amount = 300)
