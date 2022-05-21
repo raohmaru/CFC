@@ -25,6 +25,8 @@ def buttonAction(btn):
          if len(me.Deck) == 0:
             warning(MSG_ACTION_LOAD_DECK)
             return
+         if not setupDone:
+            setup()
          me.setActive()
          
       elif buttons[btn._id] == NextButton:

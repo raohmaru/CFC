@@ -76,6 +76,7 @@ MSG_ERR_CANNOT_ATTACK       = "{} cannot attack due to an ability or effect."
 MSG_ERR_BLOCK_ONE           = "An attacking character can only be blocked by exactly one character."
 MSG_ERR_DRAW_EMPTY_PILE     = "You can't draw cards from an empty {}."
 MSG_ERR_NO_EMPTY_SLOTS      = "There aren't empty slots in your ring where to play a character card."
+MSG_ERR_NO_SP               = "You do not have enough SP to {}.\n(Cost is {} SP.)"
 MSG_HOOKS_ERR = {
    Hooks.BeforeAttack: "{} cannot attack due to {}'s {} ability{}.",
    Hooks.BeforeBlock : "{} cannot counter-attack due to {}'s {} ability{}.",

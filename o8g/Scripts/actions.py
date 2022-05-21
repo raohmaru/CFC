@@ -1311,15 +1311,16 @@ def createCard(group, x = 0, y = 0):
       
       
 def createRandomDeck(group = table, x = 0, y = 0):
-   debug(">>> createRandomDeck()")
+   mute()
    nonCharQty = random.randInt(17, 21)
    nonChar = random.sample(queryCard({"Type": ["Action", "Reaction"]}), nonCharQty)
-   debug("Deck contains {} non-char cards", len(nonChar))
+   whisper("Deck contains {} non-char cards".format(len(nonChar)))
    allChar = queryCard({"Type": "Character"})
    charNoRules = queryCard({"Type": "Character", "Rules": ""}, True)
    charsRules = [c for c in allChar if c not in charNoRules]
    chars = random.sample(charsRules, DeckSize - nonCharQty)
-   debug("Deck contains {} char cards with rules", len(chars))
+   whisper("Deck contains {} char cards with rules".format(len(chars)))
    deck = nonChar + chars
    for id in deck:
       me.deck.create(id, 1)
+   playSnd("load-deck")

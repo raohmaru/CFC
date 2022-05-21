@@ -105,7 +105,7 @@ def modSP(amount = 1, mode = None, silent = False, player = me, silentSnd = Fals
       notify("{} {} {} SP. New total is {} SP (before was {}).".format(player, action, amount, player.SP, initialSP))
 
 
-def payCostSP(amount = 1, obj = None, msg = "play this card", type = None):
+def payCostSP(amount = 1, obj = None, reason = "play this card", type = None):
    """
    Pays a SP cost. However it also check if the cost can actually be paid.
    """
@@ -124,7 +124,9 @@ def payCostSP(amount = 1, obj = None, msg = "play this card", type = None):
       initialSP = me.SP
       # Cancel if player doesn't have enough SP
       if me.SP + amount < 0:
-         warning("You do not have enough SP to {}.\n(Cost is {} SP.)".format(msg, amount))
+         msg = MSG_ERR_NO_SP.format(reason, amount)
+         warning(msg)
+         notify(msg)
          return False
       me.SP += amount
       if costModMsg:

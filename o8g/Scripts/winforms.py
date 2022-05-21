@@ -248,7 +248,7 @@ class ConfirmForm(MessageBoxForm):
       self.setup(formSize.Width, max(formSize.Height, 64) + buttonPanel.Height + self.TextPadding, title)
       # If text contains 5 or more lines, it is rendered cropped
       if formSize.Height > 60:
-         labelPanel.Height += 2
+         labelPanel.Height += 4
       # Hide the toolbar
       self.ControlBox = False
       # Resumes usual layout logic
