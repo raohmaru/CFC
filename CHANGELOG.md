@@ -1,6 +1,6 @@
 # Card Fighters' Clash Changelog
 
-## 0.9.11
+## 0.10.0
 + Increased the font size of the rule text for a better legibility.
 + Confirm form can show a "Do not show again" check box option.
 + Replaced BP & SP font.
