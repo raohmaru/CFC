@@ -27,6 +27,15 @@ def num(s):
       return 0
 
 
+def toBase(n, base, D = "0123456789abcdefghijklmnopqrstuvwxyz"):
+   """
+   Number base converter.
+   Returns: string
+   <https://stackoverflow.com/questions/47758410/convert-from-decimal-to-any-base-number-in-python>
+   """
+   return (toBase(n//base,base)+D[n%base]).lstrip("0") if n>0 else "0"
+
+
 def waitForAnimation():
    """
    Delays the next action until all animation is done.

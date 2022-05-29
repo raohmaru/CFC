@@ -29,6 +29,8 @@ for prop in _api.CardProperties():
 def CardProperties_getitem(self, key):
    value = _api.CardProperty(self._id, key)
    if cardPropertiesType[key] == "Integer":
+      if value == "":
+         return 0
       value = int(value)
    return value
 

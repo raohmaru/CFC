@@ -33,6 +33,7 @@ def onTableLoaded():
       debug("Error loading settings}")
    if not table.isTwoSided():
       warning("This game is designed to be played on a two-sided table.\n\nPlease start a new game and make sure the option 'Two Side Table' is checked.")
+   track_page()
    showWelcomeScreen()
 
 
@@ -80,6 +81,7 @@ def onDeckLoaded(args):
          _extapi.notify(msg, Colors.Red)
          # Big notification for all players
          notification(msg, Colors.Red, players)
+   track_deck(player.Deck)
    if settings["PlayAuto"]:
       setup()
    playSnd("load-deck")
@@ -217,6 +219,8 @@ def onTurnPassed(args):
       playSnd("turn-change")
    if turnNumber() == 1:
       removeButton(StartButton)
+      if not tutorial:
+         track_event("game_start", Octgn.Play.Player.LocalPlayer.Name)
    debug("<<< onTurnPassed()")
 
 

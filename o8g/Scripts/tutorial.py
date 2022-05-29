@@ -465,6 +465,7 @@ Now you are ready to face any opponent in the online arena! Good luck!
       players.pop()
       global tutorial
       tutorial = None
+      track_event("tutorial_end", Octgn.Play.Player.LocalPlayer.Name, "/tutorial")
       resetGame()
 
 
@@ -482,3 +483,4 @@ def startTutorial(group = table, x = 0, y = 0):
       return
    global tutorial
    tutorial = Tutorial()
+   track_event("tutorial_start", Octgn.Play.Player.LocalPlayer.Name, "/tutorial")

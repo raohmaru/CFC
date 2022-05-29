@@ -55,6 +55,7 @@ Have a good battle and thanks for playing!"""
    elif choice == 4:
       global tutorial
       tutorial = True
+      track_page("tutorial")
       resetGame()
       
    elif choice == 5:
@@ -90,16 +91,9 @@ def getGameVersion():
 
 def showChangelog():
    switchSetting("GameVersion", getGameVersion())
-   msg = u"""What's new in version 0.10.0
+   msg = u"""What's new in version 0.11.0
 
-- Increased the font size of the rule text of the cards for a better legibility.
-- Replaced the font of the BP & SP values.
-- Confirm boxes shows a "Do not show again" check box option.
-- New options in the Welcome screen to load decks.
-- Nerfed Amakusa SP gain per KOed character.
-- Nerfed Kazuki: now it deals 400 damage.
-- Improved game UX.
-- Several bug fixes.
+- Anonymous, basic tracking added to get insightful data about how players play the game.
 """.format(TriggerUniChar)
    askChoice(msg, [], [], ["Close"])
    

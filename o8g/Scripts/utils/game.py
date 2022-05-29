@@ -53,7 +53,7 @@ def resetAll():
    setupDone = False
    resetState()
    # The user is playing the tutorial
-   # FIXME If player does not start in the tutorial and resets the game, the tutorial is still active
+   # FIXME If player does not start the tutorial and resets the game, the tutorial is still active
    if isinstance(tutorial, Tutorial) and tutorial.step > 0:
       tutorial = None
    debug("<<< resetAll()")
@@ -69,7 +69,7 @@ def switchSetting(name, value = None):
       settings[name] = not settings[name]
    else:
       settings[name] = value
-   setSetting("settings", str(settings))  # C# method
+   setSetting("settings", str(settings))  # API method
    if isinstance(settings[name], bool):
       status = ("OFF", "ON")[settings[name]]
    else:
@@ -152,12 +152,13 @@ def selectRing():
 
 def notifyWinner(player):
    """
-   Notifys to all player who is the winner of the game.
+   Notifies to all player who is the winner of the game.
    """
    msg = MSG_HINT_WIN.format(player).upper()
    _extapi.notify(msg, Colors.Orange, True)
    if not debugging:
       notification(msg, playerList = players)
+   track_event("game_end", Octgn.Play.Player.LocalPlayer.Name)
       
       
 #---------------------------------------------------------------------------

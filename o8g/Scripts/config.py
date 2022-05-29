@@ -177,6 +177,7 @@ Yaxis        = "y"
 Author       = "raohmaru"
 GameId       = "e3d56d9e-900d-49c6-b6ae-22cbb51be153"
 Website      = "https://cardfightersclash.wordpress.com"
+WebsiteId    = "09d1ef6c-1295-48f3-a404-6721b498cd57"
 NaN          = float("nan")
 # _extapi is not ready yet
 # ButtonSize = _extapi.game.CardSizes["button"].Width
@@ -282,7 +283,7 @@ gameCards      = {}     # Dictionary holding all parsed cards
 cleanedUpRing  = False  # Tracks if the user has run the Clean-up phase
 commander      = None   # RulesCommands instance
 turnsRemaining = 1      # The number of consecutive turns a player can play
-envVars        = None   # Global variables to be used in eval() expression
+envVars        = None   # Global variables to be used in eval() expressions
 buttons        = {}     # Holds the created UI buttons
 transformed    = {}     # Transformed cards
 phaseOngoing   = False  # True while running phase automation tasks
@@ -299,13 +300,14 @@ tutorial       = None
 settings = {
    "PlayAuto"     : True,    # Trigger game, event and card effects
    "PhaseAuto"    : True,    # Automatic phase advancement
-   "Activate"     : True,    # Automatic activate /\ abilites and Action and Reaction cards
+   "Activate"     : True,    # Automatic activate /\ abilities and Action and Reaction cards
    "WinForms"     : True,    # Use custom Windows Forms for displaying info pop-ups
    "Sounds"       : True,    # Play sound effect
    "WelcomeScreen": True,    # Show welcome screen
    "ExtAPI"       : True,    # Make use of the extended API to access the C# API of IronPython
    "GameVersion"  : "0.0.0", # Last version shown in the changelog window
    "Avatar"       : None,    # Player's avatar
+   "Tracking"     : True,    # Enable tracking
    "DoNotShow": {            # If True, do not show these Confirmation dialogs again
       "Destroy" : False,
       "Activate": False

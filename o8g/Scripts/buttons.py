@@ -28,6 +28,7 @@ def buttonAction(btn):
          if not setupDone:
             setup()
          me.setActive()
+         track_event("click", StartButton)
          
       elif buttons[btn._id] == NextButton:
          nextPhase(True)

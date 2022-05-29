@@ -258,6 +258,7 @@ def resetDoNotShowAgain(group, x = 0, y = 0):
    switchSetting("DoNotShow", doNotShow)
    whisper("Restored \"Do not show again\" dialogs. Hidden notifications will appear again.")
 
+
 #---------------------------------------------------------------------------
 # Table card actions
 #---------------------------------------------------------------------------
