@@ -104,7 +104,7 @@ actions = [
    # "action = [[if true]] discard(all) [[invalid]] damage(5) target(opp)",
    # "action = reveal(); [[if true]] destroy() target(opp)",
    # "action = [[invalid true]] discard(all) [[else]] damage(5)",
-   # "action = moveTo(ctrlHand, -1, true) target?(characters[bp>=800]) uynt",
+   "action = moveTo(ctrlHand, -1, true) target?(characters[bp>=800]) uynt",
    # "action = {F}: moveTo(ctrlDeck) target(characters[-backup]) & shuffle(myDeck) & shuffle(oppDeck)",
    # "action = {F}: destroy() target(^character@myRing) & damage(5, character)",
    # "action = [[if  all myring: bp <= 3]] playExtraChar()",
@@ -115,14 +115,14 @@ actions = [
    # "action = reveal(hand) & each(action in me.hand => bp(+2)) target(this) & discard(actions)"
    # "action = discard(<,1>action@oppHand)",
    # "action = destroy() target(characters::not(prevTgt))",
-   # "action = shuffle?()",
+   "action = shuffle?()",
    # "action = steal(character@ring) from(character[powerful])",
    # "action = {S}: transform('80d411e3-c3df-486f-927f-1592d9db65de') target(character)",
    # "action = reveal(nil, true, false, 1, -12, yes, none)",
    # "action = copyAbility(prevTgt.0) to(this); [[if prevTgt.ability == trigger]] clear()",
    # "action = {S}: each(card in me.hand => hp(+100))"
    # "action = discard(character) || destroy() & draw(2)"
-   "action = discard(character) && destroy()"
+   # "action = discard(character) && destroy()"
 ]
 abilities = [
    "abilities = unblockable",

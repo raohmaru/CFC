@@ -135,6 +135,7 @@ def updateSharedGlobals(name, value, player = None):
    Replacement for OCTGN global variables, because when simultaneous requests are sent from different players to update a
    global variable, the server does not merge the data and keeps only the last updated version.
    """
+   debug(">>> updateSharedGlobals({}, {}, {})", name, value, player)
    # Merge current variable with the changes from the other player
    if isinstance(value, tuple):
       remov, added = value
@@ -146,7 +147,7 @@ def updateSharedGlobals(name, value, player = None):
       # dict
       elif isinstance(gvar, dict):
          for k in remov:
-            del gvar[k]
+            gvar.pop(k, None)  # If second arg is not given and key is not in the dictionary, a KeyError is raised
          for d in added:
             gvar.update(d)
          value = gvar

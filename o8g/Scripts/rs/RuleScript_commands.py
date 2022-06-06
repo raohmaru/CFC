@@ -286,7 +286,10 @@ def cmd_discard(rc, targets, source, restr, whichCards = ""):
             else:
                remoteCall(player, "discard", [card])
       else:
-         notify(MSG_ERR_NO_CARDS_DISCARD.format(player))
+         if whichCards == "all":
+            notify(MSG_ERR_NO_CARDS_DISCARD.format(player))
+         else:
+            notify(MSG_ERR_NO_CARDS_DISCARD_F.format(player))
          success = False
       # Peek cards
       if reveal or len(targets) > 1:
