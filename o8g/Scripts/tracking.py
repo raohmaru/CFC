@@ -94,7 +94,7 @@ def track_page(page = ""):
    
    
 def track_deck(deck):
-   #      0   1    2    3
+   # Qty:  0   1    2    3
    sep = ["", ",", ".", ":"]
    cards = [toBase(c.Gid, 32) for c in deck]
    cardsDict = { i: cards.count(i) for i in cards }

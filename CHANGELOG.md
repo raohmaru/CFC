@@ -1,5 +1,9 @@
 # Card Fighters' Clash Changelog
 
+## 0.12.0
+## 0.11.0
++ Anonymous, basic tracking added to get insightful data about how players play the game.
+
 ## 0.10.0
 + Increased the font size of the rule text for a better legibility.
 + Confirm form can show a "Do not show again" check box option.

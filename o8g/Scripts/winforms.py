@@ -448,6 +448,7 @@ def notification(msg, color = Colors.Black, playerList = None):
 def loadDeckDialog(path):
    playSnd("win-ask-1", True)
    form = DeckSelectorForm(path)
+   # openFileDlg("Load a deck", _extapi.getDecksPath(), "OCTGN deck files (*.o8d)|*.o8d")
    return form.show()
 
    

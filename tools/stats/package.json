@@ -1,0 +1,5 @@
+{
+  "dependencies": {
+    "libxmljs": "^0.19.10"
+  }
+}

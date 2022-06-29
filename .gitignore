@@ -5,3 +5,5 @@ psd/
 *.pyc
 Gemfile.lock
 o8g/Documents/*.html
+node_modules/
+/tools/stats/*.o8d

@@ -1,0 +1,15 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "type": "pwa-node",
+            "request": "launch",
+            "name": "Launch Program",
+            "skipFiles": [
+                "<node_internals>/**"
+            ],
+            "program": "${file}",
+            "args": ["4o:bp:2a.g:81:3o:5l:a:bq,7l:1k:7b,13:bn.ba:a4:2i:80.1c,3r."]
+        }
+    ]
+}
