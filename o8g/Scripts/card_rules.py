@@ -45,7 +45,7 @@ type:
    Values:
       Any Type: Character, Action, Reaction
       Any Subtype: Warrior, Pilot, Captain...
-      A card name surrounded by double quotes (")
+      A card name surrounded by double quotes
    Keywords:
       player
       me
@@ -138,7 +138,7 @@ cond: (optional)
 effect:
    Values:
       Effect command (followed by () or ?() with 0 or more parameters):
-      ?() marks the command as optional:
+      ?() marks the command as optional by letting the user choose if apply it:
          activate(expr)
          alterCost(cardtype, [=]#) // permanent
          bp(#|x#|=#|expr)       // default target = this
@@ -200,7 +200,7 @@ to(): (optional)
    Default:
       current player or the card (depend on context)
 
-to?(): Same as to(), but target is optional and will run next effect in the action.
+to?(): Same as to(), but target is optional and will run next effect in the action if there are no targets.
       
 restr: (optional)
    Keywords:

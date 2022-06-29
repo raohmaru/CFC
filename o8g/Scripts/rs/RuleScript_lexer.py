@@ -366,6 +366,7 @@ class RulesLexer():
          if match:
             kw, params = RulesLexer.extractKeyword(match.group(1), RS_KW_CMD_COND)
             if kw:
+               params = RulesLexer.stripQuotes(params)
                # Join with condition from the event
                if effect[0]:
                   effect[0][1] += " and " + params
@@ -533,3 +534,16 @@ class RulesLexer():
       if isNumber(token):
          return int(token)
       return token
+      
+      
+   @staticmethod
+   def stripQuotes(str):
+      """
+      Strips leading and trailing quotes from a string literal.
+      """
+      if str:
+         if str[0] == '"' and str[-1] == '"':
+            return str.strip('"')
+         if str[0] == "'" and str[-1] == "'":
+            return str.strip("'")
+      return str

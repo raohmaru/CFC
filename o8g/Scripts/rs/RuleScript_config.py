@@ -56,6 +56,7 @@ RS_RGX_KEY_LABEL      = re.compile(r"^label\s*=\s*")
 
 RS_RGX_PARAM          = re.compile(r"\(([^)]*)\)")
 RS_RGX_COND           = re.compile(r"\[\[([^\]]+)\]\]\s*")
+RS_RGX_UUID           = re.compile(r"[\da-f]{8}-[\da-f]{4}-[\da-f]{4}-[\da-f]{4}-[\da-f]{12}")
 
 # Comments
 RS_COMMENT_CHAR = "#"

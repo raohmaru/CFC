@@ -214,11 +214,11 @@ class Rules():
             if cond[0] == RS_KW_COND_MAY:
                question = MSG_Q_MAY
                if len(cond) > 1:
-                  question = cond[1].strip('"\"').capitalize()
-               debug("-- Found MAY condition: {}", question)
+                  question = cond[1].capitalize()
+               debug("-- Found MAY condition: \"{}\"", question)
                if not confirm(question):
                   debug("--- {} canceled", me)
-                  return False
+                  return True
             # IF condition
             elif cond[0] == RS_KW_COND_IF:            
                debug("-- Found IF condition: {}", cond[1])

@@ -521,9 +521,10 @@ def cmd_each(rc, targets, source, restr, args):
    
 def cmd_transform(rc, targets, source, restr, expr):
    model = None
+   expr = RulesLexer.stripQuotes(expr)
    # Is expr a literal with a UUID?
-   if expr[0] == '"':
-      model = expr.strip('"')
+   if RS_RGX_UUID.match(expr):
+      model = expr
    else:
       card = evalExpression(expr, True, getLocals(rc = rc, targets = targets, source = source))
       if card:
