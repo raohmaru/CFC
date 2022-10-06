@@ -1,6 +1,8 @@
 # Card Fighters' Clash Changelog
 
 ## 0.12.0
++ Disabled tracking.
+
 ## 0.11.0
 + Anonymous, basic tracking added to get insightful data about how players play the game.
 
