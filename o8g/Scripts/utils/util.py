@@ -283,3 +283,11 @@ def getLocals(**kwargs):
       locals["discarded"] = []
    
    return locals
+   
+
+def hexToRGB(hex):
+   """
+   Transform a color hex value (like "#FFCC000") into its RGB components as a list.
+   """
+   hex = hex.lstrip("#")
+   return list(int(hex[i:i+2], 16) for i in (0, 2, 4))
