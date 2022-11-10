@@ -51,6 +51,7 @@ def dealDamage(dmg, target, source, combatDmg = True, isPiercing = False):
          dmg += modDmg
       oldHP = getState(target, "HP")
       newHP = oldHP - dmg
+      newHP = max(0, newHP)
       target.HP = newHP
       # Update game state in case several attacks are done at once
       setState(target, "HP", newHP)
@@ -78,6 +79,7 @@ def dealDamage(dmg, target, source, combatDmg = True, isPiercing = False):
 def loseLife(qty, target, source):
    oldHP = getState(target, "HP")
    newHP = oldHP - qty
+   newHP = max(0, newHP)
    target.HP = newHP
    effect = "ability".format(source) if isCharacter(source) else "effect"
    notify("{} loses {} HP due to {}'s {}. New HP is {} (before was {}).".format(target, qty, source, effect, target.HP, oldHP))
