@@ -63,42 +63,6 @@ class RulesAbilities():
       if removeGameEventListener(card_id, RulesAbilities.items[ability]["event"], "abl_genericListener"):
          notify("{} has lost the {} ability".format(card, ability))
       
-      
-#---------------------------------------------------------------------------
-# Related functions
-#---------------------------------------------------------------------------
-               
-def getPlayerOrCard(id):
-   if id in [p._id for p in players]:
-      return Player(id)
-   else:
-      return Card(id)
-      
-      
-def getObjName(obj):
-   if isinstance(obj, (int, long)):
-      obj = getPlayerOrCard(obj)
-   if hasattr(obj, "Name"):
-      return obj.Name
-   else:
-      return obj.name
-   
-   
-def notifyAbility(target_id, source_id = None, msg = None, restr = "", isWarning = False):
-   obj = getPlayerOrCard(target_id)
-   source = obj
-   if source_id is not None:
-      source = Card(source_id)
-   if msg is not None:
-      func = warning if isWarning else notify
-      name = obj
-      if isPlayer(obj) or isWarning:
-         if isPlayer(obj) and isWarning:
-            name = "You"
-         else:
-            name = getObjName(obj)
-      func(msg.format(name, source.Name, source.properties["Ability Name"], restr))
-
 
 #---------------------------------------------------------------------------
 # Abilities functions

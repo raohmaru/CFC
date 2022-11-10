@@ -117,7 +117,7 @@ def onCardsMoved(args):
          # From the table to anywhere else
          if fromGroup == table and toGroup != table:
             clearAttachLinks(card)
-            if charIsInRing(card):
+            if isCharInRing(card):
                # Frees a slot of the ring
                MyRing[MyRing.index(card_id)] = None
                setGlobalVar("Ring", MyRing, me)
@@ -142,7 +142,7 @@ def onCardsMoved(args):
             playSnd("move-card-2")
          # From anywhere else to the table
          elif fromGroup != table and toGroup == table:
-            if not ringChanged and charIsInRing(card):
+            if not ringChanged and isCharInRing(card):
                ringChanged = True
             if not card.isFaceUp:
                playSnd("move-card-1", True)

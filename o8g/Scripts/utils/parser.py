@@ -102,3 +102,28 @@ def getTargets(str, source = None, reveal = True):
    """
    cardsTokens = RulesLexer.parseTarget(str.lower())
    return RulesUtils.getTargets(cardsTokens, source, reveal = reveal)
+
+
+def getEnvVars(): 
+   """
+   Returns a dict with global variables and functions to be used in cards rules with RuleScript.
+   """
+   global envVars
+   if not envVars:
+      envVars = {
+         "me": me,
+         "instant": InstantAbility,
+         "triggered": TriggerAbility,
+         "auto": AutoAbility,
+         # aliases
+         "ischar": isCharacter
+      }
+      # To use in evalExpression(), case sensitive
+      globalFuncs = [getGameCard, isAction, isReaction, isCharacter, getRingSize, getRing, getState, getOpp, getAttackingCards, num, getCardByContext]
+      for f in globalFuncs:
+         envVars[f.__name__] = f
+      # Used in cardRules, case insensitive
+      globalFuncs = [flipCoin, isCharacter, inUAttack, getTargets]
+      for f in globalFuncs:
+         envVars[f.__name__.lower()] = f
+   return envVars

@@ -334,7 +334,7 @@ class Rules():
                if target:
                   amount = int(target["types"][0])
                # Looking exactly for `amount` targeted cards in the hand
-               targetedCards = getTargetedCards(type = None, group = me.hand)
+               targetedCards = getTargetedCardsFrom(type = None, group = me.hand)
                if len(targetedCards) == amount:
                   cards = targetedCards
                # Should ask for cards?

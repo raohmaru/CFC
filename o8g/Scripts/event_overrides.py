@@ -71,7 +71,7 @@ def overrideCardsMoved(args):
             elif fromGroup == table:
                cy = card.position[1]
                # Attack
-               if me.isActive and phaseIdx == AttackPhase and charIsInRing(card):
+               if me.isActive and phaseIdx == AttackPhase and isCharInRing(card):
                   if (y > cy - DragOffsetY, y < cy + DragOffsetY)[bool(playerSide + 1)]:
                      slotIdx = getDropSlotIndex(x)
                      if slotIdx == None:
@@ -97,7 +97,7 @@ def overrideCardsMoved(args):
                      cancelAttack(card)
                      continue
                # Block
-               elif (not me.isActive or tutorial) and phaseIdx == BlockPhase and charIsInRing(card):
+               elif (not me.isActive or tutorial) and phaseIdx == BlockPhase and isCharInRing(card):
                   if (y > cy - DragOffsetY, y < cy + DragOffsetY)[bool(playerSide + 1)]:
                      slotIdx = getDropSlotIndex(x)
                      if slotIdx == None:
@@ -134,23 +134,4 @@ def overrideTurnPassed(args):
    setState(None, "activePlayer", player._id)
    nextTurn(player)
 
-
-#---------------------------------------------------------------------------
-# Related functions
-#---------------------------------------------------------------------------
-
-def getDropSlotIndex(x):
-   """
-   Returns the slot closest to the given X coordinate, or None.
-   """
-   idx = None
-   ox = 200
-   cx = x + CardWidth/2
-   for j in range(NumSlots):
-      slotX = CardsCoords["Slot" + `invertSlotIdx(j)`][0] + CardWidth / 2
-      diff = abs(slotX - cx)
-      if diff < ox:
-         idx = j
-         ox = diff
-   return idx
    

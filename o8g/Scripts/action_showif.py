@@ -25,7 +25,7 @@ def acsh_autoPlayOff(args, x = 0, y = 0):
       
 def acsh_canBackup(args, x = 0, y = 0):
    card = args[0]
-   return isCharacter(card) and me.isActive and getCurrentPhase() == MainPhase and charIsInRing(card)
+   return isCharacter(card) and me.isActive and getCurrentPhase() == MainPhase and isCharInRing(card)
 
       
 def acsh_charsInArena(args, x = 0, y = 0):
@@ -34,7 +34,7 @@ def acsh_charsInArena(args, x = 0, y = 0):
 
 def acsh_charIsInRing(args, x = 0, y = 0):
    card = args[0]
-   return isCharacter(card) and charIsInRing(card)
+   return isCharacter(card) and isCharInRing(card)
    
    
 def acsh_debug(args, x = 0, y = 0):
@@ -68,7 +68,7 @@ def acsh_hidden(args, x = 0, y = 0):
 
 def acsh_isActivePlayerAttack(args, x = 0, y = 0):
    card = args[0]
-   return isCharacter(card) and me.isActive and getCurrentPhase() == AttackPhase and not isAttacking(card) and charIsInRing(card)
+   return isCharacter(card) and me.isActive and getCurrentPhase() == AttackPhase and not isAttacking(card) and isCharInRing(card)
 
       
 def acsh_isChar(args, x = 0, y = 0):
@@ -91,7 +91,7 @@ def acsh_isCharNotBackup(args, x = 0, y = 0):
       
 def acsh_isNotBackup(args, x = 0, y = 0):
    card = args[0]
-   return not isCharacter(card) or charIsInRing(card)
+   return not isCharacter(card) or isCharInRing(card)
 
       
 def acsh_isNotTutorial(args, x = 0, y = 0):

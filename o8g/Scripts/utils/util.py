@@ -15,7 +15,7 @@
 # along with this script. If not, see <http://www.gnu.org/licenses/>.
 
 #---------------------------------------------------------------------------
-# General functions
+# Utility functions
 #---------------------------------------------------------------------------
 
 def num(s):
@@ -128,7 +128,7 @@ def clearGlobalVar(name, player = None):
    elif isinstance(gvar, (int, long)):
       gvar = 0
    setGlobalVar(name, gvar, player)
-         
+
          
 def updateSharedGlobals(name, value, player = None):
    """
@@ -157,3 +157,129 @@ def updateSharedGlobals(name, value, player = None):
       PlayerGlobals[player._id][name] = value
    else:
       Globals[name] = value
+
+
+def syncGlobalVars():
+   """
+   In multiplayer games global variables could not be sync if players simultaneously modify them.
+   Nevertheless, needs more testing to ensure that this is absolutely necessary.
+   """
+   # Reset action local variables
+   clearGlobalVar("TempVars")
+
+   cards = [c._id for c in table
+            if isCharacter(c)]
+   
+   # Ensure there aren't any "ghost" card in the ring
+   ring = getGlobalVar("Ring", me)
+   changed = False
+   for id in ring:
+      if id != None and id not in cards:
+         ring[ring.index(id)] = None
+         changed = True
+   if changed:
+      setGlobalVar("Ring", ring, me)
+   
+   if len(players) > 1:
+      ring = getGlobalVar("Ring", players[1])
+      changed = False
+      for id in ring:
+         if id != None and id not in cards:
+            ring[ring.index(id)] = None
+            changed = True
+      if changed:
+         setGlobalVar("Ring", ring, players[1])
+      
+   # Events
+   ge = getGlobalVar("GameEvents")
+   changed = False
+   for e in list(reversed(ge)):
+      if e["restr"] is None:
+         source = e["source"]
+         id = e["id"]
+         if (
+            (source and (source not in cards and isCharacter(Card(source)) or not Card(source).Rules))
+            or (id not in cards and isCharacter(Card(id)) or not Card(id).Rules)
+         ):
+            ge.remove(e)
+            changed = True
+   if changed:
+      setGlobalVar("GameEvents", ge)
+   
+   # Modifiers
+   Modifiers = getGlobalVar("Modifiers")
+   changed = False
+   for t in Modifiers:
+      for m in list(reversed(Modifiers[t])):
+         if not m[0] in cards and isCharacter(Card(m[0])):
+            Modifiers[t].remove(m)
+            changed = True
+   if changed:
+      setGlobalVar("Modifiers", Modifiers)
+   
+   # Rules
+   Rules = getGlobalVar("Rules")
+   changed = False
+   for r in Rules:
+      for id in Rules[r].keys():
+         if not id in cards and isCharacter(Card(id)):
+            del Rules[r][id]
+            changed = True
+   if changed:
+      setGlobalVar("Rules", Rules)
+   
+   update()
+
+
+def getPlayerOrCard(id):
+   """
+   Returns a Player or a Card with the given id.
+   """
+   if id in [p._id for p in players]:
+      return Player(id)
+   else:
+      return Card(id)
+      
+      
+def getObjName(obj):
+   """
+   Returns the value of the attribute "name" of the object.
+   """
+   if isinstance(obj, (int, long)):
+      obj = getPlayerOrCard(obj)
+   if hasattr(obj, "Name"):
+      return obj.Name
+   else:
+      return obj.name
+
+
+def getLocals(**kwargs): 
+   """
+   Returns a dict of local variables defined in several places.
+   """
+   locals = {}
+   vars = getGlobalVar("TempVars")
+   for key, value in vars.iteritems():
+      key = key.lower()
+      if isinstance(value, list):
+         locals[key] = [objectify(id) for id in value]
+      else:
+         locals[key] = objectify(value)
+        
+   rc = commander
+   if kwargs:
+      if "source" in kwargs:
+         locals["this"] = kwargs["source"]
+      if "targets" in kwargs and len(kwargs["targets"]) > 0:
+         locals["tgt"] = kwargs["targets"][0]
+      if "rc" in kwargs:
+         rc = kwargs["rc"]  # Commander could be a subprocess
+      
+   if rc and rc.prevTargets != None and len(rc.prevTargets) > 0:
+      locals["prevtgt"] = rc.prevTargets
+      
+   # Add some default variables
+   if not "discarded" in locals:
+      locals["discarded"] = []
+   
+   return locals

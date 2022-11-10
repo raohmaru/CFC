@@ -90,6 +90,11 @@ def isVisible(card):
    return True
 
 
+def isCharInRing(card, player = me):
+   ring = getGlobalVar("Ring", player)
+   return card._id in ring
+
+
 def hasFilter(card, filter):
    # card.filter does not have the alpha value (#AARRGGB => #RRGGBB)
    return card.filter and card.filter[1:] == filter[3:]

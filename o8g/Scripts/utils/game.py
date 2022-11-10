@@ -150,17 +150,15 @@ def selectRing():
    return players[t-1]
    
 
-def notifyWinner(player):
+def getSourceController():
    """
-   Notifies to all player who is the winner of the game.
+   Gets the controller of the source effect.
    """
-   msg = MSG_HINT_WIN.format(player).upper()
-   _extapi.notify(msg, Colors.Orange, True)
-   if not debugging:
-      notification(msg, playerList = players)
-   track_event("game_end", Octgn.Play.Player.LocalPlayer.Name)
-      
-      
+   if commander and commander.cmdsArgs:
+      return commander.cmdsArgs[2].controller
+   return me
+   
+
 #---------------------------------------------------------------------------
 # Rules
 #---------------------------------------------------------------------------
@@ -344,3 +342,66 @@ def removeGameMod(id, msg = False):
    setGlobalVar("Modifiers", Modifiers)
    if msg:
       notify(msg)
+
+
+#---------------------------------------------------------------------------
+# Attack & Block
+#---------------------------------------------------------------------------
+
+def rearrangeUAttack(card):
+   """
+   Rearrange or cancels a UA if the card was part of it.
+   """
+   debug(">>> rearrangeUAttack({})", card)
+   uattack = getGlobalVar("UnitedAttack")
+   if card._id in uattack:
+      notify("{} was part of an United Attack. Now it will be rearranged.".format(card))
+      uatttackIdx = uattack.index(card._id)
+      uattack.remove(card._id)
+      uattack = filter(None, uattack)
+      setGlobalVar("UnitedAttack", uattack)
+      # If it was the lead card, or there is only 1 char left, cancel UA
+      if uatttackIdx == 0 or len(uattack) == 1:
+         notify("{} cancels the United Attack.".format(me))
+         clearGlobalVar("UnitedAttack")
+         for cid in uattack:
+            c = Card(cid)
+            removeMarker(c, "United Attack")
+            if attackAuto(c):
+               c.highlight = AttackColor
+            else:
+               cancelAttack(c, True)
+      # Reorder remaining chars in the UA
+      else:
+         for cid in uattack[1:]:
+            alignCard(Card(cid))
+      debug("UnitedAttack: {}", uattack)
+      
+
+def cancelAttack(card, silent = False):
+   debug(">>> cancelAttack({})", card)
+   removeMarker(card, "Attack")
+   removeMarker(card, "United Attack")
+   removeMarker(card, "Unfreezable")
+   clear(card)
+   alignCard(card)
+   rearrangeUAttack(card)
+   if not silent:
+      notify("{} cancels the attack with {}.".format(me, card))
+      playSnd("cancel-1")
+   
+
+def cancelBlock(card, silent = False):
+   removeMarker(card, "Counter-attack")
+   clear(card)
+   alignCard(card)
+   blockers = getGlobalVar("Blockers")
+   for i in blockers:
+      if blockers[i] == card._id:
+         del blockers[i]
+         debug("Removed blocker {}", blockers)
+         setGlobalVar("Blockers", blockers)
+         break
+   if not silent:
+      notify("{} cancels the counter-attack with {}.".format(me, card))
+      playSnd("cancel-1")

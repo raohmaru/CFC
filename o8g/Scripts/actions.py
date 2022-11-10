@@ -442,7 +442,7 @@ def askCardBackups(card, x = 0, y = 0):
       information("Only character cards can be backed-up.")
       return
    acceptedBackups = getAcceptedBackups(card)
-   inRing = charIsInRing(card)
+   inRing = isCharInRing(card)
    avlCharsForBackup = []
    msg = "{} can be backed-up with the following character types:\n  - {}".format(card.Name, "\n  - ".join(filter(None, acceptedBackups)))
    # Check remaining backups
@@ -615,7 +615,7 @@ def swapAbilities(card, x = 0, y = 0, target = None):
    Swap the abilities between two characters.
    """
    debug(">>> swapAbilities({}, {})", card, target)
-   if not isCharacter(card) or not charIsInRing(card, card.controller) or not card.Rules:
+   if not isCharacter(card) or not isCharInRing(card, card.controller) or not card.Rules:
       whisper("Abilities can only be swapped between character cards with abilities in the arena.")
       return
    if not target:
@@ -684,7 +684,7 @@ def destroy(card, controller = me):
 
 def batchDestroy(cards, x = 0, y = 0):
    if len(cards) == 1:
-      action = "KO" if isCharacter(cards[0]) and charIsInRing(cards[0]) else "discard"
+      action = "KO" if isCharacter(cards[0]) and isCharInRing(cards[0]) else "discard"
       msg = "Do you want to {} {}?".format(action, cards[0].Name)
    else:
       msg = "Do you want to discard these {} cards?".format(len(cards))
@@ -813,7 +813,7 @@ def changeSlot(card, x = 0, y = 0, targets = None):
       warning(MSG_SEL_CHAR_RING)
       return
    if not targets:
-      targets = getTargetedCards(card, True, card.controller == me)
+      targets = getTargetedCardsFrom(card, True, card.controller == me)
    # Swap the position of two characters
    if len(targets) > 0:
       target = targets[0]
@@ -1240,9 +1240,11 @@ def reshuffleCHA(group = me.piles["Discard pile"]):
    mute()
    reshuffleCardsOfType(group, CharType)
 
+
 def reshuffleAC(group = me.piles["Discard pile"]):
    mute()
    reshuffleCardsOfType(group, ActionType)
+
 
 def reshuffleRE(group = me.piles["Discard pile"]):
    mute()

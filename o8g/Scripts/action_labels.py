@@ -54,7 +54,7 @@ def aclb_Default(args, x = 0, y = 0):
 
 def aclb_ChangeSlot(args, x = 0, y = 0):
    card = args[0]
-   targets = getTargetedCards(card, True, card.controller == me)
+   targets = getTargetedCardsFrom(card, True, card.controller == me)
    if len(targets) > 0:
       return "Swap slot"
    else:

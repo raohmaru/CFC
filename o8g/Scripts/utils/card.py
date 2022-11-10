@@ -47,7 +47,6 @@ def placeCard(card, type = None, action = None, target = None, faceDown = False)
    Automatically places a card on the table according to the type of card.
    """
    debug(">>> placeCard()")
-
    if settings["PlayAuto"]:
       if type == CharType and action != None:
          coords = (0, fixCardY(0))
@@ -81,6 +80,9 @@ def placeCard(card, type = None, action = None, target = None, faceDown = False)
 
   
 def getSlotIdx(card, player = me):
+   """
+   Gets the slot index of a card in the given player's ring.
+   """
    debug(">>> getSlotIdx({})", card)
    ring = getGlobalVar("Ring", player)
    for i, id in enumerate(ring):
@@ -92,8 +94,24 @@ def getSlotIdx(card, player = me):
          return i
    debug("Card isn't in a slot")
    return -1
-   
-   
+
+
+def getDropSlotIndex(x):
+   """
+   Returns the slot closest to the given X coordinate, or None.
+   """
+   idx = None
+   ox = 200
+   cx = x + CardWidth/2
+   for j in range(NumSlots):
+      slotX = CardsCoords["Slot" + `invertSlotIdx(j)`][0] + CardWidth / 2
+      diff = abs(slotX - cx)
+      if diff < ox:
+         idx = j
+         ox = diff
+   return idx
+
+
 def getCardAtSlot(idx, player = me):
    debug(">>> getCardAtSlot({}, {})", idx, player)
    ring = getGlobalVar("Ring", player)
@@ -103,12 +121,7 @@ def getCardAtSlot(idx, player = me):
    debug("Card at slot {} is: {}", idx, card)
    return card
    
-
-def charIsInRing(card, player = me):
-   ring = getGlobalVar("Ring", player)
-   return card._id in ring
-
-   
+  
 def putAtSlot(card, idx, player = me, move = False):
    """
    Puts or move a card into a slot in the ring.
@@ -126,6 +139,9 @@ def putAtSlot(card, idx, player = me, move = False):
 
 
 def alignCard(card, x = None, y = None, slotIdx = None):
+   """
+   Aligns a card in the table according to its state.
+   """
    debug(">>> alignCard({}, {}, {}, {})", card, x, y, slotIdx)
    z = None
    if x == None or y == None:
@@ -171,6 +187,9 @@ def alignCard(card, x = None, y = None, slotIdx = None):
 
 
 def alignBackups(card, x = 0, y = 0):
+   """
+   Aligns the cards attached to the given card.
+   """
    debug(">>> alignBackups({}, {}, {})", card, x, y)
    attachs = getAttachments(card)
    if len(attachs) > 0:
@@ -244,6 +263,9 @@ def transformCard(card, cardModel):
    
    
 def copyAlternateRules(card, target):
+   """
+   Copies the rules of the target card into another card as an alternate form.
+   """
    debug(">>> copyAlternateRules({}, {})", card, target)
    if not settings["ExtAPI"]:
       return False
@@ -257,8 +279,12 @@ def copyAlternateRules(card, target):
       return addAlternateRules(card, ability, rules)
    return False
    
-   
+
 def addAlternateRules(card, ability, rules, altname = None):
+   """
+   Adds an alternate form to the card (a different set of properties to the same card).
+   https://github.com/octgn/OCTGN/wiki/set.xml#alternate
+   """
    debug(">>> addAlternateRules({}, {}, {})", card, ability, altname)
    if not settings["ExtAPI"]:
       return None
@@ -278,27 +304,7 @@ def addAlternateRules(card, ability, rules, altname = None):
    card.alternate = altname
    return altname
    
-
-def askForEmptySlot(player = me):
-   ring = getGlobalVar("Ring", player)
-   if ring.count(None) == 0:
-      warning(MSG_ERR_NO_EMPTY_SLOTS)
-      return -1
-   # Prompt the player to select an empty slot
-   slots = []
-   for i, id in enumerate(ring):
-      if id == None:
-         slots.append(str(i + 1))
-   # Don't ask if only one slot is empty
-   if len(slots) == 1:
-      return int(slots[0]) - 1
-   slotIdx = askChoice("Select an empty slot:", slots)
-   debug("Selected option {} ({})", slotIdx, slotIdx - 1)
-   if slotIdx == 0:
-      return -1
-   return int(slots[slotIdx - 1]) - 1
-
-   
+  
 def passControlTo(player, cards, cb = None, cbArgs = None):
    debug(">>> passControlTo({}, {}, {}, {})", player, cards, cb, cbArgs)
    for card in cards:
@@ -319,7 +325,7 @@ def getAttackingCards(player = me, getUA = False):
       or (getUA and hasMarker(card, "United Attack"))]
 
 
-def getTargetedCards(card = None, targetedByMe = True, controlledByMe = True, type = CharType, group = table):
+def getTargetedCardsFrom(card = None, targetedByMe = True, controlledByMe = True, type = CharType, group = table):
    """
    Returns a list with all cards from the given group targeted by the given player.
    """
@@ -364,3 +370,18 @@ def copyCard(card):
       "model"  : CharsAbilities[card._id] if card._id in CharsAbilities else card.model
    })
    return card_copy
+
+
+def discardKOedChars():
+   """
+   Destroy characters with 0 BP.
+   """
+   for card in getRing():
+      if getMarker(card, "BP") == 0:
+         notify("{}'s {} BP is 0. Taking it out from the arena.".format(card.controller, card))
+         if card.controller == me:
+            destroy(card)
+            update()  # Syncs the game state along players. Also delays animations.
+         else:
+            remoteCall(card.controller, "destroy", [card, card.controller])
+            remoteCall(card.controller, "update", [])
