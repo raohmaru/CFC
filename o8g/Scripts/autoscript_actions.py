@@ -204,7 +204,7 @@ def attackAuto(card, force = False):
    if triggerHook(Hooks.BeforeAttack, card._id, [card._id]) == False:
       return
    # Cancels the character's attack if it's already attacking
-   if isAttacking(card):
+   if isAttacking(card) and not force:
       cancelAttack(card)
       return
    # Char just entered the ring?

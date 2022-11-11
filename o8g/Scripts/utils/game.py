@@ -355,7 +355,7 @@ def rearrangeUAttack(card):
    debug(">>> rearrangeUAttack({})", card)
    uattack = getGlobalVar("UnitedAttack")
    if card._id in uattack:
-      notify("{} was part of an United Attack. Now it will be rearranged.".format(card))
+      notify("{} was part of an United Attack. Now the attack it will be rearranged.".format(card))
       uatttackIdx = uattack.index(card._id)
       uattack.remove(card._id)
       uattack = filter(None, uattack)
@@ -367,7 +367,7 @@ def rearrangeUAttack(card):
          for cid in uattack:
             c = Card(cid)
             removeMarker(c, "United Attack")
-            if attackAuto(c):
+            if attackAuto(c, True):
                c.highlight = AttackColor
             else:
                cancelAttack(c, True)

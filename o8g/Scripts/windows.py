@@ -94,7 +94,8 @@ def showChangelog():
    msg = u"""What's new in version 0.12.0
 
 - Disabled basic tracking.
-- Updated Core set image pack. Download it from cardfightersclash.wordpress.com/image-packs.
+- Updated Core set image pack. You can download it from cardfightersclash.wordpress.com/image-packs.
+- Several bug fixes.
 """.format(TriggerUniChar)
    askChoice(msg, [], [], ["Close"])
    
