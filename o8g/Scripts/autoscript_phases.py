@@ -127,9 +127,10 @@ def drawPhaseStart():
 
 def mainPhaseStart():
    alignCards()
+   # Restore default game board
+   table.board = ""
    if settings["PhaseAuto"]:
       addButton(NextButton)
-      
    for card in table:
       card.target(False)
 
@@ -137,6 +138,10 @@ def mainPhaseStart():
 def attackPhaseStart():
    syncGlobalVars()
    discardKOedChars()
+   if playerSide == 1:
+      table.board = "attack1"
+   else:
+      table.board = "attack2"
    # In case going backwards and button was hence removed
    if settings["PhaseAuto"]:
       addButton(NextButton)
@@ -151,8 +156,10 @@ def attackPhaseStart():
 
 
 def blockPhaseStart():
-   if not tutorial:
-      removeButton(NextButton)
+   if tutorial or playerSide == -1:
+      table.board = "block1"
+   else:
+      table.board = "block2"
    uattack = getGlobalVar("UnitedAttack")
    if settings["PlayAuto"]:
       # Pay the cost of the UA
@@ -177,6 +184,8 @@ def blockPhaseStart():
 def endPhaseStart():
    syncGlobalVars()
    discardKOedChars()
+   # Restore default game board
+   table.board = ""
 
    # Freeze attacking characters
    freezeAtk = getRule("attack_freeze")

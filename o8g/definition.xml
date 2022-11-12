@@ -4,7 +4,7 @@
       name="Card Fighters' Clash"
       id="e3d56d9e-900d-49c6-b6ae-22cbb51be153"
       octgnVersion="3.4.350.0"
-      version="0.12.0.936"
+      version="0.12.0.939"
       markersize="20"
       tags="capcom snk fighter"
       description="Play epic battles with fighters from Capcom and SNK!
@@ -86,50 +86,50 @@
 	</events>
 
 	<sounds>
-		<sound name="activate-1" src="Resources/Sounds/activate-1.mp3"/>
-		<sound name="activate-2" src="Resources/Sounds/activate-2.mp3"/>
-		<sound name="activate-3" src="Resources/Sounds/activate-3.mp3"/>
-		<sound name="attack-1" src="Resources/Sounds/attack-1.mp3"/>
-		<sound name="attack-2" src="Resources/Sounds/attack-2.mp3"/>
-		<sound name="backup" src="Resources/Sounds/backup.mp3"/>
-		<sound name="block" src="Resources/Sounds/block.mp3"/>
-		<sound name="cancel-1" src="Resources/Sounds/cancel-1.mp3"/>
-		<sound name="cancel-2" src="Resources/Sounds/cancel-2.mp3"/>
-		<sound name="card-play-1" src="Resources/Sounds/card-play-1.mp3"/>
-		<sound name="card-play-2" src="Resources/Sounds/card-play-2.mp3"/>
-		<sound name="damage-char-1" src="Resources/Sounds/damage-char-1.mp3"/>
-		<sound name="damage-char-2" src="Resources/Sounds/damage-char-2.mp3"/>
-		<sound name="damage-player-1" src="Resources/Sounds/damage-player-1.mp3"/>
-		<sound name="damage-player-2" src="Resources/Sounds/damage-player-2.mp3"/>
-		<sound name="discard" src="Resources/Sounds/discard.mp3"/>
-		<sound name="draw" src="Resources/Sounds/draw.mp3"/>
-		<sound name="gain-life" src="Resources/Sounds/gain-life.mp3"/>
-		<sound name="gain-sp" src="Resources/Sounds/gain-sp.mp3"/>
-		<sound name="ko-1" src="Resources/Sounds/ko-1.mp3"/>
-		<sound name="ko-2" src="Resources/Sounds/ko-2.mp3"/>
-		<sound name="load-deck" src="Resources/Sounds/load-deck.mp3"/>
-		<sound name="lose-life" src="Resources/Sounds/lose-life.mp3"/>
-		<sound name="lose-sp" src="Resources/Sounds/lose-sp.mp3"/>
-		<sound name="move-card-1" src="Resources/Sounds/move-card-1.mp3"/>
-		<sound name="move-card-2" src="Resources/Sounds/move-card-2.mp3"/>
-		<sound name="move-card-3" src="Resources/Sounds/move-card-3.mp3"/>
-		<sound name="new-game" src="Resources/Sounds/new-game.mp3"/>
-		<sound name="notification" src="Resources/Sounds/notification.mp3"/>
-		<sound name="phase-change" src="Resources/Sounds/phase-change.mp3"/>
-		<sound name="power-up" src="Resources/Sounds/power-up.mp3"/>
-		<sound name="power-down" src="Resources/Sounds/power-down.mp3"/>
-		<sound name="shuffle" src="Resources/Sounds/shuffle.mp3"/>
-		<sound name="tap" src="Resources/Sounds/tap.mp3"/>
-		<sound name="to-hand" src="Resources/Sounds/to-hand.mp3"/>
-		<sound name="turn-change" src="Resources/Sounds/turn-change.mp3"/>
-		<sound name="untap" src="Resources/Sounds/untap.mp3"/>
-		<sound name="win-ask-1" src="Resources/Sounds/win-ask-1.mp3"/>
-		<sound name="win-ask-2" src="Resources/Sounds/win-ask-2.mp3"/>
-		<sound name="win-confirm" src="Resources/Sounds/win-confirm.mp3"/>
-		<sound name="win-error" src="Resources/Sounds/win-error.mp3"/>
-		<sound name="win-info" src="Resources/Sounds/win-info.mp3"/>
-		<sound name="win-warning" src="Resources/Sounds/win-warning.mp3"/>
-		<sound name="transform" src="Resources/Sounds/transform.mp3"/>
+		<sound name="activate-1" src="Resources/Sounds/activate-1.mp3" />
+		<sound name="activate-2" src="Resources/Sounds/activate-2.mp3" />
+		<sound name="activate-3" src="Resources/Sounds/activate-3.mp3" />
+		<sound name="attack-1" src="Resources/Sounds/attack-1.mp3" />
+		<sound name="attack-2" src="Resources/Sounds/attack-2.mp3" />
+		<sound name="backup" src="Resources/Sounds/backup.mp3" />
+		<sound name="block" src="Resources/Sounds/block.mp3" />
+		<sound name="cancel-1" src="Resources/Sounds/cancel-1.mp3" />
+		<sound name="cancel-2" src="Resources/Sounds/cancel-2.mp3" />
+		<sound name="card-play-1" src="Resources/Sounds/card-play-1.mp3" />
+		<sound name="card-play-2" src="Resources/Sounds/card-play-2.mp3" />
+		<sound name="damage-char-1" src="Resources/Sounds/damage-char-1.mp3" />
+		<sound name="damage-char-2" src="Resources/Sounds/damage-char-2.mp3" />
+		<sound name="damage-player-1" src="Resources/Sounds/damage-player-1.mp3" />
+		<sound name="damage-player-2" src="Resources/Sounds/damage-player-2.mp3" />
+		<sound name="discard" src="Resources/Sounds/discard.mp3" />
+		<sound name="draw" src="Resources/Sounds/draw.mp3" />
+		<sound name="gain-life" src="Resources/Sounds/gain-life.mp3" />
+		<sound name="gain-sp" src="Resources/Sounds/gain-sp.mp3" />
+		<sound name="ko-1" src="Resources/Sounds/ko-1.mp3" />
+		<sound name="ko-2" src="Resources/Sounds/ko-2.mp3" />
+		<sound name="load-deck" src="Resources/Sounds/load-deck.mp3" />
+		<sound name="lose-life" src="Resources/Sounds/lose-life.mp3" />
+		<sound name="lose-sp" src="Resources/Sounds/lose-sp.mp3" />
+		<sound name="move-card-1" src="Resources/Sounds/move-card-1.mp3" />
+		<sound name="move-card-2" src="Resources/Sounds/move-card-2.mp3" />
+		<sound name="move-card-3" src="Resources/Sounds/move-card-3.mp3" />
+		<sound name="new-game" src="Resources/Sounds/new-game.mp3" />
+		<sound name="notification" src="Resources/Sounds/notification.mp3" />
+		<sound name="phase-change" src="Resources/Sounds/phase-change.mp3" />
+		<sound name="power-up" src="Resources/Sounds/power-up.mp3" />
+		<sound name="power-down" src="Resources/Sounds/power-down.mp3" />
+		<sound name="shuffle" src="Resources/Sounds/shuffle.mp3" />
+		<sound name="tap" src="Resources/Sounds/tap.mp3" />
+		<sound name="to-hand" src="Resources/Sounds/to-hand.mp3" />
+		<sound name="turn-change" src="Resources/Sounds/turn-change.mp3" />
+		<sound name="untap" src="Resources/Sounds/untap.mp3" />
+		<sound name="win-ask-1" src="Resources/Sounds/win-ask-1.mp3" />
+		<sound name="win-ask-2" src="Resources/Sounds/win-ask-2.mp3" />
+		<sound name="win-confirm" src="Resources/Sounds/win-confirm.mp3" />
+		<sound name="win-error" src="Resources/Sounds/win-error.mp3" />
+		<sound name="win-info" src="Resources/Sounds/win-info.mp3" />
+		<sound name="win-warning" src="Resources/Sounds/win-warning.mp3" />
+		<sound name="transform" src="Resources/Sounds/transform.mp3" />
 	</sounds>
 
 	<fonts>
@@ -139,17 +139,17 @@
 	</fonts>
 
 	<markers>
-		<marker name="BP"              id="b86fc644-d084-43d3-99d2-5b11457321cc" src="Resources/Markers/bp.png"/>
-		<marker name="Just Entered"    id="9a52c42c-543f-48bb-9a48-d7599d6c8fae" src="Resources/Markers/fresh.png"/>
-		<marker name="Attack"          id="023406a3-417c-473d-bc23-481290755a4a" src="Resources/Markers/attack.png"/>
-		<marker name="United Attack"   id="88036e2b-6a1f-40be-a941-988b27c405ba" src="Resources/Markers/united-attack.png"/>
-		<marker name="Counter-attack"  id="2fd7dc74-4149-469d-9bde-53e94b99b934" src="Resources/Markers/counter-attack.png"/>
-		<marker name="Cannot Unfreeze" id="5231f83b-b78e-48b3-8bce-62031c022bf4" src="Resources/Markers/cannot-unfreeze.png"/>
-		<marker name="Unfreezable"     id="fec1976b-9ce5-4b32-8c07-76eadc5607f6" src="Resources/Markers/unfreezable.png"/>
-		<marker name="Backup"          id="efd3208d-2ec3-44ca-be1d-858e91628da4" src="Resources/Markers/backup.png"/>
-		<marker name="Pierce"          id="3131facc-3fe4-4dd5-95ff-afc08570d869" src="Resources/Markers/pierce.png"/>
-		<marker name="Cannot Block"    id="a8a4b1a3-6023-4ac1-b24f-a50e4768a598" src="Resources/Markers/cannot-block.png"/>
-		<marker name="Cannot Attack"    id="d117bc87-57d3-4489-8407-4e0a955eecb3" src="Resources/Markers/cannot-attack.png"/>
+		<marker name="BP"              id="b86fc644-d084-43d3-99d2-5b11457321cc" src="Resources/Markers/bp.png" />
+		<marker name="Just Entered"    id="9a52c42c-543f-48bb-9a48-d7599d6c8fae" src="Resources/Markers/fresh.png" />
+		<marker name="Attack"          id="023406a3-417c-473d-bc23-481290755a4a" src="Resources/Markers/attack.png" />
+		<marker name="United Attack"   id="88036e2b-6a1f-40be-a941-988b27c405ba" src="Resources/Markers/united-attack.png" />
+		<marker name="Counter-attack"  id="2fd7dc74-4149-469d-9bde-53e94b99b934" src="Resources/Markers/counter-attack.png" />
+		<marker name="Cannot Unfreeze" id="5231f83b-b78e-48b3-8bce-62031c022bf4" src="Resources/Markers/cannot-unfreeze.png" />
+		<marker name="Unfreezable"     id="fec1976b-9ce5-4b32-8c07-76eadc5607f6" src="Resources/Markers/unfreezable.png" />
+		<marker name="Backup"          id="efd3208d-2ec3-44ca-be1d-858e91628da4" src="Resources/Markers/backup.png" />
+		<marker name="Pierce"          id="3131facc-3fe4-4dd5-95ff-afc08570d869" src="Resources/Markers/pierce.png" />
+		<marker name="Cannot Block"    id="a8a4b1a3-6023-4ac1-b24f-a50e4768a598" src="Resources/Markers/cannot-block.png" />
+		<marker name="Cannot Attack"    id="d117bc87-57d3-4489-8407-4e0a955eecb3" src="Resources/Markers/cannot-attack.png" />
 	</markers>
 	
 	<proxygen definitionsrc="Proxy/proxydef.xml"></proxygen>
@@ -209,12 +209,16 @@
 		<property name="Illustrator" type="String" ignoreText="True" hidden="True" />
 		<property name="Gid" type="Integer" hidden="True" ignoreText="True" />
 		
-		<size name="button" width="58" height="58" front="Resources/Card/button.png" back="Resources/Card/button.png"/>
-		<size name="avatar" width="292" height="40" front="Resources/Card/button.png" back="Resources/Card/button.png"/>
+		<size name="button" width="58" height="58" front="Resources/Card/button.png" back="Resources/Card/button.png" />
+		<size name="avatar" width="292" height="40" front="Resources/Card/button.png" back="Resources/Card/button.png" />
 	</card>
 
 	<gameboards src="Resources/Background/ring.png" x="-468" y="-398" width="936" height="796">
-	</gameboards>
+        <gameboard name="attack1" src="Resources/Background/ring-a1.png"  x="-468" y="-398" width="936" height="796" />
+        <gameboard name="attack2" src="Resources/Background/ring-a2.png"  x="-468" y="-398" width="936" height="796" />
+        <gameboard name="block1"  src="Resources/Background/ring-b1.png"  x="-468" y="-398" width="936" height="796" />
+        <gameboard name="block2"  src="Resources/Background/ring-b2.png"  x="-468" y="-398" width="936" height="796" />
+    </gameboards>
 
 	<table name="Table" visibility="undefined" ordered="False" width="1250" height="750" background="Resources/Background/background.jpg" backgroundStyle="uniformToFill">
 		<groupaction menu="Setup game" shortcut="Ctrl+Shift+S" execute="setup" showIf="acsh_gameNotStarted" getName="aclb_SetupOrStart" />
@@ -449,10 +453,10 @@
 		<counter name="HP" icon="Resources/Counters/hp.png" default="3000" reset="True" />
 		<counter name="SP" icon="Resources/Counters/sp.png" default="0"  reset="True" />
 
-		<group name="Hand" visibility="me" viewState="expanded" icon="Resources/Groups/hand.png"/>
-		<group name="Deck" visibility="none" viewState="pile" icon="Resources/Groups/deck.png"/>
-		<group name="Discard pile" visibility="all" viewState="pile" icon="Resources/Groups/discards.png"/>
-		<group name="Removed pile" visibility="all"  viewState="pile" icon="Resources/Groups/removed.png" collapsed="True"/>
+		<group name="Hand" visibility="me" viewState="expanded" icon="Resources/Groups/hand.png" />
+		<group name="Deck" visibility="none" viewState="pile" icon="Resources/Groups/deck.png" />
+		<group name="Discard pile" visibility="all" viewState="pile" icon="Resources/Groups/discards.png" />
+		<group name="Removed pile" visibility="all"  viewState="pile" icon="Resources/Groups/removed.png" collapsed="True" />
 	</shared>
 	-->
 

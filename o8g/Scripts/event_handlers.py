@@ -50,6 +50,8 @@ def onGameStarted():
    elif settings["PlayAuto"]:
       addButton(StartButton)
    setAvatar()
+   # Restore default game board
+   table.board = ""
    playSnd("new-game", True)
 
 

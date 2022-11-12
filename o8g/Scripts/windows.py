@@ -95,6 +95,7 @@ def showChangelog():
 
 - Disabled basic tracking.
 - Updated Core set image pack. You can download it from cardfightersclash.wordpress.com/image-packs.
+- UI and gameplay improvements.
 - Several bug fixes.
 """.format(TriggerUniChar)
    askChoice(msg, [], [], ["Close"])
