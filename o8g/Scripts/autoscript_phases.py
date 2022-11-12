@@ -49,7 +49,16 @@ def triggerPhaseEvent(phase, oldPhase = 0):
       else:
          drawPhaseStart()
    elif phase == MainPhase:   mainPhaseStart()
-   elif phase == AttackPhase: attackPhaseStart()
+   elif phase == AttackPhase:
+      # Skip attack phase if player has no chars, or if all chars entered the ring this turn
+      if getRingSize() == 0 or len([c for c in getRing(me) if hasMarker(c, "Just Entered")]) == getRingSize():
+         if getRingSize() == 0:
+            notify("{} skips their {} phase because he or she has no characters in their ring.".format(me, PhaseNames[phase]))
+         else:
+            notify("{} skips their {} phase because any of their characters can attack.".format(me, PhaseNames[phase]))
+         nextPhase(False)
+         return
+      attackPhaseStart()
    elif phase == BlockPhase:
       if len(getAttackingCards(me, True)) == 0:
          notify("{} skips their {} phase because there are no attacking characters.".format(me, PhaseNames[phase]))

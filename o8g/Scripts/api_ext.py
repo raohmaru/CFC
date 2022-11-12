@@ -249,4 +249,3 @@ if settings["ExtAPI"]:
    _extapi = ExtendedApi()
    # Alias to use _extapi.whisper from remoteCall()
    _extapi_whisper = _extapi.whisper
-
