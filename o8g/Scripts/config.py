@@ -113,22 +113,22 @@ Buttons = {
 
 # A table holding tuples with the location for the cards according its state
 CardsCoords = dict(
-   #                x      y
-   Slot0         = (-311,  209),
-   Slot1         = (-134,  209),
-   Slot2         = ( 44,   209),
-   Slot3         = ( 221,  209),
-   Attack0       = (-311,  39),
-   Attack1       = (-134,  39),
-   Attack2       = ( 44,   39),
-   Attack3       = ( 221,  39),
-   BackupOffset  = ( 0,    13),
-   UAttackOffset = ( 43,   0),
-   Action        = ( 0,    -49),
-   Avatar        = ( 0,    375),
+   #                x     y
+   Slot0         = (-311, 209),
+   Slot1         = (-134, 209),
+   Slot2         = ( 44,  209),
+   Slot3         = ( 221, 209),
+   Attack0       = (-311, 39),
+   Attack1       = (-134, 39),
+   Attack2       = ( 44,  39),
+   Attack3       = ( 221, 39),
+   BackupOffset  = ( 0,   13),
+   UAttackOffset = ( 43,  0),
+   Action        = ( 0,   -49),
+   Avatar        = ( 0,   375)
 )
-CardsCoords[StartButton] = (-385, 30)
-CardsCoords[NextButton]  = ( 387, 244)
+CardsCoords[StartButton] = (0,    65)
+CardsCoords[NextButton]  = (387, 244)
 
 # Card types
 CharType     = "Character"
