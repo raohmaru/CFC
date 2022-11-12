@@ -53,7 +53,7 @@ def triggerPhaseEvent(phase, oldPhase = 0):
       # Skip attack phase if player has no chars, or if all chars entered the ring this turn
       if getRingSize() == 0 or len([c for c in getRing(me) if hasMarker(c, "Just Entered")]) == getRingSize():
          if getRingSize() == 0:
-            notify("{} skips their {} phase because he or she has no characters in their ring.".format(me, PhaseNames[phase]))
+            notify("{} skips their {} phase because there aren't characters in their ring.".format(me, PhaseNames[phase]))
          else:
             notify("{} skips their {} phase because any of their characters can attack.".format(me, PhaseNames[phase]))
          nextPhase(False)
