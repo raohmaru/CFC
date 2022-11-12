@@ -4,7 +4,7 @@
       name="Card Fighters' Clash"
       id="e3d56d9e-900d-49c6-b6ae-22cbb51be153"
       octgnVersion="3.4.350.0"
-      version="0.12.0.932"
+      version="0.12.0.936"
       markersize="20"
       tags="capcom snk fighter"
       description="Play epic battles with fighters from Capcom and SNK!
@@ -209,8 +209,8 @@
 		<property name="Illustrator" type="String" ignoreText="True" hidden="True" />
 		<property name="Gid" type="Integer" hidden="True" ignoreText="True" />
 		
-		<size name="button" width="58" height="58" front="Resources/Card/empty.png" back="Resources/Card/empty.png"/>
-		<size name="avatar" width="292" height="40" front="Resources/Card/empty.png" back="Resources/Card/empty.png"/>
+		<size name="button" width="58" height="58" front="Resources/Card/button.png" back="Resources/Card/button.png"/>
+		<size name="avatar" width="292" height="40" front="Resources/Card/button.png" back="Resources/Card/button.png"/>
 	</card>
 
 	<gameboards src="Resources/Background/ring.png" x="-468" y="-398" width="936" height="796">

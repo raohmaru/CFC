@@ -32,7 +32,7 @@ def buttonAction(btn):
          
       elif buttons[btn._id] == NextButton:
          nextPhase(True)
-      
+
       
 def addButton(name):
    mute()
@@ -44,6 +44,8 @@ def addButton(name):
    # Nail it to the table thus preventing players from manually moving it
    btn.anchor = True
    buttons[btn._id] = btn.Name
+   # Change alternate to show a more descriptive name
+   btn.alternate = "alt"
    # Removes the model so the button image is not shown in the preview.
    # Unfortunately it loses its type and buttonAction() won't be called
    # icard = _extapi.getCardIdentityById(btn._id)
