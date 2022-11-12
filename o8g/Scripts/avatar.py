@@ -22,8 +22,8 @@ def avatarAction(card):
    model, qty = askCard({"Type": AvatarType}, title = "Choose your avatar image")
    if qty > 0:
       setAvatar(model)
-      
-      
+
+
 def setAvatar(model = None):
    mute()
    if not model:
@@ -36,12 +36,13 @@ def setAvatar(model = None):
       oldAvatar = getAvatar(me)
       if oldAvatar:
          oldAvatar.delete()
-         
       x = CardsCoords["Avatar"][0] * playerSide - AvatarWidth/2
       y = fixCardY(CardsCoords["Avatar"][1], AvatarHeight)         
       avatar = table.create(model, x, y, quantity = 1, persist = False)
       # Nail it to the table thus preventing players from manually moving it
       avatar.anchor = True
+      # Change the name of the current alternate to show a descriptive text
+      _extapi.getCardDataById(avatar._id).PropertySets[""].Name = "Double click to change avatar"
       if avatar.Name != settings["Avatar"]:
          switchSetting("Avatar", model)
 
