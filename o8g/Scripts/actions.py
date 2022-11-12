@@ -1327,3 +1327,5 @@ def createRandomDeck(group = table, x = 0, y = 0):
    for id in deck:
       me.deck.create(id, 1)
    playSnd("load-deck")
+   waitForAnimation()
+   shuffle(me.Deck)
