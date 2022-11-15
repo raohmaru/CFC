@@ -196,22 +196,21 @@ def onTurnPassed(args):
    Triggers when the player passes the turn to another player.
    """
    debug(">>> onTurnPassed: #{}, {} -> {}", turnNumber(), args.player, getActivePlayer())
-   global cleanedUpRing, turnsRemaining
    resetState()
    # That was my old turn
    if args.player == me:
       clearGlobalVar("UnitedAttack")
       clearGlobalVar("Blockers")
       # Force cleanup
-      if not cleanedUpRing:
+      if not p1.cleanedUpRing:
          triggerPhaseEvent(CleanupPhase)
       # Not repeating turn
       if not me.isActive:
          removeAllButtons()
    # I start my turn
    if me.isActive:
-      cleanedUpRing = False
-      turnsRemaining = 1
+      p1.cleanedUpRing = False
+      p1.turnsRemaining = 1
       # First turn of the game, I start
       if turnNumber() == 1:
          setState(None, "activePlayer", me._id)
@@ -258,8 +257,7 @@ def onPhasePassed(args):
       if me.isActive:
          if not settings["PhaseAuto"]:
             _extapi.whisper("This is the last phase of your turn.", Colors.Blue)
-         global cleanedUpRing
-         cleanedUpRing = True
+         p1.cleanedUpRing = True
    # Active player
    if me.isActive:
       # Priority back to me

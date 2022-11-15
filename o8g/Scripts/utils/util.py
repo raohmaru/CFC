@@ -74,12 +74,12 @@ def getGlobalVar(name, player = None):
    """
    if player:
       id = player._id
-      if not id in PlayerGlobals:
-         PlayerGlobals[id] = {}
-      if not name in PlayerGlobals[id]:
-         PlayerGlobals[id][name] = eval(player.getGlobalVariable(name))
+      if not id in p1.globals:
+         p1.globals[id] = {}
+      if not name in p1.globals[id]:
+         p1.globals[id][name] = eval(player.getGlobalVariable(name))
       # Returns a copy so it cannot be modified
-      return eval(str(PlayerGlobals[id][name]))
+      return eval(str(p1.globals[id][name]))
    else:
       if not name in Globals:
          Globals[name] = eval(getGlobalVariable(name))
@@ -93,7 +93,7 @@ def setGlobalVar(name, value, player = None):
    """
    gvar = getGlobalVar(name, player)
    if player:
-      PlayerGlobals[player._id][name] = value
+      p1.globals[player._id][name] = value
    else:
       Globals[name] = value
    if len(players) > 1:
@@ -147,14 +147,15 @@ def updateSharedGlobals(name, value, player = None):
       # dict
       elif isinstance(gvar, dict):
          for k in remov:
-            gvar.pop(k, None)  # If second arg is not given and key is not in the dictionary, a KeyError is raised
+            # If second arg is not given and key is not in the dictionary, a KeyError is raised
+            gvar.pop(k, None)
          for d in added:
             gvar.update(d)
          value = gvar
    if player:
-      if not player._id in PlayerGlobals:
-         PlayerGlobals[player._id] = {}
-      PlayerGlobals[player._id][name] = value
+      if not player._id in p1.globals:
+         p1.globals[player._id] = {}
+      p1.globals[player._id][name] = value
    else:
       Globals[name] = value
 

@@ -49,9 +49,10 @@ def debugScenario():
    gotoMain()
    waitForAnimation()
    tableCards = [
-       "d14694b4-484c-4b45-962e-8cbb636d8a9a" # 200 BP
-      ,"c7d128ea-a3b9-4b04-b8b2-a61153b5b2e6" # 400 BP
-      # ,"24e99a13-cb42-4e16-9900-78dde12e1a4c" # 600 BP
+       "299c01d7-37f0-41de-81f3-712b8dd63f11" # Akari Ichijou
+       # "d14694b4-484c-4b45-962e-8cbb636d8a9a" # 200 BP
+      # ,"c7d128ea-a3b9-4b04-b8b2-a61153b5b2e6" # 400 BP
+      ,"24e99a13-cb42-4e16-9900-78dde12e1a4c" # 600 BP
       # ,"e6e46f83-d089-4762-8d8e-2a3252cfc9db" # 800 BP
    ]
    for i, id in enumerate(tableCards):
@@ -132,8 +133,8 @@ def debugOpp():
    
    tableCards = [
        # "d14694b4-484c-4b45-962e-8cbb636d8a9a" # 200 BP
-       "c7d128ea-a3b9-4b04-b8b2-a61153b5b2e6" # 400 BP
-      ,"24e99a13-cb42-4e16-9900-78dde12e1a4c" # 600 BP
+      ,"c7d128ea-a3b9-4b04-b8b2-a61153b5b2e6" # 400 BP
+      # ,"24e99a13-cb42-4e16-9900-78dde12e1a4c" # 600 BP
       # ,"e6e46f83-d089-4762-8d8e-2a3252cfc9db" # 800 BP
    ]
    for i, id in enumerate(tableCards):

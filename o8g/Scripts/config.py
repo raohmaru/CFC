@@ -103,7 +103,7 @@ MarkersDict = {
    "Cannot Attack"  : ("Cannot Attack",   "d117bc87-57d3-4489-8407-4e0a955eecb3")
 }
 
-
+# UI Buttons
 StartButton = "Start Game"
 NextButton = "Next Phase"
 Buttons = {
@@ -111,7 +111,7 @@ Buttons = {
    NextButton : "1d0c798b-b785-4bb6-b160-14c71db6af47"
 }
 
-# A table holding tuples with the location for the cards according its state
+# A table holding tuples with the location of the cards according its state
 CardsCoords = dict(
    #                x     y
    Slot0         = (-311, 209),
@@ -210,7 +210,7 @@ GameRulesDefaults = {
    "attack_freeze"     : True,  # Characters freeze after a attack
    "attack"            : True,  # Characters can attack
    "backup_limit"      : True,  # Limit the number of backups per turn
-   "play_removed"      : False  # Play cards from Removed pile
+   "play_removed"      : False  # Play cards from the Removed pile
 }
 
 # Debug
@@ -277,19 +277,14 @@ Colors = Struct(**{
 # Variables for the current user
 #---------------------------------------------------------------------------
 
-playerSide     = None   # The side of the player (top: -1, bottom: 1)
-handSize       = HandSize
+p1             = GamePlayer() # The current player
 gameCards      = {}     # Dictionary holding all parsed cards
-cleanedUpRing  = False  # Tracks if the user has run the Clean-up phase
 commander      = None   # RulesCommands instance
-turnsRemaining = 1      # The number of consecutive turns a player can play
 envVars        = None   # Global variables to be used in eval() expressions
 buttons        = {}     # Holds the created UI buttons
 transformed    = {}     # Transformed cards
-phaseOngoing   = False  # True while running phase automation tasks
+isPhaseOngoing = False  # True while running phase automation tasks
 Globals        = {}     # Replaces OCTGN global variables
-PlayerGlobals  = {}     # Replaces OCTGN player global variables
-setupDone      = False  # Whether the player has done the game setup
 debugVerbosity = DebugLevel["Off"]
 debugging      = False
 tutorial       = None
@@ -308,12 +303,8 @@ settings = {
    "GameVersion"  : "0.0.0", # Last version shown in the changelog window
    "Avatar"       : None,    # Player's avatar
    "Tracking"     : False,   # Enable tracking
-   "DoNotShow": {            # If True, do not show these Confirmation dialogs again
+   "DoNotShow": {            # If True, do not show these confirmation dialogs again
       "Destroy" : False,
       "Activate": False
    }
 }
-
-# Values used in dialogs that can be overridden by the user to remember his last input
-dialogProphecyCount = 3
-dialogTrashCount    = 1

@@ -2,9 +2,13 @@
 
 ## 0.12.0
 + Disabled tracking.
++ UI and gameplay improvements.
++ Several bug fixes.
++ Code improvements.
 
 ## 0.11.0
 + Anonymous, basic tracking added to get insightful data about how players play the game.
++ Several bug fixes.
 
 ## 0.10.0
 + Increased the font size of the rule text for a better legibility.

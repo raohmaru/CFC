@@ -25,8 +25,8 @@ import re
 #---------------------------------------------------------------------------
 
 def nextPhase(fromKeyStroke = True, x = 0, y = 0):
-   global phaseOngoing, turnsRemaining
-   if fromKeyStroke and phaseOngoing and settings["PlayAuto"] and me.isActive:
+   global isPhaseOngoing
+   if fromKeyStroke and isPhaseOngoing and settings["PlayAuto"] and me.isActive:
       return
       
    phaseIdx = getCurrentPhase()
@@ -45,8 +45,8 @@ def nextPhase(fromKeyStroke = True, x = 0, y = 0):
          return
       # We reached the last phase
       if phaseIdx >= CleanupPhase:
-         turnsRemaining -= 1
-         if turnsRemaining <= 0:
+         p1.turnsRemaining -= 1
+         if p1.turnsRemaining <= 0:
             setState(None, "activePlayer", getOpp()._id)
             nextTurn(getOpp())
          else:
@@ -58,7 +58,7 @@ def nextPhase(fromKeyStroke = True, x = 0, y = 0):
          phaseIdx += 1
       
       setPhase(phaseIdx)
-      phaseOngoing = True
+      isPhaseOngoing = True
    # If I am not the active player but it is the Block phase
    elif phaseIdx == BlockPhase and getState(None, "priority") == me._id:
       # Pass priority to opponent
@@ -118,17 +118,16 @@ def setup(group = table, x = 0, y = 0):
    Game setup. It should be the first function to invoke to start a game.
    """
    debug(">>> setup()")
-   global setupDone
    # We ensure that player has loaded a deck
    if len(me.Deck) == 0:
       warning(MSG_ACTION_LOAD_DECK)
       return
-   if not setupDone:
+   if not p1.setupDone:
       _extapi.notify(MSG_PHASES[SetupPhase].format(me), Colors.LightBlue, True)
       shuffle(me.Deck)
       refillHand() # We fill the player's hand to their hand size
       notify("Setup for player {} completed.".format(me))
-      setupDone = True
+      p1.setupDone = True
    else:
       me.setActive()
 
@@ -1049,8 +1048,8 @@ def refillHand(group = me.hand):
    """
    playHand = len(me.hand)
    # If there's less cards than the handSize, draw from the deck until it's full
-   if playHand < handSize:
-      drawMany(me.Deck, handSize - playHand)
+   if playHand < p1.handSize:
+      drawMany(me.Deck, p1.handSize - playHand)
 
 
 #---------------------------------------------------------------------------
@@ -1079,9 +1078,11 @@ def drawMany(group, count = None):
       whisper(MSG_ERR_DRAW_EMPTY_PILE.format(group.name))
       return
    if count == None:
-      count = askInteger("How many cards do you want to draw?", handSize) # Ask the player how many cards they want.
+      count = askInteger("How many cards do you want to draw?", p1.dialogDrawCount) # Ask the player how many cards they want.
    if count == None:
       return
+   # Remember amount for next time dialog is opened
+   p1.dialogDrawCount = count
    drawn = 0
    for i in range(0, count):
       # If the deck is not empty...
@@ -1132,12 +1133,12 @@ def trash(group, x = 0, y = 0, count = None):
    if group is None:
       group = me.Deck
    # Last input by the user
-   global dialogTrashCount
    if count == None:
-      count = askInteger("How many cards do you want to trash?", dialogTrashCount)
+      count = askInteger("How many cards do you want to trash?", p1.dialogTrashCount)
    if count == None:
       return
-   dialogTrashCount = count
+   # Remember amount for next time dialog is opened
+   p1.dialogTrashCount = count
    discards = me.piles["Discard pile"]
    cards = []
    for card in group.top(count):
@@ -1158,13 +1159,14 @@ def prophecy(group = me.Deck, x = 0, y = 0, count = None, deckPos = False):
    if len(group) == 0:
       return
    # Last input by the user
-   global dialogProphecyCount
    if not count:
-      count = askInteger("How many cards do you want to see?", dialogProphecyCount)
+      count = askInteger("How many cards do you want to see?", p1.dialogProphecyCount)
       if count == None:
          return
-   dialogProphecyCount = count
-   cards = list(group[:count])  # Convert generator object to list
+   # Remember amount for next time dialog is opened
+   p1.dialogProphecyCount = count
+   # Convert generator object to list
+   cards = list(group[:count])
    cardsPos = []
    owner = "his" if group.controller == me else "{}'s".format(group.controller)
    notify(MSG_PLAYER_LOOKS.format(me, owner, group.name))

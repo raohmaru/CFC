@@ -1,5 +1,5 @@
 # Python Scripts for the Card Fighters' Clash definition for OCTGN
-# Copyright (C) 2013 Raohmaru
+# Copyright (C) 2022 Raohmaru
 
 # This python script is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -14,34 +14,22 @@
 # You should have received a copy of the GNU General Public License
 # along with this script. If not, see <http://www.gnu.org/licenses/>.
 
-
-import time 
-
 #---------------------------------------------------------------------------
-# Sound interface
+# Player class
 #---------------------------------------------------------------------------
 
-soundsPlaying = {}
-
-def playSnd(name, isInternal = False):
-   """
-   Play a sound effect, whether it is internal (only for the current player) or for everyone.
-   """
-   # debug(">>> playSnd({}, {})", name, isInternal)
-   if name in soundsPlaying:
-      # Do not repeat the sound if it has been played some time ago
-      if time.time() - soundsPlaying[name] < SoundMinAge:
-         return   
-   soundsPlaying[name] = time.time()
-
-   if (
-      isInternal
-      or Octgn.Program.DeveloperMode
-   ):
-      try:
-         sound = _extapi.game.Sounds[name]
-         Octgn.Utils.Sounds.PlayGameSound(sound)
-      except KeyError:
-         debug("Sound {} does not exist!", name)
-   else:
-      playSound(name)
+class GamePlayer(object):
+   def __init__(self):
+      self.reset()
+      # Values used in dialogs that can be overridden by the user to remember his last input
+      self.dialogProphecyCount = 3
+      self.dialogTrashCount    = 1
+      self.dialogDrawCount     = self.handSize
+      
+   def reset(self):
+      self.side           = None   # The side of the player (top: -1, bottom: 1)
+      self.handSize       = HandSize
+      self.cleanedUpRing  = False  # Tracks if the user has run the Clean-up phase
+      self.turnsRemaining = 1      # The number of consecutive turns a player can play
+      self.setupDone      = False  # Whether the player has done the game setup
+      self.globals        = {}     # Replaces OCTGN player global variables

@@ -18,7 +18,7 @@
 # Game engine fixes
 #---------------------------------------------------------------------------
 
-# Fix card properties of type Integer which returns a string instead of an integer
+# Fix card properties of type Integer which returns a string instead of an integer value
 # https://octgn.16bugs.com/projects/3602/bugs/188805
 cardPropertiesType = {}
 for prop in _api.CardProperties():

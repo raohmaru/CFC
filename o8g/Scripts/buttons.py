@@ -25,7 +25,7 @@ def buttonAction(btn):
          if len(me.Deck) == 0:
             warning(MSG_ACTION_LOAD_DECK)
             return
-         if not setupDone:
+         if not p1.setupDone:
             setup()
          me.setActive()
          track_event("click", StartButton)
@@ -38,7 +38,7 @@ def addButton(name):
    mute()
    if name in buttons.values():
       return
-   x = CardsCoords[name][0] * playerSide - ButtonSize/2
+   x = CardsCoords[name][0] * p1.side - ButtonSize/2
    y = fixCardY(CardsCoords[name][1], ButtonSize)
    btn = table.create(Buttons[name], x, y, quantity = 1, persist = False)
    # Nail it to the table thus preventing players from manually moving it

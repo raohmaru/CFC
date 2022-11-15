@@ -72,8 +72,8 @@ def triggerPhaseEvent(phase, oldPhase = 0):
    elif phase == EndPhase:      endPhaseStart()
    elif phase == CleanupPhase:  cleanupPhaseStart()
    
-   global phaseOngoing
-   phaseOngoing = False
+   global isPhaseOngoing
+   isPhaseOngoing = False
    
    # Automatic phase change
    if settings["PhaseAuto"] and not backwards:
@@ -147,7 +147,7 @@ def mainPhaseStart():
 def attackPhaseStart():
    syncGlobalVars()
    discardKOedChars()
-   if playerSide == 1:
+   if p1.side == 1:
       table.board = "attack1"
    else:
       table.board = "attack2"
@@ -165,7 +165,7 @@ def attackPhaseStart():
 
 
 def blockPhaseStart():
-   if tutorial or playerSide == -1:
+   if tutorial or p1.side == -1:
       table.board = "block1"
    else:
       table.board = "block2"

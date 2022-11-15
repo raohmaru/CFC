@@ -18,16 +18,21 @@ The project uses [Rake](https://github.com/ruby/rake) to automate some tasks, av
 | `rake copy`        | Copies python files to the game's script folder under OCTGN's games database folder. Useful when debugging your game along with the built-in functionality to reload python scripts. |
 | `rake test`        | Verifies the files as a valid game definition. |
 | `rake versionbump` | Increases the build number by 1 in the definition.xml file. |
-| `rake octgn`       | Runs OCTGN in dev mode, in the table view with the CFC plugin loaded. |
+| `rake octgn`       | Runs OCTGN in development mode, in the table view with the CFC plugin loaded. |
 | `rake docs`        | Converts Markdown documents in Documents/ folder into HTML files. |
 
 Use [bundler](http://bundler.io/) to install the dependencies listed in the [Gemfile](https://github.com/raohmaru/CFC/blob/master/Gemfile).
 
-## Templates
+## Card Templates
 CFC card templates (and sets of cards) are created and managed using [Magic Set Editor 2](http://magicseteditor.sourceforge.net/) software and a [custom template](https://github.com/raohmaru/CFC-MSE2).  
-The card template is ported as an [OCTGN proxy card](https://github.com/octgn/OCTGN/wiki/ProxyGenerator), hence the [image packs](https://cardfightersclash.wordpress.com/image-packs/) for the cards only contains the illustrations.
+The card template is exported as an [OCTGN proxy card](https://github.com/octgn/OCTGN/wiki/ProxyGenerator), hence the [image packs](https://cardfightersclash.wordpress.com/image-packs/) for the cards only contains the illustrations.
 
-## Developing For OCTGN
+## Card Coding
+The game play is totally automated using [OCTGN Python API](https://github.com/octgn/OCTGN/wiki/OCTGN-Python-3.1.0.2-API-Reference), which means that players don't need to do any manual action to move the game forward. You can play CFC the same way you play Magic: The Gathering Arena or Hearthstone in your computer.
+
+The mechanics of each card (this is, the rules of the card that interact with the game) are coded in RuleScript. [You can find the documentation here](./docs/RuleScript.md).
+
+## Developing for OCTGN
 OCTGN Game Development wiki: https://github.com/octgn/OCTGN/wiki#create-games-on-octgn
 
 ### Command Line Arguments

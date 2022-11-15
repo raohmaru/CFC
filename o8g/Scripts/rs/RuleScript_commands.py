@@ -359,7 +359,7 @@ def cmd_hp(rc, targets, source, restr, qtyExpr):
       targets = [source.controller]
    debug(">>> cmd_hp({}, {}) => {}", targets, qtyExpr, qty)
    for player in targets:
-      player.HP += qty
+      player.HP = getState(player, "HP") + qty
       sign = "+" if qty >= 0 else ""
       notify("{} sets {}'s HP to {} ({}{})".format(me, player, player.HP, sign, qty))
       if qty > 0:
@@ -633,10 +633,9 @@ def cmd_activate(rc, targets, source, restr, expr):
    
 
 def cmd_turns(rc, targets, source, restr, qty):
-   global turnsRemaining
    qty = int(qty)
    debug(">>> cmd_turns({}, {})", targets, qty)
-   turnsRemaining += qty
+   p1.turnsRemaining += qty
    if qty > 0:
       notify("{} will play another turn after this one".format(me))
    elif qty < 0:

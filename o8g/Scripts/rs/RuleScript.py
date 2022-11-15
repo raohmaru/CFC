@@ -230,7 +230,7 @@ class Rules():
                      return self.execAction(cond[2], target, isAuto, True)
                   # Only a failed condition in the first action can stop the execution
                   if i == 0 and len(effect[1]) > 0:
-                     notify("Cannot activate the ability because its conditions does not match.")
+                     notify("Cannot activate the ability because its conditions do not match.")
                   if not isAuto and i == 0:
                      return ERR_NO_EFFECT
                   revert = True  # Remove abilities

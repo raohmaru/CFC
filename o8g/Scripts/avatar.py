@@ -36,7 +36,7 @@ def setAvatar(model = None):
       oldAvatar = getAvatar(me)
       if oldAvatar:
          oldAvatar.delete()
-      x = CardsCoords["Avatar"][0] * playerSide - AvatarWidth/2
+      x = CardsCoords["Avatar"][0] * p1.side - AvatarWidth/2
       y = fixCardY(CardsCoords["Avatar"][1], AvatarHeight)         
       avatar = table.create(model, x, y, quantity = 1, persist = False)
       # Nail it to the table thus preventing players from manually moving it

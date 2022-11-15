@@ -22,35 +22,31 @@ def chooseSide():
    """
    Checks if the player has chosen a side for this game.
    """
-   global playerSide
-   if playerSide is not None:
+   if p1.side is not None:
       return
    if Table.isTwoSided():
-      playerSide = (1, -1)[me.isInverted]
+      p1.side = (1, -1)[me.isInverted]
    else:
       side = 0
       while side == 0:
          side = askChoice("In which side of the board will you play?", ["Top side", "Bottom side"])
-      playerSide = (-1, 1)[side - 1]
+      p1.side = (-1, 1)[side - 1]
 
 
 def resetAll():
    """
-   Clears all the global variables in order to start a new game.
+   Clears all the global and player variables in order to start a new game.
    """
    debug(">>> resetAll()")
    # Import all our global variables and reset them
-   global playerSide, handSize, gameCards, turnsRemaining, transformed, buttons, PlayerGlobals, Globals, tutorial, setupDone
-   handSize = HandSize
+   global gameCards, transformed, buttons, Globals, tutorial
    gameCards = {}
    transformed = {}
    buttons = {}
-   turnsRemaining = 1
    me.HP = StartingHP
    me.SP = 0
-   PlayerGlobals = {}
    Globals = {}
-   setupDone = False
+   p1.reset()
    resetState()
    # The user is playing the tutorial
    # FIXME If player does not start the tutorial and resets the game, the tutorial is still active
@@ -303,8 +299,9 @@ def resetState():
          "charsperturn" : CharsPerTurn, # Allowed number of chars to play per turn
          "backupsplayed": 0,            # Num of chars backed-up this turn
          "ncdamaged"    : False,        # Player damaged by non-character card
-         "lostsp"       : 0,
-         "skip"         : gs["skip"] if "skip" in gs else [], # Skip phases, don't reset
+         "lostsp"       : 0,            # SP lost this turn
+         # Skip phases, don't reset
+         "skip"         : gs["skip"] if "skip" in gs else [],
           # It seems that OCTGN counters are not updated among players fast enough, so we relay on these
          "hp"           : p.HP,
          "sp"           : p.SP
