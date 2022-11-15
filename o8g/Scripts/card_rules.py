@@ -120,7 +120,7 @@ action = {cost}: [[cond]] effect [& effect] [&& effect] [|| effect] to(target) r
 Multiple action keys are allowed. If there are two or more, a dialog will be show to choose the action.
 Several actions can be joined with ';'.
 Actions are executed in parallel, in order. Effects in the same action (joined by &, && or ||) are executed sequentially.
-Optional, but a card may contain either an action or an auto field.
+Optional, but a card must contain either an action or an auto field.
 
 cost: (optional)
    Keywords:
@@ -333,10 +333,9 @@ Available variables:
    tgt (type: list)      // current target
    prevTgt (type: list)  // previous target
    uaBP
-   -- players --
+   -- players (type: Player) --
    me
    opp
-   damagedPlayer
       .hp
       .sp
       .hand
@@ -346,13 +345,13 @@ Available variables:
          .size
       .ncDamaged
       .lostSP
-   -- piles (type: list) --
+   -- piles (only available during an effect) (type: list) --
    discarded
    trashed
    destroyed
    moved
    sacrificed
-   -- cards --
+   -- cards (type: Card) --
    this
    attacker
    blocker
@@ -374,7 +373,7 @@ Context variables:
       reaction
    
 Available functions:
-   all expr in group
+   all <expr> in <group>
    isChar()
    flipCoin()
    inUAttack()
@@ -417,7 +416,7 @@ action = {D}{F}: +cantblock to(character@oppRing) ueot
 
 # Shinjin Akuma's MASTERED DESTINY
 RulesDict["9da88c0d-7915-43e2-a555-23ffbcf11226"] = """
-action = swapPiles(deck,discards) & shuffle()
+action = swapPiles(deck, discards) & shuffle()
 """
 
 # Blodia's ENERGY COST
@@ -1318,8 +1317,9 @@ action = {D(character[abinstant])}{F}: activate(discarded.0)
 
 # Akari Ichijou's LET'S GAMBLE!
 RulesDict["95675af9-956c-4b27-b7e1-a59b10a0cb7c"] = """
+target = character
 vars = _coin := flipCoin()
-action = {F}: [[if _coin]] bp(+500) target(character) [[else]] damage(300) to(this)
+action = {F}: [[if _coin]] bp(+500) target(tgt.0) [[else]] damage(300) to(this)
 """
 
 # Awakened Kaede's POWER MATCH
