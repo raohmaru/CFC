@@ -70,7 +70,7 @@ By playing cards players can bring into the battle powerful fighters and effects
    **B** Uncommon.  
    **A** Rare; very powerful, balanced, and/or great ability.  
    **S** Very rare, unusual ability.
-7. **Text box**. This is where a card’s rules appears, which explains the effects it has in the game. Character cards have an ability symbol (<span class="ab ab-instant">▲</span>, <span class="ab ab-trigger">■</span> or <span class="ab ab-auto">●</span>) and an ability name at the beginning of the text, printed in bold.  
+7. **Text box**. This is where a card’s rules appears, which explains the effects it has in the game. Character cards can have an ability symbol (<span class="ab ab-instant">▲</span>, <span class="ab ab-trigger">■</span> or <span class="ab ab-auto">●</span>) next to an ability name, both at the beginning of the text box printed in bold, followed by the rules.  
    Below the rules text it can appear an italicized text (the flavour text) that adds some description of the CFC world. It has no effect on game play.
 8. **Back-ups**. The list and number of subtypes with whom a character can be backed up. Every icon represents a card subtype. Only Characters can have back-ups, up to three.
 9. **Information line**. Here is shown the illustration credit and the collector number within a set.
@@ -168,7 +168,7 @@ Attacking characters can join their BP to do a more powerful attack. This called
 
 United Attack have a cost depending on the number of characters involved in the attack, that you may pay after choosing the characters. Double United Attack (two characters) costs 5 SP. Triple United Attack (three characters) costs 10 SP.
 
-When choosing the characters you must decide the order -which character goes first in the attack.
+When choosing the characters you must decide the order —which character goes first in the attack.
 
 The total BP of the characters in a United Attack is considered when dealing damage. If the attack is countered and the total BP of the attacking characters is higher than the BP of the character that counters, this BP difference is dealt as damage to the enemy (piercing damage).
 
