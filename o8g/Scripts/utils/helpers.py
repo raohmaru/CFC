@@ -57,7 +57,7 @@ def isAvatar(card):
 
 
 def isUI(card):
-   return card.Type in [ButtonType, AvatarType]
+   return card.Type in [ButtonType, AvatarType, StatusType]
 
 
 def isAttached(card):

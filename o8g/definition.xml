@@ -4,7 +4,7 @@
       name="Card Fighters' Clash"
       id="e3d56d9e-900d-49c6-b6ae-22cbb51be153"
       octgnVersion="3.4.350.0"
-      version="0.12.0.944"
+      version="0.12.0.947"
       markersize="20"
       tags="capcom snk fighter"
       description="Play epic battles with fighters from Capcom and SNK!
@@ -50,6 +50,7 @@
 		<script src="Scripts/sounds.py" />
 		<script src="Scripts/buttons.py" />
 		<script src="Scripts/avatar.py" />
+		<script src="Scripts/ui.py" />
 		<script src="Scripts/action_labels.py" />
 		<script src="Scripts/action_showif.py" />
 		<script src="Scripts/card_rules.py" />
@@ -211,7 +212,8 @@
 		<property name="Gid" type="Integer" hidden="True" ignoreText="True" />
 		
 		<size name="button" width="58" height="58" front="Resources/Card/button.png" back="Resources/Card/button.png" />
-		<size name="avatar" width="292" height="40" front="Resources/Card/button.png" back="Resources/Card/button.png" />
+		<size name="avatar" width="292" height="40" front="Resources/Card/avatar.png" back="Resources/Card/avatar.png" />
+		<size name="status" width="332" height="36" front="Resources/Card/status.png" back="Resources/Card/status.png" />
 	</card>
 
 	<gameboards src="Resources/Background/ring.png" x="-468" y="-398" width="936" height="796">
@@ -348,7 +350,7 @@
 		<cardseparator />
 		<cardaction menu="Clear" shortcut="Esc" execute="clear" showIf="acsh_autoPlayOff" />
 		<cardaction menu="Flip" shortcut="Ctrl+U" execute="flip" showIf="acsh_autoPlayOff" />
-		<cardaction menu="Realign card" shortcut="Ctrl+R" execute="alignCardAction" showIf="acsh_isCharNotBackup" />
+		<cardaction menu="Realign card" shortcut="Ctrl+R" execute="alignCardAction" showIf="acsh_isNotCharBackup" />
 		<cardaction menu="&#x1f6c8; Card info" shortcut="Ctrl+I" execute="cardInfo" showIf="acsh_notUI" />
 	</table>
 

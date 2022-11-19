@@ -125,7 +125,8 @@ CardsCoords = dict(
    BackupOffset  = ( 0,   13),
    UAttackOffset = ( 43,  0),
    Action        = ( 0,   -49),
-   Avatar        = ( 0,   375)
+   Avatar        = ( 0,   375),
+   Status        = ( 0,   375)
 )
 CardsCoords[StartButton] = (0,    65)
 CardsCoords[NextButton]  = (387, 244)
@@ -136,6 +137,7 @@ ActionType   = "Action"
 ReactionType = "Reaction"
 ButtonType   = "Button"
 AvatarType   = "Avatar"
+StatusType   = "Status"
 
 # Card abilities
 InstantAbility = u"\xa2"

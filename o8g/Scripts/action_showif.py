@@ -20,7 +20,7 @@
       
 def acsh_autoPlayOff(args, x = 0, y = 0):
    card = args[0] if isinstance(args, list) else None
-   return (not card or not isButton(card)) and (debugging or not settings["PlayAuto"])
+   return (not card or not isUI(card)) and (debugging or not settings["PlayAuto"])
 
       
 def acsh_canBackup(args, x = 0, y = 0):
@@ -84,7 +84,7 @@ def acsh_isCharAndPlayRemoved(args, x = 0, y = 0):
    return getRule("play_removed") and acsh_isChar(args)
 
       
-def acsh_isCharNotBackup(args, x = 0, y = 0):
+def acsh_isNotCharBackup(args, x = 0, y = 0):
    card = args[0]
    return isCharacter(card) and not hasMarker(card, "Backup")
 

@@ -207,6 +207,8 @@ def onTurnPassed(args):
       # Not repeating turn
       if not me.isActive:
          removeAllButtons()
+         if not tutorial:
+            ui.clearActivePlayer()
    # I start my turn
    if me.isActive:
       p1.cleanedUpRing = False
@@ -218,6 +220,8 @@ def onTurnPassed(args):
       if not debugging and getCurrentPhase() < ActivatePhase:
          nextPhase(False)
       playSnd("turn-change")
+      if not tutorial:
+         ui.setActivePlayer()
    if turnNumber() == 1:
       removeButton(StartButton)
       if not tutorial:

@@ -15,6 +15,10 @@
 			<property name="Type" value="Button" />
             <alternate name="Next Phase (Tab)" type="alt" size="button"/>
 		</card>
+		<!-- Player status -->
+		<card name="Active Player" id="8ca520da-0985-4480-a94b-5b968aebc482" size="status">
+			<property name="Type" value="Status" />
+		</card>
 		<!-- Avatars -->
 		<card name="Rikuto" id="a2ea8f62-cf21-42b7-8f08-c181a069b87b" size="avatar">
 			<property name="Type" value="Avatar" />
