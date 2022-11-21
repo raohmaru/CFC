@@ -181,8 +181,6 @@ GameId       = "e3d56d9e-900d-49c6-b6ae-22cbb51be153"
 Website      = "https://cardfightersclash.wordpress.com"
 WebsiteId    = "09d1ef6c-1295-48f3-a404-6721b498cd57"
 NaN          = float("nan")
-AvatarWidth  = 292
-AvatarHeight = 40
 DragOffsetY  = 60
 SoundMinAge  = 0.3 # seconds
 

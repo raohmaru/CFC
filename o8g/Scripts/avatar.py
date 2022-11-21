@@ -18,10 +18,15 @@
 # Avatar
 #---------------------------------------------------------------------------
 
+# Get the dimensions from the game definition
+AvatarWidth  = _extapi.game.CardSizes["avatar"].Width
+AvatarHeight = _extapi.game.CardSizes["avatar"].Height
+
 def avatarAction(card):
    model, qty = askCard({"Type": AvatarType}, title = "Choose your avatar image")
    if qty > 0:
       setAvatar(model)
+      notify("{} changes his avatar image.".format(me))
 
 
 def setAvatar(model = None):
