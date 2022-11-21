@@ -112,24 +112,24 @@ Buttons = {
 }
 
 # A table holding tuples with the location of the cards according its state
-CardsCoords = dict(
+CardsCoords = {
    #                x     y
-   Slot0         = (-311, 209),
-   Slot1         = (-134, 209),
-   Slot2         = ( 44,  209),
-   Slot3         = ( 221, 209),
-   Attack0       = (-311, 39),
-   Attack1       = (-134, 39),
-   Attack2       = ( 44,  39),
-   Attack3       = ( 221, 39),
-   BackupOffset  = ( 0,   13),
-   UAttackOffset = ( 43,  0),
-   Action        = ( 0,   -49),
-   Avatar        = ( 0,   375),
-   Status        = ( 0,   375)
-)
-CardsCoords[StartButton] = (0,    65)
-CardsCoords[NextButton]  = (387, 244)
+   "Slot0"         : (-311, 209),
+   "Slot1"         : (-134, 209),
+   "Slot2"         : ( 44,  209),
+   "Slot3"         : ( 221, 209),
+   "Attack0"       : (-311, 39),
+   "Attack1"       : (-134, 39),
+   "Attack2"       : ( 44,  39),
+   "Attack3"       : ( 221, 39),
+   "BackupOffset"  : ( 0,   13),
+   "UAttackOffset" : ( 43,  0),
+   "Action"        : ( 0,   -49),
+   "Avatar"        : ( 0,   375),
+   "Status"        : ( 0,   375),
+   StartButton     : ( 0,    65),
+   NextButton      : ( 387, 244)
+}
 
 # Card types
 CharType     = "Character"
@@ -181,9 +181,6 @@ GameId       = "e3d56d9e-900d-49c6-b6ae-22cbb51be153"
 Website      = "https://cardfightersclash.wordpress.com"
 WebsiteId    = "09d1ef6c-1295-48f3-a404-6721b498cd57"
 NaN          = float("nan")
-# _extapi is not ready yet
-# ButtonSize = _extapi.game.CardSizes["button"].Width
-ButtonSize   = 58
 AvatarWidth  = 292
 AvatarHeight = 40
 DragOffsetY  = 60
