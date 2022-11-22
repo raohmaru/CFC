@@ -201,6 +201,7 @@ def onTurnPassed(args):
    if args.player == me:
       clearGlobalVar("UnitedAttack")
       clearGlobalVar("Blockers")
+      me.turnsRemaining = 0
       # Force cleanup
       if not me.cleanedUpRing:
          triggerPhaseEvent(CleanupPhase)
