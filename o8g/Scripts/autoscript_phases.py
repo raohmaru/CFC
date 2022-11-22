@@ -147,7 +147,7 @@ def mainPhaseStart():
 def attackPhaseStart():
    syncGlobalVars()
    discardKOedChars()
-   if p1.side == 1:
+   if me.side == 1:
       table.board = "attack1"
    else:
       table.board = "attack2"
@@ -165,7 +165,7 @@ def attackPhaseStart():
 
 
 def blockPhaseStart():
-   if tutorial or p1.side == -1:
+   if tutorial or me.side == -1:
       table.board = "block1"
    else:
       table.board = "block2"

@@ -45,8 +45,8 @@ def nextPhase(fromKeyStroke = True, x = 0, y = 0):
          return
       # We reached the last phase
       if phaseIdx >= CleanupPhase:
-         p1.turnsRemaining -= 1
-         if p1.turnsRemaining <= 0:
+         me.turnsRemaining -= 1
+         if me.turnsRemaining <= 0:
             setState(None, "activePlayer", getOpp()._id)
             nextTurn(getOpp())
          else:
@@ -122,12 +122,12 @@ def setup(group = table, x = 0, y = 0):
    if len(me.Deck) == 0:
       warning(MSG_ACTION_LOAD_DECK)
       return
-   if not p1.setupDone:
+   if not me.setupDone:
       _extapi.notify(MSG_PHASES[SetupPhase].format(me), Colors.LightBlue, True)
       shuffle(me.Deck)
       refillHand() # We fill the player's hand to their hand size
       notify("Setup for player {} completed.", me)
-      p1.setupDone = True
+      me.setupDone = True
    else:
       me.setActive()
 
@@ -1048,8 +1048,8 @@ def refillHand(group = me.hand):
    """
    playHand = len(me.hand)
    # If there's less cards than the handSize, draw from the deck until it's full
-   if playHand < p1.handSize:
-      drawMany(me.Deck, p1.handSize - playHand)
+   if playHand < me.handSize:
+      drawMany(me.Deck, me.handSize - playHand)
 
 
 #---------------------------------------------------------------------------
@@ -1078,11 +1078,11 @@ def drawMany(group, count = None):
       whisper(MSG_ERR_DRAW_EMPTY_PILE.format(group.name))
       return
    if count == None:
-      count = askInteger("How many cards do you want to draw?", p1.dialogDrawCount) # Ask the player how many cards they want.
+      count = askInteger("How many cards do you want to draw?", me.dialogDrawCount) # Ask the player how many cards they want.
    if count == None:
       return
    # Remember amount for next time dialog is opened
-   p1.dialogDrawCount = count
+   me.dialogDrawCount = count
    drawn = 0
    for i in range(0, count):
       # If the deck is not empty...
@@ -1134,11 +1134,11 @@ def trash(group, x = 0, y = 0, count = None):
       group = me.Deck
    # Last input by the user
    if count == None:
-      count = askInteger("How many cards do you want to trash?", p1.dialogTrashCount)
+      count = askInteger("How many cards do you want to trash?", me.dialogTrashCount)
    if count == None:
       return
    # Remember amount for next time dialog is opened
-   p1.dialogTrashCount = count
+   me.dialogTrashCount = count
    discards = me.piles["Discard pile"]
    cards = []
    for card in group.top(count):
@@ -1160,11 +1160,11 @@ def prophecy(group = me.Deck, x = 0, y = 0, count = None, deckPos = False):
       return
    # Last input by the user
    if not count:
-      count = askInteger("How many cards do you want to see?", p1.dialogProphecyCount)
+      count = askInteger("How many cards do you want to see?", me.dialogProphecyCount)
       if count == None:
          return
    # Remember amount for next time dialog is opened
-   p1.dialogProphecyCount = count
+   me.dialogProphecyCount = count
    # Convert generator object to list
    cards = list(group[:count])
    cardsPos = []

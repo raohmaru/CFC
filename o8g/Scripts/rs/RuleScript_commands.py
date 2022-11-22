@@ -635,7 +635,7 @@ def cmd_activate(rc, targets, source, restr, expr):
 def cmd_turns(rc, targets, source, restr, qty):
    qty = int(qty)
    debug(">>> cmd_turns({}, {})", targets, qty)
-   p1.turnsRemaining += qty
+   me.turnsRemaining += qty
    if qty > 0:
       notify("{} will play another turn after this one", me)
    elif qty < 0:

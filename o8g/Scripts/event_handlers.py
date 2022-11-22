@@ -202,7 +202,7 @@ def onTurnPassed(args):
       clearGlobalVar("UnitedAttack")
       clearGlobalVar("Blockers")
       # Force cleanup
-      if not p1.cleanedUpRing:
+      if not me.cleanedUpRing:
          triggerPhaseEvent(CleanupPhase)
       # Not repeating turn
       if not me.isActive:
@@ -211,8 +211,8 @@ def onTurnPassed(args):
             ui.clearActivePlayer()
    # I start my turn
    if me.isActive:
-      p1.cleanedUpRing = False
-      p1.turnsRemaining = 1
+      me.cleanedUpRing = False
+      me.turnsRemaining = 1
       # First turn of the game, I start
       if turnNumber() == 1:
          setState(None, "activePlayer", me._id)
@@ -261,7 +261,7 @@ def onPhasePassed(args):
       if me.isActive:
          if not settings["PhaseAuto"]:
             _extapi.whisper("This is the last phase of your turn.", Colors.Blue)
-         p1.cleanedUpRing = True
+         me.cleanedUpRing = True
    # Active player
    if me.isActive:
       # Priority back to me

@@ -274,7 +274,6 @@ Colors = Struct(**{
 # Variables for the current user
 #---------------------------------------------------------------------------
 
-p1             = GamePlayer() # The current player
 gameCards      = {}     # Dictionary holding all parsed cards
 commander      = None   # RulesCommands instance
 envVars        = None   # Global variables to be used in eval() expressions

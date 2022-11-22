@@ -130,7 +130,7 @@ def aclb_RemovedDefault(group, x = 0, y = 0):
 
 
 def aclb_SetupOrStart(group, x = 0, y = 0):
-   if p1.setupDone:
+   if me.setupDone:
       return "Start game"
 
 

@@ -22,15 +22,15 @@ def chooseSide():
    """
    Checks if the player has chosen a side for this game.
    """
-   if p1.side is not None:
+   if me.side is not None:
       return
    if Table.isTwoSided():
-      p1.side = (1, -1)[me.isInverted]
+      me.side = (1, -1)[me.isInverted]
    else:
       side = 0
       while side == 0:
          side = askChoice("In which side of the board will you play?", ["Top side", "Bottom side"])
-      p1.side = (-1, 1)[side - 1]
+      me.side = (-1, 1)[side - 1]
 
 
 def resetAll():
@@ -46,7 +46,7 @@ def resetAll():
    me.HP = StartingHP
    me.SP = 0
    Globals = {}
-   p1.reset()
+   me.reset()
    resetState()
    # The user is playing the tutorial
    # FIXME If player does not start the tutorial and resets the game, the tutorial is still active

@@ -277,3 +277,9 @@ def debugGameState():
             print("{}".format(c.Name))
       ua = [Card(id).Name for id in ua]
       print(" + ".join(ua))
+
+   print("\n== Local Player ==")
+   for key in dir(me):
+       if not hasattr(Player, key) and key[0] != "_":
+           print("{}: {}".format(key, getattr(me, key)))
+           

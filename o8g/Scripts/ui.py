@@ -32,7 +32,7 @@ class ui():
       """
       Player status visual hint.
       """
-      x = CardsCoords["Status"][0] * p1.side - ui.StatusWidth/2
+      x = CardsCoords["Status"][0] * me.side - ui.StatusWidth/2
       y = fixCardY(CardsCoords["Status"][1], ui.StatusHeight)         
       ui.activePlayerCard = table.create(ui.ActivePlayerModel, x, y, quantity = 1, persist = False)
       # Wait before sending the card to the back, or it will be on top of the avatar

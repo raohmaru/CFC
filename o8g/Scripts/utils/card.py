@@ -27,7 +27,7 @@ def fixCardY(y, height = CardHeight, inverted = False):
    offsetY = 0
    if me.isInverted or inverted:
       offsetY = height
-   side = p1.side
+   side = me.side
    if inverted:
       side = -1
    return (y + offsetY) * side
@@ -64,13 +64,13 @@ def placeCard(card, type = None, action = None, target = None, faceDown = False)
          cards = [c for c in table
             if c.controller == me
             and isAction(c) or isReaction(c)]
-         posX = -((len(cards) + 1) * CardWidth) / 2 * p1.side
-         if p1.side == -1:
+         posX = -((len(cards) + 1) * CardWidth) / 2 * me.side
+         if me.side == -1:
             posX -= CardWidth
          posY = fixCardY(CardsCoords["Action"][1])
          for i, c in enumerate(cards):
-            c.moveToTable(posX + CardWidth * i * p1.side, posY)
-         card.moveToTable(posX + CardWidth * len(cards) * p1.side, posY, faceDown)
+            c.moveToTable(posX + CardWidth * i * me.side, posY)
+         card.moveToTable(posX + CardWidth * len(cards) * me.side, posY, faceDown)
       else:
          card.moveToTable(-CardWidth / 2, fixCardY(0), faceDown)
    else:
@@ -164,7 +164,7 @@ def alignCard(card, x = None, y = None, slotIdx = None):
          lead = Card(uattack[0])
          lead.index = MaxCharsUAttack + 1
          x, y = lead.position
-         x += ox * idx * p1.side
+         x += ox * idx * me.side
          y += oy * idx
          z = lead.index - 1 * idx
       # Align blockers

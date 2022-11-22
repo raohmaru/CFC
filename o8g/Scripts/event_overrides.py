@@ -72,7 +72,7 @@ def overrideCardsMoved(args):
                cy = card.position[1]
                # Attack
                if me.isActive and phaseIdx == AttackPhase and isCharInRing(card):
-                  if (y > cy - DragOffsetY, y < cy + DragOffsetY)[bool(p1.side + 1)]:
+                  if (y > cy - DragOffsetY, y < cy + DragOffsetY)[bool(me.side + 1)]:
                      slotIdx = getDropSlotIndex(x)
                      if slotIdx == None:
                         continue
@@ -98,7 +98,7 @@ def overrideCardsMoved(args):
                      continue
                # Block
                elif (not me.isActive or tutorial) and phaseIdx == BlockPhase and isCharInRing(card):
-                  if (y > cy - DragOffsetY, y < cy + DragOffsetY)[bool(p1.side + 1)]:
+                  if (y > cy - DragOffsetY, y < cy + DragOffsetY)[bool(me.side + 1)]:
                      slotIdx = getDropSlotIndex(x)
                      if slotIdx == None:
                         continue

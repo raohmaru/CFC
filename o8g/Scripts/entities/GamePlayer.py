@@ -18,18 +18,29 @@
 # Player class
 #---------------------------------------------------------------------------
 
-class GamePlayer(object):
-   def __init__(self):
-      self.reset()
-      # Values used in dialogs that can be overridden by the user to remember his last input
-      self.dialogProphecyCount = 3
-      self.dialogTrashCount    = 1
-      self.dialogDrawCount     = self.handSize
+def GamePlayer(player):
+   """
+   Wraps an OCTGN Player to add more methods and properties.
+   """
+   # Player is a C# class
+   # Dynamically add a class method
+   Player.reset = lambda _: GamePlayerReset(player)
+   player.reset()
+   # Values used in dialogs that can be overridden by the user to remember his last input
+   player.dialogProphecyCount = 3
+   player.dialogTrashCount    = 1
+   player.dialogDrawCount     = player.handSize
+   return player
       
-   def reset(self):
-      self.side           = None   # The side of the player (top: -1, bottom: 1)
-      self.handSize       = HandSize
-      self.cleanedUpRing  = False  # Tracks if the user has run the Clean-up phase
-      self.turnsRemaining = 1      # The number of consecutive turns a player can play
-      self.setupDone      = False  # Whether the player has done the game setup
-      self.globals        = {}     # Replaces OCTGN player global variables
+def GamePlayerReset(player):
+   debug(">>> GamePlayer::reset()")
+   player.side           = None   # The side of the player (top: -1, bottom: 1)
+   player.handSize       = HandSize
+   player.cleanedUpRing  = False  # Tracks if the user has run the Clean-up phase
+   player.turnsRemaining = 1      # The number of consecutive turns a player can play
+   player.setupDone      = False  # Whether the player has done the game setup
+   player.globals        = {}     # Replaces OCTGN player global variables
+
+
+# Monkey patching the current player
+me = GamePlayer(me)
