@@ -76,7 +76,7 @@ def switchSetting(name, value = None):
 
 def rollDie(sides):
    n = rnd(1, sides)
-   notify("{} rolls {} on a {}-sided die.".format(me, n, sides))
+   notify("{} rolls {} on a {}-sided die.", me, n, sides)
    return n
 
 
@@ -215,7 +215,7 @@ def toggleRule(ruleName, value, id, restr = None, playerId = None):
          msg = msg[int(bool(value))]
          restr = getTextualRestr(restr)
          ctrl = player if playerId else ""
-         notify(msg.format(value, restr, ctrl))
+         notify(msg, value, restr, ctrl)
 
 
 #---------------------------------------------------------------------------
@@ -352,14 +352,14 @@ def rearrangeUAttack(card):
    debug(">>> rearrangeUAttack({})", card)
    uattack = getGlobalVar("UnitedAttack")
    if card._id in uattack:
-      notify("{} was part of an United Attack. Now the attack it will be rearranged.".format(card))
+      notify("{} was part of an United Attack. Now the attack it will be rearranged.", card)
       uatttackIdx = uattack.index(card._id)
       uattack.remove(card._id)
       uattack = filter(None, uattack)
       setGlobalVar("UnitedAttack", uattack)
       # If it was the lead card, or there is only 1 char left, cancel UA
       if uatttackIdx == 0 or len(uattack) == 1:
-         notify("{} cancels the United Attack.".format(me))
+         notify("{} cancels the United Attack.", me)
          clearGlobalVar("UnitedAttack")
          for cid in uattack:
             c = Card(cid)
@@ -384,7 +384,7 @@ def cancelAttack(card, silent = False):
    alignCard(card)
    rearrangeUAttack(card)
    if not silent:
-      notify("{} cancels the attack with {}.".format(me, card))
+      notify("{} cancels the attack with {}.", me, card)
       playSnd("cancel-1")
    
 
@@ -400,5 +400,5 @@ def cancelBlock(card, silent = False):
          setGlobalVar("Blockers", blockers)
          break
    if not silent:
-      notify("{} cancels the counter-attack with {}.".format(me, card))
+      notify("{} cancels the counter-attack with {}.", me, card)
       playSnd("cancel-1")

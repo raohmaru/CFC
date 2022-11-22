@@ -50,7 +50,7 @@ def nextPhase(fromKeyStroke = True, x = 0, y = 0):
             setState(None, "activePlayer", getOpp()._id)
             nextTurn(getOpp())
          else:
-            notify("{} takes another turn".format(me))
+            notify("{} takes another turn", me)
             setState(None, "activePlayer", me._id)
             nextTurn(me)
          return
@@ -63,7 +63,7 @@ def nextPhase(fromKeyStroke = True, x = 0, y = 0):
    elif phaseIdx == BlockPhase and getState(None, "priority") == me._id:
       # Pass priority to opponent
       setState(None, "priority", getOpp()._id)
-      notify(MSG_PHASE_DONE.format(me, PhaseNames[phaseIdx], getOpp()))
+      notify(MSG_PHASE_DONE, me, PhaseNames[phaseIdx], getOpp())
       notification(MSG_PHASE_DONE.format(me, PhaseNames[phaseIdx], "you"), playerList = [getOpp()])
       removeButton(NextButton)
       remoteCall(players[1], "nextPhase", [False])
@@ -126,7 +126,7 @@ def setup(group = table, x = 0, y = 0):
       _extapi.notify(MSG_PHASES[SetupPhase].format(me), Colors.LightBlue, True)
       shuffle(me.Deck)
       refillHand() # We fill the player's hand to their hand size
-      notify("Setup for player {} completed.".format(me))
+      notify("Setup for player {} completed.", me)
       p1.setupDone = True
    else:
       me.setActive()
@@ -147,20 +147,20 @@ def restart(isRemote = False, x = 0, y = 0):
    toOwnerDeck(me.piles["Removed pile"])
    waitForAnimation()
    setup()
-   notify("{} restarts the game.".format(me))
+   notify("{} restarts the game.", me)
    if not isRemote and len(players) > 1:
       remoteCall(players[1], "restart", [])
 
 
 def flipCoin(group = None, x = 0, y = 0):
    sides = ["Heads", "Tails"]
-   notify("{} flips a coin...".format(me))
+   notify("{} flips a coin...", me)
    choice = askChoice("Call heads or tails", sides)
    # askChoice() returns 0 if the window is closed
    choice = choice - 1
    if choice == -1:
       choice = 0
-   notify("{} has choosen {}".format(me, sides[choice]))
+   notify("{} has choosen {}", me, sides[choice])
    n = rnd(0, 1)
    wins = n == choice
    notify(u"\u2192 flips {} ({}).".format(sides[n], ("loses", "wins")[wins]))
@@ -189,9 +189,9 @@ def randomPick(group, x = 0, y = 0, fromPlayer = None):
    card.target(True)
    revealCard(card)
    if group == table:
-      notify("{} randomly selects {}'s {} on the ring.".format(me, card.controller, card))
+      notify("{} randomly selects {}'s {} on the ring.", me, card.controller, card)
    else:
-      notify("{} randomly selects {} from their {}.".format(me, card, group.name))
+      notify("{} randomly selects {} from their {}.", me, card, group.name)
 
 
 def randomPickMine(group, x = 0, y = 0):
@@ -207,7 +207,7 @@ def clearAll(group = None, x = 0, y = 0):
    """
    Clear selections on all cards
    """
-   notify("{} clears all selections, targets and highlights.".format(me))
+   notify("{} clears all selections, targets and highlights.", me)
    for card in getCards(table, me):
       clear(card)
    clearSelection()
@@ -294,7 +294,7 @@ def attack(card, x = 0, y = 0):
          return
    card.highlight = AttackColor
    playSnd("attack-1")
-   notify(MSG_ACTION_ATTACK.format(me, card))
+   notify(MSG_ACTION_ATTACK, me, card)
 
 
 def attackNoFreeze(card, x = 0, y = 0):
@@ -304,7 +304,7 @@ def attackNoFreeze(card, x = 0, y = 0):
    card.highlight = AttackNoFreezeColor
    setMarker(card, "Unfreezable")
    playSnd("attack-1")
-   notify(MSG_ACTION_ATTACK_NOFREEZE.format(me, card))
+   notify(MSG_ACTION_ATTACK_NOFREEZE, me, card)
 
 
 def unitedAttack(card, x = 0, y = 0, targets = None):
@@ -318,7 +318,7 @@ def unitedAttack(card, x = 0, y = 0, targets = None):
          return
    card.highlight = UnitedAttackColor
    playSnd("attack-2")
-   notify("{} does an United Attack with {}.".format(me, cardsnames))
+   notify("{} does an United Attack with {}.", me, cardsnames)
 
 
 def block(card, x = 0, y = 0, targets = None):
@@ -328,11 +328,11 @@ def block(card, x = 0, y = 0, targets = None):
       if target:
          withChar = "{} ".format(target) + withChar
       else:
-         notify("{} cannot counter-attack due to an ability or effect.".format(card))
+         notify("{} cannot counter-attack due to an ability or effect.", card)
          return
    card.highlight = BlockColor
    playSnd("block")
-   notify("{} counter-attacks {}.".format(me, withChar))
+   notify("{} counter-attacks {}.", me, withChar)
 
 
 def activate(card, x = 0, y = 0):
@@ -342,7 +342,7 @@ def activate(card, x = 0, y = 0):
    if card.highlight == ActivatedColor and not settings["PlayAuto"]:
       card.highlight = None
       card.target(None)
-      notify("{} deactivates {}.".format(me, card))
+      notify("{} deactivates {}.", me, card)
       return
    pcard = getGameCard(card)
    if not pcard.hasEffect():
@@ -351,13 +351,13 @@ def activate(card, x = 0, y = 0):
    ability = "effect"
    if isCharacter(card):
       ability = "ability {}".format(pcard.ability)
-   notify("{} tries to activate {}'s {}.".format(me, card, ability))
+   notify("{} tries to activate {}'s {}.", me, card, ability)
    if settings["PlayAuto"]:
       res = activateAuto(card)
       # Nothing happened
       if not res or res != True:
          if res == ERR_NO_EFFECT:
-            notify("{}'s {} has no effect.".format(card, ability))
+            notify("{}'s {} has no effect.", card, ability)
             playSnd("cancel-2")
          if (isCharacter(card) and pcard.ability.type == TriggerAbility) or res != ERR_NO_EFFECT:
             return
@@ -376,7 +376,7 @@ def activate(card, x = 0, y = 0):
       playSnd("activate-1")
    else:
       playSnd("activate-2")
-   notify("{} has activated {}'s {}.".format(me, card, ability))
+   notify("{} has activated {}'s {}.", me, card, ability)
 
 
 def freeze(card, x = 0, y = 0, unfreeze = None, silent = False):
@@ -415,7 +415,7 @@ def doesNotUnfreeze(card, restr = None):
    else:
       removeMarker(card, "Cannot Unfreeze")
       msg = "unfreeze as normal"
-   notify("{0}'s {1} will {2} in {0}'s {3}Activate phase.".format(card.controller, card, msg, when))
+   notify("{0}'s {1} will {2} in {0}'s {3}Activate phase.", card.controller, card, msg, when)
 
 
 def clear(card, x = 0, y = 0):
@@ -517,9 +517,9 @@ def toggleAbility(card, x = 0, y = 0, remove = False):
          funcCall(p, deleteGameCard, [card])
       funcCall(card.controller, createGameCard, [card, None, True, False, True])
       if card.Rules != "":
-         notify("{} restores {}'s abilities.".format(me, card))
+         notify("{} restores {}'s abilities.", me, card)
       else:
-         notify("{} tried to restore {}'s abilities, but it doesn't have any original ability.".format(me, card))
+         notify("{} tried to restore {}'s abilities, but it doesn't have any original ability.", me, card)
    # Removes ability
    else:
       dispatchEvent(GameEvents.Powerless, card._id)
@@ -539,7 +539,7 @@ def toggleAbility(card, x = 0, y = 0, remove = False):
          # Updates proxy image for all players
          for p in players:
             funcCall(p, addAlternateRules, [card, "", "", "noability"])
-      notify("{} removes {}'s abilities".format(me, card))
+      notify("{} removes {}'s abilities", me, card)
 
 
 def copyAbility(card, x = 0, y = 0, target = None):
@@ -600,7 +600,7 @@ def copyAbility(card, x = 0, y = 0, target = None):
          if target.Ability.split(" ")[0] != InstantAbility:
             if card.highlight == ActivatedColor:
                card.highlight = None
-         notify("{} copies ability {} to {}.".format(me, target.Ability, card))
+         notify("{} copies ability {} to {}.", me, target.Ability, card)
          return target
       else:
          warning("Target card doesn't have an ability to copy.")
@@ -630,7 +630,7 @@ def swapAbilities(card, x = 0, y = 0, target = None):
    copyAbility(card,   target = target)
    copyAbility(target, target = card_copy)
    target.target(False)
-   notify("{} has swapped abilities between {} and {}".format(me, card, target))
+   notify("{} has swapped abilities between {} and {}", me, card, target)
       
       
 def stealAbility(card, x = 0, y = 0, target = None):
@@ -641,7 +641,7 @@ def stealAbility(card, x = 0, y = 0, target = None):
    if target:
       ability = getGameCard(target).ability.name
       toggleAbility(target, remove = True)
-      notify("{} steals ability {} from {} and gives it to {}.".format(me, ability, target, card))
+      notify("{} steals ability {} from {} and gives it to {}.", me, ability, target, card)
 
 
 def flip(card, x = 0, y = 0):
@@ -678,7 +678,7 @@ def destroy(card, controller = me):
    # Restore rotation or it will go to the pile rotated
    if card.orientation != Rot0:
       card.orientation = Rot0
-   notify("{} {} {} {}.".format(controller, action, card, fromText))
+   notify("{} {} {} {}.", controller, action, card, fromText)
 
 
 def batchDestroy(cards, x = 0, y = 0):
@@ -700,7 +700,7 @@ def remove(card, x = 0, y = 0):
    """
    fromText = fromWhereStr(card.group)
    card.moveTo(me.piles["Removed pile"])
-   notify("{} removes {} {}.".format(me, card, fromText))
+   notify("{} removes {} {}.", me, card, fromText)
 
 
 def toHand(card, x = 0, y = 0):
@@ -710,9 +710,9 @@ def toHand(card, x = 0, y = 0):
    cardname = revealCard(card)
    card.moveTo(me.hand)
    if src == table:
-      notify("{} returns {} to its Hand {}.".format(me, cardname, fromText))
+      notify("{} returns {} to its Hand {}.", me, cardname, fromText)
    else:
-      notify("{} puts {} in its Hand {}.".format(me, cardname, fromText))
+      notify("{} puts {} in its Hand {}.", me, cardname, fromText)
 
 
 def toDeckTop(card, x = 0, y = 0):
@@ -721,14 +721,14 @@ def toDeckTop(card, x = 0, y = 0):
    cardname = revealCard(card)
    card.isFaceUp = False
    card.moveTo(me.Deck)
-   notify("{} puts {} {} on the top of its Deck.".format(me, cardname, fromText))
+   notify("{} puts {} {} on the top of its Deck.", me, cardname, fromText)
 
 
 def toDeckBottom(card, x = 0, y = 0):
    mute()
    fromText = fromWhereStr(card.group)
    card.moveToBottom(me.Deck)
-   notify("{} puts {} {} on the bottom of its Deck.".format(me, card, fromText))
+   notify("{} puts {} {} on the bottom of its Deck.", me, card, fromText)
 
 
 def toHandAll(group, x = 0, y = 0):
@@ -737,7 +737,7 @@ def toHandAll(group, x = 0, y = 0):
       card.moveTo(me.hand)
    if len(players) > 1:
       waitForAnimation()
-   notify(MSG_ACTION_MOVE_ALL_CARDS.format(me, group.name, "its Hand"))
+   notify(MSG_ACTION_MOVE_ALL_CARDS, me, group.name, "its Hand")
 
 
 def toDeckTopAll(group, x = 0, y = 0):
@@ -747,7 +747,7 @@ def toDeckTopAll(group, x = 0, y = 0):
       card.moveTo(Deck)
    if len(players) > 1:
       waitForAnimation()
-   notify(MSG_ACTION_MOVE_ALL_CARDS.format(me, group.name, "the top of its Deck"))
+   notify(MSG_ACTION_MOVE_ALL_CARDS, me, group.name, "the top of its Deck")
 
 
 def toDeckBottomAll(group, x = 0, y = 0):
@@ -757,7 +757,7 @@ def toDeckBottomAll(group, x = 0, y = 0):
       card.moveToBottom(Deck)
    if len(players) > 1:
       waitForAnimation()
-   notify(MSG_ACTION_MOVE_ALL_CARDS.format(me, group.name, "the bottom of its Deck"))
+   notify(MSG_ACTION_MOVE_ALL_CARDS, me, group.name, "the bottom of its Deck")
 
 
 def toOwnerDeck(cards):
@@ -780,7 +780,7 @@ def discardAll(group, x = 0, y = 0):
       card.moveTo(discards)
    if len(players) > 1:
       waitForAnimation()
-   notify(MSG_ACTION_MOVE_ALL_CARDS.format(me, group.name, "the bottom of its Discard pile"))
+   notify(MSG_ACTION_MOVE_ALL_CARDS, me, group.name, "the bottom of its Discard pile")
 
 
 def removeAll(group, x = 0, y = 0):
@@ -793,7 +793,7 @@ def removeAll(group, x = 0, y = 0):
       card.moveTo(pile)
    if len(players) > 1:
       waitForAnimation()
-   notify(MSG_ACTION_MOVE_ALL_CARDS.format(me, group.name, "the bottom of its Removed pile"))
+   notify(MSG_ACTION_MOVE_ALL_CARDS, me, group.name, "the bottom of its Removed pile")
 
 
 def toTableFaceDown(card, x = 0, y = 0):
@@ -801,7 +801,7 @@ def toTableFaceDown(card, x = 0, y = 0):
    mute()
    fromText = fromWhereStr(card.group)
    placeCard(card, card.Type, faceDown = True)
-   notify(MSG_ACTION_FACE_DOWN.format(me, fromText))
+   notify(MSG_ACTION_FACE_DOWN, me, fromText)
 
 
 def changeSlot(card, x = 0, y = 0, targets = None):
@@ -828,14 +828,14 @@ def changeSlot(card, x = 0, y = 0, targets = None):
       alignCard(card)
       alignCard(target)
       target.target(False)
-      notify("{} swapped positions of {} and {}.".format(me, card, target))
+      notify("{} swapped positions of {} and {}.", me, card, target)
    # Move a character to another slot
    else:
       slotIdx = askForEmptySlot(card.controller)
       if slotIdx > -1:
          putAtSlot(card, slotIdx, card.controller, True)
          alignCard(card)
-         notify("{} moved {} to slot {}.".format(me, card, slotIdx+1))
+         notify("{} moved {} to slot {}.", me, card, slotIdx+1)
 
 
 #---------------------------------------------------------------------------
@@ -854,7 +854,7 @@ def addMarkerAction(cards, x = 0, y = 0):
    # Then go through their cards and add those markers to each.
    for card in cards:
       card.markers[marker] += quantity
-      notify("{} adds {} {} counter to {}.".format(me, quantity, marker[0], card))
+      notify("{} adds {} {} counter to {}.", me, quantity, marker[0], card)
 
 # --------------
 # Character BP
@@ -865,7 +865,7 @@ def plusBP(cards, x = 0, y = 0, silent = False, amount = 100):
    for card in cards:
       addMarker(card, "BP", amount)
       if not silent:
-         notify("{} raises {}'s BP by {} (new BP is {})".format(me, card, amount, getMarker(card, "BP")))
+         notify("{} raises {}'s BP by {} (new BP is {})", me, card, amount, getMarker(card, "BP"))
          playSnd("power-up")
 
 def minusBP(cards, x = 0, y = 0, silent = False, amount = 100):
@@ -877,7 +877,7 @@ def minusBP(cards, x = 0, y = 0, silent = False, amount = 100):
          c = bp
       addMarker(card, "BP", -c)
       if not silent:
-         notify("{} lowers {}'s BP by {} (new BP is {}).".format(me, card, amount, getMarker(card, "BP")))
+         notify("{} lowers {}'s BP by {} (new BP is {}).", me, card, amount, getMarker(card, "BP"))
          playSnd("power-down")
 
 def plusBP2(cards, x = 0, y = 0): plusBP(cards, amount = 200)
@@ -973,13 +973,13 @@ def play(card, x = 0, y = 0, slotIdx = None):
       placeCard(card, card.Type)
    isChar = isCharacter(card)
    if isChar:
-      notify("{} plays {} from their {}{}.".format(me, card, group.name, slot))
+      notify("{} plays {} from their {}{}.", me, card, group.name, slot)
       charsPlayed = getState(me, "charsPlayed")
       playSnd("card-play-1")
-      notify("({} has played {} character{} this turn.)".format(me, charsPlayed, pluralize(charsPlayed)))
+      notify("({} has played {} character{} this turn.)", me, charsPlayed, pluralize(charsPlayed))
    else:
       playSnd("card-play-2")
-      notify("{} plays {} from their {}.".format(me, card, group.name))
+      notify("{} plays {} from their {}.", me, card, group.name)
       
    if settings["PlayAuto"]:
       pcard = getGameCard(card)
@@ -1010,12 +1010,12 @@ def backup(card, x = 0, y = 0, target = None):
       if target:
          lastBP = getGameCard(target).getState("lastBP")
          newBP = getMarker(target, "BP")
-         notify("{0} back-ups {1} with {2} from their {3}. New BP of {1} is {4} (before was {5}).".format(me, target, card, group.name, newBP, lastBP))
+         notify("{0} back-ups {1} with {2} from their {3}. New BP of {1} is {4} (before was {5}).", me, target, card, group.name, newBP, lastBP)
          playSnd("backup")
          return True
    else:
       placeCard(card, card.Type)
-      notify("{} back-ups with {} from their {}.".format(me, card, group.name))
+      notify("{} back-ups with {} from their {}.", me, card, group.name)
       playSnd("backup")
    debug("<<< back-up end")
 
@@ -1030,7 +1030,7 @@ def discard(card, x = 0, y = 0, isRandom = False):
    if isRandom:
       msg = MSG_DISCARD_RANDOM
    playSnd("discard")
-   notify(msg.format(me, card, group.name))
+   notify(msg, me, card, group.name)
 
 
 def randomDiscard(group = me.hand, x = 0, y = 0):
@@ -1039,7 +1039,7 @@ def randomDiscard(group = me.hand, x = 0, y = 0):
     if card == None:
         return
     card.moveTo(me.piles["Discard pile"])
-    notify(MSG_DISCARD_RANDOM.format(me, card, group.name))
+    notify(MSG_DISCARD_RANDOM, me, card, group.name)
 
 
 def refillHand(group = me.hand):
@@ -1066,7 +1066,7 @@ def draw(group = me.Deck):
       return
    group.top().moveTo(me.hand)
    playSnd("draw")
-   notify("{} draws a card.".format(me))
+   notify("{} draws a card.", me)
 
 
 def drawMany(group, count = None):
@@ -1090,7 +1090,7 @@ def drawMany(group, count = None):
          # ...then move them one by one into their play hand.
          group.top().moveTo(me.hand)
          drawn += 1
-   notify("{} draws {} card{}.".format(me, drawn, pluralize(drawn)))
+   notify("{} draws {} card{}.", me, drawn, pluralize(drawn))
    playSnd("draw")
 
 
@@ -1110,7 +1110,7 @@ def randomDraw(group = me.Deck, type = None):
       card = cards[rnd(0, len(cards)-1)]
    cardname = revealCard(card, type)
    card.moveTo(me.hand)
-   notify("{} draws {} at random {}.".format(me, cardname, fromWhereStr(group)))
+   notify("{} draws {} at random {}.", me, cardname, fromWhereStr(group))
 
 
 def randomDrawCHA(group = me.Deck):
@@ -1148,7 +1148,7 @@ def trash(group, x = 0, y = 0, count = None):
    addTempVar("trashed", cards)
    if len(players) > 1:
       waitForAnimation()
-   notify("{} trashes top {} cards {}.".format(me, count, fromWhereStr(group)))
+   notify("{} trashes top {} cards {}.", me, count, fromWhereStr(group))
 
 
 def prophecy(group = me.Deck, x = 0, y = 0, count = None, deckPos = False):
@@ -1169,7 +1169,7 @@ def prophecy(group = me.Deck, x = 0, y = 0, count = None, deckPos = False):
    cards = list(group[:count])
    cardsPos = []
    owner = "his" if group.controller == me else "{}'s".format(group.controller)
-   notify(MSG_PLAYER_LOOKS.format(me, owner, group.name))
+   notify(MSG_PLAYER_LOOKS, me, owner, group.name)
    where = "top or bottom"
    if deckPos is not False:
       where = "top" if deckPos >= 0 else "bottom"
@@ -1205,7 +1205,7 @@ def shuffle(group):
    mute()
    group.shuffle()
    playSnd("shuffle")
-   notify("{} shuffled its {}".format(me, group.name))
+   notify("{} shuffled its {}", me, group.name)
 
 
 def reshuffle(group = me.piles["Discard pile"]):
@@ -1220,7 +1220,7 @@ def reshuffle(group = me.piles["Discard pile"]):
    waitForAnimation()
    Deck.shuffle()
    playSnd("shuffle")
-   notify("{} reshuffled its {} into its Deck.".format(me, group.name))
+   notify("{} reshuffled its {} into its Deck.", me, group.name)
 
 
 def reshuffleCardsOfType(group, cardType):
@@ -1235,7 +1235,7 @@ def reshuffleCardsOfType(group, cardType):
    update()  # Trying this method to delay next actions until networked tasks are complete
    Deck.shuffle()
    playSnd("shuffle")
-   notify("{} shuffles all {} cards from his {} into its Deck.".format(me, cardType, group.name))
+   notify("{} shuffles all {} cards from his {} into its Deck.", me, cardType, group.name)
 
 
 def reshuffleCHA(group = me.piles["Discard pile"]):
@@ -1259,11 +1259,11 @@ def revealTopDeck(group, x = 0, y = 0):
       return
    card = group[0]
    if card.isFaceUp:
-      notify("{} hides {} from the top of their {}.".format(me, card, group.name))
+      notify("{} hides {} from the top of their {}.", me, card, group.name)
       card.isFaceUp = False
    else:
       card.isFaceUp = True
-      notify("{} reveals {} from the top of their {}.".format(me, card, group.name))
+      notify("{} reveals {} from the top of their {}.", me, card, group.name)
 
 
 def swapWithDeck(group = me.piles["Discard pile"]):
@@ -1312,7 +1312,7 @@ def createCard(group, x = 0, y = 0):
    id, quantity = askCard(title = "Choose a card to add to the game")
    if quantity > 0:
       card = table.create(id, 0, 0, quantity = quantity, persist = True)
-      notify("{} has created the card {}".format(me, card))
+      notify("{} has created the card {}", me, card)
       
       
 def createRandomDeck(group = table, x = 0, y = 0):

@@ -26,7 +26,7 @@ def avatarAction(card):
    model, qty = askCard({"Type": AvatarType}, title = "Choose your avatar image")
    if qty > 0:
       setAvatar(model)
-      notify("{} changes his avatar image.".format(me))
+      notify("{} changes his avatar image.", me)
 
 
 def setAvatar(model = None):

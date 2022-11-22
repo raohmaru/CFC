@@ -450,32 +450,3 @@ def loadDeckDialog(path):
    form = DeckSelectorForm(path)
    # openFileDlg("Load a deck", _extapi.getDecksPath(), "OCTGN deck files (*.o8d)|*.o8d")
    return form.show()
-
-   
-#---------------------------------------------------------------------------
-# Overrides
-#---------------------------------------------------------------------------
-
-_confirm_ = confirm
-def confirm(msg, settingID = None):
-   playSnd("win-confirm", True)
-   if settingID and settings["WinForms"]:
-      # Remember last choice (True: do not show again)
-      if settingID in settings["DoNotShow"] and settings["DoNotShow"][settingID]:
-         return True
-      # Custom form with a checkbox
-      form = ConfirmForm(msg, "Confirmation", settingID)
-      return form.show()
-   return _confirm_(msg)
-
-
-_askChoice_ = askChoice
-def askChoice(question, choices = [], colors = [], customButtons = []):
-   playSnd("win-ask-2", True)
-   return _askChoice_(question, choices, colors, customButtons)
-
-
-_remoteCall_ = remoteCall
-def remoteCall(player, func, args):
-   mute()
-   _remoteCall_(player, func, args)

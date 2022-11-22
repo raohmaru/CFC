@@ -31,7 +31,7 @@ def swapPiles(pile1, pile2):
       card.moveTo(pile2)   
    if len(players) > 1:
       waitForAnimation()
-   notify("{} swaps its {} with its {}.".format(me, pile1.name, pile2.name))
+   notify("{} swaps its {} with its {}.", me, pile1.name, pile2.name)
 
 
 def reveal(group):
@@ -43,11 +43,11 @@ def reveal(group):
          isFaceUp = card.isFaceUp
          # If card is not faced up its name won't appear in the chat
          card.isFaceUp = True
-         notify("{} reveals {} {}.".format(me, card, fromWhereStr(card.group)))
+         notify("{} reveals {} {}.", me, card, fromWhereStr(card.group))
          card.isFaceUp = isFaceUp
    else:
       cards = [card for card in group]
-      notify("{} shows their {}".format(group.controller, group.name))
+      notify("{} shows their {}", group.controller, group.name)
       showCardDlg(cards, "Cards in {}'s {}".format(group.controller, group.name), 0, min = 0)
       # Allow opponent to peek at the revealed cards of your hand
       if group.name == "Hand":

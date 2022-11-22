@@ -374,7 +374,7 @@ class RulesUtils():
             if pick:
                pickMsg = "the {} {} card{} of ".format("top" if pick > 0 else "bottom", abs(pick), pluralize(abs(pick)))
                owner = pickMsg + owner
-            notify(MSG_PLAYER_LOOKS.format(me, owner, zone[1]))
+            notify(MSG_PLAYER_LOOKS, me, owner, zone[1])
             title = msg.format(qtyMsg, qtyPlural, article, zone[1], sourceName)
             # If there aren't enough cards to select, just show the cards
             if len(result) <= minQty:
@@ -390,16 +390,16 @@ class RulesUtils():
                   # - selected cards are contained in the result set
                   if cards_sel == None or minQty == 0 or not reveal or len(set(cards_sel) & set(result)) >= 1:
                      if cards_sel == None:
-                        notify(MSG_PLAYER_SELECTS_NONE.format(me, owner, zone[1]))
+                        notify(MSG_PLAYER_SELECTS_NONE, me, owner, zone[1])
                      result = cards_sel
                      break
                   title = "Please " + title[0].lower() + title[1:]
                   warning(title)
             if result:
                if isVisible(result[0]):
-                  notify(MSG_PLAYER_SELECTS_NAMED.format(me, cardsAsNamesListStr(result)))
+                  notify(MSG_PLAYER_SELECTS_NAMED, me, cardsAsNamesListStr(result))
                else:
-                  notify(MSG_PLAYER_SELECTS.format(me, len(result)))
+                  notify(MSG_PLAYER_SELECTS, me, len(result))
          if result == None and minQty != 0:
             return False
 

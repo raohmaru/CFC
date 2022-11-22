@@ -222,9 +222,9 @@ def cmd_discard(rc, targets, source, restr, whichCards = ""):
                remoteCall(player, "discard", [card])
       else:
          if whichCards == "all":
-            notify(MSG_ERR_NO_CARDS_DISCARD.format(player))
+            notify(MSG_ERR_NO_CARDS_DISCARD, player)
          else:
-            notify(MSG_ERR_NO_CARDS_DISCARD_F.format(player))
+            notify(MSG_ERR_NO_CARDS_DISCARD_F, player)
          success = False
       # Peek cards
       if reveal or len(targets) > 1:
@@ -304,7 +304,7 @@ def cmd_movePile(rc, targets, source, restr, zone1, zone2):
          card.moveTo(pile2)
       if len(players) > 1:
          waitForAnimation()
-      notify("{} moves all cards from their {} to their {}.".format(me, pile1.name, pile2.name))      
+      notify("{} moves all cards from their {} to their {}.", me, pile1.name, pile2.name)
    rc.applyNext()
 
 
@@ -361,7 +361,7 @@ def cmd_hp(rc, targets, source, restr, qtyExpr):
    for player in targets:
       player.HP = getState(player, "HP") + qty
       sign = "+" if qty >= 0 else ""
-      notify("{} sets {}'s HP to {} ({}{})".format(me, player, player.HP, sign, qty))
+      notify("{} sets {}'s HP to {} ({}{})", me, player, player.HP, sign, qty)
       if qty > 0:
          playSnd("gain-life")
    rc.applyNext()
@@ -371,7 +371,7 @@ def cmd_playExtraChar(rc, targets, source, restr, *args):
    cpt = getState(me, "charsPerTurn")
    debug(">>> cmd_playExtraChar() {} -> {}", cpt, cpt + 1)
    setState(me, "charsPerTurn", cpt + 1)
-   notify("{} can play an additional character this turn.".format(me))
+   notify("{} can play an additional character this turn.", me)
    rc.applyNext()
 
 
@@ -490,7 +490,7 @@ def cmd_moveRevealedCardsTo(rc, targets, source, restr, zone, pos = None):
       targetZone = RulesUtils.getPileByName(zone, pile[0])
       myPile = targetZone.controller == me
       debug("Moving up to {} cards to {} in pos {}", index, zone, pos)
-      notify("{} looks through the top of {} {} ({} card{} revealed)".format(me, "his" if myPile else players[1], pile.name, index + 1, pluralize(index + 1)))
+      notify("{} looks through the top of {} {} ({} card{} revealed)", me, "his" if myPile else players[1], pile.name, index + 1, pluralize(index + 1))
       for card in newPile:
          if myPile:
             moveToGroup(targetZone, card, pile, num(pos), True)
@@ -637,9 +637,9 @@ def cmd_turns(rc, targets, source, restr, qty):
    debug(">>> cmd_turns({}, {})", targets, qty)
    p1.turnsRemaining += qty
    if qty > 0:
-      notify("{} will play another turn after this one".format(me))
+      notify("{} will play another turn after this one", me)
    elif qty < 0:
-      notify("{} will skip his next turn".format(me))
+      notify("{} will skip his next turn", me)
    rc.applyNext()
    
 
@@ -652,7 +652,7 @@ def cmd_skip(rc, targets, source, restr, phase):
       if not idx in skipPhases:
          skipPhases.append(idx)
          setState(player, "skip", skipPhases)
-      notify("{} will skip his next {} phase.".format(player, phase.title()))
+      notify("{} will skip his next {} phase.", player, phase.title())
    rc.applyNext()
    
    
@@ -668,7 +668,7 @@ def cmd_unite(rc, targets, source, restr, *args):
          if card != target:
             remoteCall(getOpp(), "unitedAttackAuto", [card, [target], True])
             waitForAnimation()
-      notify("{} has forced {} to do an United Attack".format(me, cardsAsNamesListStr(targets)))
+      notify("{} has forced {} to do an United Attack", me, cardsAsNamesListStr(targets))
    rc.applyNext()
    
    
@@ -677,7 +677,7 @@ def cmd_removeFromAttack(rc, targets, source, restr, *args):
    for card in targets:
       remoteCall(getOpp(), "cancelAttack", [card])
       waitForAnimation()
-      notify("{} removes {} from attack.".format(me, card))
+      notify("{} removes {} from attack.", me, card)
    rc.applyNext()
 
 

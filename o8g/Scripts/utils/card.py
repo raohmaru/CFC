@@ -244,9 +244,9 @@ def transformCard(card, cardModel):
    else:
       newCard = group.create(cardModel, quantity = 1)
    if group == table and card.isFaceUp:
-      notify("{} transforms {} into {}.".format(me, card, newCard))
+      notify("{} transforms {} into {}.", me, card, newCard)
    else:
-      notify("{} transformed a card {}.".format(me, fromWhereStr(group)))
+      notify("{} transformed a card {}.", me, fromWhereStr(group))
    model = card.model
    update()
    # Store the original card model in the transformed list to restore it back if needed
@@ -378,7 +378,7 @@ def discardKOedChars():
    """
    for card in getRing():
       if getMarker(card, "BP") == 0:
-         notify("{}'s {} BP is 0. Taking it out from the arena.".format(card.controller, card))
+         notify("{}'s {} BP is 0. Taking it out from the arena.", card.controller, card)
          if card.controller == me:
             destroy(card)
             update()  # Syncs the game state along players. Also delays animations.

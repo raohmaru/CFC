@@ -41,7 +41,7 @@ def clearAttachLinks(card):
    card_id = card._id
    # Detaches cards that were attached to the current card
    if card_id in backups.values():
-      notify("{} clears all backups of {}.".format(me, card))
+      notify("{} clears all backups of {}.", me, card)
       for id in backups:
          if backups[id] == card_id:
             attcard = Card(id)

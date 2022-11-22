@@ -23,7 +23,7 @@ def dealDamage(dmg, target, source, combatDmg = True, isPiercing = False):
    Applies damage from a source to a target, either a card or a player.
    """
    if not getRule("dmg_combat_deal") and isCharacter(source) and (hasMarker(source, "Attack") or hasMarker(source, "Counter-attack")):
-      notify("{} deals no combat damage due to an ability or effect.".format(source))
+      notify("{} deals no combat damage due to an ability or effect.", source)
       return
    # Damage to a card
    if isinstance(target, Card):
@@ -31,7 +31,7 @@ def dealDamage(dmg, target, source, combatDmg = True, isPiercing = False):
       realDmg = min(dmg, getMarker(target, "BP"))  # Damage cannot be greater than target's BP
       addMarker(target, "BP", -realDmg)
       newBP = getMarker(target, "BP")
-      notify("{} deals {} {}damage to {}. New BP is {} (before was {}).".format(source, dmg, "combat " if combatDmg else "", target, newBP, oldBP))
+      notify("{} deals {} {}damage to {}. New BP is {} (before was {}).", source, dmg, "combat " if combatDmg else "", target, newBP, oldBP)
       if isCharacter(source):
          playSnd("damage-char-1")
          if combatDmg:
@@ -47,7 +47,7 @@ def dealDamage(dmg, target, source, combatDmg = True, isPiercing = False):
          dispatchEvent(GameEvents.BeforeDamage, args = [source._id])
       modDmg = getTempVar("damageMod", 0)
       if modDmg != 0:
-         notify(u"Damage has been {} by {} ({}  \u2192  {}).".format(["decreased", "increased"][modDmg > 0], modDmg, dmg, dmg + modDmg))
+         notify(u"Damage has been {} by {} ({}  \u2192  {}).", ["decreased", "increased"][modDmg > 0], modDmg, dmg, dmg + modDmg)
          dmg += modDmg
       oldHP = getState(target, "HP")
       newHP = oldHP - dmg
@@ -60,7 +60,7 @@ def dealDamage(dmg, target, source, combatDmg = True, isPiercing = False):
          typeOfDmg = "piercing "
       elif combatDmg:
          typeOfDmg = "combat "
-      notify("{} deals {} {}damage to {}. New HP is {} (before was {}).".format(source, dmg, typeOfDmg, target, target.HP, oldHP))
+      notify("{} deals {} {}damage to {}. New HP is {} (before was {}).", source, dmg, typeOfDmg, target, target.HP, oldHP)
       if newHP <= 0:
          notifyWinner(getOpp(target))
       # Change game state: non-combat damage
@@ -82,7 +82,7 @@ def loseLife(qty, target, source):
    newHP = max(0, newHP)
    target.HP = newHP
    effect = "ability".format(source) if isCharacter(source) else "effect"
-   notify("{} loses {} HP due to {}'s {}. New HP is {} (before was {}).".format(target, qty, source, effect, target.HP, oldHP))
+   notify("{} loses {} HP due to {}'s {}. New HP is {} (before was {}).", target, qty, source, effect, target.HP, oldHP)
    if newHP <= 0:
       notifyWinner(getOpp(target))
    playSnd("lose-life")
@@ -104,7 +104,7 @@ def modSP(amount = 1, mode = None, silent = False, player = me, silentSnd = Fals
          playSnd("lose-sp")
       elif not silentSnd:
          playSnd("gain-sp")
-      notify("{} {} {} SP. New total is {} SP (before was {}).".format(player, action, amount, player.SP, initialSP))
+      notify("{} {} {} SP. New total is {} SP (before was {}).", player, action, amount, player.SP, initialSP)
 
 
 def payCostSP(amount = 1, obj = None, reason = "play this card", type = None):
@@ -133,7 +133,7 @@ def payCostSP(amount = 1, obj = None, reason = "play this card", type = None):
       me.SP += amount
       if costModMsg:
          notify(costModMsg)
-      notify("{} has spent {} SP. New total is {} SP (before was {}).".format(me, amount, me.SP, initialSP))
+      notify("{} has spent {} SP. New total is {} SP (before was {}).", me, amount, me.SP, initialSP)
    return True
    
    

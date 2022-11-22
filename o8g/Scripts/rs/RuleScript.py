@@ -270,7 +270,7 @@ class Rules():
          if isCharacter(thisCard):
             notify(MSG_AB_AUTO_ACT_CHAR.format(thisCard.controller, thisCard, getGameCard(thisCard).ability))
          else:
-            notify(MSG_AB_AUTO_ACT.format(thisCard.controller, thisCard))
+            notify(MSG_AB_AUTO_ACT, thisCard.controller, thisCard)
       
       return True
 
@@ -288,9 +288,9 @@ class Rules():
          # Non-character cards can have autos with events (Crossover/Grandmaster rule)
          if not isCharacter(thisCard) or getMarker(thisCard, "BP") > 0:
             if isCharacter(thisCard):
-               notify(MSG_AB_AUTO_TRIGGER_CHAR.format(eventName, thisCard, thisCard.controller, thisCard.group.name))
+               notify(MSG_AB_AUTO_TRIGGER_CHAR, eventName, thisCard, thisCard.controller, thisCard.group.name)
             else:
-               notify(MSG_AB_AUTO_TRIGGER.format(eventName, thisCard, thisCard.controller))
+               notify(MSG_AB_AUTO_TRIGGER, eventName, thisCard, thisCard.controller)
             if not hasMarker(thisCard, "United Attack"):
                targets = [thisCard]
                if RS_KEY_TARGET in self.rules_tokens:
@@ -304,7 +304,7 @@ class Rules():
                      addTempVar("trigger", trigger)
                return self.execAction(auto, targets, True)
             else:
-               notify(MSG_AB_AUTO_UATTACK.format(thisCard, thisCard.Ability))
+               notify(MSG_AB_AUTO_UATTACK, thisCard, thisCard.Ability)
       
       return True
                
@@ -340,7 +340,7 @@ class Rules():
                # Should ask for cards?
                if len(cards) == 0:
                   cards = RulesUtils.getCardsFromZone(RS_KW_ZONE_HAND)
-                  notify(MSG_PLAYER_LOOKS.format(me, "their", "hand"))
+                  notify(MSG_PLAYER_LOOKS, me, "their", "hand")
                   cards = showCardDlg(cards, "Select {} card{} from you hand to discard".format(amount, pluralize(amount)), amount, min = amount)
                if cards == None:
                   return False

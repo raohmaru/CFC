@@ -50,7 +50,7 @@ def overrideCardsMoved(args):
                # It may have been played faced down
                if not faceup:
                   mute()  # Or OCTGN will tell which card it is
-                  notify(MSG_ACTION_FACE_DOWN.format(me, fromWhereStr(fromGroup)))
+                  notify(MSG_ACTION_FACE_DOWN, me, fromWhereStr(fromGroup))
                   card.moveToTable(x, y, True)
                   continue
                # Play a character card

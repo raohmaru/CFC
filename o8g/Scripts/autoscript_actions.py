@@ -292,7 +292,7 @@ def unitedAttackAuto(card, targets = None, force = False):
       if not force:
          warning(MSG_UA_MAX.format(MaxCharsUAttack + 1))
       else:
-         notify(MSG_UA_MAX.format(MaxCharsUAttack + 1))
+         notify(MSG_UA_MAX, MaxCharsUAttack + 1)
       return
    totalUnited = len(united) + 1 # Current chars in UA + current char that will wants to join
    # Cost
@@ -401,13 +401,13 @@ def activateAuto(card):
 
    if card.highlight == ActivatedColor:
       kind = "ability" if isCharacter(card) else "effect"
-      notify("{}'s {} has already been activated.".format(card, kind))
+      notify("{}'s {} has already been activated.", card, kind)
       return
    # Character ability
    if isCharacter(card):
       pcard = getGameCard(card)
       if not pcard.hasEffect():
-         notify("{} has no ability to activate.".format(card))
+         notify("{} has no ability to activate.", card)
          return
       debug("Trying to activate {}'s ability {} {}", card.Name, pcard.ability.type, pcard.ability.name)
       # Activate [] and /\ only in player's Main Phase

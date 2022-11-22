@@ -110,7 +110,7 @@ def dispatchEvent(event, obj_id = None, args = []):
                card = Card(listener["callback"])
                # Don"t trigger auto ability for chars in a UA
                if inUAttack(card):
-                  notify("{}'s ability cannot be activated because it joined an United Attack.".format(card))
+                  notify("{}'s ability cannot be activated because it joined an United Attack.", card)
                   res = (None, listener["callback"])
                   continue
                # Call callback

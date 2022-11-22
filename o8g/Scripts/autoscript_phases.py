@@ -34,7 +34,7 @@ def triggerPhaseEvent(phase, oldPhase = 0):
    
    skipPhases = getState(me, "skip")
    if phase in skipPhases:
-      notify("{} skips their {} phase due to an ability.".format(me, PhaseNames[phase]))
+      notify("{} skips their {} phase due to an ability.", me, PhaseNames[phase])
       skipPhases.remove(phase)  # remove by value
       setState(me, "skip", skipPhases)
       nextPhase(False)
@@ -43,7 +43,7 @@ def triggerPhaseEvent(phase, oldPhase = 0):
    if   phase == ActivatePhase: activatePhaseStart()
    elif phase == DrawPhase:
       if turnNumber() == 1:
-         notify("{} skips their {} phase (the first player must skip it during their first turn).".format(me, PhaseNames[phase]))
+         notify("{} skips their {} phase (the first player must skip it during their first turn).", me, PhaseNames[phase])
          nextPhase(False)
          return
       else:
@@ -53,15 +53,15 @@ def triggerPhaseEvent(phase, oldPhase = 0):
       # Skip attack phase if player has no chars, or if all chars entered the ring this turn
       if getRingSize() == 0 or len([c for c in getRing(me) if hasMarker(c, "Just Entered")]) == getRingSize():
          if getRingSize() == 0:
-            notify("{} skips their {} phase because there aren't characters in their ring.".format(me, PhaseNames[phase]))
+            notify("{} skips their {} phase because there aren't characters in their ring.", me, PhaseNames[phase])
          else:
-            notify("{} skips their {} phase because any of their characters can attack.".format(me, PhaseNames[phase]))
+            notify("{} skips their {} phase because any of their characters can attack.", me, PhaseNames[phase])
          nextPhase(False)
          return
       attackPhaseStart()
    elif phase == BlockPhase:
       if len(getAttackingCards(me, True)) == 0:
-         notify("{} skips their {} phase because there are no attacking characters.".format(me, PhaseNames[phase]))
+         notify("{} skips their {} phase because there are no attacking characters.", me, PhaseNames[phase])
          if backwards:
             prevPhase()
          else:
@@ -113,7 +113,7 @@ def activatePhaseStart():
    frostedChars = ""
    if frosted:
       frostedChars = " but {}".format(cardsAsNamesListStr(frosted))
-   notify("{} unfreezes all characters in their ring{}.".format(me, frostedChars))
+   notify("{} unfreezes all characters in their ring{}.", me, frostedChars)
    # Trigger event
    dispatchEvent(GameEvents.ActivatePhase)
    cleanupGameEvents(RS_KW_RESTR_UYNT)
@@ -125,7 +125,7 @@ def activatePhaseStart():
 def drawPhaseStart():
    if settings["PlayAuto"]:
       if len(me.Deck) == 0 and len(players) > 1 and not tutorial:
-         notify("{} has no cards in their deck and therefore can't draw.".format(me))
+         notify("{} has no cards in their deck and therefore can't draw.", me)
          notifyWinner(getOpp())
       else:
          draw()
@@ -178,10 +178,10 @@ def blockPhaseStart():
          uaType = ["", "Double", "Triple"][uaSize] + " United Attack"
          uaTypeKw = "ua{}".format(len(uattack))
          if not payCostSP(uaSize * UAttackCost, uaType, "do a {}".format(uaType), uaTypeKw):
-            notify("{} does not have enough SP to pay the {}.".format(me, uaType))
+            notify("{} does not have enough SP to pay the {}.", me, uaType)
             prevPhase()
             return
-         notify("{} has paid the cost of the {}.".format(me, uaType))
+         notify("{} has paid the cost of the {}.", me, uaType)
    dispatchEvent(GameEvents.BlockPhase)
    for card in getAttackingCards(me, True):
       dispatchEvent(GameEvents.Attacks, card._id, [card._id])
@@ -259,7 +259,7 @@ def endPhaseStart():
             ):               
             dealDamage(uadmg, players[1], card, isPiercing = True)
          elif pdmg > 0 and uadmg > 0:
-            notify("{} points of piercing damage were prevented.".format(uadmg))
+            notify("{} points of piercing damage were prevented.", uadmg)
       # Unblocked attacker
       elif len(players) > 1:
          doDamage = True

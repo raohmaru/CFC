@@ -173,7 +173,7 @@ def onCardsMoved(args):
          if card_id in transformed:
             newCard = toGroup.create(transformed[card_id], quantity = 1)
             newCard.moveTo(toGroup, card.index)
-            notify("Transformed card {} is restored into {}".format(card, newCard))
+            notify("Transformed card {} is restored into {}", card, newCard)
             del transformed[card_id]
             card.delete()
       if (

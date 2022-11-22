@@ -61,7 +61,7 @@ class RulesAbilities():
       card = Card(card_id)
       debug("-- removing ability '{}' from {}", ability, card)
       if removeGameEventListener(card_id, RulesAbilities.items[ability]["event"], "abl_genericListener"):
-         notify("{} has lost the {} ability".format(card, ability))
+         notify("{} has lost the {} ability", card, ability)
       
 
 #---------------------------------------------------------------------------
@@ -165,7 +165,7 @@ def abl_removed(obj_id, source_id, msg, eventCallback, restr = None):
    # If msg has 2 items it means that it is a on/off message (see MSG_AB).
    # Then we want to show the message when the effect is gone because of the restr cleanup.
    if restr and msg and len(msg) == 2:
-      notify(msg[1].format(getObjName(obj_id)))
+      notify(msg[1], getObjName(obj_id))
 
 
 def abl_cantblock_removed(obj_id, source_id, msg, eventCallback, restr = None):
