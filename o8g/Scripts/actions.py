@@ -208,7 +208,7 @@ def clearAll(group = None, x = 0, y = 0):
    Clear selections on all cards
    """
    notify("{} clears all selections, targets and highlights.", me)
-   for card in getCards(table, me):
+   for card in getCards():
       clear(card)
    clearSelection()
 

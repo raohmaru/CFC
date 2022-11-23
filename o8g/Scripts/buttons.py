@@ -22,47 +22,40 @@
 ButtonSize = _extapi.game.CardSizes["button"].Width
 
 def buttonAction(btn):
-   if btn._id in buttons:
-      if buttons[btn._id] == Buttons[StartButton]:
-         if len(me.Deck) == 0:
-            warning(MSG_ACTION_LOAD_DECK)
-            return
-         if not me.setupDone:
-            setup()
-         me.setActive()
-         track_event("click", StartButton)
-         
-      elif buttons[btn._id] == Buttons[NextButton]:
-         nextPhase(True)
+   if btn.model == ButtonModels[StartButton]:
+      if len(me.Deck) == 0:
+         warning(MSG_ACTION_LOAD_DECK)
+         return
+      if not me.setupDone:
+         setup()
+      me.setActive()
+      track_event("click", StartButton)
+      
+   elif btn.model == ButtonModels[NextButton]:
+      nextPhase(True)
 
       
 def addButton(name):
    mute()
-   if name in buttons.values():
-      return
-   model = Buttons[name]
+   model = ButtonModels[name]
+   for c in getCards(includeUI = True):
+      if isButton(c) and c.model == model:
+         return
    x = CardsCoords[name][0] * me.side - ButtonSize/2
    y = fixCardY(CardsCoords[name][1], ButtonSize)
    btn = table.create(model, x, y, quantity = 1, persist = False)
    # Nail it to the table thus preventing players from manually moving it
    btn.anchor = True
-   buttons[btn._id] = model
    # Change alternate to show a more descriptive name
    btn.alternate = "alt"
       
       
 def removeButton(name):
    mute()
-   model = Buttons[name]
-   ids = []
-   for key, v in buttons.iteritems():
-      if model == v:
-         ids.append(key)
-   if ids:
-      for c in table:
-         if c._id in ids:
-            del buttons[c._id]
-            c.delete()
+   model = ButtonModels[name]
+   for c in getCards(includeUI = True):
+      if isButton(c) and c.model == model:
+         c.delete()
 
 
 def removeAllButtons():
@@ -70,7 +63,6 @@ def removeAllButtons():
    Removes all buttons in the game.
    """
    mute()
-   for c in table:
-      if c._id in buttons:
-         del buttons[c._id]
+   for c in getCards(includeUI = True):
+      if isButton(c):
          c.delete()

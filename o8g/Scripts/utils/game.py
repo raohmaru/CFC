@@ -39,10 +39,9 @@ def resetAll():
    """
    debug(">>> resetAll()")
    # Import all our global variables and reset them
-   global gameCards, transformed, buttons, Globals, tutorial
+   global gameCards, transformed, Globals, tutorial
    gameCards = {}
    transformed = {}
-   buttons = {}
    me.HP = StartingHP
    me.SP = 0
    Globals = {}

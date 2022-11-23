@@ -106,7 +106,7 @@ MarkersDict = {
 # UI Buttons
 StartButton = "Start Game"
 NextButton = "Next Phase"
-Buttons = {
+ButtonModels = {
    StartButton: "81918f9c-83cc-4589-8b86-19a238a0623b",
    NextButton : "1d0c798b-b785-4bb6-b160-14c71db6af47"
 }
@@ -277,7 +277,6 @@ Colors = Struct(**{
 gameCards      = {}     # Dictionary holding all parsed cards
 commander      = None   # RulesCommands instance
 envVars        = None   # Global variables to be used in eval() expressions
-buttons        = {}     # Holds the created UI buttons
 transformed    = {}     # Transformed cards
 isPhaseOngoing = False  # True while running phase automation tasks
 Globals        = {}     # Replaces OCTGN global variables

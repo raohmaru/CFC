@@ -351,10 +351,10 @@ def getAllTargetedCards(player = me):
    return targets
    
    
-def getCards(group = table, player = me):
+def getCards(group = table, player = me, includeUI = False):
    return [card for card in group
       if card.controller == me
-      and not isUI(card)]
+      and (not isUI(card) or includeUI)]
 
 
 def copyCard(card):
