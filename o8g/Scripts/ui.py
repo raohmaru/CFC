@@ -32,6 +32,9 @@ class ui():
       """
       Player status visual hint.
       """
+      for c in getCards(includeUI = True):
+         if c.model == ui.ActivePlayerModel:
+            return
       x = CardsCoords["Status"][0] * me.side - ui.StatusWidth/2
       y = fixCardY(CardsCoords["Status"][1], ui.StatusHeight)         
       ui.activePlayerCard = table.create(ui.ActivePlayerModel, x, y, quantity = 1, persist = False)
