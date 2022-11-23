@@ -100,3 +100,8 @@ def acsh_isNotTutorial(args, x = 0, y = 0):
       
 def acsh_notUI(args, x = 0, y = 0):
    return not isUI(args[0])
+
+      
+def acsh_clear(args, x = 0, y = 0):
+   card = args[0]
+   return bool(card.targetedBy or card.highlight)
