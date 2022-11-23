@@ -119,7 +119,7 @@ action = {cost}: [[cond]] effect [& effect] [&& effect] [|| effect] to(target) r
 
 Multiple action keys are allowed. If there are two or more, a dialog will be show to choose the action.
 Several actions can be joined with ';'.
-Actions are executed in parallel, in order. Effects in the same action (joined by &, && or ||) are executed sequentially.
+Actions are executed in parallel but in in order. Effects in the same action (joined by &, && or ||) are executed sequentially.
 Optional, but a card must contain either an action or an auto field.
 
 cost: (optional)
@@ -681,7 +681,7 @@ RulesDict["c3bb69f7-4b77-469f-a9ff-79cca1e52574"] = """
 action = {F}: draw(2) & discard()
 """
 
-# Hayato's ASHURA
+# Hayato's ASURA
 RulesDict["f232c282-6a03-436f-aae2-53f6988c6603"] = """
 action = reveal(hand); each(action in me.hand => bp(+200)) target(this); discard(actions)
 """

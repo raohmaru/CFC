@@ -1487,7 +1487,7 @@
 			<property name="Rarity"       value="C" />
 			<property name="Ability"      value="&#162; ASHURA" />
 			<property name="Ability Type" value="&#162;" />
-			<property name="Ability Name" value="ASHURA" />
+			<property name="Ability Name" value="ASURA" />
 			<property name="Rules"        value="Reveal your hand, then discard all action cards. Raise this character&apos;s BP 200 points for each card discarded this way." />
 			<property name="BP"           value="700" />
 			<property name="SP"           value="1" />
