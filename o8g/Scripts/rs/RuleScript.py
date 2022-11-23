@@ -22,6 +22,7 @@ class Rules():
    """
    A class to parse, hold and execute the rules of a card.
    """
+   __slots__ = ("rule_id", "card_id", "rules_tokens", "parsed", "has_events")
 
    def __init__(self, rule, card_id):
       self.rule_id = rule.lower()  # case insensitive

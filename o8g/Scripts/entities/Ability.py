@@ -22,6 +22,7 @@ class Ability:
    """
    A class that represents an ability or an effect of a card.
    """
+   __slots__ = ("ability", "type", "name", "rules")
    # Class (static) variables, which are also the default values for each instance
    ability = ""
    type    = ""
@@ -31,7 +32,7 @@ class Ability:
    def __init__(self, obj, rules = None, ruleId = None):
       # Ability can be defined from a string...
       if isinstance(obj, basestring):
-         ability = Regexps['ability'].match(obj)
+         ability = Regexps["ability"].match(obj)
          if ability:
             self.ability = ability.group(0)
             self.type    = ability.group(1)
@@ -41,16 +42,16 @@ class Ability:
       elif ruleId:
          cardData  = _extapi.getCardDataByModel(ruleId)
          cardProps = _extapi.getCardProperties(cardData)
-         self.ability = cardProps['Ability']
-         self.type    = cardProps['Ability Type']
-         self.name    = cardProps['Ability Name']
-         self.rules   = cardProps['Rules']
+         self.ability = cardProps["Ability"]
+         self.type    = cardProps["Ability Type"]
+         self.name    = cardProps["Ability Name"]
+         self.rules   = cardProps["Rules"]
       # ... or a card-like object
       elif obj.Ability:
          self.ability = obj.Ability
-         self.type    = obj.properties['Ability Type']
-         self.name    = obj.properties['Ability Name']
-         self.rules   = obj.properties['Rules']
+         self.type    = obj.properties["Ability Type"]
+         self.name    = obj.properties["Ability Name"]
+         self.rules   = obj.properties["Rules"]
    
    @property
    def unicodeChar(self):

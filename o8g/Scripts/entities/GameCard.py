@@ -22,6 +22,11 @@ class GameCard(object):
    """
    A class which stores the card effect name and its parsed rule scripts.
    """
+   # 'ability' is a attribute of child class CharCard. If it is created in the child class,
+   # it shadows the descriptors created for the slot attributes here.
+   # Shadowing the descriptors in a subclass causes Python to be unable to find the
+   # routine needed to set the attribute.
+   __slots__ = ("card", "card_id", "rule_id", "rules", "state", "ability")
    
    def __init__(self, card, ruleId = None):
       self.card = card

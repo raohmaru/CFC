@@ -22,6 +22,8 @@ class RulesCommands():
    """
    Class to handle the commands that are applied to a set of objects.
    """
+   __slots__ = ("cmds", "cmdsArgs", "prevTargets", "lastCmdSuccess")
+
    items = {}
 
    def __init__(self):

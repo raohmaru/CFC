@@ -49,7 +49,9 @@ def debugScenario():
    gotoMain()
    waitForAnimation()
    tableCards = [
-       # "d14694b4-484c-4b45-962e-8cbb636d8a9a" # 200 BP
+       "d14694b4-484c-4b45-962e-8cbb636d8a9a" # 200 BP
+      ,"a33974af-3d8e-41d6-8f90-fd6c8d525e18" # Mai
+      ,"f232c282-6a03-436f-aae2-53f6988c6603" # Hayato
       # ,"c7d128ea-a3b9-4b04-b8b2-a61153b5b2e6" # 400 BP
       # ,"24e99a13-cb42-4e16-9900-78dde12e1a4c" # 600 BP
       # ,"e6e46f83-d089-4762-8d8e-2a3252cfc9db" # 800 BP
@@ -65,6 +67,8 @@ def debugScenario():
       waitForAnimation()
       
    handCards = [
+       "f286cc08-ae18-4a40-bd66-17aedcfd9267" # Krauser
+      ,"f7a00823-d37b-48eb-b2f6-c530623a2a9c" # Abduction
        # "8bb477f9-5004-4018-8d5e-73c6a23e8912" # Char 300 BP
       # ,"e910f462-bea9-4262-b168-c7c512eb6511" # Char 500 BP
       # ,"0fdadc92-0864-46cc-a3ff-c20e2af8249c" # Char 700 BP
