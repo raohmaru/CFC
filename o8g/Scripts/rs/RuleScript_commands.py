@@ -1,3 +1,6 @@
+#!/usr/bin/python
+# -*- coding: utf-8 -*-
+
 # Python Scripts for the Card Fighters' Clash definition for OCTGN
 # Copyright (C) 2013 Raohmaru
 
@@ -261,7 +264,7 @@ def cmd_moveTo(rc, targets, source, restr, zone, pos = None, reveal = None):
          if isNumber(pos):
             pos = int(pos)
          elif pos == "?":
-            choice = askChoice("Where to put the card{}?".format(pluralize(len(targets))), ["Top of pile", "Bottom of pile"])
+            choice = askChoice("Where to put the card{}?".format(pluralize(len(targets))), ["△ Top of pile", "▽ Bottom of pile"])
             pos = (max(choice, 1) - 1) * -1
          elif pos is not None:
             reveal = pos

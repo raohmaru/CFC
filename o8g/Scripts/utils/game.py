@@ -1,3 +1,6 @@
+#!/usr/bin/python
+# -*- coding: utf-8 -*-
+
 # Python Scripts for the Card Fighters' Clash definition for OCTGN
 # Copyright (C) 2022 Raohmaru
 
@@ -29,7 +32,7 @@ def chooseSide():
    else:
       side = 0
       while side == 0:
-         side = askChoice("In which side of the board will you play?", ["Top side", "Bottom side"])
+         side = askChoice("In which side of the board will you play?", ["△ Top side", "▽ Bottom side"])
       me.side = (-1, 1)[side - 1]
 
 

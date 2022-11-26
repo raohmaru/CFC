@@ -1,3 +1,6 @@
+#!/usr/bin/python
+# -*- coding: utf-8 -*-
+
 # Python Scripts for the Card Fighters' Clash definition for OCTGN
 # Copyright (C) 2013 Raohmaru
 
@@ -203,7 +206,7 @@ def randomPickEnemy(group, x = 0, y = 0):
       randomPick(group, fromPlayer = players[1])
 
 
-def clearAll(group = None, x = 0, y = 0):
+def clearAll(group = table, x = 0, y = 0):
    """
    Clear selections on all cards
    """
@@ -1183,7 +1186,7 @@ def prophecy(group = me.Deck, x = 0, y = 0, count = None, deckPos = False):
       card = card[0]
       # ... and then choose where to put them (once)
       if deckPos is False:
-         deckPos = askChoice("Where to put the card?", ["Top of the deck", "Bottom of the deck"])
+         deckPos = askChoice("Where to put the card?", ["△ Top of the deck", "▽ Bottom of the deck"])
          if deckPos == 0:
             return
          # Reverse the choice  1,2 => 0,-1
