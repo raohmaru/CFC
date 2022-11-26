@@ -4,7 +4,7 @@
       name="Card Fighters' Clash"
       id="e3d56d9e-900d-49c6-b6ae-22cbb51be153"
       octgnVersion="3.4.350.0"
-      version="0.12.0.960"
+      version="0.12.0.961"
       markersize="20"
       tags="capcom snk fighter"
       description="Play epic battles with fighters from Capcom and SNK!
@@ -406,7 +406,6 @@
 				<groupaction menu="Hand" shortcut="Ctrl+Shift+H" execute="toHandAll" />
 				<groupaction menu="Discard pile" shortcut="Ctrl+Shift+Del" execute="discardAll" />
 			</groupactions>
-            <groupaction menu="Clear all targets" shortcut="esc" execute="clearAll" showIf="acsh_clearAll" />
             <!--  -->
 			<cardaction menu="Put card into Hand" shortcut="Ctrl+H" execute="toHand" />
 			<cardaction menu="Put card into Discard pile" shortcut="Del" execute="discard" />
