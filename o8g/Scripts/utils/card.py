@@ -236,7 +236,7 @@ def transformCard(card, cardModel):
          newCard.orientation = card.orientation
          if settings["PlayAuto"]:
             createGameCard(newCard, forceActivateAuto = True)
-         if hasMarker(card, "Just Entered"):
+         if isFresh(card):
             setMarker(newCard, "Just Entered", 1)
       for m in card.markers:
          if m[0] != "BP":

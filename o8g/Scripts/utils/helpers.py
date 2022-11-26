@@ -69,6 +69,10 @@ def isFrozen(card):
    return card.orientation & Rot90 == Rot90
 
 
+def isFresh(card):
+   return hasMarker(card, "Just Entered")
+
+
 def isAttacking(card, inUA = True):
    return hasMarker(card, "Attack") or inUA and hasMarker(card, "United Attack")
 
@@ -102,7 +106,7 @@ def hasFilter(card, filter):
 
 def canBackup(card):
    # Char just entered the ring?
-   if hasMarker(card, "Just Entered") and not getRule("backup_fresh"):
+   if isFresh(card) and not getRule("backup_fresh"):
       warning("Characters that just entered the ring this turn can't be backed-up.")
       return
    # Backup limit

@@ -152,7 +152,7 @@ def abl_cantblock_added(card, restr = None):
 
 
 def abl_rush_added(card, restr = None):
-   if hasMarker(card, "Just Entered"):
+   if isFresh(card):
       removeMarker(card, "Just Entered")
       
 

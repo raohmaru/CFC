@@ -208,7 +208,7 @@ def attackAuto(card, force = False):
       cancelAttack(card)
       return
    # Char just entered the ring?
-   if hasMarker(card, "Just Entered"):
+   if isFresh(card):
       warning(MSG_ERR_ATTACK_FRESH)
       return
    # Frozen char?
@@ -244,7 +244,7 @@ def unitedAttackAuto(card, targets = None, force = False):
       warning(MSG_ERR_CANNOT_ATTACK.format(card.Name))
       return
    # Char just entered the ring?
-   if hasMarker(card, "Just Entered"):
+   if isFresh(card):
       warning(MSG_ERR_ATTACK_FRESH)
       return
    # Triggers a hook to check if the character can attack.
@@ -425,7 +425,7 @@ def activateAuto(card):
             _extapi.notify(MSG_RULES["ab_instant_act"][False], Colors.Red)
             return
          # Activate only once
-         if not hasMarker(card, "Just Entered"):
+         if not isFresh(card):
             warning("{} abilities can only be activated once when the character just enters the ring.".format(InstantUniChar))
             return
       # [] abilities
@@ -435,7 +435,7 @@ def activateAuto(card):
             warning(MSG_RULES["ab_trigger_act"][False])
             return
          # Just entered?
-         if not getRule("ab_trigger_fresh") and hasMarker(card, "Just Entered"):
+         if not getRule("ab_trigger_fresh") and isFresh(card):
             warning("Can't activate {} abilities of characters that just entered the ring.".format(TriggerUniChar))
             return
          # Frozen or attacking?

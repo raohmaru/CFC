@@ -221,7 +221,7 @@ def filter_frozen(card, include, cmd, *args):
    
 def filter_justEntered(card, include, cmd, *args):
    debug(">>> filter_justEntered({}, {}, {}, {})", card, include, cmd, args)
-   res = hasMarker(card, "Just Entered")
+   res = isFresh(card)
    if include:
       return res
    else:
