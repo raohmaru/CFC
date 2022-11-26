@@ -322,7 +322,7 @@ def onMarkerChanged(args):
             setMarker(card, marker, oldValue)
 
 
-def OnCounterChanged(args):
+def onCounterChanged(args):
    """
    Triggers when a player's counter value is adjusted.
    """
@@ -335,7 +335,7 @@ def OnCounterChanged(args):
    setState(player, counterName, value)
 
 
-def OnCardClicked(args):
+def onCardClicked(args):
    """
    Triggers when a player clicks a card.
    """
@@ -345,14 +345,14 @@ def OnCardClicked(args):
       if isButton(card) and mouseButton == 0:  # Left button
          debug(">>> OnCardClicked: {}, {}, {}", card, mouseButton, args.keysDown)
          buttonAction(card)
-         
+
 
 def onCardTargeted(args):
    """
    Triggers when a card is targeted, or de-targeted.
    """
    card = args.card
-   targeted = args.targeted
+   targeted = args.targeted # True if the card was targeted, False if it was de-targeted.
    debug(">>> onCardTargeted: {} by {} ({})", card, args.player, targeted)
    # Disallow targeting UI cards
    if isUI(card) and targeted:

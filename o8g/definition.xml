@@ -4,7 +4,7 @@
       name="Card Fighters' Clash"
       id="e3d56d9e-900d-49c6-b6ae-22cbb51be153"
       octgnVersion="3.4.350.0"
-      version="0.12.0.954"
+      version="0.12.0.960"
       markersize="20"
       tags="capcom snk fighter"
       description="Play epic battles with fighters from Capcom and SNK!
@@ -73,17 +73,17 @@
 	</scripts>
 
 	<events>
-		<event name="OnTableLoaded"        action="onTableLoaded" />
-		<event name="OnGameStarted"        action="onGameStarted" />
-		<event name="OnDeckLoaded"         action="onDeckLoaded" />
-		<event name="OnCardsMoved"         action="onCardsMoved" />
-		<event name="OnScriptedCardsMoved" action="onCardsMoved" />
-		<event name="OnTurnPassed"         action="onTurnPassed" />
-		<event name="OnPhasePassed"        action="onPhasePassed" />
-		<event name="OnMarkerChanged"      action="onMarkerChanged" />
-		<event name="OnCounterChanged"     action="OnCounterChanged" />
-		<event name="OnCardClicked"        action="OnCardClicked" />
+		<event name="OnCardClicked"        action="onCardClicked" />
 		<event name="OnCardTargeted"       action="onCardTargeted" />
+		<event name="OnCardsMoved"         action="onCardsMoved" />
+		<event name="OnCounterChanged"     action="onCounterChanged" />
+		<event name="OnDeckLoaded"         action="onDeckLoaded" />
+		<event name="OnGameStarted"        action="onGameStarted" />
+		<event name="OnMarkerChanged"      action="onMarkerChanged" />
+		<event name="OnPhasePassed"        action="onPhasePassed" />
+		<event name="OnScriptedCardsMoved" action="onCardsMoved" />
+		<event name="OnTableLoaded"        action="onTableLoaded" />
+		<event name="OnTurnPassed"         action="onTurnPassed" />
 		<event name="OverrideCardsMoved"   action="overrideCardsMoved" />
 		<event name="OverrideTurnPassed"   action="overrideTurnPassed" />
 	</events>
@@ -264,7 +264,6 @@
 			</groupactions>
 		</groupactions>
 		<groupaction menu="Realign cards" shortcut="Ctrl+R" execute="alignCards" showIf="acsh_charsInArena" />
-		<groupaction menu="Clear all targets" shortcut="esc" execute="clearAll" />
 		<groupactions menu="Random..." showIf="acsh_autoPlayOff">
 			<groupaction menu="Flip a coin" shortcut="Ctrl+Alt+2" execute="flipCoin" />
 			<groupaction menu="Pick a random card" shortcut="Ctrl+Alt+R" execute="randomPick" />
@@ -272,6 +271,7 @@
 			<groupaction menu="Pick a random card (Enemy)" execute="randomPickEnemy" />
 		</groupactions>
 		<groupaction menu="Restart game" execute="restart" showIf="acsh_gameStarted" />
+		<groupaction menu="Clear all targets" shortcut="esc" execute="clearAll" showIf="acsh_clearAll" />
 		<groupseparator />
 		<groupactions menu="Settings..." showIf="acsh_isNotTutorial">
 			<groupaction menu="Switch Play automation ON/OFF" execute="switchPlayAuto" getName="aclb_PlayAuto" />
@@ -349,9 +349,9 @@
 		<cardaction menu="Transform" shortcut="Ctrl+Shift+T" batchExecute="transformCards" showIf="acsh_autoPlayOff" />
 		<cardaction menu="Backup" shortcut="Ctrl+Alt+B" execute="askCardBackups" showIf="acsh_canBackup" />
 		<cardseparator />
-		<cardaction menu="Clear targets" shortcut="Esc" execute="clear" showIf="acsh_clear" />
 		<cardaction menu="Flip" shortcut="Ctrl+U" execute="flip" showIf="acsh_autoPlayOff" />
 		<cardaction menu="Realign card" shortcut="Ctrl+R" execute="alignCardAction" showIf="acsh_isNotCharBackup" />
+		<cardaction menu="Clear targets" shortcut="Esc" execute="clear" showIf="acsh_clear" />
 		<cardaction menu="&#x1f6c8; Card info" shortcut="Ctrl+I" execute="cardInfo" showIf="acsh_notUI" />
 	</table>
 
@@ -370,6 +370,7 @@
 				<groupaction menu="Deck (Bottom)" shortcut="Ctrl+Alt+D" execute="toDeckBottomAll" />
 				<groupaction menu="Shuffle into Deck" shortcut="Ctrl+S" execute="shuffleIntoDeck" />
 			</groupactions>
+            <groupaction menu="Clear all targets" shortcut="esc" execute="clearAll" showIf="acsh_clearAll" />
 			<!--  -->
 			<cardaction menu="Play card" default="True" shortcut="Ctrl+P" execute="play" />
 			<cardaction menu="Play as backup" shortcut="Ctrl+B" execute="backup" showIf="acsh_isChar" />
@@ -382,8 +383,8 @@
 			</cardactions>
 			<cardaction menu="Transform" shortcut="Ctrl+Shift+T" batchExecute="transformCards" showIf="acsh_autoPlayOff" />
 			<cardseparator />
-			<cardaction menu="Clear" shortcut="Esc" execute="clear" showIf="acsh_autoPlayOff" />
 			<cardaction menu="Flip" shortcut="Ctrl+U" execute="flip" showIf="acsh_autoPlayOff" />
+			<cardaction menu="Clear" shortcut="Esc" execute="clear" showIf="acsh_clear" />
 			<cardaction menu="&#x1f6c8; Show backups" shortcut="Ctrl+Alt+B" execute="askCardBackups" showIf="acsh_isChar" />
 			<cardaction menu="&#x1f6c8; Card info" shortcut="Ctrl+I" execute="cardInfo" showIf="acsh_notUI" />
 		</group>
@@ -405,9 +406,14 @@
 				<groupaction menu="Hand" shortcut="Ctrl+Shift+H" execute="toHandAll" />
 				<groupaction menu="Discard pile" shortcut="Ctrl+Shift+Del" execute="discardAll" />
 			</groupactions>
+            <groupaction menu="Clear all targets" shortcut="esc" execute="clearAll" showIf="acsh_clearAll" />
+            <!--  -->
 			<cardaction menu="Put card into Hand" shortcut="Ctrl+H" execute="toHand" />
 			<cardaction menu="Put card into Discard pile" shortcut="Del" execute="discard" />
 			<cardaction menu="Flip" shortcut="Ctrl+U" execute="flip" showIf="acsh_autoPlayOff" />
+			<cardseparator />
+			<cardaction menu="Clear" shortcut="Esc" execute="clear" showIf="acsh_clear" />
+			<cardaction menu="&#x1f6c8; Card info" shortcut="Ctrl+I" execute="cardInfo" showIf="acsh_notUI" />
 		</group>
 		
 		<group name="Discard pile" visibility="all" viewState="pile" icon="Resources/Groups/discards.png">
@@ -425,14 +431,17 @@
 				<groupaction menu="Deck (Bottom)" execute="toDeckBottomAll" />
 				<groupaction menu="Removed pile" execute="removeAll" />
 			</groupactions>
+            <groupaction menu="Clear all targets" shortcut="esc" execute="clearAll" showIf="acsh_clearAll" />
 			<!--  -->
 			<cardaction menu="Return card to Hand" shortcut="Ctrl+H" default="True" execute="toHand" />
 			<cardaction menu="Put into Deck (Top)" shortcut="Ctrl+D" execute="toDeckTop" />
 			<cardaction menu="Put into Deck (Bottom)" shortcut="Ctrl+Alt+D" execute="toDeckBottom" />
 			<cardaction menu="Put into Removed Pile" shortcut="Shift+Del" execute="remove" />
 			<cardseparator />
+			<cardaction menu="Clear" shortcut="Esc" execute="clear" showIf="acsh_clear" />
 			<cardaction menu="&#x1f6c8; Card info" shortcut="Ctrl+I" execute="cardInfo" showIf="acsh_notUI" />
 		</group>
+        
 		<group name="Removed pile" visibility="all"  viewState="pile" icon="Resources/Groups/removed.png" collapsed="True">
 			<groupactions menu="Move All Cards To...">
 				<groupaction menu="Hand" execute="toHandAll" />
@@ -440,6 +449,7 @@
 				<groupaction menu="Deck (Bottom)" execute="toDeckBottomAll" />
 				<groupaction menu="Discard pile" execute="discardAll" />
 			</groupactions>
+            <groupaction menu="Clear all targets" shortcut="esc" execute="clearAll" showIf="acsh_clearAll" />
 			<!--  -->
 			<cardaction menu="Return card to Hand" shortcut="Ctrl+H" default="True" execute="removedDefaultAction" getName="aclb_RemovedDefault" />
 			<cardaction menu="Play as backup" execute="backup" showIf="acsh_isCharAndPlayRemoved" />
@@ -447,6 +457,7 @@
 			<cardaction menu="Put into Deck (Top)" shortcut="Ctrl+D" execute="toDeckTop" />
 			<cardaction menu="Put into Deck (Bottom)" shortcut="Ctrl+Alt+D" execute="toDeckBottom" />
 			<cardseparator />
+			<cardaction menu="Clear" shortcut="Esc" execute="clear" showIf="acsh_clear" />
 			<cardaction menu="&#x1f6c8; Card info" shortcut="Ctrl+I" execute="cardInfo" showIf="acsh_notUI" />
 		</group>
 	</player>

@@ -208,7 +208,7 @@ def clearAll(group = None, x = 0, y = 0):
    Clear selections on all cards
    """
    notify("{} clears all selections, targets and highlights.", me)
-   for card in getCards():
+   for card in getCards(group):
       clear(card)
    clearSelection()
 
@@ -422,6 +422,7 @@ def clear(card, x = 0, y = 0):
    card.target(False)
    card.highlight = None
    card.select(False)
+   card.arrow(card, False)
 
 
 def alignCardAction(card, x = 0, y = 0):
