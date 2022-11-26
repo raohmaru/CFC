@@ -92,7 +92,7 @@ def showCardDlg(list, title, max = 1, text = "Card Selection", min = 1, bottomLi
    
    for c in list:
       # Removes KOed chars in the ring
-      if c.group == table and getMarker(c, "BP") == 0:
+      if c.group == table and isKOed(c):
          continue
       # Organizes chars by group
       if not c.group.name in groups:

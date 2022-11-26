@@ -94,6 +94,10 @@ def isVisible(card):
    return True
 
 
+def isKOed(card):
+   return getMarker(card, "BP") == 0
+
+
 def isCharInRing(card, player = me):
    ring = getGlobalVar("Ring", player)
    return card._id in ring

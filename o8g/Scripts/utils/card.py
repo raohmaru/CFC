@@ -377,7 +377,7 @@ def discardKOedChars():
    Destroy characters with 0 BP.
    """
    for card in getRing():
-      if getMarker(card, "BP") == 0:
+      if isKOed(card):
          notify("{}'s {} BP is 0. Taking it out from the arena.", card.controller, card)
          if card.controller == me:
             destroy(card)
