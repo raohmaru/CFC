@@ -19,7 +19,7 @@
 Case insensitive
 
 ---------------------------------------------------
-target = <qty> type <pick> [filters] @ zone ::selector([args]); ...
+target = <qty> type <pick> [filter] @ zone ::selector([args]); ...
 target? = ...
 
 Defines target(s) used by the effects.
@@ -56,8 +56,8 @@ type:
    Prefixes:
       ^ (other)
       ! (not)
-   Sufixes:
-      s (pluralize) (valid on Type, Subtype, player or *)
+   Suffixes:
+      s (pluralize) (valid on Type, Subtype, card name, player or *)
    Default:
       *
       
@@ -65,8 +65,10 @@ pick:
    Values:
       Positive number (top of pile)
       Negative number (bottom of pile)
+   Default:
+      1
 
-filters: (optional)
+filter: (optional)
    Operators:
       , (or)
       & (and)
@@ -649,7 +651,7 @@ auto = ~anyBeforePayCostReaction~ modCost(reaction, -3)
 
 # Roberto's GOAL KEEPER
 RulesDict["6b1e210a-4846-419c-87f8-875aae812c6e"] = """
-# The system will get the label for each choice from CMD_LABELS
+# The engine will get the label for each choice from CMD_LABELS
 action = swapChars() target(<2>character@sameRing)
 action = moveToSlot() target(character@sameRing)
 """
