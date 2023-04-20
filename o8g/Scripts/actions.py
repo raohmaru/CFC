@@ -369,7 +369,7 @@ def activate(card, x = 0, y = 0):
       freeze(card, silent = True)
    # Apply highlight
    if card.group == table:
-      # Get again the parsed card in case its rules changed
+      # Get again the parsed card in case its rules has changed
       pcard = getGameCard(card)
       if pcard.getState("willHighlight") == True:
          card.highlight = ActivatedColor

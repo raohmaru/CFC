@@ -139,7 +139,7 @@ cond: (optional)
       
 effect:
    Values:
-      Effect command (followed by () or ?() with 0 or more parameters):
+      Effect command (followed by () or ?() with 0 or more arguments).
       ?() marks the command as optional by letting the user choose if apply it:
          activate(expr)
          alterCost(cardtype, [=]#) // permanent
@@ -195,7 +195,7 @@ effect:
       ||  (or, will execute right effect if left effect failed)
       
 to(): (optional)
-   Parameters:
+   Arguments:
       A valid target or a expression
    Alias:
       target, from
