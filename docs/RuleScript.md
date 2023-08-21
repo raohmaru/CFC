@@ -467,8 +467,8 @@ Several hooks can be joined with the comma character `,`.
 |--|--|
 | Values    | Keyword |
 | Keyword   | `canBlock` — whether the character can block or not |
-| Prefixes  | See [event prefixes](#events) |
-| Suffixes  | See [events suffixes](#events) |
+| Prefixes  | See [event prefixes](#event) |
+| Suffixes  | See [events suffixes](#event) |
 
 #### `[[cond]]`
 See [Action statement conditions](#cond).
