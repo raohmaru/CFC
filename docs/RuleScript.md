@@ -216,6 +216,8 @@ It is optional, but a rule must contain at least either one `auto` or one `actio
 
 An `auto` property contain one or several [Auto statements](#Auto-Statement), joined by the semicolon character `;`. They will be executed in parallel but respecting the order (from left to right).
 
+### Label Property
+
 ## Statements
 A statement is a line of code commanding a task.
 
@@ -388,7 +390,7 @@ Abilities are effects applied to players or character cards that are permanent a
 
 |  |  |
 |--|--|
-| Keywords | see [Abilities](#Abilities-Property) |
+| Keywords | see [Abilities](#Abilities-Statement) |
 | Prefixes | `+` — adds the ability<br>`-` — removes the ability |
 
 #### `to(target filter)`
@@ -417,8 +419,8 @@ Restrictions until when to apply the effects of an action statement.
 ### Abilities Statement
 All abilities are keywords.
 
-| Ability | Targets | Effect |
-|--|--|
+| Ability Name | Targets | Effect |
+|---------|---------|--------|
 | unblockable     | Character | Cannot be blocked when it attacks |
 | cantattack      | Character | Cannot attack |
 | cantblock       | Character | Cannot block |
@@ -434,26 +436,14 @@ All abilities are keywords.
 ### Auto Statement
 An Auto statement contains the effects of the [Auto property](#Auto-Property). It is a string composed of several segments.
 
-The current syntax is for when using hooks:
-```ini
-?hook? [[cond if expr]]
-```
-Without hooks the syntax is the following. All segments are optional but the `effect` segment (it must contain at least one effect).
+The following is the default syntax. All segments are optional but the `effect` segment (it must contain at least one effect).
 ```ini
 ~event~ [[cond]] effect & effect to(target filter) restr; ...
 ```
-
-#### `?hook?`
-Hooks are a way to modify the behaviour of the game life cycle. They trigger after an specific game event, and must be followed only by a condition evaluation `[[cond if expr]]` which result may cancel or allow the event default action.
-
-Several hooks can be joined with the comma character `,`.
-
-|  |  |
-|--|--|
-| Values    | Keyword |
-| Keyword   | `canBlock` — whether the character can block or not |
-| Prefixes  | See [event prefixes](#events) |
-| Suffixes  | See [events suffixes](#events) |
+When using hooks the syntax is the following:
+```ini
+?hook? [[cond if expr]]
+```
 
 #### `~event~`
 It defines one or more game event listeners that when triggered will execute the Auto statement of the rules.
@@ -467,6 +457,18 @@ Several events can be specified by separating them with the comma character `,`.
 | Prefixes  | `my` — (default)<br>`opp` — opponent player<br>`any` — any player |
 | Suffixes  | `:this` — (default)<br>`:fromThis` — (default)<br>`:any` — listens for any object that triggers the event<br>`:once` — triggers only once and then deletes the event listener<br>`:action` — triggers for action cards<br>`:reaction` — triggers for reaction cards<br>`:char` — triggers for character cards |
 | Optional  | true |
+
+#### `?hook?`
+Hooks are a way to modify the behaviour of the game life cycle. They trigger after an specific game event, and must be followed only by a condition evaluation `[[cond if expr]]` which result may cancel or allow the event default action.
+
+Several hooks can be joined with the comma character `,`.
+
+|  |  |
+|--|--|
+| Values    | Keyword |
+| Keyword   | `canBlock` — whether the character can block or not |
+| Prefixes  | See [event prefixes](#events) |
+| Suffixes  | See [events suffixes](#events) |
 
 #### `[[cond]]`
 See [Action statement conditions](#cond).
