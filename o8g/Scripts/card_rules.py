@@ -128,7 +128,7 @@ cost: (optional)
    Keywords:
       F
       S | S(target)
-      D | D(#|target)
+      D | D(#|target|<r[#]>)
       E | E(target)
 
 cond: (optional)
@@ -202,7 +202,7 @@ to(): (optional)
    Default:
       current player or the card (depend on context)
 
-to?(): Same as to(), but target is optional and will run next effect in the action if there are no targets.
+to?(): Same as to(), but if there are no targets the execution of the effects won't stop.
       
 restr: (optional)
    Keywords:
@@ -252,26 +252,28 @@ event:
       backedUp
       beforePayCostAction
       beforePayCostReaction
-      beforeDamage:[suffix]
-      cancelCombatDamage:[suffix]
-      playerCombatDamaged:[suffix]
-      attacks:[suffix]
-      blocks:[suffix]
-      blocked:[suffix]
+      beforeDamage[suffix]
+      cancelCombatDamage[suffix]
+      playerCombatDamaged[suffix]
+      attacks[suffix]
+      blocks[suffix]
+      blocked[suffix]
    Prefixes:
       my (default)
       opp
       any
    Suffixes:
-      :fromThis  // cosmetic
       :this      // cosmetic
+      :fromThis  // cosmetic
       :any
       :once
-      :action
+      :action  // replaced by isAction()
+      :reaction  // replaced by isReaction()
+      :char  // replaced by isCharacter()
       
 hook:
    Keywords:
-      canBlock:[suffix]
+      canBlock[suffix]
    Prefixes:
       @see auto:event:prefixes
    Suffixes:
@@ -279,7 +281,7 @@ hook:
 
 cond:
    @see action:cond
-   Some conditions may create an event if there aren't any
+   Some conditions may create an event if there aren't any ~event~
    After an if condition, it there aren't any effect, the result of the condition may cancel or allow the event default action
 
 effect:
@@ -365,7 +367,9 @@ Available variables:
    soloAttack
    oppLostSP
    -- const --
+   instant
    triggered
+   auto
    
 Context variables:
    each(), all
@@ -456,7 +460,8 @@ action = {F}: reveal() & moveTo(hand, true) & shuffle()
 
 # Guy's HAYA-GAKE
 RulesDict["2c1d8c60-0858-4524-adc1-e7596a4d08e0"] = """
-auto = ?oppCanBlock:this? [[if me.ring.size > 1]] # me.ring is opp.ring because it is triggered when the opponent blocks
+# `me.ring` is opp.ring because it is triggered when the opponent blocks therefore is the active player
+auto = ?oppCanBlock:this? [[if me.ring.size > 1]]
 """
 
 # Haggar's SPINNING LARIAT
@@ -1135,7 +1140,7 @@ auto = ~anyCleanupPhase~ unfreeze() target(characters[frozen])
 
 # Raiden's MIKE APPEAL
 RulesDict["bfb5d6cd-afca-4aeb-a1da-8204eb4b2eed"] = """
-auto = ~anyBackedUp~ draw() to(trigger.controller)
+auto = ~anyBackedUp~ draw() to(trigger.controller)  # `.controller` is from the Python API
 """
 
 # Rock Howard's NEO DEADLY RAVE

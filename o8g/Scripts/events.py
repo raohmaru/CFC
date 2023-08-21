@@ -153,7 +153,7 @@ def dispatchEvent(event, obj_id = None, args = []):
 
 def triggerHook(event, obj_id = None, args = []):
    """
-   Hook system. It returns a boolean whether the given action defined by the hook is allowed or not or not.
+   Hook system. It returns a boolean whether the given action defined by the hook is allowed or not.
    """
    res = None
    source = None

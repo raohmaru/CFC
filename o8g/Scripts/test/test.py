@@ -53,10 +53,10 @@ targets = [
    # "target = characters[attack]",
    # "target = character@hand",
    # "target = @oppRing",
-   "target = Captain[attack] @ oppRing",
-   "target = robot[-block]@myhand",
+   # "target = Captain[attack] @ oppRing",
+   # "target = robot[-block]@myhand",
    # "target = character,action[bp>=800,frozen]@oppRing",
-   # "target = characters[sp=-1]",
+   "target = characters[sp==-1]",
    # "target = ^character[fresh&powerless]",
    # "target = ^character[fresh & -powerless]",
    # "target = ^character[fresh & -powerless, backedup]",
@@ -87,18 +87,20 @@ actions = [
    # "action = {D(character)}{F}: sp(abs(discarded.0.SP))",
    # "action = {D(<**>)}{F}: damage(discarded.size * 100) to(^characters)",
    # "action = {D(<r>)}{F}: bp(+300) target(character)",
+   # "action = {D(<r2>)}{F}: bp(+300) target(character)",
    # "action = {f}:destroy() & draw(1)",
    # "action = {S(character@myRing)}: destroy()",
    # "action = {D}: destroy() to(character[bp>=800]@oppRing)",
-   "action = {E(reaction@discard)}: [[may]] moveTo(hand)",
-   "action = {E(reaction@discard)}: [[may 'Question?']] moveTo(hand)",
-   "action = {E(reaction@discard)}: [[may \"Question?\"]] moveTo(hand)",
+   # "action = {E(reaction@discard)}: [[may]] moveTo(hand)",
+   # "action = {E(reaction@discard)}: [[may Question what?]] moveTo(hand)",
+   # "action = {E(reaction@discard)}: [[may 'Question?']] moveTo(hand)",
+   # "action = {E(reaction@discard)}: [[may \"Question?\"]] moveTo(hand)",
    # "action = destroy() ueot",
    # "action = destroy() oppueot",
    # "action = {D(action)}: [[if me.HP < 10]] destroy() to(character) & freeze; draw(2) ueot",
    # "action = {F}:  to(character) ueot",
    # "action = {D(2)}: +cantblock to(character@oppRing) ueot",
-   "action = [[may Destroy all humans?]] destroy()",
+   # "action = [[may Destroy all humans?]] destroy()",
    # "action = [[if me.hand == 0]] destroy() uynt",
    # "action = [[if true]] discard(all) target(me) [[elif false]] damage(5) target(opp)",
    # "action = [[if true]] discard(all) [[else]] damage(5) target(opp)",
@@ -111,7 +113,8 @@ actions = [
    # "action = [[if  all myring: bp <= 3]] playExtraChar()",
    # "action = {F}: moveTo(@oppDeck) target(*@hand); moveTo(hand) target(*<-1>@oppDeck)",
    # "action = {F}: reveal(hand) & myHand.each(bp <= 3 { bp(+2) }) target(this)"
-   # "action = swapChars() target(<2>character)\naction = moveToSlot() target(character)",
+   # "action = swapChars() target(<2>character)",
+   # "action = moveToSlot() target(character)",
    # "action = rndDiscard()",
    # "action = reveal(hand) & each(action in me.hand => bp(+2)) target(this) & discard(actions)"
    # "action = discard(<,1>action@oppHand)",
@@ -144,10 +147,11 @@ autos = [
    # "auto = ~myEndPhase~ moveTo(ctrlHand) to(characters[bp>=800])",
    # "auto = ~anyBlockPhase~ +unblockable to(characters[bp<=300 & attack & -uattack]) ueot",
    # "auto = ~playerCombatDamaged:fromThis~ +cantplayac to(opp) oppueot",
-   # "auto = ?oppCanBlock:any? [[if blocker.bp > this.bp]]",
-   # "auto = ~anyPlayerDamaged:action~ damage(1) to(damagedPlayer)",
-   "auto = ~anyPlayerDamaged:action~ [[if me.hp < 10]] hp(+1)",
+   "auto = ?oppCanBlock:any? [[if blocker.bp > this.bp]]",
+   "auto = ~anyPlayerDamaged:action~ damage(1) to(damagedPlayer)",
+   # "auto = ~anyPlayerDamaged:action~ [[if me.hp < 10]] hp(+1)",
    # "auto = ~oppEndPhase:once~ discard(all)",
+   "auto = ~cancelCombatDamage:this~ damage(600) to(opp)"
 ]
 evals = [
    "action in me.hand => bp(+2)"
@@ -181,9 +185,9 @@ def test(arr, title):
       print ""
 
 # test(targets, 'targets')
-test(actions, 'actions')
+# test(actions, 'actions')
 # test(abilities, 'abilities')
-# test(autos, 'autos')
+test(autos, 'autos')
 # test(requisite, 'requisite')
 # test(vars, 'vars')
 # test(labels, 'labels')

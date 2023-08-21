@@ -165,6 +165,7 @@ class RulesUtils():
          ftargets = RulesUtils.filterTargets(type, filters, zone, cards, source, msg, pick, qty, reveal)
          if ftargets:
             targets += ftargets
+      # If there are no targets, try to eval the expression
       if not targets and not pick:
          debug("-- maybe it's an expression?")
          result = evalExpression(types[0], True, getLocals())
