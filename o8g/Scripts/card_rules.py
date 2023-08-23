@@ -299,6 +299,7 @@ restr:
 requisite = target [&& target]
 
 A list of targets that all must exist in order to execute the action.
+Only one requisite key is allowed.
 @see target
 
 ---------------------------------------------------
@@ -306,6 +307,7 @@ vars = varname := value [; varname := value]
 
 Assigns a value to a variable, which will exists only during the execution of the effects.
 Several variables can be joined with ';'.
+Only one vars key is allowed.
 
 varname:
    A valid identifier

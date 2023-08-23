@@ -10,7 +10,7 @@ RuleScript is case insensitive, including identifiers, commands (functions) and 
 A Primitive in RuleScript is data that has no attributes and are not objects of the game.
 
 ### String
-A string is a series of characters that represents a text.  
+A string is a series of signs that represents a text.  
 String literals can be specified using single or double quotes, or no quotes at all (depending on the context).
 
 ### Integer
@@ -85,14 +85,14 @@ The following variables are available in expressions:
 
 | Name | Type | Value |
 | :--- | :--- | :---- |
-| `tgt`        | list    | Current target cards |
-| `prevTgt`    | list    | Previous target cards |
-| `uaBP`       | integer | United attack total BP |
+| `tgt`        | list    | Current targeted cards |
+| `prevTgt`    | list    | Previous targeted cards |
+| `uaBP`       | integer | Total BP of the United attack |
 | `me`         | Player  | The current player |
 | `opp`        | Player  | The opponent player |
 | `discarded`  | list    | Cards that were discarded from the hand |
 | `trashed`    | list    | Cards that went to the removed pile |
-| `destroyed`  | list    | Cards that were destroyed |
+| `destroyed`  | list    | Cards that were moved to the discards pile |
 | `moved`      | list    | Cards that were moved from a pile to another pile (including the table) |
 | `sacrificed` | list    | Cards that were moved from a ring to he discard pile |
 | `this`       | Card    | The card which effects is being executed |
@@ -153,8 +153,11 @@ name = value
 
 Leading and trailing whitespaces around the property and the equals sign are ignored.
 
+### Identifier
+An identifier is a word that contain the sign "_" and/or any of the following sign ranges: a-z, A-Z, 0-9.
+
 ### Commenting
-To comment a line of code, use the character `#`. The code after this character will be ignored by the parser.
+To comment a line of code, use the sign `#`. The code after this sign will be ignored by the parser.
 
 ## Properties
 
@@ -165,34 +168,35 @@ The target property defines one or more targets in the game (cards or players) t
 target = target filter; ...
 ```
 
-Only one `target` property is allowed in a rule. Any other `target` property after the first is ignored.
+Only one Target property is allowed in a rule. Any other Target property after the first is ignored.
 
-It is optional. The target can be inferred from the context of the `action` or `auto` properties, or defined by the commands `to()`, `target()` or `from()`. By default the target is the current player or the current card.
+It is optional. The target can be inferred from the context of the Action or Auto properties, or defined by the commands `to()`, `target()` or `from()`. By default the target is the current player or the current card.
 
-It is volitional. By appending `?` to `target` the actions of the rule will be executed even if there are no matching targets.
+It is volitional. By appending `?` to Target the actions of the rule will be executed even if there are no matching targets.
 
 ```ini
 target? = target filter
 ```
 
-The value of the `target` property is one or several [Target Filter statement](#Target-Filter-Statement), concatenated by the semicolon character `;`.
+The value of the Target property is one or several [Target Filter statement](#Target-Filter-Statement), concatenated by the semicolon sign `;`.
 
 
 ### Action Property
-The `action` property defines the actions a card can perform, which effects will be applied to the given targets (if any).
+The Action property defines the actions a card can perform, which effects will be applied to the given targets (if any).
 ```ini
 action = action statement; ...
 ```
-Multiple `action` properties are allowed. If there are two or more, a dialog will be shown to choose an action. The text of the button for each action is inferred from the action statement or it can be defined with a preceding [label](#Label-Property) property.
+Multiple Action properties are allowed. If there are two or more, a dialog will be shown to choose an action. The text of the button for each action is inferred from the action statement or it can be defined with a [label](#Label-Property) property.
 ```ini
+label  = "Label"
 action = action statement
 label  = "Label"
 action = action statement
 ```
 
-It is optional, but a rule must contain at least either one `action` or one `auto` property.
+It is optional, but a rule must contain at least either one Action or one Auto property.
 
-The value of the `action` property is one or several [Action statements](#Action-Statement), concatenated by the semicolon character `;`. They will be executed in parallel but respecting the order (from left to right). Note that effects in the same action statement (joined by `&,` `&&` or `||`) are executed sequentially.
+The value of the Action property is one or several [Action statements](#Action-Statement), concatenated by the semicolon sign `;`. They will be executed in parallel but respecting the order (from left to right). Note that effects in the same action statement (joined by `&,` `&&` or `||`) are executed sequentially.
 
 ### Abilities Property
 Abilities are permanent properties of cards. They change how the card interacts with the game.
@@ -201,22 +205,72 @@ Abilities are permanent properties of cards. They change how the card interacts 
 abilities = ability, ...
 ```
 
-Only one `abilities` property is allowed in a rule. Any other `abilities` property after the first is ignored.
+Only one Abilities property is allowed in a rule. Any other Abilities property after the first is ignored.
 
-One or several [abilities](#Abilities-Statement) can be specified by separating them with the comma character `,`.
+One or several [abilities](#Abilities-Statement) can be specified by separating them with the comma sign `,`.
 
 ### Auto Property
-Like the `action` property, the `auto` property defines the actions and effects of the card. But unlike the `action` property, the effects of the `auto` property are always active or they trigger when a specific event occurs.
+Like the Action property, the Auto property defines the actions and effects of the card. But unlike the Action property, the effects of the Auto property are always active or they trigger when a specific event occurs.
 ```ini
 auto = auto statement; ...
 ```
-Only one `auto` property is allowed. Any other `auto` property after the first is ignored.
+Only one Auto property is allowed. Any other Auto property after the first is ignored.
 
-It is optional, but a rule must contain at least either one `auto` or one `action` property.
+It is optional, but a rule must contain at least either one Auto or one Action property.
 
-An `auto` property contain one or several [Auto statements](#Auto-Statement), joined by the semicolon character `;`. They will be executed in parallel but respecting the order (from left to right).
+An Auto property contain one or several [Auto statements](#Auto-Statement), joined by the semicolon sign `;`. They will be executed in parallel but respecting the order (from left to right).
 
 ### Label Property
+The Label property adds a label to an Action property when it is rendered as an action button. The first Label property modifies the first Action property, the second label modifies the second action, and so on.
+
+```ini
+label  = "Action button 1"
+action = action statement
+label  = Action button 2
+action = action statement
+```
+
+The value of the Label property is a String. Quotes are optional. 
+
+Multiple Label properties are allowed, up to the number of Action properties.
+
+### Requisite Property
+The Requisite property defines targets which must exist in order to execute the rule of the card. It only works along with Action properties.
+
+```ini
+requisite = target filter && ...
+```
+
+It accepts one or more [Target Filter statement](#Target-Filter-Statement) separated by the `&&` operator.
+
+Only one Requisite property is allowed in a rule.
+
+### Variables Property
+The Variables property allows to create variables at runtime, by declaring a variable and assigning a value to it. These variables will exists only during the execution of the rule of the card.
+
+```ini
+vars = varname := value ; ...
+```
+A variable has a name and a value, delimited by the operator `:=`.
+
+The name of the variable must be a valid [identifier](#identifier).  
+It is a common practice to start the variable name with an underscore `_`.
+
+The value of the variable is one of the following:
++ Number
++ String
++ Boolean
++ A valid [expression](#Expressions)
+
+Example:
+```ini
+vars = _cards := getTargets('*s@myDiscards')
+action = {F}: [[if _cards.size > 0]] bp(+500) to(*[bp<=300])
+```
+
+Several variables can be declared by separating them with the semicolon sign `;`.
+
+Only one Variables property is allowed in a rule.
 
 ## Statements
 A statement is a line of code commanding a task.
@@ -383,7 +437,7 @@ If the identifier name is suffixed with `?`, the engine will show a confirmation
 | `trash([int])`                    | Moves the given amount of cards from the player's deck to its discard pile. Default: 1 |
 | `turns(int)`                      | Adds the given positive amount of turns to the active player |
 | `unfreeze()`                      | Untaps a card |
-| `unite()`                         | Forces attacking characters that are not part of an United Attack to do an United Attack |
+| `unite()`                         | Forces attacking character cards that are not part of an United Attack to do an United Attack |
 
 ##### Action Abilities
 Abilities are effects applied to players or character cards that are permanent and change how the target interacts with the game.
@@ -399,7 +453,7 @@ It is optional. By default the target is the current player or the current card 
 
 |  |  |
 |--|--|
-| Argument | [Target Filter statement](#Target-Filter-Statement), concatenated by the semicolon character `;`. |
+| Argument | [Target Filter statement](#Target-Filter-Statement), concatenated by the semicolon sign `;`. |
 | Default  | Current player or the current card |
 | Alias    | `target()`, `from()` |
 | Optional | True |
@@ -448,7 +502,7 @@ When using hooks the syntax is the following:
 #### `~event~`
 It defines one or more game event listeners that when triggered will execute the Auto statement of the rules.
 
-Several events can be specified by separating them with the comma character `,`.
+Several events can be specified by separating them with the comma sign `,`.
 
 |  |  |
 |--|--|
@@ -461,7 +515,7 @@ Several events can be specified by separating them with the comma character `,`.
 #### `?hook?`
 Hooks are a way to modify the behaviour of the game life cycle. They trigger after an specific game event, and must be followed only by a condition evaluation `[[cond if expr]]` which result may cancel or allow the event default action.
 
-Several hooks can be joined with the comma character `,`.
+Several hooks can be joined with the comma sign `,`.
 
 |  |  |
 |--|--|
