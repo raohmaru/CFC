@@ -791,7 +791,7 @@ action = {F}: bp(+300) target(character@oppRing); bp(+300) target(character@myRi
 
 # Juli's PSYCHO CHARGE ALPHA
 RulesDict["a2536791-c173-4228-84ce-4d2dec036ac3"] = """
-action = {D(character)}{F}: sp(abs(discarded.0.SP))
+action = {D(character)}{F}: sp(abs(discarded.0.SP))  # abs() is a Python built-in function
 """
 
 # Karin's COMPENSATION
@@ -2056,7 +2056,7 @@ action = unfreeze()
 
 # Rest
 RulesDict["2c9000df-e21a-4482-9dfc-8df3f702e29e"] = """
-action = {D(character)}: sp(abs(discarded.0.SP))
+action = {D(character)}: sp(abs(discarded.0.SP))  # abs() is a Python built-in function
 """
 
 # Robber
