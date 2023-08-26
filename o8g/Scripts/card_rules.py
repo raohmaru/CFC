@@ -313,9 +313,10 @@ varname:
    A valid identifier
    
 value:
-   number
-   string
-   boolean
+   String
+   Integer
+   Boolean
+   List
    A valid expression (@see Expressions)
    
    
@@ -391,9 +392,11 @@ Available functions:
 Scripting
 
 Types:
+   string
+   integer
    boolean
    nil (none type)
-   integer
+   keyword
    list
       .size
       .#     // gets an item by its index
@@ -1615,6 +1618,7 @@ action = damage(500)
 
 # Emulate
 RulesDict["053ba349-515d-4293-898b-625f837f62b6"] = """
+# target = !"Emulate"&action@oppDiscards
 target = !"Emulate"[action]@oppDiscards
 action = activate(tgt)
 """

@@ -49,14 +49,14 @@ pp = pprint.PrettyPrinter(indent=1)
 # Rules to test
 targets = [
    # "target = character",
-   # "target = character,reactions",
+   "target = character,reactions",
    # "target = characters[attack]",
    # "target = character@hand",
    # "target = @oppRing",
    # "target = Captain[attack] @ oppRing",
    # "target = robot[-block]@myhand",
    # "target = character,action[bp>=800,frozen]@oppRing",
-   "target = characters[sp==-1]",
+   # "target = characters[sp==-1]",
    # "target = ^character[fresh&powerless]",
    # "target = ^character[fresh & -powerless]",
    # "target = ^character[fresh & -powerless, backedup]",
@@ -184,10 +184,10 @@ def test(arr, title):
       pp.pprint(tokens)
       print ""
 
-# test(targets, 'targets')
+test(targets, 'targets')
 # test(actions, 'actions')
 # test(abilities, 'abilities')
-test(autos, 'autos')
+# test(autos, 'autos')
 # test(requisite, 'requisite')
 # test(vars, 'vars')
 # test(labels, 'labels')
