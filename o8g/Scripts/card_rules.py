@@ -439,11 +439,6 @@ requisite = character<1>@oppRing
 action = {S}: destroy() target(character@oppRing)
 """
 
-# Zero Akuma's GIGA CRUSH
-RulesDict["fd1a3f1c-7df1-443e-97b1-f093d66e74c9"] = """
-# action = reveal(hand); discard(actions) & discard(reactions)
-"""
-
 # Regina's RADIO TRANSMITTER
 RulesDict["0a8f39ff-6b21-4805-bafb-27c3f38d1986"] = """
 auto = ~myEndPhase~ moveTo(ctrlHand) target(characters[bp>=800])
@@ -1068,11 +1063,6 @@ action = bp(+300) target(character)
 RulesDict["f3557575-c61e-42fd-9442-9413cea64bdf"] = """
 target = character[powerful]
 action = {F}: loseAbility() & bp(+300)
-"""
-
-# Geese's COMPOSURE
-RulesDict["59253bbd-0dbd-4d43-9a2b-7f01b4bc1f76"] = """
-# action = reveal(hand); discard(actions) & discard(reactions)
 """
 
 # Geese Howard's REPPU KEN
