@@ -172,7 +172,7 @@ action = trash(5) # Anything after the hash sign is ignored
 An identifier is a word that contain the sign "_" and/or any of the following sign ranges: a-z, A-Z, 0-9.
 
 ### Context
-When a line of code is executed, it creates a **context** in which some values can be referenced. Expressions and [commands](#action-commands) can create their own contexts.
+When a line of code is executed, it creates a **context** in which some values can be referenced. [Expressions](#expressions) and [commands](#action-commands) can create their own contexts.
 
 ## Properties
 
@@ -497,21 +497,21 @@ If the identifier name is suffixed with `?`, the engine will show a confirmation
 
 | Command | Task |
 |:-|:-|
-| `activate(expr)`                  | Executes the rules of the card that matches the expression |
+| `activate(expr)`                  | Executes the rules of the card that matches the [expression](#expressions) |
 | `alterCost(cardtype, int\|=int)`  | Modifies permanently the cost of a [card type](#global-keywords) or the cost of [united attacks](#global-keywords) by the given amount, or sets an exact (`=`) amount |
-| `bp(int\|xint\|=int\|expr)`          | Modifies the BP of a character card by the given amount or expression, or multiplies it by `xint` (`x` + integer), or sets an exact (`=`) amount |
+| `bp(int\|xint\|=int\|expr)`       | Modifies the BP of a character card by the given amount or [expression](#expressions), or multiplies it by `xint` (`x` + integer), or sets an exact (`=`) amount |
 | `clear()`                         | Removes any [highlight](https://github.com/octgn/OCTGN/wiki/OCTGN-Python-3.1.0.2-API-Reference#cardhighlight) from the card |
 | `copyAbility(expr)`               | Copies the rule of a card to the target card |
 | `damage(int\|expr)`               | Does non-combat damage to the target player or character card |
 | `destroy()`                       | Moves a card in the ring to the discard pile |
 | `disableRule(rule)`               | Permanently disables a [rule](#global-keywords) of the game |
 | `discard([int\|target])`          | Forces a player to discard the given amount of cards from their hand, or the cards returned by the target filter. Default: 1. |
-| `draw([int\|expression])`         | Forces a player to draw the given amount of cards. Default: 1. |
-| `each(expr in list => effect)`    | Applies an effect for each card in the list that matches the expression |
+| `draw([int\|expr])`               | Forces a player to draw the given amount of cards. Default: 1. |
+| `each(expr in list => effect)`    | Applies an effect for each card in the list that matches the [expression](#expressions) |
 | `each(target => effect)`          | Applies an effect for each target matched by the target filter |
 | `enableRule(rule)`                | Permanently enables a [rule](#global-keywords) of the game |
 | `freeze([bool])`                  | Taps a card, or toggles its tap status if the argument is `true` |
-| `hp(int\|expr)`                   | Modifies the HP of a player by the given amount or expression |
+| `hp(int\|expr)`                   | Modifies the HP of a player by the given amount or [expression](#expressions) |
 | `loseAbility()`                   | Permanently removes the rules of a character card |
 | `loseLife(int)`                   | A player loses the given amount of HP |
 | `modCost(cardtype, int)`          | Modifies the cost of a [card type](#global-keywords) by the given amount as long as the effect is in a `auto` property with an event |
@@ -531,12 +531,12 @@ If the identifier name is suffixed with `?`, the engine will show a confirmation
 | `rndDiscard([int])`               | Forces a player to discard a number of random cards from their hand. Alias of `discard(<rint>)` Default: 1. |
 | `shuffle([pile])`                 | Shuffles a pile. Default: current player's deck |
 | `skip(phase)`                     | Target player will skip his next [`phase`](#global-keywords) |
-| `sp(int\|=int\|expr)`             | Modifies the SP of a player by the given amount or expression, or sets an exact (`=`) amount |
+| `sp(int\|=int\|expr)`             | Modifies the SP of a player by the given amount or [expression](#expressions), or sets an exact (`=`) amount |
 | `steal([target])`                 | Removes the rule from a character card and copies it to the current character card or to the character card matched by the given argument |
 | `swapAbilities()`                 | Swaps the rules between two targeted character cards |
 | `swapChars()`                     | Swaps the position in the ring between two targeted character cards |
 | `swapPiles(pile1, pile2)`         | Swaps all the cards between the two given piles |
-| `transform("card model"\|expr)`   | Changes the targeted card to the given [card model](https://github.com/octgn/OCTGN/wiki/OCTGN-Python-3.1.0.2-API-Reference#cardmodel) (GUID) or the card matched by the expression |
+| `transform("card model"\|expr)`   | Changes the targeted card to the given [card model](https://github.com/octgn/OCTGN/wiki/OCTGN-Python-3.1.0.2-API-Reference#cardmodel) (GUID) or the card matched by the [expression](#expressions) |
 | `trash([int])`                    | Moves the given amount of cards from the player's deck to its discard pile. Default: 1 |
 | `turns(int)`                      | Adds the given positive amount of turns to the active player |
 | `unfreeze()`                      | Untaps a card |
@@ -689,7 +689,7 @@ See [Action statement conditions](#cond).
 See [Action statement effects](#effect).
 
 #### `to(target filter)`
-See [Action statement to()](#to-target-filter).
+See [Action statement to()](#totarget-filter).
 
 #### restr
 See [Action statement restrictions](#restr).
