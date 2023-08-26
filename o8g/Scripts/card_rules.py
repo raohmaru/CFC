@@ -19,7 +19,7 @@
 Case insensitive
 
 ---------------------------------------------------
-target = <qty> type <pick> [filters] @ zone ::selector([args]); ...
+target = <qty> type <pick> [filter] @ zone ::selector([args]); ...
 target? = ...
 
 Defines target(s) used by the effects.
@@ -56,8 +56,8 @@ type:
    Prefixes:
       ^ (other)
       ! (not)
-   Sufixes:
-      s (pluralize) (valid on Type, Subtype, player or *)
+   Suffixes:
+      s (pluralize) (valid on Type, Subtype, card name, player or *)
    Default:
       *
       
@@ -65,8 +65,10 @@ pick:
    Values:
       Positive number (top of pile)
       Negative number (bottom of pile)
+   Default:
+      1
 
-filters: (optional)
+filter: (optional)
    Operators:
       , (or)
       & (and)
@@ -74,9 +76,9 @@ filters: (optional)
       Any Type: Character, Action, Reaction
       Any Subtype: Warrior, Pilot, Captain...
    Keywords:
-      bp [=|>=|<=] number
+      bp [==|>=|<=] number
       bp:lowest
-      sp [=|>=|<=] number
+      sp [==|>=|<=] number
       backedup
       attack
       uattack
@@ -126,7 +128,7 @@ cost: (optional)
    Keywords:
       F
       S | S(target)
-      D | D(#|target)
+      D | D(#|target|<r[#]>)
       E | E(target)
 
 cond: (optional)
@@ -137,7 +139,7 @@ cond: (optional)
       
 effect:
    Values:
-      Effect command (followed by () or ?() with 0 or more parameters):
+      Effect command (followed by () or ?() with 0 or more arguments).
       ?() marks the command as optional by letting the user choose if apply it:
          activate(expr)
          alterCost(cardtype, [=]#) // permanent
@@ -193,14 +195,14 @@ effect:
       ||  (or, will execute right effect if left effect failed)
       
 to(): (optional)
-   Parameters:
+   Arguments:
       A valid target or a expression
    Alias:
       target, from
    Default:
       current player or the card (depend on context)
 
-to?(): Same as to(), but target is optional and will run next effect in the action if there are no targets.
+to?(): Same as to(), but if there are no targets the execution of the effects won't stop.
       
 restr: (optional)
    Keywords:
@@ -250,26 +252,28 @@ event:
       backedUp
       beforePayCostAction
       beforePayCostReaction
-      beforeDamage:[suffix]
-      cancelCombatDamage:[suffix]
-      playerCombatDamaged:[suffix]
-      attacks:[suffix]
-      blocks:[suffix]
-      blocked:[suffix]
+      beforeDamage[suffix]
+      cancelCombatDamage[suffix]
+      playerCombatDamaged[suffix]
+      attacks[suffix]
+      blocks[suffix]
+      blocked[suffix]
    Prefixes:
       my (default)
       opp
       any
    Suffixes:
-      :fromThis  // cosmetic
       :this      // cosmetic
+      :fromThis  // cosmetic
       :any
       :once
-      :action
+      :action  // replaced by isAction()
+      :reaction  // replaced by isReaction()
+      :char  // replaced by isCharacter()
       
 hook:
    Keywords:
-      canBlock:[suffix]
+      canBlock[suffix]
    Prefixes:
       @see auto:event:prefixes
    Suffixes:
@@ -277,7 +281,7 @@ hook:
 
 cond:
    @see action:cond
-   Some conditions may create an event if there aren't any
+   Some conditions may create an event if there aren't any ~event~
    After an if condition, it there aren't any effect, the result of the condition may cancel or allow the event default action
 
 effect:
@@ -295,6 +299,7 @@ restr:
 requisite = target [&& target]
 
 A list of targets that all must exist in order to execute the action.
+Only one requisite key is allowed.
 @see target
 
 ---------------------------------------------------
@@ -302,14 +307,16 @@ vars = varname := value [; varname := value]
 
 Assigns a value to a variable, which will exists only during the execution of the effects.
 Several variables can be joined with ';'.
+Only one vars key is allowed.
 
 varname:
    A valid identifier
    
 value:
-   number
-   string
-   boolean
+   String
+   Integer
+   Boolean
+   List
    A valid expression (@see Expressions)
    
    
@@ -363,7 +370,9 @@ Available variables:
    soloAttack
    oppLostSP
    -- const --
+   instant
    triggered
+   auto
    
 Context variables:
    each(), all
@@ -383,9 +392,11 @@ Available functions:
 Scripting
 
 Types:
+   string
+   integer
    boolean
    nil (none type)
-   integer
+   keyword
    list
       .size
       .#     // gets an item by its index
@@ -431,11 +442,6 @@ requisite = character<1>@oppRing
 action = {S}: destroy() target(character@oppRing)
 """
 
-# Zero Akuma's GIGA CRUSH
-RulesDict["fd1a3f1c-7df1-443e-97b1-f093d66e74c9"] = """
-# action = reveal(hand); discard(actions) & discard(reactions)
-"""
-
 # Regina's RADIO TRANSMITTER
 RulesDict["0a8f39ff-6b21-4805-bafb-27c3f38d1986"] = """
 auto = ~myEndPhase~ moveTo(ctrlHand) target(characters[bp>=800])
@@ -454,7 +460,8 @@ action = {F}: reveal() & moveTo(hand, true) & shuffle()
 
 # Guy's HAYA-GAKE
 RulesDict["2c1d8c60-0858-4524-adc1-e7596a4d08e0"] = """
-auto = ?oppCanBlock:this? [[if me.ring.size > 1]] # me.ring is opp.ring because it is triggered when the opponent blocks
+# `me.ring` is opp.ring because it is triggered when the opponent blocks therefore is the active player
+auto = ?oppCanBlock:this? [[if me.ring.size > 1]]
 """
 
 # Haggar's SPINNING LARIAT
@@ -649,7 +656,7 @@ auto = ~anyBeforePayCostReaction~ modCost(reaction, -3)
 
 # Roberto's GOAL KEEPER
 RulesDict["6b1e210a-4846-419c-87f8-875aae812c6e"] = """
-# The system will get the label for each choice from CMD_LABELS
+# The engine will get the label for each choice from CMD_LABELS
 action = swapChars() target(<2>character@sameRing)
 action = moveToSlot() target(character@sameRing)
 """
@@ -782,7 +789,7 @@ action = {F}: bp(+300) target(character@oppRing); bp(+300) target(character@myRi
 
 # Juli's PSYCHO CHARGE ALPHA
 RulesDict["a2536791-c173-4228-84ce-4d2dec036ac3"] = """
-action = {D(character)}{F}: sp(abs(discarded.0.SP))
+action = {D(character)}{F}: sp(abs(discarded.0.SP))  # abs() is a Python built-in function
 """
 
 # Karin's COMPENSATION
@@ -1061,11 +1068,6 @@ target = character[powerful]
 action = {F}: loseAbility() & bp(+300)
 """
 
-# Geese's COMPOSURE
-RulesDict["59253bbd-0dbd-4d43-9a2b-7f01b4bc1f76"] = """
-# action = reveal(hand); discard(actions) & discard(reactions)
-"""
-
 # Geese Howard's REPPU KEN
 RulesDict["526c4102-b6da-4880-91dc-1b9b007d4cc5"] = """
 action = {F}: damage(this.bp) to(character@infront); moveTo(hand) target(this)
@@ -1133,7 +1135,7 @@ auto = ~anyCleanupPhase~ unfreeze() target(characters[frozen])
 
 # Raiden's MIKE APPEAL
 RulesDict["bfb5d6cd-afca-4aeb-a1da-8204eb4b2eed"] = """
-auto = ~anyBackedUp~ draw() to(trigger.controller)
+auto = ~anyBackedUp~ draw() to(trigger.controller)  # `.controller` is from the Python API
 """
 
 # Rock Howard's NEO DEADLY RAVE
@@ -1616,6 +1618,7 @@ action = damage(500)
 
 # Emulate
 RulesDict["053ba349-515d-4293-898b-625f837f62b6"] = """
+# target = !"Emulate"&action@oppDiscards
 target = !"Emulate"[action]@oppDiscards
 action = activate(tgt)
 """
@@ -2047,7 +2050,7 @@ action = unfreeze()
 
 # Rest
 RulesDict["2c9000df-e21a-4482-9dfc-8df3f702e29e"] = """
-action = {D(character)}: sp(abs(discarded.0.SP))
+action = {D(character)}: sp(abs(discarded.0.SP))  # abs() is a Python built-in function
 """
 
 # Robber

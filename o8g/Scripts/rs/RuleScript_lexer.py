@@ -115,7 +115,7 @@ class RulesLexer():
 
          # Skip comment lines
          if line[0] == RS_COMMENT_CHAR:
-            debug("Leading comment char found. Line skipped")
+            debug("Leading comment char found. Line skipped.")
             continue
 
          # Remove comments at the end of the line
@@ -133,7 +133,7 @@ class RulesLexer():
                   targetsList.append(RulesLexer.parseTarget(target, flag))
                rulesDict[RS_KEY_TARGET] = targetsList
          else:
-            debug("Target already defined. Line skipped")
+            debug("Target already defined. Line skipped.")
 
          # Check for action commands
          match = RS_RGX_KEY_ACTION.match(line)
@@ -154,7 +154,7 @@ class RulesLexer():
                debug("Abilities key found!")
                rulesDict[RS_KEY_ABILITIES] = RulesLexer.parseAbility( line[len(match.group()):] )
          else:
-            debug("Abilities already defined. Line skipped")
+            debug("Abilities already defined. Line skipped.")
 
          # Check for one auto command
          if not RS_KEY_AUTO in rulesDict:
@@ -163,7 +163,7 @@ class RulesLexer():
                debug("Auto key found!")
                rulesDict[RS_KEY_AUTO] = RulesLexer.parseAction( line[len(match.group()):] )
          else:
-            debug("Action already defined. Line skipped")
+            debug("Auto already defined. Line skipped.")
             
          # Check for one requisite command
          if not RS_KEY_REQ in rulesDict:
@@ -173,7 +173,7 @@ class RulesLexer():
                requisites = line[len(match.group()):].split(RS_OP_BOOL_AND)
                rulesDict[RS_KEY_REQ] = map(str.strip, requisites)
          else:
-            debug("RS_KEY_REQ already defined. Line skipped")
+            debug("Requisite already defined. Line skipped.")
             
          # Check for one variables command
          if not RS_KEY_VARS in rulesDict:
@@ -182,7 +182,7 @@ class RulesLexer():
                debug("Variables key found!")
                rulesDict[RS_KEY_VARS] = RulesLexer.parseVars( line[len(match.group()):] )
          else:
-            debug("Variables already defined. Line skipped")
+            debug("Variables already defined. Line skipped.")
             
          # Check for label commands
          match = RS_RGX_KEY_LABEL.match(line)

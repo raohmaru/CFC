@@ -162,7 +162,7 @@ class Rules():
          for i, a in enumerate(action):
             # Gets the cmd name as fallback
             label = a["effects"][0][1][0][0]
-            # Does the list have the index? (checks if the index is in the range of 0 and the lenght)
+            # Does the list have the index? (checks if the index is in the range of 0 and the length)
             if 0 <= i < len(cardLabels):
                label = cardLabels[i]
             elif label in CMD_LABELS:
