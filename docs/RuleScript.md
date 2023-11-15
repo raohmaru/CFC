@@ -69,13 +69,13 @@ It is a representation of a player, which holds the data of that player.
 #### Attributes
 | Name | Type | Value |
 | :--- | :--- | :---- |
-| `hp`        | integer | Life of the player |
-| `sp`        | integer | SP of the player |
-| `hand`      | list    | The player's hand |
-| `discards`  | list    | The player's discard pile |
-| `ring`      | list    | The player's ring |
-| `ncDamaged` | bool    | Whether the players was dealt non-combat damage this turn |
-| `lostSP`    | integer | The amount of SP the player has lost this turn |
+| `hp`        | integer     | Life of the player |
+| `sp`        | integer     | SP of the player |
+| `hand`      | list\<card> | The player's hand |
+| `discards`  | list\<card> | The player's discard pile |
+| `ring`      | list\<card> | The player's ring |
+| `ncDamaged` | bool        | Whether the players was dealt non-combat damage this turn |
+| `lostSP`    | integer     | The amount of SP the player has lost this turn |
 
 ### Card
 A card of the game.
@@ -95,26 +95,26 @@ The following variables are available in expressions:
 
 | Name | Type | Value |
 | :--- | :--- | :---- |
-| `tgt`        | list    | Current targeted cards |
-| `prevTgt`    | list    | Previous targeted cards |
-| `uaBP`       | integer | Total BP of the United attack |
-| `me`         | Player  | The current player |
-| `opp`        | Player  | The opponent player |
-| `discarded`  | list    | Cards that were moved from the hand to the discard pile |
-| `trashed`    | list    | Cards that were moved from the deck to the removed pile |
-| `destroyed`  | list    | Cards that were moved from a ring to the discard pile |
-| `moved`      | list    | Cards that were moved from a pile to another pile (including the ring) |
-| `sacrificed` | list    | Cards destroyed by its own controller |
-| `this`       | Card    | The card which effects is being executed |
-| `attacker`   | Card    | An attacking card |
-| `blocker`    | Card    | A blocking card |
-| `trigger`    | Card    | The card that has triggered an effect or event |
-| `alone`      | bool    | True if the card is the only card in its controller ring |
-| `soloAttack` | bool    | True if the card that is attacking alone |
-| `oppLostSP`  | bool    | True if an opponent has lost SP |
-| `instant`    | string  | The "instant" ability |
-| `triggered`  | string  | The "triggered" ability |
-| `auto`       | string  | The "auto" ability |
+| `tgt`        | list\<card> | Current targeted cards |
+| `prevTgt`    | list\<card> | Previous targeted cards |
+| `uaBP`       | integer     | Total BP of the United attack |
+| `me`         | Player      | The current player |
+| `opp`        | Player      | The opponent player |
+| `discarded`  | list\<card> | Cards that were moved from the hand to the discard pile |
+| `trashed`    | list\<card> | Cards that were moved from the deck to the removed pile |
+| `destroyed`  | list\<card> | Cards that were moved from a ring to the discard pile |
+| `moved`      | list\<card> | Cards that were moved from a pile to another pile (including the ring) |
+| `sacrificed` | list\<card> | Cards destroyed by its own controller |
+| `this`       | Card        | The card which effects is being executed |
+| `attacker`   | Card        | An attacking card |
+| `blocker`    | Card        | A blocking card |
+| `trigger`    | Card        | The card that has triggered an effect or event |
+| `alone`      | bool        | True if the card is the only card in its controller ring |
+| `soloAttack` | bool        | True if the card that is attacking alone |
+| `oppLostSP`  | bool        | True if an opponent has lost SP |
+| `instant`    | string      | The "instant" ability |
+| `triggered`  | string      | The "triggered" ability |
+| `auto`       | string      | The "auto" ability |
 
 Variables available in the following iteration contexts: `each()`, `all...in`:
 
@@ -183,7 +183,7 @@ The target property defines one or more targets in the game (cards or players) t
 target = target filter; ...
 ```
 
-If one or more targets can be selected, the engine will will show the [card dialog](https://github.com/octgn/OCTGN/wiki/OCTGN-Python-3.1.0.2-API-Reference#carddlg) to select the target(s).
+If one or more targets can be selected, the engine will show the [card dialog](https://github.com/octgn/OCTGN/wiki/OCTGN-Python-3.1.0.2-API-Reference#carddlg) to select the target(s).
 
 Only one Target property is allowed in a rule. Any other Target property after the first are ignored.
 
@@ -259,6 +259,13 @@ requisite = target filter && ...
 It accepts one or more [Target Filter statement](#target-filter-statement) separated by the `&&` operator.
 
 > To avoid showing the [card dialog](https://github.com/octgn/OCTGN/wiki/OCTGN-Python-3.1.0.2-API-Reference#carddlg) when checking the requisite, always use the segment [`<pick>`](#pick) in the Target Filter statement.
+> <details>
+> <summary>Example</summary>
+> 
+> ```ini
+> requisite = character<1>@oppRing
+> ```
+> </details>
 
 Only one Requisite property is allowed in a rule.
 
