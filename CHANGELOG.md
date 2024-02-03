@@ -5,7 +5,8 @@
 + UI and gameplay improvements.
 + Several bug fixes.
 + Code improvements.
-+ Added RuleScript documentation
++ Added RuleScript documentation.
++ Added opaque background to the card numbering.
 
 ## 0.11.0
 + Anonymous, basic tracking added to get insightful data about how players play the game.
