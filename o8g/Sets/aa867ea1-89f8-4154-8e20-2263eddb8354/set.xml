@@ -5963,7 +5963,7 @@
 			<property name="Illustrator"  value="Art by SNK Playmore" />
 			<property name="Gid"          value="313" />
 		</card>
-		<card name="Tohma" id="52b8e15b-36b5-4a05-88f0-098dff1148d2">
+		<card name="Touma" id="52b8e15b-36b5-4a05-88f0-098dff1148d2">
 			<property name="Publisher"    value="SNK" />
 			<property name="Team"         value="Samurai Shodown" />
 			<property name="Type"         value="Character" />
