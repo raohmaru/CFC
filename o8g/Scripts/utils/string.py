@@ -72,7 +72,7 @@ def cardsAsNamesListStr(cards):
    return str
       
 
-def replIdsWithNames(string):
+def replaceIDsWithNames(string):
    """
    Replaces a card ID in the given string (e.g. {#66526}) with the card name, to be used in forms.
    """

@@ -400,7 +400,7 @@ def messageBox(type, msg, title, icon = None, boxIcon = None):
    debug(">>> messageBox({}, {}, {})", title, icon, boxIcon)
    if settings["WinForms"]:
       # Replace the card ID with the card name
-      msg = replIdsWithNames(msg)
+      msg = replaceIDsWithNames(msg)
       debug(msg)
       if boxIcon:
          # Use native MessageBox

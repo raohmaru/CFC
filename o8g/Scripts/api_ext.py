@@ -192,15 +192,15 @@ class ExtendedApi(object):
       
       
    def warning(self, str):
-      self.addMessage(Octgn.Core.Play.WarningMessage(replIdsWithNames(str), {}))
+      self.addMessage(Octgn.Core.Play.WarningMessage(replaceIDsWithNames(str), {}))
       
             
    def system(self, str):
-      self.addMessage(Octgn.Core.Play.SystemMessage(replIdsWithNames(str), {}))
+      self.addMessage(Octgn.Core.Play.SystemMessage(replaceIDsWithNames(str), {}))
       
       
    def whisper(self, str, color = Colors.Black, bold = False):
-      msg = replIdsWithNames(str)
+      msg = replaceIDsWithNames(str)
       dummyPlayer = DummyPlayer(color)
       if bold:
          dummyPlayer.name = msg
