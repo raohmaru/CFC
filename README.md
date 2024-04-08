@@ -48,6 +48,11 @@ Run `OCTGN.exe [OPTION]`, where...
 ### Debug
 OCTGN Game logs are stored as .o8l files under the folder Documents/OCTGN/History/.
 
+## Tips and Donations
+If you find this OCTGN plugin useful, you can consider making a tip to support this project. Every little bit helps.
+
+[![ko-fi](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/E1E2WE8J4)
+
 ## License
 Released under the GNU General Public License version 3.
 
