@@ -78,6 +78,10 @@ MSG_ERR_BLOCK_ONE           = "An attacking character can only be blocked by exa
 MSG_ERR_DRAW_EMPTY_PILE     = "You can't draw cards from an empty {}."
 MSG_ERR_NO_EMPTY_SLOTS      = "There aren't empty slots in your ring where to play a character card."
 MSG_ERR_NO_SP               = "You do not have enough SP to {}.\n(Cost is {} SP.)"
+MSG_ERR_PLAY_CHARLIMIT      = "Only {} character card{} per turn can be played.\n(You have played {} character{} this turn.)"
+MSG_ERR_PLAY_SLOTNOTEMPTY   = "Character card can't be played, slot {} is not empty (it's taken up by {}).\nIf you want to do a backup, please first target a character in your ring."
+MSG_ERR_PLAY_ACNOTMAIN      = "Action cards can only be played in your Main Phase."
+MSG_ERR_PLAY_RENOTENEMYCA   = "Reaction cards can only be played in enemy's Counter-attack Phase."
 MSG_HOOKS_ERR = {
    Hooks.BeforeAttack: "{} cannot attack due to {}'s {} ability{}.",
    Hooks.BeforeBlock : "{} cannot counter-attack due to {}'s {} ability{}.",

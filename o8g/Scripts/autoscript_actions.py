@@ -33,7 +33,7 @@ def playAuto(card, slotIdx = None, force = False):
       charsPlayed = getState(me, "charsPlayed")
       charsPerTurn = getState(me, "charsPerTurn")
       if charsPlayed >= charsPerTurn:
-         warning("Only {} character card{} per turn can be played.\n(You have played {} character{} this turn.)".format(charsPerTurn, pluralize(charsPerTurn), charsPlayed, pluralize(charsPlayed)))
+         warning(MSG_ERR_PLAY_CHARLIMIT.format(charsPerTurn, pluralize(charsPerTurn), charsPlayed, pluralize(charsPlayed)))
          return
       # BP limit?
       bplimit = getRule("play_char_bp_limit")
@@ -57,7 +57,7 @@ def playAuto(card, slotIdx = None, force = False):
       # Sanity check: Is it really empty that slot?
       # (It's also really needed this check?)
       if myRing[slotIdx] != None:
-         warning("Character card can't be played, slot {} is not empty (it's taken up by {}).\nIf you want to do a backup, please first target a character in your ring.".format(slotIdx, Card(myRing[slotIdx]).Name))
+         warning(MSG_ERR_PLAY_SLOTNOTEMPTY.format(slotIdx, Card(myRing[slotIdx]).Name))
          return
       # Pay SP cost
       if not payCostSP(card.SP, card, type = CharType):
@@ -81,7 +81,7 @@ def playAuto(card, slotIdx = None, force = False):
          return
       # Check if the card can be legally played
       if not me.isActive or phaseIdx != MainPhase:
-         information("Action cards can only be played in your Main Phase.")
+         information(MSG_ERR_PLAY_ACNOTMAIN)
          return
       # Pay SP cost
       if not payCostSP(card.SP, card, type = ActionType):
@@ -97,7 +97,7 @@ def playAuto(card, slotIdx = None, force = False):
    elif isReaction(card):
       # Check if the card can be legally played
       if (me.isActive or phaseIdx != BlockPhase) and not debugging and not tutorial:
-         information("Reaction cards can only be played in enemy's Counter-attack Phase.")
+         information(MSG_ERR_PLAY_RENOTENEMYCA)
          return
       # Triggers a hook to check if the player can play reaction cards
       if triggerHook(Hooks.BeforePlayRE, args = [me._id]) == False:

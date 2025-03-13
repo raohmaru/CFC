@@ -49,8 +49,7 @@ def debugScenario():
    gotoMain()
    waitForAnimation()
    tableCards = [
-       "d14694b4-484c-4b45-962e-8cbb636d8a9a" # 200 BP
-      ,"de28f9bf-d995-4743-afcd-a28065beb39d" # Cammy (Alpha)
+       # "d14694b4-484c-4b45-962e-8cbb636d8a9a" # 200 BP
       # ,"c7d128ea-a3b9-4b04-b8b2-a61153b5b2e6" # 400 BP
       # ,"24e99a13-cb42-4e16-9900-78dde12e1a4c" # 600 BP
       # ,"e6e46f83-d089-4762-8d8e-2a3252cfc9db" # 800 BP
@@ -66,18 +65,16 @@ def debugScenario():
       waitForAnimation()
       
    handCards = [
-       "f286cc08-ae18-4a40-bd66-17aedcfd9267" # Krauser
-      ,"f7a00823-d37b-48eb-b2f6-c530623a2a9c" # Abduction
        # "8bb477f9-5004-4018-8d5e-73c6a23e8912" # Char 300 BP
       # ,"e910f462-bea9-4262-b168-c7c512eb6511" # Char 500 BP
       # ,"0fdadc92-0864-46cc-a3ff-c20e2af8249c" # Char 700 BP
-      # ,"af43872e-e47d-4fe0-9b55-aedd8a0d0fc7" # Char 800 BP
+      "af43872e-e47d-4fe0-9b55-aedd8a0d0fc7" # Char 800 BP
       # "5e2211a0-e52e-4b7b-b03d-f6ecb3660bb0" # Action 0 SP
       # ,"83c33aa8-5981-4352-8107-cbb7e05547ec" # Action -1 SP
-      # ,"80692723-3895-435f-bf8f-e94507704af5" # Action -3 SP
+      ,"80692723-3895-435f-bf8f-e94507704af5" # Action -3 SP
        # "26fa7e0e-eb86-40d5-b5ab-39723fd67e43" # Action -5 SP
       # ,"68eaee28-a00a-480f-b8e5-e14d2a8f102c" # Reaction 0 SP
-      # ,"46deecf5-7f7b-42b5-b6fa-e3162dce2013" # Reaction -1 SP
+      ,"46deecf5-7f7b-42b5-b6fa-e3162dce2013" # Reaction -1 SP
       # ,"91e441cc-0f1f-4b01-a2b0-94678d6f0b56" # Reaction -4 SP
    ]
    for id in handCards:

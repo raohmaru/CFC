@@ -63,7 +63,7 @@ def askForEmptySlot(player = me):
    # Don't ask if only one slot is empty
    if len(slots) == 1:
       return int(slots[0]) - 1
-   slotIdx = askChoice("Select an empty slot:", slots)
+   slotIdx = askChoice("Select an empty slot in your ring:", slots)
    debug("Selected option {} ({})", slotIdx, slotIdx - 1)
    if slotIdx == 0:
       return -1
