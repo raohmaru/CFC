@@ -37,7 +37,7 @@ def showWelcomeScreen(group = None, x = 0, y = 0):
    buttons = ["Close", "Do not show again"]
    msg = """        Welcome to Card Fighters' Clash!\n
 Here you will find useful information to get started with the game.
-Have a good battle and thanks for playing!"""
+Enjoy the battle and thanks for playing!"""
    choice = askChoice(msg, choiceList, colorsList, buttons)
       
    if choice == 1:
