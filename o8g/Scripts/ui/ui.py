@@ -24,7 +24,6 @@ class ui():
    """
    StatusWidth = _extapi.game.CardSizes["status"].Width
    StatusHeight = _extapi.game.CardSizes["status"].Height
-   ActivePlayerModel = "8ca520da-0985-4480-a94b-5b968aebc482"
    activePlayerCard = None
 
    @staticmethod
@@ -33,11 +32,11 @@ class ui():
       Player status visual hint.
       """
       for c in getCards(includeUI = True):
-         if c.model == ui.ActivePlayerModel:
+         if c.model == ActivePlayerModel:
             return
       x = CardsCoords["Status"][0] * me.side - ui.StatusWidth/2
       y = fixCardY(CardsCoords["Status"][1], ui.StatusHeight)         
-      ui.activePlayerCard = table.create(ui.ActivePlayerModel, x, y, quantity = 1, persist = False)
+      ui.activePlayerCard = table.create(ActivePlayerModel, x, y, quantity = 1, persist = False)
       # Wait before sending the card to the back, or it will be on top of the avatar
       waitForAnimation()
       ui.activePlayerCard.sendToBack()

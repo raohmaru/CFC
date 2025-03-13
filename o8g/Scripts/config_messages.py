@@ -47,7 +47,7 @@ MSG_HINT_KOED               = "{} has been KOed. You should put it into your Dis
 MSG_HINT_ACTIVATE           = "Now you must activate the card's effect by double-click on it."
 MSG_HINT_ATTACK             = "You can attack with your characters or finish your turn."
 MSG_HINT_WIN                = "{} wins the game!"
-MSG_HINT_BLOCK1             = "Now {} can play Reaction cards and then {} may choose if block attackers."
+MSG_HINT_BLOCK1             = "Now {} can play Reaction cards and then {} may choose if block attackers with their characters."
 MSG_HINT_BLOCK2             = "When done, press TAB key or click in the \"Next\" button to return priority to attacking player."
 
 MSG_UA_MAX                  = "Cannot be more than {} characters in a United Attack."

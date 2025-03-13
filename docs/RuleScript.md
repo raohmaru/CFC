@@ -130,7 +130,7 @@ Available functions in expressions:
 
 | Function | Description |
 | :------- | :---------- |
-| `all <expr> in <list>`   | Returns `true` if all the elements of a given list are evaluates the expression as true |
+| `all <expr> in <list>`   | Returns `true` if all the elements of a given list evaluate the expression as true |
 | `isChar(card)`           | Returns `true` if the given card is a character card |
 | `flipCoin()`             | Asks the player to choose Heads or Tails and returns a random boolean value depending on the player's selection |
 | `inUAttack(card)`        | Returns `true` if the given card is part of a United Attack |

@@ -15,7 +15,7 @@
 # along with this script. If not, see <http://www.gnu.org/licenses/>.
 
 #---------------------------------------------------------------------------
-# Extended API that invokes methods from OCTGN C# API
+# API that invokes methods from OCTGN C# API
 #---------------------------------------------------------------------------
 
 try:

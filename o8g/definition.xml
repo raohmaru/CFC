@@ -4,7 +4,7 @@
       name="Card Fighters' Clash"
       id="e3d56d9e-900d-49c6-b6ae-22cbb51be153"
       octgnVersion="3.4.350.0"
-      version="0.12.0.961"
+      version="0.12.0.968"
       markersize="20"
       tags="capcom snk fighter"
       description="Play epic battles with fighters from Capcom and SNK!
@@ -47,13 +47,13 @@
 		<script src="Scripts/winforms.py" />
 		<script src="Scripts/windows.py" />
 		<script src="Scripts/sounds.py" />
-		<script src="Scripts/buttons.py" />
-		<script src="Scripts/avatar.py" />
-		<script src="Scripts/ui.py" />
+		<script src="Scripts/ui/buttons.py" />
+		<script src="Scripts/ui/avatar.py" />
+		<script src="Scripts/ui/ui.py" />
 		<script src="Scripts/action_labels.py" />
 		<script src="Scripts/action_showif.py" />
-		<script src="Scripts/card_rules.py" />
 		<script src="Scripts/tracking.py" />
+		<script src="Scripts/card_rules.py" />
 		<script src="Scripts/tutorial.py" />
 		<script src="Scripts/fixes.py" />
 		<script src="Scripts/overrides.py" />

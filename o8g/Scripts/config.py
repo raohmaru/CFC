@@ -103,13 +103,14 @@ MarkersDict = {
    "Cannot Attack"  : ("Cannot Attack",   "d117bc87-57d3-4489-8407-4e0a955eecb3")
 }
 
-# UI Buttons
+# UI
 StartButton = "Start Game"
 NextButton = "Next Phase"
 ButtonModels = {
    StartButton: "81918f9c-83cc-4589-8b86-19a238a0623b",
    NextButton : "1d0c798b-b785-4bb6-b160-14c71db6af47"
 }
+ActivePlayerModel = "8ca520da-0985-4480-a94b-5b968aebc482"
 
 # A table holding tuples with the location of the cards according its state
 CardsCoords = {

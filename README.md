@@ -30,7 +30,7 @@ The card template is exported as an [OCTGN proxy card](https://github.com/octgn/
 ### Card Coding
 The game play is totally automated using [OCTGN Python API](https://github.com/octgn/OCTGN/wiki/OCTGN-Python-3.1.0.2-API-Reference), which means that players don't need to do any manual action to move the game forward. You can play CFC the same way you play Magic: The Gathering Arena or Hearthstone in your computer.
 
-The mechanics of each card (this is, the rules of the card that interact with the game) are coded in RuleScript. [You can find the documentation here](./docs/RuleScript.md).
+The mechanics of each card (this is, the rules of the card that interact with the game) are coded in the RuleScript language. [You can find the documentation here](./docs/RuleScript.md).
 
 ## Developing for OCTGN
 OCTGN Game Development wiki: https://github.com/octgn/OCTGN/wiki#create-games-on-octgn
