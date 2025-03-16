@@ -169,8 +169,8 @@ def triggerHook(event, obj_id = None, args = []):
    debug("-- results: {}", results)
    # If the action is not allowed, maybe we should notify the player
    if res == False and source:
-      if event in MSG_HOOKS_ERR:
-         notifyAbility(args[0], source, MSG_HOOKS_ERR[event], isWarning = True)
+      if event in MSG_ERR_HOOKS:
+         notifyAbility(args[0], source, MSG_ERR_HOOKS[event], isWarning = True)
    return res
    
    

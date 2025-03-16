@@ -26,6 +26,7 @@ MSG_SEL_CARD                = "Select {} card{} from {} {}"
 MSG_SEL_CARD_EFFECT         = MSG_SEL_CARD + " ({}'s effect)"
 MSG_SEL_CARD_DISCARD        = MSG_SEL_CARD + " to discard"
 MSG_SEL_CARD_SACRIFICE      = MSG_SEL_CARD + " to KO"
+MSG_SEL_CARD_BACKUP         = "Select a character card from your hand to back-up {}"
 
 MSG_PLAYER_LOOKS            = "{} is looking into {} {}..."
 MSG_PLAYER_SELECTS          = "{} has selected {} card(s)"
@@ -82,7 +83,9 @@ MSG_ERR_PLAY_CHARLIMIT      = "Only {} character card{} per turn can be played.\
 MSG_ERR_PLAY_SLOTNOTEMPTY   = "Character card can't be played, slot {} is not empty (it's taken up by {}).\nIf you want to do a backup, please first target a character in your ring."
 MSG_ERR_PLAY_ACNOTMAIN      = "Action cards can only be played in your Main Phase."
 MSG_ERR_PLAY_RENOTENEMYCA   = "Reaction cards can only be played in enemy's Counter-attack Phase."
-MSG_HOOKS_ERR = {
+MSG_ERR_BACKUP_HANDNOCOMP   = "You don't have compatible character cards in your hand to back-up {}."
+MSG_ERR_BACKUP_MAX          = "{} cannot be backed-up, maximum number of back-ups ({}) reached for this character."
+MSG_ERR_HOOKS = {
    Hooks.BeforeAttack: "{} cannot attack due to {}'s {} ability{}.",
    Hooks.BeforeBlock : "{} cannot counter-attack due to {}'s {} ability{}.",
    Hooks.CanBeBlocked: "{} cannot be counter-attacked due to {}'s {} ability{}.",
@@ -92,23 +95,23 @@ MSG_HOOKS_ERR = {
 
 MSG_AB = {
    "cantattack": [
-      MSG_HOOKS_ERR[Hooks.BeforeAttack],
+      MSG_ERR_HOOKS[Hooks.BeforeAttack],
       "{} can attack again."
    ],
    "cantblock": [
-      MSG_HOOKS_ERR[Hooks.BeforeBlock],
+      MSG_ERR_HOOKS[Hooks.BeforeBlock],
       "{} can counter-attack again."
    ],
    "unblockable": [
-      MSG_HOOKS_ERR[Hooks.CanBeBlocked],
+      MSG_ERR_HOOKS[Hooks.CanBeBlocked],
       "{} can be counter-attacked as normal."
    ],
    "cantplayac": [
-      MSG_HOOKS_ERR[Hooks.BeforePlayAC],
+      MSG_ERR_HOOKS[Hooks.BeforePlayAC],
       "{} can play action cards again."
    ],
    "cantplayre": [
-      MSG_HOOKS_ERR[Hooks.BeforePlayRE],
+      MSG_ERR_HOOKS[Hooks.BeforePlayRE],
       "{} can play reaction cards again."
    ],
    "unlimitedbackup": [

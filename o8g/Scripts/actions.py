@@ -467,17 +467,17 @@ def askCardBackups(card, x = 0, y = 0):
          if len(avlCharsForBackup) > 0:
             if not canBackup(card):
                return
-            targets = showCardDlg(avlCharsForBackup, "Select a character card from your hand to back-up {}".format(card.Name))
+            targets = showCardDlg(avlCharsForBackup, MSG_SEL_CARD_BACKUP.format(card.Name))
             if targets:
                if backup(targets[0], target = card):
                   return
          else:
-            msg = "You don't have compatible character cards in your hand to back-up {}.".format(card.Name) + "\n\n" + msg
+            msg = MSG_ERR_BACKUP_HANDNOCOMP.format(card.Name) + "\n\n" + msg
             whisper(msg)
             information(msg)
             return
       else:
-         warning("{} cannot be backed-up, maximum number of back-ups ({}) reached for this character.".format(card.Name, len(acceptedBackups)))
+         warning(MSG_ERR_BACKUP_MAX.format(card.Name, len(acceptedBackups)))
          return
    # Asked for back-up info
    if len(avlBackups) > 0 and len(avlCharsForBackup) > 0:
