@@ -1,6 +1,6 @@
 # Card Fighters' Clash FAQ
 
-### What are the differences with the video game *SNK vs. Capcom Card Fighters' Clash 2 Expand Edition*
+### What are the differences with the video game *SNK vs. Capcom Card Fighters' Clash 2 Expand Edition*?
 The mechanics of CFC are the same as the video game, but with the following differences:
 
 + The Ring has four slots for characters instead of three.

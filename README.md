@@ -9,19 +9,16 @@ This plugin allows online playing and creation of CFC decks.
 Official plugin site: https://cardfightersclash.wordpress.com/
 
 ## Development
-The project uses [Rake](https://github.com/ruby/rake) to automate some tasks, available through the following commands:
+The project uses [Go](https://go.dev/) to automate some tasks, available through the following commands:
 
 | Command            | Description        |
 | ------------------ | ------------------ |
-| `rake build`       | Builds a .o8g and a .nupkg file from the game definition files using o8build.exe. |
-| `rake deploy`      | Builds and moves the NUPKG file to the OCTGN LocalFeed directory. |
-| `rake copy`        | Copies python files to the game's script folder under OCTGN's games database folder. Useful when debugging your game along with the built-in functionality to reload python scripts. |
-| `rake test`        | Verifies the files as a valid game definition. |
-| `rake versionbump` | Increases the build number by 1 in the definition.xml file. |
-| `rake octgn`       | Runs OCTGN in development mode, in the table view with the CFC plugin loaded. |
-| `rake docs`        | Converts Markdown documents in Documents/ folder into HTML files. |
-
-Use [bundler](http://bundler.io/) to install the dependencies listed in the [Gemfile](https://github.com/raohmaru/CFC/blob/master/Gemfile).
+| `go build`       | Builds a .o8g and a .nupkg file from the game definition files using o8build.exe. |
+| `go deploy`      | Builds and moves the NUPKG file to the OCTGN LocalFeed directory. |
+| `go copy`        | Copies Python files to the game's script folder under OCTGN's games database folder. Useful when debugging your game along with the built-in functionality to reload Python scripts. |
+| `go test`        | Verifies the files as a valid game definition. |
+| `go bump`        | Increases the build number by 1 in the definition.xml file. |
+| `go docs`        | Converts Markdown documents in Documents/ folder into HTML files. |
 
 ### Card Templates
 CFC card templates (and sets of cards) are created and managed using [Magic Set Editor 2](http://magicseteditor.sourceforge.net/) software and a [custom template](https://github.com/raohmaru/CFC-MSE2).  

@@ -1,6 +1,7 @@
 package main
 
 import (
+	"bytes"
 	"fmt"
 	"io"
 	"os"
@@ -10,6 +11,14 @@ import (
 	"strconv"
 	"strings"
 	"time"
+
+	cp "github.com/otiai10/copy"
+	"github.com/yuin/goldmark"
+	"github.com/yuin/goldmark/extension"
+	"github.com/yuin/goldmark/parser"
+	"github.com/yuin/goldmark/renderer/html"
+	"github.com/yuin/goldmark/text"
+	"go.abhg.dev/goldmark/toc"
 )
 
 const PLUGIN_NAME = "Card Fighters' Clash"
@@ -22,10 +31,16 @@ func main() {
 		switch param {
 		case "build":
 			build()
-		case "buildnumber":
+		case "bump":
 			increaseBuildNumber()
 		case "deploy":
 			deploy()
+		case "test":
+			test()
+		case "copy":
+			copyPythonScripts()
+		case "docs":
+			docs()
 		case "help":
 			printHelp()
 		}
@@ -83,7 +98,7 @@ func increaseBuildNumber() error {
 	return nil
 }
 
-// Builds and moves the NUPKG file to the OCTGN LocalFeed dir
+// Increases build number, converts docs, builds game plugin and moves the NUPKG file to the OCTGN LocalFeed dir
 func deploy() {
 	startTime := time.Now()
 	octgnDataDir, err := getOCTGNDataDir()
@@ -95,6 +110,7 @@ func deploy() {
 	if err != nil {
 		return
 	}
+	docs()
 	err = increaseBuildNumber()
 	if err != nil {
 		return
@@ -113,6 +129,94 @@ func deploy() {
 	}
 	fmt.Printf("Task completed at %s\n", time.Now().Format(time.DateTime))
 	fmt.Printf("Execution time: %s\n", time.Since(startTime))
+}
+
+func test() {
+	// Execute a program and redirect output to terminal
+	cmd := exec.Command("o8build.exe", "-v", "-d="+PLUGIN_DIR)
+	cmd.Stdout = os.Stdout
+	cmd.Stderr = os.Stderr
+	cmd.Run()
+}
+
+func copyPythonScripts() {
+	octgnDataDir, err := getOCTGNDataDir()
+	if err != nil {
+		fmt.Println("Error getting OCTGN paths")
+		return
+	}
+	targetDir := filepath.Join(octgnDataDir, "GameDatabase", PLUGIN_ID, "Scripts")
+	err = cp.Copy(filepath.Join(PLUGIN_DIR, "Scripts"), targetDir)
+	if err != nil {
+		fmt.Println("Error copying Python scripts:", err)
+	}
+	fmt.Println("Python scripts copied to", targetDir)
+}
+
+func docs() {
+	files, err := getFilesGlob(filepath.Join(PLUGIN_DIR, "Documents", "*.md"))
+	if err != nil {
+		return
+	}
+	md := goldmark.New(
+		goldmark.WithParserOptions(
+			parser.WithAutoHeadingID(), // Enables auto heading ids
+		),
+		goldmark.WithRendererOptions(
+			html.WithHardWraps(), // Render newlines as <br>
+			html.WithUnsafe(),
+		),
+		goldmark.WithExtensions(
+			extension.GFM, // Table, Strikethrough, Linkify and TaskList
+		),
+	)
+	for _, path := range files {
+		doc, err := getFileContents(path)
+		if err != nil {
+			fmt.Println("Cannot open MD file")
+			return
+		}
+		// Render MD to HTML
+		var buf bytes.Buffer
+		if err := md.Convert([]byte(doc), &buf); err != nil {
+			panic(err)
+		}
+		ext := filepath.Ext(path)
+		baseNameWithoutExt := strings.TrimSuffix(filepath.Base(path), ext)
+		absPath, _ := filepath.Abs(path)
+		html := fmt.Sprintf(`<!doctype html>
+			<html lang="en">
+			<head>
+				<meta charset="utf-8">
+				<title>%s</title>
+				<link href="doc.css" rel="stylesheet">
+			</head>
+			<body>
+				%s
+			</body>
+			</html>`, baseNameWithoutExt, buf.String())
+		// Build TOC
+		if strings.Contains(doc, "<!-- toc -->") {
+			// Parse MD document
+			ast := md.Parser().Parse(text.NewReader([]byte(doc)))
+			// Build table of contents
+			tree, err := toc.Inspect(ast, []byte(doc))
+			if err == nil {
+				// Build a list representation of the table of contents to be rendered as Markdown or HTML
+				list := toc.RenderList(tree)
+				// Writes the TOC list as HTML into output
+				var output bytes.Buffer
+				md.Renderer().Render(&output, []byte(doc), list)
+				html = strings.Replace(html, "<!-- toc -->", output.String(), -1)
+			}
+		}
+		targetHTMLFile := strings.TrimSuffix(absPath, ext) + ".html"
+		err = writeFileContents(targetHTMLFile, html)
+		if err != nil {
+			fmt.Printf("Error writing HTML file %s to disk\n", targetHTMLFile)
+		}
+	}
+	fmt.Println("Markdown documents converted to HTML")
 }
 
 func printHelp() {
