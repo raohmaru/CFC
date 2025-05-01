@@ -2088,6 +2088,7 @@ action = {D(2)}: damage(300) to(characters)
 
 # Super Art select
 RulesDict["0a951ced-4508-40b9-8350-5dafb6b7e8aa"] = """
+requisite = character<1>[powerful]@myRing && character<1>[powerful]@oppRing
 action = swapAbilities() target(<2>character[powerful])
 """
 

@@ -91,12 +91,9 @@ def getGameVersion():
 
 def showChangelog():
    switchSetting("GameVersion", getGameVersion())
-   msg = u"""What's new in version 0.12.0
-
-- Disabled basic tracking.
-- Updated Core set image pack. You can download it from cardfightersclash.wordpress.com/image-packs.
-- UI and gameplay improvements.
-- Several bug fixes.
+   msg = u"""What's new in version 0.13.0
+- Bug fixes.
+- Improve stability.
 """.format(TriggerUniChar)
    askChoice(msg, [], [], ["Close"])
    

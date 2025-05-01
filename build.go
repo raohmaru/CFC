@@ -248,10 +248,10 @@ func getFile(path string) (*os.File, error) {
 func getFileContents(path string) (string, error) {
 	// Open the file
 	file, err := getFile(path)
-	defer file.Close()
 	if err != nil {
 		return "", err
 	}
+	defer file.Close()
 	// Read the file contents
 	contents, err := io.ReadAll(file)
 	if err != nil {

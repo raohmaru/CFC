@@ -183,7 +183,7 @@ The target property defines one or more targets in the game (cards or players) t
 target = target filter; ...
 ```
 
-If one or more targets can be selected, the engine will show the [card dialog](https://github.com/octgn/OCTGN/wiki/OCTGN-Python-3.1.0.2-API-Reference#carddlg) to select the target(s).
+If one or more targets can be selected, the engine will show the [card dialog](https://github.com/octgn/OCTGN/wiki/OCTGN-Python-3.1.0.2-API-Reference#carddlg) to select the target card(s), or the [choice dialog](https://github.com/octgn/OCTGN/wiki/OCTGN-Python-3.1.0.2-API-Reference#askchoicemessage-buttonlist-colorlist-custombuttons--) to select the target player.
 
 Only one Target property is allowed in a rule. Any other Target property after the first are ignored.
 
@@ -202,7 +202,7 @@ The Action property defines the actions a card can perform, this is which effect
 ```ini
 action = action statement; ...
 ```
-Multiple Action properties are allowed. If there are two or more, a dialog will be shown to choose an action. The text of the button for each action is inferred from the action statement or it can be defined with a [label](#label-property) property.
+Multiple Action properties are allowed. If there are two or more, a dialog will be shown to choose an action. The text of the button for each action is inferred from the action statement or it can be defined using a [label](#label-property) property.
 ```ini
 label  = "Label for the first action"
 action = action statement; ...
@@ -211,7 +211,7 @@ action = action statement; ...
 
 It is optional, but **a rule must contain at least either one Action property or one Auto property**.
 
-The value of the Action property is one or several [Action statements](#action-statement), concatenated by the semicolon sign `;`. They will be executed in parallel but respecting the order (from left to right). Note that effects in the same action statement (joined by `&,` `&&` or `||`) are executed sequentially.
+The value of the Action property is one or several [Action statements](#action-statement), concatenated by the semicolon sign `;`. They are executed in parallel starting from the left. Note that effects in the same action statement (joined by `&,` `&&` or `||`) are executed sequentially.
 
 ### Abilities Property
 Abilities are permanent properties of cards. They change how the card interacts with the game.
@@ -233,7 +233,7 @@ Only one Auto property is allowed. Any other Auto property after the first are i
 
 It is optional, but **a rule must contain at least either one Auto property or one Action property**.
 
-An Auto property contain one or several [Auto statements](#auto-statement), joined by the semicolon sign `;`. They will be executed in parallel but respecting the order (from left to right).
+An Auto property contain one or several [Auto statements](#auto-statement), joined by the semicolon sign `;`. They are executed in parallel starting from the left.
 
 ### Label Property
 The Label property adds a label to an Action property when it is rendered as an action button. The first Label property modifies the first Action property, the second label modifies the second action, and so on.
@@ -258,7 +258,7 @@ requisite = target filter && ...
 
 It accepts one or more [Target Filter statement](#target-filter-statement) separated by the `&&` operator.
 
-> To avoid showing the [card dialog](https://github.com/octgn/OCTGN/wiki/OCTGN-Python-3.1.0.2-API-Reference#carddlg) when checking the requisite, always use the segment [`<pick>`](#pick) in the Target Filter statement.
+> To avoid showing the [card dialog](https://github.com/octgn/OCTGN/wiki/OCTGN-Python-3.1.0.2-API-Reference#carddlg) when checking the requisite, use the segment [`<pick>`](#pick) in the Target Filter statement.
 > <details>
 > <summary>Example</summary>
 > 
@@ -492,7 +492,7 @@ An effect is a code statement that performs changes in the game.
 |  |  |
 |:-|:-|
 | Values    | [Command](#action-commands)<br>[Ability](#action-abilities) |
-| Operators | `&` — will execute the next effect after the left effect<br>`&&` — logical AND, will stop execution of the action statement if the left effect failed<br>`||` — logical OR, will execute right effect if the left effect failed |
+| Operators | `&` — will execute the next effect after the left effect<br>`&&` — logical AND, will stop execution of the action statement if the left effect failed<br>`\|\|` — logical OR, will execute right effect if the left effect failed |
 | Optional  | False |
 
 ##### Action Commands
@@ -637,13 +637,13 @@ The following is the formal syntax. All segments are optional but the `effect` s
 ```ini
 ~event~ [[cond]] effect & effect to(target filter) restr; ...
 ```
-When using hooks the syntax is the following:
+When using hooks the syntax is as following:
 ```ini
 ?hook? [[cond if expr]]
 ```
 
 #### \~event\~
-It defines one or more game event listeners that when triggered will execute the Auto statement of the rules.
+It defines one or more game event listeners that when triggered will execute the effects of the Auto statement.
 
 Several events can be specified by separating them with the comma sign `,`.
 

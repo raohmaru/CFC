@@ -1,5 +1,8 @@
 # Card Fighters' Clash Changelog
 
+## 0.13.0
+- Bug fixes.
+- Improve stability.
 ## 0.12.0
 + Disabled tracking.
 + UI and gameplay improvements.
